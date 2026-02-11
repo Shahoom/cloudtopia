@@ -1,0 +1,343 @@
+/* Custom Font for CloudTopia Logo */
+@font-face {
+  font-family: 'AgharaPro';
+  src: url('/fonts/AgharaProRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Changa Font - Variable Weight */
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Outfit:wght@500;600;700;800&display=swap');
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --font-inter: 'Changa', sans-serif;
+  --font-poppins: 'Changa', sans-serif;
+  --font-logo: 'AgharaPro', 'Changa', sans-serif;
+  --font-arabic: 'Changa', sans-serif;
+  font-size: 112.5%;
+  /* 18px base instead of 16px - makes everything ~12% larger */
+  
+  /* Shadcn CSS Variables */
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 199 89% 48%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 243 75% 59%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --ring: 199 89% 48%;
+  
+  /* Card colors for shadcn components */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+}
+
+/* RTL Support */
+[dir="rtl"] body {
+  font-family: var(--font-arabic);
+  line-height: 1.8;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-family: var(--font-arabic);
+  line-height: 1.6;
+}
+
+[dir="rtl"] p {
+  line-height: 2;
+}
+
+@layer base {
+  * {
+    @apply border-neutral-200;
+  }
+
+  body {
+    @apply bg-white text-neutral-700 antialiased;
+    font-family: var(--font-inter);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-poppins);
+    @apply font-bold text-neutral-900;
+  }
+
+  h1 {
+    @apply text-h1;
+  }
+
+  h2 {
+    @apply text-h2;
+  }
+
+  h3 {
+    @apply text-h3;
+  }
+
+  h4 {
+    @apply text-h4;
+  }
+
+  h5 {
+    @apply text-h5;
+  }
+
+  p {
+    @apply text-body;
+  }
+}
+
+@layer components {
+
+  /* Design System Container */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Typography Utilities */
+  .text-display {
+    @apply text-display font-heading text-neutral-900;
+  }
+
+  .text-title {
+    @apply text-h2 font-heading text-neutral-900;
+  }
+
+  .text-subtitle {
+    @apply text-body-lg text-neutral-600 font-medium;
+  }
+
+  .text-section-heading {
+    @apply text-h3 font-heading text-neutral-900 mb-4;
+  }
+
+  .text-body-large {
+    @apply text-body-lg text-neutral-700;
+  }
+
+  /* Button Base */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-body transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-body-lg;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-body-sm;
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus:ring-primary-500 shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-600 text-white hover:bg-secondary-700 active:bg-secondary-800 focus:ring-secondary-500 shadow-sm hover:shadow-md;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-50 active:bg-primary-100 focus:ring-primary-500;
+  }
+
+  .btn-ghost {
+    @apply text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200 focus:ring-neutral-500;
+  }
+
+  /* Section Utilities */
+  .section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-sm {
+    @apply py-12 md:py-16;
+  }
+
+  /* Card Component */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 transition-shadow duration-200 hover:shadow-md;
+  }
+
+  /* Tag/Badge Component */
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-body-sm font-medium;
+  }
+
+  .tag-primary {
+    @apply bg-primary-100 text-primary-700;
+  }
+
+  .tag-secondary {
+    @apply bg-secondary-100 text-secondary-700;
+  }
+
+  .tag-neutral {
+    @apply bg-neutral-100 text-neutral-700;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-hero;
+  }
+
+  /* Gradient Background */
+  .gradient-bg {
+    @apply bg-gradient-hero;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animated gradient for text */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+
+  /* Animated dots background */
+  @keyframes drift {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(20px, 20px);
+    }
+
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  /* Cloud floating animation */
+  @keyframes float-cloud {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+
+    50% {
+      transform: translateY(-20px) translateX(10px);
+    }
+  }
+
+  @keyframes float-cloud-slow {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+
+    50% {
+      transform: translateY(-15px) translateX(-8px);
+    }
+  }
+
+  @keyframes float-cloud-reverse {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0) scale(1);
+    }
+
+    50% {
+      transform: translateY(15px) translateX(-12px) scale(1.05);
+    }
+  }
+
+  /* Fade in up animation */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Scale in animation */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-float-cloud {
+    animation: float-cloud 8s ease-in-out infinite;
+  }
+
+  .animate-float-cloud-slow {
+    animation: float-cloud-slow 10s ease-in-out infinite;
+  }
+
+  .animate-float-cloud-reverse {
+    animation: float-cloud-reverse 12s ease-in-out infinite;
+  }
+
+  /* Fade in up animation for pricing cards */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
