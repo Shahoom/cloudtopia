@@ -54,6 +54,7 @@ const MagneticButton = ({ children, className, onClick }: { children: React.Reac
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
   const handleMouse = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return
     const { clientX, clientY } = e
     const { height, width, left, top } = ref.current!.getBoundingClientRect()
     const middleX = clientX - (left + width / 2)
@@ -335,6 +336,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
             <img
               src={project.image}
               alt={project.title}
+              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover object-top"
             />
           )}
@@ -514,10 +516,17 @@ export default function ProjectsPage() {
   const { scrollYProgress } = useScroll()
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
+  // Use state for parallax values to disable them on mobile
+  const [useParallax, setUseParallax] = useState(false)
+
+  useEffect(() => {
+    setUseParallax(window.innerWidth >= 768)
+  }, [isMobile])
+
   // Parallax transforms for background elements
-  const backgroundY = useTransform(smoothProgress, [0, 1], [0, -300])
-  const orbScale = useTransform(smoothProgress, [0, 0.3], [1, 1.5])
-  const orbOpacity = useTransform(smoothProgress, [0, 0.3], [0.2, 0])
+  const backgroundY = useTransform(smoothProgress, [0, 1], [0, useParallax ? -300 : 0])
+  const orbScale = useTransform(smoothProgress, [0, 0.3], [1, useParallax ? 1.5 : 1])
+  const orbOpacity = useTransform(smoothProgress, [0, 0.3], [0.2, useParallax ? 0 : 0.2])
 
   const openProjectModal = (project: Project) => {
     setSelectedProject(project)
@@ -690,21 +699,25 @@ export default function ProjectsPage() {
         />
 
         {/* Gradient orbs with parallax */}
-        <motion.div
-          style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -100]) }}
-          className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-neutral-200/50 rounded-full blur-[120px] pointer-events-none"
-        />
-        <motion.div
-          style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -80]) }}
-          className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-neutral-300/40 rounded-full blur-[100px] pointer-events-none"
-        />
-        <motion.div
-          style={{ y: useTransform(smoothProgress, [0.2, 0.6], [0, -60]) }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200/30 to-transparent rounded-full blur-[80px] pointer-events-none"
-        />
+        {useParallax && (
+          <>
+            <motion.div
+              style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -100]) }}
+              className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-neutral-200/50 rounded-full blur-[120px] pointer-events-none"
+            />
+            <motion.div
+              style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -80]) }}
+              className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-neutral-300/40 rounded-full blur-[100px] pointer-events-none"
+            />
+            <motion.div
+              style={{ y: useTransform(smoothProgress, [0.2, 0.6], [0, -60]) }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200/30 to-transparent rounded-full blur-[80px] pointer-events-none"
+            />
+          </>
+        )}
 
         {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
+        {!isMobile && <div className="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />}
 
         <div className="container max-w-7xl mx-auto px-4 relative z-10">
           {/* Section Header with Vaporize Effect */}
@@ -809,16 +822,16 @@ export default function ProjectsPage() {
 
           {/* Projects Grid - Smooth layout animations */}
           <motion.div
-            layout
+            layout={!isMobile}
             className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
             transition={{ layout: { duration: 0.6, ease: [0.25, 0.1, 0, 1] } }}
           >
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode={isMobile ? "sync" : "popLayout"}>
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  layout
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  layout={!isMobile}
+                  initial={{ opacity: 0, y: isMobile ? 10 : 30, scale: isMobile ? 1 : 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.95 }}
                   transition={{
@@ -837,6 +850,7 @@ export default function ProjectsPage() {
                       <img
                         src={project.image}
                         alt={project.title}
+                        loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       />
                     )}
@@ -874,7 +888,7 @@ export default function ProjectsPage() {
       <section className="py-32 bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 relative overflow-hidden">
         {/* Animated background with parallax */}
         <motion.div
-          style={{ y: useTransform(smoothProgress, [0.5, 0.8], [100, -100]) }}
+          style={{ y: useParallax ? useTransform(smoothProgress, [0.5, 0.8], [100, -100]) : 0 }}
           className="absolute inset-0"
         >
           <SparklesCore
@@ -882,7 +896,7 @@ export default function ProjectsPage() {
             background="transparent"
             minSize={0.4}
             maxSize={1.2}
-            particleDensity={30}
+            particleDensity={isMobile ? 5 : 30}
             className="w-full h-full"
             particleColor="#ffffff"
             speed={0.5}

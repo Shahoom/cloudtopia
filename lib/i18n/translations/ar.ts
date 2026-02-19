@@ -60,6 +60,7 @@ export const ar = {
       learnMore: 'اقرأ المزيد'
     },
     philosophy: {
+      badge: 'سحابة برؤية مبتكرة',
       title: 'ماذا تعني',
       highlight: '"السحابة"',
       titleEnd: '؟',

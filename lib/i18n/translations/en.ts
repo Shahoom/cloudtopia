@@ -60,6 +60,7 @@ export const en = {
       learnMore: 'Learn more'
     },
     philosophy: {
+      badge: 'A Cloud In an Innovative View',
       title: 'What Does',
       highlight: '"The Cloud"',
       titleEnd: 'Mean?',

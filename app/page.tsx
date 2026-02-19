@@ -270,7 +270,7 @@ export default function HomePage() {
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavender/20 border border-blue-500/30 mb-8"
                         >
                             <Cloud className="w-5 h-5 text-blue-400" />
-                            <span className="text-blue-300 font-medium">A Cloud In an Innovative View</span>
+                            <span className="text-blue-300 font-medium">{t.home?.philosophy?.badge}</span>
                         </motion.div>
                     </FloatingCard>
 
