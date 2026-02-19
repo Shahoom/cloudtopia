@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cloudtopia.net'),
@@ -211,6 +212,7 @@ export default function RootLayout({
             <Footer />
           </ThemeProvider>
         </LanguageProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
