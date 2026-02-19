@@ -270,6 +270,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
   const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return
     if (!cardRef.current) return
     const rect = cardRef.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
@@ -400,7 +401,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
         <div className="p-7" style={{ transform: 'translateZ(20px)' }}>
           <motion.h3
             animate={{ color: isHovered ? '#0ea5e9' : '#171717' }}
-            className="text-xl font-bold mb-3 leading-tight line-clamp-2"
+            className="text-lg md:text-xl font-bold mb-3 leading-tight line-clamp-2"
           >
             {project.title}
           </motion.h3>
@@ -500,6 +501,14 @@ export default function ProjectsPage() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Smooth scroll progress for Apple-like parallax
   const { scrollYProgress } = useScroll()
@@ -550,8 +559,8 @@ export default function ProjectsPage() {
 
   return (
     <>
-      {/* Tech Cursor Effect */}
-      <TechCursor />
+      {/* Tech Cursor Effect - Only on Desktop */}
+      {!isMobile && <TechCursor />}
 
       {/* HERO SECTION */}
       <section
@@ -576,7 +585,7 @@ export default function ProjectsPage() {
         {/* Particles */}
         <Particles
           className="absolute inset-0 opacity-50"
-          quantity={80}
+          quantity={isMobile ? 20 : 80}
           ease={100}
           color="#ffffff"
           refresh
@@ -609,7 +618,7 @@ export default function ProjectsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]"
+                className="text-3xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]"
               >
                 {t.projects.hero.title}
                 <br />
@@ -672,7 +681,7 @@ export default function ProjectsPage() {
         {/* Interactive Particles */}
         <Particles
           className="absolute inset-0"
-          quantity={80}
+          quantity={isMobile ? 20 : 80}
           ease={80}
           color="#000000"
           refresh
@@ -709,7 +718,7 @@ export default function ProjectsPage() {
                 ]}
                 font={{
                   fontFamily: "Inter, system-ui, sans-serif",
-                  fontSize: "56px",
+                  fontSize: isMobile ? "28px" : "56px",
                   fontWeight: 700
                 }}
                 color="rgb(23, 23, 23)"

@@ -18,7 +18,7 @@ export default function LanguageSwitcher({ isDark = false }: LanguageSwitcherPro
   return (
     <button
       onClick={toggleLocale}
-      className={`flex items-center gap-1 px-4 py-2 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group ${isDark
+      className={`flex items-center gap-1 px-2.5 py-1.5 md:px-4 md:py-2 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group ${isDark
         ? 'bg-lavender/10 hover:bg-lavender/20 border border-white/20 hover:border-white/30'
         : 'bg-lavender/80 hover:bg-lavender border border-neutral-200 hover:border-primary-300'
         }`}

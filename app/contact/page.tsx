@@ -313,7 +313,7 @@ ${formData.message}`
                 <Sparkles className="w-5 h-5 text-primary-500" />
                 <span className="font-bold text-primary-600 uppercase tracking-widest text-xs">{t.contact.hero.badge}</span>
               </div>
-              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-neutral-900">
+              <h1 className="text-3xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-neutral-900">
                 {t.contact.hero.title}<br />
                 <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient">
                   {t.contact.hero.titleHighlight}

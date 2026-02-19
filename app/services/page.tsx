@@ -422,6 +422,14 @@ function ServiceCardComponent({
 export default function ServicesPage() {
     const { dir, locale } = useLanguage()
     const isRTL = locale === 'ar'
+    const [isMobile, setIsMobile] = React.useState(false)
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768)
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+        return () => window.removeEventListener('resize', checkMobile)
+    }, [])
 
     const content = {
         en: {
@@ -458,8 +466,8 @@ export default function ServicesPage() {
 
     return (
         <div className="min-h-screen bg-zinc-950 text-white selection:bg-blue-500/30" dir={dir}>
-            {/* Tech Cursor Effect */}
-            <TechCursor />
+            {/* Tech Cursor Effect - Only on Desktop */}
+            {!isMobile && <TechCursor />}
             {/* Hero Section - Preserved */}
             <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
                 <ProceduralGroundBackground />
@@ -483,7 +491,7 @@ export default function ServicesPage() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.2 }}
-                            className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[1.05]"
+                            className="text-2xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[1.05]"
                         >
                             <span className="text-white">{currentContent.title}</span>
                             <br />

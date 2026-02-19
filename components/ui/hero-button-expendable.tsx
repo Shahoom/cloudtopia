@@ -55,7 +55,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/30 via-transparent to-zinc-950/70" />
             </div>
 
-            <div className={`relative z-10 flex flex-col items-center gap-6 sm:gap-8 text-center ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
+            <div className={`relative z-10 flex flex-col items-center gap-4 sm:gap-8 text-center ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-50 max-w-5xl"
+                    className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-50 max-w-5xl"
                 >
                     {isRTL ? 'ارتقِ بأعمالك' : 'Elevate Your Business'} <br className="hidden sm:block" />
                     <div className="flex items-center justify-center gap-x-2 sm:gap-x-3 whitespace-nowrap mt-2">

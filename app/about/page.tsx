@@ -42,7 +42,7 @@ function SectionHeading({ badge, title, highlight, description, variant = 'dark'
                 </div>
             )}
             <h2 className={cn(
-                "text-3xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight",
+                "text-2xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight",
                 isDark ? "text-white" : "text-neutral-900"
             )}>
                 {title}{' '}
@@ -107,7 +107,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="text-5xl md:text-7xl lg:text-9xl font-black text-white tracking-tighter leading-none mb-4"
+                        className="text-3xl md:text-7xl lg:text-9xl font-black text-white tracking-tighter leading-none mb-4"
                     >
                         {t.about.hero.title}{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
@@ -140,7 +140,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 0.4 }}
-                        className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed mb-12 mt-4"
+                        className="text-lg md:text-2xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed mb-12 mt-4"
                     >
                         {t.about.hero.description}
                     </motion.p>
@@ -409,7 +409,7 @@ export default function AboutPage() {
                                 transition={{ duration: 0.6 }}
                                 className="flex flex-col items-center gap-8 py-20 bg-blue-600/5 rounded-[4rem] border border-blue-600/10 backdrop-blur-sm"
                             >
-                                <h2 className="text-4xl md:text-7xl font-black text-neutral-900 tracking-tight leading-tight max-w-4xl">
+                                <h2 className="text-3xl md:text-7xl font-black text-neutral-900 tracking-tight leading-tight max-w-4xl">
                                     {t.about.cta.title}
                                 </h2>
                                 <p className="text-xl md:text-2xl text-neutral-600 max-w-2xl font-light">

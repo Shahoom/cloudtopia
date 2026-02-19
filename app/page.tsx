@@ -62,7 +62,7 @@ function AnimatedCounter({ value, suffix = '', duration = 2000 }: { value: numbe
     }, [isVisible, value, duration])
 
     return (
-        <div ref={ref} className="font-bold text-4xl md:text-5xl lg:text-6xl text-white">
+        <div ref={ref} className="font-bold text-3xl md:text-5xl lg:text-6xl text-white">
             {count.toLocaleString()}{suffix}
         </div>
     )
@@ -275,7 +275,7 @@ export default function HomePage() {
                     </FloatingCard>
 
                     <FloatingCard delay={0.1}>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
                             {t.home?.philosophy?.title || 'What Does'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{t.home?.philosophy?.highlight || '"The Cloud"'}</span> {t.home?.philosophy?.titleEnd || 'Mean?'}
                         </h2>
                     </FloatingCard>
@@ -302,7 +302,7 @@ export default function HomePage() {
                         </FloatingCard>
 
                         <FloatingCard delay={0.1}>
-                            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">
+                            <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6">
                                 {isRTL ? (
                                     <>{t.home?.journey?.subtitle || 'نبدأ معك من حيث أنت ونساعدك على النمو.'}</>
                                 ) : (
@@ -343,7 +343,7 @@ export default function HomePage() {
                         </FloatingCard>
 
                         <FloatingCard delay={0.1}>
-                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                                 {t.home?.featuredProjects?.title || 'Our Recent'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">{t.home?.featuredProjects?.titleHighlight || 'Success Stories'}</span>
                             </h2>
                         </FloatingCard>
