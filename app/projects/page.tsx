@@ -129,18 +129,18 @@ const ProjectModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-10 lg:inset-20 bg-lavender rounded-3xl shadow-2xl z-50 overflow-hidden flex flex-col"
+            className="fixed inset-x-5 inset-y-[10vh] md:inset-10 lg:inset-20 bg-lavender rounded-3xl shadow-2xl z-50 overflow-hidden flex flex-col"
           >
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-10 relative">
+            <div className="flex-1 overflow-y-auto p-5 md:p-10 relative">
               {/* Close button */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="absolute top-0 right-0 w-10 h-10 bg-lavender rounded-full flex items-center justify-center text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 transition-colors z-10"
+                className="absolute top-2 right-2 w-8 h-8 md:w-10 md:h-10 bg-lavender rounded-full flex items-center justify-center text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 transition-colors z-10"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 md:w-5 md:h-5" />
               </motion.button>
               {/* Type & Metric badges */}
               <motion.div
@@ -148,16 +148,16 @@ const ProjectModal = ({
                 animate={{ y: 0, opacity: 1 }}
                 className="flex flex-wrap items-center gap-4 mb-4"
               >
-                <div className="flex items-center gap-2 bg-lavender px-4 py-2 rounded-full border border-primary-100">
+                <div className="flex items-center gap-2 bg-lavender px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-primary-100">
                   <span className="text-primary-600">{getCategoryIcon(project.category)}</span>
-                  <span className="text-sm font-semibold text-primary-700">
+                  <span className="text-xs md:text-sm font-semibold text-primary-700">
                     {project.type}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 bg-lavender px-4 py-2 rounded-full border border-emerald-100">
-                  <TrendingUp className="w-4 h-4 text-emerald-600" />
-                  <span className="text-sm text-neutral-500">{project.metrics.label}:</span>
-                  <span className="text-sm font-bold text-emerald-600">{project.metrics.value}</span>
+                <div className="flex items-center gap-2 bg-lavender px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-emerald-100">
+                  <TrendingUp className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
+                  <span className="text-xs md:text-sm text-neutral-500">{project.metrics.label}:</span>
+                  <span className="text-xs md:text-sm font-bold text-emerald-600">{project.metrics.value}</span>
                 </div>
               </motion.div>
 
@@ -165,7 +165,7 @@ const ProjectModal = ({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1 }}
-                className="text-2xl md:text-4xl font-bold text-neutral-900 mb-6 pr-12"
+                className="text-xl md:text-4xl font-bold text-neutral-900 mb-6 pr-10"
               >
                 {project.title}
               </motion.h2>
