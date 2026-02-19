@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/Card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Shield, Users, Zap, Code2, Globe, Lock } from 'lucide-react'
 
 interface WebAppFeaturesProps {
@@ -38,7 +38,7 @@ export function WebAppFeatures({ locale = 'en' }: WebAppFeaturesProps) {
         }
     }
     return (
-        <section className="bg-gray-50 py-16 md:py-32 dark:bg-transparent">
+        <section className="bg-lavender py-16 md:py-32 dark:bg-transparent">
             <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
                 <div className="relative">
                     <div className="relative z-10 grid grid-cols-6 gap-3">
@@ -127,9 +127,9 @@ export function WebAppFeatures({ locale = 'en' }: WebAppFeaturesProps) {
                                 </div>
                                 <div className="rounded-tl-(--radius) relative -mb-6 -mr-6 mt-6 h-fit border-l border-t p-6 py-6 sm:ml-6">
                                     <div className="absolute left-3 top-2 flex gap-1">
-                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10"></span>
-                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10"></span>
-                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10"></span>
+                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-lavender/10"></span>
+                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-lavender/10"></span>
+                                        <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-lavender/10"></span>
                                     </div>
                                     <svg className="w-full sm:w-[150%]" viewBox="0 0 366 231" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -168,8 +168,8 @@ export function WebAppFeatures({ locale = 'en' }: WebAppFeaturesProps) {
                                 <div className="before:bg-(--color-border) relative mt-6 before:absolute before:inset-0 before:mx-auto before:w-px sm:-my-6 sm:-mr-6">
                                     <div className="relative flex h-full flex-col justify-center space-y-6 py-6">
                                         <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-emerald-50">React</span>
-                                            <div className="ring-background size-7 ring-4 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-lavender">React</span>
+                                            <div className="ring-background size-7 ring-4 bg-gradient-to-br from-cyan-400 to-lavender rounded-full flex items-center justify-center text-white text-xs font-bold">
                                                 R
                                             </div>
                                         </div>
@@ -177,10 +177,10 @@ export function WebAppFeatures({ locale = 'en' }: WebAppFeaturesProps) {
                                             <div className="ring-background size-8 ring-4 bg-gradient-to-br from-slate-800 to-slate-950 rounded-full flex items-center justify-center text-white text-xs font-bold">
                                                 N
                                             </div>
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-emerald-50">Next.js</span>
+                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-lavender">Next.js</span>
                                         </div>
                                         <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-emerald-50">TypeScript</span>
+                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm bg-lavender">TypeScript</span>
                                             <div className="ring-background size-7 ring-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white text-xs font-bold">
                                                 TS
                                             </div>

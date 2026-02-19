@@ -427,8 +427,9 @@ function GalleryScene({
 
         const worldZ = plane.z - depthRange / 2
 
-        const aspect = texture.image
-          ? texture.image.width / texture.image.height
+        const img = texture.image as HTMLImageElement | undefined
+        const aspect = img
+          ? img.width / img.height
           : 1
         const scale: [number, number, number] =
           aspect > 1 ? [2 * aspect, 2, 1] : [2, 2 / aspect, 1]
@@ -457,7 +458,7 @@ function FallbackGallery({ images }: { images: ImageItem[] }) {
   )
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center h-full bg-lavender p-4">
       <p className="text-gray-600 mb-4">
         WebGL not supported. Showing image list:
       </p>

@@ -1,9 +1,8 @@
-'use client'
-
-import React from 'react'
-import { motion } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { GlowingEffect } from './glowing-effect'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export interface ScrollCardItem {
     name: string
@@ -25,6 +24,97 @@ interface HorizontalScrollCardsProps {
     variant?: 'light' | 'dark'
 }
 
+function CardContent({
+    card,
+    variant,
+    isRTL,
+    whatsIncludedLabel,
+    isDragging = false
+}: {
+    card: ScrollCardItem
+    variant: 'light' | 'dark'
+    isRTL: boolean
+    whatsIncludedLabel: string
+    isDragging?: boolean
+}) {
+    return (
+        <div className={cn(
+            "relative h-full rounded-2xl transition-all duration-500 group overflow-hidden",
+            isDragging ? "pointer-events-none" : "pointer-events-auto"
+        )}>
+            <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={84}
+                inactiveZone={0.01}
+                borderWidth={2}
+            />
+
+            <div className={cn(
+                "relative h-full flex flex-col p-6 rounded-2xl border transition-all duration-500 z-10",
+                variant === 'dark'
+                    ? "bg-zinc-900/50 backdrop-blur-xl border-white/5 group-hover:bg-zinc-900/80 group-hover:border-white/10"
+                    : "bg-lavender/40 backdrop-blur-xl border-slate-200 group-hover:bg-lavender/60 group-hover:border-purple-200 group-hover:shadow-2xl shadow-xl shadow-slate-200/50"
+            )}>
+                <div className={cn(
+                    "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500",
+                    card.gradient
+                )} />
+
+                <div className="flex items-start gap-4 mb-6 relative z-10">
+                    <div className={cn(
+                        "w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-500",
+                        variant === 'dark' ? "bg-transparent group-hover:bg-lavender/10" : "bg-transparent group-hover:bg-lavender/10"
+                    )}>
+                        {card.icon}
+                    </div>
+                    <div className="flex-1">
+                        <h3 className={cn(
+                            "text-lg font-bold leading-tight mb-1",
+                            variant === 'dark' ? "text-white" : "text-slate-900"
+                        )}>
+                            {card.name}
+                        </h3>
+                        {card.tagline && (
+                            <p className={cn(
+                                "text-xs font-bold bg-clip-text text-transparent",
+                                card.gradient
+                            )}>
+                                {card.tagline}
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                <p className={cn(
+                    "text-sm mb-6 leading-relaxed relative z-10",
+                    variant === 'dark' ? "text-slate-400" : "text-slate-600"
+                )}>
+                    {card.description}
+                </p>
+
+                <div className="mt-auto space-y-3 relative z-10">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                        {whatsIncludedLabel}
+                    </h4>
+                    <ul className="space-y-2">
+                        {card.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-xs font-medium text-slate-500">
+                                <div className={cn(
+                                    "w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0",
+                                    card.gradient
+                                )} />
+                                {feature}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export function HorizontalScrollCards({
     cards,
     title,
@@ -34,36 +124,54 @@ export function HorizontalScrollCards({
     isRTL = false,
     variant = 'light'
 }: HorizontalScrollCardsProps) {
+    const { dir } = useLanguage()
+    const scrollRef = useRef<HTMLDivElement>(null)
+    const [constraints, setConstraints] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
+
+    useEffect(() => {
+        const updateConstraints = () => {
+            if (scrollRef.current) {
+                const scrollWidth = scrollRef.current.scrollWidth
+                const clientWidth = scrollRef.current.offsetWidth
+                setConstraints(clientWidth - scrollWidth)
+            }
+        }
+
+        updateConstraints()
+        window.addEventListener('resize', updateConstraints)
+        return () => window.removeEventListener('resize', updateConstraints)
+    }, [cards])
 
     return (
         <section className={cn(
-            "py-10 md:py-16 relative overflow-hidden",
+            "py-10 md:py-20 relative overflow-hidden select-none",
             variant === 'dark'
-                ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
-                : "bg-white"
+                ? "bg-slate-950"
+                : "bg-lavender"
         )}>
-            {/* Subtle background pattern for light mode */}
-            {variant === 'light' && (
-                <div className="absolute inset-0 pointer-events-none opacity-30">
-                    <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-200 rounded-full blur-3xl" />
-                    <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-200 rounded-full blur-3xl" />
-                </div>
-            )}
+            {/* Background elements */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className={cn(
+                    "absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 bg-gradient-to-br",
+                    variant === 'dark' ? "from-lavender/30 to-lavender/30" : "from-purple-200 to-blue-100"
+                )} />
+            </div>
 
             <div className="relative z-10">
                 {/* Section Header */}
                 {(title || subtitle) && (
-                    <div className="max-w-7xl mx-auto px-4 md:px-6 mb-6 md:mb-10">
+                    <div className="max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-12">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                            className="text-center"
+                            transition={{ duration: 0.6 }}
+                            className={isRTL ? "text-right" : "text-left"}
                         >
                             {title && (
                                 <h2 className={cn(
-                                    "text-xl md:text-2xl lg:text-3xl font-bold mb-2",
+                                    "text-2xl md:text-4xl font-black mb-3 tracking-tight",
                                     variant === 'dark' ? "text-white" : "text-slate-900"
                                 )}>
                                     {title}
@@ -71,8 +179,8 @@ export function HorizontalScrollCards({
                             )}
                             {subtitle && (
                                 <p className={cn(
-                                    "text-sm md:text-base max-w-2xl mx-auto",
-                                    variant === 'dark' ? "text-slate-300" : "text-slate-600"
+                                    "text-base md:text-lg max-w-2xl",
+                                    variant === 'dark' ? "text-slate-400" : "text-slate-500"
                                 )}>
                                     {subtitle}
                                 </p>
@@ -81,137 +189,64 @@ export function HorizontalScrollCards({
                     </div>
                 )}
 
-                {/* Horizontal Scrolling Cards */}
-                <div className="relative">
-                    {/* Gradient fade edges */}
-                    <div className={cn(
-                        "absolute left-0 top-0 bottom-0 w-8 md:w-16 z-10 pointer-events-none",
-                        variant === 'dark'
-                            ? "bg-gradient-to-r from-slate-900 to-transparent"
-                            : "bg-gradient-to-r from-white to-transparent"
-                    )} />
-                    <div className={cn(
-                        "absolute right-0 top-0 bottom-0 w-8 md:w-16 z-10 pointer-events-none",
-                        variant === 'dark'
-                            ? "bg-gradient-to-l from-slate-900 to-transparent"
-                            : "bg-gradient-to-l from-white to-transparent"
-                    )} />
-
-                    {/* Scrollable container - Fixed scrolling */}
-                    <div
-                        className="flex gap-4 md:gap-5 overflow-x-auto px-4 md:px-8 lg:px-16 py-3 cursor-grab active:cursor-grabbing"
-                        style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
-                            WebkitOverflowScrolling: 'touch',
-                            overflowX: 'scroll',
+                {/* Desktop Draggable Container */}
+                <div className="hidden md:block relative">
+                    <motion.div
+                        ref={scrollRef}
+                        drag="x"
+                        dragConstraints={{
+                            right: isRTL ? -constraints : 0,
+                            left: isRTL ? 0 : constraints
                         }}
-                        dir={isRTL ? 'rtl' : 'ltr'}
+                        onDragStart={() => setIsDragging(true)}
+                        onDragEnd={() => setIsDragging(false)}
+                        className={cn(
+                            "flex gap-6 cursor-grab active:cursor-grabbing py-4",
+                            isRTL ? "pr-4 md:pr-8 lg:pr-16" : "pl-4 md:pl-8 lg:pl-16"
+                        )}
+                        style={{ x: 0 }}
                     >
                         {cards.map((card, index) => (
                             <motion.div
                                 key={card.name}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: index * 0.05 }}
-                                className="flex-shrink-0 w-[240px] md:w-[260px] group"
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                className="flex-shrink-0 w-[420px]"
                             >
-                                {/* Card with Glowing Effect */}
-                                <div className="relative h-full rounded-xl transition-all duration-300 hover:-translate-y-1">
-                                    <GlowingEffect
-                                        spread={35}
-                                        glow={true}
-                                        disabled={false}
-                                        proximity={60}
-                                        inactiveZone={0.01}
-                                        borderWidth={2}
-                                    />
-
-                                    {/* Card Content - Compact */}
-                                    <div className={cn(
-                                        "relative h-full flex flex-col p-4 rounded-[0.9rem] border overflow-hidden z-10 transition-all duration-300",
-                                        variant === 'dark'
-                                            ? "bg-slate-900/80 backdrop-blur-xl border-white/10 hover:border-white/20"
-                                            : "bg-white border-slate-200 hover:border-purple-300 shadow-md hover:shadow-lg"
-                                    )}>
-                                        {/* Icon & Name */}
-                                        <div className="flex items-center gap-3 mb-3">
-                                            <div className={cn(
-                                                "w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-lg transition-all duration-300",
-                                                "group-hover:scale-105",
-                                                variant === 'dark' ? "bg-white/5" : "bg-purple-50"
-                                            )}>
-                                                <div className="flex items-center justify-center w-7 h-7">
-                                                    {card.icon}
-                                                </div>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <h3 className={cn(
-                                                    "text-sm font-bold leading-tight",
-                                                    variant === 'dark' ? "text-white" : "text-slate-900"
-                                                )}>
-                                                    {card.name}
-                                                </h3>
-                                                {card.tagline && (
-                                                    <p className={cn(
-                                                        "text-[10px] font-medium mt-0.5",
-                                                        variant === 'dark' ? "text-purple-400" : "text-purple-600"
-                                                    )}>
-                                                        {card.tagline}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        {/* Description */}
-                                        <p className={cn(
-                                            "text-xs mb-3 leading-relaxed",
-                                            variant === 'dark' ? "text-slate-300" : "text-slate-600"
-                                        )}>
-                                            {card.description}
-                                        </p>
-
-                                        {/* Features */}
-                                        <div className="flex-grow">
-                                            <h4 className={cn(
-                                                "text-[9px] font-bold uppercase tracking-widest mb-2",
-                                                variant === 'dark' ? "text-slate-500" : "text-slate-400"
-                                            )}>
-                                                {whatsIncludedLabel}
-                                            </h4>
-                                            <ul className="space-y-1.5">
-                                                {(Array.isArray(card.features) ? card.features : []).map((feature, idx) => (
-                                                    <li key={idx} className="flex items-start gap-1.5">
-                                                        <span className={cn(
-                                                            "w-1 h-1 rounded-full mt-1.5 flex-shrink-0",
-                                                            variant === 'dark' ? "bg-purple-400" : "bg-purple-500"
-                                                        )} />
-                                                        <span className={cn(
-                                                            "text-xs leading-snug",
-                                                            variant === 'dark' ? "text-slate-300" : "text-slate-600"
-                                                        )}>
-                                                            {feature}
-                                                        </span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={whatsIncludedLabel} />
                             </motion.div>
                         ))}
+                        <div className="flex-shrink-0 w-32 h-1" />
+                    </motion.div>
+                </div>
+
+                {/* Mobile Vertical Stack */}
+                <div className="md:hidden px-4 space-y-6">
+                    {cards.map((card, index) => (
+                        <motion.div
+                            key={card.name}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                        >
+                            <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={whatsIncludedLabel} />
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Visual indicator for dragging */}
+                <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            {dir === 'rtl' ? 'اسحب للتنقل' : 'Drag to explore'}
+                        </span>
+                        <div className="w-12 h-[1px] bg-slate-200" />
                     </div>
                 </div>
             </div>
-
-            {/* Custom styles */}
-            <style jsx global>{`
-                @keyframes bounceX {
-                    0%, 100% { transform: translateX(0); }
-                    50% { transform: translateX(4px); }
-                }
-            `}</style>
-        </section>
+        </section >
     )
 }

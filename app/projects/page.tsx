@@ -4,13 +4,13 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { 
-  Sparkles, 
-  Globe, 
-  Database, 
-  Zap, 
-  Beaker, 
-  ArrowRight, 
+import {
+  Sparkles,
+  Globe,
+  Database,
+  Zap,
+  Beaker,
+  ArrowRight,
   TrendingUp,
   Award,
   Target,
@@ -26,7 +26,6 @@ import {
 } from 'lucide-react'
 import { Particles } from '@/components/ui/particles'
 import { SparklesCore } from '@/components/ui/sparkles'
-import { SplineScene } from '@/components/ui/splite'
 import TechCursor from '@/components/ui/tech-cursor'
 import VaporizeTextCycle, { Tag } from '@/components/ui/vapour-text-effect'
 
@@ -82,14 +81,14 @@ const MagneticButton = ({ children, className, onClick }: { children: React.Reac
 }
 
 // Project Details Modal
-const ProjectModal = ({ 
-  project, 
-  isOpen, 
-  onClose, 
-  getCategoryIcon, 
-  getCategoryColor, 
-  t 
-}: { 
+const ProjectModal = ({
+  project,
+  isOpen,
+  onClose,
+  getCategoryIcon,
+  getCategoryColor,
+  t
+}: {
   project: Project | null
   isOpen: boolean
   onClose: () => void
@@ -122,14 +121,14 @@ const ProjectModal = ({
             onClick={onClose}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           />
-          
+
           {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-10 lg:inset-20 bg-white rounded-3xl shadow-2xl z-50 overflow-hidden flex flex-col"
+            className="fixed inset-4 md:inset-10 lg:inset-20 bg-lavender rounded-3xl shadow-2xl z-50 overflow-hidden flex flex-col"
           >
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 md:p-10 relative">
@@ -138,7 +137,7 @@ const ProjectModal = ({
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="absolute top-0 right-0 w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 transition-colors z-10"
+                className="absolute top-0 right-0 w-10 h-10 bg-lavender rounded-full flex items-center justify-center text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 transition-colors z-10"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -148,13 +147,13 @@ const ProjectModal = ({
                 animate={{ y: 0, opacity: 1 }}
                 className="flex flex-wrap items-center gap-4 mb-4"
               >
-                <div className="flex items-center gap-2 bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
+                <div className="flex items-center gap-2 bg-lavender px-4 py-2 rounded-full border border-primary-100">
                   <span className="text-primary-600">{getCategoryIcon(project.category)}</span>
                   <span className="text-sm font-semibold text-primary-700">
                     {project.type}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
+                <div className="flex items-center gap-2 bg-lavender px-4 py-2 rounded-full border border-emerald-100">
                   <TrendingUp className="w-4 h-4 text-emerald-600" />
                   <span className="text-sm text-neutral-500">{project.metrics.label}:</span>
                   <span className="text-sm font-bold text-emerald-600">{project.metrics.value}</span>
@@ -176,7 +175,7 @@ const ProjectModal = ({
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100"
+                  className="bg-gradient-to-br from-orange-50 to-orange-100/20 rounded-2xl p-6 border border-orange-100"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
@@ -192,7 +191,7 @@ const ProjectModal = ({
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100"
+                  className="bg-gradient-to-br from-emerald-50 to-emerald-100/20 rounded-2xl p-6 border border-emerald-100"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
@@ -219,7 +218,7 @@ const ProjectModal = ({
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.5 + i * 0.05 }}
-                      className="px-4 py-2 bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 rounded-full font-medium text-sm border border-primary-100 hover:border-primary-200 transition-colors cursor-default"
+                      className="px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100/20 text-primary-700 rounded-full font-medium text-sm border border-primary-100 hover:border-primary-200 transition-colors cursor-default"
                     >
                       {feature}
                     </motion.span>
@@ -239,7 +238,7 @@ const ProjectModal = ({
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex-1 flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-primary-500/25 transition-all"
+                    className="group flex-1 flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-primary-500/25 transition-all"
                   >
                     <ExternalLink className="w-5 h-5" />
                     <span>{t.projects.modal.visitProject}</span>
@@ -247,7 +246,7 @@ const ProjectModal = ({
                   </a>
                   <button
                     onClick={onClose}
-                    className="px-8 py-4 bg-neutral-100 text-neutral-700 font-semibold rounded-2xl hover:bg-neutral-200 transition-colors"
+                    className="px-8 py-4 bg-lavender text-neutral-700 font-semibold rounded-2xl hover:bg-neutral-200 transition-colors"
                   >
                     {t.projects.modal.close}
                   </button>
@@ -265,7 +264,7 @@ const ProjectModal = ({
 const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor, t, isActive, onClick }: any) => {
   const cardRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(cardRef, { once: true, margin: "-100px" })
-  
+
   const [rotateX, setRotateX] = useState(0)
   const [rotateY, setRotateY] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
@@ -277,7 +276,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
     const centerY = rect.top + rect.height / 2
     const mouseX = e.clientX - centerX
     const mouseY = e.clientY - centerY
-    
+
     setRotateX(-mouseY / 20)
     setRotateY(mouseX / 20)
   }
@@ -292,9 +291,9 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 100, rotateX: -15 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0, 
+      animate={isInView ? {
+        opacity: 1,
+        y: 0,
         rotateX: 0,
         transition: { duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }
       } : {}}
@@ -316,12 +315,12 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
           scale: isHovered ? 1.02 : 1,
         }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="relative bg-white/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/50 shadow-xl hover:shadow-2xl transition-shadow duration-500"
+        className="relative bg-lavender/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/50 shadow-xl hover:shadow-2xl transition-shadow duration-500"
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Animated border gradient */}
-        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-white/50 via-transparent to-white/50 pointer-events-none" />
-        
+        <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-lavender/50 via-transparent to-lavender/50 pointer-events-none" />
+
         {/* Glow effect on hover */}
         <motion.div
           animate={{ opacity: isHovered ? 0.5 : 0 }}
@@ -332,16 +331,16 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
         <div className={`relative h-56 bg-gradient-to-br ${getCategoryColor(project.category)} overflow-hidden`}>
           {/* Project Image (if available) */}
           {project.image && (
-            <img 
-              src={project.image} 
+            <img
+              src={project.image}
               alt={project.title}
               className="absolute inset-0 w-full h-full object-cover object-top"
             />
           )}
-          
+
           {/* Gradient overlay */}
           <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent`} />
-          
+
           {/* Animated mesh gradient */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_50%)]" />
 
@@ -355,8 +354,8 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
             className="absolute bottom-4 right-4"
             style={{ transform: 'translateZ(50px)' }}
           >
-            <div className="w-12 h-12 bg-white/90 backdrop-blur-xl rounded-xl shadow-xl flex items-center justify-center border border-white/50">
-              <motion.div 
+            <div className="w-12 h-12 bg-lavender/90 backdrop-blur-xl rounded-xl shadow-xl flex items-center justify-center border border-white/50">
+              <motion.div
                 animate={{ scale: isHovered ? 1.1 : 1 }}
                 className="text-neutral-700"
               >
@@ -371,8 +370,8 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
             className="absolute top-5 left-5"
             style={{ transform: 'translateZ(30px)' }}
           >
-            <div className="flex items-center gap-2 bg-white/90 backdrop-blur-xl px-4 py-2 rounded-full shadow-xl">
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 animate-pulse" />
+            <div className="flex items-center gap-2 bg-lavender/90 backdrop-blur-xl px-4 py-2 rounded-full shadow-xl">
+              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 animate-pulse" />
               <span className="text-xs font-bold text-neutral-800 uppercase tracking-wide">
                 {project.type}
               </span>
@@ -386,7 +385,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
             className="absolute top-5 right-5"
             style={{ transform: 'translateZ(40px)' }}
           >
-            <div className="bg-white/90 backdrop-blur-xl px-4 py-2 rounded-full shadow-xl">
+            <div className="bg-lavender/90 backdrop-blur-xl px-4 py-2 rounded-full shadow-xl">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-emerald-600" />
                 <span className="text-lg font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
@@ -415,13 +414,13 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
             {project.features.slice(0, 3).map((feature: string) => (
               <span
                 key={feature}
-                className="px-3 py-1 text-xs font-semibold bg-primary-50 text-primary-600 rounded-full"
+                className="px-3 py-1 text-xs font-semibold bg-lavender text-primary-600 rounded-full"
               >
                 {feature}
               </span>
             ))}
             {project.features.length > 3 && (
-              <span className="px-3 py-1 text-xs font-semibold bg-neutral-100 text-neutral-600 rounded-full">
+              <span className="px-3 py-1 text-xs font-semibold bg-lavender text-neutral-600 rounded-full">
                 +{project.features.length - 3}
               </span>
             )}
@@ -436,7 +435,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
               <span>{t.projects.card.viewDetails}</span>
               <ArrowRight className="w-4 h-4" />
             </motion.div>
-            
+
             {/* Live link for real projects */}
             {project.link && (
               <motion.a
@@ -464,7 +463,7 @@ const AnimatedCounter = ({ value, suffix = '', prefix = '' }: { value: string, s
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
   const numValue = parseInt(value.replace(/[^0-9]/g, ''))
-  
+
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -472,7 +471,7 @@ const AnimatedCounter = ({ value, suffix = '', prefix = '' }: { value: string, s
       let start = 0
       const duration = 2000
       const increment = numValue / (duration / 16)
-      
+
       const timer = setInterval(() => {
         start += increment
         if (start >= numValue) {
@@ -501,11 +500,11 @@ export default function ProjectsPage() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  
+
   // Smooth scroll progress for Apple-like parallax
   const { scrollYProgress } = useScroll()
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
-  
+
   // Parallax transforms for background elements
   const backgroundY = useTransform(smoothProgress, [0, 1], [0, -300])
   const orbScale = useTransform(smoothProgress, [0, 0.3], [1, 1.5])
@@ -522,9 +521,9 @@ export default function ProjectsPage() {
   }
 
   const projects = t.projects.projectCards as Project[]
-  
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
+
+  const filteredProjects = activeFilter === 'all'
+    ? projects
     : projects.filter(p => p.category === activeFilter)
 
   const featuredProjects = projects.filter(p => p.featured)
@@ -541,11 +540,11 @@ export default function ProjectsPage() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'digitalPresence': return 'from-blue-500 via-cyan-500 to-teal-500'
-      case 'businessSystems': return 'from-violet-500 via-purple-500 to-fuchsia-500'
-      case 'webApps': return 'from-orange-500 via-amber-500 to-yellow-500'
-      case 'labs': return 'from-pink-500 via-rose-500 to-red-500'
-      default: return 'from-primary-500 to-secondary-500'
+      case 'digitalPresence': return 'from-blue-500 via-cyan-500 to-blue-600'
+      case 'businessSystems': return 'from-indigo-500 via-purple-500 to-indigo-600'
+      case 'webApps': return 'from-violet-500 via-pink-500 to-violet-600'
+      case 'labs': return 'from-emerald-500 via-teal-500 to-emerald-600'
+      default: return 'from-blue-500 to-indigo-600'
     }
   }
 
@@ -555,25 +554,25 @@ export default function ProjectsPage() {
       <TechCursor />
 
       {/* HERO SECTION */}
-      <section 
+      <section
         className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950"
       >
         {/* Animated background grid with parallax */}
-        <motion.div 
+        <motion.div
           style={{ y: backgroundY }}
-          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" 
+          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"
         />
-        
+
         {/* Gradient orbs with scroll animations */}
-        <motion.div 
+        <motion.div
           style={{ scale: orbScale, opacity: orbOpacity }}
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-[150px]" 
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-lavender/20 rounded-full blur-[150px]"
         />
-        <motion.div 
+        <motion.div
           style={{ scale: orbScale, opacity: orbOpacity }}
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary-500/20 rounded-full blur-[150px]" 
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-lavender/20 rounded-full blur-[150px]"
         />
-        
+
         {/* Particles */}
         <Particles
           className="absolute inset-0 opacity-50"
@@ -599,7 +598,7 @@ export default function ProjectsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full mb-8"
+                className="inline-flex items-center gap-3 bg-lavender/5 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full mb-8"
               >
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-sm font-semibold text-white/80">{t.projects.hero.badge}</span>
@@ -641,7 +640,7 @@ export default function ProjectsPage() {
               >
                 <MagneticButton
                   onClick={() => router.push(`/${locale}/contact`)}
-                  className="group relative px-8 py-4 bg-white text-neutral-900 font-bold rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/25 transition-shadow"
+                  className="group relative px-8 py-4 bg-lavender text-neutral-900 font-bold rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/25 transition-shadow"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {t.projects.cta.primaryButton}
@@ -651,7 +650,7 @@ export default function ProjectsPage() {
 
                 <MagneticButton
                   onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="group px-8 py-4 bg-white/5 backdrop-blur-xl text-white font-semibold rounded-2xl border border-white/10 hover:bg-white/10 transition-all"
+                  className="group px-8 py-4 bg-lavender/5 backdrop-blur-xl text-white font-semibold rounded-2xl border border-white/10 hover:bg-lavender/10 transition-all"
                 >
                   <span className="flex items-center gap-2">
                     <Play className="w-5 h-5" />
@@ -666,10 +665,10 @@ export default function ProjectsPage() {
       </section>
 
       {/* FEATURED PROJECTS - Apple-like reveal */}
-      <section id="projects" className="pt-16 pb-32 relative overflow-hidden bg-gradient-to-b from-neutral-100 via-neutral-50 to-white">
+      <section id="projects" className="pt-16 pb-32 relative overflow-hidden bg-gradient-to-b from-lavender via-lavender to-lavender">
         {/* Animated grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_40%,transparent_100%)]" />
-        
+
         {/* Interactive Particles */}
         <Particles
           className="absolute inset-0"
@@ -680,21 +679,21 @@ export default function ProjectsPage() {
           size={0.5}
           staticity={50}
         />
-        
+
         {/* Gradient orbs with parallax */}
-        <motion.div 
+        <motion.div
           style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -100]) }}
-          className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-neutral-200/50 rounded-full blur-[120px] pointer-events-none" 
+          className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-neutral-200/50 rounded-full blur-[120px] pointer-events-none"
         />
-        <motion.div 
+        <motion.div
           style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -80]) }}
-          className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-neutral-300/40 rounded-full blur-[100px] pointer-events-none" 
+          className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-neutral-300/40 rounded-full blur-[100px] pointer-events-none"
         />
-        <motion.div 
+        <motion.div
           style={{ y: useTransform(smoothProgress, [0.2, 0.6], [0, -60]) }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200/30 to-transparent rounded-full blur-[80px] pointer-events-none" 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200/30 to-transparent rounded-full blur-[80px] pointer-events-none"
         />
-        
+
         {/* Subtle noise texture */}
         <div className="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
 
@@ -757,11 +756,11 @@ export default function ProjectsPage() {
       </section>
 
       {/* ALL PROJECTS WITH FILTERS - Smooth Apple-like transitions */}
-      <section className="py-32 bg-neutral-50 relative overflow-hidden">
+      <section className="py-32 bg-lavender relative overflow-hidden">
         {/* Subtle animated gradient */}
-        <motion.div 
+        <motion.div
           style={{ y: useTransform(smoothProgress, [0.3, 0.6], [50, -50]) }}
-          className="absolute inset-0 bg-gradient-to-b from-white via-neutral-50 to-neutral-100"
+          className="absolute inset-0 bg-gradient-to-b from-lavender via-lavender to-lavender"
         />
 
         <div className="container max-w-7xl mx-auto px-4 relative">
@@ -785,9 +784,9 @@ export default function ProjectsPage() {
                 whileTap={{ scale: 0.95 }}
                 className={`
                   relative px-6 py-3 rounded-full font-semibold transition-all duration-500
-                  ${activeFilter === filter 
-                    ? 'bg-neutral-900 text-white shadow-xl shadow-neutral-900/20' 
-                    : 'bg-white text-neutral-600 hover:bg-neutral-100 shadow-md hover:shadow-lg'
+                  ${activeFilter === filter
+                    ? 'bg-neutral-900 text-white shadow-xl shadow-neutral-900/20'
+                    : 'bg-lavender text-neutral-600 hover:bg-lavender shadow-md hover:shadow-lg'
                   }
                 `}
               >
@@ -800,8 +799,8 @@ export default function ProjectsPage() {
           </motion.div>
 
           {/* Projects Grid - Smooth layout animations */}
-          <motion.div 
-            layout 
+          <motion.div
+            layout
             className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
             transition={{ layout: { duration: 0.6, ease: [0.25, 0.1, 0, 1] } }}
           >
@@ -813,21 +812,21 @@ export default function ProjectsPage() {
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                  transition={{ 
-                    duration: 0.5, 
+                  transition={{
+                    duration: 0.5,
                     delay: index * 0.03,
                     ease: [0.25, 0.1, 0, 1],
                     layout: { duration: 0.5, ease: [0.25, 0.1, 0, 1] }
                   }}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   onClick={() => openProjectModal(project)}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border border-neutral-100 cursor-pointer"
+                  className="group bg-lavender rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border border-neutral-100 cursor-pointer"
                 >
                   <div className={`h-32 bg-gradient-to-br ${getCategoryColor(project.category)} relative overflow-hidden`}>
                     {/* Project Image */}
                     {project.image && (
-                      <img 
-                        src={project.image} 
+                      <img
+                        src={project.image}
                         alt={project.title}
                         className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       />
@@ -836,7 +835,7 @@ export default function ProjectsPage() {
                     <div className="absolute bottom-2 right-2">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className="w-8 h-8 bg-white/90 rounded-lg flex items-center justify-center shadow-lg"
+                        className="w-8 h-8 bg-lavender/90 rounded-lg flex items-center justify-center shadow-lg"
                       >
                         {getCategoryIcon(project.category)}
                       </motion.div>
@@ -865,7 +864,7 @@ export default function ProjectsPage() {
       {/* LABS SECTION - Cinematic reveal */}
       <section className="py-32 bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 relative overflow-hidden">
         {/* Animated background with parallax */}
-        <motion.div 
+        <motion.div
           style={{ y: useTransform(smoothProgress, [0.5, 0.8], [100, -100]) }}
           className="absolute inset-0"
         >
@@ -882,9 +881,9 @@ export default function ProjectsPage() {
         </motion.div>
 
         {/* Gradient orbs */}
-        <motion.div 
+        <motion.div
           style={{ scale: useTransform(smoothProgress, [0.5, 0.7], [0.8, 1.2]) }}
-          className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[150px]"
+          className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-lavender/20 rounded-full blur-[150px]"
         />
 
         <div className="container max-w-4xl mx-auto px-4 text-center relative z-10">
@@ -894,7 +893,7 @@ export default function ProjectsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0, 1] }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-full mb-8"
+              className="inline-flex items-center gap-2 bg-lavender/10 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-full mb-8"
             >
               <Beaker className="w-5 h-5 text-purple-300" />
               <span className="font-semibold text-white">{t.projects.labsSection.badge}</span>
@@ -932,7 +931,7 @@ export default function ProjectsPage() {
           >
             <MagneticButton
               onClick={() => router.push(`/${locale}/labs`)}
-              className="group px-8 py-4 bg-white text-purple-900 font-bold rounded-2xl shadow-2xl hover:shadow-white/25 transition-all"
+              className="group px-8 py-4 bg-lavender text-purple-900 font-bold rounded-2xl shadow-2xl hover:shadow-white/25 transition-all"
             >
               <span className="flex items-center gap-2">
                 {t.projects.labsSection.cta}
@@ -943,103 +942,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* CTA SECTION - Grand finale with Apple-like reveal */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        {/* Subtle animated gradient */}
-        <motion.div 
-          style={{ 
-            scale: useTransform(smoothProgress, [0.7, 1], [1, 1.5]),
-            opacity: useTransform(smoothProgress, [0.7, 0.9], [0.08, 0.15])
-          }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,1),transparent_70%)]" 
-        />
-
-        <div className="container max-w-4xl mx-auto px-4 text-center relative z-10">
-          <div className="overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-3xl shadow-2xl mb-8"
-            >
-              <Rocket className="w-10 h-10 text-white" />
-            </motion.div>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="text-4xl md:text-6xl font-bold text-neutral-900 mb-6"
-            >
-              {t.projects.cta.title}
-            </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="text-xl text-neutral-600 mb-10 max-w-2xl mx-auto"
-            >
-              {t.projects.cta.description}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <MagneticButton
-                onClick={() => router.push(`/${locale}/contact`)}
-                className="group px-10 py-5 bg-neutral-900 text-white font-bold rounded-2xl shadow-2xl hover:shadow-neutral-900/25 transition-all"
-              >
-                <span className="flex items-center gap-2">
-                  {t.projects.cta.primaryButton}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </MagneticButton>
-
-              <MagneticButton
-                onClick={() => router.push(`/${locale}/services`)}
-                className="px-10 py-5 bg-neutral-100 text-neutral-900 font-semibold rounded-2xl hover:bg-neutral-200 transition-all"
-              >
-                {t.projects.cta.secondaryButton}
-              </MagneticButton>
-            </motion.div>
-
-            {/* Trust badges - Staggered reveal */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="mt-12 flex flex-wrap justify-center gap-6 text-neutral-500 text-sm"
-            >
-              {[
-                t.projects.trustBadges.freeConsultation,
-                t.projects.trustBadges.noHiddenFees,
-                t.projects.trustBadges.customProposals
-              ].map((item, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 + i * 0.1, ease: [0.25, 0.1, 0, 1] }}
-                  viewport={{ once: true }}
-                  className="flex items-center gap-2"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-green-500" />
-                  <span>{item}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* Project Details Modal */}
       <ProjectModal

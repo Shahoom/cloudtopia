@@ -100,12 +100,12 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
           inactiveZone={0.01}
           borderWidth={3}
         />
-        <div className="relative flex h-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-[0.75px] border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 sm:p-5 md:p-6 shadow-sm">
+        <div className="relative flex h-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-[0.75px] border-zinc-100 dark:border-zinc-800 bg-lavender dark:bg-zinc-900 p-4 sm:p-5 md:p-6 shadow-sm">
           <div className="relative flex flex-1 flex-col gap-2">
-            <h4 className="text-base sm:text-lg font-bold leading-tight text-zinc-900 dark:text-zinc-50">
+            <h4 className="text-lg sm:text-lg font-bold leading-tight text-zinc-900 dark:text-zinc-50">
               {title}
             </h4>
-            <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed">
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-sm leading-relaxed">
               {description}
             </p>
           </div>
@@ -117,10 +117,10 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 
 export function ServiceExplanationSection({ isRTL = false, locale = "en" }: ServiceExplanationProps) {
   const t = isRTL ? content.ar : content.en
-  
+
   return (
-    <section 
-      className="w-full bg-slate-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 flex flex-col"
+    <section
+      className="w-full bg-lavender text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 flex flex-col"
       dir={isRTL ? "rtl" : "ltr"}
       aria-labelledby="service-title"
     >
@@ -133,10 +133,10 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             delay={0.2}
             duration={0.8}
           >
-            <h2 id="service-title" className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight">
+            <h2 id="service-title" className="text-3xl sm:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight">
               {t.heroTitle}
             </h2>
-            <span className="inline-block bg-primary-600 text-white px-3 sm:px-4 pb-1 sm:pb-2 pt-1 rounded-md mt-2 sm:mt-4 text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black">
+            <span className="inline-block bg-primary-600 text-white px-3 sm:px-4 pb-1 sm:pb-2 pt-1 rounded-md mt-2 sm:mt-4 text-3xl sm:text-3xl md:text-5xl lg:text-7xl font-black">
               {t.heroHighlight}
             </span>
           </TextBlockAnimation>
@@ -152,16 +152,16 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
       </div>
 
       {/* THE PITCH */}
-      <div className="min-h-[auto] sm:min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center items-center px-4 sm:px-6 py-12 sm:py-16 md:py-24 bg-zinc-100/80 dark:bg-zinc-900/60">
+      <div className="min-h-[auto] sm:min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center items-center px-4 sm:px-6 py-12 sm:py-16 md:py-24 bg-lavender/80 dark:bg-zinc-900/60">
         <div className="max-w-3xl w-full space-y-8 sm:space-y-12 md:space-y-16">
           <TextBlockAnimation blockColor="#10b981" duration={0.7}>
-            <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
+            <h3 className="text-2xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
               {t.pitchTitle}
             </h3>
           </TextBlockAnimation>
 
           <TextBlockAnimation blockColor="#f59e0b" stagger={0.03}>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-zinc-700 dark:text-zinc-300">
+            <p className="text-lg sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-zinc-700 dark:text-zinc-300">
               {t.pitchDescription}
             </p>
           </TextBlockAnimation>
@@ -180,7 +180,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
       </div>
 
       {/* FEATURES GRID with Glowing Cards */}
-      <div className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-white dark:bg-zinc-950">
+      <div className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-lavender dark:bg-zinc-950">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <TextBlockAnimation blockColor="#2563eb" duration={0.6}>
@@ -189,7 +189,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
               </h3>
             </TextBlockAnimation>
           </div>
-          
+
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
             {t.features.map((feature, index) => (
               <GlowingCard
@@ -203,7 +203,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
       </div>
 
       {/* FOOTER: Call to Action */}
-      <footer className="h-[30vh] sm:h-[35vh] md:h-[40vh] flex items-center justify-center px-4 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950">
+      <footer className="h-[30vh] sm:h-[35vh] md:h-[40vh] flex items-center justify-center px-4 border-t border-slate-200 dark:border-zinc-800 bg-lavender dark:bg-zinc-950">
         <TextBlockAnimation blockColor="#ef4444" duration={0.8}>
           <a
             href={`/${locale}/contact`}
@@ -227,11 +227,12 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             "provider": {
               "@type": "Organization",
               "name": "CloudTopia",
-              "url": "https://cloudtopia.com",
-              "logo": "https://cloudtopia.com/logo.png",
+              "url": "https://cloudtopia.net",
+              "logo": "https://cloudtopia.net/images/CloudTopia.svg",
               "sameAs": [
-                "https://twitter.com/cloudtopia",
-                "https://linkedin.com/company/cloudtopia"
+                "https://x.com/thecloudtopia",
+                "https://instagram.com/thecloudtopia",
+                "https://github.com/Shahoom"
               ]
             },
             "areaServed": [

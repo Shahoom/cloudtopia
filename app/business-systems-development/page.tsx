@@ -96,7 +96,7 @@ export default function BusinessSystemsDevelopmentPage() {
                 ? 'نظام متكامل لإدارة علاقات العملاء، تتبع المبيعات، وأتمتة التسويق مع تقارير وتحليلات متقدمة.'
                 : 'Complete CRM solution for customer relationship management, sales tracking, and marketing automation with advanced analytics.',
             gradient: "bg-gradient-to-br from-purple-500 to-purple-700",
-            glowColor: "bg-purple-500/50",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['إدارة جهات الاتصال والعملاء', 'تتبع مسار المبيعات', 'أتمتة التسويق', 'تقارير وتحليلات متقدمة']
                 : ['Contact & Lead Management', 'Sales Pipeline Tracking', 'Marketing Automation', 'Advanced Analytics & Reports'],
@@ -108,8 +108,8 @@ export default function BusinessSystemsDevelopmentPage() {
             description: locale === 'ar'
                 ? 'نظام شامل لإدارة المخزون والمستودعات مع تتبع فوري للمنتجات وتنبيهات إعادة الطلب.'
                 : 'Comprehensive inventory and warehouse management system with real-time product tracking and reorder alerts.',
-            gradient: "bg-gradient-to-br from-secondary-500 to-purple-600",
-            glowColor: "bg-secondary-500/50",
+            gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['تتبع المخزون في الوقت الفعلي', 'إدارة المستودعات المتعددة', 'تنبيهات إعادة الطلب', 'تقارير حركة المخزون']
                 : ['Real-time Stock Tracking', 'Multi-warehouse Management', 'Auto Reorder Alerts', 'Inventory Movement Reports'],
@@ -121,8 +121,8 @@ export default function BusinessSystemsDevelopmentPage() {
             description: locale === 'ar'
                 ? 'نظام نقاط بيع سحابي متكامل مع إدارة المخزون والعملاء والتقارير المالية.'
                 : 'Cloud-based POS system integrated with inventory, customer management, and financial reporting.',
-            gradient: "bg-gradient-to-br from-blue-500 to-indigo-600",
-            glowColor: "bg-blue-500/50",
+            gradient: "bg-gradient-to-br from-indigo-500 to-indigo-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['معالجة سريعة للمعاملات', 'تكامل مع المخزون', 'إدارة الموظفين والنوبات', 'تقارير مالية شاملة']
                 : ['Fast Transaction Processing', 'Inventory Integration', 'Staff & Shift Management', 'Financial Reports'],
@@ -134,8 +134,8 @@ export default function BusinessSystemsDevelopmentPage() {
             description: locale === 'ar'
                 ? 'نظام شامل لإدارة الموارد البشرية من التوظيف إلى الرواتب والأداء.'
                 : 'Complete HR system from recruitment to payroll and performance management.',
-            gradient: "bg-gradient-to-br from-teal-500 to-green-600",
-            glowColor: "bg-teal-500/50",
+            gradient: "bg-gradient-to-br from-green-500 to-green-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['إدارة الموظفين والتوظيف', 'نظام الرواتب والمكافآت', 'تتبع الحضور والإجازات', 'تقييم الأداء']
                 : ['Employee & Recruitment', 'Payroll & Benefits', 'Attendance & Leave Tracking', 'Performance Reviews'],
@@ -147,8 +147,8 @@ export default function BusinessSystemsDevelopmentPage() {
             description: locale === 'ar'
                 ? 'نظام حجوزات متكامل للخدمات والمواعيد مع تكامل التقويم والتذكيرات.'
                 : 'Integrated booking system for services and appointments with calendar integration and reminders.',
-            gradient: "bg-gradient-to-br from-orange-500 to-pink-600",
-            glowColor: "bg-orange-500/50",
+            gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['حجز المواعيد عبر الإنترنت', 'تكامل التقويم', 'تذكيرات تلقائية', 'إدارة الموارد والغرف']
                 : ['Online Appointment Booking', 'Calendar Integration', 'Automated Reminders', 'Resource & Room Management'],
@@ -160,8 +160,8 @@ export default function BusinessSystemsDevelopmentPage() {
             description: locale === 'ar'
                 ? 'لوحات تحكم تحليلية متقدمة لمراقبة أداء الأعمال واتخاذ قرارات مبنية على البيانات.'
                 : 'Advanced analytics dashboards to monitor business performance and make data-driven decisions.',
-            gradient: "bg-gradient-to-br from-cyan-500 to-blue-600",
-            glowColor: "bg-cyan-500/50",
+            gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['تحليلات في الوقت الفعلي', 'لوحات تحكم مخصصة', 'تقارير تلقائية', 'تكامل مصادر البيانات']
                 : ['Real-time Analytics', 'Custom Dashboards', 'Automated Reports', 'Data Source Integration'],
@@ -171,7 +171,7 @@ export default function BusinessSystemsDevelopmentPage() {
 
 
     return (
-        <div className="min-h-screen bg-white" dir={dir}>
+        <div className="min-h-screen bg-lavender" dir={dir}>
             {/* Section 1: Hero Parallax */}
             <HeroParallax
                 products={products}
@@ -347,7 +347,7 @@ export default function BusinessSystemsDevelopmentPage() {
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
                             href="/contact"
-                            className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                            className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {locale === 'ar' ? 'ابدأ مشروعك اليوم' : 'Start Your Project Today'}
                             <svg className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 rtl:rotate-180 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -356,7 +356,7 @@ export default function BusinessSystemsDevelopmentPage() {
                         </Link>
                         <Link
                             href="/services"
-                            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-white/10 transition-all duration-300"
+                            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"
                         >
                             {locale === 'ar' ? 'استكشف خدماتنا' : 'Explore All Services'}
                         </Link>

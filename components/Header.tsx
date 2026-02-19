@@ -83,7 +83,7 @@ export default function Header() {
       className={`sticky top-0 z-[9999] transition-all duration-500 ${isScrolled
           ? isDarkSection
             ? 'bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/10'
-            : 'bg-white/80 backdrop-blur-md shadow-md border-b border-neutral-200'
+            : 'bg-lavender/80 backdrop-blur-md shadow-md border-b border-neutral-200'
           : 'bg-transparent border-b border-transparent'
         }`}
       dir={dir}
@@ -138,7 +138,7 @@ export default function Header() {
               <span className="relative z-10">{t.nav.getStarted}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-secondary-600 to-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               <span className="absolute inset-0 opacity-0 group-hover:opacity-20">
-                <span className="absolute inset-0 animate-pulse bg-white"></span>
+                <span className="absolute inset-0 animate-pulse bg-lavender"></span>
               </span>
             </Link>
           </div>
@@ -149,8 +149,8 @@ export default function Header() {
             <button
               type="button"
               className={`p-2 rounded-lg transition-all duration-500 relative group ${isDarkSection
-                  ? 'text-zinc-300 hover:bg-white/10 hover:text-white'
-                  : 'text-neutral-700 hover:bg-primary-50 hover:text-primary-600'
+                  ? 'text-zinc-300 hover:bg-lavender/10 hover:text-white'
+                  : 'text-neutral-700 hover:bg-lavender hover:text-primary-600'
                 }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
@@ -179,8 +179,8 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={`px-4 py-3 font-medium transition-all duration-300 rounded-lg transform ${isDarkSection
-                      ? 'text-zinc-300 hover:text-white hover:bg-white/10'
-                      : 'text-neutral-700 hover:text-primary-600 hover:bg-primary-50'
+                      ? 'text-zinc-300 hover:text-white hover:bg-lavender/10'
+                      : 'text-neutral-700 hover:text-primary-600 hover:bg-lavender'
                     } ${dir === 'rtl' ? 'hover:-translate-x-2' : 'hover:translate-x-2'}`}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{

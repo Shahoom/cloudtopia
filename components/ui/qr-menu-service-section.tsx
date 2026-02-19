@@ -18,7 +18,7 @@ const content = {
     heroTitle: "Revolutionize Your",
     heroHighlight: "Restaurant Menu",
     heroDescription: "Transform your traditional paper menus into dynamic, contactless digital experiences. Our QR code menu systems help restaurants in Saudi Arabia, UAE, and across the Middle East reduce printing costs by up to 90%, update menus in real-time, and provide customers with an interactive, multilingual dining experience.",
-    
+
     // Main Features
     featuresTitle: "Complete QR Menu System Features",
     featuresSubtitle: "Everything Your Restaurant Needs to Go Digital",
@@ -81,7 +81,7 @@ const content = {
         description: "Send us your current menu in any format - PDF, photos, or even your existing website. We handle the digital transformation."
       },
       {
-        step: "02", 
+        step: "02",
         title: "We Design & Build",
         description: "Our team creates a beautiful, mobile-optimized digital menu with your branding, photos, and all item details in Arabic and English."
       },
@@ -107,7 +107,7 @@ const content = {
     heroTitle: "ثورة في",
     heroHighlight: "قائمة مطعمك",
     heroDescription: "حوّل قوائمك الورقية التقليدية إلى تجارب رقمية تفاعلية بدون تلامس. تساعد أنظمة قوائم QR الخاصة بنا المطاعم في السعودية والإمارات وجميع أنحاء الشرق الأوسط على تقليل تكاليف الطباعة بنسبة تصل إلى 90%، وتحديث القوائم في الوقت الفعلي، وتوفير تجربة طعام تفاعلية متعددة اللغات للعملاء.",
-    
+
     // Main Features
     featuresTitle: "ميزات نظام قائمة QR الكامل",
     featuresSubtitle: "كل ما يحتاجه مطعمك للتحول الرقمي",
@@ -195,7 +195,7 @@ const content = {
 function AnimatedSection({ children, delay = 0, className }: { children: React.ReactNode, delay?: number, className?: string }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+
   return (
     <motion.div
       ref={ref}
@@ -226,7 +226,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
           inactiveZone={0.01}
           borderWidth={3}
         />
-        <div className="relative flex h-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-[0.75px] border-orange-100 bg-white p-5 sm:p-6 shadow-sm">
+        <div className="relative flex h-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-[0.75px] border-orange-100 bg-lavender p-5 sm:p-6 shadow-sm">
           <div className="relative flex flex-1 flex-col gap-2">
             <h3 className="text-base sm:text-lg font-bold leading-tight text-slate-900">
               {title}
@@ -244,31 +244,31 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuServiceSectionProps) {
   const t = isRTL ? content.ar : content.en
   const Arrow = isRTL ? ArrowLeft : ArrowRight
-  
+
   return (
-    <section 
-      className="w-full bg-white text-slate-900"
+    <section
+      className="w-full bg-lavender text-slate-900"
       dir={isRTL ? "rtl" : "ltr"}
       aria-labelledby="qr-menu-service-title"
     >
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-orange-50 to-white py-16 sm:py-20 md:py-24 px-4 sm:px-6">
+      <div className="bg-gradient-to-b from-lavender to-lavender py-16 sm:py-20 md:py-24 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto text-center">
           <AnimatedSection>
-            <span className="inline-block px-4 py-2 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 mb-6">
+            <span className="inline-block px-4 py-2 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 mb-6">
               {t.badge}
             </span>
           </AnimatedSection>
-          
+
           <AnimatedSection delay={0.1}>
             <h1 id="qr-menu-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
               {t.heroTitle}{" "}
-              <span className="bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                 {t.heroHighlight}
               </span>
             </h1>
           </AnimatedSection>
-          
+
           <AnimatedSection delay={0.2}>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
               {t.heroDescription}
@@ -278,7 +278,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
       </div>
 
       {/* Features Section with Glowing Cards */}
-      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-orange-50/50">
+      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-lavender/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <AnimatedSection>
@@ -290,7 +290,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
               </p>
             </AnimatedSection>
           </div>
-          
+
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             {t.features.map((feature, index) => (
               <GlowingCard
@@ -316,11 +316,11 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
               </p>
             </AnimatedSection>
           </div>
-          
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {t.benefits.map((benefit, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
-                <div className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                <div className="text-center p-6 rounded-2xl bg-lavender/10 backdrop-blur-sm border border-white/20">
                   <div className="text-5xl sm:text-6xl font-black text-white mb-2">
                     {benefit.metric}
                   </div>
@@ -350,7 +350,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
               </p>
             </AnimatedSection>
           </div>
-          
+
           <div className="grid sm:grid-cols-3 gap-8 sm:gap-12">
             {t.process.map((step, index) => (
               <AnimatedSection key={index} delay={index * 0.15}>
@@ -372,7 +372,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
       </div>
 
       {/* Use Cases Section */}
-      <div className="py-12 sm:py-16 px-4 sm:px-6 bg-orange-50">
+      <div className="py-12 sm:py-16 px-4 sm:px-6 bg-lavender">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">
@@ -380,9 +380,9 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
               {t.useCases.map((useCase, index) => (
-                <span 
+                <span
                   key={index}
-                  className="px-5 py-2.5 bg-white rounded-full text-slate-700 font-medium border border-orange-200 hover:border-orange-400 hover:text-orange-600 transition-colors text-sm sm:text-base"
+                  className="px-5 py-2.5 bg-lavender rounded-full text-slate-700 font-medium border border-orange-200 hover:border-orange-400 hover:text-orange-600 transition-colors text-sm sm:text-base"
                 >
                   {useCase}
                 </span>
@@ -393,7 +393,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
       </div>
 
       {/* CTA Section */}
-      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600">
+      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-gradient-to-br from-lavender via-lavender to-orange-600">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
@@ -404,7 +404,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
             </p>
             <a
               href={`/${locale}/contact`}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-orange-600 font-bold text-lg rounded-full hover:bg-orange-50 transition-colors shadow-xl hover:shadow-2xl"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-orange-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
               {t.ctaButton}
               <Arrow className="w-5 h-5" />
@@ -426,11 +426,12 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
             "provider": {
               "@type": "Organization",
               "name": "CloudTopia",
-              "url": "https://cloudtopia.com",
-              "logo": "https://cloudtopia.com/logo.png",
+              "url": "https://cloudtopia.net",
+              "logo": "https://cloudtopia.net/images/CloudTopia.svg",
               "sameAs": [
-                "https://twitter.com/cloudtopia",
-                "https://linkedin.com/company/cloudtopia"
+                "https://x.com/thecloudtopia",
+                "https://instagram.com/thecloudtopia",
+                "https://github.com/Shahoom"
               ]
             },
             "areaServed": [
@@ -462,11 +463,11 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
             },
             "potentialAction": {
               "@type": "ContactAction",
-              "target": "https://cloudtopia.com/contact"
+              "target": "https://cloudtopia.net/contact"
             },
             "additionalType": "https://schema.org/Product",
             "category": "Restaurant Technology",
-            "keywords": isRTL 
+            "keywords": isRTL
               ? "قائمة QR, قائمة رقمية, قائمة مطعم, قائمة إلكترونية, مطعم ذكي, قائمة بدون تلامس"
               : "QR menu, digital menu, restaurant menu, contactless menu, smart restaurant, touchless ordering, menu QR code"
           })

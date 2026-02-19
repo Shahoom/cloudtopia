@@ -16,6 +16,7 @@ import { StarsCanvas } from '@/components/ui/stars-canvas'
 import Hero from '@/components/ui/hero-button-expendable'
 import { SparklesCore } from '@/components/ui/sparkles'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { AuroraBackground } from '@/components/ui/aurora-background'
 
 // Animated counter component
 function AnimatedCounter({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) {
@@ -122,10 +123,10 @@ function JourneyStep({
     const [isHovered, setIsHovered] = useState(false)
 
     const accentStyles: Record<string, { bg: string; border: string; text: string; glow: string; badge: string }> = {
-        blue: { bg: 'bg-blue-50', border: 'border-blue-200 hover:border-blue-400', text: 'text-blue-600', glow: 'shadow-blue-200/50', badge: 'bg-blue-600' },
-        purple: { bg: 'bg-purple-50', border: 'border-purple-200 hover:border-purple-400', text: 'text-purple-600', glow: 'shadow-purple-200/50', badge: 'bg-purple-600' },
-        emerald: { bg: 'bg-emerald-50', border: 'border-emerald-200 hover:border-emerald-400', text: 'text-emerald-600', glow: 'shadow-emerald-200/50', badge: 'bg-emerald-600' },
-        amber: { bg: 'bg-amber-50', border: 'border-amber-200 hover:border-amber-400', text: 'text-amber-600', glow: 'shadow-amber-200/50', badge: 'bg-amber-600' },
+        blue: { bg: 'bg-white/40', border: 'border-blue-200/50 hover:border-blue-400', text: 'text-blue-600', glow: 'shadow-blue-200/50', badge: 'bg-blue-600' },
+        purple: { bg: 'bg-white/40', border: 'border-purple-200/50 hover:border-purple-400', text: 'text-purple-600', glow: 'shadow-purple-200/50', badge: 'bg-purple-600' },
+        emerald: { bg: 'bg-white/40', border: 'border-emerald-200/50 hover:border-emerald-400', text: 'text-emerald-600', glow: 'shadow-emerald-200/50', badge: 'bg-emerald-600' },
+        amber: { bg: 'bg-white/40', border: 'border-amber-200/50 hover:border-amber-400', text: 'text-amber-600', glow: 'shadow-amber-200/50', badge: 'bg-amber-600' },
     }
 
     const s = accentStyles[accent] || accentStyles.blue
@@ -139,7 +140,7 @@ function JourneyStep({
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`group relative rounded-2xl border-2 ${s.border} bg-white p-8 transition-all duration-500 cursor-pointer ${isHovered ? `shadow-xl ${s.glow} -translate-y-2` : 'shadow-sm'
+                className={`group relative rounded-2xl border-2 ${s.border} bg-white/40 backdrop-blur-md p-8 transition-all duration-500 cursor-pointer ${isHovered ? `shadow-xl ${s.glow} -translate-y-2` : 'shadow-sm'
                     }`}
             >
                 {/* Step number badge */}
@@ -255,21 +256,21 @@ export default function HomePage() {
                 <div className="absolute inset-0 z-[1] pointer-events-none">
                     <motion.div
                         style={{ y: backgroundY }}
-                        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px]"
+                        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-lavender/20 rounded-full blur-[120px]"
                     />
                     <motion.div
                         style={{ y: backgroundY }}
-                        className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[120px]"
+                        className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-lavender/20 rounded-full blur-[120px]"
                     />
                 </div>
 
                 <div className="relative z-10 max-w-5xl mx-auto text-center">
                     <FloatingCard>
                         <motion.div
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 mb-8"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavender/20 border border-blue-500/30 mb-8"
                         >
                             <Cloud className="w-5 h-5 text-blue-400" />
-                            <span className="text-blue-300 font-medium">{t.home?.philosophy?.title || 'Our Philosophy'}</span>
+                            <span className="text-blue-300 font-medium">A Cloud In an Innovative View</span>
                         </motion.div>
                     </FloatingCard>
 
@@ -287,20 +288,13 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Section 3: Your Journey — White Section */}
-            <section className="relative py-28 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
-                {/* Decorative background elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-20 -left-32 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl" />
-                    <div className="absolute bottom-20 -right-32 w-96 h-96 bg-purple-100/40 rounded-full blur-3xl" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-50/30 rounded-full blur-3xl" />
-                </div>
-
-                <div className="relative z-10 max-w-7xl mx-auto">
+            {/* Section 3: Your Journey — Aurora Section */}
+            <AuroraBackground className="!h-auto !bg-[#F4F5F5] py-28 px-4 sm:px-6 lg:px-8">
+                <div className="relative z-10 max-w-7xl mx-auto w-full">
                     <div className="text-center mb-20">
                         <FloatingCard>
                             <motion.div
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-50 border border-emerald-200 mb-8"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-emerald-200 mb-8 shadow-sm"
                             >
                                 <Rocket className="w-5 h-5 text-emerald-600" />
                                 <span className="text-emerald-700 font-semibold text-sm">{t.home?.journey?.title || 'Your Cloud Journey'}</span>
@@ -312,12 +306,12 @@ export default function HomePage() {
                                 {isRTL ? (
                                     <>{t.home?.journey?.subtitle || 'نبدأ معك من حيث أنت ونساعدك على النمو.'}</>
                                 ) : (
-                                    <>We Meet You <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Where You Are</span></>
+                                    <>We Meet You <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Where You Are</span></>
                                 )}
                             </h2>
                         </FloatingCard>
                         <FloatingCard delay={0.2}>
-                            <p className="text-lg text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+                            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
                                 {isRTL
                                     ? 'سواء كنت في بداية رحلتك الرقمية أو جاهز للتوسع، لدينا حلول لكل مرحلة.'
                                     : 'Whether you\'re just starting your digital journey or ready to scale, we have solutions for every stage.'}
@@ -331,7 +325,7 @@ export default function HomePage() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </AuroraBackground>
 
 
 
@@ -341,7 +335,7 @@ export default function HomePage() {
                     <div className="text-center mb-16">
                         <FloatingCard>
                             <motion.div
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-500/30 mb-8"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavender/20 border border-cyan-500/30 mb-8"
                             >
                                 <Code2 className="w-5 h-5 text-cyan-400" />
                                 <span className="text-cyan-300 font-medium">{t.home?.featuredProjects?.badge || 'Featured Projects'}</span>
@@ -370,7 +364,7 @@ export default function HomePage() {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, delay: index * 0.15 }}
                                 whileHover={{ y: -8 }}
-                                className="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10"
+                                className="group relative bg-lavender/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10"
                             >
                                 {/* Project Image */}
                                 <div className="relative h-52 overflow-hidden">
@@ -386,14 +380,14 @@ export default function HomePage() {
 
                                     {/* Type badge */}
                                     <div className="absolute top-4 left-4">
-                                        <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-xs font-bold text-neutral-800 rounded-full uppercase tracking-wide">
+                                        <span className="px-3 py-1.5 bg-lavender/90 backdrop-blur-sm text-xs font-bold text-neutral-800 rounded-full uppercase tracking-wide">
                                             {project.type}
                                         </span>
                                     </div>
 
                                     {/* Metric badge */}
                                     <div className="absolute top-4 right-4">
-                                        <span className="px-3 py-1.5 bg-emerald-500/90 backdrop-blur-sm text-xs font-bold text-white rounded-full">
+                                        <span className="px-3 py-1.5 bg-lavender/90 backdrop-blur-sm text-xs font-bold text-white rounded-full">
                                             {project.metrics.value}
                                         </span>
                                     </div>
@@ -413,7 +407,7 @@ export default function HomePage() {
                                         {project.features.slice(0, 3).map((feature) => (
                                             <span
                                                 key={feature}
-                                                className="px-3 py-1 rounded-full bg-white/10 text-white/70 text-xs font-medium"
+                                                className="px-3 py-1 rounded-full bg-lavender/10 text-white/70 text-xs font-medium"
                                             >
                                                 {feature}
                                             </span>
@@ -442,7 +436,7 @@ export default function HomePage() {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl hover:bg-white/20 transition-colors border border-white/20 inline-flex items-center gap-2"
+                                className="px-8 py-4 bg-lavender/10 backdrop-blur-sm text-white font-semibold rounded-2xl hover:bg-lavender/20 transition-colors border border-white/20 inline-flex items-center gap-2"
                             >
                                 {t.home?.featuredProjects?.viewAll || 'View All Projects'}
                                 <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
@@ -452,80 +446,6 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Section 5: CTA Section — White Design */}
-            <section className="relative py-32 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
-                {/* Decorative background elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-200 to-transparent" />
-                    <div className="absolute top-20 -right-32 w-[500px] h-[500px] bg-blue-50/60 rounded-full blur-3xl" />
-                    <div className="absolute bottom-20 -left-32 w-[400px] h-[400px] bg-purple-50/60 rounded-full blur-3xl" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-50/30 rounded-full blur-3xl" />
-                </div>
-
-                <div className="relative z-10 max-w-4xl mx-auto text-center">
-                    <FloatingCard>
-                        <div className="relative p-10 sm:p-14 rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-indigo-700 overflow-hidden shadow-2xl shadow-blue-500/20">
-                            {/* Sparkles effect */}
-                            <div className="absolute inset-0">
-                                <SparklesCore
-                                    id="cta-sparkles"
-                                    background="transparent"
-                                    minSize={0.4}
-                                    maxSize={1}
-                                    particleDensity={50}
-                                    className="w-full h-full"
-                                    particleColor="#ffffff"
-                                    speed={0.5}
-                                />
-                            </div>
-
-                            {/* Decorative circles */}
-                            <div className="absolute -top-20 -right-20 w-60 h-60 bg-white/5 rounded-full" />
-                            <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/5 rounded-full" />
-
-                            <div className="relative z-10">
-                                <motion.div
-                                    animate={{ scale: [1, 1.1, 1] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                    className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20"
-                                >
-                                    <Rocket className="w-10 h-10 text-white" />
-                                </motion.div>
-
-                                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                                    {t.home?.cta?.title || 'Ready to Move to the Cloud?'}
-                                </h2>
-                                <p className="text-xl text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
-                                    {t.home?.cta?.description || 'Let\'s discuss how we can help transform your business and accelerate your digital growth.'}
-                                </p>
-
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                    <Link href={`/${locale}/services`}>
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="px-8 py-4 bg-white text-blue-600 font-bold rounded-2xl hover:bg-blue-50 transition-colors shadow-lg shadow-black/10 flex items-center justify-center gap-2"
-                                        >
-                                            {t.home?.cta?.button || 'Start Your Journey'}
-                                            <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
-                                        </motion.button>
-                                    </Link>
-                                    <Link href={`/${locale}/contact`}>
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/20 transition-colors border border-white/20 flex items-center justify-center gap-2"
-                                        >
-                                            <Mail className="w-5 h-5" />
-                                            {t.home?.cta?.contactUs || 'Contact Us'}
-                                        </motion.button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </FloatingCard>
-                </div>
-            </section>
         </div>
     )
 }

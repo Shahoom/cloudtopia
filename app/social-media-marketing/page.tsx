@@ -124,8 +124,8 @@ const Hero = () => {
               </h1>
               <div className="flex items-center mt-4 justify-center gap-1">
                 <span className="relative flex h-3 w-3 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-500"></span>
                 </span>
                 <p className="text-xs text-green-500">{t.available}</p>
               </div>
@@ -261,7 +261,7 @@ const ServicesSlideshow = ({ locale }: { locale: string }) => {
 
   return (
     <section id="services" className="relative">
-      <HoverSlider className="min-h-screen place-content-center p-6 md:px-12 lg:px-24 bg-gradient-to-b from-white via-pink-50/20 to-white dark:from-neutral-950 dark:via-pink-950/10 dark:to-neutral-950 text-neutral-800 dark:text-neutral-200">
+      <HoverSlider className="min-h-screen place-content-center p-6 md:px-12 lg:px-24 bg-gradient-to-b from-lavender via-lavender/20 to-lavender dark:from-neutral-950 dark:via-pink-950/10 dark:to-neutral-950 text-neutral-800 dark:text-neutral-200">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 md:mb-12">
             <h3 className="mb-2 text-xs font-medium capitalize tracking-wide text-pink-500">
@@ -303,7 +303,7 @@ const ServicesSlideshow = ({ locale }: { locale: string }) => {
                 ))}
               </HoverSliderImageWrap>
               {/* Description Box */}
-              <div className="mt-4 p-4 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm rounded-2xl border border-pink-100 dark:border-pink-900/30 shadow-lg">
+              <div className="mt-4 p-4 bg-lavender/80 dark:bg-neutral-900/80 backdrop-blur-sm rounded-2xl border border-pink-100 dark:border-pink-900/30 shadow-lg">
                 <h4 className="font-bold text-lg text-pink-500 mb-1">
                   {SLIDES[activeIndex].title}
                 </h4>
@@ -381,7 +381,7 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
   ]
 
   return (
-    <section id="creative" className="relative bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white py-20 overflow-hidden">
+    <section id="creative" className="relative bg-lavender dark:bg-neutral-950 text-neutral-900 dark:text-white py-20 overflow-hidden">
       {/* Header */}
       <div className="text-center mb-12 px-6">
         <h3 className="mb-2 text-xs font-medium capitalize tracking-wide text-pink-500">
@@ -692,7 +692,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
   const t = isRTL ? content.ar : content.en
 
   return (
-    <section id="about-service" className="relative bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 py-20 md:py-28">
+    <section id="about-service" className="relative bg-gradient-to-b from-lavender via-lavender/30 to-lavender dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Main Title - H2 for SEO */}
@@ -736,7 +736,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
                     inactiveZone={0.01}
                     borderWidth={2}
                   />
-                  <div className="relative h-full flex flex-col p-6 rounded-[1.1rem] border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 z-10 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800">
+                  <div className="relative h-full flex flex-col p-6 rounded-[1.1rem] border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 z-10 bg-lavender dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800">
                     <h4 className="text-xl font-bold text-neutral-900 dark:text-white mb-3 group-hover:text-pink-500 transition-colors">
                       {service.title}
                     </h4>
@@ -802,7 +802,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
                     inactiveZone={0.01}
                     borderWidth={2}
                   />
-                  <div className="relative p-4 text-center rounded-[0.7rem] border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 z-10 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800">
+                  <div className="relative p-4 text-center rounded-[0.7rem] border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 z-10 bg-lavender dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800">
                     <h4 className="font-bold text-neutral-900 dark:text-white text-sm mb-1 group-hover:text-pink-500 transition-colors">
                       {platform.name}
                     </h4>
@@ -840,7 +840,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
                     inactiveZone={0.01}
                     borderWidth={2}
                   />
-                  <details className="relative bg-white dark:bg-neutral-900 rounded-[1rem] shadow-md border border-neutral-100 dark:border-neutral-800 z-10 overflow-hidden">
+                  <details className="relative bg-lavender dark:bg-neutral-900 rounded-[1rem] shadow-md border border-neutral-100 dark:border-neutral-800 z-10 overflow-hidden">
                     <summary className="p-6 cursor-pointer font-semibold text-neutral-900 dark:text-white flex items-center justify-between list-none hover:text-pink-500 transition-colors">
                       {faq.question}
                       <span className="text-pink-500 group-open/faq:rotate-180 transition-transform">▼</span>
@@ -856,7 +856,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-neutral-900 dark:bg-white/5 rounded-3xl p-8 md:p-12">
+        <div className="text-center bg-neutral-900 dark:bg-lavender/5 rounded-3xl p-8 md:p-12">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
             {t.ctaTitle}
           </h3>
@@ -865,7 +865,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
           </p>
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
           >
             {t.ctaButton}
             <span>→</span>

@@ -66,7 +66,7 @@ export function DynamicTextSlider({
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-black text-white flex flex-col items-center justify-center text-center p-4 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="w-full min-h-screen bg-lavender dark:bg-black text-white flex flex-col items-center justify-center text-center p-4 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-5xl">
         <h1 className="font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl">
           {title}
@@ -222,7 +222,7 @@ function ContentSlider({ width: initialWidth, height: propHeight, handleSize = 2
             className={`z-20 absolute top-0 h-full w-7 rounded-full bg-[#262626] border border-purple-500 flex items-center justify-center cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-purple-400 transition-transform duration-150 ease-in-out opacity-100 ${scaleClass}`}
             style={{ left: x, touchAction: "none" }}
           >
-            <span className="w-1 h-8 rounded-full bg-purple-500" />
+            <span className="w-1 h-8 rounded-full bg-lavender" />
           </button>
         );
       })}

@@ -1,7 +1,7 @@
 {
   "name": "CloudTopia - Digital & Cloud Solutions",
   "short_name": "CloudTopia",
-  "description": "Transform your business with cutting-edge digital and cloud solutions",
+  "description": "Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,16 +9,15 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/images/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
     },
     {
-      "src": "/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/images/CloudTopia.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "categories": [
@@ -27,6 +26,6 @@
     "technology"
   ],
   "lang": "en-US",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false
 }
-

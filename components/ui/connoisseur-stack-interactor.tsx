@@ -123,7 +123,7 @@ export const ConnoisseurStackInteractor = ({
       ref={containerRef}
       className={cn(
         "flex flex-col md:flex-row items-center justify-between min-h-[80vh] md:min-h-screen w-full p-4 sm:p-8 md:p-16 lg:p-24 overflow-hidden transition-colors duration-500",
-        "bg-white dark:bg-[#050505]",
+        "bg-lavender dark:bg-[#050505]",
         className
       )}
     >
@@ -172,7 +172,7 @@ export const ConnoisseurStackInteractor = ({
 
       {/* RIGHT SIDE: SQUARE GRID (Sharp Squares) */}
       <div className="relative w-full md:w-1/2 flex justify-center items-center mt-8 sm:mt-12 md:mt-0">
-        <div className="absolute w-[120%] h-[120%] bg-orange-500/10 dark:bg-orange-600/5 blur-[80px] md:blur-[120px] rounded-full transition-opacity duration-1000" />
+        <div className="absolute w-[120%] h-[120%] bg-lavender/10 dark:bg-orange-600/5 blur-[80px] md:blur-[120px] rounded-full transition-opacity duration-1000" />
 
         <svg
           viewBox="0 0 500 500"

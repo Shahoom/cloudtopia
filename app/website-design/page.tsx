@@ -67,7 +67,7 @@ function WebDesignHero() {
   const texts = isRTL ? arabicTexts : englishTexts
 
   return (
-    <section className="w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative bg-white">
+    <section className="w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative bg-lavender">
       <Floating sensitivity={-0.5} className="h-full">
         <FloatingElement
           depth={0.5}
@@ -142,7 +142,7 @@ function WebDesignHero() {
 
       <div className="flex flex-col justify-center items-center w-[250px] sm:w-[300px] md:w-[500px] lg:w-[700px] z-50 pointer-events-auto">
         <motion.h1
-          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-center w-full justify-center items-center flex-col flex whitespace-pre leading-tight font-bold tracking-tight space-y-1 md:space-y-4"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-center w-full justify-center items-center flex-col flex whitespace-pre leading-tight font-bold tracking-tight space-y-1 md:space-y-4"
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
@@ -173,7 +173,7 @@ function WebDesignHero() {
         </motion.h1>
 
         <motion.p
-          className="text-sm sm:text-lg md:text-xl lg:text-2xl text-center text-slate-600 pt-4 sm:pt-8 md:pt-10 lg:pt-12 max-w-2xl"
+          className="text-lg sm:text-lg md:text-xl lg:text-2xl text-center text-slate-600 pt-4 sm:pt-8 md:pt-10 lg:pt-12 max-w-2xl"
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
@@ -184,9 +184,9 @@ function WebDesignHero() {
           }
         </motion.p>
 
-        <div className="flex flex-row justify-center space-x-4 rtl:space-x-reverse items-center mt-10 sm:mt-16 md:mt-20 lg:mt-20 text-xs">
+        <div className="flex flex-row justify-center space-x-4 rtl:space-x-reverse items-center mt-10 sm:mt-16 md:mt-20 lg:mt-20">
           <motion.button
-            className="sm:text-base md:text-lg lg:text-xl font-semibold tracking-tight text-white bg-primary-600 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-2xl hover:bg-primary-700 transition-colors"
+            className="text-base sm:text-base md:text-lg lg:text-xl font-semibold tracking-tight text-white bg-primary-600 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-2xl hover:bg-primary-700 transition-colors"
             animate={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 20 }}
             transition={{
@@ -205,7 +205,7 @@ function WebDesignHero() {
             </Link>
           </motion.button>
           <motion.button
-            className="sm:text-base md:text-lg lg:text-xl font-semibold tracking-tight text-primary-600 bg-primary-50 border-2 border-primary-200 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-lg hover:bg-primary-100 transition-colors"
+            className="text-base sm:text-base md:text-lg lg:text-xl font-semibold tracking-tight text-primary-600 bg-lavender border-2 border-primary-200 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-lg hover:bg-lavender transition-colors"
             animate={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 20 }}
             transition={{
@@ -268,7 +268,7 @@ function WebDesignServiceSection() {
 
 export default function WebsiteDesignPage() {
   return (
-    <div className="relative w-full overflow-hidden bg-white text-neutral-900">
+    <div className="relative w-full overflow-hidden bg-lavender text-neutral-900">
       {/* Light Mode Layout Fixes */}
       <style dangerouslySetInnerHTML={{
         __html: `

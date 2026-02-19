@@ -49,11 +49,11 @@ function ScrollHeroSection({
   // Mobile: cycle through words automatically
   useEffect(() => {
     if (!isMobile) return;
-    
+
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % items.length);
     }, 1500);
-    
+
     return () => clearInterval(interval);
   }, [isMobile, items.length]);
 
@@ -61,7 +61,7 @@ function ScrollHeroSection({
     const root = document.documentElement;
     root.style.setProperty('--scroll-hue', String(hue));
     root.style.setProperty('--scroll-start', `${startVh}vh`);
-    
+
     return () => {
       root.style.removeProperty('--scroll-hue');
       root.style.removeProperty('--scroll-start');
@@ -73,7 +73,7 @@ function ScrollHeroSection({
   // Don't render until we know if it's mobile or not
   if (isMobile === null) {
     return (
-      <div className="min-h-[40vh] bg-slate-50" />
+      <div className="min-h-[40vh] bg-lavender" />
     );
   }
 
@@ -119,12 +119,12 @@ function ScrollHeroSection({
             <span>{prefixText}</span>
             <span>{items[items.length - 1]}</span>
           </h2>
-          
+
           <div className="text-center" aria-hidden="true">
             <span className="block text-2xl sm:text-3xl font-bold text-slate-800 mb-3">
               {prefixText}
             </span>
-            
+
             <div className="space-y-1">
               {items.map((word, i) => (
                 <motion.div
@@ -150,7 +150,7 @@ function ScrollHeroSection({
           --scroll-hue: 220;
           width: 100%;
           position: relative;
-          background: #f8fafc;
+          background: #f4f1f8;
           padding-top: 2rem;
         }
 

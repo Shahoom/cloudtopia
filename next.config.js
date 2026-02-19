@@ -3,7 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  
+  transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
+
   // Security Headers
   async headers() {
     return [

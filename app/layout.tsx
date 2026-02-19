@@ -25,7 +25,13 @@ export const metadata: Metadata = {
     'global services',
     'custom software',
     'digital presence',
-    'CloudTopia'
+    'CloudTopia',
+    'website design',
+    'e-commerce solutions',
+    'social media marketing',
+    'content creation',
+    'QR menu',
+    'cloud computing',
   ],
   authors: [{ name: 'CloudTopia', url: 'https://cloudtopia.net' }],
   creator: 'CloudTopia',
@@ -35,19 +41,39 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: [
+      { url: '/images/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/images/favicon.ico' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    alternateLocale: 'ar_SA',
     url: 'https://cloudtopia.net',
     title: 'CloudTopia — Digital & Cloud Technologies',
-    description: 'Transform your business with cutting-edge digital and cloud solutions. Serving clients worldwide.',
+    description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
     siteName: 'CloudTopia',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'CloudTopia — Digital & Cloud Technologies',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'CloudTopia — Digital & Cloud Technologies',
-    description: 'Transform your business with cutting-edge digital and cloud solutions.',
-    creator: '@cloudtopia',
+    description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+    creator: '@thecloudtopia',
+    site: '@thecloudtopia',
+    images: ['/images/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -67,6 +93,19 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://cloudtopia.net',
+    languages: {
+      'en': 'https://cloudtopia.net',
+      'ar': 'https://cloudtopia.net/ar',
+      'x-default': 'https://cloudtopia.net',
+    },
+  },
+  category: 'technology',
+  other: {
+    'google': 'notranslate',
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+    'apple-mobile-web-app-title': 'CloudTopia',
   },
 }
 
@@ -89,9 +128,73 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/images/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/images/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
+
+        {/* Hreflang tags for international SEO */}
+        <link rel="alternate" hrefLang="en" href="https://cloudtopia.net" />
+        <link rel="alternate" hrefLang="ar" href="https://cloudtopia.net/ar" />
+        <link rel="alternate" hrefLang="x-default" href="https://cloudtopia.net" />
+
+        {/* Preconnect to external resources */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* JSON-LD Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'CloudTopia',
+              url: 'https://cloudtopia.net',
+              logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+              image: 'https://cloudtopia.net/images/og-image.jpg',
+              description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+              foundingDate: '2024',
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+90-501-151-11-16',
+                contactType: 'customer service',
+                email: 'info@cloudtopia.net',
+                availableLanguage: ['English', 'Arabic'],
+                areaServed: 'Worldwide',
+              },
+              sameAs: [
+                'https://x.com/thecloudtopia',
+                'https://instagram.com/thecloudtopia',
+                'https://github.com/Shahoom',
+              ],
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'TR',
+              },
+              knowsLanguage: ['en', 'ar'],
+            }),
+          }}
+        />
+
+        {/* JSON-LD WebSite Schema for Sitelinks Search */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'CloudTopia',
+              url: 'https://cloudtopia.net',
+              description: 'Digital & Cloud Technologies — Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+              inLanguage: ['en', 'ar'],
+              publisher: {
+                '@type': 'Organization',
+                name: 'CloudTopia',
+                url: 'https://cloudtopia.net',
+              },
+            }),
+          }}
+        />
       </head>
       <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
         <LanguageProvider>
@@ -112,4 +215,3 @@ export default function RootLayout({
     </html>
   )
 }
-

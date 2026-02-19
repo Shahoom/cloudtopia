@@ -114,7 +114,7 @@ export const en = {
         },
         {
           number: '04',
-          title: 'Innovation',
+          title: 'Labs',
           description: 'Leverage AI and cutting-edge technology to stay ahead of the competition.',
           highlight: 'Innovate with AI & automation.',
           body: 'Leverage AI tools, automation, and cutting-edge technologies to stay ahead of the competition.',
@@ -145,7 +145,7 @@ export const en = {
     },
     labsPreview: {
       title: 'CloudTopia Labs',
-      badge: 'Innovation',
+      badge: 'Labs',
       highlight: 'Innovate and experiment.',
       description: 'Our R&D division exploring AI, automation, and emerging technologies. Some projects become future products, some stay experimental.',
       info: 'Labs is our innovation hub—not a main service offering, but a glimpse into what\'s next.',
@@ -1569,6 +1569,18 @@ export const en = {
       title: 'Innovation &',
       titleHighlight: 'Experiments',
       description: 'Explore the AI-powered tools we develop and the projects we build for our clients.',
+      neonTitle: 'BEYOND CLOUD AND THE LIMITS',
+      neonSubtitle: 'WHERE INNOVATION MEETS IMAGINATION',
+      neonDescription: 'Welcome to CloudTopia Labs — our playground for pushing boundaries. Here, AI meets creativity, code meets art, and every experiment is a step toward building the impossible.',
+      scramblePhrases: [
+        'CLOUDTOPIA LABS',
+        'We Build the Future',
+        'AI × Creativity',
+        'Beyond the Cloud',
+        'Code Meets Art',
+        'Innovation Unleashed',
+      ],
+      scrambleSubtitle: 'WHERE IDEAS BECOME REALITY',
     },
     aiTools: {
       badge: 'AI Labs',
@@ -1597,6 +1609,130 @@ export const en = {
           useLabel: 'Use for:',
         },
       ],
+    },
+    innovationDomains: {
+      badge: 'Innovation Domains',
+      title: 'Applied AI,',
+      gradientText: 'Engineered for Impact',
+      description: 'We explore six core domains of artificial intelligence — each designed to solve real problems and create measurable business value.',
+      domains: [
+        {
+          title: 'Generative AI Systems',
+          description: 'From content generation to design synthesis — we build systems that create.',
+          items: ['Content Generation', 'Document Automation', 'Code Generation', 'Design Synthesis', 'Synthetic Data Creation', 'AI-Powered Creative Tools'],
+        },
+        {
+          title: 'AI Chatbots & Intelligent Agents',
+          description: 'Autonomous agents and copilots that understand, reason, and execute.',
+          items: ['AI Assistants', 'Customer Support Automation', 'Internal Business Copilots', 'Multi-Agent Systems', 'Autonomous AI Task Execution'],
+        },
+        {
+          title: 'Computer Vision Intelligence',
+          description: 'Teaching machines to see, interpret, and act on visual data.',
+          items: ['Image Recognition', 'Object Detection', 'OCR Systems', 'Visual Analytics', 'Industrial & Medical Applications'],
+        },
+        {
+          title: 'Predictive & Forecasting Systems',
+          description: 'Data-driven foresight for smarter business decisions.',
+          items: ['Demand Forecasting', 'Risk Prediction', 'Sales Prediction', 'Customer Behavior Modeling', 'Financial Trend Analysis'],
+        },
+        {
+          title: 'Optimization & Decision Intelligence',
+          description: 'AI-powered engines that optimize resources and sharpen decisions.',
+          items: ['Resource Allocation', 'Route Optimization', 'Workflow Intelligence', 'Smart Pricing Systems', 'AI Decision Engines'],
+        },
+        {
+          title: 'AI-Powered Automation Systems',
+          description: 'Intelligent workflows that eliminate friction and scale operations.',
+          items: ['Workflow Automation', 'AI-Integrated CRM', 'Data Pipelines', 'Business Process Automation', 'Smart Triggers & Routing'],
+        },
+      ],
+    },
+    prototypes: {
+      badge: 'Prototypes',
+      title: 'From Experiment',
+      gradientText: 'To Product',
+      description: 'CloudTopia Labs builds experimental AI systems that evolve into scalable SaaS platforms. Every prototype is designed with product potential.',
+      cards: [
+        {
+          id: 1,
+          title: "AI Booking Optimizer",
+          description: "Intelligent scheduling that maximizes occupancy, minimizes conflict, and adapts in real-time to changing logistics.",
+          image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90",
+          gradient: "from-blue-500 via-indigo-500 to-violet-500",
+          category: "Scheduling",
+          features: ["Dynamic Traffic Modeling", "Real-time Conflict Resolution", "Occupancy Forecasting"],
+          status: "Beta"
+        },
+        {
+          id: 2,
+          title: "AI Marketing Assistant",
+          description: "Autonomous campaign creation, audience targeting, and multi-channel performance optimization at global scale.",
+          image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90",
+          gradient: "from-rose-500 via-pink-500 to-orange-500",
+          category: "Marketing",
+          features: ["Creative Asset Generation", "Predictive Audience Scoring", "Automated A/B Testing"],
+          status: "In Testing"
+        },
+        {
+          id: 3,
+          title: "AI Legal Analyzer",
+          description: "Deep-learning contract parsing, risk flagging, and multi-jurisdiction clause extraction with 99.9% precision.",
+          image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90",
+          gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+          category: "Legal Tech",
+          features: ["Clause-level Intelligence", "Risk Propensity Scoring", "Automatic Redlining"],
+          status: "Prototype"
+        },
+        {
+          id: 4,
+          title: "AI Knowledge Engine",
+          description: "Self-organizing enterprise knowledge bases that autonomously learn, connect, and surface hidden insights.",
+          image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90",
+          gradient: "from-amber-500 via-orange-500 to-rose-500",
+          category: "Knowledge",
+          features: ["Semantic Relationship Mapping", "Contextual Information Retrieval", "Adaptive Learning Loops"],
+          status: "Developing"
+        },
+        {
+          id: 5,
+          title: "Vision Analytics Pro",
+          description: "Next-gen industrial computer vision for real-time quality control, safety monitoring, and operational intelligence.",
+          image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90",
+          gradient: "from-cyan-500 via-blue-500 to-indigo-500",
+          category: "Vision",
+          features: ["Nanosecond Object Detection", "Anomaly Recognition Engine", "Predictive Maintenance"],
+          status: "Alpha"
+        }
+      ],
+      ui: {
+        successScore: "Success Score",
+        response: "Response",
+        cta: "Request Lab Access",
+        limited: "Inquiry Required • Limited Availability"
+      }
+    },
+    philosophy: {
+      badge: 'The CloudTopia Philosophy',
+      notFluff: 'Labs is not ',
+      experimentalFluff: 'experimental fluff.',
+      itIs: 'It’s continuous innovation',
+      appliedDirectly: 'applied directly to ',
+      productionSystems: 'production systems.',
+      staggered: ['Every website.', 'Every platform.', 'Every system.'],
+      cloudNative: {
+        label: 'Built cloud-native.',
+        description: 'Global, resilient, and always-on architecture.',
+      },
+      scalable: {
+        label: 'Built scalable.',
+        description: 'Engineered for limitless growth and performance.',
+      },
+      intelligent: {
+        label: 'Built intelligent.',
+        description: 'Cognitive logic that adapts to your unique workflow.',
+      },
+      ctaBadge: 'Join the Innovation',
     },
     projects: {
       badge: 'Our Work',
@@ -1645,6 +1781,11 @@ export const en = {
 
   // Contact Page
   contact: {
+    intro: {
+      line1: 'The cloud is infinite, but our connection starts here.',
+      line2: 'Great ideas deserve to be heard. Let\'s bridge the gap between your vision and the cloud.',
+      line3: 'Your journey upward begins with a single message.',
+    },
     hero: {
       badge: 'Get in Touch',
       title: 'Let\'s Start a',
@@ -1652,13 +1793,30 @@ export const en = {
       description: 'Ready to move your business to the cloud? We\'d love to hear from you.',
     },
     info: {
+      directContact: 'Direct Contact',
       email: 'Email',
-      phone: 'Phone / WhatsApp',
+      phone: 'WhatsApp',
       location: 'Service Areas',
       worldwide: 'Worldwide',
       responseTime: 'Response Time',
       responseValue: 'Within 24 hours',
       detailsTitle: 'Contact Details',
+    },
+    social: {
+      badge: 'Connect & Collaborate',
+      title: 'Get In Touch',
+      description: 'Join our vibrant community across multiple platforms and stay connected with the latest updates',
+      connect: 'Connect',
+      instagramLabels: { name: 'Instagram', desc: 'Visual Stories' },
+      xLabels: { name: 'X (Twitter)', desc: 'Tech Updates' },
+      githubLabels: { name: 'GitHub', desc: 'Code Repository' },
+      whatsappLabels: { name: 'WhatsApp', desc: 'Direct Support' },
+    },
+    cta: {
+      titleLine1: 'Ready to',
+      titleHighlight: 'level up',
+      titleLine2: 'your business?',
+      description: 'Join hundreds of businesses that trust CloudTopia for their digital transformation journey.',
     },
     form: {
       title: 'Send Us a Message',
@@ -1684,10 +1842,10 @@ export const en = {
       budget: 'Project Budget (Optional)',
       budgetPlaceholder: 'Select budget range',
       budgetOptions: {
-        small: 'Under $5,000',
-        medium: '$5,000 - $15,000',
-        large: '$15,000 - $50,000',
-        enterprise: '$50,000+',
+        small: 'Under $1,000',
+        medium: '$1,000 - $5,000',
+        large: '$5,000 - $10,000',
+        enterprise: '$10,000+',
         discuss: 'Let\'s discuss',
       },
       timeline: 'Project Timeline',
@@ -1698,11 +1856,16 @@ export const en = {
         quarter: 'Within 3 months',
         flexible: 'Flexible',
       },
-      message: 'Project Details',
+      message: 'Your Message',
       messagePlaceholder: 'Tell us about your project...',
       sendEmail: 'Send via Email',
-      sendWhatsApp: 'Chat on WhatsApp',
+      sendWhatsApp: 'Send via WhatsApp',
+      sending: 'SENDING...',
       chooseMethod: 'Choose how you\'d like to reach us:',
+      whatsappTab: 'WhatsApp',
+      emailTab: 'Email',
+      waMessage: 'Hi CloudTopia! I\'m interested in your services.',
+      emailSubject: 'New Contact Form Submission from',
     },
     whyUs: {
       title: 'Why Work With CloudTopia?',

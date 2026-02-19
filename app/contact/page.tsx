@@ -1,18 +1,246 @@
 'use client'
 
-import { PrimaryButton, OutlineButton } from '@/components/ui/Button'
-import Section from '@/components/ui/Section'
-import Tag from '@/components/ui/Tag'
-import Card from '@/components/ui/Card'
-import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send, MessageSquare, Globe, Clock, CheckCircle, Sparkles, Shield, Users } from 'lucide-react'
-import { useState } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
+import { Mail, Phone, MapPin, Send, MessageSquare, Globe, Clock, CheckCircle, Sparkles, Shield, Users, ArrowRight, Github, Twitter, Linkedin, Instagram } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { ProfessionalConnect } from '@/components/ui/get-in-touch'
+
+// --- Custom Internal Components (No UI Libs) ---
+
+interface MousePosition {
+  x: number
+  y: number
+}
+
+const InteractiveBackground = () => {
+  const [mousePos, setMousePos] = useState<MousePosition>({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  return (
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-lavender pointer-events-none">
+      <motion.div
+        className="absolute w-[800px] h-[800px] rounded-full bg-primary-200/20 blur-3xl"
+        animate={{
+          x: mousePos.x - 400,
+          y: mousePos.y - 400,
+        }}
+        transition={{ type: 'spring', damping: 30, stiffness: 50, restDelta: 0.001 }}
+      />
+      <motion.div
+        className="absolute w-[600px] h-[600px] rounded-full bg-secondary-200/20 blur-3xl"
+        animate={{
+          x: mousePos.x - 300,
+          y: mousePos.y - 300,
+        }}
+        transition={{ type: 'spring', damping: 40, stiffness: 40, restDelta: 0.001, delay: 0.05 }}
+      />
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }} />
+    </div>
+  )
+}
+
+const TiltCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const mouseXSpring = useSpring(x)
+  const mouseYSpring = useSpring(y)
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"])
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    const xPct = mouseX / width - 0.5
+    const yPct = mouseY / height - 0.5
+    x.set(xPct)
+    y.set(yPct)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className={`relative group bg-white/40 backdrop-blur-xl border border-white/40 rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:shadow-primary-500/10 ${className}`}
+    >
+      <div style={{ transform: "translateZ(50px)" }} className="relative z-10">
+        {children}
+      </div>
+    </motion.div>
+  )
+}
+
+const FloatingInput = ({ label, id, value, onChange, type = "text", required = false }: any) => {
+  const [isFocused, setIsFocused] = useState(false)
+  const { dir } = useLanguage()
+
+  return (
+    <div className="relative mb-6 group">
+      <input
+        type={type}
+        id={id}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        required={required}
+        className={`w-full bg-white/30 backdrop-blur-md border border-neutral-200 rounded-2xl px-5 py-4 pt-7 outline-none transition-all duration-300 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 hover:border-primary-300/50 text-neutral-900 font-medium peer`}
+        placeholder=" "
+      />
+      <label
+        htmlFor={id}
+        className={`absolute top-4 ${dir === 'rtl' ? 'right-5' : 'left-5'} text-neutral-500 font-medium transition-all duration-300 pointer-events-none peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-600 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs opacity-70 peer-focus:opacity-100`}
+      >
+        {label} {required && <span className="text-primary-600">*</span>}
+      </label>
+      <div className={`absolute bottom-0 ${dir === 'rtl' ? 'right-0' : 'left-0'} h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-b-2xl transition-all duration-500 ease-out ${isFocused ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
+    </div>
+  )
+}
+
+const FloatingTextarea = ({ label, id, value, onChange, required = false }: any) => {
+  const [isFocused, setIsFocused] = useState(false)
+  const { dir } = useLanguage()
+
+  return (
+    <div className="relative mb-6 group">
+      <textarea
+        id={id}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        required={required}
+        rows={6}
+        className="w-full bg-white/30 backdrop-blur-md border border-neutral-200 rounded-2xl px-5 py-4 pt-7 outline-none transition-all duration-300 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 hover:border-primary-300/50 text-neutral-900 font-medium resize-none peer"
+        placeholder=" "
+      />
+      <label
+        htmlFor={id}
+        className={`absolute top-4 ${dir === 'rtl' ? 'right-5' : 'left-5'} text-neutral-500 font-medium transition-all duration-300 pointer-events-none peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-600 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs opacity-70 peer-focus:opacity-100`}
+      >
+        {label} {required && <span className="text-primary-600">*</span>}
+      </label>
+      <div className={`absolute bottom-0 ${dir === 'rtl' ? 'right-0' : 'left-0'} h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-b-2xl transition-all duration-500 ease-out ${isFocused ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
+    </div>
+  )
+}
+
+const CustomSelect = ({ label, id, value, onChange, options, required = false }: any) => {
+  const [isFocused, setIsFocused] = useState(false)
+  const { dir } = useLanguage()
+
+  return (
+    <div className="relative mb-6 group">
+      <select
+        id={id}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        required={required}
+        className="w-full bg-white/30 backdrop-blur-md border border-neutral-200 rounded-2xl px-5 py-4 pt-7 outline-none transition-all duration-300 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 hover:border-primary-300/50 text-neutral-900 font-medium peer appearance-none cursor-pointer"
+      >
+        <option value="" disabled hidden></option>
+        {options.map((opt: any) => (
+          <option key={opt.value} value={opt.value} className="bg-white">
+            {opt.label}
+          </option>
+        ))}
+      </select>
+      <div className={`absolute top-1/2 ${dir === 'rtl' ? 'left-5' : 'right-5'} -translate-y-1/2 pointer-events-none text-neutral-400 group-hover:text-primary-500 transition-colors`}>
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+      <label
+        htmlFor={id}
+        className={`absolute top-4 ${dir === 'rtl' ? 'right-5' : 'left-5'} text-neutral-500 font-medium transition-all duration-300 pointer-events-none peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-600 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs opacity-70 peer-focus:opacity-100`}
+      >
+        {label} {required && <span className="text-primary-600">*</span>}
+      </label>
+      <div className={`absolute bottom-0 ${dir === 'rtl' ? 'right-0' : 'left-0'} h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-b-2xl transition-all duration-500 ease-out ${isFocused ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
+    </div>
+  )
+}
+
+const IntroSection = () => {
+  const { t } = useLanguage()
+
+  const sentences = [
+    t.contact.intro.line1,
+    t.contact.intro.line2,
+    t.contact.intro.line3
+  ]
+
+  return (
+    <div className="max-w-4xl mx-auto text-center mb-24 mt-12">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.3
+            }
+          }
+        }}
+        className="space-y-6"
+      >
+        {sentences.map((sentence, i) => (
+          <motion.p
+            key={i}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`text-2xl md:text-3xl font-medium ${i === 1 ? 'text-primary-600 italic' : 'text-neutral-500'
+              } leading-relaxed`}
+          >
+            {sentence}
+          </motion.p>
+        ))}
+        <motion.div
+          variants={{
+            hidden: { scaleX: 0 },
+            visible: { scaleX: 1 }
+          }}
+          transition={{ duration: 1.5, delay: 1, ease: "circOut" }}
+          className="h-px w-32 bg-gradient-to-r from-transparent via-primary-300 to-transparent mx-auto mt-12"
+        />
+      </motion.div>
+    </div>
+  )
+}
+
+// --- Main Page Component ---
 
 export default function ContactPage() {
   const { t, dir, locale } = useLanguage()
-
-  const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [activeTab, setActiveTab] = useState('email')
 
   const [formData, setFormData] = useState({
     name: '',
@@ -25,526 +253,345 @@ export default function ContactPage() {
     message: ''
   })
 
-  const handleWhatsApp = () => {
-    const message = `Hi CloudTopia! I'm interested in your services.
+  const formRef = useRef<HTMLDivElement>(null)
 
-Name: ${formData.name || 'N/A'}
-Email: ${formData.email || 'N/A'}
-Company: ${formData.company || 'N/A'}
-Interest: ${formData.interest || 'N/A'}
-
-Message: ${formData.message || 'N/A'}`
+  const handleWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    const message = `${t.contact.form.waMessage}
+      
+${t.contact.form.name}: ${formData.name || 'N/A'}
+${t.contact.form.email}: ${formData.email || 'N/A'}
+${t.contact.form.company}: ${formData.company || 'N/A'}
+${t.contact.form.service}: ${formData.interest || 'N/A'}
+${t.contact.form.message}: ${formData.message || 'N/A'}`
 
     const encodedMessage = encodeURIComponent(message)
-    window.open(`https://wa.me/905011511116?text=${encodedMessage}`, '_blank')
+    setTimeout(() => {
+      window.open(`https://wa.me/905011511116?text=${encodedMessage}`, '_blank')
+      setIsSubmitting(false)
+    }, 1000)
   }
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = `New Contact Form Submission from ${formData.name}`
-    const body = `Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone || 'N/A'}
-Company: ${formData.company || 'N/A'}
-Interest: ${formData.interest}
-Budget: ${formData.budget || 'N/A'}
-Timeline: ${formData.timeline || 'N/A'}
+    setIsSubmitting(true)
+    const subject = `${t.contact.form.emailSubject} ${formData.name}`
+    const body = `${t.contact.form.name}: ${formData.name}
+${t.contact.form.email}: ${formData.email}
+${t.contact.form.phone}: ${formData.phone || 'N/A'}
+${t.contact.form.company}: ${formData.company || 'N/A'}
+${t.contact.form.service}: ${formData.interest}
+${t.contact.form.budget}: ${formData.budget || 'N/A'}
+${t.contact.form.timeline}: ${formData.timeline || 'N/A'}
 
-Message:
+${t.contact.form.message}:
 ${formData.message}`
 
-    window.location.href = `mailto:info@cloudtopia.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setTimeout(() => {
+      window.location.href = `mailto:info@cloudtopia.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      setIsSubmitting(false)
+    }, 1000)
   }
 
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="text-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary-200/30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary-200/30 rounded-full blur-3xl"></div>
+    <div className="min-h-screen relative py-20 px-4 md:px-8 overflow-x-hidden">
+      <InteractiveBackground />
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg mb-6">
-              <MessageSquare className="w-5 h-5 text-primary-600" />
-              <span className="font-bold text-primary-700">{t.contact.hero.badge}</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              {t.contact.hero.title}{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                {t.contact.hero.titleHighlight}
-              </span>
-            </h1>
-            <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              {t.contact.hero.description}
-            </p>
+      <div className="max-w-7xl mx-auto">
+        <IntroSection />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
-            {/* Quick Contact Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <motion.div
-                whileHover={{ y: -5, scale: 1.05 }}
-                className="group"
-              >
-                <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary-200 bg-white/80 backdrop-blur-sm">
-                  <Mail className="w-10 h-10 mx-auto mb-3 text-primary-600 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="font-semibold text-neutral-900 mb-1">{t.contact.info.email}</p>
-                  <a href="mailto:info@cloudtopia.net" className="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                    info@cloudtopia.net
-                  </a>
-                </Card>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ y: -5, scale: 1.05 }}
-                className="group"
-              >
-                <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-secondary-200 bg-white/80 backdrop-blur-sm">
-                  <Phone className="w-10 h-10 mx-auto mb-3 text-secondary-600 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="font-semibold text-neutral-900 mb-1">{t.contact.info.phone}</p>
-                  <a href="tel:+905011511116" className="text-sm text-secondary-600 hover:text-secondary-700 font-medium">
-                    +90 501 151 11 16
-                  </a>
-                </Card>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ y: -5, scale: 1.05 }}
-                className="group"
-              >
-                <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-green-200 bg-white/80 backdrop-blur-sm">
-                  <MapPin className="w-10 h-10 mx-auto mb-3 text-green-600 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="font-semibold text-neutral-900 mb-1">{t.contact.info.location}</p>
-                  <p className="text-sm text-green-600 font-medium">
-                    {t.contact.info.worldwide}
-                  </p>
-                </Card>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* Contact Form Section */}
-      <Section background="gray">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-          {/* Form */}
-          <div className="lg:col-span-2">
+          {/* Left Column: Info & Vision */}
+          <div className="lg:col-span-5 space-y-12">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <Card className="relative overflow-hidden border-2 border-primary-100">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-primary-100/50 rounded-full blur-3xl"></div>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-600 rounded-xl flex items-center justify-center">
-                      <Send className="w-6 h-6 text-white" />
-                    </div>
-                    <h2 className="text-3xl font-bold">{t.contact.form.title}</h2>
+              <div className="inline-flex items-center gap-2 bg-white/40 backdrop-blur-md px-6 py-3 rounded-full shadow-sm border border-white/50 mb-8">
+                <Sparkles className="w-5 h-5 text-primary-500" />
+                <span className="font-bold text-primary-600 uppercase tracking-widest text-xs">{t.contact.hero.badge}</span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-neutral-900">
+                {t.contact.hero.title}<br />
+                <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient">
+                  {t.contact.hero.titleHighlight}
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl text-neutral-600 font-medium leading-relaxed max-w-xl">
+                {t.contact.hero.description}
+              </p>
+            </motion.div>
+
+            <div className="space-y-6">
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-primary-600/60 ml-2">{t.contact.info.directContact}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <TiltCard className="flex flex-col items-center sm:items-start text-center sm:text-start">
+                  <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 text-primary-600">
+                    <Mail className="w-8 h-8" />
                   </div>
-                  <p className="text-neutral-600 mb-6">{t.contact.form.description}</p>
+                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{t.contact.info.email}</h3>
+                  <a href="mailto:info@cloudtopia.net" className="text-primary-600 font-bold hover:underline">info@cloudtopia.net</a>
+                </TiltCard>
 
-                  <form onSubmit={handleEmailSubmit} className="space-y-6">
-                    {/* Name & Email Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-semibold text-neutral-900 mb-2 flex items-center gap-2">
-                          {t.contact.form.name} *
-                          <span className="text-primary-600">●</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          required
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300"
-                          placeholder={t.contact.form.namePlaceholder}
-                        />
-                      </div>
+                <TiltCard className="flex flex-col items-center sm:items-start text-center sm:text-start">
+                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-green-600">
+                    <MessageSquare className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{t.contact.info.phone}</h3>
+                  <a href="https://wa.me/905011511116" target="_blank" rel="noopener noreferrer" className="text-green-600 font-bold hover:underline" dir="ltr">+90 501 151 11 16</a>
+                </TiltCard>
+              </div>
+            </div>
 
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-neutral-900 mb-2 flex items-center gap-2">
-                          {t.contact.form.email} *
-                          <span className="text-primary-600">●</span>
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300"
-                          placeholder={t.contact.form.emailPlaceholder}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Phone & Company Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-semibold text-neutral-900 mb-2">
-                          {t.contact.form.phone}
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300"
-                          placeholder={t.contact.form.phonePlaceholder}
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="company" className="block text-sm font-semibold text-neutral-900 mb-2">
-                          {t.contact.form.company}
-                        </label>
-                        <input
-                          type="text"
-                          id="company"
-                          value={formData.company}
-                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300"
-                          placeholder={t.contact.form.companyPlaceholder}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Interest */}
-                    <div>
-                      <label htmlFor="interest" className="block text-sm font-semibold text-neutral-900 mb-2 flex items-center gap-2">
-                        {t.contact.form.service} *
-                        <span className="text-primary-600">●</span>
-                      </label>
-                      <select
-                        id="interest"
-                        value={formData.interest}
-                        onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                        required
-                        className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300 bg-white"
-                      >
-                        <option value="">{t.contact.form.servicePlaceholder}</option>
-                        <option value="digital-presence">{t.contact.form.serviceOptions.website}</option>
-                        <option value="business-systems">{t.contact.form.serviceOptions.systems}</option>
-                        <option value="web-apps">{t.contact.form.serviceOptions.webApp}</option>
-                        <option value="marketing">{t.contact.form.serviceOptions.marketing}</option>
-                        <option value="other">{t.contact.form.serviceOptions.other}</option>
-                      </select>
-                    </div>
-
-                    {/* Budget & Timeline Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="budget" className="block text-sm font-semibold text-neutral-900 mb-2">
-                          {t.contact.form.budget}
-                        </label>
-                        <select
-                          id="budget"
-                          value={formData.budget}
-                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300 bg-white"
-                        >
-                          <option value="">{t.contact.form.budgetPlaceholder}</option>
-                          <option value="under-5k">{t.contact.form.budgetOptions.small}</option>
-                          <option value="5k-15k">{t.contact.form.budgetOptions.medium}</option>
-                          <option value="15k-50k">{t.contact.form.budgetOptions.large}</option>
-                          <option value="50k-plus">{t.contact.form.budgetOptions.enterprise}</option>
-                          <option value="discuss">{t.contact.form.budgetOptions.discuss}</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label htmlFor="timeline" className="block text-sm font-semibold text-neutral-900 mb-2">
-                          {t.contact.form.timeline}
-                        </label>
-                        <select
-                          id="timeline"
-                          value={formData.timeline}
-                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                          className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all hover:border-primary-300 bg-white"
-                        >
-                          <option value="">{t.contact.form.timelinePlaceholder}</option>
-                          <option value="urgent">{t.contact.form.timelineOptions.urgent}</option>
-                          <option value="1-month">{t.contact.form.timelineOptions.month}</option>
-                          <option value="2-3-months">{t.contact.form.timelineOptions.quarter}</option>
-                          <option value="3-6-months">{t.contact.form.timelineOptions.quarter}</option>
-                          <option value="flexible">{t.contact.form.timelineOptions.flexible}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-semibold text-neutral-900 mb-2 flex items-center gap-2">
-                        {t.contact.form.message} *
-                        <span className="text-primary-600">●</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        required
-                        rows={6}
-                        className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none hover:border-primary-300"
-                        placeholder={t.contact.form.messagePlaceholder}
-                      ></textarea>
-                    </div>
-
-                    {/* Submit Buttons */}
-                    <div className="space-y-4">
-                      <div className="bg-primary-50 border-2 border-primary-200 rounded-xl p-4">
-                        <p className="text-sm font-semibold text-neutral-900 mb-3 flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-primary-600" />
-                          {t.contact.form.chooseMethod}
-                        </p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <motion.button
-                            type="submit"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary-500 to-secondary-600 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300"
-                          >
-                            <Mail className="w-5 h-5" />
-                            {t.contact.form.sendEmail}
-                          </motion.button>
-
-                          <motion.button
-                            type="button"
-                            onClick={handleWhatsApp}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300"
-                          >
-                            <MessageSquare className="w-5 h-5" />
-                            {t.contact.form.sendWhatsApp}
-                          </motion.button>
-                        </div>
-                      </div>
-
-                      <p className="text-sm text-neutral-500 text-center flex items-center justify-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {t.contact.info.responseValue}
-                      </p>
-                    </div>
-                  </form>
-                </div>
-              </Card>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex gap-4"
+            >
+              {[
+                {
+                  icon: (
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  ),
+                  href: 'https://wa.me/905011511116',
+                  color: 'hover:text-green-600'
+                },
+                {
+                  icon: (
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z" />
+                    </svg>
+                  ),
+                  href: 'https://x.com/thecloudtopia',
+                  color: 'hover:text-neutral-900'
+                },
+                {
+                  icon: (
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                  ),
+                  href: 'https://github.com/Shahoom',
+                  color: 'hover:text-neutral-900'
+                },
+                {
+                  icon: (
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                    </svg>
+                  ),
+                  href: 'https://instagram.com/thecloudtopia',
+                  color: 'hover:text-pink-600'
+                }
+              ].map((platform, i) => (
+                <motion.a
+                  key={i}
+                  href={platform.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  className={`w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/50 text-neutral-600 transition-colors ${platform.color}`}
+                >
+                  {platform.icon}
+                </motion.a>
+              ))}
             </motion.div>
           </div>
 
-          {/* Contact Info Sidebar */}
-          <div className="space-y-6">
-            {/* Contact Details */}
+          {/* Right Column: Interactive Form */}
+          <div className="lg:col-span-7" ref={formRef}>
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="bg-white/40 backdrop-blur-2xl border border-white/50 rounded-[40px] p-8 md:p-12 shadow-2xl relative overflow-hidden"
             >
-              <Card className="border-2 border-primary-100 hover:shadow-xl transition-all duration-300">
-                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-600 rounded-lg flex items-center justify-center">
-                    <Phone className="w-4 h-4 text-white" />
-                  </div>
-                  {t.contact.info.detailsTitle}
-                </h3>
-                <div className="space-y-4">
-                  <div className="p-3 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors duration-200">
-                    <div className="flex items-start gap-3">
-                      <Mail className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-xs font-semibold text-neutral-900 mb-1">{t.contact.info.email}</p>
-                        <a href="mailto:info@cloudtopia.net" className="text-sm text-primary-600 hover:text-primary-700 font-medium break-all">
-                          info@cloudtopia.net
-                        </a>
-                      </div>
-                    </div>
+              {/* Animated corner decorations */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary-500/10 blur-[100px]" />
+              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-secondary-500/10 blur-[100px]" />
+
+              <div className="relative z-10">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+                  <div>
+                    <h2 className="text-4xl font-black text-neutral-900 tracking-tight">{t.contact.form.title}</h2>
+                    <p className="text-neutral-500 font-medium mt-2">{t.contact.form.description}</p>
                   </div>
 
-                  <div className="p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200">
-                    <div className="flex items-start gap-3">
-                      <Phone className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-xs font-semibold text-neutral-900 mb-1">{t.contact.info.phone}</p>
-                        <a href="tel:+905011511116" className="text-sm text-green-600 hover:text-green-700 font-medium">
-                          +90 501 151 11 16
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors duration-200">
-                    <div className="flex items-start gap-3">
-                      <Globe className="w-5 h-5 text-secondary-600 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-xs font-semibold text-neutral-900 mb-1">{t.contact.info.location}</p>
-                        <p className="text-sm text-secondary-600 font-medium">
-                          {t.contact.info.worldwide}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-blue-50 rounded-lg">
-                    <div className="flex items-start gap-3">
-                      <Clock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-xs font-semibold text-neutral-900 mb-1">{t.contact.info.responseTime}</p>
-                        <p className="text-sm text-blue-600 font-medium">
-                          {t.contact.info.responseValue}
-                        </p>
-                      </div>
-                    </div>
+                  <div className="flex bg-lavender/50 p-1 rounded-2xl border border-neutral-200">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('email')}
+                      className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === 'email' ? 'bg-white text-primary-600 shadow-md' : 'text-neutral-500 hover:text-neutral-800'}`}
+                    >
+                      {t.contact.form.emailTab}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('whatsapp')}
+                      className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === 'whatsapp' ? 'bg-white text-green-600 shadow-md' : 'text-neutral-500 hover:text-neutral-800'}`}
+                    >
+                      {t.contact.form.whatsappTab}
+                    </button>
                   </div>
                 </div>
-              </Card>
-            </motion.div>
 
-            {/* What to Expect */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <Card className="bg-gradient-to-br from-primary-50 via-white to-secondary-50 border-2 border-primary-200 hover:shadow-xl transition-all duration-300">
-                <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary-600" />
-                  {t.contact.nextSteps.title}
-                </h3>
-                <ol className="space-y-3">
-                  {t.contact.nextSteps.steps.map((step, index) => (
-                    <motion.li
-                      key={index}
-                      className="flex gap-3 items-start"
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <span className="w-6 h-6 bg-gradient-to-br from-primary-600 to-secondary-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold shadow-md">
-                        {index + 1}
-                      </span>
-                      <span className="text-sm text-neutral-700 leading-relaxed">{step}</span>
-                    </motion.li>
-                  ))}
-                </ol>
-              </Card>
-            </motion.div>
+                <form onSubmit={activeTab === 'email' ? handleEmailSubmit : handleWhatsApp} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FloatingInput
+                      label={t.contact.form.name}
+                      id="name"
+                      value={formData.name}
+                      onChange={(e: any) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                    <FloatingInput
+                      label={t.contact.form.email}
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e: any) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
+                  </div>
 
-            {/* Quick Links */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Card className="border-2 border-neutral-200 hover:shadow-xl transition-all duration-300">
-                <h3 className="text-lg font-bold mb-3">{t.contact.quickLinks.title}</h3>
-                <p className="text-sm text-neutral-600 mb-4">
-                  {t.contact.quickLinks.description}
-                </p>
-                <div className="space-y-2">
-                  {t.contact.quickLinks.links.map((link, index) => (
-                    <motion.a
-                      key={index}
-                      href={l(link.href)}
-                      whileHover={{ x: 5 }}
-                      className="flex items-center gap-2 text-sm text-primary-600 hover:text-primary-700 font-medium p-2 rounded-lg hover:bg-primary-50 transition-colors duration-200"
-                    >
-                      <span>{link.icon}</span>
-                      {link.label}
-                      <span className={dir === 'rtl' ? 'mr-auto rotate-180' : 'ml-auto'}>→</span>
-                    </motion.a>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </Section>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FloatingInput
+                      label={t.contact.form.phone}
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e: any) => setFormData({ ...formData, phone: e.target.value })}
+                    />
+                    <FloatingInput
+                      label={t.contact.form.company}
+                      id="company"
+                      value={formData.company}
+                      onChange={(e: any) => setFormData({ ...formData, company: e.target.value })}
+                    />
+                  </div>
 
-      {/* Why Choose Us */}
-      <Section>
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t.contact.whyUs.title.split(' ').slice(0, 2).join(' ')}{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                {t.contact.whyUs.title.split(' ').slice(2).join(' ')}
-              </span>
-            </h2>
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-              {t.contact.whyUs.subtitle}
-            </p>
-          </motion.div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <CustomSelect
+                      label={t.contact.form.service}
+                      id="interest"
+                      value={formData.interest}
+                      onChange={(e: any) => setFormData({ ...formData, interest: e.target.value })}
+                      required
+                      options={[
+                        { value: 'digital-presence', label: t.contact.form.serviceOptions.website },
+                        { value: 'business-systems', label: t.contact.form.serviceOptions.systems },
+                        { value: 'web-apps', label: t.contact.form.serviceOptions.webApp },
+                        { value: 'marketing', label: t.contact.form.serviceOptions.marketing },
+                        { value: 'other', label: t.contact.form.serviceOptions.other },
+                      ]}
+                    />
+                    <CustomSelect
+                      label={t.contact.form.budget}
+                      id="budget"
+                      value={formData.budget}
+                      onChange={(e: any) => setFormData({ ...formData, budget: e.target.value })}
+                      options={[
+                        { value: 'under-1k', label: t.contact.form.budgetOptions.small },
+                        { value: '1k-5k', label: t.contact.form.budgetOptions.medium },
+                        { value: '5k-10k', label: t.contact.form.budgetOptions.large },
+                        { value: '10k-plus', label: t.contact.form.budgetOptions.enterprise },
+                        { value: 'discuss', label: t.contact.form.budgetOptions.discuss },
+                      ]}
+                    />
+                    <CustomSelect
+                      label={t.contact.form.timeline}
+                      id="timeline"
+                      value={formData.timeline}
+                      onChange={(e: any) => setFormData({ ...formData, timeline: e.target.value })}
+                      options={[
+                        { value: 'urgent', label: t.contact.form.timelineOptions.urgent },
+                        { value: '1-month', label: t.contact.form.timelineOptions.month },
+                        { value: '2-3-months', label: t.contact.form.timelineOptions.quarter },
+                        { value: 'flexible', label: t.contact.form.timelineOptions.flexible },
+                      ]}
+                    />
+                  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: <CheckCircle className="w-8 h-8" />,
-                title: t.contact.whyUs.items[0].title,
-                description: t.contact.whyUs.items[0].description,
-                color: 'from-green-500 to-green-600'
-              },
-              {
-                icon: <Shield className="w-8 h-8" />,
-                title: t.contact.whyUs.items[1].title,
-                description: t.contact.whyUs.items[1].description,
-                color: 'from-blue-500 to-blue-600'
-              },
-              {
-                icon: <Users className="w-8 h-8" />,
-                title: t.contact.whyUs.items[2].title,
-                description: t.contact.whyUs.items[2].description,
-                color: 'from-purple-500 to-purple-600'
-              },
-              {
-                icon: <Globe className="w-8 h-8" />,
-                title: t.contact.whyUs.items[3].title,
-                description: t.contact.whyUs.items[3].description,
-                color: 'from-orange-500 to-orange-600'
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, scale: 1.05 }}
-              >
-                <Card className="text-center h-full hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary-200">
-                  <motion.div
-                    className={`w-16 h-16 bg-gradient-to-br ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-lg`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
+                  <FloatingTextarea
+                    label={t.contact.form.message}
+                    id="message"
+                    value={formData.message}
+                    onChange={(e: any) => setFormData({ ...formData, message: e.target.value })}
+                    required
+                  />
+
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`w-full py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-3 transition-all duration-500 shadow-2xl relative overflow-hidden group ${activeTab === 'email'
+                      ? 'bg-neutral-900 text-white hover:bg-black'
+                      : 'bg-green-600 text-white hover:bg-green-700 shadow-green-500/30'
+                      }`}
                   >
-                    {item.icon}
-                  </motion.div>
-                  <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm text-neutral-600">{item.description}</p>
-                </Card>
-              </motion.div>
-            ))}
+                    <AnimatePresence mode="wait">
+                      {isSubmitting ? (
+                        <motion.div
+                          key="loading"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="flex items-center gap-2"
+                        >
+                          <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>{t.contact.form.sending}</span>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="text"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="flex items-center gap-3"
+                        >
+                          {activeTab === 'email' ? <Mail className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
+                          {activeTab === 'email' ? t.contact.form.sendEmail : t.contact.form.sendWhatsApp}
+                          <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform ${dir === 'rtl' ? 'rotate-180 group-hover:-translate-x-2' : ''}`} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
+                </form>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </Section>
-    </>
+
+
+        {/* Professional Connect Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 border-t border-white/20 pt-10"
+        >
+          <ProfessionalConnect />
+        </motion.div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          animation: gradient 6s ease infinite;
+        }
+      `}</style>
+    </div>
   )
 }
-

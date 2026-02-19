@@ -21,8 +21,8 @@ export default function Section({
   }
 
   const backgroundClasses = {
-    white: 'bg-white',
-    gray: 'bg-neutral-50',
+    white: 'bg-lavender',
+    gray: 'bg-lavender',
     gradient: 'bg-gradient-hero text-white'
   }
 

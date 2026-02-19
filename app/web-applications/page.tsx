@@ -45,8 +45,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'منصات مخصصة لبث المحتوى المرئي والصوتي مع تفاعل فوري وإدارة شاملة'
                 : 'Custom platforms for video and audio streaming with live interaction and content management',
-            gradient: "bg-gradient-to-br from-rose-500 to-pink-600",
-            glowColor: "bg-rose-500/50",
+            gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['بث مباشر عالي الجودة', 'إدارة المحتوى والمكتبات', 'نظام اشتراكات ومدفوعات', 'تحليلات المشاهدة والتفاعل']
                 : ['HD live streaming infrastructure', 'Content libraries and management', 'Subscription and monetization', 'Viewer analytics and engagement'],
@@ -58,8 +58,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'منصات تجارة متكاملة تربط البائعين بالمشترين مع أنظمة دفع وشحن'
                 : 'Complete commerce platforms connecting buyers and sellers with integrated payments and logistics',
-            gradient: "bg-gradient-to-br from-emerald-500 to-teal-600",
-            glowColor: "bg-emerald-500/50",
+            gradient: "bg-gradient-to-br from-teal-500 to-teal-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['إدارة البائعين والمنتجات', 'نظام عربات التسوق والدفع', 'لوحات تحكم للبائعين', 'تتبع الطلبات والشحن']
                 : ['Vendor and product management', 'Shopping cart and checkout', 'Seller dashboards and tools', 'Order tracking and fulfillment'],
@@ -71,8 +71,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'تطبيقات سحابية للشركات مع إدارة مستخدمين وفواتير اشتراكات'
                 : 'Cloud-based business applications with user management and subscription billing',
-            gradient: "bg-gradient-to-br from-violet-500 to-purple-600",
-            glowColor: "bg-violet-500/50",
+            gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['بنية متعددة المستأجرين', 'إدارة الفواتير والاشتراكات', 'لوحات تحكم تحليلية', 'واجهات برمجية API للتكامل']
                 : ['Multi-tenant architecture', 'Billing and subscription management', 'Analytics dashboards', 'API access for integrations'],
@@ -84,8 +84,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'بوابات مخصصة للعملاء لإدارة الحسابات والطلبات والوثائق'
                 : 'Custom client portals for account management, orders, and document access',
-            gradient: "bg-gradient-to-br from-blue-500 to-cyan-600",
-            glowColor: "bg-blue-500/50",
+            gradient: "bg-gradient-to-br from-cyan-500 to-cyan-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['تسجيل دخول آمن للعملاء', 'إدارة الحسابات والملفات', 'تتبع الطلبات والخدمات', 'تواصل مباشر ودعم فني']
                 : ['Secure client authentication', 'Account and profile management', 'Service and order tracking', 'Direct messaging and support'],
@@ -97,8 +97,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'تطبيقات داخلية مخصصة لإدارة العمليات والموظفين والموارد'
                 : 'Tailored internal applications for operations, team, and resource management',
-            gradient: "bg-gradient-to-br from-slate-500 to-gray-600",
-            glowColor: "bg-slate-500/50",
+            gradient: "bg-gradient-to-br from-gray-500 to-gray-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['أتمتة سير العمل الداخلي', 'لوحات تحكم إدارية', 'إدارة الموظفين والمهام', 'تقارير وتحليلات أداء']
                 : ['Workflow automation', 'Admin dashboards and controls', 'Team and task management', 'Performance reporting'],
@@ -110,8 +110,8 @@ export default function WebApplicationsPage() {
             description: locale === 'ar'
                 ? 'تطبيقات متقدمة تستخدم الذكاء الاصطناعي لتحسين العمليات والتنبؤات'
                 : 'Advanced applications leveraging AI for process optimization and predictions',
-            gradient: "bg-gradient-to-br from-amber-500 to-orange-600",
-            glowColor: "bg-amber-500/50",
+            gradient: "bg-gradient-to-br from-orange-500 to-orange-600",
+            glowColor: "bg-lavender/50",
             features: locale === 'ar'
                 ? ['معالجة اللغة الطبيعية', 'التعلم الآلي والتنبؤات', 'أتمتة ذكية للمهام', 'تحليلات متقدمة']
                 : ['Natural language processing', 'Machine learning & predictions', 'Intelligent task automation', 'Advanced analytics'],
@@ -119,15 +119,15 @@ export default function WebApplicationsPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-white" dir={dir}>
+        <div className="min-h-screen bg-lavender" dir={dir}>
             {/* Section 1: Globe Hero */}
             <DotGlobeHero
                 rotationSpeed={0.004}
                 className="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 relative overflow-hidden"
             >
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-slate-900/30" />
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-lavender/10 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-lavender/10 rounded-full blur-3xl animate-pulse" />
 
                 <div className="relative z-10 text-center space-y-12 max-w-5xl mx-auto px-6 py-12">
                     <motion.div
@@ -140,9 +140,9 @@ export default function WebApplicationsPage() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-emerald-500/20 border border-emerald-400/30 backdrop-blur-xl shadow-2xl"
+                            className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-lavender/20 via-lavender/10 to-lavender/20 border border-emerald-400/30 backdrop-blur-xl shadow-2xl"
                         >
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/10 via-transparent to-emerald-500/10 animate-pulse" />
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-lavender/10 via-transparent to-lavender/10 animate-pulse" />
                             <div className="w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
                             <span className="relative z-10 text-sm font-bold text-emerald-400 tracking-wider uppercase">{currentContent.badge}</span>
                             <div className="w-2 h-2 bg-emerald-400 rounded-full animate-ping" style={{ animationDelay: '500ms' }} />
@@ -204,11 +204,11 @@ export default function WebApplicationsPage() {
                             }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => window.location.href = '/contact'}
-                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 via-emerald-500 to-teal-500 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-emerald-500/30 transition-all duration-500 overflow-hidden border border-emerald-400/20"
+                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-emerald-500/30 transition-all duration-500 overflow-hidden border border-emerald-400/20"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-lavender/20 via-lavender/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                className="absolute inset-0 bg-gradient-to-r from-transparent via-lavender/30 to-transparent"
                                 initial={{ x: "-100%" }}
                                 whileHover={{ x: "100%" }}
                                 transition={{ duration: 0.8 }}
@@ -264,7 +264,7 @@ export default function WebApplicationsPage() {
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
                             href="/contact"
-                            className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-white rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                            className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {locale === 'ar' ? 'ابدأ مشروعك اليوم' : 'Start Your Project Today'}
                             <svg className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 rtl:rotate-180 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +273,7 @@ export default function WebApplicationsPage() {
                         </Link>
                         <Link
                             href="/services"
-                            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-white/10 transition-all duration-300"
+                            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"
                         >
                             {locale === 'ar' ? 'استكشف خدماتنا' : 'Explore All Services'}
                         </Link>

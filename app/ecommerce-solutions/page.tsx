@@ -107,7 +107,7 @@ export default function EcommerceSolutionsPage() {
   return (
     <main className="flex-grow">
       <div
-        className="flex flex-col overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900"
+        className="flex flex-col overflow-hidden bg-gradient-to-b from-lavender via-lavender to-lavender text-slate-900"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Container Scroll Sections */}

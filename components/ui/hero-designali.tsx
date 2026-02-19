@@ -73,6 +73,7 @@ Line.prototype = {
     // @ts-ignore
     this.nodes = [];
     for (let i = 0; i < E.size; i++) {
+      // @ts-ignore
       const t = new Node();
       // @ts-ignore
       t.x = pos.x;
@@ -281,7 +282,7 @@ function ShineBorder({
         } as React.CSSProperties
       }
       className={cn(
-        "relative grid h-full w-full place-items-center rounded-3xl bg-white p-3 text-black dark:bg-black dark:text-white",
+        "relative grid h-full w-full place-items-center rounded-3xl bg-lavender p-3 text-black dark:bg-black dark:text-white",
         className
       )}
     >

@@ -10,7 +10,7 @@ import {
   GalleryCol,
   GalleryContainer,
 } from "@/components/ui/animated-gallery"
-import { Button } from "@/components/ui/Button"
+import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { QrCode, Smartphone, ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -132,7 +132,7 @@ function MobileImageCarousel() {
   return (
     <div className="relative w-full h-[50vh] overflow-hidden rounded-2xl mx-auto max-w-[90vw]">
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-lavender via-transparent to-transparent z-10 pointer-events-none" />
 
       <AnimatePresence mode="wait">
         <motion.img
@@ -154,8 +154,8 @@ function MobileImageCarousel() {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                ? "bg-orange-500 w-6"
-                : "bg-white/60"
+              ? "bg-lavender w-6"
+              : "bg-lavender/60"
               }`}
           />
         ))}
@@ -181,7 +181,7 @@ export default function RestaurantQRMenuPage() {
   // Prevent hydration mismatch
   if (isMobile === null) {
     return (
-      <main className="flex-grow min-h-screen bg-white" dir={isRTL ? "rtl" : "ltr"}>
+      <main className="flex-grow min-h-screen bg-lavender" dir={isRTL ? "rtl" : "ltr"}>
         <div className="flex items-center justify-center h-screen">
           <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -192,7 +192,7 @@ export default function RestaurantQRMenuPage() {
   return (
     <main className="flex-grow" dir={isRTL ? "rtl" : "ltr"}>
       {/* Hero Section */}
-      <div className="relative bg-white">
+      <div className="relative bg-lavender">
         {/* Header Content */}
         <ContainerStagger className="relative z-[9999] place-self-center px-4 sm:px-6 pt-16 sm:pt-20 md:pt-28 text-center">
           <ContainerAnimated>
@@ -229,7 +229,7 @@ export default function RestaurantQRMenuPage() {
                 {t.cta} <Smartphone className="w-4 h-4" />
               </Button>
             </Link>
-            <Button variant="outline" className="gap-2 border-slate-300 text-slate-700 hover:bg-slate-50 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
+            <Button variant="outline" className="gap-2 border-slate-300 text-slate-700 hover:bg-lavender px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
               {t.learnMore} <ArrowRight className="w-4 h-4" />
             </Button>
           </ContainerAnimated>

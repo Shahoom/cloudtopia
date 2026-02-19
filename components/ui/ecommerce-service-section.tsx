@@ -18,7 +18,7 @@ const content = {
     heroTitle: "Build Your",
     heroHighlight: "Online Empire",
     heroDescription: "We design and develop powerful e-commerce platforms that transform your business into a 24/7 sales machine. From custom online stores to enterprise marketplaces, we deliver solutions that drive revenue, enhance customer experience, and scale with your growth.",
-    
+
     // Main Features
     featuresTitle: "Complete E-Commerce Solutions",
     featuresSubtitle: "Everything You Need to Sell Online Successfully",
@@ -71,7 +71,7 @@ const content = {
         description: "We analyze your business model, target audience, competitors, and goals to create a comprehensive e-commerce strategy and technical roadmap."
       },
       {
-        step: "02", 
+        step: "02",
         title: "Design & UX",
         description: "Our designers create stunning, conversion-optimized interfaces with intuitive navigation, compelling product displays, and seamless checkout flows."
       },
@@ -102,7 +102,7 @@ const content = {
     heroTitle: "ابنِ",
     heroHighlight: "إمبراطوريتك الرقمية",
     heroDescription: "نصمم ونطور منصات تجارة إلكترونية قوية تحول عملك إلى آلة مبيعات تعمل على مدار الساعة. من المتاجر المخصصة إلى الأسواق الإلكترونية للمؤسسات، نقدم حلولاً تزيد الإيرادات وتحسن تجربة العملاء وتنمو مع توسعك.",
-    
+
     // Main Features
     featuresTitle: "حلول تجارة إلكترونية متكاملة",
     featuresSubtitle: "كل ما تحتاجه للبيع عبر الإنترنت بنجاح",
@@ -185,7 +185,7 @@ const content = {
 function AnimatedSection({ children, delay = 0, className }: { children: React.ReactNode, delay?: number, className?: string }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+
   return (
     <motion.div
       ref={ref}
@@ -217,7 +217,7 @@ const GlowingCard = ({ title, description, area }: GlowingCardProps) => {
           inactiveZone={0.01}
           borderWidth={3}
         />
-        <div className="relative flex h-full flex-col justify-between gap-4 overflow-hidden rounded-xl border-[0.75px] border-slate-100 bg-white p-5 sm:p-6 shadow-sm">
+        <div className="relative flex h-full flex-col justify-between gap-4 overflow-hidden rounded-xl border-[0.75px] border-slate-100 bg-lavender p-5 sm:p-6 shadow-sm">
           <div className="relative flex flex-1 flex-col justify-between gap-3">
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl leading-tight font-semibold tracking-tight text-slate-900">
@@ -237,22 +237,22 @@ const GlowingCard = ({ title, description, area }: GlowingCardProps) => {
 export function EcommerceServiceSection({ isRTL = false, locale = "en" }: EcommerceServiceSectionProps) {
   const t = isRTL ? content.ar : content.en
   const Arrow = isRTL ? ArrowLeft : ArrowRight
-  
+
   return (
-    <section 
-      className="w-full bg-white text-slate-900"
+    <section
+      className="w-full bg-lavender text-slate-900"
       dir={isRTL ? "rtl" : "ltr"}
       aria-labelledby="ecommerce-service-title"
     >
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-slate-50 to-white py-16 sm:py-20 md:py-24 px-4 sm:px-6">
+      <div className="bg-gradient-to-b from-lavender to-lavender py-16 sm:py-20 md:py-24 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto text-center">
           <AnimatedSection>
             <span className="inline-block px-4 py-2 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-600 mb-6">
               {t.badge}
             </span>
           </AnimatedSection>
-          
+
           <AnimatedSection delay={0.1}>
             <h1 id="ecommerce-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
               {t.heroTitle}{" "}
@@ -261,7 +261,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
               </span>
             </h1>
           </AnimatedSection>
-          
+
           <AnimatedSection delay={0.2}>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
               {t.heroDescription}
@@ -271,7 +271,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
       </div>
 
       {/* Features Section with Glowing Cards */}
-      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-slate-50">
+      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-lavender">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <AnimatedSection>
@@ -283,7 +283,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
               </p>
             </AnimatedSection>
           </div>
-          
+
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             {t.features.map((feature, index) => (
               <GlowingCard
@@ -309,7 +309,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
               </p>
             </AnimatedSection>
           </div>
-          
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {t.process.map((step, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
@@ -331,7 +331,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
       </div>
 
       {/* Platforms Section */}
-      <div className="py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+      <div className="py-12 sm:py-16 px-4 sm:px-6 bg-lavender">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">
@@ -339,9 +339,9 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             </h3>
             <div className="flex flex-wrap justify-center gap-4">
               {t.platforms.map((platform, index) => (
-                <span 
+                <span
                   key={index}
-                  className="px-6 py-3 bg-white rounded-full text-slate-700 font-medium border border-slate-200 hover:border-violet-300 hover:text-violet-600 transition-colors"
+                  className="px-6 py-3 bg-lavender rounded-full text-slate-700 font-medium border border-slate-200 hover:border-violet-300 hover:text-violet-600 transition-colors"
                 >
                   {platform}
                 </span>
@@ -363,7 +363,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             </p>
             <a
               href={`/${locale}/contact`}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-violet-600 font-bold text-lg rounded-full hover:bg-violet-50 transition-colors shadow-xl hover:shadow-2xl"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-violet-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
               {t.ctaButton}
               <Arrow className="w-5 h-5" />
@@ -385,11 +385,12 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             "provider": {
               "@type": "Organization",
               "name": "CloudTopia",
-              "url": "https://cloudtopia.com",
-              "logo": "https://cloudtopia.com/logo.png",
+              "url": "https://cloudtopia.net",
+              "logo": "https://cloudtopia.net/images/CloudTopia.svg",
               "sameAs": [
-                "https://twitter.com/cloudtopia",
-                "https://linkedin.com/company/cloudtopia"
+                "https://x.com/thecloudtopia",
+                "https://instagram.com/thecloudtopia",
+                "https://github.com/Shahoom"
               ]
             },
             "areaServed": [
@@ -421,7 +422,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             },
             "potentialAction": {
               "@type": "ContactAction",
-              "target": "https://cloudtopia.com/contact"
+              "target": "https://cloudtopia.net/contact"
             }
           })
         }}

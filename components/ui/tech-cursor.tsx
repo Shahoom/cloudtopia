@@ -73,7 +73,7 @@ const TechCursor = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       };
-      
+
       handleResize();
       window.addEventListener("resize", handleResize);
 
@@ -95,17 +95,17 @@ const TechCursor = () => {
       animate();
 
       let frameCount = 0;
-      
+
       const onMove = (e: MouseEvent) => {
         if (techImagesRef.current.length === 0) return;
-        
-        // Only create particle every 4th mouse move event (slower spawn rate)
+
+        // Balanced spawn rate (every 3rd move)
         frameCount++;
-        if (frameCount % 4 !== 0) return;
-        
+        if (frameCount % 3 !== 0) return;
+
         const randomIcon =
           techImagesRef.current[
-            Math.floor(Math.random() * techImagesRef.current.length)
+          Math.floor(Math.random() * techImagesRef.current.length)
           ];
 
         const size = 22 + Math.random() * 8;
@@ -117,8 +117,8 @@ const TechCursor = () => {
           image: randomIcon.image,
           size,
           update() {
-            this.y -= 0.2;  // Slower upward movement (was 0.4)
-            this.alpha -= 0.008;  // Slower fade out (was 0.02)
+            this.y -= 0.4;  // Slightly slower upward movement
+            this.alpha -= 0.01;  // Slightly slower fade out
           },
           draw(ctx: CanvasRenderingContext2D) {
             ctx.globalAlpha = this.alpha;

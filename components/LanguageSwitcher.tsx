@@ -19,8 +19,8 @@ export default function LanguageSwitcher({ isDark = false }: LanguageSwitcherPro
     <button
       onClick={toggleLocale}
       className={`flex items-center gap-1 px-4 py-2 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group ${isDark
-        ? 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30'
-        : 'bg-white/80 hover:bg-white border border-neutral-200 hover:border-primary-300'
+        ? 'bg-lavender/10 hover:bg-lavender/20 border border-white/20 hover:border-white/30'
+        : 'bg-lavender/80 hover:bg-lavender border border-neutral-200 hover:border-primary-300'
         }`}
       aria-label="Switch language"
     >

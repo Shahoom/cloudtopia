@@ -52,7 +52,7 @@ export function NavBar({ items, className, isDark = false }: NavBarProps) {
       <div className={cn(
         "flex items-center gap-1 backdrop-blur-lg py-1 px-1 rounded-full shadow-lg transition-all duration-300",
         isDark
-          ? "bg-white/10 border border-white/20"
+          ? "bg-lavender/10 border border-white/20"
           : "bg-neutral-900/5 border border-neutral-200"
       )}>
         {items.map((item) => {
@@ -79,7 +79,7 @@ export function NavBar({ items, className, isDark = false }: NavBarProps) {
               {isActive && (
                 <motion.div
                   layoutId="lamp"
-                  className="absolute inset-0 w-full bg-white rounded-full -z-0 shadow-md"
+                  className="absolute inset-0 w-full bg-lavender rounded-full -z-0 shadow-md"
                   initial={false}
                   transition={{
                     type: "spring",
@@ -88,7 +88,7 @@ export function NavBar({ items, className, isDark = false }: NavBarProps) {
                   }}
                 >
                   {/* Tubelight glow effect */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-t-full shadow-lg">
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-lavender via-lavender to-lavender rounded-t-full shadow-lg">
                     <div className="absolute w-12 h-6 bg-primary-400/30 rounded-full blur-md -top-2 -left-2" />
                     <div className="absolute w-8 h-6 bg-secondary-400/30 rounded-full blur-md -top-1" />
                     <div className="absolute w-4 h-4 bg-primary-400/40 rounded-full blur-sm top-0 left-2" />

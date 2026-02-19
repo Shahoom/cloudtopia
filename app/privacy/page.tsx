@@ -1,5 +1,5 @@
-import Section from '@/components/ui/Section'
-import Card from '@/components/ui/Card'
+import Section from '@/components/ui/section'
+import Card from '@/components/ui/card'
 import { Shield } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -13,9 +13,9 @@ export default function PrivacyPage() {
   return (
     <>
       {/* Hero Section */}
-      <Section className="bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+      <Section className="bg-gradient-to-br from-lavender via-lavender to-lavender">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg mb-6">
+          <div className="inline-flex items-center gap-2 bg-lavender/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg mb-6">
             <Shield className="w-5 h-5 text-primary-600" />
             <span className="font-bold text-primary-700">Privacy Policy</span>
           </div>
@@ -165,7 +165,7 @@ export default function PrivacyPage() {
             </div>
           </Card>
 
-          <Card className="bg-primary-50 border-primary-200">
+          <Card className="bg-lavender border-primary-200">
             <h2 className="text-2xl font-bold mb-4 text-neutral-900">10. Contact Us</h2>
             <div className="space-y-4 text-neutral-700">
               <p>

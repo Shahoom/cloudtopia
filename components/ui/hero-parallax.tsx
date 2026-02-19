@@ -60,13 +60,13 @@ export const HeroParallax = ({
         springConfig
     );
     const translateY = useSpring(
-        useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+        useTransform(scrollYProgress, [0, 0.2], [-400, 300]),
         springConfig
     );
     return (
         <div
             ref={ref}
-            className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+            className="h-[120vh] md:h-[180vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
         >
             <Header title={title} description={description} isRTL={isRTL} />
             <motion.div
@@ -112,12 +112,12 @@ export const HeroParallax = ({
 
 export const Header = ({ title, description, isRTL = false }: { title?: string; description?: string; isRTL?: boolean }) => {
     return (
-        <div className={`max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 ${isRTL ? 'text-right' : 'text-left'}`}>
+        <div className={`max-w-7xl relative mx-auto py-10 md:py-20 px-4 w-full left-0 top-0 ${isRTL ? 'text-right' : 'text-left'}`}>
             <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-slate-900 leading-tight"
+                className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-slate-900 leading-tight"
             >
                 {title || (
                     <>
@@ -129,7 +129,7 @@ export const Header = ({ title, description, isRTL = false }: { title?: string; 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className={`max-w-2xl text-sm md:text-xl mt-4 md:mt-8 text-slate-700 leading-relaxed ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}
+                className={`max-w-2xl text-lg md:text-xl mt-4 md:mt-8 text-slate-700 leading-relaxed ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}
             >
                 {description || "We build beautiful products with the latest technologies and frameworks. We are a team of passionate developers and designers that love to build amazing products."}
             </motion.p>
@@ -159,7 +159,7 @@ export const ProductCard = ({
                 transition: { duration: 0.2 }
             }}
             key={product.title}
-            className="group/product h-96 w-[30rem] relative flex-shrink-0 transition-shadow duration-300 hover:shadow-2xl rounded-2xl overflow-hidden"
+            className="group/product h-80 w-[20rem] md:h-96 md:w-[30rem] relative flex-shrink-0 transition-shadow duration-300 hover:shadow-2xl rounded-2xl overflow-hidden"
         >
             <Image
                 src={product.thumbnail}

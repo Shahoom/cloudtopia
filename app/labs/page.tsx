@@ -1,388 +1,412 @@
 'use client'
 
-import { PrimaryButton, OutlineButton } from '@/components/ui/Button'
-import Section from '@/components/ui/Section'
-import Tag from '@/components/ui/Tag'
-import Card from '@/components/ui/Card'
-import { motion } from 'framer-motion'
-import { Sparkles, Brain, Image, FileText, BarChart3, Globe, ShoppingCart, Calendar, Briefcase } from 'lucide-react'
-import OrbitingSkills from '@/components/ui/orbiting-skills'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { cn } from '@/lib/utils'
+import {
+    Brain, Sparkles, Eye, TrendingUp, Settings, RotateCcw,
+    ArrowRight,
+    Globe, LayoutDashboard, Workflow, Database, ChevronDown
+} from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import dynamic from 'next/dynamic'
 
-export default function LabsPage() {
-  const { t, locale } = useLanguage()
+const RainingLetters = dynamic(
+    () => import('@/components/ui/modern-animated-hero-section'),
+    { ssr: false }
+)
 
-  const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+const InteractiveCardGallery = dynamic<any>(
+    () => import('@/components/ui/3d-interactive-card-gallery'),
+    { ssr: false }
+)
 
-  // AI Tools we've created
-  const aiTools = [
-    {
-      ...t.labs.aiTools.items[0],
-      icon: <FileText className="w-6 h-6" />,
-      color: 'from-blue-500 to-blue-600',
-    },
-    {
-      ...t.labs.aiTools.items[1],
-      icon: <Image className="w-6 h-6" />,
-      color: 'from-purple-500 to-purple-600',
-    },
-    {
-      ...t.labs.aiTools.items[2],
-      icon: <Brain className="w-6 h-6" />,
-      color: 'from-pink-500 to-pink-600',
-    },
-  ]
+const InteractiveNebulaShader = dynamic(
+    () => import('@/components/ui/liquid-shader').then(mod => mod.InteractiveNebulaShader),
+    { ssr: false }
+)
 
-  // Real projects we've built for clients
-  const clientProjects = [
-    {
-      ...t.labs.projects.items[0],
-      icon: <Globe className="w-6 h-6" />,
-      gradient: 'from-amber-500 to-orange-600',
-    },
-    {
-      ...t.labs.projects.items[1],
-      icon: <Calendar className="w-6 h-6" />,
-      gradient: 'from-green-500 to-emerald-600',
-    },
-    {
-      ...t.labs.projects.items[2],
-      icon: <ShoppingCart className="w-6 h-6" />,
-      gradient: 'from-purple-500 to-pink-600',
-    },
-    {
-      ...t.labs.projects.items[3],
-      icon: <BarChart3 className="w-6 h-6" />,
-      gradient: 'from-violet-500 to-purple-600',
-    },
-  ]
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
-  return (
-    <>
-      {/* Hero Section */}
-      <Section className="text-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden relative">
-        {/* Orbiting Skills Background */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-50 pointer-events-none">
-          <OrbitingSkills />
-        </div>
+// ─── Data ────────────────────────────────────────────────────────────────────
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg mb-6">
-              <Sparkles className="w-5 h-5 text-primary-600" />
-              <span className="font-bold text-primary-700">{t.labs.hero.badge}</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              {t.labs.hero.title}{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                {t.labs.hero.titleHighlight}
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-neutral-600 mb-6 max-w-3xl mx-auto leading-relaxed">
-              {t.labs.hero.description}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <PrimaryButton href={l('/contact')}>
-                {t.labs.cta.button}
-              </PrimaryButton>
-              <OutlineButton href={l('/services')}>
-                {t.nav.services}
-              </OutlineButton>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
+// ─── Local Icon Mapping for Innovation Domains ───────────────────────────────
+const domainIcons = [Sparkles, Brain, Eye, TrendingUp, Settings, RotateCcw]
+const domainStyles = [
+    { gradient: 'from-violet-500/20 to-lavender/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-violet-400' },
+    { gradient: 'from-blue-500/20 to-cyan-500/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-blue-400' },
+    { gradient: 'from-emerald-500/20 to-teal-500/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-emerald-400' },
+    { gradient: 'from-amber-500/20 to-orange-500/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-amber-400' },
+    { gradient: 'from-rose-500/20 to-pink-500/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-rose-400' },
+    { gradient: 'from-sky-500/20 to-blue-500/20', border: 'border-white/5 hover:border-white/10', iconColor: 'text-sky-400' },
+]
 
-      {/* AI Tools Section */}
-      <Section>
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+// ─── Sub-components ──────────────────────────────────────────────────────────
+
+function SectionHeading({ badge, title, description, gradientText, variant = 'dark' }: { badge?: string; title: string; description: string; gradientText?: string; variant?: 'dark' | 'light' }) {
+    const isDark = variant === 'dark'
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <motion.div
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 px-6 py-2 rounded-full mb-6 shadow-lg relative overflow-hidden group cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-secondary-600 to-primary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <Brain className="w-5 h-5 text-white relative z-10" />
-              </motion.div>
-              <span className="font-bold text-white relative z-10">{t.labs.aiTools.badge}</span>
-            </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t.labs.aiTools.title}{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                {t.labs.aiTools.title}
-              </span>
-            </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              {t.labs.aiTools.description}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {aiTools.map((tool, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group"
-              >
-                <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-primary-300 relative overflow-hidden">
-                  {/* Animated gradient background on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-transparent to-secondary-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-4">
-                      <motion.div
-                        className={`w-14 h-14 bg-gradient-to-br ${tool.color} rounded-xl flex items-center justify-center text-white shadow-lg relative overflow-hidden`}
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                        {tool.icon}
-                      </motion.div>
-                      <motion.span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${tool.status === 'Live'
-                          ? 'bg-green-100 text-green-700 border border-green-300'
-                          : 'bg-blue-100 text-blue-700 border border-blue-300'
-                          }`}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        {tool.status}
-                      </motion.span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2 text-neutral-900 group-hover:text-primary-600 transition-colors duration-300">
-                      {tool.name}
-                    </h3>
-                    <p className="text-neutral-600 mb-4 leading-relaxed">
-                      {tool.description}
-                    </p>
-                    <div className="pt-3 border-t border-neutral-200 group-hover:border-primary-200 transition-colors duration-300">
-                      <p className="text-sm text-neutral-500 group-hover:text-neutral-700 transition-colors duration-300">
-                        <span className="font-semibold text-primary-600">{tool.useLabel}</span> {tool.use}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary-200/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-neutral-600 mb-6">
-              {t.labs.aiTools.description}
-            </p>
-            <PrimaryButton href={l('/contact')}>
-              {t.labs.cta.button}
-            </PrimaryButton>
-          </div>
-        </div>
-      </Section>
-
-      {/* Client Projects Section */}
-      <Section background="gray">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <motion.div
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary-500 to-purple-600 px-6 py-2 rounded-full mb-6 shadow-lg relative overflow-hidden group cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-secondary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <motion.div
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Briefcase className="w-5 h-5 text-white relative z-10" />
-              </motion.div>
-              <span className="font-bold text-white relative z-10">{t.labs.projects.badge}</span>
-            </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t.labs.projects.title}{' '}
-              <span className="bg-gradient-to-r from-secondary-600 to-purple-700 bg-clip-text text-transparent">
-                {t.labs.projects.title}
-              </span>
-            </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              {t.labs.projects.description}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {clientProjects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10, scale: 1.01 }}
-                className="group"
-              >
-                <Card className="h-full hover:shadow-2xl transition-all duration-300 bg-white border-2 border-transparent hover:border-secondary-300 relative overflow-hidden">
-                  {/* Animated gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-secondary-50 via-transparent to-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                  </div>
-
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-4">
-                      <motion.div
-                        className={`w-14 h-14 bg-gradient-to-br ${project.gradient} rounded-xl flex items-center justify-center text-white shadow-lg relative`}
-                        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity duration-300"></div>
-                        {project.icon}
-                      </motion.div>
-                      <motion.span
-                        className="px-3 py-1 bg-gradient-to-r from-neutral-100 to-neutral-200 text-neutral-700 rounded-full text-xs font-semibold border border-neutral-300"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {project.industry}
-                      </motion.span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-1 text-neutral-900 group-hover:text-secondary-600 transition-colors duration-300">
-                      {project.name}
-                    </h3>
-                    <p className="text-sm text-primary-600 font-semibold mb-3 group-hover:text-primary-700 transition-colors duration-300">
-                      {project.type}
-                    </p>
-                    <p className="text-neutral-600 mb-4 leading-relaxed group-hover:text-neutral-700 transition-colors duration-300">
-                      {project.description}
-                    </p>
-                    <div className="pt-4 border-t border-neutral-200 group-hover:border-secondary-200 transition-colors duration-300">
-                      <p className="text-sm font-semibold text-neutral-700 mb-3 flex items-center gap-2">
-                        <span className="w-1 h-4 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
-                        {t.labs.projects.keyFeaturesLabel}
-                      </p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {project.features.map((feature, idx) => (
-                          <motion.div
-                            key={idx}
-                            className="flex items-center gap-2"
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: idx * 0.05 }}
-                            viewport={{ once: true }}
-                          >
-                            <motion.div
-                              className="w-1.5 h-1.5 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
-                              whileHover={{ scale: 1.5 }}
-                            ></motion.div>
-                            <span className="text-sm text-neutral-600 group-hover:text-neutral-700 transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom accent bar */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-neutral-600 mb-6">
-              {t.labs.cta.customRequest}
-            </p>
-            <PrimaryButton href={l('/services')}>
-              {t.labs.cta.secondaryButton}
-            </PrimaryButton>
-          </div>
-        </div>
-      </Section>
-
-      {/* CTA Section */}
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-600 border-0 text-white relative overflow-hidden group">
-              {/* Animated background particles */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-10 right-10 w-32 h-32 bg-secondary-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-              </div>
-
-              <div className="text-center py-12 px-6 relative z-10">
-                <motion.div
-                  animate={{
-                    rotate: [0, 10, -10, 10, 0],
-                    scale: [1, 1.1, 1, 1.1, 1]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Sparkles className="w-16 h-16 mx-auto mb-6 opacity-90 drop-shadow-lg" />
-                </motion.div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
-                  {t.labs.cta.title}
-                </h2>
-                <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
-                  {t.labs.cta.description}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <OutlineButton
-                      href={l('/contact')}
-                      className="bg-white text-primary-600 border-white hover:bg-white/95 hover:shadow-2xl transition-all duration-300 font-bold relative overflow-hidden group"
-                    >
-                      <span className="relative z-10">{t.labs.cta.button}</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary-100 to-secondary-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </OutlineButton>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <OutlineButton
-                      href={l('/services')}
-                      className="border-2 border-white text-white hover:bg-white/20 hover:shadow-xl transition-all duration-300 font-bold backdrop-blur-sm"
-                    >
-                      {t.nav.services}
-                    </OutlineButton>
-                  </motion.div>
+            className={cn("text-center mb-16 sm:mb-20 lg:mb-24")}
+        >
+            {badge && (
+                <div className="flex justify-center mb-6">
+                    <span className={cn(
+                        "inline-flex items-center gap-2 text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase rounded-full px-5 py-2 backdrop-blur-md",
+                        isDark ? "text-blue-400/80 bg-blue-500/5 border border-blue-500/10" : "text-primary-600 bg-primary-500/5 border border-primary-500/10"
+                    )}>
+                        <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", isDark ? "bg-blue-400" : "bg-primary-500")} />
+                        {badge}
+                    </span>
                 </div>
-              </div>
-            </Card>
-          </motion.div>
-        </div>
-      </Section>
-    </>
-  )
+            )}
+            <h2 className={cn(
+                "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.2] mb-6",
+                isDark ? "text-white" : "text-slate-900"
+            )}>
+                {title}
+                {gradientText && (
+                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400">
+                        {gradientText}
+                    </span>
+                )}
+            </h2>
+            <p className={cn(
+                "text-sm sm:text-base lg:text-xl max-w-3xl mx-auto leading-relaxed font-light px-4",
+                isDark ? "text-white/40" : "text-slate-600"
+            )}>
+                {description}
+            </p>
+        </motion.div>
+    )
 }
 
+function DomainCard({ domain, index, isRTL }: { domain: any; index: number; isRTL: boolean }) {
+    const [isExpanded, setIsExpanded] = useState(false)
+    const Icon = domainIcons[index % domainIcons.length]
+    const style = domainStyles[index % domainStyles.length]
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            viewport={{ once: true }}
+            className="group relative"
+        >
+            <div className="relative h-full rounded-2xl">
+                <GlowingEffect
+                    spread={40}
+                    glow={true}
+                    disabled={false}
+                    proximity={64}
+                    inactiveZone={0.01}
+                    borderWidth={3}
+                />
+
+                <div
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className={cn(
+                        "relative h-full flex flex-col rounded-2xl border bg-[#0a0a1a]/60 backdrop-blur-xl p-6 sm:p-7 lg:p-8 cursor-pointer transition-all duration-500 hover:bg-[#0c0c22]/80 overflow-hidden z-10",
+                        style.border,
+                        isRTL ? "text-right" : "text-left"
+                    )}
+                >
+                    {/* Subtle inner gradient */}
+                    <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-500", style.gradient)} />
+
+                    <div className={cn("flex items-start justify-between mb-6", isRTL ? "flex-row-reverse" : "flex-row")}>
+                        <div className={cn(
+                            "w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/10",
+                            style.iconColor
+                        )}>
+                            <Icon className="w-6 h-6" strokeWidth={1.5} />
+                        </div>
+                        <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <ChevronDown className="w-5 h-5 text-white/20 group-hover:text-white/40" />
+                        </motion.div>
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-medium text-white mb-2 tracking-tight">
+                        {domain.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-white/50 leading-relaxed font-light mb-auto">
+                        {domain.description}
+                    </p>
+
+                    <AnimatePresence>
+                        {isExpanded && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                className="overflow-hidden"
+                            >
+                                <div className="pt-6 mt-6 border-t border-white/5">
+                                    <div className={cn("flex flex-wrap gap-2.5", isRTL ? "flex-row-reverse" : "flex-row")}>
+                                        {domain.items.map((item: string, i: number) => (
+                                            <motion.span
+                                                key={i}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ duration: 0.3, delay: i * 0.05 }}
+                                                className="text-[11px] sm:text-xs px-3 py-1.5 rounded-full border border-white/10 text-white/40 bg-white/[0.02] hover:bg-white/[0.08] hover:text-white/80 transition-all duration-300"
+                                            >
+                                                {item}
+                                            </motion.span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
+
+
+// ─── Main Page ───────────────────────────────────────────────────────────────
+
+export default function LabsPage() {
+    const { t, locale } = useLanguage()
+
+    const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+
+    return (
+        <div className="bg-[#060611]">
+            {/* ━━━ Section 1: Raining Letters Hero ━━━ */}
+            <div style={{ marginTop: '-80px' }}>
+                <RainingLetters
+                    phrases={t.labs.hero.scramblePhrases}
+                    subtitle={t.labs.hero.scrambleSubtitle}
+                />
+            </div>
+
+            {/* ━━━ Section 2: AI Innovation Domains ━━━ */}
+            <section className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 overflow-hidden bg-[#03030a]">
+                {/* Visual enhancements for premium feel */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.05),transparent_50%)]" />
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[160px] -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2" />
+
+                <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 relative z-10">
+                    <SectionHeading
+                        badge={t.labs.innovationDomains.badge}
+                        title={t.labs.innovationDomains.title}
+                        gradientText={t.labs.innovationDomains.gradientText}
+                        description={t.labs.innovationDomains.description}
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                        {t.labs.innovationDomains.domains.map((domain: any, index: number) => (
+                            <DomainCard key={index} domain={domain} index={index} isRTL={locale === 'ar'} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Section Transition Mask */}
+                <div className="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-lavender via-transparent to-transparent pointer-events-none" />
+                <div
+                    className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] transform rotate-180"
+                    style={{ zIndex: 20 }}
+                >
+                    <svg
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="relative block w-[calc(100%+1.3px)] h-[100px] text-lavender fill-current"
+                    >
+                        <path d="M1200 120L0 16.48V0h1200v120z" />
+                    </svg>
+                </div>
+            </section>
+
+            {/* ━━━ Section 3: Experimental Prototypes (Interactive Gallery) ━━━ */}
+            <section className="relative py-20 sm:py-24 lg:py-32 px-4 sm:px-6 overflow-hidden bg-lavender">
+                {/* Clean background for Section 3 */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.4),transparent_50%)]" />
+
+                <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 relative z-10">
+                    <SectionHeading
+                        variant="light"
+                        badge={t.labs.prototypes.badge}
+                        title={t.labs.prototypes.title}
+                        gradientText={t.labs.prototypes.gradientText}
+                        description={t.labs.prototypes.description}
+                    />
+
+                    <InteractiveCardGallery
+                        cards={t.labs.prototypes.cards}
+                        ui={t.labs.prototypes.ui}
+                        isRTL={locale === 'ar'}
+                        ctaLink={l('/contact')}
+                    />
+                </div>
+
+                {/* Transition back to dark */}
+                <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0]" style={{ zIndex: 20 }}>
+                    <svg
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="relative block w-[calc(100%+1.3px)] h-[80px] text-[#060611] fill-current"
+                    >
+                        <path d="M1200 120L0 16.48V0h1200v120z" />
+                    </svg>
+                </div>
+            </section>
+
+            {/* ━━━ Section 4: The CloudTopia Philosophy ━━━ */}
+            <section className="relative py-32 sm:py-48 lg:py-64 px-4 sm:px-6 overflow-hidden">
+                {/* Nebula Shader Background */}
+                <div className="absolute inset-0 z-0">
+                    <InteractiveNebulaShader isAbsolute={true} disableCenterDimming={true} />
+                    <div className="absolute inset-0 bg-[#060611]/80 backdrop-blur-[2px]" />
+                </div>
+
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] sm:w-[40%] h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent z-10" />
+
+                {/* Ambient Depth Glows */}
+                <div className="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+                <div className="w-full max-w-7xl mx-auto relative z-10 flex flex-col items-center">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 1.5 }}
+                        viewport={{ once: true }}
+                        className="text-center w-full"
+                    >
+                        <motion.span
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                            className="text-[10px] sm:text-xs font-bold tracking-[0.5em] uppercase text-rose-400 mb-16 sm:mb-24 block"
+                        >
+                            {t.labs.philosophy.badge}
+                        </motion.span>
+
+                        <div className="space-y-6 sm:space-y-12 mb-28 sm:mb-40">
+                            <div className="overflow-hidden">
+                                <motion.h2
+                                    initial={{ y: "100%" }}
+                                    whileInView={{ y: 0 }}
+                                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                                    viewport={{ once: true }}
+                                    className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight"
+                                >
+                                    <span className="text-rose-400/40">{t.labs.philosophy.notFluff}</span>
+                                    <span className="text-white drop-shadow-[0_0_30px_rgba(244,63,94,0.4)]">{t.labs.philosophy.experimentalFluff}</span>
+                                </motion.h2>
+                            </div>
+                            <div className="overflow-hidden">
+                                <motion.h2
+                                    initial={{ y: "100%" }}
+                                    whileInView={{ y: 0 }}
+                                    transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                                    viewport={{ once: true }}
+                                    className="text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-medium tracking-tighter leading-tight"
+                                >
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-red-500 to-orange-500">
+                                        {t.labs.philosophy.itIs}
+                                    </span>
+                                </motion.h2>
+                            </div>
+                            <div className="overflow-hidden">
+                                <motion.h3
+                                    initial={{ y: "100%" }}
+                                    whileInView={{ y: 0 }}
+                                    transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                    viewport={{ once: true }}
+                                    className="text-xl sm:text-3xl md:text-4xl lg:text-6xl font-extralight text-white/80 tracking-tight"
+                                >
+                                    {t.labs.philosophy.appliedDirectly} <span className="text-white">{t.labs.philosophy.productionSystems}</span>
+                                </motion.h3>
+                            </div>
+                        </div>
+
+                        {/* Staggered text block */}
+                        <div className={cn("flex flex-col md:flex-row justify-center items-center gap-8 md:gap-24 lg:gap-32 mb-32 sm:mb-48", locale === 'ar' && "flex-row-reverse")}>
+                            {t.labs.philosophy.staggered.map((text: string, i: number) => (
+                                <motion.div
+                                    key={text}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 1, delay: 0.8 + (i * 0.2) }}
+                                    viewport={{ once: true }}
+                                    className="flex flex-col items-center gap-4"
+                                >
+                                    <span className="text-xl sm:text-2xl lg:text-3xl font-extralight text-rose-200/40 tracking-wide italic">
+                                        {text}
+                                    </span>
+                                    <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-rose-400/20 to-transparent" />
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Built badges */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-6xl">
+                            {[
+                                { ...t.labs.philosophy.cloudNative, gradient: 'from-orange-400 to-rose-400', glow: 'shadow-rose-500/10' },
+                                { ...t.labs.philosophy.scalable, gradient: 'from-rose-400 to-red-500', glow: 'shadow-red-500/10' },
+                                { ...t.labs.philosophy.intelligent, gradient: 'from-red-500 to-orange-500', glow: 'shadow-orange-500/10' }
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={item.label}
+                                    initial={{ opacity: 0, y: 40 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 1.2, delay: 1.4 + (i * 0.2), ease: [0.16, 1, 0.3, 1] }}
+                                    viewport={{ once: true }}
+                                    className={cn(
+                                        "group relative p-10 sm:p-14 rounded-[3rem] border border-white/5 bg-white/[0.01] backdrop-blur-3xl hover:bg-white/[0.03] transition-all duration-700 hover:-translate-y-2",
+                                        item.glow
+                                    )}
+                                >
+                                    <div className="flex flex-col items-center gap-6 text-center">
+                                        <span className={cn("text-xl sm:text-2xl font-light tracking-tight text-transparent bg-clip-text bg-gradient-to-r", item.gradient)}>
+                                            {item.label}
+                                        </span>
+                                        <p className="text-sm text-white/40 leading-relaxed max-w-[200px]">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Final CTA link */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 2.2 }}
+                            viewport={{ once: true }}
+                            className="mt-32 sm:mt-48"
+                        >
+                            <a
+                                href={l('/contact')}
+                                className="inline-flex flex-col items-center gap-6 group"
+                            >
+                                <span className="text-[10px] sm:text-xs font-bold tracking-[0.4em] uppercase text-white/20 group-hover:text-white/60 transition-colors duration-500">
+                                    {t.labs.philosophy.ctaBadge}
+                                </span>
+                                <div className={cn("w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-rose-400/50 transition-colors duration-500", locale === 'ar' && "rotate-180")}>
+                                    <ArrowRight className="w-5 h-5 text-white/20 group-hover:text-rose-400 transition-all duration-500 group-hover:translate-x-1" strokeWidth={1} />
+                                </div>
+                            </a>
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </section>
+        </div>
+    )
+}

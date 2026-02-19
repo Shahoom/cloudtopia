@@ -44,7 +44,7 @@ export default function ContentCreationPage() {
   const particleColors = ['a855f7', 'd946ef', 'ec4899', 'f472b6', 'f9a8d4', 'fce7f3']
 
   return (
-    <main className="min-h-screen bg-white dark:bg-neutral-950" dir={dir} lang={locale}>
+    <main className="min-h-screen bg-lavender dark:bg-neutral-950" dir={dir} lang={locale}>
       {/* Section 1: Hero with Dynamic Text Slider */}
       <DynamicTextSlider
         title={t.title}
@@ -54,7 +54,7 @@ export default function ContentCreationPage() {
       />
 
       {/* Section 2: Magic Text - Scroll Reveal Content */}
-      <section className="relative w-full min-h-[50vh] bg-gradient-to-b from-white to-gray-50 dark:from-neutral-950 dark:to-neutral-900 py-12 md:py-16">
+      <section className="relative w-full min-h-[50vh] bg-gradient-to-b from-lavender to-lavender dark:from-neutral-950 dark:to-neutral-900 py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <MagicText
             text={t.magicText}
@@ -71,7 +71,7 @@ export default function ContentCreationPage() {
       </section>
 
       {/* Section 3: Text Generate Effect */}
-      <section className="relative w-full bg-gray-50 dark:bg-neutral-900 py-16 md:py-24">
+      <section className="relative w-full bg-lavender dark:bg-neutral-900 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">
             {t.generateTitle}
@@ -89,7 +89,7 @@ export default function ContentCreationPage() {
       <ContentBlock locale={locale} />
 
       {/* Section 5: Interactive Particle Text Effect (Final Section) */}
-      <section className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] bg-white dark:bg-white">
+      <section className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] bg-lavender dark:bg-lavender">
         <ParticleTextEffect
           text={t.particleText}
           className="absolute inset-0"

@@ -46,9 +46,9 @@ export function Card({ rotateX, scale, children }: CardProps) {
         boxShadow:
           "0 9px 20px rgba(0,0,0,0.2), 0 37px 37px rgba(0,0,0,0.15), 0 84px 50px rgba(0,0,0,0.1)",
       }}
-      className="max-w-5xl mt-4 sm:mt-6 md:mt-8 mx-auto h-[25rem] sm:h-[30rem] md:h-[40rem] w-full border-4 border-slate-200 p-2 md:p-4 bg-white rounded-[20px] sm:rounded-[30px]"
+      className="max-w-5xl mt-4 sm:mt-6 md:mt-8 mx-auto h-[25rem] sm:h-[30rem] md:h-[40rem] w-full border-4 border-slate-200 p-2 md:p-4 bg-lavender rounded-[20px] sm:rounded-[30px]"
     >
-      <div className="h-full w-full overflow-hidden rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-zinc-900 p-1 sm:p-2 md:p-3">
+      <div className="h-full w-full overflow-hidden rounded-xl sm:rounded-2xl bg-lavender dark:bg-zinc-900 p-1 sm:p-2 md:p-3">
         {children}
       </div>
     </motion.div>

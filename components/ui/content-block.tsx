@@ -72,7 +72,7 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
     const isRTL = locale === 'ar'
 
     return (
-        <section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-neutral-950">
+        <section className="py-16 sm:py-20 lg:py-24 bg-lavender dark:bg-neutral-950">
             <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="mx-auto max-w-3xl text-center mb-12">
@@ -101,8 +101,8 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
                                     inactiveZone={0.01}
                                     borderWidth={3}
                                 />
-                                <div className="relative flex h-full flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border-[0.75px] border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm text-center">
-                                    <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+                                <div className="relative flex h-full flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border-[0.75px] border-zinc-100 dark:border-zinc-800 bg-lavender dark:bg-zinc-900 p-4 shadow-sm text-center">
+                                    <div className="p-3 rounded-full bg-lavender dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
                                         {service.icon}
                                     </div>
                                     <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
@@ -121,7 +121,7 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
                 <div className="space-y-8 mb-12">
                     {/* Feature 1 */}
                     <div className={cn(
-                        "grid gap-8 items-center rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-neutral-900 dark:to-neutral-800 p-6 sm:p-8 lg:p-10",
+                        "grid gap-8 items-center rounded-2xl bg-gradient-to-br from-lavender to-lavender dark:from-neutral-900 dark:to-neutral-800 p-6 sm:p-8 lg:p-10",
                         "sm:grid-cols-2"
                     )}>
                         <div className={isRTL ? "sm:order-2" : ""}>
@@ -144,7 +144,7 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
                                 {['📸', '🎬', '✨', '📊'].map((emoji, i) => (
                                     <div
                                         key={i}
-                                        className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-white dark:bg-neutral-700 shadow-md flex items-center justify-center text-3xl sm:text-4xl hover:scale-105 transition-transform"
+                                        className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-lavender dark:bg-neutral-700 shadow-md flex items-center justify-center text-3xl sm:text-4xl hover:scale-105 transition-transform"
                                     >
                                         {emoji}
                                     </div>
@@ -155,7 +155,7 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
 
                     {/* Feature 2 */}
                     <div className={cn(
-                        "grid gap-8 items-center rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-neutral-900 dark:to-neutral-800 p-6 sm:p-8 lg:p-10",
+                        "grid gap-8 items-center rounded-2xl bg-gradient-to-br from-lavender to-lavender dark:from-neutral-900 dark:to-neutral-800 p-6 sm:p-8 lg:p-10",
                         "sm:grid-cols-2"
                     )}>
                         <div className={cn(
@@ -163,11 +163,11 @@ export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
                             isRTL ? "sm:order-2" : ""
                         )}>
                             <div className="relative">
-                                <div className="w-48 h-32 sm:w-64 sm:h-40 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-xl flex items-center justify-center">
+                                <div className="w-48 h-32 sm:w-64 sm:h-40 rounded-xl bg-gradient-to-br from-lavender to-lavender shadow-xl flex items-center justify-center">
                                     <Video className="size-12 sm:size-16 text-white" />
                                 </div>
-                                <div className="absolute -bottom-4 -right-4 bg-white dark:bg-neutral-800 rounded-lg shadow-lg px-3 py-2 flex items-center gap-2">
-                                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                <div className="absolute -bottom-4 -right-4 bg-lavender dark:bg-neutral-800 rounded-lg shadow-lg px-3 py-2 flex items-center gap-2">
+                                    <span className="w-2 h-2 bg-lavender rounded-full animate-pulse"></span>
                                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t.qualityBadge}</span>
                                 </div>
                             </div>

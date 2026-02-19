@@ -308,8 +308,8 @@ function HeroModern({
                     surface: "bg-black text-white",
                     subtle: "text-white/60",
                     border: "border-white/12",
-                    card: "bg-white/6",
-                    accent: "bg-white/12",
+                    card: "bg-lavender/6",
+                    accent: "bg-lavender/12",
                     glow: "rgba(255,255,255,0.14)",
                     background: {
                         color: "#040404",
@@ -322,14 +322,14 @@ function HeroModern({
                     },
                 }
                 : {
-                    surface: "bg-white text-neutral-950",
+                    surface: "bg-lavender text-neutral-950",
                     subtle: "text-neutral-600",
                     border: "border-neutral-200/80",
-                    card: "bg-neutral-100/80",
-                    accent: "bg-neutral-100",
+                    card: "bg-lavender/80",
+                    accent: "bg-lavender",
                     glow: "rgba(17,17,17,0.08)",
                     background: {
-                        color: "#f5f5f4",
+                        color: "#f4f1f8",
                         layers: [
                             "radial-gradient(ellipse 80% 60% at 10% -10%, rgba(15,15,15,0.12), transparent 60%)",
                             "radial-gradient(ellipse 90% 70% at 90% -20%, rgba(15,15,15,0.08), transparent 70%)",
@@ -451,7 +451,7 @@ function HeroModern({
                                     key={modeKey}
                                     type="button"
                                     onClick={() => setMode(modeKey)}
-                                    className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === modeKey ? "bg-white text-black dark:bg-white/90 dark:text-black" : `${palette.border} ${palette.accent}`
+                                    className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === modeKey ? "bg-lavender text-black dark:bg-lavender/90 dark:text-black" : `${palette.border} ${palette.accent}`
                                         }`}
                                 >
                                     {modeLabels?.[modeKey] || (modeKey.charAt(0).toUpperCase() + modeKey.slice(1))}
@@ -496,7 +496,7 @@ function HeroModern({
                                 loading="lazy"
                                 className="absolute inset-0 h-full w-full object-cover transition duration-700 ease-out hover:scale-[1.03]"
                             />
-                            <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-white/10" />
+                            <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-lavender/10" />
                             <div className="pointer-events-none absolute inset-0 border border-white/10 mix-blend-overlay dark:border-white/20" />
                             <span className="pointer-events-none absolute -left-16 top-16 h-40 w-40 rounded-full border border-white/15 opacity-70 motion-safe:animate-[hero3-glow_9s_ease-in-out_infinite]" />
                             <span className="pointer-events-none absolute -right-12 bottom-16 h-48 w-48 rounded-full border border-white/10 opacity-40 motion-safe:animate-[hero3-drift_12s_ease-in-out_infinite]" />
