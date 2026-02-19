@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/Card'
 import { Shield, Users, Zap, Code2, Globe, Lock } from 'lucide-react'
 
 interface WebAppFeaturesProps {

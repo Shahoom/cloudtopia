@@ -1,5 +1,5 @@
-import Section from '@/components/ui/section'
-import Card from '@/components/ui/card'
+import Section from '@/components/ui/Section'
+import Card from '@/components/ui/Card'
 import { Shield } from 'lucide-react'
 import type { Metadata } from 'next'
 

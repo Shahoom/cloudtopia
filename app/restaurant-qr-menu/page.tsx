@@ -10,7 +10,7 @@ import {
   GalleryCol,
   GalleryContainer,
 } from "@/components/ui/animated-gallery"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { QrCode, Smartphone, ArrowRight } from "lucide-react"
 import Link from "next/link"
