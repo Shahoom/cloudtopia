@@ -79,6 +79,6 @@ export function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         // Match all paths except static files
-        '/((?!_next/static|_next/image|favicon.ico|images|icon-|apple-touch|manifest).*)',
+        '/((?!_next/static|_next/image|favicon.ico|favicon.svg|icon.svg|images|icon-|apple-touch|manifest).*)',
     ],
 }

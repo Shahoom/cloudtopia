@@ -43,10 +43,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
     apple: [
-      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
   },
   openGraph: {
@@ -138,8 +138,6 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
 
 
