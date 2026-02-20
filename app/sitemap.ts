@@ -21,21 +21,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' as const },
     ]
 
-    return routes.map((route) => {
-        // Handle the root path '/' correctly
-        const pathSuffix = route.path === '/' ? '' : route.path;
+    const sitemapEntries: MetadataRoute.Sitemap = []
 
-        return {
-            url: `${baseUrl}/en${pathSuffix}`,   // Primary URL should point to a 200 OK route, not a redirect
+    routes.forEach((route) => {
+        const pathSuffix = route.path === '/' ? '' : route.path
+
+        // Add English version
+        sitemapEntries.push({
+            url: `${baseUrl}/en${pathSuffix}`,
             lastModified: new Date(),
             changeFrequency: route.changeFrequency,
             priority: route.priority,
             alternates: {
                 languages: {
-                    en: `${baseUrl}/en${pathSuffix}`,  // Explicit English URL
-                    ar: `${baseUrl}/ar${pathSuffix}`,  // Explicit Arabic URL
+                    en: `${baseUrl}/en${pathSuffix}`,
+                    ar: `${baseUrl}/ar${pathSuffix}`,
                 },
             },
-        };
+        })
+
+        // Add Arabic version
+        sitemapEntries.push({
+            url: `${baseUrl}/ar${pathSuffix}`,
+            lastModified: new Date(),
+            changeFrequency: route.changeFrequency,
+            priority: route.priority,
+            alternates: {
+                languages: {
+                    en: `${baseUrl}/en${pathSuffix}`,
+                    ar: `${baseUrl}/ar${pathSuffix}`,
+                },
+            },
+        })
     })
+
+    return sitemapEntries
 }
