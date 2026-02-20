@@ -123,11 +123,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
-        <link rel="manifest" href="/manifest.json" />
-
-        {/* Preload critical fonts */}
+        {/* Preload critical fonts early */}
         <link
           rel="preload"
           href="/fonts/Changa-VariableFont_wght.ttf"
@@ -142,6 +138,10 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+
 
         {/* Hreflang tags for international SEO */}
         <link rel="alternate" hrefLang="en" href="https://cloudtopia.net" />

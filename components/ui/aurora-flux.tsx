@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export type AuroraFluxProps = {
     /** Run full-bleed (fills viewport). If false, the canvas just fills its parent. */
@@ -44,8 +44,8 @@ void main() {
   vec2 i = vec2(0.1);
   vec2 f = p * (z += 5. - 6. * exp(.4 - dot(p, p)));
   vec4 O = vec4(0.0);
-  // Dramatically reduced iterations on mobile for better TBT
-  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 2.0 : 8.0); i.y += 1.0) {
+  // Dramatically reduced iterations for better TBT
+  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 2.0 : 4.0); i.y += 1.0) {
     O += (tanh(f) + 1.0).xyyx * abs(f.x - f.y);
     f += tanh(f.yx * i.y + i + u_time) / i.y + 0.7;
   }
@@ -108,6 +108,19 @@ export default function AuroraFlux({
     const vaoRef = useRef<WebGLVertexArrayObject | null>(null);
     const rafRef = useRef<number | null>(null);
     const hoverRef = useRef(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    // Intersection Observer for performance
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
+            { threshold: 0.01, rootMargin: '100px' }
+        );
+        observer.observe(canvas);
+        return () => observer.disconnect();
+    }, []);
 
     // uniforms
     const uTimeRef = useRef<WebGLUniformLocation | null>(null);
@@ -118,8 +131,7 @@ export default function AuroraFlux({
     const resize = () => {
         const canvas = canvasRef.current!;
         const gl = glRef.current!;
-        const isMobile = window.innerWidth < 768;
-        const dpr = fullScreen ? (isMobile ? 1.0 : Math.max(1, Math.min(2, window.devicePixelRatio || 1))) : 1.0;
+        const dpr = 1.0;
         const displayW = fullScreen ? window.innerWidth : canvas.clientWidth;
         const displayH = fullScreen ? window.innerHeight : canvas.clientHeight;
         const w = Math.floor(displayW * dpr);
@@ -133,6 +145,7 @@ export default function AuroraFlux({
     };
 
     const shouldRender = () =>
+        isVisible &&
         !(pauseWhenHidden && document.visibilityState === 'hidden') &&
         !(pauseOnHover && hoverRef.current);
 
@@ -189,14 +202,8 @@ export default function AuroraFlux({
 
         if (uMixRef.current) gl.uniform1f(uMixRef.current, mix);
 
-        // first size + listeners
+        // first size
         resize();
-        const onResize = () => resize();
-        window.addEventListener('resize', onResize);
-        const onVisibility = () => {
-            if (shouldRender() && rafRef.current === null) loop(0);
-        };
-        document.addEventListener('visibilitychange', onVisibility);
 
         if (pauseOnHover) {
             const onEnter = () => { hoverRef.current = true; };
@@ -235,8 +242,15 @@ export default function AuroraFlux({
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
             rafRef.current = requestAnimationFrame(loop);
         };
+        const onResize = () => resize();
+        window.addEventListener('resize', onResize);
+        const onVisibility = () => {
+            if (shouldRender() && rafRef.current === null) loop(0);
+        };
+        document.addEventListener('visibilitychange', onVisibility);
+
         (window as any).requestAnimationFrame((time: number) => {
-            loop(time);
+            if (shouldRender()) loop(time);
         });
 
         return () => {
@@ -254,7 +268,7 @@ export default function AuroraFlux({
             vaoRef.current = null;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fullScreen, pauseWhenHidden, pauseOnHover, mix]);
+    }, [fullScreen, pauseWhenHidden, pauseOnHover, mix, isVisible]);
 
     return (
         <canvas

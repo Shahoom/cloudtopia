@@ -112,6 +112,7 @@ function JourneyStep({
                             alt={title}
                             width={48}
                             height={48}
+                            quality={50}
                             className="w-full h-full object-contain"
                         />
                     </motion.div>
@@ -195,7 +196,7 @@ export default function HomePage() {
                 {/* Stars Canvas - Only for this section, optimized for performance */}
                 <StarsCanvas
                     transparent={false}
-                    maxStars={150} // Reduced for mobile performance
+                    maxStars={80}
                     hue={217}
                     brightness={0.7}
                     speedMultiplier={0.3} // Slower for less load

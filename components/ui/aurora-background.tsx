@@ -36,14 +36,25 @@ export const AuroraBackground = ({
           after:content-[""] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
           after:dark:[background-image:var(--dark-gradient),var(--aurora)]
           after:[background-size:200%,_100%] 
-          after:hidden md:after:block after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
+          after:hidden md:after:block after:[background-attachment:fixed] after:mix-blend-difference
           pointer-events-none
           absolute -inset-[10px] opacity-30 will-change-transform`,
 
                         showRadialGradient &&
                         `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
                     )}
-                ></div>
+                >
+                    <div className="md:block hidden absolute inset-0 opacity-50 mix-blend-soft-light animate-aurora-transform will-change-transform"
+                        style={{
+                            backgroundImage: 'var(--aurora)',
+                            backgroundSize: '200% 200%',
+                            width: '200%',
+                            height: '200%',
+                            left: '-50%',
+                            top: '-50%'
+                        }}
+                    />
+                </div>
             </div>
             <div className="relative z-10 w-full">
                 {children}

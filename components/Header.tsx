@@ -115,7 +115,7 @@ export default function Header() {
             <div className="flex flex-col -space-y-0.5">
               <span className={`font-logo font-bold transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-xl' : 'text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
                 }`}>
-                Cloud<span className={`bg-clip-text text-transparent bg-[length:200%_auto] md:animate-gradient ${isDarkSection
+                Cloud<span className={`bg-clip-text text-transparent ${isDarkSection
                   ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
                   : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600'
                   }`}>Topia</span>

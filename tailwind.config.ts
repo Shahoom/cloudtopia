@@ -13,6 +13,7 @@ const config: Config = {
     extend: {
       animation: {
         aurora: "aurora 80s linear infinite",
+        "aurora-transform": "aurora-transform 20s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
         "shine-pulse": "shine-pulse 14s infinite linear",
       },
@@ -21,6 +22,17 @@ const config: Config = {
           "0%": { backgroundPosition: "0% 0%" },
           "50%": { backgroundPosition: "100% 100%" },
           "100%": { backgroundPosition: "0% 0%" },
+        },
+        "aurora-transform": {
+          "0%": {
+            transform: "translate(0, 0) rotate(0deg)",
+          },
+          "50%": {
+            transform: "translate(5%, 5%) rotate(2deg)",
+          },
+          "100%": {
+            transform: "translate(0, 0) rotate(0deg)",
+          },
         },
         aurora: {
           from: {
