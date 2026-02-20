@@ -24,10 +24,12 @@ import {
   Lightbulb,
   Wrench
 } from 'lucide-react'
-import { Particles } from '@/components/ui/particles'
-import { SparklesCore } from '@/components/ui/sparkles'
 import TechCursor from '@/components/ui/tech-cursor'
 import VaporizeTextCycle, { Tag } from '@/components/ui/vapour-text-effect'
+import dynamic from 'next/dynamic'
+
+const Particles = dynamic(() => import('@/components/ui/particles').then(mod => mod.Particles), { ssr: false })
+const SparklesCore = dynamic(() => import('@/components/ui/sparkles').then(mod => mod.SparklesCore), { ssr: false })
 
 type ProjectCategory = 'all' | 'digitalPresence' | 'businessSystems' | 'webApps' | 'labs'
 
@@ -180,7 +182,7 @@ const ProjectModal = ({
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-                      <img src="/icons/projects/challenge.png" alt="Challenge" className="w-10 h-10 object-contain" />
+                      <img src="/icons/projects/challenge.png" alt="Challenge" width={40} height={40} className="w-10 h-10 object-contain" />
                     </div>
                     <h3 className="text-lg font-bold text-neutral-900">{t.projects.modal.challenge}</h3>
                   </div>
@@ -196,7 +198,7 @@ const ProjectModal = ({
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-                      <img src="/icons/projects/solution.png" alt="Solution" className="w-10 h-10 object-contain" />
+                      <img src="/icons/projects/solution.png" alt="Solution" width={40} height={40} className="w-10 h-10 object-contain" />
                     </div>
                     <h3 className="text-lg font-bold text-neutral-900">{t.projects.modal.solution}</h3>
                   </div>

@@ -13,9 +13,11 @@ import {
     Rocket,
     Users
 } from 'lucide-react'
-import ProceduralGroundBackground from '@/components/ui/procedural-ground-background'
-import { AuroraBackground } from '@/components/ui/aurora-background'
 import TechCursor from '@/components/ui/tech-cursor'
+import dynamic from 'next/dynamic'
+
+const ProceduralGroundBackground = dynamic(() => import('@/components/ui/procedural-ground-background'), { ssr: false })
+const AuroraBackground = dynamic(() => import('@/components/ui/aurora-background').then(mod => mod.AuroraBackground), { ssr: false })
 
 interface ServiceCard {
     name: string
@@ -561,7 +563,7 @@ export default function ServicesPage() {
                                         href={`#${category.id}`}
                                         className="group whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors border border-transparent hover:border-black/5 hover:bg-black/5"
                                     >
-                                        <img src={category.icon} alt={isRTL ? category.nameAr : category.name} className="w-4 h-4 opacity-70 group-hover:opacity-100" />
+                                        <img src={category.icon} alt={isRTL ? category.nameAr : category.name} width={16} height={16} className="w-4 h-4 opacity-70 group-hover:opacity-100" />
                                         {isRTL ? category.nameAr : category.name}
                                     </Link>
                                 ))}

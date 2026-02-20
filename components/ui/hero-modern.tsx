@@ -494,6 +494,8 @@ function HeroModern({
                                 src={showcaseImage.src}
                                 alt={showcaseImage.alt}
                                 loading="lazy"
+                                width={800}
+                                height={600}
                                 className="absolute inset-0 h-full w-full object-cover transition duration-700 ease-out hover:scale-[1.03]"
                             />
                             <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-lavender/10" />

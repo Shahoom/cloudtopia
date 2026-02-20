@@ -3,12 +3,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { DotGlobeHero } from '@/components/ui/globe-hero'
-import { HorizontalScrollCards, ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
-import { WebAppFeatures } from '@/components/ui/features-8'
-import { StickyFeatureSection } from '@/components/ui/sticky-scroll-cards-section'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ArrowRight, Globe, Layers, Code2, Shield, Rocket } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+const DotGlobeHero = dynamic(() => import('@/components/ui/globe-hero').then(mod => mod.DotGlobeHero), { ssr: false })
+const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
+import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
+const WebAppFeatures = dynamic(() => import('@/components/ui/features-8').then(mod => mod.WebAppFeatures), { ssr: false })
+const StickyFeatureSection = dynamic(() => import('@/components/ui/sticky-scroll-cards-section').then(mod => mod.StickyFeatureSection), { ssr: false })
 
 
 
@@ -41,7 +44,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'منصات الوسائط والبث' : 'Media & Streaming Platforms',
             tagline: locale === 'ar' ? 'منصات محتوى احترافية للبث والتفاعل المباشر' : 'Professional content delivery and live engagement',
-            icon: <img src="/icons/services/Mobile-Responsive Apps.png" alt="Media Platforms" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Mobile-Responsive Apps.png" alt="Media Platforms" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'منصات مخصصة لبث المحتوى المرئي والصوتي مع تفاعل فوري وإدارة شاملة'
                 : 'Custom platforms for video and audio streaming with live interaction and content management',
@@ -54,7 +57,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'منصات التجارة والأسواق' : 'Commerce & Marketplace Platforms',
             tagline: locale === 'ar' ? 'أسواق متعددة البائعين ومنصات تجارة متكاملة' : 'Multi-vendor marketplaces and complete commerce systems',
-            icon: <img src="/icons/services/Booking Platform.png" alt="Commerce" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Booking Platform.png" alt="Commerce" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'منصات تجارة متكاملة تربط البائعين بالمشترين مع أنظمة دفع وشحن'
                 : 'Complete commerce platforms connecting buyers and sellers with integrated payments and logistics',
@@ -67,7 +70,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'منتجات SaaS والاشتراكات' : 'SaaS & Subscription Products',
             tagline: locale === 'ar' ? 'برمجيات سحابية قابلة للتوسع مع نماذج اشتراك مرنة' : 'Scalable cloud software with flexible subscription models',
-            icon: <img src="/icons/services/Admin Dashboard.png" alt="SaaS" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Admin Dashboard.png" alt="SaaS" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'تطبيقات سحابية للشركات مع إدارة مستخدمين وفواتير اشتراكات'
                 : 'Cloud-based business applications with user management and subscription billing',
@@ -80,7 +83,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'بوابات العملاء والمستخدمين' : 'Client & User Portals',
             tagline: locale === 'ar' ? 'بوابات آمنة للعملاء للوصول للخدمات والبيانات' : 'Secure client portals for service access and data management',
-            icon: <img src="/icons/services/Customer Portal.png" alt="Portals" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Customer Portal.png" alt="Portals" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'بوابات مخصصة للعملاء لإدارة الحسابات والطلبات والوثائق'
                 : 'Custom client portals for account management, orders, and document access',
@@ -93,7 +96,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'أنظمة الأعمال الداخلية' : 'Internal Business Systems',
             tagline: locale === 'ar' ? 'أنظمة داخلية مخصصة لتحسين العمليات التشغيلية' : 'Custom internal tools to streamline operations',
-            icon: <img src="/icons/services/Payment Integration.png" alt="Internal Systems" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Payment Integration.png" alt="Internal Systems" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'تطبيقات داخلية مخصصة لإدارة العمليات والموظفين والموارد'
                 : 'Tailored internal applications for operations, team, and resource management',
@@ -106,7 +109,7 @@ export default function WebApplicationsPage() {
         {
             name: locale === 'ar' ? 'تطبيقات الذكاء الاصطناعي' : 'AI-Powered Applications',
             tagline: locale === 'ar' ? 'تطبيقات ذكية مدعومة بالذكاء الاصطناعي' : 'Smart applications powered by artificial intelligence',
-            icon: <img src="/icons/services/Analytics Dashboard.png" alt="AI Apps" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Analytics Dashboard.png" alt="AI Apps" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'تطبيقات متقدمة تستخدم الذكاء الاصطناعي لتحسين العمليات والتنبؤات'
                 : 'Advanced applications leveraging AI for process optimization and predictions',

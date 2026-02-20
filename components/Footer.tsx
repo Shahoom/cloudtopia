@@ -67,7 +67,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-lavender text-neutral-500 border-t border-neutral-100" dir={dir}>
+    <footer className="bg-lavender text-neutral-600 border-t border-neutral-100" dir={dir}>
       <div className="container">
         {/* Main Footer Content */}
         <div className="py-12 md:py-16">
@@ -78,6 +78,8 @@ export default function Footer() {
                 <img
                   src="/images/CloudTopia.svg"
                   alt="CloudTopia Logo"
+                  width={150}
+                  height={40}
                   className="h-10 w-auto"
                 />
                 <span className="text-2xl font-bold font-logo text-neutral-900">

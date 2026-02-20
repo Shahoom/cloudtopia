@@ -43,10 +43,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/favicon.ico', sizes: 'any' },
+      { url: '/favicon.ico', sizes: 'any' },
     ],
     apple: [
-      { url: '/images/favicon.ico' },
+      { url: '/favicon.ico' },
     ],
   },
   openGraph: {
@@ -92,12 +92,7 @@ export const metadata: Metadata = {
     // yandex: 'your-yandex-verification-code',
   },
   alternates: {
-    canonical: 'https://cloudtopia.net',
-    languages: {
-      'en': 'https://cloudtopia.net',
-      'ar': 'https://cloudtopia.net/ar',
-      'x-default': 'https://cloudtopia.net',
-    },
+    // Let Next.js auto-generate canonical based on metadataBase
   },
   category: 'technology',
   other: {
@@ -128,8 +123,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/images/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/images/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
 
         {/* Hreflang tags for international SEO */}
@@ -137,10 +132,7 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="ar" href="https://cloudtopia.net/ar" />
         <link rel="alternate" hrefLang="x-default" href="https://cloudtopia.net" />
 
-        {/* Preconnect to external resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
+        {/* Preconnect to external resources optionally - removed for Fonts as unused */}
         {/* JSON-LD Organization Schema */}
         <script
           type="application/ld+json"

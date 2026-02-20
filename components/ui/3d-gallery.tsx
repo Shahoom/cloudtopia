@@ -468,6 +468,8 @@ function FallbackGallery({ images }: { images: ImageItem[] }) {
             key={i}
             src={img.src || '/placeholder.svg'}
             alt={img.alt}
+            width={400}
+            height={128}
             className="w-full h-32 object-cover rounded"
           />
         ))}

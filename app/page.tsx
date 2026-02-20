@@ -12,11 +12,13 @@ import {
     ExternalLink,
     Mail,
 } from 'lucide-react'
-import { StarsCanvas } from '@/components/ui/stars-canvas'
 import Hero from '@/components/ui/hero-button-expendable'
-import { SparklesCore } from '@/components/ui/sparkles'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { AuroraBackground } from '@/components/ui/aurora-background'
+import dynamic from 'next/dynamic'
+
+const StarsCanvas = dynamic(() => import('@/components/ui/stars-canvas').then(mod => mod.StarsCanvas), { ssr: false })
+const SparklesCore = dynamic(() => import('@/components/ui/sparkles').then(mod => mod.SparklesCore), { ssr: false })
 
 // Animated counter component
 function AnimatedCounter({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) {
@@ -165,10 +167,10 @@ function JourneyStep({
                     </motion.div>
 
                     <div className="flex-1 min-w-0">
-                        <h4 className={`text-lg font-bold text-neutral-900 mb-1 transition-colors duration-300 group-hover:${s.text}`}>
+                        <h3 className={`text-lg font-bold text-neutral-900 mb-1 transition-colors duration-300 group-hover:${s.text}`}>
                             {title}
-                        </h4>
-                        <p className="text-neutral-500 text-sm leading-relaxed">
+                        </h3>
+                        <p className="text-neutral-600 text-sm leading-relaxed">
                             {description}
                         </p>
 
@@ -398,7 +400,7 @@ export default function HomePage() {
                                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
                                         {project.title}
                                     </h3>
-                                    <p className="text-white/60 text-sm mb-4 leading-relaxed line-clamp-2">
+                                    <p className="text-white/70 text-sm mb-4 leading-relaxed line-clamp-2">
                                         {project.solution}
                                     </p>
 

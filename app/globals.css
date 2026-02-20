@@ -1,7 +1,4 @@
-/* External Font Imports — must be first */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Outfit:wght@500;600;700;800&display=swap');
-
-/* Custom Font for CloudTopia Logo */
+/* External Font Imports removed (render-blocking) *//* Custom Font for CloudTopia Logo */
 @font-face {
   font-family: 'AgharaPro';
   src: url('/fonts/AgharaProRegular.ttf') format('truetype');

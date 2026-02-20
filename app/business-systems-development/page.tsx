@@ -2,10 +2,13 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { HeroParallax } from '@/components/ui/hero-parallax'
-import { HeroModern } from '@/components/ui/hero-modern'
-import { HorizontalScrollCards, ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import dynamic from 'next/dynamic'
+
+const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then(mod => mod.HeroParallax), { ssr: false })
+const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then(mod => mod.HeroModern), { ssr: false })
+const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
+import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 
 export default function BusinessSystemsDevelopmentPage() {
     const { dir, locale } = useLanguage()
@@ -91,7 +94,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'نظام إدارة علاقات العملاء' : 'CRM System',
             tagline: locale === 'ar' ? 'إدارة العملاء بذكاء' : 'Smart Customer Management',
-            icon: <img src="/icons/services/CRM System.png" alt="CRM" className="w-10 h-10" />,
+            icon: <img src="/icons/services/CRM System.png" alt="CRM" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'نظام متكامل لإدارة علاقات العملاء، تتبع المبيعات، وأتمتة التسويق مع تقارير وتحليلات متقدمة.'
                 : 'Complete CRM solution for customer relationship management, sales tracking, and marketing automation with advanced analytics.',
@@ -104,7 +107,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'إدارة المخزون' : 'Inventory Management',
             tagline: locale === 'ar' ? 'تتبع المخزون بدقة' : 'Precise Stock Tracking',
-            icon: <img src="/icons/services/Inventory Management.png" alt="Inventory" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Inventory Management.png" alt="Inventory" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'نظام شامل لإدارة المخزون والمستودعات مع تتبع فوري للمنتجات وتنبيهات إعادة الطلب.'
                 : 'Comprehensive inventory and warehouse management system with real-time product tracking and reorder alerts.',
@@ -117,7 +120,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'نظام نقاط البيع' : 'POS System',
             tagline: locale === 'ar' ? 'نقاط بيع متطورة' : 'Advanced Point of Sale',
-            icon: <img src="/icons/services/POS System.png" alt="POS" className="w-10 h-10" />,
+            icon: <img src="/icons/services/POS System.png" alt="POS" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'نظام نقاط بيع سحابي متكامل مع إدارة المخزون والعملاء والتقارير المالية.'
                 : 'Cloud-based POS system integrated with inventory, customer management, and financial reporting.',
@@ -130,7 +133,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'إدارة الموارد البشرية' : 'HR Management',
             tagline: locale === 'ar' ? 'إدارة فريقك بكفاءة' : 'Efficient Team Management',
-            icon: <img src="/icons/services/HR Management.png" alt="HR" className="w-10 h-10" />,
+            icon: <img src="/icons/services/HR Management.png" alt="HR" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'نظام شامل لإدارة الموارد البشرية من التوظيف إلى الرواتب والأداء.'
                 : 'Complete HR system from recruitment to payroll and performance management.',
@@ -143,7 +146,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'نظام الحجوزات' : 'Booking System',
             tagline: locale === 'ar' ? 'حجوزات ذكية ومرنة' : 'Smart & Flexible Booking',
-            icon: <img src="/icons/services/Booking System.png" alt="Booking" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Booking System.png" alt="Booking" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'نظام حجوزات متكامل للخدمات والمواعيد مع تكامل التقويم والتذكيرات.'
                 : 'Integrated booking system for services and appointments with calendar integration and reminders.',
@@ -156,7 +159,7 @@ export default function BusinessSystemsDevelopmentPage() {
         {
             name: locale === 'ar' ? 'لوحات التحليلات' : 'Analytics Dashboard',
             tagline: locale === 'ar' ? 'رؤى أعمال متقدمة' : 'Advanced Business Insights',
-            icon: <img src="/icons/services/Analytics Dashboard.png" alt="Analytics" className="w-10 h-10" />,
+            icon: <img src="/icons/services/Analytics Dashboard.png" alt="Analytics" width={40} height={40} className="w-10 h-10" />,
             description: locale === 'ar'
                 ? 'لوحات تحكم تحليلية متقدمة لمراقبة أداء الأعمال واتخاذ قرارات مبنية على البيانات.'
                 : 'Advanced analytics dashboards to monitor business performance and make data-driven decisions.',

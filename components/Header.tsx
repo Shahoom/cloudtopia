@@ -81,10 +81,10 @@ export default function Header() {
     <header
       ref={headerRef}
       className={`sticky top-0 z-[9999] transition-all duration-500 ${isScrolled
-          ? isDarkSection
-            ? 'bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/10'
-            : 'bg-lavender/80 backdrop-blur-md shadow-md border-b border-neutral-200'
-          : 'bg-transparent border-b border-transparent'
+        ? isDarkSection
+          ? 'bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/10'
+          : 'bg-lavender/80 backdrop-blur-md shadow-md border-b border-neutral-200'
+        : 'bg-transparent border-b border-transparent'
         }`}
       dir={dir}
     >
@@ -102,6 +102,8 @@ export default function Header() {
               <img
                 src="/images/CloudTopia.svg"
                 alt="CloudTopia Logo"
+                width={150}
+                height={44}
                 className={`relative z-10 transition-all duration-300 group-hover:scale-110 ${isScrolled ? 'h-9' : 'h-11'
                   }`}
               />
@@ -112,11 +114,11 @@ export default function Header() {
               <span className={`font-logo font-bold transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-xl' : 'text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
                 }`}>
                 Cloud<span className={`bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient ${isDarkSection
-                    ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
-                    : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600'
+                  ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
+                  : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600'
                   }`}>Topia</span>
               </span>
-              <span className={`text-[11px] font-medium tracking-wider uppercase transition-all duration-500 ${isDarkSection ? 'text-zinc-400' : 'text-neutral-500'
+              <span className={`text-[11px] font-medium tracking-wider uppercase transition-all duration-500 ${isDarkSection ? 'text-zinc-400' : 'text-neutral-600'
                 }`}>
                 {t.header.tagline}
               </span>
@@ -149,8 +151,8 @@ export default function Header() {
             <button
               type="button"
               className={`p-2 rounded-lg transition-all duration-500 relative group ${isDarkSection
-                  ? 'text-zinc-300 hover:bg-lavender/10 hover:text-white'
-                  : 'text-neutral-700 hover:bg-lavender hover:text-primary-600'
+                ? 'text-zinc-300 hover:bg-lavender/10 hover:text-white'
+                : 'text-neutral-700 hover:bg-lavender hover:text-primary-600'
                 }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
@@ -179,8 +181,8 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={`px-4 py-3 font-medium transition-all duration-300 rounded-lg transform ${isDarkSection
-                      ? 'text-zinc-300 hover:text-white hover:bg-lavender/10'
-                      : 'text-neutral-700 hover:text-primary-600 hover:bg-lavender'
+                    ? 'text-zinc-300 hover:text-white hover:bg-lavender/10'
+                    : 'text-neutral-700 hover:text-primary-600 hover:bg-lavender'
                     } ${dir === 'rtl' ? 'hover:-translate-x-2' : 'hover:translate-x-2'}`}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{

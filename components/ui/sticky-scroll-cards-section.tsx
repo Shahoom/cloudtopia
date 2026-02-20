@@ -143,6 +143,8 @@ export function StickyFeatureSection({ locale = 'en' }: StickyFeatureSectionProp
                                             src={feature.imageUrl}
                                             alt={feature.title}
                                             loading="lazy"
+                                            width={600}
+                                            height={400}
                                             className="relative z-10 w-full h-auto rounded-2xl shadow-2xl object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                                             onError={(e) => {
                                                 const target = e.target as HTMLImageElement;
