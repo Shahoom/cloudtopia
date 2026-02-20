@@ -21,16 +21,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' as const },
     ]
 
-    return routes.map((route) => ({
-        url: `${baseUrl}${route.path}`,
-        lastModified: new Date(),
-        changeFrequency: route.changeFrequency,
-        priority: route.priority,
-        alternates: {
-            languages: {
-                en: `${baseUrl}${route.path}`,
-                ar: `${baseUrl}/ar${route.path}`,
+    return routes.map((route) => {
+        // Handle the root path '/' correctly
+        const pathSuffix = route.path === '/' ? '' : route.path;
+
+        return {
+            url: `${baseUrl}/en${pathSuffix}`,   // Primary URL should point to a 200 OK route, not a redirect
+            lastModified: new Date(),
+            changeFrequency: route.changeFrequency,
+            priority: route.priority,
+            alternates: {
+                languages: {
+                    en: `${baseUrl}/en${pathSuffix}`,  // Explicit English URL
+                    ar: `${baseUrl}/ar${pathSuffix}`,  // Explicit Arabic URL
+                },
             },
-        },
-    }))
+        };
+    })
 }

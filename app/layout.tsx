@@ -141,10 +141,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
 
-        {/* Hreflang tags for international SEO */}
-        <link rel="alternate" hrefLang="en" href="https://cloudtopia.net" />
-        <link rel="alternate" hrefLang="ar" href="https://cloudtopia.net/ar" />
-        <link rel="alternate" hrefLang="x-default" href="https://cloudtopia.net" />
+        {/* Hreflang tracking is handled robustly via the dynamic sitemap.xml */}
 
         {/* Preconnect to external resources optionally - removed for Fonts as unused */}
         {/* JSON-LD Organization Schema */}
