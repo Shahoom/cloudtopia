@@ -44,7 +44,8 @@ void main() {
   vec2 i = vec2(0.1);
   vec2 f = p * (z += 5. - 6. * exp(.4 - dot(p, p)));
   vec4 O = vec4(0.0);
-  for (i.y = 1.0; i.y <= 8.0; i.y += 1.0) {
+  // Reduced iterations on mobile for better TBT
+  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 4.0 : 8.0); i.y += 1.0) {
     O += (tanh(f) + 1.0).xyyx * abs(f.x - f.y);
     f += tanh(f.yx * i.y + i + u_time) / i.y + 0.7;
   }

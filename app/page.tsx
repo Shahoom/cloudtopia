@@ -245,10 +245,10 @@ export default function HomePage() {
                 {/* Stars Canvas - Only for this section, optimized for performance */}
                 <StarsCanvas
                     transparent={false}
-                    maxStars={300}
+                    maxStars={150} // Reduced for mobile performance
                     hue={217}
                     brightness={0.7}
-                    speedMultiplier={0.4}
+                    speedMultiplier={0.3} // Slower for less load
                     twinkleIntensity={40}
                     position="absolute"
                     className="z-0"
@@ -375,6 +375,7 @@ export default function HomePage() {
                                             src={project.image}
                                             alt={project.title}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, 33vw"
                                             className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                                         />
                                     )}

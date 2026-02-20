@@ -1,30 +1,12 @@
-/* External Font Imports removed (render-blocking) *//* Custom Font for CloudTopia Logo */
-@font-face {
-  font-family: 'AgharaPro';
-  src: url('/fonts/AgharaProRegular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Changa Font - Variable Weight */
-@font-face {
-  font-family: 'Changa';
-  src: url('/fonts/Changa-VariableFont_wght.ttf') format('truetype-variations');
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
-}
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 :root {
-  --font-inter: 'Changa', sans-serif;
-  --font-poppins: 'Changa', sans-serif;
-  --font-logo: 'AgharaPro', 'Changa', sans-serif;
-  --font-arabic: 'Changa', sans-serif;
+  --font-inter: var(--font-changa), sans-serif;
+  --font-poppins: var(--font-changa), sans-serif;
+  --font-logo: var(--font-aghara-pro), var(--font-changa), sans-serif;
+  --font-arabic: var(--font-changa), sans-serif;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   

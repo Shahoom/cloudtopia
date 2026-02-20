@@ -1,9 +1,22 @@
 import type { Metadata, Viewport } from 'next'
+import { Changa } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
+
+const changa = Changa({
+  subsets: ['latin', 'arabic'],
+  display: 'swap',
+  variable: '--font-changa',
+})
+
+const agharaPro = localFont({
+  src: '../public/fonts/AgharaProRegular.ttf',
+  variable: '--font-aghara-pro',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cloudtopia.net'),
@@ -188,7 +201,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
+      <body className={`flex flex-col min-h-screen antialiased ${changa.variable} ${agharaPro.variable}`}>
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
