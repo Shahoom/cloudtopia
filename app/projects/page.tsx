@@ -530,6 +530,14 @@ export default function ProjectsPage() {
   const orbScale = useTransform(smoothProgress, [0, 0.3], [1, useParallax ? 1.5 : 1])
   const orbOpacity = useTransform(smoothProgress, [0, 0.3], [0.2, useParallax ? 0 : 0.2])
 
+  // Parallax transforms moved to top level to avoid hook violations
+  const featuredParallax1 = useTransform(smoothProgress, [0.1, 0.5], [0, -100])
+  const featuredParallax2 = useTransform(smoothProgress, [0.1, 0.5], [0, -80])
+  const featuredParallax3 = useTransform(smoothProgress, [0.2, 0.6], [0, -60])
+  const footerParallax = useTransform(smoothProgress, [0.5, 0.8], [100, -100])
+  const gradientParallax = useTransform(smoothProgress, [0.3, 0.6], [50, -50])
+  const orbScaleParallax = useTransform(smoothProgress, [0.5, 0.7], [0.8, 1.2])
+
   const openProjectModal = (project: Project) => {
     setSelectedProject(project)
     setIsModalOpen(true)
@@ -704,15 +712,15 @@ export default function ProjectsPage() {
         {useParallax && (
           <>
             <motion.div
-              style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -100]) }}
+              style={{ y: featuredParallax1 }}
               className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-neutral-200/50 rounded-full blur-[120px] pointer-events-none"
             />
             <motion.div
-              style={{ y: useTransform(smoothProgress, [0.1, 0.5], [0, -80]) }}
+              style={{ y: featuredParallax2 }}
               className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-neutral-300/40 rounded-full blur-[100px] pointer-events-none"
             />
             <motion.div
-              style={{ y: useTransform(smoothProgress, [0.2, 0.6], [0, -60]) }}
+              style={{ y: featuredParallax3 }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-neutral-200/30 to-transparent rounded-full blur-[80px] pointer-events-none"
             />
           </>
@@ -783,7 +791,7 @@ export default function ProjectsPage() {
       <section className="py-32 bg-lavender relative overflow-hidden">
         {/* Subtle animated gradient */}
         <motion.div
-          style={{ y: useTransform(smoothProgress, [0.3, 0.6], [50, -50]) }}
+          style={{ y: gradientParallax }}
           className="absolute inset-0 bg-gradient-to-b from-lavender via-lavender to-lavender"
         />
 
@@ -890,7 +898,7 @@ export default function ProjectsPage() {
       <section className="py-32 bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 relative overflow-hidden">
         {/* Animated background with parallax */}
         <motion.div
-          style={{ y: useParallax ? useTransform(smoothProgress, [0.5, 0.8], [100, -100]) : 0 }}
+          style={{ y: useParallax ? footerParallax : 0 }}
           className="absolute inset-0"
         >
           <SparklesCore
@@ -907,7 +915,7 @@ export default function ProjectsPage() {
 
         {/* Gradient orbs */}
         <motion.div
-          style={{ scale: useTransform(smoothProgress, [0.5, 0.7], [0.8, 1.2]) }}
+          style={{ scale: orbScaleParallax }}
           className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-lavender/20 rounded-full blur-[150px]"
         />
 
