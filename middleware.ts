@@ -28,11 +28,12 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
 
-    // Skip static files and API routes
+    // Skip static files, API routes, and Vercel internal routes
     if (
         pathname.startsWith('/_next') ||
         pathname.startsWith('/api') ||
         pathname.startsWith('/images') ||
+        pathname.startsWith('/_vercel') ||
         pathname.includes('.') // files with extensions
     ) {
         return NextResponse.next()
@@ -78,7 +79,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        // Match all paths except static files
-        '/((?!_next/static|_next/image|favicon.ico|favicon.svg|icon.svg|images|icon-|apple-touch|manifest).*)',
+        // Match all paths except static files and Vercel internals
+        '/((?!_next/static|_next/image|_vercel|favicon.ico|favicon.svg|icon.svg|images|icon-|apple-touch|manifest).*)',
     ],
 }
