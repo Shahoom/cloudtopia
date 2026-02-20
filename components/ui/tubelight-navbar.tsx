@@ -50,7 +50,7 @@ export function NavBar({ items, className, isDark = false }: NavBarProps) {
       )}
     >
       <div className={cn(
-        "flex items-center gap-1 backdrop-blur-lg py-1 px-1 rounded-full shadow-lg transition-all duration-300",
+        "flex items-center gap-1 backdrop-blur-md py-1 px-1 rounded-full shadow-lg transition-all duration-300",
         isDark
           ? "bg-lavender/10 border border-white/20"
           : "bg-neutral-900/5 border border-neutral-200"

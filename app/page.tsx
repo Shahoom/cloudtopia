@@ -92,7 +92,7 @@ function JourneyStep({
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`group relative rounded-2xl border-2 ${s.border} bg-white/40 backdrop-blur-md p-8 transition-all duration-500 cursor-pointer ${isHovered ? `shadow-xl ${s.glow} -translate-y-2` : 'shadow-sm'
+                className={`group relative rounded-2xl border-2 ${s.border} bg-white/40 backdrop-blur-sm p-8 transition-all duration-500 cursor-pointer ${isHovered ? `shadow-xl ${s.glow} -translate-y-2` : 'shadow-sm'
                     }`}
             >
                 {/* Step number badge */}

@@ -44,8 +44,8 @@ void main() {
   vec2 i = vec2(0.1);
   vec2 f = p * (z += 5. - 6. * exp(.4 - dot(p, p)));
   vec4 O = vec4(0.0);
-  // Dramatically reduced iterations for better TBT
-  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 2.0 : 4.0); i.y += 1.0) {
+  // Ultra-low iterations for maximum main-thread performance
+  for (i.y = 1.0; i.y <= 2.0; i.y += 1.0) {
     O += (tanh(f) + 1.0).xyyx * abs(f.x - f.y);
     f += tanh(f.yx * i.y + i + u_time) / i.y + 0.7;
   }
@@ -220,7 +220,7 @@ export default function AuroraFlux({
 
         // render loop
         let lastTime = 0;
-        const targetFPS = 30;
+        const targetFPS = 24; // Consistent 24fps for cinematic look and low load
         const frameInterval = 1000 / targetFPS;
 
         const loop = (t: number) => {

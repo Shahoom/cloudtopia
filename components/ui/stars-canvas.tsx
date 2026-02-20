@@ -132,12 +132,12 @@ export function StarsCanvas({
 
         // Optimized animation loop
         let lastTime = 0;
-        const targetFPS = w < 768 ? 20 : 30; // Further reduced for mobile performance
+        const targetFPS = 24;
         const frameInterval = 1000 / targetFPS;
 
         const animate = (currentTime: number) => {
             if (paused || !isVisible) {
-                animationRef.current = requestAnimationFrame(animate);
+                animationRef.current = undefined;
                 return;
             }
 
