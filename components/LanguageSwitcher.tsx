@@ -25,15 +25,15 @@ export default function LanguageSwitcher({ isDark = false }: LanguageSwitcherPro
       aria-label="Switch language"
     >
       <span className={`text-sm font-bold transition-colors ${locale === 'en'
-        ? (isDark ? 'text-blue-400' : 'text-primary-600')
-        : (isDark ? 'text-zinc-500' : 'text-neutral-400')
+        ? (isDark ? 'text-blue-400' : 'text-primary-700')
+        : (isDark ? 'text-zinc-400' : 'text-neutral-600')
         }`}>
         EN
       </span>
-      <span className={isDark ? 'text-zinc-500 mx-1' : 'text-neutral-300 mx-1'}>|</span>
+      <span className={isDark ? 'text-zinc-500 mx-1' : 'text-neutral-400 mx-1'}>|</span>
       <span className={`text-sm font-bold transition-colors ${locale === 'ar'
-        ? (isDark ? 'text-blue-400' : 'text-primary-600')
-        : (isDark ? 'text-zinc-500' : 'text-neutral-400')
+        ? (isDark ? 'text-blue-400' : 'text-primary-700')
+        : (isDark ? 'text-zinc-400' : 'text-neutral-600')
         }`}>
         AR
       </span>

@@ -70,11 +70,18 @@ export function StarsCanvas({
 
         const ctx = canvas.getContext('2d', { alpha: transparent })!;
 
-        // Use container dimensions instead of window for scoped rendering
+        // Efficient dimension tracking without forced reflow
         const updateDimensions = () => {
             const rect = container.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
+            // Lower DPR for stars to reduce main-thread burden
+            const dpr = 0.75;
+            const newW = Math.floor(rect.width * dpr);
+            const newH = Math.floor(rect.height * dpr);
+
+            if (canvas.width !== newW || canvas.height !== newH) {
+                canvas.width = newW;
+                canvas.height = newH;
+            }
             return { w: rect.width, h: rect.height };
         };
 

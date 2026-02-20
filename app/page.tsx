@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -154,8 +154,8 @@ export default function HomePage() {
     const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
     const isRTL = locale === 'ar'
 
-    // Real projects from the projects page translations
-    const featuredProjects = (t.projects?.projectCards as Array<{
+    // Memoize derived data to save main-thread work
+    const featuredProjects = useMemo(() => (t.projects?.projectCards as Array<{
         id: string
         category: string
         type: string
@@ -167,21 +167,21 @@ export default function HomePage() {
         image: string
         metrics: { label: string; value: string }
         link?: string
-    }>)?.filter(p => p.featured).slice(0, 3) || []
+    }>)?.filter(p => p.featured).slice(0, 3) || [], [t.projects?.projectCards])
 
     // Journey steps from translations
-    const journeyStepsData = t.home?.journey?.steps as Array<{
+    const journeyStepsData = (t.home?.journey?.steps as Array<{
         number: string
         title: string
         description: string
-    }> || []
+    }>) || []
 
-    const journeySteps = [
+    const journeySteps = useMemo(() => [
         { iconImage: '/icons/services/digitalpresence.png', number: journeyStepsData[0]?.number || '01', title: journeyStepsData[0]?.title || 'Digital Presence', description: journeyStepsData[0]?.description || 'Establish your online identity with websites, social media, and digital marketing.', accent: 'blue', href: `/${locale}/services` },
         { iconImage: '/icons/services/systems.png', number: journeyStepsData[1]?.number || '02', title: journeyStepsData[1]?.title || 'Business Systems', description: journeyStepsData[1]?.description || 'Streamline operations with custom CRM, inventory, and management systems.', accent: 'purple', href: `/${locale}/services` },
         { iconImage: '/icons/services/webapps.png', number: journeyStepsData[2]?.number || '03', title: journeyStepsData[2]?.title || 'Web Applications', description: journeyStepsData[2]?.description || 'Build interactive platforms, portals, and SaaS solutions for your customers.', accent: 'emerald', href: `/${locale}/services` },
         { iconImage: '/icons/services/Analytics Dashboard.png', number: journeyStepsData[3]?.number || '04', title: journeyStepsData[3]?.title || 'Labs', description: journeyStepsData[3]?.description || 'Explore AI-powered tools and innovative experiments pushing the boundaries of technology.', accent: 'amber', href: `/${locale}/labs` }
-    ]
+    ], [journeyStepsData, locale])
 
     return (
         <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -273,7 +273,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-8">
-                        {journeySteps.map((step, index) => (
+                        {journeySteps.map((step: any, index: number) => (
                             <JourneyStep key={index} {...step} index={index} />
                         ))}
                     </div>
@@ -309,7 +309,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
-                        {featuredProjects.map((project, index) => (
+                        {featuredProjects.map((project: any, index: number) => (
                             <motion.div
                                 key={project.id}
                                 initial={{ opacity: 0, y: 40 }}
@@ -358,7 +358,7 @@ export default function HomePage() {
 
                                     {/* Features */}
                                     <div className="flex flex-wrap gap-2 mb-5">
-                                        {project.features.slice(0, 3).map((feature) => (
+                                        {project.features.slice(0, 3).map((feature: string) => (
                                             <span
                                                 key={feature}
                                                 className="px-3 py-1 rounded-full bg-lavender/10 text-white/70 text-xs font-medium"

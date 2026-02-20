@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function Footer() {
@@ -75,18 +76,19 @@ export default function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <Link href={l('/')} className={`inline-flex items-center mb-4 ${dir === 'rtl' ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
-                <img
+                <Image
                   src="/images/CloudTopia.svg"
                   alt="CloudTopia Logo"
                   width={150}
                   height={40}
+                  priority
                   className="h-10 w-auto"
                 />
                 <span className="text-2xl font-bold font-logo text-neutral-900">
                   Cloud<span className="text-blue-600">Topia</span>
                 </span>
               </Link>
-              <p className="text-neutral-400 mb-6 max-w-sm">
+              <p className="text-neutral-600 mb-6 max-w-sm font-medium">
                 {t.footer.description}
               </p>
               <div className={`flex ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
@@ -94,7 +96,7 @@ export default function Footer() {
                   <Link
                     key={social.name}
                     href={social.href}
-                    className="w-10 h-10 rounded-lg bg-lavender border border-neutral-100 flex items-center justify-center text-neutral-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200"
+                    className="w-10 h-10 rounded-lg bg-lavender border border-neutral-200 flex items-center justify-center text-neutral-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200"
                     aria-label={social.name}
                   >
                     {social.icon}
@@ -114,7 +116,7 @@ export default function Footer() {
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="text-neutral-400 hover:text-blue-600 transition-colors duration-200"
+                        className="text-neutral-600 hover:text-blue-600 transition-colors duration-200 font-medium"
                       >
                         {link.name}
                       </Link>
@@ -127,16 +129,16 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-neutral-100 py-6">
+        <div className="border-t border-neutral-200 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-neutral-400 text-sm">
+            <p className="text-neutral-600 text-sm font-medium">
               {t.footer.copyright.replace('{year}', currentYear.toString())}
             </p>
             <div className={`flex text-sm ${dir === 'rtl' ? 'space-x-reverse space-x-6' : 'space-x-6'}`}>
-              <Link href={l('/privacy')} className="text-neutral-400 hover:text-blue-600 transition-colors">
+              <Link href={l('/privacy')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
                 {t.footer.links.privacy}
               </Link>
-              <Link href={l('/terms')} className="text-neutral-400 hover:text-blue-600 transition-colors">
+              <Link href={l('/terms')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
                 {t.footer.links.terms}
               </Link>
             </div>

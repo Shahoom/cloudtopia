@@ -127,15 +127,17 @@ export default function AuroraFlux({
     const uResRef = useRef<WebGLUniformLocation | null>(null);
     const uMixRef = useRef<WebGLUniformLocation | null>(null);
 
-    // handle DPR sizing
+    // handle DPR sizing with ultra-low resolution for performance
     const resize = () => {
         const canvas = canvasRef.current!;
         const gl = glRef.current!;
-        const dpr = 1.0;
+        // Divide rendering resolution by 2 (area by 4) for massive GPU/Main-thread savings
+        const dpr = 0.5;
         const displayW = fullScreen ? window.innerWidth : canvas.clientWidth;
         const displayH = fullScreen ? window.innerHeight : canvas.clientHeight;
         const w = Math.floor(displayW * dpr);
         const h = Math.floor(displayH * dpr);
+
         if (canvas.width !== w || canvas.height !== h) {
             canvas.width = w;
             canvas.height = h;
