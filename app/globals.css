@@ -1,12 +1,30 @@
+/* External Font Imports removed (render-blocking) *//* Custom Font for CloudTopia Logo */
+@font-face {
+  font-family: 'AgharaPro';
+  src: url('/fonts/AgharaProRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Changa Font - Variable Weight */
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 :root {
-  --font-inter: var(--font-changa), sans-serif;
-  --font-poppins: var(--font-changa), sans-serif;
-  --font-logo: var(--font-aghara-pro), var(--font-changa), sans-serif;
-  --font-arabic: var(--font-changa), sans-serif;
+  --font-inter: 'Changa', sans-serif;
+  --font-poppins: 'Changa', sans-serif;
+  --font-logo: 'AgharaPro', 'Changa', sans-serif;
+  --font-arabic: 'Changa', sans-serif;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   
@@ -233,43 +251,6 @@
     }
   }
 
-  /* Cloud floating animation */
-  @keyframes float-cloud {
-
-    0%,
-    100% {
-      transform: translateY(0) translateX(0);
-    }
-
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-  }
-
-  @keyframes float-cloud-slow {
-
-    0%,
-    100% {
-      transform: translateY(0) translateX(0);
-    }
-
-    50% {
-      transform: translateY(-15px) translateX(-8px);
-    }
-  }
-
-  @keyframes float-cloud-reverse {
-
-    0%,
-    100% {
-      transform: translateY(0) translateX(0) scale(1);
-    }
-
-    50% {
-      transform: translateY(15px) translateX(-12px) scale(1.05);
-    }
-  }
-
   /* Fade in up animation */
   @keyframes fade-in-up {
     from {
@@ -294,18 +275,6 @@
       opacity: 1;
       transform: scale(1);
     }
-  }
-
-  .animate-float-cloud {
-    animation: float-cloud 8s ease-in-out infinite;
-  }
-
-  .animate-float-cloud-slow {
-    animation: float-cloud-slow 10s ease-in-out infinite;
-  }
-
-  .animate-float-cloud-reverse {
-    animation: float-cloud-reverse 12s ease-in-out infinite;
   }
 
   /* Fade in up animation for pricing cards */

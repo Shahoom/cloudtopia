@@ -75,6 +75,16 @@ const nextConfig = {
   // Enable SWC minification
   swcMinify: true,
 
+  // Experimental optimizations
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      'framer-motion',
+      '@react-three/drei',
+      'three',
+    ],
+  },
+
   // Trailing slash redirect
   trailingSlash: false,
 

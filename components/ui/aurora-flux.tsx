@@ -44,8 +44,8 @@ void main() {
   vec2 i = vec2(0.1);
   vec2 f = p * (z += 5. - 6. * exp(.4 - dot(p, p)));
   vec4 O = vec4(0.0);
-  // Reduced iterations on mobile for better TBT
-  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 4.0 : 8.0); i.y += 1.0) {
+  // Dramatically reduced iterations on mobile for better TBT
+  for (i.y = 1.0; i.y <= (u_resolution.x < 768.0 ? 2.0 : 8.0); i.y += 1.0) {
     O += (tanh(f) + 1.0).xyyx * abs(f.x - f.y);
     f += tanh(f.yx * i.y + i + u_time) / i.y + 0.7;
   }
@@ -118,7 +118,8 @@ export default function AuroraFlux({
     const resize = () => {
         const canvas = canvasRef.current!;
         const gl = glRef.current!;
-        const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        const isMobile = window.innerWidth < 768;
+        const dpr = fullScreen ? (isMobile ? 1.0 : Math.max(1, Math.min(2, window.devicePixelRatio || 1))) : 1.0;
         const displayW = fullScreen ? window.innerWidth : canvas.clientWidth;
         const displayH = fullScreen ? window.innerHeight : canvas.clientHeight;
         const w = Math.floor(displayW * dpr);
@@ -211,11 +212,23 @@ export default function AuroraFlux({
         }
 
         // render loop
+        let lastTime = 0;
+        const targetFPS = 30;
+        const frameInterval = 1000 / targetFPS;
+
         const loop = (t: number) => {
             if (!shouldRender()) {
                 rafRef.current = null;
                 return;
             }
+
+            const deltaTime = t - lastTime;
+            if (deltaTime < frameInterval) {
+                rafRef.current = requestAnimationFrame(loop);
+                return;
+            }
+            lastTime = t - (deltaTime % frameInterval);
+
             if (!gl || !program) return;
             gl.useProgram(program);
             if (uTimeRef.current) gl.uniform1f(uTimeRef.current, t * 0.001);

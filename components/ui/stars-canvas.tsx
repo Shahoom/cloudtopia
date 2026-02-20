@@ -113,7 +113,8 @@ export function StarsCanvas({
 
         // Initialize stars only once (using ref to persist across effect re-runs)
         if (starsRef.current.length === 0) {
-            for (let i = 0; i < maxStars; i++) {
+            const starCount = w < 768 ? 50 : maxStars; // Drastically reduced for mobile
+            for (let i = 0; i < starCount; i++) {
                 const orbitRadius = random(maxOrbit(w, h));
                 starsRef.current.push({
                     orbitRadius,
@@ -131,7 +132,7 @@ export function StarsCanvas({
 
         // Optimized animation loop
         let lastTime = 0;
-        const targetFPS = 30; // Cap at 30 FPS for performance
+        const targetFPS = w < 768 ? 20 : 30; // Further reduced for mobile performance
         const frameInterval = 1000 / targetFPS;
 
         const animate = (currentTime: number) => {

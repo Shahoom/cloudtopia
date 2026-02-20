@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 import { Home, Briefcase, Sparkles, Info, Mail, FolderKanban } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -99,12 +100,13 @@ export default function Header() {
             {/* Logo with hover effect */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-hero rounded-xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
-              <img
+              <Image
                 src="/images/CloudTopia.svg"
                 alt="CloudTopia Logo"
                 width={150}
                 height={44}
-                className={`relative z-10 transition-all duration-300 group-hover:scale-110 ${isScrolled ? 'h-9' : 'h-11'
+                priority
+                className={`relative z-10 transition-all duration-300 group-hover:scale-110 w-auto ${isScrolled ? 'h-9' : 'h-11'
                   }`}
               />
             </div>
@@ -113,7 +115,7 @@ export default function Header() {
             <div className="flex flex-col -space-y-0.5">
               <span className={`font-logo font-bold transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-xl' : 'text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
                 }`}>
-                Cloud<span className={`bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient ${isDarkSection
+                Cloud<span className={`bg-clip-text text-transparent bg-[length:200%_auto] md:animate-gradient ${isDarkSection
                   ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
                   : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600'
                   }`}>Topia</span>

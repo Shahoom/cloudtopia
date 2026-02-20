@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        aurora: "aurora 60s linear infinite",
+        aurora: "aurora 80s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
         "shine-pulse": "shine-pulse 14s infinite linear",
       },
