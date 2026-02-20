@@ -32,7 +32,7 @@ export default function Hero() {
     const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
 
     return (
-        <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-zinc-950 px-4 sm:px-6 py-12 sm:py-20 transition-colors duration-300">
+        <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FAFAFA] px-4 sm:px-6 py-12 sm:py-20 transition-colors duration-300">
 
             {/* AuroraFlux Background - Dynamic flowing aurora effect */}
             <div className="absolute inset-0 pointer-events-none">
@@ -41,7 +41,7 @@ export default function Hero() {
                     pauseWhenHidden={true}
                     pauseOnHover={false}
                     mix={0.5}
-                    className="absolute inset-0 opacity-60"
+                    className="absolute inset-0 opacity-[0.15]" // Decreased waves
                     style={{
                         position: "absolute",
                         top: 0,
@@ -52,7 +52,7 @@ export default function Hero() {
                     ariaLabel="Dynamic aurora background effect"
                 />
                 {/* Overlay gradient for better text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/30 via-transparent to-zinc-950/70" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/90" />
             </div>
 
             <div className={`relative z-10 flex flex-col items-center gap-4 sm:gap-8 text-center ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
@@ -60,9 +60,9 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-900/50 px-3 py-1 text-sm font-medium text-zinc-200 backdrop-blur-sm"
+                    className="inline-flex items-center rounded-full border border-neutral-200 bg-white/60 px-3 py-1 text-sm font-medium text-neutral-800 backdrop-blur-sm shadow-sm"
                 >
-                    <span className="flex h-2 w-2 rounded-full bg-lavender mr-2 animate-pulse"></span>
+                    <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
                     {t.header?.tagline || 'Digital & Cloud Technologies'}
                 </motion.div>
 
@@ -70,11 +70,11 @@ export default function Hero() {
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-50 max-w-5xl"
+                    className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-900 max-w-5xl"
                 >
                     {isRTL ? 'ارتقِ بأعمالك' : 'Elevate Your Business'} <br className="hidden sm:block" />
                     <div className="flex items-center justify-center gap-x-2 sm:gap-x-3 whitespace-nowrap mt-2">
-                        <span className="text-zinc-50">{isRTL ? 'إلى' : 'Into the'}</span>
+                        <span className="text-neutral-900">{isRTL ? 'إلى' : 'Into the'}</span>
                         <div className="relative flex items-center h-[1.2em] min-w-[2ch]">
                             <AnimatePresence mode="wait">
                                 <motion.span
@@ -99,7 +99,7 @@ export default function Hero() {
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl px-4 leading-relaxed"
+                    className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl px-4 leading-relaxed mt-2"
                 >
                     {t.home?.hero?.description || 'CloudTopia empowers businesses to thrive in the digital era — from crafting stunning online presence, to building powerful systems and web applications, to pioneering innovation through cutting-edge technology.'}
                 </motion.p>
@@ -108,13 +108,13 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 w-full sm:w-auto"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 w-full sm:w-auto"
                 >
                     <Link href={l('/contact')} className="w-full sm:w-auto">
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-10 py-3 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)]"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-10 py-3 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
                         >
                             {t.home?.hero?.getStarted || 'Get Started'}
                             <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
@@ -124,7 +124,7 @@ export default function Hero() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-10 py-3 text-lg font-semibold text-zinc-200 bg-zinc-900 border border-zinc-700 rounded-full hover:bg-zinc-800 transition-all backdrop-blur-sm"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-10 py-3 text-lg font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all shadow-sm hover:shadow-md"
                         >
                             {isRTL ? 'مشاهدة الخدمات' : 'View Services'}
                         </motion.button>

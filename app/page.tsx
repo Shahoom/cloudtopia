@@ -187,7 +187,7 @@ export default function HomePage() {
         <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
 
             {/* Section 1: Hero with Aurora Flux Effect */}
-            <section className="relative bg-zinc-950" data-header-theme="dark">
+            <section className="relative bg-[#FAFAFA]" data-header-theme="light">
                 <Hero />
             </section>
 

@@ -59,8 +59,8 @@ void main() {
     0.6 + 0.4 * sin(channel + 2.0)
   );
   O.rgb *= glow * 1.0;
-
-  fragColor = O;
+  float alpha = max(O.r, max(O.g, O.b));
+  fragColor = vec4(O.rgb, alpha);
 }
 `;
 
@@ -167,7 +167,7 @@ export default function AuroraFlux({
             canvas.style.display = 'block';
         }
 
-        const gl = canvas.getContext('webgl2', { antialias: false, alpha: false });
+        const gl = canvas.getContext('webgl2', { antialias: false, alpha: true });
         if (!gl) {
             console.error('WebGL2 not supported.');
             return;
