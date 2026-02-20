@@ -127,6 +127,22 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
 
+        {/* Preload critical fonts */}
+        <link
+          rel="preload"
+          href="/fonts/Changa-VariableFont_wght.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/AgharaProRegular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+
         {/* Hreflang tags for international SEO */}
         <link rel="alternate" hrefLang="en" href="https://cloudtopia.net" />
         <link rel="alternate" hrefLang="ar" href="https://cloudtopia.net/ar" />

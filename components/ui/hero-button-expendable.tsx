@@ -67,9 +67,9 @@ export default function Hero() {
                 </motion.div>
 
                 <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
+                    transition={{ duration: 0.3 }}
                     className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-50 max-w-5xl"
                 >
                     {isRTL ? 'ارتقِ بأعمالك' : 'Elevate Your Business'} <br className="hidden sm:block" />
@@ -96,9 +96,9 @@ export default function Hero() {
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
+                    transition={{ duration: 0.3 }}
                     className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl px-4 leading-relaxed"
                 >
                     {t.home?.hero?.description || 'CloudTopia empowers businesses to thrive in the digital era — from crafting stunning online presence, to building powerful systems and web applications, to pioneering innovation through cutting-edge technology.'}
