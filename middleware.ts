@@ -53,12 +53,16 @@ export function middleware(request: NextRequest) {
         const newUrl = new URL(newPathname, request.url)
 
         // Pass the locale as a header so the app can read it
-        const rewriteResponse = NextResponse.rewrite(newUrl)
+        const requestHeaders = new Headers(request.headers)
+        requestHeaders.set('x-locale', locale)
+
+        const rewriteResponse = NextResponse.rewrite(newUrl, {
+            request: { headers: requestHeaders }
+        })
         rewriteResponse.cookies.set('NEXT_LOCALE', locale, {
             path: '/',
             maxAge: 60 * 60 * 24 * 365
         })
-        rewriteResponse.headers.set('x-locale', locale)
 
         return rewriteResponse
     }
