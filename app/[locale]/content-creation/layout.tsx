@@ -1,8 +1,7 @@
-import { cookies } from 'next/headers'
 import type { Metadata } from 'next'
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = cookies().get('NEXT_LOCALE')?.value ?? 'en'
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+    const locale = params.locale ?? 'en'
     const isAr = locale === 'ar'
     return {
         title: isAr
