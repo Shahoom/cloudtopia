@@ -110,6 +110,16 @@ const ProjectModal = ({
     }
   }, [isOpen])
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    if (isOpen) {
+      window.addEventListener('keydown', handleEscape)
+    }
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isOpen, onClose])
+
   if (!project) return null
 
   return (
@@ -127,6 +137,9 @@ const ProjectModal = ({
 
           {/* Modal */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={project.title}
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}

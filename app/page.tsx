@@ -274,7 +274,7 @@ export default function HomePage() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {journeySteps.map((step: any, index: number) => (
-                            <JourneyStep key={index} {...step} index={index} />
+                            <JourneyStep key={step.iconImage} {...step} index={index} />
                         ))}
                     </div>
                 </div>
