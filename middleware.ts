@@ -45,38 +45,22 @@ export function middleware(request: NextRequest) {
     )
 
     if (pathnameHasLocale) {
-        // Extract the locale from the pathname
+        // Extract locale and set cookie + header, then pass through
+        // With [locale] route segment, Next.js handles the routing natively
         const locale = pathname.split('/')[1]
 
-        // Rewrite to the actual page (without locale prefix)
-        const newPathname = pathname.replace(`/${locale}`, '') || '/'
-        const newUrl = new URL(newPathname, request.url)
-
-        // Pass the locale as a header so the app can read it
         const requestHeaders = new Headers(request.headers)
         requestHeaders.set('x-locale', locale)
 
-        // Also inject into Cookie header so cookies() works in generateMetadata()
-        const existingCookies = request.headers.get('cookie') || ''
-        const filteredCookies = existingCookies
-            .split(';')
-            .map(c => c.trim())
-            .filter(c => c && !c.startsWith('NEXT_LOCALE='))
-            .join('; ')
-        const newCookieHeader = filteredCookies
-            ? `${filteredCookies}; NEXT_LOCALE=${locale}`
-            : `NEXT_LOCALE=${locale}`
-        requestHeaders.set('cookie', newCookieHeader)
-
-        const rewriteResponse = NextResponse.rewrite(newUrl, {
+        const response = NextResponse.next({
             request: { headers: requestHeaders }
         })
-        rewriteResponse.cookies.set('NEXT_LOCALE', locale, {
+        response.cookies.set('NEXT_LOCALE', locale, {
             path: '/',
             maxAge: 60 * 60 * 24 * 365
         })
 
-        return rewriteResponse
+        return response
     }
 
     // No locale in URL - redirect to include locale
