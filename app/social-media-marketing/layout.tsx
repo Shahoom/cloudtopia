@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Social Media Marketing' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/social-media-marketing',
-        languages: { 'en': 'https://cloudtopia.net/social-media-marketing', 'ar': 'https://cloudtopia.net/ar/social-media-marketing' },
+        canonical: 'https://cloudtopia.net/en/social-media-marketing',
+        languages: { 'en': 'https://cloudtopia.net/en/social-media-marketing', 'ar': 'https://cloudtopia.net/ar/social-media-marketing', 'x-default': 'https://cloudtopia.net/en/social-media-marketing' },
     },
 }
 

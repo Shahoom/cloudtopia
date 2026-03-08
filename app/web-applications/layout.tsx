@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Web Applications' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/web-applications',
-        languages: { 'en': 'https://cloudtopia.net/web-applications', 'ar': 'https://cloudtopia.net/ar/web-applications' },
+        canonical: 'https://cloudtopia.net/en/web-applications',
+        languages: { 'en': 'https://cloudtopia.net/en/web-applications', 'ar': 'https://cloudtopia.net/ar/web-applications', 'x-default': 'https://cloudtopia.net/en/web-applications' },
     },
 }
 

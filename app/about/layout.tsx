@@ -14,8 +14,8 @@ export const metadata: Metadata = {
         description: 'Learn about our mission to empower businesses with digital and cloud technologies.',
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/about',
-        languages: { 'en': 'https://cloudtopia.net/about', 'ar': 'https://cloudtopia.net/ar/about' },
+        canonical: 'https://cloudtopia.net/en/about',
+        languages: { 'en': 'https://cloudtopia.net/en/about', 'ar': 'https://cloudtopia.net/ar/about', 'x-default': 'https://cloudtopia.net/en/about' },
     },
 }
 

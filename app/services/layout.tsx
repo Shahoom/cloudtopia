@@ -14,8 +14,8 @@ export const metadata: Metadata = {
         description: 'Comprehensive digital services: website design, e-commerce, marketing, content creation, business systems, and web applications.',
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/services',
-        languages: { 'en': 'https://cloudtopia.net/services', 'ar': 'https://cloudtopia.net/ar/services' },
+        canonical: 'https://cloudtopia.net/en/services',
+        languages: { 'en': 'https://cloudtopia.net/en/services', 'ar': 'https://cloudtopia.net/ar/services', 'x-default': 'https://cloudtopia.net/en/services' },
     },
 }
 

@@ -14,8 +14,8 @@ export const metadata: Metadata = {
         description: 'Get in touch for a free consultation. Reach us via email, WhatsApp, or our contact form.',
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/contact',
-        languages: { 'en': 'https://cloudtopia.net/contact', 'ar': 'https://cloudtopia.net/ar/contact' },
+        canonical: 'https://cloudtopia.net/en/contact',
+        languages: { 'en': 'https://cloudtopia.net/en/contact', 'ar': 'https://cloudtopia.net/ar/contact', 'x-default': 'https://cloudtopia.net/en/contact' },
     },
 }
 

@@ -14,8 +14,8 @@ export const metadata: Metadata = {
         description: 'Explore our portfolio of successful digital transformation projects.',
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/projects',
-        languages: { 'en': 'https://cloudtopia.net/projects', 'ar': 'https://cloudtopia.net/ar/projects' },
+        canonical: 'https://cloudtopia.net/en/projects',
+        languages: { 'en': 'https://cloudtopia.net/en/projects', 'ar': 'https://cloudtopia.net/ar/projects', 'x-default': 'https://cloudtopia.net/en/projects' },
     },
 }
 

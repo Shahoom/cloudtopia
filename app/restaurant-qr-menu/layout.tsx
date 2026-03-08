@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia QR Menu' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/restaurant-qr-menu',
-        languages: { 'en': 'https://cloudtopia.net/restaurant-qr-menu', 'ar': 'https://cloudtopia.net/ar/restaurant-qr-menu' },
+        canonical: 'https://cloudtopia.net/en/restaurant-qr-menu',
+        languages: { 'en': 'https://cloudtopia.net/en/restaurant-qr-menu', 'ar': 'https://cloudtopia.net/ar/restaurant-qr-menu', 'x-default': 'https://cloudtopia.net/en/restaurant-qr-menu' },
     },
 }
 
