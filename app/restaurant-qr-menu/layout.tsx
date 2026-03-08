@@ -1,18 +1,30 @@
-import { Metadata } from 'next'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'Restaurant QR Menu — Digital Menus for Modern Dining',
-    description: 'QR menu solutions by CloudTopia. Create beautiful, interactive digital menus for your restaurant. Contactless ordering, real-time updates, and premium design.',
-    openGraph: {
-        title: 'Restaurant QR Menu Solutions — CloudTopia',
-        description: 'Beautiful, interactive digital menus for restaurants. Contactless ordering, real-time updates, and premium design.',
-        url: 'https://cloudtopia.net/restaurant-qr-menu',
-        images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia QR Menu' }],
-    },
-    alternates: {
-        canonical: 'https://cloudtopia.net/en/restaurant-qr-menu',
-        languages: { 'en': 'https://cloudtopia.net/en/restaurant-qr-menu', 'ar': 'https://cloudtopia.net/ar/restaurant-qr-menu', 'x-default': 'https://cloudtopia.net/en/restaurant-qr-menu' },
-    },
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = headers().get('x-locale') ?? 'en'
+    const isAr = locale === 'ar'
+    return {
+        title: isAr
+            ? 'قائمة QR للمطاعم — قوائم رقمية للمطاعم العصرية'
+            : 'Restaurant QR Menu — Digital Menus for Modern Dining',
+        description: isAr
+            ? 'حلول قائمة QR من كلاود توبيا. أنشئ قوائم رقمية تفاعلية جميلة لمطعمك. طلب بدون تلامس وتحديثات فورية وتصميم راقٍ.'
+            : 'QR menu solutions by CloudTopia. Create beautiful, interactive digital menus for your restaurant. Contactless ordering, real-time updates, and premium design.',
+        openGraph: {
+            title: isAr ? 'حلول قائمة QR للمطاعم — كلاود توبيا' : 'Restaurant QR Menu Solutions — CloudTopia',
+            description: isAr
+                ? 'قوائم رقمية تفاعلية جميلة للمطاعم. طلب بدون تلامس وتحديثات فورية وتصميم راقٍ.'
+                : 'Beautiful, interactive digital menus for restaurants. Contactless ordering, real-time updates, and premium design.',
+            url: isAr ? 'https://cloudtopia.net/ar/restaurant-qr-menu' : 'https://cloudtopia.net/en/restaurant-qr-menu',
+            locale: isAr ? 'ar_SA' : 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'قائمة QR للمطاعم — كلاود توبيا' : 'CloudTopia QR Menu' }],
+        },
+        alternates: {
+            canonical: isAr ? 'https://cloudtopia.net/ar/restaurant-qr-menu' : 'https://cloudtopia.net/en/restaurant-qr-menu',
+            languages: { 'en': 'https://cloudtopia.net/en/restaurant-qr-menu', 'ar': 'https://cloudtopia.net/ar/restaurant-qr-menu', 'x-default': 'https://cloudtopia.net/en/restaurant-qr-menu' },
+        },
+    }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

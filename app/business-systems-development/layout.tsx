@@ -1,18 +1,30 @@
-import { Metadata } from 'next'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'Business Systems Development — Custom Software Solutions',
-    description: 'Custom business systems by CloudTopia. CRM, ERP, inventory management, and workflow automation — built to scale with your business needs.',
-    openGraph: {
-        title: 'Business Systems Development — CloudTopia',
-        description: 'Custom CRM, ERP, inventory management, and workflow automation — built to scale with your business.',
-        url: 'https://cloudtopia.net/business-systems-development',
-        images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Business Systems' }],
-    },
-    alternates: {
-        canonical: 'https://cloudtopia.net/en/business-systems-development',
-        languages: { 'en': 'https://cloudtopia.net/en/business-systems-development', 'ar': 'https://cloudtopia.net/ar/business-systems-development', 'x-default': 'https://cloudtopia.net/en/business-systems-development' },
-    },
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = headers().get('x-locale') ?? 'en'
+    const isAr = locale === 'ar'
+    return {
+        title: isAr
+            ? 'تطوير أنظمة الأعمال — حلول برمجية مخصصة'
+            : 'Business Systems Development — Custom Software Solutions',
+        description: isAr
+            ? 'أنظمة أعمال مخصصة من كلاود توبيا. CRM وERP وإدارة المخزون وأتمتة سير العمل — مبنية للتوسع مع احتياجات عملك.'
+            : 'Custom business systems by CloudTopia. CRM, ERP, inventory management, and workflow automation — built to scale with your business needs.',
+        openGraph: {
+            title: isAr ? 'تطوير أنظمة الأعمال — كلاود توبيا' : 'Business Systems Development — CloudTopia',
+            description: isAr
+                ? 'CRM وERP مخصص وإدارة المخزون وأتمتة سير العمل — مبنية للتوسع مع أعمالك.'
+                : 'Custom CRM, ERP, inventory management, and workflow automation — built to scale with your business.',
+            url: isAr ? 'https://cloudtopia.net/ar/business-systems-development' : 'https://cloudtopia.net/en/business-systems-development',
+            locale: isAr ? 'ar_SA' : 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'أنظمة الأعمال — كلاود توبيا' : 'CloudTopia Business Systems' }],
+        },
+        alternates: {
+            canonical: isAr ? 'https://cloudtopia.net/ar/business-systems-development' : 'https://cloudtopia.net/en/business-systems-development',
+            languages: { 'en': 'https://cloudtopia.net/en/business-systems-development', 'ar': 'https://cloudtopia.net/ar/business-systems-development', 'x-default': 'https://cloudtopia.net/en/business-systems-development' },
+        },
+    }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

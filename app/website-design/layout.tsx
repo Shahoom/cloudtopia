@@ -1,18 +1,30 @@
-import { Metadata } from 'next'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'Website Design — Stunning, Modern & Responsive Websites',
-    description: 'Professional website design services by CloudTopia. We create stunning, responsive, and SEO-optimized websites that convert visitors into customers.',
-    openGraph: {
-        title: 'Website Design Services — CloudTopia',
-        description: 'Professional website design — stunning, responsive, and SEO-optimized websites that convert visitors into customers.',
-        url: 'https://cloudtopia.net/website-design',
-        images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Website Design' }],
-    },
-    alternates: {
-        canonical: 'https://cloudtopia.net/en/website-design',
-        languages: { 'en': 'https://cloudtopia.net/en/website-design', 'ar': 'https://cloudtopia.net/ar/website-design', 'x-default': 'https://cloudtopia.net/en/website-design' },
-    },
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = headers().get('x-locale') ?? 'en'
+    const isAr = locale === 'ar'
+    return {
+        title: isAr
+            ? 'تصميم المواقع — مواقع مذهلة وعصرية ومتجاوبة'
+            : 'Website Design — Stunning, Modern & Responsive Websites',
+        description: isAr
+            ? 'خدمات تصميم المواقع الاحترافية من كلاود توبيا. نصمم مواقع إلكترونية مذهلة ومتجاوبة ومُحسَّنة لمحركات البحث تحوّل الزوار إلى عملاء.'
+            : 'Professional website design services by CloudTopia. We create stunning, responsive, and SEO-optimized websites that convert visitors into customers.',
+        openGraph: {
+            title: isAr ? 'خدمات تصميم المواقع — كلاود توبيا' : 'Website Design Services — CloudTopia',
+            description: isAr
+                ? 'تصميم مواقع احترافي — مواقع مذهلة ومتجاوبة ومُحسَّنة لمحركات البحث تحوّل الزوار إلى عملاء.'
+                : 'Professional website design — stunning, responsive, and SEO-optimized websites that convert visitors into customers.',
+            url: isAr ? 'https://cloudtopia.net/ar/website-design' : 'https://cloudtopia.net/en/website-design',
+            locale: isAr ? 'ar_SA' : 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'تصميم المواقع — كلاود توبيا' : 'CloudTopia Website Design' }],
+        },
+        alternates: {
+            canonical: isAr ? 'https://cloudtopia.net/ar/website-design' : 'https://cloudtopia.net/en/website-design',
+            languages: { 'en': 'https://cloudtopia.net/en/website-design', 'ar': 'https://cloudtopia.net/ar/website-design', 'x-default': 'https://cloudtopia.net/en/website-design' },
+        },
+    }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

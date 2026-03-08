@@ -1,18 +1,30 @@
-import { Metadata } from 'next'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'E-Commerce Solutions — Online Stores That Convert',
-    description: 'E-commerce solutions by CloudTopia. We build powerful online stores with seamless checkout, inventory management, and growth-optimized product pages.',
-    openGraph: {
-        title: 'E-Commerce Solutions — CloudTopia',
-        description: 'Powerful online stores with seamless checkout, inventory management, and growth-optimized product pages.',
-        url: 'https://cloudtopia.net/ecommerce-solutions',
-        images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia E-Commerce Solutions' }],
-    },
-    alternates: {
-        canonical: 'https://cloudtopia.net/en/ecommerce-solutions',
-        languages: { 'en': 'https://cloudtopia.net/en/ecommerce-solutions', 'ar': 'https://cloudtopia.net/ar/ecommerce-solutions', 'x-default': 'https://cloudtopia.net/en/ecommerce-solutions' },
-    },
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = headers().get('x-locale') ?? 'en'
+    const isAr = locale === 'ar'
+    return {
+        title: isAr
+            ? 'حلول التجارة الإلكترونية — متاجر إلكترونية عالية التحويل'
+            : 'E-Commerce Solutions — Online Stores That Convert',
+        description: isAr
+            ? 'حلول التجارة الإلكترونية من كلاود توبيا. نبني متاجر إلكترونية قوية مع دفع سلس وإدارة مخزون وصفحات منتجات مُحسَّنة للنمو.'
+            : 'E-commerce solutions by CloudTopia. We build powerful online stores with seamless checkout, inventory management, and growth-optimized product pages.',
+        openGraph: {
+            title: isAr ? 'حلول التجارة الإلكترونية — كلاود توبيا' : 'E-Commerce Solutions — CloudTopia',
+            description: isAr
+                ? 'متاجر إلكترونية قوية مع دفع سلس وإدارة مخزون وصفحات منتجات مُحسَّنة للنمو.'
+                : 'Powerful online stores with seamless checkout, inventory management, and growth-optimized product pages.',
+            url: isAr ? 'https://cloudtopia.net/ar/ecommerce-solutions' : 'https://cloudtopia.net/en/ecommerce-solutions',
+            locale: isAr ? 'ar_SA' : 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'حلول التجارة الإلكترونية — كلاود توبيا' : 'CloudTopia E-Commerce Solutions' }],
+        },
+        alternates: {
+            canonical: isAr ? 'https://cloudtopia.net/ar/ecommerce-solutions' : 'https://cloudtopia.net/en/ecommerce-solutions',
+            languages: { 'en': 'https://cloudtopia.net/en/ecommerce-solutions', 'ar': 'https://cloudtopia.net/ar/ecommerce-solutions', 'x-default': 'https://cloudtopia.net/en/ecommerce-solutions' },
+        },
+    }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
