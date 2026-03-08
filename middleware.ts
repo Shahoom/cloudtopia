@@ -56,6 +56,18 @@ export function middleware(request: NextRequest) {
         const requestHeaders = new Headers(request.headers)
         requestHeaders.set('x-locale', locale)
 
+        // Also inject into Cookie header so cookies() works in generateMetadata()
+        const existingCookies = request.headers.get('cookie') || ''
+        const filteredCookies = existingCookies
+            .split(';')
+            .map(c => c.trim())
+            .filter(c => c && !c.startsWith('NEXT_LOCALE='))
+            .join('; ')
+        const newCookieHeader = filteredCookies
+            ? `${filteredCookies}; NEXT_LOCALE=${locale}`
+            : `NEXT_LOCALE=${locale}`
+        requestHeaders.set('cookie', newCookieHeader)
+
         const rewriteResponse = NextResponse.rewrite(newUrl, {
             request: { headers: requestHeaders }
         })

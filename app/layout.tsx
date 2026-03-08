@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -127,7 +127,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const locale = headers().get('x-locale') ?? 'en'
+  const locale = cookies().get('NEXT_LOCALE')?.value ?? 'en'
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
