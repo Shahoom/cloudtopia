@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Business Systems' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/business-systems-development',
-        languages: { 'en': 'https://cloudtopia.net/business-systems-development', 'ar': 'https://cloudtopia.net/ar/business-systems-development' },
+        canonical: 'https://cloudtopia.net/en/business-systems-development',
+        languages: { 'en': 'https://cloudtopia.net/en/business-systems-development', 'ar': 'https://cloudtopia.net/ar/business-systems-development', 'x-default': 'https://cloudtopia.net/en/business-systems-development' },
     },
 }
 

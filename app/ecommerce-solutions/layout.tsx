@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia E-Commerce Solutions' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/ecommerce-solutions',
-        languages: { 'en': 'https://cloudtopia.net/ecommerce-solutions', 'ar': 'https://cloudtopia.net/ar/ecommerce-solutions' },
+        canonical: 'https://cloudtopia.net/en/ecommerce-solutions',
+        languages: { 'en': 'https://cloudtopia.net/en/ecommerce-solutions', 'ar': 'https://cloudtopia.net/ar/ecommerce-solutions', 'x-default': 'https://cloudtopia.net/en/ecommerce-solutions' },
     },
 }
 

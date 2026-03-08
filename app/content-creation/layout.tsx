@@ -10,8 +10,8 @@ export const metadata: Metadata = {
         images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Content Creation' }],
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/content-creation',
-        languages: { 'en': 'https://cloudtopia.net/content-creation', 'ar': 'https://cloudtopia.net/ar/content-creation' },
+        canonical: 'https://cloudtopia.net/en/content-creation',
+        languages: { 'en': 'https://cloudtopia.net/en/content-creation', 'ar': 'https://cloudtopia.net/ar/content-creation', 'x-default': 'https://cloudtopia.net/en/content-creation' },
     },
 }
 

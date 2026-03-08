@@ -93,7 +93,12 @@ export const metadata: Metadata = {
     // yandex: 'your-yandex-verification-code',
   },
   alternates: {
-    // Let Next.js auto-generate canonical based on metadataBase
+    canonical: 'https://cloudtopia.net/en',
+    languages: {
+      'en': 'https://cloudtopia.net/en',
+      'ar': 'https://cloudtopia.net/ar',
+      'x-default': 'https://cloudtopia.net/en',
+    },
   },
   category: 'technology',
   other: {

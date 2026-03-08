@@ -14,8 +14,8 @@ export const metadata: Metadata = {
         description: 'Our innovation hub for AI, cloud-native, and cutting-edge experimental prototypes.',
     },
     alternates: {
-        canonical: 'https://cloudtopia.net/labs',
-        languages: { 'en': 'https://cloudtopia.net/labs', 'ar': 'https://cloudtopia.net/ar/labs' },
+        canonical: 'https://cloudtopia.net/en/labs',
+        languages: { 'en': 'https://cloudtopia.net/en/labs', 'ar': 'https://cloudtopia.net/ar/labs', 'x-default': 'https://cloudtopia.net/en/labs' },
     },
 }
 
