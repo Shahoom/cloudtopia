@@ -8,13 +8,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             ? 'تواصل معنا — احصل على استشارة مجانية'
             : 'Contact Us — Get a Free Consultation',
         description: isAr
-            ? 'تواصل مع كلاود توبيا للحصول على استشارة مجانية. تواصل معنا عبر البريد الإلكتروني أو واتساب أو نموذج التواصل. نحن مستعدون لمساعدتك في تحويل أعمالك رقمياً.'
-            : 'Get in touch with CloudTopia for a free consultation. Reach us via email, WhatsApp, or our contact form. We\'re ready to help transform your business digitally.',
+            ? 'تواصل مع كلاود توبيا لتصميم المواقع، التجارة الإلكترونية، أنظمة CRM، منصات الحجز، أو التسويق الرقمي. استشارة مجانية عبر البريد الإلكتروني أو واتساب.'
+            : 'Contact CloudTopia for website design, e-commerce, CRM systems, booking platforms, or social media marketing. Free consultation via email or WhatsApp.',
         openGraph: {
             title: isAr ? 'تواصل مع كلاود توبيا — ابدأ رحلتك الرقمية' : 'Contact CloudTopia — Start Your Digital Journey',
             description: isAr
-                ? 'تواصل معنا للحصول على استشارة مجانية عبر البريد الإلكتروني أو واتساب أو نموذج التواصل.'
-                : 'Get in touch for a free consultation. Reach us via email, WhatsApp, or our contact form.',
+                ? 'استشارة مجانية لتصميم المواقع، التجارة الإلكترونية، أنظمة CRM، أو التسويق الرقمي.'
+                : 'Free consultation for website design, e-commerce, CRM systems, or digital marketing.',
             url: isAr ? 'https://cloudtopia.net/ar/contact' : 'https://cloudtopia.net/en/contact',
             locale: isAr ? 'ar_SA' : 'en_US',
             images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'تواصل مع كلاود توبيا' : 'Contact CloudTopia' }],

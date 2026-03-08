@@ -6,13 +6,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     return {
         title: {
             absolute: isAr
-                ? 'كلاود توبيا — تقنيات رقمية وسحابية | عالمي'
-                : 'CloudTopia — Digital & Cloud Technologies | Worldwide',
+                ? 'كلاود توبيا — تقنيات رقمية وسحابية'
+                : 'CloudTopia — Digital & Cloud Technologies',
             template: isAr ? '%s | كلاود توبيا' : '%s | CloudTopia',
         },
         description: isAr
-            ? 'حوّل أعمالك مع حلول رقمية وسحابية متطورة. خبرة في تطوير الويب والبنية التحتية السحابية وخدمات التحول الرقمي في جميع أنحاء العالم.'
-            : 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services serving clients worldwide.',
+            ? 'كلاود توبيا تبني مواقع ويب، أنظمة أعمال مخصصة، متاجر إلكترونية، وتطبيقات ويب. وكالة رقمية متخصصة للشركات النامية.'
+            : 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
         openGraph: {
             type: 'website',
             locale: isAr ? 'ar_SA' : 'en_US',
@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             url: isAr ? 'https://cloudtopia.net/ar' : 'https://cloudtopia.net/en',
             title: isAr ? 'كلاود توبيا — تقنيات رقمية وسحابية' : 'CloudTopia — Digital & Cloud Technologies',
             description: isAr
-                ? 'حوّل أعمالك مع حلول رقمية وسحابية متطورة. خبرة في تطوير الويب والبنية التحتية السحابية وخدمات التحول الرقمي.'
-                : 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+                ? 'كلاود توبيا تبني مواقع ويب، أنظمة أعمال مخصصة، متاجر إلكترونية، وتطبيقات ويب. وكالة رقمية متخصصة للشركات النامية.'
+                : 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
             siteName: isAr ? 'كلاود توبيا' : 'CloudTopia',
             images: [{
                 url: '/images/og-image.jpg',
@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             card: 'summary_large_image',
             title: isAr ? 'كلاود توبيا — تقنيات رقمية وسحابية' : 'CloudTopia — Digital & Cloud Technologies',
             description: isAr
-                ? 'حوّل أعمالك مع حلول رقمية وسحابية متطورة.'
-                : 'Transform your business with cutting-edge digital and cloud solutions.',
+                ? 'كلاود توبيا تبني مواقع ويب وأنظمة أعمال وتطبيقات ويب مخصصة.'
+                : 'CloudTopia builds websites, business systems, and custom web applications.',
         },
         alternates: {
             canonical: isAr ? 'https://cloudtopia.net/ar' : 'https://cloudtopia.net/en',

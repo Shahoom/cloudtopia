@@ -10,10 +10,10 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 export const metadata: Metadata = {
   metadataBase: new URL('https://cloudtopia.net'),
   title: {
-    default: 'CloudTopia — Digital & Cloud Technologies | Worldwide',
+    default: 'CloudTopia — Digital & Cloud Technologies',
     template: '%s | CloudTopia'
   },
-  description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services serving clients worldwide.',
+  description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
   keywords: [
     'cloud solutions',
     'digital agency',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     alternateLocale: 'ar_SA',
     url: 'https://cloudtopia.net',
     title: 'CloudTopia — Digital & Cloud Technologies',
-    description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+    description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     siteName: 'CloudTopia',
     images: [
       {
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'CloudTopia — Digital & Cloud Technologies',
-    description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+    description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     creator: '@thecloudtopia',
     site: '@thecloudtopia',
     images: ['/images/og-image.jpg'],
@@ -164,7 +164,7 @@ export default function RootLayout({
               url: 'https://cloudtopia.net',
               logo: 'https://cloudtopia.net/images/CloudTopia.svg',
               image: 'https://cloudtopia.net/images/og-image.jpg',
-              description: 'Transform your business with cutting-edge digital and cloud solutions. Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+              description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
               foundingDate: '2024',
               contactPoint: {
                 '@type': 'ContactPoint',
@@ -197,7 +197,7 @@ export default function RootLayout({
               '@type': 'WebSite',
               name: 'CloudTopia',
               url: 'https://cloudtopia.net',
-              description: 'Digital & Cloud Technologies — Expert web development, cloud infrastructure, and digital transformation services worldwide.',
+              description: 'Digital & Cloud Technologies — Website design, business systems, e-commerce, and custom web applications for growing businesses.',
               inLanguage: ['en', 'ar'],
               publisher: {
                 '@type': 'Organization',

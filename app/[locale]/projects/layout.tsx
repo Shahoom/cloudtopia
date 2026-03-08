@@ -8,13 +8,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             ? 'مشاريعنا — أعمالنا ودراسات الحالة'
             : 'Projects — Our Work & Case Studies',
         description: isAr
-            ? 'استكشف محفظة مشاريع كلاود توبيا الناجحة. من حلول التواجد الرقمي إلى تطبيقات الويب المعقدة وأنظمة الأعمال — شاهد كيف نحوّل الأعمال.'
-            : 'Explore CloudTopia\'s portfolio of successful projects. From digital presence solutions to complex web applications and business systems — see how we transform businesses.',
+            ? 'تصفح محفظة كلاود توبيا: مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، منصات حجز، قوائم QR للمطاعم، وتطبيقات ويب لأعمال حقيقية.'
+            : 'Browse CloudTopia\'s portfolio: custom websites, e-commerce stores, CRM systems, booking platforms, restaurant QR menus, and web applications built for real businesses.',
         openGraph: {
             title: isAr ? 'مشاريعنا — محفظة كلاود توبيا' : 'Our Projects — CloudTopia Portfolio',
             description: isAr
-                ? 'استكشف محفظة مشاريعنا الناجحة. من التواجد الرقمي إلى تطبيقات الويب المعقدة وأنظمة الأعمال.'
-                : 'Explore our portfolio of successful projects. From digital presence to complex web applications and business systems.',
+                ? 'مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، منصات حجز، وتطبيقات ويب لأعمال حقيقية.'
+                : 'Custom websites, e-commerce stores, CRM systems, booking platforms, and web applications built for real businesses.',
             url: isAr ? 'https://cloudtopia.net/ar/projects' : 'https://cloudtopia.net/en/projects',
             locale: isAr ? 'ar_SA' : 'en_US',
             images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'محفظة مشاريع كلاود توبيا' : 'CloudTopia Projects Portfolio' }],
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         twitter: {
             title: isAr ? 'مشاريعنا — محفظة كلاود توبيا' : 'Our Projects — CloudTopia Portfolio',
             description: isAr
-                ? 'استكشف محفظة مشاريعنا في التحول الرقمي.'
-                : 'Explore our portfolio of successful digital transformation projects.',
+                ? 'مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، وتطبيقات ويب لأعمال حقيقية.'
+                : 'Custom websites, e-commerce stores, CRM systems, and web applications for real businesses.',
         },
         alternates: {
             canonical: isAr ? 'https://cloudtopia.net/ar/projects' : 'https://cloudtopia.net/en/projects',
