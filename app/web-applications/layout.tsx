@@ -1,18 +1,30 @@
-import { Metadata } from 'next'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'Web Applications — Custom Cloud-Based Solutions',
-    description: 'Custom web application development by CloudTopia. Scalable, cloud-based applications with real-time features, AI integration, and modern architecture.',
-    openGraph: {
-        title: 'Web Applications — CloudTopia',
-        description: 'Custom, scalable web applications with real-time features, AI integration, and modern cloud architecture.',
-        url: 'https://cloudtopia.net/web-applications',
-        images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: 'CloudTopia Web Applications' }],
-    },
-    alternates: {
-        canonical: 'https://cloudtopia.net/en/web-applications',
-        languages: { 'en': 'https://cloudtopia.net/en/web-applications', 'ar': 'https://cloudtopia.net/ar/web-applications', 'x-default': 'https://cloudtopia.net/en/web-applications' },
-    },
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = headers().get('x-locale') ?? 'en'
+    const isAr = locale === 'ar'
+    return {
+        title: isAr
+            ? 'تطبيقات الويب — حلول سحابية مخصصة'
+            : 'Web Applications — Custom Cloud-Based Solutions',
+        description: isAr
+            ? 'تطوير تطبيقات ويب مخصصة من كلاود توبيا. تطبيقات سحابية قابلة للتوسع مع ميزات فورية وتكامل ذكاء اصطناعي وبنية حديثة.'
+            : 'Custom web application development by CloudTopia. Scalable, cloud-based applications with real-time features, AI integration, and modern architecture.',
+        openGraph: {
+            title: isAr ? 'تطبيقات الويب — كلاود توبيا' : 'Web Applications — CloudTopia',
+            description: isAr
+                ? 'تطبيقات ويب مخصصة وقابلة للتوسع مع ميزات فورية وتكامل ذكاء اصطناعي وبنية سحابية حديثة.'
+                : 'Custom, scalable web applications with real-time features, AI integration, and modern cloud architecture.',
+            url: isAr ? 'https://cloudtopia.net/ar/web-applications' : 'https://cloudtopia.net/en/web-applications',
+            locale: isAr ? 'ar_SA' : 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'تطبيقات الويب — كلاود توبيا' : 'CloudTopia Web Applications' }],
+        },
+        alternates: {
+            canonical: isAr ? 'https://cloudtopia.net/ar/web-applications' : 'https://cloudtopia.net/en/web-applications',
+            languages: { 'en': 'https://cloudtopia.net/en/web-applications', 'ar': 'https://cloudtopia.net/ar/web-applications', 'x-default': 'https://cloudtopia.net/en/web-applications' },
+        },
+    }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
