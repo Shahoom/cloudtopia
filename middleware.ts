@@ -48,13 +48,6 @@ export function middleware(request: NextRequest) {
         // Extract the locale from the pathname
         const locale = pathname.split('/')[1]
 
-        // Set the locale cookie for persistence
-        const response = NextResponse.next()
-        response.cookies.set('NEXT_LOCALE', locale, {
-            path: '/',
-            maxAge: 60 * 60 * 24 * 365 // 1 year
-        })
-
         // Rewrite to the actual page (without locale prefix)
         const newPathname = pathname.replace(`/${locale}`, '') || '/'
         const newUrl = new URL(newPathname, request.url)

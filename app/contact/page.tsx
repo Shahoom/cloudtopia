@@ -268,8 +268,11 @@ ${t.contact.form.message}: ${formData.message || 'N/A'}`
 
     const encodedMessage = encodeURIComponent(message)
     setTimeout(() => {
-      window.open(`https://wa.me/905011511116?text=${encodedMessage}`, '_blank')
-      setIsSubmitting(false)
+      try {
+        window.open(`https://wa.me/905011511116?text=${encodedMessage}`, '_blank')
+      } finally {
+        setIsSubmitting(false)
+      }
     }, 1000)
   }
 
@@ -289,8 +292,11 @@ ${t.contact.form.message}:
 ${formData.message}`
 
     setTimeout(() => {
-      window.location.href = `mailto:info@cloudtopia.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-      setIsSubmitting(false)
+      try {
+        window.location.href = `mailto:info@cloudtopia.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      } finally {
+        setIsSubmitting(false)
+      }
     }, 1000)
   }
 
