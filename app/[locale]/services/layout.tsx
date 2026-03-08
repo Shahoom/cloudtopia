@@ -8,13 +8,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             ? 'خدماتنا — تصميم مواقع، تجارة إلكترونية، تسويق والمزيد'
             : 'Services — Web Design, E-Commerce, Marketing & More',
         description: isAr
-            ? 'استكشف خدمات كلاود توبيا الشاملة: تصميم المواقع، حلول التجارة الإلكترونية، التسويق عبر وسائل التواصل الاجتماعي، إنتاج المحتوى، أنظمة الأعمال، تطبيقات الويب، وحلول قائمة QR.'
-            : 'Explore CloudTopia\'s comprehensive digital services: website design, e-commerce solutions, social media marketing, content creation, business systems, web applications, and QR menu solutions.',
+            ? 'تصميم مواقع احترافي، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل الاجتماعي، منصات حجز، وتطبيقات ويب مخصصة. استشارة مجانية متاحة.'
+            : 'Professional website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications. Free consultation available.',
         openGraph: {
             title: isAr ? 'خدماتنا — كلاود توبيا' : 'Our Services — CloudTopia',
             description: isAr
-                ? 'خدمات رقمية شاملة: تصميم المواقع، التجارة الإلكترونية، التسويق، إنتاج المحتوى، أنظمة الأعمال وتطبيقات الويب.'
-                : 'Comprehensive digital services: website design, e-commerce, marketing, content creation, business systems, and web applications.',
+                ? 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.'
+                : 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
             url: isAr ? 'https://cloudtopia.net/ar/services' : 'https://cloudtopia.net/en/services',
             locale: isAr ? 'ar_SA' : 'en_US',
             images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'خدمات كلاود توبيا' : 'CloudTopia Services' }],
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         twitter: {
             title: isAr ? 'خدماتنا — كلاود توبيا' : 'Our Services — CloudTopia',
             description: isAr
-                ? 'خدمات رقمية شاملة: تصميم المواقع، التجارة الإلكترونية، التسويق، إنتاج المحتوى، أنظمة الأعمال وتطبيقات الويب.'
-                : 'Comprehensive digital services: website design, e-commerce, marketing, content creation, business systems, and web applications.',
+                ? 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.'
+                : 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
         },
         alternates: {
             canonical: isAr ? 'https://cloudtopia.net/ar/services' : 'https://cloudtopia.net/en/services',

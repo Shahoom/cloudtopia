@@ -8,13 +8,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             ? 'من نحن — مهمتنا، رؤيتنا وقيمنا'
             : 'About Us — Our Mission, Vision & Values',
         description: isAr
-            ? 'تعرّف على مهمة كلاود توبيا لتمكين الشركات بالتقنيات الرقمية والسحابية. اكتشف رؤيتنا وقيمنا وفريقنا المتخصص الذي يخدم العملاء حول العالم.'
-            : 'Learn about CloudTopia\'s mission to empower businesses with digital and cloud technologies. Discover our vision, values, and expert team serving clients worldwide.',
+            ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع، التجارة الإلكترونية، أنظمة CRM، منصات الحجز، وتطبيقات الويب المخصصة للشركات.'
+            : 'CloudTopia is a digital agency offering website design, e-commerce development, CRM systems, booking platforms, and custom web applications for businesses.',
         openGraph: {
             title: isAr ? 'من نحن — كلاود توبيا | تقنيات رقمية وسحابية' : 'About CloudTopia — Digital & Cloud Technologies',
             description: isAr
-                ? 'تعرّف على مهمتنا لتمكين الشركات بالتقنيات الرقمية والسحابية. اكتشف رؤيتنا وقيمنا وفريقنا.'
-                : 'Learn about our mission to empower businesses with digital and cloud technologies. Discover our vision, values, and expert team.',
+                ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع، التجارة الإلكترونية، أنظمة CRM، وتطبيقات الويب للشركات.'
+                : 'CloudTopia is a digital agency specializing in website design, e-commerce, CRM systems, and web applications for businesses.',
             url: isAr ? 'https://cloudtopia.net/ar/about' : 'https://cloudtopia.net/en/about',
             locale: isAr ? 'ar_SA' : 'en_US',
             images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'من نحن — كلاود توبيا' : 'About CloudTopia' }],
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         twitter: {
             title: isAr ? 'من نحن — كلاود توبيا' : 'About CloudTopia',
             description: isAr
-                ? 'تعرّف على مهمتنا لتمكين الشركات بالتقنيات الرقمية والسحابية.'
-                : 'Learn about our mission to empower businesses with digital and cloud technologies.',
+                ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع وأنظمة الأعمال وتطبيقات الويب.'
+                : 'CloudTopia is a digital agency specializing in website design, business systems, and web applications.',
         },
         alternates: {
             canonical: isAr ? 'https://cloudtopia.net/ar/about' : 'https://cloudtopia.net/en/about',
