@@ -93,14 +93,6 @@ export const metadata: Metadata = {
     // google: 'your-google-verification-code',
     // yandex: 'your-yandex-verification-code',
   },
-  alternates: {
-    canonical: 'https://cloudtopia.net/en',
-    languages: {
-      'en': 'https://cloudtopia.net/en',
-      'ar': 'https://cloudtopia.net/ar',
-      'x-default': 'https://cloudtopia.net/en',
-    },
-  },
   category: 'technology',
   other: {
     'google': 'notranslate',

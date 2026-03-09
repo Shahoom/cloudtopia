@@ -28,6 +28,14 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
 
+    // Redirect www to non-www (permanent 301)
+    const host = request.headers.get('host') || ''
+    if (host.startsWith('www.')) {
+        const url = request.nextUrl.clone()
+        url.host = host.replace(/^www\./, '')
+        return NextResponse.redirect(url, { status: 301 })
+    }
+
     // Skip static files, API routes, and Vercel internal routes
     if (
         pathname.startsWith('/_next') ||
@@ -64,10 +72,12 @@ export function middleware(request: NextRequest) {
     }
 
     // No locale in URL - redirect to include locale
+    // Strip trailing slash on root to avoid /en/ → /en double redirect
     const locale = getLocale(request)
-    const newUrl = new URL(`/${locale}${pathname}`, request.url)
+    const cleanPath = pathname === '/' ? '' : pathname
+    const newUrl = new URL(`/${locale}${cleanPath}`, request.url)
 
-    return NextResponse.redirect(newUrl)
+    return NextResponse.redirect(newUrl, { status: 301 })
 }
 
 export const config = {
