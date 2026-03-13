@@ -89,7 +89,7 @@ const content: Record<string, ContentData> = {
 }
 
 export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {
-    const t = (content as any)[locale] || (locale === 'ar' ? content.ar : content.en)
+    const t: ContentData = content[locale] || content.en
     const isRTL = locale === 'ar'
 
     return (
