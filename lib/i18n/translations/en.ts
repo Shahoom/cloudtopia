@@ -324,6 +324,11 @@ export const en = {
         { name: 'Design & Build', detail: 'Developing custom solutions with a modern tech stack, focusing on usability and performance.', status: 'Phase 2' },
         { name: 'Deploy & Optimize', detail: 'Seamless transition to live environment with ongoing support, monitoring, and iterative improvements.', status: 'Phase 3' },
       ],
+      showcase: {
+        alt: 'Modern business dashboard interface showing analytics and data visualization',
+        caption: 'System Dashboard',
+        captionRight: 'Real-time Analytics',
+      },
       cta: {
         title: 'Ready to Transform Your Business Operations?',
         description: 'Let\'s build a custom business system that meets your unique needs and drives your growth.',
