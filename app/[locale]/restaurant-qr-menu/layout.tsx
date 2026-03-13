@@ -47,5 +47,42 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function restaurantqrmenuLayout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
+                            { '@type': 'ListItem', position: 3, name: 'Restaurant QR Menu', item: 'https://cloudtopia.net/en/restaurant-qr-menu' },
+                        ],
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Service',
+                        name: 'Restaurant QR Menu Systems',
+                        description: 'Smart digital menus with QR technology for restaurants, cafes, and hospitality.',
+                        url: 'https://cloudtopia.net/en/restaurant-qr-menu',
+                        provider: {
+                            '@type': 'Organization',
+                            name: 'CloudTopia',
+                            url: 'https://cloudtopia.net',
+                        },
+                        serviceType: 'Digital Menu Solutions',
+                        areaServed: 'Worldwide',
+                    }),
+                }}
+            />
+            {children}
+        </>
+    )
 }

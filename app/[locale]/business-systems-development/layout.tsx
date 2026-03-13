@@ -47,5 +47,42 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function businesssystemsdevelopmentLayout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
+                            { '@type': 'ListItem', position: 3, name: 'Business Systems Development', item: 'https://cloudtopia.net/en/business-systems-development' },
+                        ],
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Service',
+                        name: 'Business Systems Development — CRM, POS, HR & More',
+                        description: 'Custom business systems: CRM, inventory, POS, HR, and booking systems built for your operations.',
+                        url: 'https://cloudtopia.net/en/business-systems-development',
+                        provider: {
+                            '@type': 'Organization',
+                            name: 'CloudTopia',
+                            url: 'https://cloudtopia.net',
+                        },
+                        serviceType: 'Business Software Development',
+                        areaServed: 'Worldwide',
+                    }),
+                }}
+            />
+            {children}
+        </>
+    )
 }

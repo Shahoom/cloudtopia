@@ -47,5 +47,85 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function socialmediamarketingLayout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
+                            { '@type': 'ListItem', position: 3, name: 'Social Media Marketing', item: 'https://cloudtopia.net/en/social-media-marketing' },
+                        ],
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Service',
+                        name: 'Social Media Marketing & Management',
+                        description: 'Strategic social media marketing to grow your brand presence and engagement.',
+                        url: 'https://cloudtopia.net/en/social-media-marketing',
+                        provider: {
+                            '@type': 'Organization',
+                            name: 'CloudTopia',
+                            url: 'https://cloudtopia.net',
+                        },
+                        serviceType: 'Social Media Marketing',
+                        areaServed: 'Worldwide',
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How much do social media marketing services cost?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Our social media marketing packages are customized based on your needs, platforms, and goals. We offer flexible pricing starting from basic management to comprehensive full-service solutions. Contact us for a personalized quote.',
+                                },
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How long does it take to see results from social media marketing?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'While some improvements can be seen within the first month, sustainable growth typically takes 3-6 months of consistent effort. We focus on building genuine engagement and long-term brand awareness rather than quick fixes.',
+                                },
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Which social media platforms should my business be on?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'The right platforms depend on your target audience and business type. We analyze your industry and customer demographics to recommend the most effective platforms for your specific goals.',
+                                },
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Do you create content or do we need to provide it?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'We handle all content creation including graphics, videos, captions, and hashtag research. We work with you to understand your brand voice and create content that authentically represents your business.',
+                                },
+                            },
+                        ],
+                    }),
+                }}
+            />
+            {children}
+        </>
+    )
 }

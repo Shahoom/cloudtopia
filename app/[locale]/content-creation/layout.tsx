@@ -47,5 +47,42 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function contentcreationLayout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
+                            { '@type': 'ListItem', position: 3, name: 'Content Creation', item: 'https://cloudtopia.net/en/content-creation' },
+                        ],
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Service',
+                        name: 'Content Creation & Copywriting',
+                        description: 'SEO-optimized content creation for websites, social media, and marketing.',
+                        url: 'https://cloudtopia.net/en/content-creation',
+                        provider: {
+                            '@type': 'Organization',
+                            name: 'CloudTopia',
+                            url: 'https://cloudtopia.net',
+                        },
+                        serviceType: 'Content Marketing',
+                        areaServed: 'Worldwide',
+                    }),
+                }}
+            />
+            {children}
+        </>
+    )
 }
