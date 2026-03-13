@@ -2,32 +2,46 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'Contact CloudTopia — Get in Touch',
+        ar: 'تواصل مع كلاود توبيا',
+        tr: 'CloudTopia İletişim — Bize Ulaşın',
+    }
+    const descs: Record<string, string> = {
+        en: 'Contact us for a free consultation. We respond within 24 hours.',
+        ar: 'تواصل معنا للحصول على استشارة مجانية. نرد خلال 24 ساعة.',
+        tr: 'Ücretsiz danışmanlık için bizimle iletişime geçin. 24 saat içinde yanıt veriyoruz.',
+    }
+    const ogTitles: Record<string, string> = {
+        en: 'Contact — CloudTopia',
+        ar: 'التواصل — كلاود توبيا',
+        tr: 'İletişim — CloudTopia',
+    }
+    const ogDescs: Record<string, string> = {
+        en: 'Get in touch for a free consultation.',
+        ar: 'تواصل معنا للحصول على استشارة مجانية.',
+        tr: 'Ücretsiz danışmanlık için bize ulaşın.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const title = titles[locale] || titles.en
+    const desc = descs[locale] || descs.en
+    const ogTitle = ogTitles[locale] || ogTitles.en
+    const ogDesc = ogDescs[locale] || ogDescs.en
+
     return {
-        title: isAr
-            ? 'تواصل معنا — احصل على استشارة مجانية'
-            : 'Contact Us — Get a Free Consultation',
-        description: isAr
-            ? 'تواصل مع كلاود توبيا لتصميم المواقع، التجارة الإلكترونية، أنظمة CRM، منصات الحجز، أو التسويق الرقمي. استشارة مجانية عبر البريد الإلكتروني أو واتساب.'
-            : 'Contact CloudTopia for website design, e-commerce, CRM systems, booking platforms, or social media marketing. Free consultation via email or WhatsApp.',
+        title,
+        description: desc,
         openGraph: {
-            title: isAr ? 'تواصل مع كلاود توبيا — ابدأ رحلتك الرقمية' : 'Contact CloudTopia — Start Your Digital Journey',
-            description: isAr
-                ? 'استشارة مجانية لتصميم المواقع، التجارة الإلكترونية، أنظمة CRM، أو التسويق الرقمي.'
-                : 'Free consultation for website design, e-commerce, CRM systems, or digital marketing.',
-            url: isAr ? 'https://cloudtopia.net/ar/contact' : 'https://cloudtopia.net/en/contact',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'تواصل مع كلاود توبيا' : 'Contact CloudTopia' }],
+            title: ogTitle,
+            description: ogDesc,
+            url: `https://cloudtopia.net/${locale}/contact`,
+            locale: ogLocales[locale] || 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
         },
-        twitter: {
-            title: isAr ? 'تواصل مع كلاود توبيا' : 'Contact CloudTopia',
-            description: isAr
-                ? 'تواصل للحصول على استشارة مجانية عبر البريد الإلكتروني أو واتساب أو نموذج التواصل.'
-                : 'Get in touch for a free consultation. Reach us via email, WhatsApp, or our contact form.',
-        },
+        twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar/contact' : 'https://cloudtopia.net/en/contact',
-            languages: { 'en': 'https://cloudtopia.net/en/contact', 'ar': 'https://cloudtopia.net/ar/contact', 'x-default': 'https://cloudtopia.net/en/contact' },
+            canonical: `https://cloudtopia.net/${locale}/contact`,
+            languages: { 'en': 'https://cloudtopia.net/en/contact', 'ar': 'https://cloudtopia.net/ar/contact', 'tr': 'https://cloudtopia.net/tr/contact', 'x-default': 'https://cloudtopia.net/en/contact' },
         },
     }
 }

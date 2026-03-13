@@ -2,46 +2,57 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'CloudTopia — Digital & Cloud Technologies',
+        ar: 'كلاود توبيا — تقنيات رقمية وسحابية',
+        tr: 'CloudTopia — Dijital & Bulut Teknolojileri',
+    }
+    const descriptions: Record<string, string> = {
+        en: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+        ar: 'كلاود توبيا تبني مواقع ويب، أنظمة أعمال مخصصة، متاجر إلكترونية، وتطبيقات ويب. وكالة رقمية متخصصة للشركات النامية.',
+        tr: 'CloudTopia web siteleri, özel iş sistemleri, e-ticaret mağazaları ve web uygulamaları geliştirir. Büyüyen işletmeler için uzman dijital ajans.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const siteNames: Record<string, string> = { en: 'CloudTopia', ar: 'كلاود توبيا', tr: 'CloudTopia' }
+    const templates: Record<string, string> = { en: '%s | CloudTopia', ar: '%s | كلاود توبيا', tr: '%s | CloudTopia' }
+
+    const title = titles[locale] || titles.en
+    const description = descriptions[locale] || descriptions.en
+    const ogLocale = ogLocales[locale] || ogLocales.en
+    const alternateOgLocales = Object.entries(ogLocales).filter(([k]) => k !== locale).map(([, v]) => v)
+
     return {
         title: {
-            absolute: isAr
-                ? 'كلاود توبيا — تقنيات رقمية وسحابية'
-                : 'CloudTopia — Digital & Cloud Technologies',
-            template: isAr ? '%s | كلاود توبيا' : '%s | CloudTopia',
+            absolute: title,
+            template: templates[locale] || templates.en,
         },
-        description: isAr
-            ? 'كلاود توبيا تبني مواقع ويب، أنظمة أعمال مخصصة، متاجر إلكترونية، وتطبيقات ويب. وكالة رقمية متخصصة للشركات النامية.'
-            : 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+        description,
         openGraph: {
             type: 'website',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            alternateLocale: isAr ? 'en_US' : 'ar_SA',
-            url: isAr ? 'https://cloudtopia.net/ar' : 'https://cloudtopia.net/en',
-            title: isAr ? 'كلاود توبيا — تقنيات رقمية وسحابية' : 'CloudTopia — Digital & Cloud Technologies',
-            description: isAr
-                ? 'كلاود توبيا تبني مواقع ويب، أنظمة أعمال مخصصة، متاجر إلكترونية، وتطبيقات ويب. وكالة رقمية متخصصة للشركات النامية.'
-                : 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
-            siteName: isAr ? 'كلاود توبيا' : 'CloudTopia',
+            locale: ogLocale,
+            alternateLocale: alternateOgLocales,
+            url: `https://cloudtopia.net/${locale}`,
+            title,
+            description,
+            siteName: siteNames[locale] || siteNames.en,
             images: [{
                 url: '/images/og-image.jpg',
                 width: 1200,
                 height: 630,
-                alt: isAr ? 'كلاود توبيا — تقنيات رقمية وسحابية' : 'CloudTopia — Digital & Cloud Technologies',
+                alt: title,
             }],
         },
         twitter: {
             card: 'summary_large_image',
-            title: isAr ? 'كلاود توبيا — تقنيات رقمية وسحابية' : 'CloudTopia — Digital & Cloud Technologies',
-            description: isAr
-                ? 'كلاود توبيا تبني مواقع ويب وأنظمة أعمال وتطبيقات ويب مخصصة.'
-                : 'CloudTopia builds websites, business systems, and custom web applications.',
+            title,
+            description: descriptions[locale] || descriptions.en,
         },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar' : 'https://cloudtopia.net/en',
+            canonical: `https://cloudtopia.net/${locale}`,
             languages: {
                 'en': 'https://cloudtopia.net/en',
                 'ar': 'https://cloudtopia.net/ar',
+                'tr': 'https://cloudtopia.net/tr',
                 'x-default': 'https://cloudtopia.net/en',
             },
         },

@@ -25,6 +25,9 @@ export const en = {
       exploreServices: 'Explore Services',
       freeConsultation: 'Get Free Consultation',
       getStarted: 'Get Started',
+      viewServices: 'View Services',
+      intoThe: 'Into the',
+      titleSuffix: '',
       modal: {
         title: 'Ready to scale?',
         description: 'Join forward-thinking companies building their digital future with CloudTopia.',
@@ -70,6 +73,8 @@ export const en = {
       title: 'Your Journey to the Cloud',
       subtitle: 'We meet you where you are and help you scale.',
       viewServices: 'View Services',
+      mainTitle: 'We Meet You Where You Are',
+      mainSubtitle: "Whether you're just starting your digital journey or ready to scale, we have solutions for every stage.",
       steps: [
         {
           number: '01',
@@ -268,7 +273,196 @@ export const en = {
       faqDescription: 'Common questions about our {service} services.',
       ctaTitle: 'Ready to scale your {service}?',
       ctaButton: 'Request a Proposal',
-    }
+    },
+    businessSystemsPage: {
+      hero: {
+        title: "Intelligent Business Systems & Automation",
+        description: "Custom-built ERP, CRM, and management solutions designed to scale with your business and optimize internal operations through intelligent automation and real-time data analytics.",
+      },
+      solutionsTitle: 'Our Comprehensive Solutions',
+      solutionsSubtitle: 'Explore our integrated business systems designed to transform your operations',
+      whatsIncluded: 'What\'s Included:',
+      more: 'more',
+      badge: 'BUSINESS SYSTEMS DEVELOPMENT',
+      modernTitle: 'Enterprise-Grade Business Systems Built for Growth & Efficiency',
+      modernDescription: 'Transform your operations with custom CRM, POS, ERP, and inventory management solutions. We build scalable business systems that automate workflows, centralize data, and drive measurable ROI.',
+      metrics: [
+        { label: 'Implementation Time', value: '14 Days' },
+        { label: 'Systems Developed', value: '50+' },
+        { label: 'Client Retention', value: '98%' },
+      ],
+      modes: {
+        strategy: {
+          title: 'Strategic Planning',
+          description: 'We analyze your business processes, identify automation opportunities, and design a custom system architecture aligned with your growth goals.',
+          items: [
+            'Comprehensive Process Audit',
+            'Custom Architecture Design',
+            'Integration Roadmap Planning',
+          ],
+        },
+        execution: {
+          title: 'Implementation & Deployment',
+          description: 'Agile development process with rigorous testing, seamless data migration, and comprehensive training. Ensuring your team maximizes the system\'s capabilities.',
+          items: [
+            'Iterative Development Cycles',
+            'Data Migration & Integration',
+            'Team Training & Documentation',
+          ],
+        },
+      },
+      expertiseTitle: 'Our Expertise',
+      expertiseDescription: 'We specialize in building business systems that integrate seamlessly with your existing workflows while providing the flexibility to scale with your growth.',
+      expertiseItems: [
+        'CRM & Customer Management',
+        'POS & Retail Solutions',
+        'Inventory & Warehouse Systems',
+      ],
+      processTitle: 'Development Process',
+      processSteps: [
+        { name: 'Discovery & Analysis', detail: 'Deep dive into your operations to identify automation opportunities and system requirements.', status: 'Phase 1' },
+        { name: 'Design & Build', detail: 'Developing custom solutions with a modern tech stack, focusing on usability and performance.', status: 'Phase 2' },
+        { name: 'Deploy & Optimize', detail: 'Seamless transition to live environment with ongoing support, monitoring, and iterative improvements.', status: 'Phase 3' },
+      ],
+      cta: {
+        title: 'Ready to Transform Your Business Operations?',
+        description: 'Let\'s build a custom business system that meets your unique needs and drives your growth.',
+        button: 'Start Your Project Today',
+        explore: 'Explore All Services',
+      },
+      whyChoose: {
+        title: 'Why Choose Us',
+        items: [
+          { label: 'Custom Solutions' },
+          { label: 'Fast Delivery' },
+          { label: 'Ongoing Support' },
+          { label: 'Scalable Architecture' },
+        ],
+      },
+    },
+    webApplicationsPage: {
+      hero: {
+        badge: 'WEB APPLICATIONS',
+        title: 'Build Powerful',
+        titleHighlight: 'Web Applications',
+        description: 'From SaaS platforms to enterprise portals, we create scalable web applications that power your business growth with cutting-edge technology.',
+        ctaExplore: 'Start Your Project',
+        ctaDemo: 'View Live Demo',
+      },
+      solutionsTitle: 'Web Application Solutions',
+      solutionsSubtitle: 'Explore our comprehensive web application solutions designed to bring your ideas to life',
+      whatsIncluded: 'What\'s Included:',
+      more: 'more',
+      cta: {
+        title: 'Ready to Build Your Web Application?',
+        description: 'Let\'s transform your idea into a powerful web application that drives your business growth.',
+        button: 'Start Your Project Today',
+        explore: 'Explore All Services',
+      },
+      whyChoose: {
+        title: 'Why Choose Us',
+        items: [
+          { label: 'Global Scale Apps' },
+          { label: 'Advanced Security' },
+          { label: 'High Performance' },
+          { label: 'Clean Code' },
+        ],
+      },
+    },
+    websiteDesignPage: {
+      hero: {
+        prefix: "Make your",
+        suffix: "Website",
+        rotatingTexts: ["amazing", "modern", "professional", "stunning", "fast", "unique", "awesome", "responsive"],
+        description: "We design and develop professional websites that reflect your brand identity and convert visitors into customers. Modern, fast, and responsive designs for all devices.",
+        ctaStart: "Start Your Project",
+        ctaWork: "View Our Work",
+      },
+      scrollSection: {
+        prefix: "We",
+        items: ["design.", "develop.", "build.", "launch.", "grow."],
+      }
+    },
+    ecommercePage: {
+      hero: {
+        badge: 'E-COMMERCE SOLUTIONS',
+        title: 'Scale Your',
+        titleHighlight: 'Global Sales',
+        description: 'Open up to cross-border trade with secure payment systems, smart inventory management, and high-conversion designs.',
+        ctaStart: 'Build Your Store',
+        ctaCases: 'Success Stories',
+      },
+      solutionsTitle: 'E-Commerce Models',
+      solutionsSubtitle: 'Discover the digital sales infrastructure that best fits your business model',
+      whatsIncluded: 'Features:',
+      more: 'more',
+      cta: {
+        title: 'Ready to Start Selling Online?',
+        description: 'Let\'s build a professional e-commerce platform together to sell your products to the world.',
+        button: 'Start Today',
+        explore: 'All Solutions',
+      }
+    },
+    restaurantPage: {
+      hero: {
+        badge: 'RESTAURANT SOLUTIONS',
+        title: 'Enhance Service with',
+        titleHighlight: 'Digital Menu',
+        description: 'Modernize your operations with contactless, interactive, and real-time updatable QR menu systems.',
+        ctaDemo: 'View Demo',
+        ctaPricing: 'View Packages',
+      },
+      solutionsTitle: 'Restaurant Technologies',
+      solutionsSubtitle: 'Offer your guests a modern and fast service experience',
+      whatsIncluded: 'Features:',
+      more: 'more',
+      cta: {
+        title: 'Digitize Your Restaurant',
+        description: 'Get rid of paper menu costs and speed up your ordering processes.',
+        button: 'Join Now',
+        explore: 'Service Details',
+      }
+    },
+    socialMediaPage: {
+      hero: {
+        badge: 'SOCIAL MEDIA MARKETING',
+        title: 'Hear Your Brand Voice',
+        titleHighlight: 'Around the World',
+        description: 'We ensure your growth on social platforms with strategic content management and data-driven advertising campaigns.',
+        ctaStrategy: 'Get Strategy',
+        ctaAnalytics: 'Request Analysis',
+      },
+      solutionsTitle: 'Digital Marketing Solutions',
+      solutionsSubtitle: 'Reach the right audience, on the right platform, with the right message',
+      whatsIncluded: 'Scope:',
+      more: 'more',
+      cta: {
+        title: 'Make a Difference in Social Media',
+        description: 'Let\'s build the strategy together that will turn your followers into loyal customers.',
+        button: 'Contact Us',
+        explore: 'Marketing Services',
+      }
+    },
+    contentCreationPage: {
+      hero: {
+        badge: 'CONTENT CREATION',
+        title: 'We Produce',
+        titleHighlight: 'Value-Added Content',
+        description: 'We enrich your digital presence with SEO-oriented blogs, professional campaign texts, and visual stories specific to your brand.',
+        ctaBrief: 'Send Brief',
+        ctaPortfolio: 'View Portfolio',
+      },
+      solutionsTitle: 'Our Content Expertise',
+      solutionsSubtitle: 'An impressive and technically flawless range of content',
+      whatsIncluded: 'Modules:',
+      more: 'others',
+      cta: {
+        title: 'Let\'s Start Telling Your Story',
+        description: 'Stand out with content that leaves a mark and brings you to the top of search engines.',
+        button: 'Get in Touch',
+        explore: 'Content Strategies',
+      }
+    },
   },
 
   // Service Cards
@@ -2101,17 +2295,209 @@ export const en = {
     noHiddenFees: 'No Hidden Fees',
     customSolutions: 'Custom Solutions',
     expertSupport: 'Expert Support',
+    scrollDown: 'Scroll Down',
+    scrollToExplore: 'Scroll to Explore',
   },
 
   // Privacy & Terms
   privacy: {
     title: 'Privacy Policy',
     subtitle: 'Your Privacy Matters',
+    description: 'At CloudTopia, we take your privacy seriously. This policy explains how we collect, use, and protect your information.',
     lastUpdated: 'Last updated:',
+    sections: [
+      {
+        title: '1. Information We Collect',
+        content: 'We collect information you provide directly to us, including:',
+        items: [
+          'Contact Information: Name, email address, phone number, and company details',
+          'Project Information: Details about your project requirements, budget, and timeline',
+          'Communication Records: Messages you send us through our contact forms or email',
+          'Technical Information: IP address, browser type, device information, and usage data',
+        ],
+      },
+      {
+        title: '2. How We Use Your Information',
+        content: 'We use the information we collect to:',
+        items: [
+          'Respond to your inquiries and provide customer support',
+          'Deliver our services and fulfill your project requirements',
+          'Send you updates about your projects and our services',
+          'Improve our website and services',
+          'Comply with legal obligations',
+          'Prevent fraud and enhance security',
+        ],
+      },
+      {
+        title: '3. Information Sharing',
+        content: 'We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:',
+        items: [
+          'Service Providers: With trusted partners who assist in delivering our services',
+          'Legal Requirements: When required by law or to protect our rights',
+          'Business Transfers: In connection with a merger, acquisition, or sale of assets',
+          'With Your Consent: When you explicitly agree to share your information',
+        ],
+      },
+      {
+        title: '4. Data Security',
+        content: 'We implement industry-standard security measures to protect your information:',
+        items: [
+          'Encryption of data in transit and at rest',
+          'Secure servers and infrastructure',
+          'Regular security audits and updates',
+          'Access controls and authentication',
+          'Employee training on data protection',
+        ],
+        footer: 'However, no method of transmission over the internet is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.',
+      },
+      {
+        title: '5. Your Rights',
+        content: 'You have the right to:',
+        items: [
+          'Access: Request a copy of your personal information',
+          'Correction: Update or correct inaccurate information',
+          'Deletion: Request deletion of your personal information',
+          'Opt-out: Unsubscribe from marketing communications',
+          'Data Portability: Request your data in a portable format',
+        ],
+        footer: 'To exercise these rights, please contact us at info@cloudtopia.net',
+      },
+      {
+        title: '6. Cookies and Tracking',
+        content: 'We use cookies and similar tracking technologies to improve your experience on our website. These include:',
+        items: [
+          'Essential Cookies: Required for basic website functionality',
+          'Analytics Cookies: Help us understand how visitors use our site',
+          'Preference Cookies: Remember your settings and preferences',
+        ],
+        footer: 'You can control cookies through your browser settings. Note that disabling cookies may affect website functionality.',
+      },
+      {
+        title: '7. International Data Transfers',
+        content: 'CloudTopia operates globally and serves clients worldwide. Your information may be transferred to and processed in various regions as needed to provide our services. We ensure appropriate safeguards are in place for all international data transfers in compliance with applicable data protection laws.',
+      },
+      {
+        title: '8. Children\'s Privacy',
+        content: 'Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.',
+      },
+      {
+        title: '9. Changes to This Policy',
+        content: 'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date. We encourage you to review this policy periodically.',
+      },
+      {
+        title: '10. Contact Us',
+        content: 'If you have any questions about this Privacy Policy or how we handle your information, please contact us:',
+        items: [
+          'Email: info@cloudtopia.net',
+          'Phone: +90 501 151 11 16',
+          'Service Areas: Worldwide',
+        ],
+      },
+    ],
   },
   terms: {
     title: 'Terms of Service',
     subtitle: 'Terms of Service',
+    description: 'Please read these terms carefully before using CloudTopia\'s services.',
+    lastUpdated: 'Last updated:',
+    sections: [
+      {
+        title: '1. Acceptance of Terms',
+        content: 'By accessing or using CloudTopia\'s services, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using our services.',
+      },
+      {
+        title: '2. Services Description',
+        content: 'CloudTopia provides the following services:',
+        items: [
+          'Digital Presence Services: Website development, social media marketing, and content creation',
+          'Business Systems Development: Custom software solutions, CRM systems, and business management tools',
+          'Web Applications: Interactive web applications, dashboards, and SaaS solutions',
+          'AI Tools: Artificial intelligence powered tools and automation services',
+        ],
+        footer: 'All services are provided on a project basis with terms defined in individual project agreements.',
+      },
+      {
+        title: '3. Client Responsibilities',
+        content: 'As a client, you agree to:',
+        items: [
+          'Provide accurate and complete information for your projects',
+          'Respond to requests for information in a timely manner',
+          'Review and approve deliverables within agreed timeframes',
+          'Make payments according to the agreed schedule',
+          'Provide necessary access to systems and platforms as required',
+          'Use our services only for lawful purposes',
+        ],
+      },
+      {
+        title: '4. Payment Terms',
+        content: 'Payment terms for our services:',
+        items: [
+          'Project Quotes: All projects begin with a detailed quote',
+          'Payment Schedule: Typically includes initial deposit and milestone payments',
+          'Payment Methods: Bank transfer, credit card, or other agreed methods',
+          'Late Payments: May result in project delays or suspension of services',
+          'Refunds: Subject to project stage and agreement terms',
+        ],
+        footer: 'Specific payment terms will be outlined in your project agreement.',
+      },
+      {
+        title: '5. Intellectual Property',
+        content: 'Upon full payment, you own the final deliverables created specifically for your project. This includes custom designs, content, and code developed exclusively for you.',
+        items: [
+          'CloudTopia Ownership: We retain ownership of our tools, frameworks, methodologies, and reusable components. We reserve the right to use projects as portfolio examples unless otherwise agreed.',
+          'Third-Party Assets: Some projects may include third-party software, libraries, or assets. These remain subject to their original licenses.',
+        ],
+      },
+      {
+        title: '6. Project Timeline and Delivery',
+        content: 'Regarding project timelines:',
+        items: [
+          'Estimated timelines are provided in good faith but are not guaranteed',
+          'Delays caused by client feedback or information delays may extend timelines',
+          'Force majeure events may affect delivery schedules',
+          'We will communicate any expected delays promptly',
+          'Changes to project scope may require timeline adjustments',
+        ],
+      },
+      {
+        title: '7. Revisions and Changes',
+        content: 'Project revisions and changes:',
+        items: [
+          'Each project includes a specified number of revision rounds',
+          'Additional revisions beyond the agreed scope may incur extra fees',
+          'Major scope changes require a new agreement and pricing',
+          'Change requests should be submitted in writing',
+        ],
+      },
+      {
+        title: '8. Warranties and Disclaimers',
+        content: 'We warrant that services will be performed with professional care and skill. However, services are provided "as is" except as specifically warranted. We do not guarantee specific business results or outcomes.',
+      },
+      {
+        title: '9. Limitation of Liability',
+        content: 'CloudTopia\'s total liability for any claims arising from our services shall not exceed the amount paid for the specific service giving rise to the claim.',
+      },
+      {
+        title: '10. Confidentiality',
+        content: 'Both parties agree to keep confidential information private and secure, and use it only for the project purpose.',
+      },
+      {
+        title: '11. Termination',
+        content: 'Either party may terminate a project agreement with written notice or immediately if the other party breaches these terms.',
+      },
+      {
+        title: '12. Governing Law',
+        content: 'These terms are governed by international business law and the laws of the jurisdiction where services are provided.',
+      },
+      {
+        title: '13. Changes to Terms',
+        content: 'We reserve the right to modify these terms at any time. Changes will be posted on this page.',
+      },
+      {
+        title: '14. Contact Information',
+        content: 'For questions about these Terms of Service, please contact us at info@cloudtopia.net',
+      },
+    ],
   },
 }
 

@@ -229,7 +229,7 @@ export default function HomePage() {
 
                     <FloatingCard delay={0.1}>
                         <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                            {t.home?.philosophy?.title || 'What Does'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{t.home?.philosophy?.highlight || '"The Cloud"'}</span> {t.home?.philosophy?.titleEnd || 'Mean?'}
+                            {(typeof t.home?.philosophy?.title === 'string' ? t.home?.philosophy?.title : 'What Does')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{t.home?.philosophy?.highlight || '"The Cloud"'}</span> {t.home?.philosophy?.titleEnd || 'Mean?'}
                         </h2>
                     </FloatingCard>
 
@@ -256,18 +256,12 @@ export default function HomePage() {
 
                         <FloatingCard delay={0.1}>
                             <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6">
-                                {isRTL ? (
-                                    <>{t.home?.journey?.subtitle || 'نبدأ معك من حيث أنت ونساعدك على النمو.'}</>
-                                ) : (
-                                    <>We Meet You <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Where You Are</span></>
-                                )}
+                                {t.home?.journey?.mainTitle || (locale === 'ar' ? 'نلتقي بك حيثما كنت' : (locale === 'tr' ? 'Geleceğe Giden Her Adımda Yanınızdayız' : 'We Meet You Where You Are'))}
                             </h2>
                         </FloatingCard>
                         <FloatingCard delay={0.2}>
                             <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-                                {isRTL
-                                    ? 'سواء كنت في بداية رحلتك الرقمية أو جاهز للتوسع، لدينا حلول لكل مرحلة.'
-                                    : 'Whether you\'re just starting your digital journey or ready to scale, we have solutions for every stage.'}
+                                {t.home?.journey?.mainSubtitle || (locale === 'ar' ? 'سواء كنت في بداية رحلتك الرقمية أو جاهز للتوسع، لدينا حلول لكل مرحلة.' : (locale === 'tr' ? 'İster dijitale henüz adım atın ister küresel ölçeklenmeye hazırlanın; her seviye için profesyonel bir çözümümüz var.' : 'Whether you\'re just starting your digital journey or ready to scale, we have solutions for every stage.'))}
                             </p>
                         </FloatingCard>
                     </div>

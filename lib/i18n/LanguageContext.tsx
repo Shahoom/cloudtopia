@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Locale, defaultLocale, localeDirection, locales } from './config'
 import { en } from './translations/en'
 import { ar } from './translations/ar'
+import { tr } from './translations/tr'
 
 type Translations = typeof en
 
@@ -18,6 +19,7 @@ interface LanguageContextType {
 const translations: Record<Locale, Translations> = {
   en,
   ar,
+  tr: tr as unknown as Translations,
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)

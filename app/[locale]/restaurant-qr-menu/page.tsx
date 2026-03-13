@@ -72,6 +72,15 @@ const content = {
     description: "ارتقِ بتجربة تناول الطعام مع قوائم رقمية بدون تلامس. تساعد حلول رمز QR الخاصة بنا المطاعم على تقليل التكاليف وتحديث القوائم فورياً وتوفير لمسة عصرية يحبها العملاء.",
     cta: "ابدأ الآن",
     learnMore: "اعرف المزيد",
+  },
+  tr: {
+    badge: "Restoran QR Menü Sistemleri",
+    title1: "Restoran",
+    titleHighlight: "Deneyiminizi",
+    title2: "Dijitalle Dönüştürün",
+    description: "Temassız dijital menülerle yemek deneyiminizi bir üst seviyeye taşıyın. QR kod çözümlerimiz restoranların maliyetlerini düşürmesine, menülerini anında güncellemesine ve müşterilerin sevdiği modern bir dokunuş sunmasına yardımcı olur.",
+    cta: "Hemen Başlayın",
+    learnMore: "Daha Fazla Bilgi",
   }
 }
 
@@ -115,11 +124,32 @@ const menuItems = {
       clipId: "clip-pixels",
       image: "/images/services/restaurant-qr-menu/8.avif"
     }
+  ],
+  tr: [
+    {
+      num: "01",
+      name: "QR Menüler",
+      clipId: "clip-original",
+      image: "/images/services/restaurant-qr-menu/1.webp"
+    },
+    {
+      num: "02",
+      name: "Dijital Sipariş",
+      clipId: "clip-hexagons",
+      image: "/images/services/restaurant-qr-menu/5.avif"
+    },
+    {
+      num: "03",
+      name: "Akıllı Masalar",
+      clipId: "clip-pixels",
+      image: "/images/services/restaurant-qr-menu/8.avif"
+    }
   ]
 }
 
 // Mobile Image Carousel Component
 function MobileImageCarousel() {
+  const { locale } = useLanguage()
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -138,7 +168,7 @@ function MobileImageCarousel() {
         <motion.img
           key={currentIndex}
           src={ALL_IMAGES[currentIndex]}
-          alt="Restaurant"
+          alt={locale === 'ar' ? 'مطعم' : (locale === 'tr' ? 'Restoran' : 'Restaurant')}
           className="absolute inset-0 w-full h-full object-cover rounded-2xl"
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -165,10 +195,10 @@ function MobileImageCarousel() {
 }
 
 export default function RestaurantQRMenuPage() {
-  const { locale } = useLanguage()
-  const isRTL = locale === "ar"
-  const t = isRTL ? content.ar : content.en
-  const items = isRTL ? menuItems.ar : menuItems.en
+  const { locale, dir } = useLanguage()
+  const isRTL = dir === 'rtl'
+  const currentContent = (content as any)[locale] || content.en
+  const currentItems = (menuItems as any)[locale] || menuItems.en
   const [isMobile, setIsMobile] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -198,39 +228,39 @@ export default function RestaurantQRMenuPage() {
           <ContainerAnimated>
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-600 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 shadow-lg">
               <QrCode className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              <span className="font-bold text-white text-xs sm:text-sm">{t.badge}</span>
+              <span className="font-bold text-white text-xs sm:text-sm">{currentContent.badge}</span>
             </div>
           </ContainerAnimated>
 
           <ContainerAnimated>
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900">
-              {t.title1}{" "}
+              {currentContent.title1}{" "}
               <span className="bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">
-                {t.titleHighlight}
+                {currentContent.titleHighlight}
               </span>
             </h1>
           </ContainerAnimated>
 
           <ContainerAnimated>
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900">
-              {t.title2}
+              {currentContent.title2}
             </h1>
           </ContainerAnimated>
 
           <ContainerAnimated className="my-4 sm:my-6">
             <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto px-2">
-              {t.description}
+              {currentContent.description}
             </p>
           </ContainerAnimated>
 
           <ContainerAnimated className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 md:mb-0">
             <Link href={`/${locale}/contact`}>
               <Button className="gap-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
-                {t.cta} <Smartphone className="w-4 h-4" />
+                {currentContent.cta} <Smartphone className="w-4 h-4" />
               </Button>
             </Link>
             <Button variant="outline" className="gap-2 border-slate-300 text-slate-700 hover:bg-lavender px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
-              {t.learnMore} <ArrowRight className="w-4 h-4" />
+              {currentContent.learnMore} <ArrowRight className="w-4 h-4" />
             </Button>
           </ContainerAnimated>
         </ContainerStagger>
@@ -263,7 +293,7 @@ export default function RestaurantQRMenuPage() {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt="Restaurant interior"
+                      alt={locale === 'ar' ? 'تصميم داخلي للمطعم' : (locale === 'tr' ? 'Restoran iç mekanı' : 'Restaurant interior')}
                     />
                   ))}
                 </GalleryCol>
@@ -273,7 +303,7 @@ export default function RestaurantQRMenuPage() {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt="Digital menu experience"
+                      alt={locale === 'ar' ? 'تجربة القائمة الرقمية' : (locale === 'tr' ? 'Dijital menü deneyimi' : 'Digital menu experience')}
                     />
                   ))}
                 </GalleryCol>
@@ -283,7 +313,7 @@ export default function RestaurantQRMenuPage() {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt="Restaurant technology"
+                      alt={locale === 'ar' ? 'تقنية المطاعم' : (locale === 'tr' ? 'Restoran teknolojisi' : 'Restaurant technology')}
                     />
                   ))}
                 </GalleryCol>
@@ -294,7 +324,7 @@ export default function RestaurantQRMenuPage() {
       </div>
 
       {/* Interactive Menu Section */}
-      <ConnoisseurStackInteractor items={items} />
+      <ConnoisseurStackInteractor items={currentItems} />
 
       {/* Service Explanation Section - SEO Optimized */}
       <QRMenuServiceSection isRTL={isRTL} locale={locale} />

@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    alternateLocale: 'ar_SA',
+    alternateLocale: ['ar_SA', 'tr_TR'],
     url: 'https://cloudtopia.net',
     title: 'CloudTopia — Digital & Cloud Technologies',
     description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
@@ -163,7 +163,7 @@ export default function RootLayout({
                 telephone: '+90-501-151-11-16',
                 contactType: 'customer service',
                 email: 'info@cloudtopia.net',
-                availableLanguage: ['English', 'Arabic'],
+                availableLanguage: ['English', 'Arabic', 'Turkish'],
                 areaServed: 'Worldwide',
               },
               sameAs: [
@@ -175,7 +175,7 @@ export default function RootLayout({
                 '@type': 'PostalAddress',
                 addressCountry: 'TR',
               },
-              knowsLanguage: ['en', 'ar'],
+              knowsLanguage: ['en', 'ar', 'tr'],
             }),
           }}
         />
@@ -190,7 +190,7 @@ export default function RootLayout({
               name: 'CloudTopia',
               url: 'https://cloudtopia.net',
               description: 'Digital & Cloud Technologies — Website design, business systems, e-commerce, and custom web applications for growing businesses.',
-              inLanguage: ['en', 'ar'],
+              inLanguage: ['en', 'ar', 'tr'],
               publisher: {
                 '@type': 'Organization',
                 name: 'CloudTopia',

@@ -45,7 +45,18 @@ const Hero = () => {
     "التواصل مع المؤثرين",
   ]
 
-  const talkAbout = locale === 'ar' ? talkAboutAr : talkAboutEn
+  const talkAboutTr = [
+    "Instagram Büyümesi",
+    "Facebook Reklamları",
+    "TikTok Pazarlaması",
+    "İçerik Stratejisi",
+    "Marka Farkındalığı",
+    "Sosyal Analitik",
+    "Topluluk Yönetimi",
+    "Influencer İletişimi",
+  ]
+
+  const talkAbout = locale === 'ar' ? talkAboutAr : (locale === 'tr' ? talkAboutTr : talkAboutEn)
 
   useEffect(() => {
     renderCanvas()
@@ -72,9 +83,19 @@ const Hero = () => {
       brand: "كلاود توبيا",
       description: "نصنع استراتيجيات قوية للتواصل الاجتماعي للعلامات التجارية، ونبتكر محتوى جذاباً لدفع النمو. نحن خبراء في",
     },
+    tr: {
+      badge: "Sosyal Medya Mükemmeliyeti",
+      badgeLink: "Daha Fazla Bilgi",
+      headline: "Şunun için eksiksiz platformunuz:",
+      highlight: "Sosyal Medya",
+      available: "Şimdi Müsait",
+      welcome: "Sosyal pazarlamanın geleceğine hoş geldiniz! Biz",
+      brand: "CloudTopia",
+      description: "Markalar için güçlü sosyal medya stratejileri kurguluyor ve büyümeyi teşvik edecek etkileyici içerikler üretiyoruz. Biz şu konularda uzmanız:",
+    },
   }
 
-  const t = locale === 'ar' ? content.ar : content.en
+  const currentT = (content as any)[locale] || content.en
 
   return (
     <main className="overflow-hidden" dir={dir} lang={locale}>
@@ -83,7 +104,7 @@ const Hero = () => {
         <div className="flex flex-col items-center justify-center px-6 text-center">
           <div className="mb-6 mt-10 sm:justify-center md:mb-4 md:mt-40">
             <div className="relative flex items-center rounded-full border bg-popover px-3 py-1 text-xs text-primary/60">
-              {t.badge}
+              {currentT.badge}
               <Link
                 href={`/${locale}/services`}
                 rel="noreferrer"
@@ -93,7 +114,7 @@ const Hero = () => {
                   className="absolute inset-0 hover:font-semibold hover:text-pink-500 flex"
                   aria-hidden="true"
                 />
-                {t.badgeLink} <span aria-hidden="true"></span>
+                {currentT.badgeLink} <span aria-hidden="true"></span>
               </Link>
             </div>
           </div>
@@ -118,8 +139,8 @@ const Hero = () => {
                   className="text-pink-500 absolute -bottom-5 -right-5 h-10 w-10"
                 />
                 <span>
-                  {t.headline}{" "}
-                  <span className="text-pink-500">{t.highlight}</span>
+                  {currentT.headline}{" "}
+                  <span className="text-pink-500">{currentT.highlight}</span>
                 </span>
               </h1>
               <div className="flex items-center mt-4 justify-center gap-1">
@@ -127,21 +148,21 @@ const Hero = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-500"></span>
                 </span>
-                <p className="text-xs text-green-500">{t.available}</p>
+                <p className="text-xs text-green-500">{currentT.available}</p>
               </div>
             </div>
 
             <h1 className="mt-8 text-2xl md:text-2xl">
-              {t.welcome}{" "}
-              <span className="text-pink-500 font-bold">{t.brand}</span>
+              {currentT.welcome}{" "}
+              <span className="text-pink-500 font-bold">{currentT.brand}</span>
             </h1>
 
-            <p className="text-primary/60 py-4">
-              {t.description}{" "}
+            <div className="text-primary/60 py-4">
+              {currentT.description}{" "}
               <span className="text-purple-500 font-semibold">
                 <TypeWriter strings={talkAbout} />
               </span>.
-            </p>
+            </div>
           </div>
         </div>
         <canvas
@@ -248,14 +269,55 @@ const SLIDES_AR = [
   },
 ]
 
+const SLIDES_TR = [
+  {
+    id: "slide-1",
+    title: "Marka Kimliği",
+    description: "Markanızı unutulmaz kılan özel logolar, renk paletleri ve görsel kılavuzlar.",
+    imageUrl: "/images/services/social-media-marketing/brand-identity.avif",
+  },
+  {
+    id: "slide-2",
+    title: "İçerik Üretimi",
+    description: "Hedef kitlenizin ilgisini çekmek için tasarlanmış profesyonel fotoğraflar ve grafikler.",
+    imageUrl: "/images/services/social-media-marketing/content-creration.avif",
+  },
+  {
+    id: "slide-3",
+    title: "Instagram Pazarlama",
+    description: "Takipçilerinizi artırın, etkileşimi güçlendirin ve profilinizi bir satış makinesine dönüştürün.",
+    imageUrl: "/images/services/social-media-marketing/instagram-marketing.webp",
+  },
+  {
+    id: "slide-4",
+    title: "TikTok & Reels",
+    description: "Dikkat çeken ve geniş kitlelere ulaşan viral kısa formatlı videolar.",
+    imageUrl: "/images/services/social-media-marketing/tiktok-reels.webp",
+  },
+  {
+    id: "slide-5",
+    title: "Ücretli Reklamlar",
+    description: "Profesyonel Meta Business Suite yönetimi ve yüksek dönüşümlü reklam kampanyaları.",
+    imageUrl: "/images/services/social-media-marketing/paid-ads.avif",
+  },
+  {
+    id: "slide-6",
+    title: "Sosyal Analitik",
+    description: "Büyümeyi izlemek ve performansı optimize etmek için veri odaklı içgörüler ve raporlar.",
+    imageUrl: "/images/services/social-media-marketing/social-analytics.avif",
+  },
+]
+
 const ServicesSlideshow = ({ locale }: { locale: string }) => {
   const isRTL = locale === 'ar'
-  const SLIDES = isRTL ? SLIDES_AR : SLIDES_EN
-  const sectionLabel = isRTL ? "/ خدماتنا" : "/ our services"
-  const sectionTitle = isRTL ? "ماذا نقدم لك" : "What We Offer"
-  const sectionDesc = isRTL
+  const SLIDES = locale === 'ar' ? SLIDES_AR : (locale === 'tr' ? SLIDES_TR : SLIDES_EN)
+  const sectionLabel = locale === 'ar' ? "/ خدماتنا" : (locale === 'tr' ? "/ hizmetlerimiz" : "/ our services")
+  const sectionTitle = locale === 'ar' ? "ماذا نقدم لك" : (locale === 'tr' ? "Neler Sunuyoruz?" : "What We Offer")
+  const sectionDesc = locale === 'ar'
     ? "حلول تسويق رقمي شاملة لتنمية حضورك على وسائل التواصل الاجتماعي"
-    : "Comprehensive digital marketing solutions to grow your social media presence"
+    : (locale === 'tr'
+      ? "Sosyal medya varlığınızı büyütmek için kapsamlı dijital pazarlama çözümleri"
+      : "Comprehensive digital marketing solutions to grow your social media presence")
 
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -342,9 +404,18 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
       quote2: "نبني مجتمعات تتفاعل",
       quote3: "نجعل العلامات التجارية لا تُنسى",
     },
+    tr: {
+      label: "/ işlerimiz",
+      title: "Birçok Şeye Işık ve",
+      subtitle: "Güzellik Katıyoruz",
+      description: "Yaratıcı çalışmalarımızı keşfedin - sihirli dokunuşları görmek için görsellerin üzerine gelin",
+      quote1: "Fikirleri viral içeriklere dönüştürüyoruz",
+      quote2: "Etkileşim kuran topluluklar inşa ediyoruz",
+      quote3: "Markaları unutulmaz kılıyoruz",
+    },
   }
 
-  const t = isRTL ? content.ar : content.en
+  const currentT = (content as any)[locale] || content.en
 
   // Social media related images with captions
   const imageData = [
@@ -352,31 +423,37 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
       src: "/images/services/social-media-marketing/Social Media Strategy.jpg",
       captionEn: "Social Media Strategy",
       captionAr: "استراتيجية التواصل الاجتماعي",
+      captionTr: "Sosyal Medya Stratejisi",
     },
     {
       src: "/images/services/social-media-marketing/Creative Campaigns.avif",
       captionEn: "Creative Campaigns",
       captionAr: "حملات إبداعية",
+      captionTr: "Yaratıcı Kampanyalar",
     },
     {
       src: "/images/services/social-media-marketing/Brand Storytelling.webp",
       captionEn: "Brand Storytelling",
       captionAr: "سرد قصة العلامة",
+      captionTr: "Marka Hikayeleştirme",
     },
     {
       src: "/images/services/social-media-marketing/Visual Design.webp",
       captionEn: "Visual Design",
       captionAr: "التصميم البصري",
+      captionTr: "Görsel Tasarım",
     },
     {
       src: "/images/services/social-media-marketing/content production.avif",
       captionEn: "Content Production",
       captionAr: "إنتاج المحتوى",
+      captionTr: "İçerik Üretimi",
     },
     {
       src: "/images/services/social-media-marketing/Digital Marketing Success.webp",
       captionEn: "Digital Marketing Success",
       captionAr: "نجاح التسويق الرقمي",
+      captionTr: "Dijital Pazarlama Başarısı",
     },
   ]
 
@@ -385,16 +462,16 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
       {/* Header */}
       <div className="text-center mb-12 px-6">
         <h3 className="mb-2 text-xs font-medium capitalize tracking-wide text-pink-500">
-          {t.label}
+          {currentT.label}
         </h3>
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-2">
-          {t.title}
+          {currentT.title}
         </h2>
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-pink-500 mb-4">
-          {t.subtitle}
+          {currentT.subtitle}
         </h2>
         <p className="text-neutral-500 dark:text-neutral-400 max-w-xl mx-auto text-sm md:text-base">
-          {t.description}
+          {currentT.description}
         </p>
       </div>
 
@@ -415,7 +492,9 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
                 mouseRadius={0.3}
               />
             </div>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[0].captionAr : imageData[0].captionEn}</p>
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+              {locale === 'ar' ? imageData[0].captionAr : (locale === 'tr' ? (imageData[0] as any).captionTr : imageData[0].captionEn)}
+            </p>
           </div>
           <div className="relative group">
             <div className="h-[280px] md:h-[350px] rounded-3xl overflow-hidden">
@@ -430,14 +509,16 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
                 mouseRadius={0.35}
               />
             </div>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[1].captionAr : imageData[1].captionEn}</p>
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+              {locale === 'ar' ? imageData[1].captionAr : (locale === 'tr' ? (imageData[1] as any).captionTr : imageData[1].captionEn)}
+            </p>
           </div>
         </div>
 
         {/* Quote 1 */}
         <div className="text-center py-8 md:py-12">
           <p className="text-xl md:text-3xl font-semibold text-neutral-800 dark:text-white/90 italic">
-            "{t.quote1}"
+            "{currentT.quote1}"
           </p>
         </div>
 
@@ -456,7 +537,9 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
                 mouseRadius={0.3}
               />
             </div>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[2].captionAr : imageData[2].captionEn}</p>
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+              {locale === 'ar' ? imageData[2].captionAr : (locale === 'tr' ? (imageData[2] as any).captionTr : imageData[2].captionEn)}
+            </p>
           </div>
           <div className="relative group">
             <div className="h-[250px] md:h-[300px] rounded-3xl overflow-hidden">
@@ -471,7 +554,9 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
                 mouseRadius={0.4}
               />
             </div>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[3].captionAr : imageData[3].captionEn}</p>
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+              {locale === 'ar' ? imageData[3].captionAr : (locale === 'tr' ? (imageData[3] as any).captionTr : imageData[3].captionEn)}
+            </p>
           </div>
           <div className="relative group">
             <div className="h-[250px] md:h-[300px] rounded-3xl overflow-hidden">
@@ -486,14 +571,16 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
                 mouseRadius={0.35}
               />
             </div>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[4].captionAr : imageData[4].captionEn}</p>
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+              {locale === 'ar' ? imageData[4].captionAr : (locale === 'tr' ? (imageData[4] as any).captionTr : imageData[4].captionEn)}
+            </p>
           </div>
         </div>
 
         {/* Quote 2 */}
         <div className="text-center py-8 md:py-12">
           <p className="text-xl md:text-3xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent italic">
-            "{t.quote2}"
+            "{currentT.quote2}"
           </p>
         </div>
 
@@ -511,13 +598,15 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
               mouseRadius={0.4}
             />
           </div>
-          <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">{isRTL ? imageData[5].captionAr : imageData[5].captionEn}</p>
+          <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
+            {locale === 'ar' ? imageData[5].captionAr : (locale === 'tr' ? (imageData[5] as any).captionTr : imageData[5].captionEn)}
+          </p>
         </div>
 
         {/* Quote 3 */}
         <div className="text-center py-8 md:py-12">
           <p className="text-xl md:text-3xl font-semibold text-neutral-800 dark:text-white/90 italic">
-            "{t.quote3}"
+            "{currentT.quote3}"
           </p>
         </div>
       </div>
@@ -527,8 +616,6 @@ const CreativeShowcase = ({ locale }: { locale: string }) => {
 
 // Section 4: SEO-Optimized Service Explainer
 const ServiceExplainer = ({ locale }: { locale: string }) => {
-  const isRTL = locale === 'ar'
-
   const content = {
     en: {
       // Main heading - H2 for SEO
@@ -686,10 +773,85 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
           answer: "نتولى إنشاء كل المحتوى بما في ذلك الرسومات والفيديوهات والنصوص والهاشتاقات. نعمل معك لفهم صوت علامتك وإنشاء محتوى يمثل عملك بشكل أصيل."
         }
       ]
-    }
+    },
+    tr: {
+      mainTitle: "Sosyal Medya Pazarlama Hizmetleri",
+      mainSubtitle: "Profesyonel Sosyal Medya Yönetimi ile İşinizi Büyütün",
+
+      introParagraph: "CloudTopia olarak, her ölçekten işletmenin online varlığını oluşturmasına, hedef kitlesiyle etkileşim kurmasına ve ölçülebilir sonuçlar elde etmesine yardımcı olmak için kapsamlı sosyal medya pazarlama hizmetleri sunuyoruz. Sosyal medya uzmanlarından oluşan ekibimiz, markanızın tüm ana platformlardaki etkisini maksimize etmek için yaratıcı içerik stratejilerini veri odaklı içgörülerle birleştirir.",
+
+      whatWeOfferTitle: "Neler Sunuyoruz?",
+      services: [
+        {
+          title: "Sosyal Medya Strateji Geliştirme",
+          description: "İş hedeflerinize, hedef kitlenize ve sektöre özel olarak tasarlanmış özelleştirilmiş sosyal medya stratejileri oluşturuyoruz. Stratejik yaklaşımımız, her paylaşımın, kampanyanın ve etkileşimin genel pazarlama hedeflerinize katkıda bulunmasını sağlar.",
+        },
+        {
+          title: "İçerik Üretimi ve Yönetimi",
+          description: "Yaratıcı ekibimiz, hedef kitlenizde yankı uyandıran grafikler, videolar, hikayeler ve reels videoları dahil olmak üzere yüksek kaliteli içerikler üretir. İçerik planlamasından yayına ve topluluk yönetimine kadar her şeyi biz hallediyoruz.",
+        },
+        {
+          title: "Ücretli Sosyal Medya Reklamcılığı",
+          description: "Gelişmiş reklam kampanyaları ile yatırım getirinizi (ROI) maksimize edin. Meta Business Suite (Facebook ve Instagram), Google Ads ve TikTok Ads konularında derin uzmanlığa sahibiz. En düşük edinim maliyetini sağlamak için teknik kurulum, piksel entegrasyonu, hedef kitle daraltma ve sürekli A/B testlerini yönetiyoruz.",
+        },
+        {
+          title: "Analitik ve Raporlama",
+          description: "Ayrıntılı analitikler ve aylık raporlarla sosyal medya performansınızı takip edin. Etkileşim oranları, takipçi artışı, erişim ve dönüşüm metrikleri hakkında eyleme dönüştürülebilir içgörüler sunuyoruz.",
+        },
+        {
+          title: "Topluluk Yönetimi",
+          description: "Duyarlı etkileşimlerle online topluluğunuzu inşa edin ve besleyin. Pozitif bir marka imajını korumak ve müşteri sadakatini artırmak için yorumları, mesajları ve etkileşimleri yönetiyoruz.",
+        }
+      ],
+
+      whyChooseTitle: "Sosyal Medya Pazarlaması İçin Neden CloudTopia?",
+      whyChoosePoints: [
+        "Meta Business Suite ve Gelişmiş Reklam Araçlarında Uzmanlık",
+        "Birden fazla sektörde kanıtlanmış başarıya sahip deneyimli ekip",
+        "Benzersiz iş hedeflerinizle uyumlu kişiselleştirilmiş stratejiler",
+        "Şeffaf raporlama ve düzenli performans güncellemeleri",
+        "Kalabalık sosyal akışlarda öne çıkan yaratıcı içerikler",
+        "Etkileşimi ve dönüşümleri maksimize etmek için veri odaklı yaklaşım",
+        "Stratejiden uygulamaya kadar tam kapsamlı yönetim"
+      ],
+
+      platformsTitle: "Uzmanlaştığımız Platformlar",
+      platforms: [
+        { name: "Instagram", desc: "Görsel hikayeleştirme ve etkileşim" },
+        { name: "Facebook", desc: "Topluluk oluşturma ve reklamcılık" },
+        { name: "TikTok", desc: "Viral içerik ve Gen-Z erişimi" },
+        { name: "LinkedIn", desc: "B2B pazarlama ve düşünce liderliği" },
+        { name: "Twitter/X", desc: "Gerçek zamanlı etkileşim ve marka sesi" },
+        { name: "YouTube", desc: "Video pazarlaması ve SEO" }
+      ],
+
+      ctaTitle: "Sosyal Medya Varlığınızı Dönüştürmeye Hazır mısınız?",
+      ctaDescription: "Sosyal medya pazarlama hizmetlerimizin işinizi büyütmenize nasıl yardımcı olabileceğini tartışalım. Ücretsiz danışmanlık ve hedeflerinize özel strateji alın.",
+      ctaButton: "Bugün Başlayın",
+
+      faqTitle: "Sıkça Sorulan Sorular",
+      faqs: [
+        {
+          question: "Sosyal medya pazarlama hizmetlerinin maliyeti nedir?",
+          answer: "Sosyal medya pazarlama paketlerimiz ihtiyaçlarınıza, platformlara ve hedeflerinize göre özelleştirilir. Temel yönetimden kapsamlı tam hizmet çözümlerine kadar esnek fiyatlandırma sunuyoruz. Kişiselleştirilmiş teklif için bizimle iletişime geçin."
+        },
+        {
+          question: "Sosyal medya pazarlamasından sonuç almak ne kadar sürer?",
+          answer: "İlk ay içinde bazı iyileşmeler görülebilse de, sürdürülebilir büyüme genellikle 3-6 aylık tutarlı bir çalışma gerektirir. Hızlı çözümler yerine gerçek etkileşim ve uzun vadeli marka farkındalığı oluşturmaya odaklanıyoruz."
+        },
+        {
+          question: "İşletmem hangi sosyal medya platformlarında yer almalı?",
+          answer: "Doğru platformlar hedef kitlenize ve işletme türünüze bağlıdır. Özel hedefleriniz için en etkili platformları önermek amacıyla sektörünüzü ve müşteri demografinizi analiz ediyoruz."
+        },
+        {
+          question: "İçeriği siz mi üretiyorsunuz yoksa bizim mi sağlamamız gerekiyor?",
+          answer: "Grafikler, videolar, açıklamalar ve hashtag araştırması dahil olmak üzere tüm içerik üretimini biz üstleniyoruz. Marka sesinizi anlamak ve işletmenizi özgün bir şekilde temsil eden içerikler oluşturmak için sizinle birlikte çalışıyoruz."
+        }
+      ]
+    },
   }
 
-  const t = isRTL ? content.ar : content.en
+  const currentT = (content as any)[locale] || content.en
 
   return (
     <section id="about-service" className="relative bg-gradient-to-b from-lavender via-lavender/30 to-lavender dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 py-20 md:py-28">
@@ -698,27 +860,27 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
         {/* Main Title - H2 for SEO */}
         <header className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-4">
-            {t.mainTitle}
+            {currentT.mainTitle}
           </h2>
           <p className="text-lg md:text-xl text-pink-500 font-medium">
-            {t.mainSubtitle}
+            {currentT.mainSubtitle}
           </p>
         </header>
 
         {/* Intro Paragraph - SEO rich content */}
         <article className="mb-16">
           <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-4xl mx-auto text-center">
-            {t.introParagraph}
+            {currentT.introParagraph}
           </p>
         </article>
 
         {/* What We Offer - Services Grid */}
         <div className="mb-20">
           <h3 className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white mb-10 text-center">
-            {t.whatWeOfferTitle}
+            {currentT.whatWeOfferTitle}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {t.services.map((service, index) => (
+            {currentT.services.map((service: any, index: number) => (
               <motion.article
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -759,10 +921,10 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
           className="mb-20 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl shadow-pink-500/20"
         >
           <h3 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-            {t.whyChooseTitle}
+            {currentT.whyChooseTitle}
           </h3>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {t.whyChoosePoints.map((point, index) => (
+            {currentT.whyChoosePoints.map((point: string, index: number) => (
               <motion.li
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
@@ -781,10 +943,10 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
         {/* Platforms Section */}
         <div className="mb-20">
           <h3 className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white mb-10 text-center">
-            {t.platformsTitle}
+            {currentT.platformsTitle}
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {t.platforms.map((platform, index) => (
+            {currentT.platforms.map((platform: any, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -819,10 +981,10 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
         {/* FAQ Section - Great for SEO */}
         <div className="mb-20">
           <h3 className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white mb-10 text-center">
-            {t.faqTitle}
+            {currentT.faqTitle}
           </h3>
           <div className="max-w-3xl mx-auto space-y-4">
-            {t.faqs.map((faq, index) => (
+            {currentT.faqs.map((faq: any, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 15 }}
@@ -858,16 +1020,16 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
         {/* CTA Section */}
         <div className="text-center bg-neutral-900 dark:bg-lavender/5 rounded-3xl p-8 md:p-12">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            {t.ctaTitle}
+            {currentT.ctaTitle}
           </h3>
           <p className="text-neutral-300 mb-8 max-w-2xl mx-auto">
-            {t.ctaDescription}
+            {currentT.ctaDescription}
           </p>
           <Link
             href={`/${locale}/contact`}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
           >
-            {t.ctaButton}
+            {currentT.ctaButton}
             <span>→</span>
           </Link>
         </div>
@@ -878,5 +1040,13 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
 }
 
 export default function SocialMediaMarketingPage() {
-  return <Hero />
+  const { locale } = useLanguage()
+  return (
+    <>
+      <Hero />
+      <ServicesSlideshow locale={locale} />
+      <CreativeShowcase locale={locale} />
+      <ServiceExplainer locale={locale} />
+    </>
+  )
 }

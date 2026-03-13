@@ -69,6 +69,38 @@ const content = {
       description: "اجذب عملاءك بمعارض منتجات ثلاثية الأبعاد غامرة، وصور عالية الجودة، وتجارب تسوق تفاعلية تعزز المشاركة والتحويلات.",
       hint: "استخدم عجلة الماوس أو مفاتيح الأسهم أو اللمس للتنقل"
     }
+  },
+  tr: {
+    sections: [
+      {
+        subtitle: "Online Mağazanızı Başlatın",
+        title: "E-Ticaret Çözümleriyle",
+        highlight: "Satışlarınızı Artırın",
+        image: "/images/services/ecommerce-solutions/1.jpg",
+        alt: "Ürün listeleri ve alışveriş sepeti içeren modern e-ticaret web sitesi arayüzü"
+      },
+      {
+        subtitle: "Kusursuz Alışveriş Deneyimi",
+        title: "Ziyaretçileri",
+        highlight: "Sadık Müşterilere Dönüştürün",
+        image: "/images/services/ecommerce-solutions/2.webp",
+        alt: "E-ticaret ödeme süreci ve ödeme ağ geçidi arayüzü"
+      },
+      {
+        subtitle: "Ölçeklenebilir ve Güvenli Platform",
+        title: "İşinizle Birlikte",
+        highlight: "Büyümek İçin İnşa Edildi",
+        image: "/images/services/ecommerce-solutions/3.avif",
+        alt: "Satış performansını ve büyüme metriklerini gösteren e-ticaret analitik panosu"
+      }
+    ],
+    gallery: {
+      badge: "Ürün Sergileme",
+      title: "Etkileyici Ürün Sunumları",
+      highlight: "Kendini Satan Ürünler",
+      description: "Müşterilerinizi sürükleyici 3D ürün galerileri, yüksek kaliteli görseller ve etkileşimi ile dönüşümleri artıran interaktif alışveriş deneyimleriyle büyüleyin.",
+      hint: "Gezinmek için fare tekerleğini, ok tuşlarını veya dokunmatik ekranı kullanın"
+    }
   }
 }
 
@@ -93,9 +125,9 @@ const ecommerceImages = [
 ]
 
 export default function EcommerceSolutionsPage() {
-  const { dir } = useLanguage()
+  const { locale, dir } = useLanguage()
   const isRTL = dir === 'rtl'
-  const t = isRTL ? content.ar : content.en
+  const currentContent = (content as any)[locale] || content.en
 
   // Different accent colors for each section
   const accentColors = [
@@ -111,7 +143,7 @@ export default function EcommerceSolutionsPage() {
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Container Scroll Sections */}
-        {t.sections.map((section, index) => (
+        {currentContent.sections.map((section: any, index: number) => (
           <ContainerScroll
             key={index}
             titleComponent={
@@ -147,19 +179,19 @@ export default function EcommerceSolutionsPage() {
           {/* Header Content */}
           <div className="relative z-10 text-center pt-16 sm:pt-20 md:pt-24 px-4">
             <span className="inline-block px-4 py-2 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-amber-500 to-orange-500 mb-6">
-              {t.gallery.badge}
+              {currentContent.gallery.badge}
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              {t.gallery.title}
+              {currentContent.gallery.title}
             </h2>
 
             <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-6">
-              {t.gallery.highlight}
+              {currentContent.gallery.highlight}
             </p>
 
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8">
-              {t.gallery.description}
+              {currentContent.gallery.description}
             </p>
           </div>
 
@@ -183,13 +215,13 @@ export default function EcommerceSolutionsPage() {
           {/* Navigation Hint */}
           <div className="text-center pb-12 sm:pb-16 relative z-10">
             <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-wider">
-              {t.gallery.hint}
+              {currentContent.gallery.hint}
             </p>
           </div>
         </section>
 
         {/* Service Explanation Section */}
-        <EcommerceServiceSection isRTL={isRTL} locale={isRTL ? 'ar' : 'en'} />
+        <EcommerceServiceSection isRTL={isRTL} locale={locale} />
       </div>
     </main>
   )

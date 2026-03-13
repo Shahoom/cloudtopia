@@ -10,31 +10,39 @@ export function WebAppFeatures({ locale = 'en' }: WebAppFeaturesProps) {
 
     const content = {
         customizable: {
-            title: isArabic ? 'قابل للتخصيص' : 'Customizable'
+            title: locale === 'ar' ? 'قابل للتخصيص' : (locale === 'tr' ? 'Özelleştirilebilir' : 'Customizable')
         },
         secure: {
-            title: isArabic ? 'آمن بشكل افتراضي' : 'Secure by Default',
-            description: isArabic
+            title: locale === 'ar' ? 'آمن بشكل افتراضي' : (locale === 'tr' ? 'Varsayılan Olarak Güvenli' : 'Secure by Default'),
+            description: locale === 'ar'
                 ? 'أمان على مستوى المؤسسات مع تشفير البيانات والمصادقة الآمنة والبنية التحتية الجاهزة للامتثال لتطبيقات الويب الخاصة بك.'
-                : 'Enterprise-grade security with data encryption, secure authentication, and compliance-ready infrastructure for your web applications.'
+                : (locale === 'tr'
+                    ? 'Web uygulamalarınız için veri şifreleme, güvenli kimlik doğrulama ve uyumluluğa hazır altyapı ile kurumsal düzeyde güvenlik.'
+                    : 'Enterprise-grade security with data encryption, secure authentication, and compliance-ready infrastructure for your web applications.')
         },
         fast: {
-            title: isArabic ? 'سريع للغاية' : 'Lightning Fast',
-            description: isArabic
+            title: locale === 'ar' ? 'سريع للغاية' : (locale === 'tr' ? 'Yıldırım Hızında' : 'Lightning Fast'),
+            description: locale === 'ar'
                 ? 'أداء محسّن مع أطر عمل حديثة وبنية كود فعالة لأوقات تحميل فورية.'
-                : 'Optimized performance with modern frameworks and efficient code architecture for instant load times.'
+                : (locale === 'tr'
+                    ? 'Modern çerçeveler ve anlık yükleme süreleri için verimli kod mimarisi ile optimize edilmiş performans.'
+                    : 'Optimized performance with modern frameworks and efficient code architecture for instant load times.')
         },
         scalable: {
-            title: isArabic ? 'قابل للتوسع عالمياً' : 'Globally Scalable',
-            description: isArabic
+            title: locale === 'ar' ? 'قابل للتوسع عالمياً' : (locale === 'tr' ? 'Küresel Ölçeklenebilir' : 'Globally Scalable'),
+            description: locale === 'ar'
                 ? 'مبني للتوسع من شركة ناشئة إلى مؤسسة كبيرة مع البنية التحتية السحابية والهندسة الموزعة.'
-                : 'Built to scale from startup to enterprise with cloud infrastructure and distributed architecture.'
+                : (locale === 'tr'
+                    ? 'Bulut altyapısı ve dağıtık mimari ile başlangıçtan kurumsal düzeye ölçeklenecek şekilde tasarlandı.'
+                    : 'Built to scale from startup to enterprise with cloud infrastructure and distributed architecture.')
         },
         modern: {
-            title: isArabic ? 'تقنيات حديثة' : 'Modern Tech Stack',
-            description: isArabic
+            title: locale === 'ar' ? 'تقنيات حديثة' : (locale === 'tr' ? 'Modern Teknoloji Yığını' : 'Modern Tech Stack'),
+            description: locale === 'ar'
                 ? 'مبني بأحدث التقنيات مثل React و Next.js و TypeScript لتطبيقات قابلة للصيانة ومستقبلية.'
-                : 'Built with cutting-edge technologies like React, Next.js, and TypeScript for maintainable, future-proof applications.'
+                : (locale === 'tr'
+                    ? 'Sürdürülebilir ve geleceğe hazır uygulamalar için React, Next.js ve TypeScript gibi en yeni teknolojilerle inşa edildi.'
+                    : 'Built with cutting-edge technologies like React, Next.js, and TypeScript for maintainable, future-proof applications.')
         }
     }
     return (

@@ -2,32 +2,46 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'Our Projects — Real Work, Real Impact',
+        ar: 'مشاريعنا — أعمال حقيقية، تأثير حقيقي',
+        tr: 'Projelerimiz — Gerçek İş, Gerçek Etki',
+    }
+    const descs: Record<string, string> = {
+        en: 'Explore our portfolio of websites, web applications, and digital solutions.',
+        ar: 'استكشف محفظتنا من المواقع وتطبيقات الويب والحلول الرقمية.',
+        tr: 'Web siteleri, web uygulamaları ve dijital çözümler portföyümüzü keşfedin.',
+    }
+    const ogTitles: Record<string, string> = {
+        en: 'Projects — CloudTopia',
+        ar: 'المشاريع — كلاود توبيا',
+        tr: 'Projeler — CloudTopia',
+    }
+    const ogDescs: Record<string, string> = {
+        en: 'Our portfolio of real-world digital projects and success stories.',
+        ar: 'محفظة مشاريعنا الرقمية وقصص النجاح.',
+        tr: 'Gerçek dünya dijital projeleri ve başarı hikayelerimizin portföyü.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const title = titles[locale] || titles.en
+    const desc = descs[locale] || descs.en
+    const ogTitle = ogTitles[locale] || ogTitles.en
+    const ogDesc = ogDescs[locale] || ogDescs.en
+
     return {
-        title: isAr
-            ? 'مشاريعنا — أعمالنا ودراسات الحالة'
-            : 'Projects — Our Work & Case Studies',
-        description: isAr
-            ? 'تصفح محفظة كلاود توبيا: مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، منصات حجز، قوائم QR للمطاعم، وتطبيقات ويب لأعمال حقيقية.'
-            : 'Browse CloudTopia\'s portfolio: custom websites, e-commerce stores, CRM systems, booking platforms, restaurant QR menus, and web applications built for real businesses.',
+        title,
+        description: desc,
         openGraph: {
-            title: isAr ? 'مشاريعنا — محفظة كلاود توبيا' : 'Our Projects — CloudTopia Portfolio',
-            description: isAr
-                ? 'مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، منصات حجز، وتطبيقات ويب لأعمال حقيقية.'
-                : 'Custom websites, e-commerce stores, CRM systems, booking platforms, and web applications built for real businesses.',
-            url: isAr ? 'https://cloudtopia.net/ar/projects' : 'https://cloudtopia.net/en/projects',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'محفظة مشاريع كلاود توبيا' : 'CloudTopia Projects Portfolio' }],
+            title: ogTitle,
+            description: ogDesc,
+            url: `https://cloudtopia.net/${locale}/projects`,
+            locale: ogLocales[locale] || 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
         },
-        twitter: {
-            title: isAr ? 'مشاريعنا — محفظة كلاود توبيا' : 'Our Projects — CloudTopia Portfolio',
-            description: isAr
-                ? 'مواقع مخصصة، متاجر إلكترونية، أنظمة CRM، وتطبيقات ويب لأعمال حقيقية.'
-                : 'Custom websites, e-commerce stores, CRM systems, and web applications for real businesses.',
-        },
+        twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar/projects' : 'https://cloudtopia.net/en/projects',
-            languages: { 'en': 'https://cloudtopia.net/en/projects', 'ar': 'https://cloudtopia.net/ar/projects', 'x-default': 'https://cloudtopia.net/en/projects' },
+            canonical: `https://cloudtopia.net/${locale}/projects`,
+            languages: { 'en': 'https://cloudtopia.net/en/projects', 'ar': 'https://cloudtopia.net/ar/projects', 'tr': 'https://cloudtopia.net/tr/projects', 'x-default': 'https://cloudtopia.net/en/projects' },
         },
     }
 }

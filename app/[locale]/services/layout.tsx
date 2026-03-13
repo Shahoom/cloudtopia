@@ -2,37 +2,80 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'Services — Web Design, E-Commerce, Marketing & More',
+        ar: 'خدماتنا — تصميم مواقع، تجارة إلكترونية، تسويق والمزيد',
+        tr: 'Hizmetler — Web Tasarım, E-Ticaret, Pazarlama ve Daha Fazlası',
+    }
+    const descs: Record<string, string> = {
+        en: 'Professional website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications. Free consultation available.',
+        ar: 'تصميم مواقع احترافي، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل الاجتماعي، منصات حجز، وتطبيقات ويب مخصصة. استشارة مجانية متاحة.',
+        tr: 'Profesyonel web sitesi tasarımı, e-ticaret mağazaları, CRM sistemleri, sosyal medya pazarlama, rezervasyon platformları ve özel web uygulamaları. Ücretsiz danışmanlık.',
+    }
+    const ogTitles: Record<string, string> = {
+        en: 'Our Services — CloudTopia',
+        ar: 'خدماتنا — كلاود توبيا',
+        tr: 'Hizmetlerimiz — CloudTopia',
+    }
+    const ogDescs: Record<string, string> = {
+        en: 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
+        ar: 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.',
+        tr: 'Web sitesi tasarımı, e-ticaret mağazaları, CRM sistemleri, sosyal medya pazarlama, rezervasyon platformları ve özel web uygulamaları.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const title = titles[locale] || titles.en
+    const desc = descs[locale] || descs.en
+    const ogTitle = ogTitles[locale] || ogTitles.en
+    const ogDesc = ogDescs[locale] || ogDescs.en
+
     return {
-        title: isAr
-            ? 'خدماتنا — تصميم مواقع، تجارة إلكترونية، تسويق والمزيد'
-            : 'Services — Web Design, E-Commerce, Marketing & More',
-        description: isAr
-            ? 'تصميم مواقع احترافي، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل الاجتماعي، منصات حجز، وتطبيقات ويب مخصصة. استشارة مجانية متاحة.'
-            : 'Professional website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications. Free consultation available.',
+        title,
+        description: desc,
         openGraph: {
-            title: isAr ? 'خدماتنا — كلاود توبيا' : 'Our Services — CloudTopia',
-            description: isAr
-                ? 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.'
-                : 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
-            url: isAr ? 'https://cloudtopia.net/ar/services' : 'https://cloudtopia.net/en/services',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'خدمات كلاود توبيا' : 'CloudTopia Services' }],
+            title: ogTitle,
+            description: ogDesc,
+            url: `https://cloudtopia.net/${locale}/services`,
+            locale: ogLocales[locale] || 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
         },
-        twitter: {
-            title: isAr ? 'خدماتنا — كلاود توبيا' : 'Our Services — CloudTopia',
-            description: isAr
-                ? 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.'
-                : 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
-        },
+        twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar/services' : 'https://cloudtopia.net/en/services',
-            languages: { 'en': 'https://cloudtopia.net/en/services', 'ar': 'https://cloudtopia.net/ar/services', 'x-default': 'https://cloudtopia.net/en/services' },
+            canonical: `https://cloudtopia.net/${locale}/services`,
+            languages: { 'en': 'https://cloudtopia.net/en/services', 'ar': 'https://cloudtopia.net/ar/services', 'tr': 'https://cloudtopia.net/tr/services', 'x-default': 'https://cloudtopia.net/en/services' },
         },
     }
 }
 
-export default function ServicesLayout({ children }: { children: React.ReactNode }) {
+export default function ServicesLayout({ children, params: { locale } }: { children: React.ReactNode, params: { locale: string } }) {
+    const l = locale ?? 'en'
+
+    const breadcrumbNames: Record<string, { home: string, services: string }> = {
+        en: { home: 'Home', services: 'Services' },
+        ar: { home: 'الرئيسية', services: 'خدماتنا' },
+        tr: { home: 'Ana Sayfa', services: 'Hizmetler' },
+    }
+
+    const itemListContent: Record<string, { name: string, desc: string, items: string[] }> = {
+        en: {
+            name: 'CloudTopia Digital Services',
+            desc: 'Comprehensive digital services: website design, e-commerce, marketing, content creation, business systems, and web applications.',
+            items: ['Digital Presence', 'Business Systems', 'Web Applications']
+        },
+        ar: {
+            name: 'خدمات كلاود توبيا الرقمية',
+            desc: 'خدمات رقمية شاملة: تصميم مواقع، تجارة إلكترونية، تسويq، إنشاء محتوى، أنظمة أعمال، وتطبيقات ويب.',
+            items: ['الحضور الرقمي', 'أنظمة الأعمال', 'تطبيقات الويب']
+        },
+        tr: {
+            name: 'CloudTopia Dijital Hizmetleri',
+            desc: 'Kapsamlı dijital hizmetler: web tasarımı, e-ticaret, pazarlama, içerik üretimi, iş sistemleri ve web uygulamaları.',
+            items: ['Dijital Varlık', 'İş Sistemleri', 'Web Uygulamaları']
+        }
+    }
+
+    const b = breadcrumbNames[l] || breadcrumbNames.en
+    const i = itemListContent[l] || itemListContent.en
+
     return (
         <>
             <script
@@ -42,8 +85,8 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/services' },
+                            { '@type': 'ListItem', position: 1, name: b.home, item: `https://cloudtopia.net/${l}` },
+                            { '@type': 'ListItem', position: 2, name: b.services, item: `https://cloudtopia.net/${l}/services` },
                         ],
                     }),
                 }}
@@ -54,14 +97,14 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
                     __html: JSON.stringify({
                         '@context': 'https://schema.org',
                         '@type': 'ItemList',
-                        name: 'CloudTopia Digital Services',
-                        description: 'Comprehensive digital services: website design, e-commerce, marketing, content creation, business systems, and web applications.',
-                        url: 'https://cloudtopia.net/services',
+                        name: i.name,
+                        description: i.desc,
+                        url: `https://cloudtopia.net/${l}/services`,
                         numberOfItems: 3,
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Digital Presence', url: 'https://cloudtopia.net/services#digital-presence' },
-                            { '@type': 'ListItem', position: 2, name: 'Business Systems', url: 'https://cloudtopia.net/services#business-systems' },
-                            { '@type': 'ListItem', position: 3, name: 'Web Applications', url: 'https://cloudtopia.net/services#web-applications' },
+                            { '@type': 'ListItem', position: 1, name: i.items[0], url: `https://cloudtopia.net/${l}/services#digital-presence` },
+                            { '@type': 'ListItem', position: 2, name: i.items[1], url: `https://cloudtopia.net/${l}/services#business-systems` },
+                            { '@type': 'ListItem', position: 3, name: i.items[2], url: `https://cloudtopia.net/${l}/services#web-applications` },
                         ],
                     }),
                 }}

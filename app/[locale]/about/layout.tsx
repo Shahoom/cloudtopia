@@ -2,32 +2,46 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'About CloudTopia — Digital & Cloud Technologies',
+        ar: 'عن كلاود توبيا — تقنيات رقمية وسحابية',
+        tr: 'CloudTopia Hakkında — Dijital & Bulut Teknolojileri',
+    }
+    const descs: Record<string, string> = {
+        en: 'Learn about CloudTopia, our mission, values, and team dedicated to digital excellence.',
+        ar: 'تعرف على كلاود توبيا، مهمتنا، قيمنا، وفريقنا المخصص للتميز الرقمي.',
+        tr: 'CloudTopia, misyonumuz, değerlerimiz ve dijital mükemmelliğe adanmış ekibimiz hakkında bilgi edinin.',
+    }
+    const ogTitles: Record<string, string> = {
+        en: 'About Us — CloudTopia',
+        ar: 'عنا — كلاود توبيا',
+        tr: 'Hakkımızda — CloudTopia',
+    }
+    const ogDescs: Record<string, string> = {
+        en: 'Our mission, values, and team dedicated to digital excellence.',
+        ar: 'مهمتنا وقيمنا وفريقنا المخصص للتميز الرقمي.',
+        tr: 'Dijital mükemmelliğe adanmış misyonumuz, değerlerimiz ve ekibimiz.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const title = titles[locale] || titles.en
+    const desc = descs[locale] || descs.en
+    const ogTitle = ogTitles[locale] || ogTitles.en
+    const ogDesc = ogDescs[locale] || ogDescs.en
+
     return {
-        title: isAr
-            ? 'من نحن — مهمتنا، رؤيتنا وقيمنا'
-            : 'About Us — Our Mission, Vision & Values',
-        description: isAr
-            ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع، التجارة الإلكترونية، أنظمة CRM، منصات الحجز، وتطبيقات الويب المخصصة للشركات.'
-            : 'CloudTopia is a digital agency offering website design, e-commerce development, CRM systems, booking platforms, and custom web applications for businesses.',
+        title,
+        description: desc,
         openGraph: {
-            title: isAr ? 'من نحن — كلاود توبيا | تقنيات رقمية وسحابية' : 'About CloudTopia — Digital & Cloud Technologies',
-            description: isAr
-                ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع، التجارة الإلكترونية، أنظمة CRM، وتطبيقات الويب للشركات.'
-                : 'CloudTopia is a digital agency specializing in website design, e-commerce, CRM systems, and web applications for businesses.',
-            url: isAr ? 'https://cloudtopia.net/ar/about' : 'https://cloudtopia.net/en/about',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'من نحن — كلاود توبيا' : 'About CloudTopia' }],
+            title: ogTitle,
+            description: ogDesc,
+            url: `https://cloudtopia.net/${locale}/about`,
+            locale: ogLocales[locale] || 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
         },
-        twitter: {
-            title: isAr ? 'من نحن — كلاود توبيا' : 'About CloudTopia',
-            description: isAr
-                ? 'كلاود توبيا وكالة رقمية متخصصة في تصميم المواقع وأنظمة الأعمال وتطبيقات الويب.'
-                : 'CloudTopia is a digital agency specializing in website design, business systems, and web applications.',
-        },
+        twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar/about' : 'https://cloudtopia.net/en/about',
-            languages: { 'en': 'https://cloudtopia.net/en/about', 'ar': 'https://cloudtopia.net/ar/about', 'x-default': 'https://cloudtopia.net/en/about' },
+            canonical: `https://cloudtopia.net/${locale}/about`,
+            languages: { 'en': 'https://cloudtopia.net/en/about', 'ar': 'https://cloudtopia.net/ar/about', 'tr': 'https://cloudtopia.net/tr/about', 'x-default': 'https://cloudtopia.net/en/about' },
         },
     }
 }
