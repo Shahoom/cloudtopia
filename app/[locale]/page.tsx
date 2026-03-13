@@ -27,7 +27,7 @@ function FloatingCard({
     delay = 0,
     direction = 'up'
 }: {
-    children: React.ReactNode
+    children?: React.ReactNode
     className?: string
     delay?: number
     direction?: 'up' | 'down' | 'left' | 'right'

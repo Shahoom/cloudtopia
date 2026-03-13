@@ -154,7 +154,7 @@ function MobileImageCarousel() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % ALL_IMAGES.length)
+      setCurrentIndex((prev: number) => (prev + 1) % ALL_IMAGES.length)
     }, 3000)
     return () => clearInterval(interval)
   }, [])

@@ -144,8 +144,8 @@ export default function EcommerceSolutionsPage() {
       >
         {/* Container Scroll Sections */}
         {currentContent.sections.map((section: any, index: number) => (
+          <div key={index}>
           <ContainerScroll
-            key={index}
             titleComponent={
               <div className="space-y-4 sm:space-y-6 md:space-y-8 mb-8 sm:mb-12 md:mb-16">
                 {/* Subtitle with gradient background */}
@@ -172,6 +172,7 @@ export default function EcommerceSolutionsPage() {
               draggable={false}
             />
           </ContainerScroll>
+          </div>
         ))}
 
         {/* 3D Gallery Section */}

@@ -47,7 +47,7 @@ const InteractiveBackground = () => {
   )
 }
 
-const TiltCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+const TiltCard = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 

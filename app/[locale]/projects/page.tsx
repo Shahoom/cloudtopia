@@ -51,7 +51,7 @@ interface Project {
 }
 
 // Magnetic Button Component
-const MagneticButton = ({ children, className, onClick }: { children: React.ReactNode, className?: string, onClick?: () => void }) => {
+const MagneticButton = ({ children, className, onClick }: { children?: React.ReactNode, className?: string, onClick?: () => void }) => {
   const ref = useRef<HTMLButtonElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
@@ -460,7 +460,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
                 animate={{ opacity: isHovered ? 1 : 0.5 }}
                 whileHover={{ scale: 1.1 }}
                 className="flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700"
