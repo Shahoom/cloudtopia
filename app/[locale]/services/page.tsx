@@ -695,12 +695,13 @@ export default function ServicesPage() {
                                     {/* Continuous Cards Grid */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                         {category.services.map((service, serviceIndex) => (
-                                            <ServiceCardComponent
-                                                key={service.name}
-                                                service={service}
-                                                locale={locale}
-                                                index={serviceIndex}
-                                            />
+                                            <React.Fragment key={service.name}>
+                                                <ServiceCardComponent
+                                                    service={service}
+                                                    locale={locale as string}
+                                                    index={serviceIndex}
+                                                />
+                                            </React.Fragment>
                                         ))}
                                     </div>
                                 </div>

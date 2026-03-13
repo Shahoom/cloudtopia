@@ -21,7 +21,7 @@ interface FloatingContextType {
 const FloatingContext = createContext<FloatingContextType | null>(null)
 
 interface FloatingProps {
-  children: ReactNode
+  children?: ReactNode
   className?: string
   sensitivity?: number
   easingFactor?: number
@@ -100,7 +100,7 @@ const Floating = ({
 export default Floating
 
 interface FloatingElementProps {
-  children: ReactNode
+  children?: ReactNode
   className?: string
   depth?: number
 }

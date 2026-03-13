@@ -210,7 +210,9 @@ export default function LabsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                         {t.labs.innovationDomains.domains.map((domain: any, index: number) => (
-                            <DomainCard key={index} domain={domain} index={index} isRTL={locale === 'ar'} />
+                            <div key={index}>
+                                <DomainCard domain={domain} index={index} isRTL={locale === 'ar'} />
+                            </div>
                         ))}
                     </div>
                 </div>
