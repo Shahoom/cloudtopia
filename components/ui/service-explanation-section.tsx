@@ -220,7 +220,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <TextBlockAnimation blockColor="#2563eb" duration={0.6}>
               <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-50">
-                {isRTL ? "خدمات تصميم المواقع لدينا" : "Our Web Design Services"}
+                {locale === 'ar' ? "خدمات تصميم المواقع لدينا" : locale === 'tr' ? "Web Tasarım Hizmetlerimiz" : "Our Web Design Services"}
               </h3>
             </TextBlockAnimation>
           </div>
@@ -256,8 +256,8 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            "serviceType": isRTL ? "تصميم وتطوير المواقع الإلكترونية" : "Professional Web Design & Development Services",
-            "name": isRTL ? "خدمات تصميم المواقع - كلاود توبيا" : "Web Design Services - CloudTopia",
+            "serviceType": locale === 'ar' ? "تصميم وتطوير المواقع الإلكترونية" : locale === 'tr' ? "Profesyonel Web Tasarımı ve Geliştirme Hizmetleri" : "Professional Web Design & Development Services",
+            "name": locale === 'ar' ? "خدمات تصميم المواقع - كلاود توبيا" : locale === 'tr' ? "Web Tasarım Hizmetleri - CloudTopia" : "Web Design Services - CloudTopia",
             "description": t.pitchDescription,
             "provider": {
               "@type": "Organization",
@@ -280,7 +280,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             ],
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
-              "name": isRTL ? "خدمات تصميم وتطوير المواقع" : "Web Design & Development Services",
+              "name": locale === 'ar' ? "خدمات تصميم وتطوير المواقع" : locale === 'tr' ? "Web Tasarımı ve Geliştirme Hizmetleri" : "Web Design & Development Services",
               "itemListElement": t.features.map((feature: any, index: number) => ({
                 "@type": "Offer",
                 "position": index + 1,
