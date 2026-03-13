@@ -2,32 +2,46 @@ import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
-    const isAr = locale === 'ar'
+    const titles: Record<string, string> = {
+        en: 'CloudTopia Labs — AI & Innovation',
+        ar: 'مختبرات كلاود توبيا — الذكاء الاصطناعي والابتكار',
+        tr: 'CloudTopia Labs — Yapay Zeka & İnovasyon',
+    }
+    const descs: Record<string, string> = {
+        en: 'Explore our AI tools, prototypes, and innovation projects at CloudTopia Labs.',
+        ar: 'استكشف أدوات الذكاء الاصطناعي والنماذج الأولية ومشاريع الابتكار.',
+        tr: 'CloudTopia Labs\'taki yapay zeka araçlarımızı, prototipleri ve inovasyon projelerini keşfedin.',
+    }
+    const ogTitles: Record<string, string> = {
+        en: 'Labs — CloudTopia',
+        ar: 'المختبرات — كلاود توبيا',
+        tr: 'Labs — CloudTopia',
+    }
+    const ogDescs: Record<string, string> = {
+        en: 'AI tools, innovation prototypes, and experimental projects.',
+        ar: 'أدوات ذكاء اصطناعي، نماذج ابتكار، ومشاريع تجريبية.',
+        tr: 'Yapay zeka araçları, inovasyon prototipleri ve deneysel projeler.',
+    }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const title = titles[locale] || titles.en
+    const desc = descs[locale] || descs.en
+    const ogTitle = ogTitles[locale] || ogTitles.en
+    const ogDesc = ogDescs[locale] || ogDescs.en
+
     return {
-        title: isAr
-            ? 'المختبر — الابتكار والنماذج التجريبية'
-            : 'Labs — Innovation & Experimental Prototypes',
-        description: isAr
-            ? 'مختبر كلاود توبيا يستكشف أدوات الذكاء الاصطناعي، أتمتة العمليات، والمنتجات الرقمية التجريبية. اكتشف ما نبنيه.'
-            : 'CloudTopia Labs explores AI-powered tools, process automation, and experimental digital products. See what we\'re building next.',
+        title,
+        description: desc,
         openGraph: {
-            title: isAr ? 'مختبر كلاود توبيا — مركز الابتكار' : 'CloudTopia Labs — Innovation Hub',
-            description: isAr
-                ? 'أدوات ذكاء اصطناعي، أتمتة عمليات، ومنتجات رقمية تجريبية من كلاود توبيا.'
-                : 'AI-powered tools, process automation, and experimental digital products from CloudTopia.',
-            url: isAr ? 'https://cloudtopia.net/ar/labs' : 'https://cloudtopia.net/en/labs',
-            locale: isAr ? 'ar_SA' : 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: isAr ? 'مختبر كلاود توبيا' : 'CloudTopia Labs' }],
+            title: ogTitle,
+            description: ogDesc,
+            url: `https://cloudtopia.net/${locale}/labs`,
+            locale: ogLocales[locale] || 'en_US',
+            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
         },
-        twitter: {
-            title: isAr ? 'مختبر كلاود توبيا — مركز الابتكار' : 'CloudTopia Labs — Innovation Hub',
-            description: isAr
-                ? 'أدوات ذكاء اصطناعي، أتمتة عمليات، ومنتجات رقمية تجريبية من كلاود توبيا.'
-                : 'AI-powered tools, process automation, and experimental digital products from CloudTopia.',
-        },
+        twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: isAr ? 'https://cloudtopia.net/ar/labs' : 'https://cloudtopia.net/en/labs',
-            languages: { 'en': 'https://cloudtopia.net/en/labs', 'ar': 'https://cloudtopia.net/ar/labs', 'x-default': 'https://cloudtopia.net/en/labs' },
+            canonical: `https://cloudtopia.net/${locale}/labs`,
+            languages: { 'en': 'https://cloudtopia.net/en/labs', 'ar': 'https://cloudtopia.net/ar/labs', 'tr': 'https://cloudtopia.net/tr/labs', 'x-default': 'https://cloudtopia.net/en/labs' },
         },
     }
 }

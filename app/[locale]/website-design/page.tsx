@@ -38,21 +38,9 @@ const exampleImages = [
 
 function WebDesignHero() {
   const { t, locale, dir } = useLanguage()
+  const p = (t as any).services?.websiteDesignPage || (t as any).websiteDesignPage
 
-  // Arabic text variations
-  const arabicTexts = [
-    "مذهلاً",
-    "عصرياً",
-    "احترافياً",
-    "جذاباً",
-    "سريعاً",
-    "متميزاً",
-    "رائعاً",
-    "متجاوباً",
-  ]
-
-  // English text variations  
-  const englishTexts = [
+  const texts = p?.hero?.rotatingTexts || [
     "amazing",
     "modern",
     "professional",
@@ -64,7 +52,6 @@ function WebDesignHero() {
   ]
 
   const isRTL = dir === 'rtl'
-  const texts = isRTL ? arabicTexts : englishTexts
 
   return (
     <section className="w-full min-h-screen overflow-hidden flex flex-col items-center justify-center relative bg-lavender">
@@ -148,7 +135,7 @@ function WebDesignHero() {
           transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
         >
           <span className="text-slate-900">
-            {isRTL ? "اجعل موقعك" : "Make your"}
+            {p?.hero?.prefix || (locale === 'ar' ? "اجعل موقعك" : (locale === 'tr' ? "Web sitenizi" : "Make your"))}
           </span>
           <LayoutGroup>
             <motion.span layout className="flex whitespace-pre justify-center" dir={isRTL ? "rtl" : "ltr"}>
@@ -157,7 +144,7 @@ function WebDesignHero() {
                 className="flex whitespace-pre text-slate-900"
                 transition={{ type: "spring", damping: 30, stiffness: 400 }}
               >
-                {isRTL ? "الويب " : "website "}
+                {p?.hero?.suffix ? `${p.hero.suffix} ` : (locale === 'ar' ? "الويب " : (locale === 'tr' ? "yapın " : "website "))}
               </motion.span>
               <TextRotate
                 texts={texts}
@@ -178,10 +165,12 @@ function WebDesignHero() {
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
         >
-          {isRTL
+          {p?.hero?.description || (locale === 'ar'
             ? "نصمم ونطور مواقع إلكترونية احترافية تعكس هويتك التجارية وتحول الزوار إلى عملاء. تصاميم عصرية، سريعة، ومتجاوبة مع جميع الأجهزة."
-            : "We design and develop professional websites that reflect your brand identity and convert visitors into customers. Modern, fast, and responsive designs for all devices."
-          }
+            : locale === 'tr'
+              ? "Marka kimliğinizi yansıtan ve ziyaretçileri müşteriye dönüştüren profesyonel web siteleri tasarlıyor ve geliştiriyoruz. Tüm cihazlar için modern, hızlı ve duyarlı tasarımlar."
+              : "We design and develop professional websites that reflect your brand identity and convert visitors into customers. Modern, fast, and responsive designs for all devices."
+          )}
         </motion.p>
 
         <div className="flex flex-row justify-center space-x-4 rtl:space-x-reverse items-center mt-10 sm:mt-16 md:mt-20 lg:mt-20">
@@ -201,7 +190,7 @@ function WebDesignHero() {
             }}
           >
             <Link href={`/${locale}/contact`}>
-              {isRTL ? "ابدأ مشروعك" : "Start Your Project"} <span className={`font-serif ${isRTL ? 'mr-1' : 'ml-1'}`}>{isRTL ? '←' : '→'}</span>
+              {p?.hero?.ctaStart || (isRTL ? "ابدأ مشروعك" : "Start Your Project")} <span className={`font-serif ${isRTL ? 'mr-1' : 'ml-1'}`}>{isRTL ? '←' : '→'}</span>
             </Link>
           </motion.button>
           <motion.button
@@ -220,7 +209,7 @@ function WebDesignHero() {
             }}
           >
             <Link href={`/${locale}/projects`}>
-              {isRTL ? "شاهد أعمالنا" : "View Our Work"}
+              {p?.hero?.ctaWork || (isRTL ? "شاهد أعمالنا" : "View Our Work")}
             </Link>
           </motion.button>
         </div>
@@ -230,21 +219,14 @@ function WebDesignHero() {
 }
 
 function WebDesignScrollSection() {
-  const { locale, dir } = useLanguage()
+  const { t, dir } = useLanguage()
+  const p = (t as any).services?.websiteDesignPage || (t as any).websiteDesignPage
   const isRTL = dir === 'rtl'
-
-  // Arabic content
-  const arabicItems = ['نصمم.', 'نطور.', 'نبني.', 'نطلق.', 'ننمي.']
-  const arabicPrefix = 'نحن'
-
-  // English content
-  const englishItems = ['design.', 'develop.', 'build.', 'launch.', 'grow.']
-  const englishPrefix = 'We'
 
   return (
     <ScrollHeroSection
-      items={isRTL ? arabicItems : englishItems}
-      prefixText={isRTL ? arabicPrefix : englishPrefix}
+      items={p?.scrollSection?.items || (isRTL ? ['نصمم.', 'نطور.', 'نبني.', 'نطلق.', 'ننمي.'] : ['design.', 'develop.', 'build.', 'launch.', 'grow.'])}
+      prefixText={p?.scrollSection?.prefix || (isRTL ? 'نحن' : 'We')}
       isRTL={isRTL}
       theme="light"
       animate={true}

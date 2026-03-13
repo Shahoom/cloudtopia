@@ -16,108 +16,75 @@ const StickyFeatureSection = dynamic(() => import('@/components/ui/sticky-scroll
 
 
 export default function WebApplicationsPage() {
-    const { dir, locale } = useLanguage()
+    const { dir, locale, t } = useLanguage()
+    const p = t.services?.webApplicationsPage
 
-    const content = {
-        en: {
-            badge: 'WEB APPLICATIONS',
-            title: 'Build Powerful',
-            titleHighlight: 'Web Applications',
-            description: 'From SaaS platforms to enterprise portals, we create scalable web applications that power your business growth with cutting-edge technology.',
-            ctaExplore: 'Start Your Project',
-            ctaDemo: 'View Live Demo',
-        },
-        ar: {
-            badge: 'تطبيقات الويب',
-            title: 'بناء تطبيقات',
-            titleHighlight: 'ويب قوية',
-            description: 'من منصات SaaS إلى بوابات المؤسسات، نقوم بإنشاء تطبيقات ويب قابلة للتوسع تدعم نمو عملك بأحدث التقنيات.',
-            ctaExplore: 'ابدأ مشروعك',
-            ctaDemo: 'عرض حي',
-        }
+    const currentContent = {
+        badge: p?.hero?.badge || 'WEB APPLICATIONS',
+        title: p?.hero?.title || 'Build Powerful',
+        titleHighlight: p?.hero?.titleHighlight || 'Web Applications',
+        description: p?.hero?.description || 'From SaaS platforms to enterprise portals, we create scalable web applications that power your business growth with cutting-edge technology.',
+        ctaExplore: p?.hero?.ctaExplore || 'Start Your Project',
+        ctaDemo: p?.hero?.ctaDemo || 'View Live Demo',
     }
 
-    const currentContent = locale === 'ar' ? content.ar : content.en
+    const s = t.serviceCards?.webApps
 
     // Web Applications Cards with icons matching the services
     const webAppsCards: ScrollCardItem[] = [
         {
-            name: locale === 'ar' ? 'منصات الوسائط والبث' : 'Media & Streaming Platforms',
-            tagline: locale === 'ar' ? 'منصات محتوى احترافية للبث والتفاعل المباشر' : 'Professional content delivery and live engagement',
-            icon: <img src="/icons/services/Mobile-Responsive Apps.png" alt="Media Platforms" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'منصات مخصصة لبث المحتوى المرئي والصوتي مع تفاعل فوري وإدارة شاملة'
-                : 'Custom platforms for video and audio streaming with live interaction and content management',
-            gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+            name: s?.portal?.name || 'Customer & Partner Portals',
+            tagline: s?.portal?.tagline || 'Transparent 24/7 self-service for your clients',
+            icon: <img src="/icons/services/Customer Portal.png" alt="Portal" width={40} height={40} className="w-10 h-10" />,
+            description: s?.portal?.description || 'Secure self-service platforms for account access, documents, and support.',
+            gradient: "bg-gradient-to-br from-indigo-500 to-indigo-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['بث مباشر عالي الجودة', 'إدارة المحتوى والمكتبات', 'نظام اشتراكات ومدفوعات', 'تحليلات المشاهدة والتفاعل']
-                : ['HD live streaming infrastructure', 'Content libraries and management', 'Subscription and monetization', 'Viewer analytics and engagement'],
+            features: s?.portal?.features?.slice(0, 4) || [],
         },
         {
-            name: locale === 'ar' ? 'منصات التجارة والأسواق' : 'Commerce & Marketplace Platforms',
-            tagline: locale === 'ar' ? 'أسواق متعددة البائعين ومنصات تجارة متكاملة' : 'Multi-vendor marketplaces and complete commerce systems',
-            icon: <img src="/icons/services/Booking Platform.png" alt="Commerce" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'منصات تجارة متكاملة تربط البائعين بالمشترين مع أنظمة دفع وشحن'
-                : 'Complete commerce platforms connecting buyers and sellers with integrated payments and logistics',
-            gradient: "bg-gradient-to-br from-teal-500 to-teal-600",
+            name: s?.bookingPlatform?.name || 'Booking & Reservation Systems',
+            tagline: s?.bookingPlatform?.tagline || 'Accept appointments and manage capacity 24/7',
+            icon: <img src="/icons/services/Booking Platform.png" alt="Booking" width={40} height={40} className="w-10 h-10" />,
+            description: s?.bookingPlatform?.description || 'Professional booking platforms with integrated payments and scheduling.',
+            gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['إدارة البائعين والمنتجات', 'نظام عربات التسوق والدفع', 'لوحات تحكم للبائعين', 'تتبع الطلبات والشحن']
-                : ['Vendor and product management', 'Shopping cart and checkout', 'Seller dashboards and tools', 'Order tracking and fulfillment'],
+            features: s?.bookingPlatform?.features?.slice(0, 4) || [],
         },
         {
-            name: locale === 'ar' ? 'منتجات SaaS والاشتراكات' : 'SaaS & Subscription Products',
-            tagline: locale === 'ar' ? 'برمجيات سحابية قابلة للتوسع مع نماذج اشتراك مرنة' : 'Scalable cloud software with flexible subscription models',
-            icon: <img src="/icons/services/Admin Dashboard.png" alt="SaaS" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'تطبيقات سحابية للشركات مع إدارة مستخدمين وفواتير اشتراكات'
-                : 'Cloud-based business applications with user management and subscription billing',
+            name: s?.dashboard?.name || 'Admin & Management Dashboards',
+            tagline: s?.dashboard?.tagline || 'Centralized operational control and real-time insights',
+            icon: <img src="/icons/services/Admin Dashboard.png" alt="Dashboard" width={40} height={40} className="w-10 h-10" />,
+            description: s?.dashboard?.description || 'Powerful control panels to manage processes, users, and data from one place.',
             gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['بنية متعددة المستأجرين', 'إدارة الفواتير والاشتراكات', 'لوحات تحكم تحليلية', 'واجهات برمجية API للتكامل']
-                : ['Multi-tenant architecture', 'Billing and subscription management', 'Analytics dashboards', 'API access for integrations'],
+            features: s?.dashboard?.features?.slice(0, 4) || [],
         },
         {
-            name: locale === 'ar' ? 'بوابات العملاء والمستخدمين' : 'Client & User Portals',
-            tagline: locale === 'ar' ? 'بوابات آمنة للعملاء للوصول للخدمات والبيانات' : 'Secure client portals for service access and data management',
-            icon: <img src="/icons/services/Customer Portal.png" alt="Portals" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'بوابات مخصصة للعملاء لإدارة الحسابات والطلبات والوثائق'
-                : 'Custom client portals for account management, orders, and document access',
+            name: s?.chat?.name || 'Real-time Messaging & Support',
+            tagline: s?.chat?.tagline || 'Instant communication for teams or customers',
+            icon: <img src="/icons/services/Real-time Chat.png" alt="Chat" width={40} height={40} className="w-10 h-10" />,
+            description: s?.chat?.description || 'Secure, fast, and scalable messaging platforms for community and support.',
             gradient: "bg-gradient-to-br from-cyan-500 to-cyan-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['تسجيل دخول آمن للعملاء', 'إدارة الحسابات والملفات', 'تتبع الطلبات والخدمات', 'تواصل مباشر ودعم فني']
-                : ['Secure client authentication', 'Account and profile management', 'Service and order tracking', 'Direct messaging and support'],
+            features: s?.chat?.features?.slice(0, 4) || [],
         },
         {
-            name: locale === 'ar' ? 'أنظمة الأعمال الداخلية' : 'Internal Business Systems',
-            tagline: locale === 'ar' ? 'أنظمة داخلية مخصصة لتحسين العمليات التشغيلية' : 'Custom internal tools to streamline operations',
-            icon: <img src="/icons/services/Payment Integration.png" alt="Internal Systems" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'تطبيقات داخلية مخصصة لإدارة العمليات والموظفين والموارد'
-                : 'Tailored internal applications for operations, team, and resource management',
+            name: s?.payment?.name || 'Payment & Financial Integrations',
+            tagline: s?.payment?.tagline || 'Global and local payment gateways for secure sales',
+            icon: <img src="/icons/services/Payment Integration.png" alt="Payments" width={40} height={40} className="w-10 h-10" />,
+            description: s?.payment?.description || 'Seamless integration of card payments, subscriptions, and financial tools.',
             gradient: "bg-gradient-to-br from-gray-500 to-gray-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['أتمتة سير العمل الداخلي', 'لوحات تحكم إدارية', 'إدارة الموظفين والمهام', 'تقارير وتحليلات أداء']
-                : ['Workflow automation', 'Admin dashboards and controls', 'Team and task management', 'Performance reporting'],
+            features: s?.payment?.features?.slice(0, 4) || [],
         },
         {
-            name: locale === 'ar' ? 'تطبيقات الذكاء الاصطناعي' : 'AI-Powered Applications',
-            tagline: locale === 'ar' ? 'تطبيقات ذكية مدعومة بالذكاء الاصطناعي' : 'Smart applications powered by artificial intelligence',
-            icon: <img src="/icons/services/Analytics Dashboard.png" alt="AI Apps" width={40} height={40} className="w-10 h-10" />,
-            description: locale === 'ar'
-                ? 'تطبيقات متقدمة تستخدم الذكاء الاصطناعي لتحسين العمليات والتنبؤات'
-                : 'Advanced applications leveraging AI for process optimization and predictions',
+            name: s?.mobile?.name || 'Mobile & PWA Applications',
+            tagline: s?.mobile?.tagline || 'High-performance applications in your pocket',
+            icon: <img src="/icons/services/Mobile Apps.png" alt="Mobile" width={40} height={40} className="w-10 h-10" />,
+            description: s?.mobile?.description || 'Advanced mobile-first solutions and cross-platform PWA development.',
             gradient: "bg-gradient-to-br from-orange-500 to-orange-600",
             glowColor: "bg-lavender/50",
-            features: locale === 'ar'
-                ? ['معالجة اللغة الطبيعية', 'التعلم الآلي والتنبؤات', 'أتمتة ذكية للمهام', 'تحليلات متقدمة']
-                : ['Natural language processing', 'Machine learning & predictions', 'Intelligent task automation', 'Advanced analytics'],
+            features: s?.mobile?.features?.slice(0, 4) || [],
         },
     ]
 
@@ -226,12 +193,10 @@ export default function WebApplicationsPage() {
             {/* Section 2: Horizontal Scrolling Service Cards */}
             <HorizontalScrollCards
                 cards={webAppsCards}
-                title={locale === 'ar' ? 'حلول تطبيقات الويب' : 'Web Application Solutions'}
-                subtitle={locale === 'ar'
-                    ? 'استعرض مجموعة تطبيقات الويب المتكاملة التي نقدمها لتحويل أفكارك إلى واقع رقمي'
-                    : 'Explore our comprehensive web application solutions designed to bring your ideas to life'}
-                whatsIncludedLabel={locale === 'ar' ? 'المميزات:' : "What's Included:"}
-                moreText={locale === 'ar' ? 'المزيد' : 'more'}
+                title={p?.solutionsTitle || 'Web Application Solutions'}
+                subtitle={p?.solutionsSubtitle || 'Explore our comprehensive web application solutions designed to bring your ideas to life'}
+                whatsIncludedLabel={p?.whatsIncluded || "What's Included:"}
+                moreText={p?.more || 'more'}
                 isRTL={locale === 'ar'}
                 variant="light"
             />
@@ -244,7 +209,6 @@ export default function WebApplicationsPage() {
 
             {/* Final CTA Section */}
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 relative overflow-hidden">
-                {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-20">
                     <div className="absolute inset-0" style={{
                         backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)',
@@ -253,23 +217,17 @@ export default function WebApplicationsPage() {
 
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                        {locale === 'ar'
-                            ? 'جاهز لبناء تطبيق الويب الخاص بك؟'
-                            : 'Ready to Build Your Web Application?'
-                        }
+                        {p?.cta?.title || 'Ready to Build Your Web Application?'}
                     </h2>
                     <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-                        {locale === 'ar'
-                            ? 'دعنا نحول فكرتك إلى تطبيق ويب قوي يدعم نمو عملك.'
-                            : "Let's transform your idea into a powerful web application that drives your business growth."
-                        }
+                        {p?.cta?.description || "Let's transform your idea into a powerful web application that drives your business growth."}
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
                             href="/contact"
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
-                            {locale === 'ar' ? 'ابدأ مشروعك اليوم' : 'Start Your Project Today'}
+                            {p?.cta?.button || 'Start Your Project Today'}
                             <svg className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 rtl:rotate-180 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
@@ -278,36 +236,23 @@ export default function WebApplicationsPage() {
                             href="/services"
                             className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"
                         >
-                            {locale === 'ar' ? 'استكشف خدماتنا' : 'Explore All Services'}
+                            {p?.cta?.explore || 'Explore All Services'}
                         </Link>
                     </div>
 
-                    {/* Value Propositions */}
                     <div className="mt-16 pt-10 border-t border-white/10">
                         <p className="text-slate-400 text-sm uppercase tracking-wider mb-6">
-                            {locale === 'ar' ? 'لماذا تختارنا' : 'Why Choose Us'}
+                            {p?.whyChoose?.title || 'Why Choose Us'}
                         </p>
                         <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-                            {[
-                                {
-                                    icon: <Globe className="w-5 h-5" />,
-                                    label: locale === 'ar' ? 'تطبيقات عالمية' : 'Global Scale Apps'
-                                },
-                                {
-                                    icon: <Shield className="w-5 h-5" />,
-                                    label: locale === 'ar' ? 'أمان متقدم' : 'Advanced Security'
-                                },
-                                {
-                                    icon: <Rocket className="w-5 h-5" />,
-                                    label: locale === 'ar' ? 'أداء فائق' : 'High Performance'
-                                },
-                                {
-                                    icon: <Code2 className="w-5 h-5" />,
-                                    label: locale === 'ar' ? 'كود نظيف' : 'Clean Code'
-                                },
-                            ].map((item) => (
+                            {(p?.whyChoose?.items || [
+                                { label: 'Global Scale Apps' },
+                                { label: 'Advanced Security' },
+                                { label: 'High Performance' },
+                                { label: 'Clean Code' },
+                            ]).map((item: any) => (
                                 <div key={item.label} className="flex items-center gap-2 text-center">
-                                    <span className="text-emerald-400">{item.icon}</span>
+                                    <span className="text-emerald-400"><Rocket className="w-5 h-5" /></span>
                                     <span className="text-sm text-slate-300">{item.label}</span>
                                 </div>
                             ))}

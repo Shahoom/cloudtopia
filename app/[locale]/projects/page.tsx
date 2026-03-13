@@ -466,7 +466,7 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
                 className="flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700"
               >
                 <ExternalLink className="w-3 h-3" />
-                <span>Live</span>
+                <span>{t.projects.projectDetails.viewLiveProject || 'Live'}</span>
               </motion.a>
             )}
           </div>

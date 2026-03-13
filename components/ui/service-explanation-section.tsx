@@ -80,6 +80,41 @@ const content = {
       }
     ],
     ctaText: "ابدأ مشروعك اليوم"
+  },
+  tr: {
+    heroTitle: "Web Siteniz",
+    heroHighlight: "Dönüştürmeli.",
+    scrollHint: "Yaklaşımımızı Keşfedin",
+    pitchTitle: "Sonuç Veren Profesyonel Web Tasarımı",
+    pitchDescription: "Ziyaretçileri müşteriye dönüştüren, yüksek dönüşümlü web siteleri hazırlıyoruz. Uzman ekibimiz, sadece olağanüstü görünmekle kalmayan, aynı zamanda Orta Doğu'daki şirketler için ölçülebilir iş büyümesi sağlayan web siteleri inşa etmek için çarpıcı görsel tasarımı stratejik kullanıcı deneyimiyle birleştiriyor.",
+    quote: "Harika bir web sitesi sadece estetikten ibaret değildir — 7/24 çalışan en güçlü satış aracınızdır.",
+    features: [
+      {
+        title: "Yüksek Performanslı Web Geliştirme",
+        description: "Web sitelerimiz; optimize edilmiş kod, Next.js ve React gibi modern framework'ler ve dönüşümleri ve arama sıralamalarını artıran gelişmiş önbellekleme stratejileri sayesinde 90+ Google PageSpeed puanı elde eder."
+      },
+      {
+        title: "Mobil Öncelikli Duyarlı Tasarım",
+        description: "Web trafiğinin %60'ından fazlasının mobil cihazlardan gelmesiyle, akıllı telefonlarda, tabletlerde ve masaüstü bilgisayarlarda kusursuz deneyimler sunan mobil öncelikli duyarlı web siteleri tasarlıyoruz."
+      },
+      {
+        title: "Arama Motoru Optimizasyonu (SEO)",
+        description: "Her web sitesi teknik SEO en iyi uygulamalarıyla oluşturulur: semantik HTML5, yapılandırılmış veri işaretlemesi, optimize edilmiş meta etiketler, hızlı yükleme süreleri ve Google'da daha üst sıralarda yer almanıza yardımcı olacak temiz URL yapıları."
+      },
+      {
+        title: "Kurumsal Düzeyde Güvenlik",
+        description: "İşletmenizi ve müşteri verilerinizi siber tehditlerden korumak için SSL/TLS şifreleme, güvenli kimlik doğrulama, DDoS koruması ve düzenli güvenlik denetimleri uyguluyoruz."
+      },
+      {
+        title: "Çok Dilli Web Siteleri",
+        description: "Türkiye, Suudi Arabistan, BAE, Katar ve tüm Orta Doğu bölgesindeki kitlelerle bağlantı kurmanıza yardımcı olan, tam dil desteği ve modern tasarım konusunda uzmanlaşmış bir ekibimiz var."
+      },
+      {
+        title: "Özel Destek ve Bakım",
+        description: "Ortaklığımız yayında sona ermez. Sitenizin güvenli ve güncel kalmasını sağlamak için sürekli web sitesi bakımı, performans izleme, içerik güncellemeleri ve teknik destek sağlıyoruz."
+      }
+    ],
+    ctaText: "Projenize Bugün Başlayın"
   }
 }
 
@@ -116,7 +151,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 }
 
 export function ServiceExplanationSection({ isRTL = false, locale = "en" }: ServiceExplanationProps) {
-  const t = isRTL ? content.ar : content.en
+  const t = locale === 'ar' ? content.ar : (locale === 'tr' ? content.tr : content.en)
 
   return (
     <section
@@ -191,7 +226,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
           </div>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-            {t.features.map((feature, index) => (
+            {t.features.map((feature: any, index: number) => (
               <GlowingCard
                 key={index}
                 title={feature.title}
@@ -246,7 +281,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
               "name": isRTL ? "خدمات تصميم وتطوير المواقع" : "Web Design & Development Services",
-              "itemListElement": t.features.map((feature, index) => ({
+              "itemListElement": t.features.map((feature: any, index: number) => ({
                 "@type": "Offer",
                 "position": index + 1,
                 "itemOffered": {
