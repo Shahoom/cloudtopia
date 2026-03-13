@@ -20,17 +20,18 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         title: titles[locale] || titles.en,
         description: descriptions[locale] || descriptions.en,
         alternates: {
-            canonical: `/${locale}/privacy`,
+            canonical: `https://cloudtopia.net/${locale}/privacy`,
             languages: {
-                'en-US': '/en/privacy',
-                'ar-EG': '/ar/privacy',
-                'tr-TR': '/tr/privacy',
+                'en': 'https://cloudtopia.net/en/privacy',
+                'ar': 'https://cloudtopia.net/ar/privacy',
+                'tr': 'https://cloudtopia.net/tr/privacy',
+                'x-default': 'https://cloudtopia.net/en/privacy',
             },
         },
         openGraph: {
             title: titles[locale] || titles.en,
             description: descriptions[locale] || descriptions.en,
-            url: `/${locale}/privacy`,
+            url: `https://cloudtopia.net/${locale}/privacy`,
             type: 'website',
         }
     }

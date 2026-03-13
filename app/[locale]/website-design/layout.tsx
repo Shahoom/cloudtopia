@@ -47,5 +47,42 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function websitedesignLayout({ children }: { children: React.ReactNode }) {
-    return <>{children}</>
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
+                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: 'https://cloudtopia.net/en/website-design' },
+                        ],
+                    }),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Service',
+                        name: 'Website Design & Development',
+                        description: 'Custom websites designed for performance, SEO, and user experience.',
+                        url: 'https://cloudtopia.net/en/website-design',
+                        provider: {
+                            '@type': 'Organization',
+                            name: 'CloudTopia',
+                            url: 'https://cloudtopia.net',
+                        },
+                        serviceType: 'Web Design',
+                        areaServed: 'Worldwide',
+                    }),
+                }}
+            />
+            {children}
+        </>
+    )
 }
