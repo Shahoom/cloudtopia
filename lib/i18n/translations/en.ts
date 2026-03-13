@@ -19,7 +19,7 @@ export const en = {
   home: {
     hero: {
       tags: ['Move Your Business to the Cloud', 'Transform Your Digital Presence', 'Scale with Cloud Solutions'],
-      title: 'Your Business Belongs on the',
+      title: 'Elevate Your Business',
       titleHighlights: ['Internet', 'Cloud', 'Web'],
       description: 'CloudTopia helps businesses move to the cloud — from building their online presence, to developing systems and interactive web applications, and innovating through technology.',
       exploreServices: 'Explore Services',
