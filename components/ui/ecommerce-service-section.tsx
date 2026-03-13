@@ -319,7 +319,7 @@ const GlowingCard = ({ title, description, area }: GlowingCardProps) => {
 }
 
 export function EcommerceServiceSection({ isRTL = false, locale = "en" }: EcommerceServiceSectionProps) {
-  const t = (content as any)[locale] || (isRTL ? content.ar : content.en)
+  const t: typeof content.en = content[locale as keyof typeof content] || (isRTL ? content.ar : content.en)
   const Arrow = isRTL ? ArrowLeft : ArrowRight
 
   return (

@@ -331,7 +331,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 }
 
 export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuServiceSectionProps) {
-  const t = (content as any)[locale] || content.en
+  const t: typeof content.en = content[locale as keyof typeof content] || content.en
   const Arrow = isRTL ? ArrowLeft : ArrowRight
 
   return (
