@@ -36,7 +36,30 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# Block bad bots
+# AI search & citation engines (allowed - index and cite content)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Block training-only scrapers (no search / citation value)
+User-agent: CCBot
+Disallow: /
+
+# Block SEO audit / link analysis crawlers
 User-agent: SemrushBot
 Disallow: /
 
@@ -51,4 +74,3 @@ Disallow: /
 
 User-agent: BLEXBot
 Disallow: /
-
