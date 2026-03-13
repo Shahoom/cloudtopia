@@ -1040,13 +1040,9 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
 }
 
 export default function SocialMediaMarketingPage() {
-  const { locale } = useLanguage()
   return (
     <>
       <Hero />
-      <ServicesSlideshow locale={locale} />
-      <CreativeShowcase locale={locale} />
-      <ServiceExplainer locale={locale} />
     </>
   )
 }
