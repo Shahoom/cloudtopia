@@ -57,7 +57,7 @@ export function Card({ rotateX, scale, children }: CardProps) {
 
 interface ContainerScrollProps {
   titleComponent: React.ReactNode
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
 }
 

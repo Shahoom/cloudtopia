@@ -38,6 +38,7 @@ const AnimatedHeader: React.FC<{ locale?: string }> = ({ locale = 'en' }) => {
     const [headerRef, headerInView] = useScrollAnimation();
     const [pRef, pInView] = useScrollAnimation();
     const isArabic = locale === 'ar';
+    const isTurkish = locale === 'tr';
 
     return (
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -46,7 +47,7 @@ const AnimatedHeader: React.FC<{ locale?: string }> = ({ locale = 'en' }) => {
                 className={`text-4xl md:text-5xl font-black transition-all duration-700 ease-out text-gray-900 dark:text-white ${headerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transformStyle: 'preserve-3d' }}
             >
-                {isArabic ? 'تطبيقات ويب متطورة وآمنة' : 'Advanced & Secure Web Applications'}
+                {isArabic ? 'تطبيقات ويب متطورة وآمنة' : (isTurkish ? 'Gelişmiş ve Güvenli Web Uygulamaları' : 'Advanced & Secure Web Applications')}
             </h2>
             <p
                 ref={pRef}
@@ -55,7 +56,9 @@ const AnimatedHeader: React.FC<{ locale?: string }> = ({ locale = 'en' }) => {
             >
                 {isArabic
                     ? 'نبني حلول ويب حديثة تجمع بين الأداء العالي والأمان المؤسسي'
-                    : 'We build modern web solutions that combine high performance with enterprise-grade security'
+                    : (isTurkish
+                        ? 'Yüksek performans ile kurumsal düzeyde güvenliği birleştiren modern web çözümleri sunuyoruz'
+                        : 'We build modern web solutions that combine high performance with enterprise-grade security')
                 }
             </p>
         </div>
@@ -65,41 +68,50 @@ const AnimatedHeader: React.FC<{ locale?: string }> = ({ locale = 'en' }) => {
 // This is the main component that orchestrates everything.
 export function StickyFeatureSection({ locale = 'en' }: StickyFeatureSectionProps) {
     const isArabic = locale === 'ar';
+    const isTurkish = locale === 'tr';
 
     // --- Data for the feature cards ---
     const features = [
         {
-            title: isArabic ? 'مزامنة البيانات في الوقت الفعلي' : 'Real-Time Data Sync',
+            title: isArabic ? 'مزامنة البيانات في الوقت الفعلي' : (isTurkish ? 'Gerçek Zamanlı Veri Senkronizasyonu' : 'Real-Time Data Sync'),
             description: isArabic
                 ? 'تطبيقاتنا تتزامن تلقائياً عبر جميع الأجهزة والمستخدمين. كل تحديث يظهر فوراً، مع ضمان تناسق البيانات وموثوقيتها في جميع الأوقات.'
-                : 'Our applications automatically sync across all devices and users. Every update appears instantly, ensuring data consistency and reliability at all times.',
+                : (isTurkish
+                    ? 'Uygulamalarımız tüm cihazlar ve kullanıcılar arasında otomatik olarak senkronize edilir. Her güncelleme anında görünür, her zaman veri tutarlılığı ve güvenilirliği sağlar.'
+                    : 'Our applications automatically sync across all devices and users. Every update appears instantly, ensuring data consistency and reliability at all times.'),
             imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
             bgColor: "bg-lavender dark:bg-emerald-900/30",
             textColor: "text-gray-700 dark:text-gray-200"
         },
         {
-            title: isArabic ? 'تكامل API شامل' : 'Comprehensive API Integration',
+            title: isArabic ? 'تكامل API شامل' : (isTurkish ? 'Kapsamlı API Entegrasyonu' : 'Comprehensive API Integration'),
             description: isArabic
                 ? 'نوفر واجهات برمجية قوية ومرنة تتيح التكامل السلس مع الأنظمة الخارجية. ربط تطبيقك بأي خدمة أو منصة بسهولة تامة.'
-                : 'We provide robust and flexible APIs that enable seamless integration with external systems. Connect your application to any service or platform effortlessly.',
+                : (isTurkish
+                    ? 'Dış sistemlerle sorunsuz entegrasyon sağlayan güçlü ve esnek API\'lar sunuyoruz. Uygulamanızı herhangi bir hizmete veya platforma zahmetsizce bağlayın.'
+                    : 'We provide robust and flexible APIs that enable seamless integration with external systems. Connect your application to any service or platform effortlessly.'),
             imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2034&auto=format&fit=crop",
             bgColor: "bg-lavender dark:bg-cyan-900/30",
             textColor: "text-gray-700 dark:text-gray-200"
         },
         {
-            title: isArabic ? 'بنية قابلة للتوسع' : 'Scalable Architecture',
+            title: isArabic ? 'بنية قابلة للتوسع' : (isTurkish ? 'Ölçeklenebilir Mimari' : 'Scalable Architecture'),
             description: isArabic
                 ? 'مبنية على بنية سحابية حديثة تدعم النمو من عشرات إلى ملايين المستخدمين. تطبيقاتنا تتوسع تلقائياً حسب الطلب دون أي تدخل يدوي.'
-                : 'Built on modern cloud architecture that supports growth from dozens to millions of users. Our applications scale automatically based on demand without manual intervention.',
+                : (isTurkish
+                    ? 'Düzinelerce kullanıcıdan milyonlara kadar büyümeyi destekleyen modern bulut mimarisi üzerine inşa edilmiştir. Uygulamalarımız talebe göre manuel müdahale olmaksızın otomatik olarak ölçeklenir.'
+                    : 'Built on modern cloud architecture that supports growth from dozens to millions of users. Our applications scale automatically based on demand without manual intervention.'),
             imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
             bgColor: "bg-lavender dark:bg-blue-900/30",
             textColor: "text-gray-700 dark:text-gray-200"
         },
         {
-            title: isArabic ? 'دعم متعدد المنصات' : 'Cross-Platform Support',
+            title: isArabic ? 'دعم متعدد المنصات' : (isTurkish ? 'Çoklu Platform Desteği' : 'Cross-Platform Support'),
             description: isArabic
                 ? 'تطبيق واحد يعمل بسلاسة على الويب، الهاتف، والتابلت. تجربة مستخدم متسقة عبر جميع الأجهزة والمتصفحات مع أداء محسّن لكل منصة.'
-                : 'One application that works seamlessly on web, mobile, and tablet. Consistent user experience across all devices and browsers with optimized performance for each platform.',
+                : (isTurkish
+                    ? 'Web, mobil ve tablette sorunsuz çalışan tek bir uygulama. Tüm cihazlarda ve tarayıcılarda tutarlı kullanıcı deneyimi ve her platform için optimize edilmiş performans.'
+                    : 'One application that works seamlessly on web, mobile, and tablet. Consistent user experience across all devices and browsers with optimized performance for each platform.'),
             imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop",
             bgColor: "bg-lavender dark:bg-teal-900/30",
             textColor: "text-gray-800 dark:text-gray-100"

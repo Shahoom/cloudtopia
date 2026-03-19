@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const locales = ['en', 'ar']
+const locales = ['en', 'ar', 'tr']
 const defaultLocale = 'en'
 
 function getLocale(request: NextRequest): string {
@@ -27,54 +27,68 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
+    const host = request.headers.get('host') || ''
+
+    const isWww = host.startsWith('www.')
 
     // Skip static files, API routes, and Vercel internal routes
-    if (
+    const isStatic =
         pathname.startsWith('/_next') ||
         pathname.startsWith('/api') ||
         pathname.startsWith('/images') ||
         pathname.startsWith('/_vercel') ||
         pathname.includes('.') // files with extensions
-    ) {
+
+    if (isStatic) {
+        if (isWww) {
+            const url = request.nextUrl.clone()
+            url.host = host.replace(/^www\./, '')
+            return NextResponse.redirect(url, { status: 301 })
+        }
         return NextResponse.next()
     }
 
-    // Check if the pathname starts with a locale
-    const pathnameHasLocale = locales.some(
-        locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    // Determine all necessary corrections in one pass
+    let newHost = isWww ? host.replace(/^www\./, '') : host
+
+    // Strip trailing slash (except for root "/")
+    let newPathname = pathname.length > 1 && pathname.endsWith('/')
+        ? pathname.slice(0, -1)
+        : pathname
+
+    // Check if the (possibly cleaned) pathname already has a locale prefix
+    const hasLocale = locales.some(
+        locale => newPathname.startsWith(`/${locale}/`) || newPathname === `/${locale}`
     )
 
-    if (pathnameHasLocale) {
-        // Extract the locale from the pathname
-        const locale = pathname.split('/')[1]
-
-        // Set the locale cookie for persistence
-        const response = NextResponse.next()
-        response.cookies.set('NEXT_LOCALE', locale, {
-            path: '/',
-            maxAge: 60 * 60 * 24 * 365 // 1 year
-        })
-
-        // Rewrite to the actual page (without locale prefix)
-        const newPathname = pathname.replace(`/${locale}`, '') || '/'
-        const newUrl = new URL(newPathname, request.url)
-
-        // Pass the locale as a header so the app can read it
-        const rewriteResponse = NextResponse.rewrite(newUrl)
-        rewriteResponse.cookies.set('NEXT_LOCALE', locale, {
-            path: '/',
-            maxAge: 60 * 60 * 24 * 365
-        })
-        rewriteResponse.headers.set('x-locale', locale)
-
-        return rewriteResponse
+    if (!hasLocale) {
+        const locale = getLocale(request)
+        const pathSuffix = newPathname === '/' ? '' : newPathname
+        newPathname = `/${locale}${pathSuffix}`
     }
 
-    // No locale in URL - redirect to include locale
-    const locale = getLocale(request)
-    const newUrl = new URL(`/${locale}${pathname}`, request.url)
+    // If anything changed, do a single 301 redirect
+    if (isWww || newPathname !== pathname) {
+        const url = request.nextUrl.clone()
+        url.host = newHost
+        url.pathname = newPathname
+        return NextResponse.redirect(url, { status: 301 })
+    }
 
-    return NextResponse.redirect(newUrl)
+    // URL is already canonical — set locale cookie and header, then pass through
+    const locale = pathname.split('/')[1]
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-locale', locale)
+
+    const response = NextResponse.next({
+        request: { headers: requestHeaders }
+    })
+    response.cookies.set('NEXT_LOCALE', locale, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365
+    })
+
+    return response
 }
 
 export const config = {

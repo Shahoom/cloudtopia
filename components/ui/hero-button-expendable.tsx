@@ -72,9 +72,14 @@ export default function Hero() {
                     transition={{ duration: 0.3 }}
                     className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-900 max-w-5xl"
                 >
-                    {isRTL ? 'ارتقِ بأعمالك' : 'Elevate Your Business'} <br className="hidden sm:block" />
+                    {t.home?.hero?.title || (isRTL ? 'ارتقِ بأعمالك' : 'Elevate Your Business')} <br className="hidden sm:block" />
                     <div className="flex items-center justify-center gap-x-2 sm:gap-x-3 whitespace-nowrap mt-2">
-                        <span className="text-neutral-900">{isRTL ? 'إلى' : 'Into the'}</span>
+                        {t.home?.hero?.intoThe && (
+                            <span className="text-neutral-900">{t.home?.hero?.intoThe}</span>
+                        )}
+                        {!t.home?.hero?.intoThe && !locale.startsWith('tr') && (
+                            <span className="text-neutral-900">{isRTL ? 'إلى' : 'Into the'}</span>
+                        )}
                         <div className="relative flex items-center h-[1.2em] min-w-[2ch]">
                             <AnimatePresence mode="wait">
                                 <motion.span
@@ -92,6 +97,9 @@ export default function Hero() {
                                 </motion.span>
                             </AnimatePresence>
                         </div>
+                        {t.home?.hero?.titleSuffix && (
+                            <span className="text-neutral-900">{t.home?.hero?.titleSuffix}</span>
+                        )}
                     </div>
                 </motion.h1>
 
@@ -126,7 +134,7 @@ export default function Hero() {
                             whileTap={{ scale: 0.95 }}
                             className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-10 py-3 text-lg font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all shadow-sm hover:shadow-md"
                         >
-                            {isRTL ? 'مشاهدة الخدمات' : 'View Services'}
+                            {t.home?.hero?.viewServices || (isRTL ? 'مشاهدة الخدمات' : 'View Services')}
                         </motion.button>
                     </Link>
                 </motion.div>

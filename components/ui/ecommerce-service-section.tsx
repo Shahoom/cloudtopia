@@ -179,6 +179,90 @@ const content = {
     ctaTitle: "هل أنت مستعد لإطلاق متجرك الإلكتروني؟",
     ctaDescription: "دعنا نناقش مشروع التجارة الإلكترونية الخاص بك وننشئ متجراً يحول الزوار إلى عملاء أوفياء.",
     ctaButton: "احصل على استشارة مجانية"
+  },
+  tr: {
+    // Hero
+    badge: "E-Ticaret Geliştirme Hizmetleri",
+    heroTitle: "Kendi Çevrimiçi",
+    heroHighlight: "İmparatorluğunuzu Kurun",
+    heroDescription: "İşletmenizi 7/24 satış yapan bir makineye dönüştüren güçlü e-ticaret platformları tasarlıyor ve geliştiriyoruz. Özel çevrimiçi mağazalardan kurumsal pazaryerlerine kadar, gelir artıran, müşteri deneyimini iyileştiren ve büyümenizle birlikte ölçeklenen çözümler sunuyoruz.",
+
+    // Main Features
+    featuresTitle: "Eksiksiz E-Ticaret Çözümleri",
+    featuresSubtitle: "Başarılı Bir Şekilde Online Satış Yapmak İçin İhtiyacınız Olan Her Şey",
+    features: [
+      {
+        title: "Özel Online Mağaza Geliştirme",
+        description: "Next.js, React ve headless CMS gibi modern teknolojilerle oluşturulmuş, tamamen özelleştirilmiş e-ticaret web siteleri."
+      },
+      {
+        title: "Güvenli Ödeme Geçidi Entegrasyonu",
+        description: "Stripe, PayPal, Apple Pay ve yerel ödeme yöntemleri ile kusursuz entegrasyon."
+      },
+      {
+        title: "Envanter ve Sipariş Yönetimi",
+        description: "Gerçek zamanlı envanter takibi, otomatik stok uyarıları ve optimize edilmiş sipariş işleme sistemleri."
+      },
+      {
+        title: "Kargo ve Lojistik Entegrasyonu",
+        description: "Otomatik takip ve bildirimlerle kargo sağlayıcılarına bağlantı."
+      },
+      {
+        title: "Analitik ve İş Zekası",
+        description: "Gerçek zamanlı satış analitiği ve dönüşüm takibi öngörüleri sunan kapsamlı panolar."
+      },
+      {
+        title: "Mobil Ticaret (M-Ticaret)",
+        description: "Yerel uygulama benzeri alışveriş deneyimleri sunan mobil öncelikli duyarlı tasarım ve PWA."
+      },
+      {
+        title: "E-Ticaret SEO Optimizasyonu",
+        description: "Google Alışveriş'te daha üst sıralarda yer almak için teknik SEO, şema işaretlemesi ve içerik stratejileri."
+      },
+      {
+        title: "Çoklu Dil ve Çoklu Para Birimi",
+        description: "Yerelleştirilmiş ödeme deneyimleri ile tam dil ve para birimi desteği."
+      },
+      {
+        title: "Güvenlik ve PCI Uyumluluğu",
+        description: "SSL şifreleme, PCI DSS uyumluluğu ve dolandırıcılık tespiti ile kurumsal düzeyde güvenlik."
+      }
+    ],
+
+    // Process
+    processTitle: "E-Ticaret Geliştirme Sürecimiz",
+    processSubtitle: "Konseptten Yayına 4 Stratejik Aşamada",
+    process: [
+      {
+        step: "01",
+        title: "Keşif ve Strateji",
+        description: "Kapsamlı bir e-ticaret stratejisi ve teknik yol haritası oluşturmak için iş modelinizi, hedef kitlenizi ve rakiplerinizi analiz ediyoruz."
+      },
+      {
+        step: "02",
+        title: "Tasarım ve Kullanıcı Deneyimi",
+        description: "Tasarımcılarımız, sezgisel navigasyon ve kusursuz ödeme akışları ile dönüşüm odaklı arayüzler oluşturur."
+      },
+      {
+        step: "03",
+        title: "Geliştirme ve Entegrasyon",
+        description: "Uzman geliştiricilerimiz mağazanızı temiz kodla oluşturur, ödeme geçitlerini ve kargo sağlayıcılarını entegre eder."
+      },
+      {
+        step: "04",
+        title: "Yayın ve Büyüme",
+        description: "Yayına alma, performans optimizasyonu ve uzun vadeli başarı için pazarlama entegrasyonu ve ölçeklendirme stratejileri sağlıyoruz."
+      }
+    ],
+
+    // Platforms
+    platformsTitle: "Çalıştığımız Platformlar",
+    platforms: ["Shopify", "WooCommerce", "Magento", "Özel Çözümler", "Salla", "Zid"],
+
+    // CTA
+    ctaTitle: "Online Mağazanızı Başlatmaya Hazır mısınız?",
+    ctaDescription: "E-ticaret projenizi görüşelim ve ziyaretçileri sadık müşterilere dönüştüren bir mağaza oluşturalım.",
+    ctaButton: "Ücretsiz Danışmanlık Alın"
   }
 }
 
@@ -235,7 +319,7 @@ const GlowingCard = ({ title, description, area }: GlowingCardProps) => {
 }
 
 export function EcommerceServiceSection({ isRTL = false, locale = "en" }: EcommerceServiceSectionProps) {
-  const t = isRTL ? content.ar : content.en
+  const t: typeof content.en = content[locale as keyof typeof content] || (isRTL ? content.ar : content.en)
   const Arrow = isRTL ? ArrowLeft : ArrowRight
 
   return (

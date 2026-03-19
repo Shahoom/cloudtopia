@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://cloudtopia.net'
+    const locales = ['en', 'ar', 'tr']
 
     const routes = [
         { path: '/', priority: 1.0, changeFrequency: 'weekly' as const },
@@ -25,33 +26,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     routes.forEach((route) => {
         const pathSuffix = route.path === '/' ? '' : route.path
-
-        // Add English version
-        sitemapEntries.push({
-            url: `${baseUrl}/en${pathSuffix}`,
-            lastModified: new Date(),
-            changeFrequency: route.changeFrequency,
-            priority: route.priority,
-            alternates: {
-                languages: {
-                    en: `${baseUrl}/en${pathSuffix}`,
-                    ar: `${baseUrl}/ar${pathSuffix}`,
-                },
-            },
+        const languages: Record<string, string> = {
+            'x-default': `${baseUrl}/en${pathSuffix}`,
+        }
+        locales.forEach((loc) => {
+            languages[loc] = `${baseUrl}/${loc}${pathSuffix}`
         })
 
-        // Add Arabic version
-        sitemapEntries.push({
-            url: `${baseUrl}/ar${pathSuffix}`,
-            lastModified: new Date(),
-            changeFrequency: route.changeFrequency,
-            priority: route.priority,
-            alternates: {
-                languages: {
-                    en: `${baseUrl}/en${pathSuffix}`,
-                    ar: `${baseUrl}/ar${pathSuffix}`,
-                },
-            },
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${loc}${pathSuffix}`,
+                lastModified: new Date(),
+                changeFrequency: route.changeFrequency,
+                priority: route.priority,
+                alternates: { languages },
+            })
         })
     })
 

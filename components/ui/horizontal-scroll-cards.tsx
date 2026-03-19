@@ -119,12 +119,14 @@ export function HorizontalScrollCards({
     cards,
     title,
     subtitle,
-    whatsIncludedLabel = "What's Included:",
+    whatsIncludedLabel,
     moreText = 'more',
     isRTL = false,
     variant = 'light'
 }: HorizontalScrollCardsProps) {
-    const { dir } = useLanguage()
+    const { dir, locale } = useLanguage()
+    const defaultWhatsIncluded = locale === 'ar' ? 'ما يتضمنه:' : (locale === 'tr' ? 'Neler Dahil:' : "What's Included:")
+    const effectiveWhatsIncluded = whatsIncludedLabel || defaultWhatsIncluded
     const scrollRef = useRef<HTMLDivElement>(null)
     const [constraints, setConstraints] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
@@ -215,7 +217,7 @@ export function HorizontalScrollCards({
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 className="flex-shrink-0 w-[420px]"
                             >
-                                <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={whatsIncludedLabel} />
+                                <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={effectiveWhatsIncluded} />
                             </motion.div>
                         ))}
                         <div className="flex-shrink-0 w-32 h-1" />
@@ -232,7 +234,7 @@ export function HorizontalScrollCards({
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}
                         >
-                            <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={whatsIncludedLabel} />
+                            <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={effectiveWhatsIncluded} />
                         </motion.div>
                     ))}
                 </div>
@@ -241,7 +243,9 @@ export function HorizontalScrollCards({
                 <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            {dir === 'rtl' ? 'اسحب للتنقل' : 'Drag to explore'}
+                            {dir === 'rtl'
+                                ? 'اسحب للتنقل'
+                                : (locale === 'tr' ? 'Keşfetmek için kaydırın' : 'Drag to explore')}
                         </span>
                         <div className="w-12 h-[1px] bg-slate-200" />
                     </div>
