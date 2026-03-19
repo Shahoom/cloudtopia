@@ -189,6 +189,95 @@ const content = {
     ctaTitle: "هل أنت مستعد لرقمنة قائمتك؟",
     ctaDescription: "انضم إلى مئات المطاعم في دول الخليج الذين حوّلوا تجربة طعامهم مع حلول قوائم QR الخاصة بنا.",
     ctaButton: "احصل على استشارة مجانية"
+  },
+  tr: {
+    // Hero
+    badge: "Restoranlar için QR Menü Çözümleri",
+    heroTitle: "Restoran Menünüzü",
+    heroHighlight: "Dijitalleştirin",
+    heroDescription: "Geleneksel kağıt menülerinizi dinamik, temassız dijital deneyimlere dönüştürün. QR kod menü sistemlerimiz baskı maliyetlerini %90'a kadar azaltmanıza, menüleri gerçek zamanlı güncellemenize ve müşterilerinize etkileşimli, çok dilli bir yemek deneyimi sunmanıza yardımcı olur.",
+
+    // Main Features
+    featuresTitle: "Kapsamlı QR Menü Sistemi Özellikleri",
+    featuresSubtitle: "Restoranınızın Dijitalleşmesi İçin İhtiyacınız Olan Her Şey",
+    features: [
+      {
+        title: "Anında QR Kod Oluşturma",
+        description: "Her masa, paket servis bankosu veya teslimat paketi için benzersiz, markalı QR kodları oluşturun. Müşteriler akıllı telefon kameralarıyla kolayca tarar - uygulama indirmeye gerek yoktur."
+      },
+      {
+        title: "Gerçek Zamanlı Menü Güncellemeleri",
+        description: "Fiyatları değiştirin, sezonluk spesiyaller ekleyin, tükenen ürünleri işaretleyin veya açıklamaları anında güncelleyin. Artık yeniden basım maliyeti veya masalarda güncelliğini yitirmiş menüler yok."
+      },
+      {
+        title: "Çok Dilli Destek",
+        description: "Otomatik dil algılama özelliği ile tam Arapça, İngilizce ve Türkçe menüler. Yerel müşterilere ve uluslararası turistlere hizmet vermek için mükemmeldir."
+      },
+      {
+        title: "Yüksek Kaliteli Yemek Fotoğrafları",
+        description: "Her yemek için iştah açıcı görseller ve videolar sergileyin. Görsel menüler, sadece metinden oluşan menülere kıyasla ortalama sipariş değerini %30'a kadar artırır."
+      },
+      {
+        title: "Alerjen ve Beslenme Bilgileri",
+        description: "Alerjenleri, kalorileri, vejetaryen/vegan seçeneklerini ve helal sertifikalarını net bir şekilde belirtin. Müşterilerin bilinçli seçimler yapmasına yardımcı olun."
+      },
+      {
+        title: "Mobil Öncelikli Duyarlı Tasarım",
+        description: "Tüm akıllı telefonlar ve tabletler için optimize edilmiş harika menüler. Yavaş bağlantılarda bile hızlı yükleme süreleri ile kusursuz bir müşteri deneyimi."
+      },
+      {
+        title: "Analitik ve Öngörü Panosu",
+        description: "En çok hangi yemeklerin görüntülendiğini, yoğun sipariş zamanlarını ve müşteri tercihlerini takip edin. Menünüzü ve fiyatlandırmanızı optimize etmek için veriye dayalı kararlar alın."
+      },
+      {
+        title: "Kusursuz POS Entegrasyonu",
+        description: "Popüler restoran POS sistemleriyle bağlantı kurun. Menü öğelerini, fiyatları ve müsaitlik durumunu otomatik olarak senkronize edin."
+      },
+      {
+        title: "Özel Markalama ve Temalar",
+        description: "Dijital menünüzü özel renkler, logolar, yazı tipleri ve düzenlerle restoranınızın marka kimliğine uydurun. Uyumlu bir yemek deneyimi yaratın."
+      }
+    ],
+
+    // Benefits
+    benefitsTitle: "Neden Restoranlar Dijital QR Menüleri Seçiyor?",
+    benefitsSubtitle: "İşletmeniz Üzerindeki Ölçülebilir Etki",
+    benefits: [
+      { metric: "%90", label: "Baskı Maliyetlerinde Azalma", description: "Tekrarlayan menü basım masraflarını sonsuza dek ortadan kaldırın" },
+      { metric: "%30", label: "Ortalama Siparişte Artış", description: "Fotoğraflı görsel menüler ek satışı teşvik eder" },
+      { metric: "%50", label: "Hızlı Masa Sirkülasyonu", description: "Müşteriler daha hızlı inceler ve karar verir" },
+      { metric: "%100", label: "Temassız ve Hijyenik", description: "Pandemi sonrası güvenli yemek deneyimi" },
+    ],
+
+    // Process
+    processTitle: "Nasıl Çalışır?",
+    processSubtitle: "Dijital Menünüzü 3 Basit Adımda Yayınlayın",
+    process: [
+      {
+        step: "01",
+        title: "Menünüzü Paylaşın",
+        description: "Mevcut menünüzü herhangi bir formatta (PDF, fotoğraf veya web sitesi) bize gönderin. Dijital dönüşümü biz halledelim."
+      },
+      {
+        step: "02",
+        title: "Tasarlıyoruz ve Kuruyoruz",
+        description: "Ekibimiz, markanızla uyumlu, fotoğraflı ve tüm ürün detaylarını içeren, mobil uyumlu bir dijital menü oluşturur."
+      },
+      {
+        step: "03",
+        title: "Tara ve Servis Et",
+        description: "Masalar ve pazarlama materyalleriniz için özel QR kodlarınızı alın. Müşterileriniz hemen taramaya başlayabilir"
+      }
+    ],
+
+    // Use Cases
+    useCasesTitle: "Her Gıda İşletmesi İçin Mükemmel",
+    useCases: ["Restoranlar", "Kafeler ve Bistrolar", "Fast Food", "Yemek Alanları ve AVM'ler", "Otel Oda Servisi", "Bulut Mutfaklar", "Food Truck'lar", "Catering Hizmetleri"],
+
+    // CTA
+    ctaTitle: "Menünüzü Dijitalleştirmeye Hazır mısınız?",
+    ctaDescription: "QR menü çözümlerimizle yemek deneyimini dönüştüren yüzlerce restorana katılın.",
+    ctaButton: "Ücretsiz Danışmanlık Alın"
   }
 }
 
@@ -242,7 +331,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 }
 
 export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuServiceSectionProps) {
-  const t = isRTL ? content.ar : content.en
+  const t: typeof content.en = content[locale as keyof typeof content] || content.en
   const Arrow = isRTL ? ArrowLeft : ArrowRight
 
   return (
@@ -292,7 +381,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
           </div>
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {t.features.map((feature, index) => (
+            {t.features.map((feature: any, index: number) => (
               <GlowingCard
                 key={index}
                 title={feature.title}
@@ -318,7 +407,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {t.benefits.map((benefit, index) => (
+            {t.benefits.map((benefit: any, index: number) => (
               <AnimatedSection key={index} delay={index * 0.1}>
                 <div className="text-center p-6 rounded-2xl bg-lavender/10 backdrop-blur-sm border border-white/20">
                   <div className="text-5xl sm:text-6xl font-black text-white mb-2">
@@ -352,7 +441,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
           </div>
 
           <div className="grid sm:grid-cols-3 gap-8 sm:gap-12">
-            {t.process.map((step, index) => (
+            {t.process.map((step: any, index: number) => (
               <AnimatedSection key={index} delay={index * 0.15}>
                 <div className="relative text-center">
                   <div className="text-7xl sm:text-8xl font-black text-orange-500/20 mb-4">
@@ -379,7 +468,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
               {t.useCasesTitle}
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
-              {t.useCases.map((useCase, index) => (
+              {t.useCases.map((useCase: any, index: number) => (
                 <span
                   key={index}
                   className="px-5 py-2.5 bg-lavender rounded-full text-slate-700 font-medium border border-orange-200 hover:border-orange-400 hover:text-orange-600 transition-colors text-sm sm:text-base"
@@ -396,10 +485,10 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
       <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-gradient-to-br from-lavender via-lavender to-orange-600">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               {t.ctaTitle}
             </h2>
-            <p className="text-lg sm:text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
               {t.ctaDescription}
             </p>
             <a
@@ -447,7 +536,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
               "name": isRTL ? "خدمات قوائم QR للمطاعم" : "Restaurant QR Menu Services",
-              "itemListElement": t.features.map((feature, index) => ({
+              "itemListElement": t.features.map((feature: any, index: number) => ({
                 "@type": "Offer",
                 "position": index + 1,
                 "itemOffered": {

@@ -6,6 +6,8 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
+Disallow: /favicon.ico
+Disallow: /favicon.svg
 
 # Sitemap location
 Sitemap: https://cloudtopia.net/sitemap.xml
@@ -16,6 +18,8 @@ Crawl-delay: 1
 # Popular search engines
 User-agent: Googlebot
 Allow: /
+Disallow: /favicon.ico
+Disallow: /favicon.svg
 
 User-agent: Bingbot
 Allow: /
@@ -32,7 +36,30 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# Block bad bots
+# AI search & citation engines (allowed - index and cite content)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Block training-only scrapers (no search / citation value)
+User-agent: CCBot
+Disallow: /
+
+# Block SEO audit / link analysis crawlers
 User-agent: SemrushBot
 Disallow: /
 
@@ -47,6 +74,3 @@ Disallow: /
 
 User-agent: BLEXBot
 Disallow: /
-
-# Host
-Host: https://cloudtopia.net
