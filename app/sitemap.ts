@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getPostSlugs } from '@/lib/blog'
+import { getPostBySlug, getPostSlugs, getSlugById } from '@/lib/blog'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://cloudtopia.net'
@@ -80,20 +80,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
         })
     })
 
-    // Blog posts — routing uses the MDX filename as slug for all locales
-    const blogSlugs = getPostSlugs()
-    blogSlugs.forEach((slug) => {
-        const languages: Record<string, string> = {
-            'x-default': `${baseUrl}/en/blog/${slug}`,
+    // Blog posts — handle local slugs correctly
+    // We use the English slugs as the canonical source (ids) to find alternates
+    const canonicalSlugs = getPostSlugs('en')
+    canonicalSlugs.forEach((cid) => {
+        // Build the alternates map for this specific post
+        const languages: Record<string, string> = {}
+        const enSlug = getSlugById(cid, 'en')
+        if (enSlug) {
+            languages['x-default'] = `${baseUrl}/en/blog/${encodeURIComponent(enSlug)}`
         }
-        locales.forEach((loc) => {
-            languages[loc] = `${baseUrl}/${loc}/blog/${slug}`
-        })
 
         locales.forEach((loc) => {
+            const localSlug = getSlugById(cid, loc)
+            if (localSlug) {
+                languages[loc] = `${baseUrl}/${loc}/blog/${encodeURIComponent(localSlug)}`
+            }
+        })
+
+        // Add entries for each locale if the post exists
+        locales.forEach((loc) => {
+            const localSlug = getSlugById(cid, loc)
+            if (!localSlug) return
+
             let lastModified = new Date()
             try {
-                const postPath = path.join(process.cwd(), 'blog-posts', loc, `${slug}.mdx`)
+                const postPath = path.join(process.cwd(), 'blog-posts', loc, `${localSlug}.mdx`)
                 if (fs.existsSync(postPath)) {
                     lastModified = fs.statSync(postPath).mtime
                 }
@@ -102,7 +114,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             }
 
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}/blog/${slug}`,
+                url: `${baseUrl}/${loc}/blog/${encodeURIComponent(localSlug)}`,
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,

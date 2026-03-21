@@ -26,9 +26,10 @@ interface BlogPostLayoutProps {
         readMore: string
         onThisPage: string
     }
+    alternateSlugs: Record<string, string>
 }
 
-export default function BlogPostLayout({ post, morePosts, children, translations }: BlogPostLayoutProps) {
+export default function BlogPostLayout({ post, morePosts, children, translations, alternateSlugs }: BlogPostLayoutProps) {
     const isRtl = post.lang === 'ar'
     const [copied, setCopied] = useState(false)
 
@@ -133,7 +134,7 @@ export default function BlogPostLayout({ post, morePosts, children, translations
                                 ).map(({ code, label, ariaLabel }) => (
                                     <Link
                                         key={code}
-                                        href={`/${code}/blog/${post.slug}`}
+                                        href={`/${code}/blog/${alternateSlugs[code] || post.slug}`}
                                         aria-label={ariaLabel}
                                         aria-current={post.lang === code ? 'page' : undefined}
                                         role="listitem"

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getPostBySlug, getPostSlugs, getAllPosts } from '@/lib/blog'
+import { getPostBySlug, getPostSlugs, getAllPosts, getSlugById } from '@/lib/blog'
 import { getDictionary } from '@/lib/i18n'
 import type { Locale } from '@/lib/i18n/config'
 import BlogPostLayout from '@/components/blog/BlogPostLayout'
@@ -20,7 +20,9 @@ interface PostPageProps {
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
     const lang = params.locale || 'en'
-    const post = getPostBySlug(params.slug, lang)
+    // Decode slug in case it's in Arabic/Turkish
+    const decodedSlug = decodeURIComponent(params.slug)
+    const post = getPostBySlug(decodedSlug, lang)
 
     if (!post) {
         return { title: 'Post Not Found' }
@@ -30,6 +32,23 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     const imageUrl = post.coverImage
         ? `${BASE_URL}${post.coverImage}`
         : `${BASE_URL}/images/og-image.jpg`
+
+    // Generate alternate links for all languages
+    const alternateLanguages: Record<string, string> = {}
+    const locales = ['en', 'ar', 'tr']
+
+    locales.forEach(loc => {
+        const localSlug = getSlugById(post.id, loc)
+        if (localSlug) {
+            alternateLanguages[loc] = `${BASE_URL}/${loc}/blog/${encodeURIComponent(localSlug)}`
+        }
+    })
+
+    // Add x-default
+    const enSlug = getSlugById(post.id, 'en')
+    if (enSlug) {
+        alternateLanguages['x-default'] = `${BASE_URL}/en/blog/${encodeURIComponent(enSlug)}`
+    }
 
     return {
         title: post.title,
@@ -64,24 +83,20 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
         },
         alternates: {
             canonical: canonicalUrl,
-            languages: {
-                en: `${BASE_URL}/en/blog/${params.slug}`,
-                ar: `${BASE_URL}/ar/blog/${params.slug}`,
-                tr: `${BASE_URL}/tr/blog/${params.slug}`,
-                'x-default': `${BASE_URL}/en/blog/${params.slug}`,
-            },
+            languages: alternateLanguages,
         },
     }
 }
 
 export async function generateStaticParams() {
-    const slugs = getPostSlugs()
     const locales = ['en', 'ar', 'tr']
     const staticParams: { slug: string; locale: string }[] = []
 
-    slugs.forEach(slug => {
-        locales.forEach(locale => {
-            staticParams.push({ slug, locale })
+    locales.forEach(locale => {
+        const slugs = getPostSlugs(locale)
+        slugs.forEach(slug => {
+            // Encode slug for static params to safe-guard against special characters
+            staticParams.push({ slug: encodeURIComponent(slug), locale })
         })
     })
 
@@ -90,7 +105,8 @@ export async function generateStaticParams() {
 
 export default async function PostPage({ params }: PostPageProps) {
     const lang = params.locale || 'en'
-    const post = getPostBySlug(params.slug, lang)
+    const decodedSlug = decodeURIComponent(params.slug)
+    const post = getPostBySlug(decodedSlug, lang)
 
     if (!post) {
         notFound()
@@ -144,6 +160,16 @@ export default async function PostPage({ params }: PostPageProps) {
         },
     }
 
+    // Generate alternate slugs for the language switcher
+    const locales = ['en', 'ar', 'tr']
+    const alternateSlugs: Record<string, string> = {}
+    locales.forEach((loc: string) => {
+        const localSlug = getSlugById(post.id, loc)
+        if (localSlug) {
+            alternateSlugs[loc] = localSlug
+        }
+    })
+
     return (
         <>
             <script
@@ -165,6 +191,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     readMore: dict.blog.readMore,
                     onThisPage: dict.blog.onThisPage,
                 }}
+                alternateSlugs={alternateSlugs}
             >
                 <BlogPostBody content={post.content} />
             </BlogPostLayout>
