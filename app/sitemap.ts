@@ -94,7 +94,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         locales.forEach((loc) => {
             let lastModified = new Date()
             try {
-                const postPath = path.join(process.cwd(), 'app/[locale]/blog/posts', loc, `${slug}.mdx`)
+                const postPath = path.join(process.cwd(), 'blog-posts', loc, `${slug}.mdx`)
                 if (fs.existsSync(postPath)) {
                     lastModified = fs.statSync(postPath).mtime
                 }

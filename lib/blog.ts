@@ -17,7 +17,7 @@ export type BlogPost = {
 
 export type BlogPostMeta = Omit<BlogPost, 'content'>
 
-const postsDirectory = path.join(process.cwd(), 'app/[locale]/blog/posts')
+const postsDirectory = path.join(process.cwd(), 'blog-posts')
 
 export function getPostSlugs(): string[] {
     // We use the English folder as the canonical source for slugs.
