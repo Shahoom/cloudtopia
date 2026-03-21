@@ -81,7 +81,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
 
     // Blog posts — routing uses the MDX filename as slug for all locales
-    // All three language versions share the same slug (the EN filename).
     const blogSlugs = getPostSlugs()
     blogSlugs.forEach((slug) => {
         const languages: Record<string, string> = {
