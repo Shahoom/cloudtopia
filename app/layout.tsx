@@ -1,11 +1,16 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
+import { Playfair_Display, DM_Sans, Noto_Naskh_Arabic } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
+const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ['arabic'], variable: '--font-noto-naskh' })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cloudtopia.net'),
@@ -200,7 +205,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
+      <body className={`flex flex-col min-h-screen antialiased font-['Changa',sans-serif] ${playfair.variable} ${dmSans.variable} ${notoNaskhArabic.variable}`}>
         <LanguageProvider>
           <ThemeProvider
             attribute="class"

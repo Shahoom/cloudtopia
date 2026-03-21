@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { NavBar } from '@/components/ui/tubelight-navbar'
-import { Home, Briefcase, Sparkles, Info, Mail, FolderKanban } from 'lucide-react'
+import { Home, Briefcase, Sparkles, Info, Mail, FolderKanban, BookOpen } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
@@ -66,6 +66,7 @@ export default function Header() {
     { name: t.nav.projects, href: l('/projects') },
     { name: t.nav.labs, href: l('/labs') },
     { name: t.nav.about, href: l('/about') },
+    { name: t.nav.blog, href: l('/blog') },
     { name: t.nav.contact, href: l('/contact') },
   ]
 
@@ -75,6 +76,7 @@ export default function Header() {
     { name: t.nav.projects, url: l('/projects'), icon: FolderKanban },
     { name: t.nav.labs, url: l('/labs'), icon: Sparkles },
     { name: t.nav.about, url: l('/about'), icon: Info },
+    { name: t.nav.blog, url: l('/blog'), icon: BookOpen },
     { name: t.nav.contact, url: l('/contact'), icon: Mail },
   ]
 
@@ -111,8 +113,8 @@ export default function Header() {
               />
             </div>
 
-            {/* Brand text */}
-            <div className="flex flex-col -space-y-0.5">
+            {/* Brand text - Hidden on tiny screens to save space */}
+            <div className="hidden sm:flex flex-col -space-y-0.5">
               <span className={`font-logo font-bold transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-xl' : 'text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
                 }`}>
                 Cloud<span className={`bg-clip-text text-transparent ${isDarkSection
@@ -128,12 +130,12 @@ export default function Header() {
           </Link>
 
           {/* Centered Navigation with Tubelight Effect */}
-          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2">
+          <div className="hidden xl:flex absolute left-1/2 -translate-x-1/2">
             <NavBar items={navItems} isDark={isDarkSection} />
           </div>
 
           {/* Right side: Language Switcher + CTA Button */}
-          <div className={`hidden md:flex items-center ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
+          <div className={`hidden xl:flex items-center ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
             <LanguageSwitcher isDark={isDarkSection} />
             <Link
               href={l('/contact')}
@@ -148,7 +150,7 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className={`md:hidden flex items-center ${dir === 'rtl' ? 'space-x-reverse space-x-3' : 'space-x-3'}`}>
+          <div className="xl:hidden flex items-center gap-2">
             <LanguageSwitcher isDark={isDarkSection} />
             <button
               type="button"
@@ -173,7 +175,7 @@ export default function Header() {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
             }`}
         >
           <div className={`py-4 border-t ${isDarkSection ? 'border-white/10' : 'border-neutral-200'}`}>
