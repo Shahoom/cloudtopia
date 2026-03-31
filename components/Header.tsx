@@ -94,13 +94,13 @@ export default function Header() {
       <nav className="container">
         <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-20'
           }`}>
-          {/* Logo */}
+          {/* Logo - Ensuring it doesn't shrink on mobile */}
           <Link
             href={l('/')}
-            className={`flex items-center group relative ${dir === 'rtl' ? 'space-x-reverse space-x-2.5' : 'space-x-2.5'}`}
+            className={`flex items-center shrink-0 group relative ${dir === 'rtl' ? 'space-x-reverse space-x-2' : 'space-x-2'}`}
           >
             {/* Logo with hover effect */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <div className="absolute inset-0 bg-gradient-hero rounded-xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
               <Image
                 src="/images/CloudTopia.svg"
@@ -108,21 +108,21 @@ export default function Header() {
                 width={150}
                 height={44}
                 priority
-                className={`relative z-10 transition-all duration-300 group-hover:scale-110 w-auto ${isScrolled ? 'h-9' : 'h-11'
+                className={`relative z-10 transition-all duration-300 group-hover:scale-110 w-auto ${isScrolled ? 'h-8 sm:h-9' : 'h-10 sm:h-11'
                   }`}
               />
             </div>
 
-            {/* Brand text - Hidden on tiny screens to save space */}
-            <div className="hidden sm:flex flex-col -space-y-0.5">
-              <span className={`font-logo font-bold transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-xl' : 'text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
+            {/* Brand text - Always visible now, with responsive sizes */}
+            <div className="flex flex-col -space-y-1 min-w-0">
+              <span className={`font-logo font-bold leading-tight transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'
                 }`}>
                 Cloud<span className={`bg-clip-text text-transparent ${isDarkSection
                   ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
                   : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600'
                   }`}>Topia</span>
               </span>
-              <span className={`text-[11px] font-medium tracking-wider uppercase transition-all duration-500 ${isDarkSection ? 'text-zinc-400' : 'text-neutral-600'
+              <span className={`text-[9px] sm:text-[11px] font-medium tracking-tight sm:tracking-wider uppercase transition-all duration-500 ${isDarkSection ? 'text-zinc-400' : 'text-neutral-600'
                 }`}>
                 {t.header.tagline}
               </span>

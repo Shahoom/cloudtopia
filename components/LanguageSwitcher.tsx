@@ -12,7 +12,7 @@ export default function LanguageSwitcher({ isDark = false }: LanguageSwitcherPro
 
   return (
     <div
-      className={`flex items-center gap-0.5 px-2 py-1.5 md:px-3 md:py-2 rounded-full transition-all duration-300 shadow-sm hover:shadow-md ${isDark
+      className={`flex items-center gap-0 px-1.5 py-1 md:gap-0.5 md:px-3 md:py-2 rounded-full transition-all duration-300 shadow-sm hover:shadow-md ${isDark
         ? 'bg-lavender/10 hover:bg-lavender/20 border border-white/20 hover:border-white/30'
         : 'bg-lavender/80 hover:bg-lavender border border-neutral-200 hover:border-primary-300'
         }`}
