@@ -24,12 +24,14 @@ import {
   Lightbulb,
   Wrench
 } from 'lucide-react'
-import TechCursor from '@/components/ui/tech-cursor'
-import VaporizeTextCycle, { Tag } from '@/components/ui/vapour-text-effect'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const Particles = dynamic(() => import('@/components/ui/particles').then(mod => mod.Particles), { ssr: false })
 const SparklesCore = dynamic(() => import('@/components/ui/sparkles').then(mod => mod.SparklesCore), { ssr: false })
+const VaporizeTextCycle = dynamic(() => import('@/components/ui/vapour-text-effect'), { ssr: false })
+const TechCursor = dynamic(() => import('@/components/ui/tech-cursor'), { ssr: false })
+import { Tag } from '@/components/ui/vapour-text-effect'
 
 type ProjectCategory = 'all' | 'digitalPresence' | 'businessSystems' | 'webApps' | 'labs'
 
@@ -194,8 +196,8 @@ const ProjectModal = ({
                   className="bg-gradient-to-br from-orange-50 to-orange-100/20 rounded-2xl p-6 border border-orange-100"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-                      <img src="/icons/projects/challenge.png" alt="Challenge" width={40} height={40} className="w-10 h-10 object-contain" />
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden relative">
+                      <Image src="/icons/projects/challenge.png" alt="Challenge" fill className="object-contain" />
                     </div>
                     <h3 className="text-lg font-bold text-neutral-900">{t.projects.modal.challenge}</h3>
                   </div>
@@ -210,8 +212,8 @@ const ProjectModal = ({
                   className="bg-gradient-to-br from-emerald-50 to-emerald-100/20 rounded-2xl p-6 border border-emerald-100"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-                      <img src="/icons/projects/solution.png" alt="Solution" width={40} height={40} className="w-10 h-10 object-contain" />
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden relative">
+                      <Image src="/icons/projects/solution.png" alt="Solution" fill className="object-contain" />
                     </div>
                     <h3 className="text-lg font-bold text-neutral-900">{t.projects.modal.solution}</h3>
                   </div>
@@ -348,11 +350,13 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
         <div className={`relative h-56 bg-gradient-to-br ${getCategoryColor(project.category)} overflow-hidden`}>
           {/* Project Image (if available) */}
           {project.image && (
-            <img
+            <Image
               src={project.image}
               alt={project.title}
-              loading="lazy"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="absolute inset-0 w-full h-full object-cover object-top"
+              priority={index < 3}
             />
           )}
 
@@ -617,7 +621,7 @@ export default function ProjectsPage() {
         {/* Particles */}
         <Particles
           className="absolute inset-0 opacity-50"
-          quantity={isMobile ? 20 : 80}
+          quantity={isMobile ? 15 : 60}
           ease={100}
           color="#ffffff"
           refresh
@@ -713,7 +717,7 @@ export default function ProjectsPage() {
         {/* Interactive Particles */}
         <Particles
           className="absolute inset-0"
-          quantity={isMobile ? 20 : 80}
+          quantity={isMobile ? 15 : 60}
           ease={80}
           color="#000000"
           refresh
@@ -870,10 +874,11 @@ export default function ProjectsPage() {
                   <div className={`h-32 bg-gradient-to-br ${getCategoryColor(project.category)} relative overflow-hidden`}>
                     {/* Project Image */}
                     {project.image && (
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.title}
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                         className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       />
                     )}

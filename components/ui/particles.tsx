@@ -78,18 +78,52 @@ const Particles: React.FC<ParticlesProps> = ({
     const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 })
     const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1
 
+    const [isVisible, setIsVisible] = useState(false)
+    const animationFrameId = useRef<number | null>(null)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting)
+            },
+            { threshold: 0 }
+        )
+
+        if (canvasContainerRef.current) {
+            observer.observe(canvasContainerRef.current)
+        }
+
+        return () => {
+            if (canvasContainerRef.current) {
+                observer.unobserve(canvasContainerRef.current)
+            }
+            if (animationFrameId.current) {
+                cancelAnimationFrame(animationFrameId.current)
+            }
+        }
+    }, [])
+
     useEffect(() => {
         if (canvasRef.current) {
             context.current = canvasRef.current.getContext("2d")
         }
         initCanvas()
-        animate()
+        
+        if (isVisible) {
+            animate()
+        } else if (animationFrameId.current) {
+            cancelAnimationFrame(animationFrameId.current)
+        }
+
         window.addEventListener("resize", initCanvas)
 
         return () => {
             window.removeEventListener("resize", initCanvas)
+            if (animationFrameId.current) {
+                cancelAnimationFrame(animationFrameId.current)
+            }
         }
-    }, [color])
+    }, [color, isVisible])
 
     useEffect(() => {
         onMouseMove()
@@ -267,7 +301,7 @@ const Particles: React.FC<ParticlesProps> = ({
                 // update the circle position
             }
         })
-        window.requestAnimationFrame(animate)
+        animationFrameId.current = window.requestAnimationFrame(animate)
     }
 
     return (

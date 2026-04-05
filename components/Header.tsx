@@ -83,10 +83,10 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-[9999] transition-all duration-500 ${isScrolled
+      className={`sticky top-0 z-[9999] transition-all duration-500 ${isScrolled || mobileMenuOpen
         ? isDarkSection
-          ? 'bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/10'
-          : 'bg-lavender/80 backdrop-blur-md shadow-md border-b border-neutral-200'
+          ? 'bg-zinc-950/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/10'
+          : 'bg-lavender/95 backdrop-blur-md shadow-md border-b border-neutral-200'
         : 'bg-transparent border-b border-transparent'
         }`}
       dir={dir}
