@@ -2187,7 +2187,7 @@ export const en = {
         problem: 'Turkish art brand needed a premium online store to sell art-themed products including bags, blankets, scarves, and home decor featuring famous paintings',
         solution: 'Built a beautiful e-commerce platform showcasing art-inspired products from Van Gogh, Klimt, Monet, and more with seamless shopping experience and Turkish payment integration',
         features: ['Product Catalog', 'Shopping Cart', 'Secure Payments', 'Art Collections'],
-        image: '/images/projects/artucky.com.png',
+        image: '/images/projects/artucky-ecommerce.png',
         metrics: {
           label: 'Happy Customers',
           value: '2420+'
