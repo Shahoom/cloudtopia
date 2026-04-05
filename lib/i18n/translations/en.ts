@@ -2242,6 +2242,21 @@ export const en = {
         },
         link: 'https://lwiat.com'
       },
+      {
+        id: 'dhofar-tourism',
+        category: 'webApps',
+        type: 'Tourism Guide',
+        featured: true,
+        title: 'Dhofar Tourism - Interactive Guide',
+        problem: 'Tourists needed a comprehensive digital guide for the Dhofar region with interactive maps and detailed regional information',
+        solution: 'Developed a feature-rich tourism guide website including interactive maps, location information, and essential travel tips for visiting Dhofar',
+        features: ['Interactive Map', 'Regional Guide', 'Information Portal', 'Responsive Design'],
+        image: '/images/projects/dhofar-tourism.png',
+        metrics: {
+          label: 'Regional Reach',
+          value: '+150%'
+        }
+      },
     ],
     labsSection: {
       badge: 'Innovation Lab',

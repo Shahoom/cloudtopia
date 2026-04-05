@@ -2251,6 +2251,21 @@ export const ar = {
         },
         link: 'https://lwiat.com'
       },
+      {
+        id: 'dhofar-tourism',
+        category: 'webApps',
+        type: 'دليل سياحي',
+        featured: true,
+        title: 'دليل ظفار السياحي - دليل تفاعلي',
+        problem: 'حاجة السياح إلى دليل رقمي شامل لمنطقة ظفار يضم خرائط تفاعلية ومعلومات مفصلة عن المنطقة',
+        solution: 'طورنا موقعاً سياحياً غنياً بالميزات يتضمن خرائط تفاعلية، ومعلومات عن المواقع، ونصائح سياحية أساسية لزيارة ظفار',
+        features: ['خريطة تفاعلية', 'دليل المناطق', 'بوابة معلومات', 'تصميم متجاوب'],
+        image: '/images/projects/dhofar-tourism.png',
+        metrics: {
+          label: 'الوصول الإقليمي',
+          value: '+150%'
+        }
+      },
     ],
     labsSection: {
       badge: 'مختبر الابتكار',
