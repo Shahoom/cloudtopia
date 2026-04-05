@@ -175,7 +175,7 @@ export default function Header() {
 
         {/* Mobile menu */}
         <div
-          className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+          className={`xl:hidden transition-all duration-500 ease-in-out ${mobileMenuOpen ? 'max-h-[85vh] opacity-100 overflow-y-auto' : 'max-h-0 opacity-0 overflow-hidden'
             }`}
         >
           <div className={`py-4 border-t ${isDarkSection ? 'border-white/10' : 'border-neutral-200'}`}>
