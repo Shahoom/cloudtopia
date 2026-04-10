@@ -56,8 +56,8 @@ export default function LabsLayout({ children }: { children: React.ReactNode }) 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
-                            { '@type': 'ListItem', position: 2, name: 'Labs', item: 'https://cloudtopia.net/labs' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
+                            { '@type': 'ListItem', position: 2, name: 'Labs', item: 'https://cloudtopia.net/en/labs' },
                         ],
                     }),
                 }}
@@ -70,7 +70,7 @@ export default function LabsLayout({ children }: { children: React.ReactNode }) 
                         '@type': 'WebPage',
                         name: 'CloudTopia Labs — Innovation Hub',
                         description: 'Our innovation hub for AI, cloud-native, and cutting-edge experimental prototypes.',
-                        url: 'https://cloudtopia.net/labs',
+                        url: 'https://cloudtopia.net/en/labs',
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

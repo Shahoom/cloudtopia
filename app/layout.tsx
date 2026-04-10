@@ -105,6 +105,9 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
     'apple-mobile-web-app-title': 'CloudTopia',
+    // AI agent discovery files
+    'llms-txt': 'https://cloudtopia.net/llms.txt',
+    'pricing-md': 'https://cloudtopia.net/pricing.md',
   },
 }
 

@@ -56,7 +56,7 @@ export default function businesssystemsdevelopmentLayout({ children }: { childre
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
                             { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
                             { '@type': 'ListItem', position: 3, name: 'Business Systems Development', item: 'https://cloudtopia.net/en/business-systems-development' },
                         ],

@@ -46,7 +46,15 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function ContactLayout({ children }: { children: React.ReactNode }) {
+export default function ContactLayout({ children, params }: { children: React.ReactNode; params?: { locale?: string } }) {
+    const locale = params?.locale ?? 'en'
+    const breadcrumbNames: Record<string, { home: string; contact: string }> = {
+        en: { home: 'Home', contact: 'Contact' },
+        ar: { home: 'الرئيسية', contact: 'التواصل' },
+        tr: { home: 'Ana Sayfa', contact: 'İletişim' },
+    }
+    const names = breadcrumbNames[locale] || breadcrumbNames.en
+
     return (
         <>
             <script
@@ -56,8 +64,8 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
-                            { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://cloudtopia.net/contact' },
+                            { '@type': 'ListItem', position: 1, name: names.home, item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: names.contact, item: `https://cloudtopia.net/${locale}/contact` },
                         ],
                     }),
                 }}
@@ -70,7 +78,8 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
                         '@type': 'ContactPage',
                         name: 'Contact CloudTopia',
                         description: 'Get in touch with CloudTopia for a free consultation.',
-                        url: 'https://cloudtopia.net/contact',
+                        url: `https://cloudtopia.net/${locale}/contact`,
+                        inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

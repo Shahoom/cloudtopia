@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight, ArrowLeft } from "lucide-react"
+import { ArrowRight, ArrowLeft, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
 
@@ -91,6 +91,66 @@ const content = {
         description: "Receive your custom QR codes for tables, tent cards, and marketing materials. Your customers can start scanning immediately."
       }
     ],
+
+    // Pricing
+    pricingTitle: "Simple, Transparent Pricing",
+    pricingSubtitle: "No setup fees. No hidden charges. Start with a 14-day free trial.",
+    pricingMonthly: "Monthly",
+    pricingAnnual: "Annual",
+    pricingAnnualBadge: "Save 17%",
+    pricingPopular: "Most Popular",
+    plans: [
+      {
+        name: "Starter",
+        price: 39,
+        annualPrice: 32,
+        description: "Perfect for single-location restaurants",
+        features: [
+          "1 Location",
+          "Up to 100 menu items",
+          "Arabic & English menus",
+          "Unlimited QR code scans",
+          "Basic analytics",
+          "Email support"
+        ],
+        cta: "Start Free Trial",
+        highlighted: false
+      },
+      {
+        name: "Professional",
+        price: 89,
+        annualPrice: 74,
+        description: "Ideal for growing restaurant chains",
+        features: [
+          "Up to 3 Locations",
+          "Unlimited menu items",
+          "Multilingual support",
+          "Advanced analytics dashboard",
+          "Custom branding & colors",
+          "Priority support"
+        ],
+        cta: "Start Free Trial",
+        highlighted: true
+      },
+      {
+        name: "Business",
+        price: 179,
+        annualPrice: 149,
+        description: "For large chains & enterprise hospitality",
+        features: [
+          "Unlimited Locations",
+          "POS system integration",
+          "White-label option",
+          "API access",
+          "Dedicated account manager",
+          "24/7 phone support"
+        ],
+        cta: "Contact Sales",
+        highlighted: false
+      }
+    ],
+    pricingPerMonth: "/mo",
+    pricingBilledAnnually: "Billed annually",
 
     // Use Cases
     useCasesTitle: "Perfect For Every Food Business",
@@ -181,6 +241,66 @@ const content = {
       }
     ],
 
+    // Pricing
+    pricingTitle: "أسعار بسيطة وشفافة",
+    pricingSubtitle: "بدون رسوم إعداد. بدون تكاليف مخفية. ابدأ بتجربة مجانية لمدة 14 يوماً.",
+    pricingMonthly: "شهري",
+    pricingAnnual: "سنوي",
+    pricingAnnualBadge: "وفر 17%",
+    pricingPopular: "الأكثر شعبية",
+    plans: [
+      {
+        name: "المبتدئ",
+        price: 39,
+        annualPrice: 32,
+        description: "مثالي للمطاعم ذات الموقع الواحد",
+        features: [
+          "موقع واحد",
+          "حتى 100 عنصر في القائمة",
+          "قوائم عربية وإنجليزية",
+          "مسح رمز QR غير محدود",
+          "تحليلات أساسية",
+          "دعم عبر البريد الإلكتروني"
+        ],
+        cta: "ابدأ التجربة المجانية",
+        highlighted: false
+      },
+      {
+        name: "الاحترافي",
+        price: 89,
+        annualPrice: 74,
+        description: "مثالي لسلاسل المطاعم النامية",
+        features: [
+          "حتى 3 مواقع",
+          "عناصر قائمة غير محدودة",
+          "دعم متعدد اللغات",
+          "لوحة تحليلات متقدمة",
+          "علامة تجارية وألوان مخصصة",
+          "دعم ذو أولوية"
+        ],
+        cta: "ابدأ التجربة المجانية",
+        highlighted: true
+      },
+      {
+        name: "الأعمال",
+        price: 179,
+        annualPrice: 149,
+        description: "للسلاسل الكبيرة وضيافة المؤسسات",
+        features: [
+          "مواقع غير محدودة",
+          "تكامل مع نقاط البيع",
+          "خيار العلامة البيضاء",
+          "وصول API",
+          "مدير حساب مخصص",
+          "دعم هاتفي على مدار الساعة"
+        ],
+        cta: "تواصل مع المبيعات",
+        highlighted: false
+      }
+    ],
+    pricingPerMonth: "/شهر",
+    pricingBilledAnnually: "يُحاسَب سنوياً",
+
     // Use Cases
     useCasesTitle: "مثالي لكل نشاط غذائي",
     useCases: ["مطاعم الأكل الفاخر", "المقاهي والبيسترو", "الوجبات السريعة", "ساحات الطعام والمولات", "خدمة الغرف الفندقية", "المطابخ السحابية", "عربات الطعام", "خدمات التموين"],
@@ -270,6 +390,66 @@ const content = {
       }
     ],
 
+    // Pricing
+    pricingTitle: "Basit ve Şeffaf Fiyatlandırma",
+    pricingSubtitle: "Kurulum ücreti yok. Gizli ücret yok. 14 günlük ücretsiz denemeyle başlayın.",
+    pricingMonthly: "Aylık",
+    pricingAnnual: "Yıllık",
+    pricingAnnualBadge: "%17 Tasarruf",
+    pricingPopular: "En Popüler",
+    plans: [
+      {
+        name: "Başlangıç",
+        price: 39,
+        annualPrice: 32,
+        description: "Tek lokasyonlu restoranlar için ideal",
+        features: [
+          "1 Lokasyon",
+          "100'e kadar menü öğesi",
+          "Arapça ve İngilizce menüler",
+          "Sınırsız QR kod taraması",
+          "Temel analitik",
+          "E-posta desteği"
+        ],
+        cta: "Ücretsiz Denemeyi Başlat",
+        highlighted: false
+      },
+      {
+        name: "Profesyonel",
+        price: 89,
+        annualPrice: 74,
+        description: "Büyüyen restoran zincirleri için ideal",
+        features: [
+          "3'e kadar Lokasyon",
+          "Sınırsız menü öğesi",
+          "Çok dilli destek",
+          "Gelişmiş analitik panosu",
+          "Özel marka ve renkler",
+          "Öncelikli destek"
+        ],
+        cta: "Ücretsiz Denemeyi Başlat",
+        highlighted: true
+      },
+      {
+        name: "İşletme",
+        price: 179,
+        annualPrice: 149,
+        description: "Büyük zincirler ve kurumsal otelcilik için",
+        features: [
+          "Sınırsız Lokasyon",
+          "POS entegrasyonu",
+          "Beyaz etiket seçeneği",
+          "API erişimi",
+          "Özel hesap yöneticisi",
+          "7/24 telefon desteği"
+        ],
+        cta: "Satış Ekibiyle İletişim",
+        highlighted: false
+      }
+    ],
+    pricingPerMonth: "/ay",
+    pricingBilledAnnually: "Yıllık faturalandırılır",
+
     // Use Cases
     useCasesTitle: "Her Gıda İşletmesi İçin Mükemmel",
     useCases: ["Restoranlar", "Kafeler ve Bistrolar", "Fast Food", "Yemek Alanları ve AVM'ler", "Otel Oda Servisi", "Bulut Mutfaklar", "Food Truck'lar", "Catering Hizmetleri"],
@@ -333,6 +513,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuServiceSectionProps) {
   const t: typeof content.en = content[locale as keyof typeof content] || content.en
   const Arrow = isRTL ? ArrowLeft : ArrowRight
+  const [isAnnual, setIsAnnual] = useState(false)
 
   return (
     <section
@@ -453,6 +634,115 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
                   <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
                     {step.description}
                   </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Pricing Section */}
+      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-lavender" dir={isRTL ? "rtl" : "ltr"}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 sm:mb-14">
+            <AnimatedSection>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                {t.pricingTitle}
+              </h2>
+              <p className="text-lg sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+                {t.pricingSubtitle}
+              </p>
+              {/* Billing toggle */}
+              <div className="inline-flex items-center gap-3 bg-white border border-slate-200 rounded-full p-1.5 shadow-sm">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={cn(
+                    "px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200",
+                    !isAnnual ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:text-slate-900"
+                  )}
+                >
+                  {t.pricingMonthly}
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={cn(
+                    "px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 flex items-center gap-2",
+                    isAnnual ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:text-slate-900"
+                  )}
+                >
+                  {t.pricingAnnual}
+                  <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                    {t.pricingAnnualBadge}
+                  </span>
+                </button>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-6 lg:gap-8 items-start">
+            {t.plans.map((plan: any, index: number) => (
+              <AnimatedSection key={index} delay={index * 0.1}>
+                <div
+                  className={cn(
+                    "relative rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 transition-all duration-300",
+                    plan.highlighted
+                      ? "bg-slate-900 border-slate-700 shadow-2xl scale-105"
+                      : "bg-white border-slate-200 shadow-md hover:shadow-lg"
+                  )}
+                >
+                  {plan.highlighted && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <span className="bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+                        {t.pricingPopular}
+                      </span>
+                    </div>
+                  )}
+
+                  <div>
+                    <h3 className={cn("text-xl font-bold mb-1", plan.highlighted ? "text-white" : "text-slate-900")}>
+                      {plan.name}
+                    </h3>
+                    <p className={cn("text-sm", plan.highlighted ? "text-slate-400" : "text-slate-500")}>
+                      {plan.description}
+                    </p>
+                  </div>
+
+                  <div className="flex items-end gap-1">
+                    <span className={cn("text-4xl sm:text-5xl font-black", plan.highlighted ? "text-white" : "text-slate-900")}>
+                      ${isAnnual ? plan.annualPrice : plan.price}
+                    </span>
+                    <span className={cn("text-base font-medium mb-1", plan.highlighted ? "text-slate-400" : "text-slate-500")}>
+                      {t.pricingPerMonth}
+                    </span>
+                  </div>
+                  {isAnnual && (
+                    <p className={cn("text-xs -mt-4", plan.highlighted ? "text-slate-400" : "text-slate-500")}>
+                      {t.pricingBilledAnnually}
+                    </p>
+                  )}
+
+                  <ul className="flex flex-col gap-3 flex-1">
+                    {plan.features.map((feature: string, fIndex: number) => (
+                      <li key={fIndex} className="flex items-start gap-3">
+                        <Check className={cn("w-4 h-4 mt-0.5 shrink-0", plan.highlighted ? "text-orange-400" : "text-orange-500")} />
+                        <span className={cn("text-sm", plan.highlighted ? "text-slate-300" : "text-slate-600")}>
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={`/${locale}/contact`}
+                    className={cn(
+                      "block text-center px-6 py-3 rounded-xl font-bold text-sm transition-all duration-200",
+                      plan.highlighted
+                        ? "bg-gradient-to-r from-orange-500 to-red-600 text-white hover:from-orange-600 hover:to-red-700 shadow-lg"
+                        : "bg-slate-900 text-white hover:bg-slate-700"
+                    )}
+                  >
+                    {plan.cta}
+                  </a>
                 </div>
               </AnimatedSection>
             ))}

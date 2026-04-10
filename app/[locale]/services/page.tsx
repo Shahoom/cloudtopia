@@ -2,22 +2,15 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { cn } from '@/lib/utils'
-import {
-    ArrowRight,
-    Code2,
-    Shield,
-    Rocket,
-    Users
-} from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import TechCursor from '@/components/ui/tech-cursor'
 import dynamic from 'next/dynamic'
 
 const ProceduralGroundBackground = dynamic(() => import('@/components/ui/procedural-ground-background'), { ssr: false })
-const AuroraBackground = dynamic(() => import('@/components/ui/aurora-background').then(mod => mod.AuroraBackground), { ssr: false })
 
 interface ServiceCard {
     name: string
@@ -272,7 +265,7 @@ const webApplicationsServices: ServiceCard[] = [
         taglineAr: 'برمجيات سحابية قابلة للتوسع',
         taglineTr: 'Ölçeklenebilir Bulut Yazılımı',
         description: 'Multi-tenant SaaS applications with subscription billing and analytics.',
-        descriptionAr: 'تتطبيقات SaaS متعددة المستأجرين مع فواتير الاشتراك والتحليلات.',
+        descriptionAr: 'تطبيقات SaaS متعددة المستأجرين مع فواتير الاشتراك والتحليلات.',
         descriptionTr: 'Abonelik faturalandırması ve analizler içeren çok kiracılı SaaS uygulamaları.',
         icon: '/icons/services/Admin Dashboard.png',
         gradient: 'from-purple-500 to-purple-600',
@@ -374,7 +367,6 @@ const webApplicationsServices: ServiceCard[] = [
     },
 ]
 
-// Category data
 const categories = [
     {
         id: 'digital-presence',
@@ -386,6 +378,7 @@ const categories = [
         descriptionTr: 'Etkileyici web siteleri, SEO ve sosyal medya yönetimi ile çevrimiçi varlığınızı oluşturun.',
         icon: '/icons/services/digitalpresence.png',
         gradient: 'from-blue-600 via-blue-400 to-teal-400',
+        accentColor: 'from-blue-400 to-cyan-400',
         services: digitalPresenceServices,
     },
     {
@@ -398,6 +391,7 @@ const categories = [
         descriptionTr: 'Özel CRM, POS, envanter ve İK yönetim sistemleri ile operasyonları kolaylaştırın.',
         icon: '/icons/services/systems.png',
         gradient: 'from-purple-600 via-purple-400 to-indigo-400',
+        accentColor: 'from-purple-400 to-indigo-400',
         services: businessSystemsServices,
     },
     {
@@ -410,6 +404,7 @@ const categories = [
         descriptionTr: 'SaaS platformlarından e-ticaret ve müşteri portallarına kadar güçlü web uygulamaları.',
         icon: '/icons/services/webapps.png',
         gradient: 'from-emerald-600 via-emerald-400 to-cyan-400',
+        accentColor: 'from-emerald-400 to-cyan-400',
         services: webApplicationsServices,
     },
 ]
@@ -418,83 +413,126 @@ function ServiceCardComponent({
     service,
     locale,
     index,
+    featured = false,
 }: {
     service: ServiceCard
     locale: string
     index: number
+    featured?: boolean
 }) {
-    const isRTL = locale === 'ar'
+    const name = locale === 'ar' ? service.nameAr : locale === 'tr' ? service.nameTr : service.name
+    const tagline = locale === 'ar' ? service.taglineAr : locale === 'tr' ? service.taglineTr : service.tagline
+    const description = locale === 'ar' ? service.descriptionAr : locale === 'tr' ? service.descriptionTr : service.description
+    const features = locale === 'ar' ? service.featuresAr : locale === 'tr' ? service.featuresTr : service.features
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group"
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.55, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className={cn('group', featured && 'md:col-span-2')}
         >
-            <Link href={`/${locale}${service.href}`} className="block">
-                <div className="relative h-full rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+            <Link href={`/${locale}${service.href}`} className="block h-full" aria-label={name}>
+                <div className={cn(
+                    'relative h-full rounded-2xl transition-all duration-500',
+                    'hover:-translate-y-1.5 hover:shadow-xl hover:shadow-violet-200/60'
+                )}>
                     <GlowingEffect
-                        spread={40}
+                        spread={50}
                         glow={true}
                         disabled={false}
-                        proximity={80}
+                        proximity={100}
                         inactiveZone={0.01}
-                        borderWidth={2}
+                        borderWidth={1}
                     />
 
-                    <div className="relative h-full flex flex-col p-6 rounded-2xl border border-black/5 bg-white/40 backdrop-blur-xl overflow-hidden z-10 transition-all duration-500 group-hover:bg-white/60 group-hover:border-black/10 shadow-sm">
-                        <div className={cn(
-                            "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br",
-                            service.gradient
-                        )} />
+                    {/* Card surface — white glass on lavender */}
+                    <div className={cn(
+                        'relative h-full flex flex-col rounded-2xl overflow-hidden z-10',
+                        'border border-white/80 transition-all duration-500',
+                        'bg-white/75 backdrop-blur-xl shadow-sm shadow-violet-100/80',
+                        'group-hover:bg-white/95 group-hover:border-violet-200/80 group-hover:shadow-lg',
+                        featured ? 'p-6 md:p-8' : 'p-5'
+                    )}>
+                        {/* Top-edge shimmer on hover */}
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        <div className="flex items-start gap-4 mb-4 relative z-10">
-                            <div className="w-14 h-14 flex items-center justify-center flex-shrink-0 rounded-xl transition-all duration-500 bg-transparent group-hover:scale-110">
+                        {/* Soft violet bloom — top right */}
+                        <div className={cn(
+                            'absolute rounded-full blur-3xl transition-all duration-700 pointer-events-none',
+                            'opacity-0 group-hover:opacity-[0.12]',
+                            'bg-gradient-to-br from-violet-300 to-purple-200',
+                            featured ? '-top-16 -right-16 w-72 h-72' : '-top-10 -right-10 w-44 h-44'
+                        )} aria-hidden="true" />
+
+                        {/* Header row */}
+                        <div className={cn('flex items-start gap-3 mb-3 relative z-10')}>
+                            {/* Icon container */}
+                            <div className={cn(
+                                'flex items-center justify-center flex-shrink-0 rounded-xl transition-all duration-500',
+                                'bg-[#f4f1f8] border border-violet-100',
+                                'group-hover:border-violet-200 group-hover:bg-violet-50',
+                                featured ? 'w-16 h-16' : 'w-12 h-12'
+                            )}>
                                 <img
                                     src={service.icon}
-                                    alt={locale === 'ar' ? service.nameAr : (locale === 'tr' ? service.nameTr : service.name)}
-                                    className="w-9 h-9 object-contain"
+                                    alt={name}
+                                    className={cn(
+                                        'object-contain transition-transform duration-500 group-hover:scale-110',
+                                        featured ? 'w-9 h-9' : 'w-7 h-7'
+                                    )}
                                 />
                             </div>
-                            <div className="flex-1 min-w-0">
-                                <h3 className="text-lg font-bold leading-tight mb-1 text-slate-900">
-                                    {locale === 'ar' ? service.nameAr : (locale === 'tr' ? service.nameTr : service.name)}
-                                </h3>
-                                <p className={cn(
-                                    "text-xs font-semibold bg-gradient-to-r bg-clip-text text-transparent",
-                                    service.gradient
-                                )}>
-                                    {locale === 'ar' ? service.taglineAr : (locale === 'tr' ? service.taglineTr : service.tagline)}
+
+                            <div className="flex-1 min-w-0 pt-0.5">
+                                {/* Tagline */}
+                                <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-600/70 mb-1.5 transition-colors duration-300 group-hover:text-amber-600">
+                                    {tagline}
                                 </p>
+                                {/* Name */}
+                                <h3 className={cn(
+                                    'font-bold leading-snug text-slate-800 transition-colors duration-300 group-hover:text-slate-900',
+                                    featured ? 'text-xl md:text-2xl' : 'text-base'
+                                )}>
+                                    {name}
+                                </h3>
+                            </div>
+
+                            {/* Arrow — appears on hover */}
+                            <div className="flex-shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 rtl:-translate-x-1 rtl:group-hover:translate-x-0">
+                                <div className="w-7 h-7 rounded-full bg-amber-500/10 border border-amber-400/30 flex items-center justify-center">
+                                    <ArrowUpRight className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
+                                </div>
                             </div>
                         </div>
 
-                        <p className="text-sm text-slate-600 mb-4 leading-relaxed relative z-10">
-                            {locale === 'ar' ? service.descriptionAr : (locale === 'tr' ? service.descriptionTr : service.description)}
+                        {/* Description */}
+                        <p className={cn(
+                            'text-slate-500 leading-relaxed relative z-10 mb-3 transition-colors duration-300 group-hover:text-slate-600',
+                            featured ? 'text-sm max-w-xl' : 'text-xs'
+                        )}>
+                            {description}
                         </p>
 
-                        <div className="mt-auto relative z-10">
-                            <div className="flex flex-wrap gap-2">
-                                {(locale === 'ar' ? service.featuresAr : (locale === 'tr' ? service.featuresTr : service.features)).map((feature, idx) => (
-                                    <span
-                                        key={idx}
-                                        className="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-all duration-300 text-slate-600 bg-black/5 group-hover:bg-black/10 border border-black/5"
-                                    >
-                                        {feature}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                        {/* Hairline divider */}
+                        <div className="border-t border-slate-100 mb-3 relative z-10 transition-colors duration-300 group-hover:border-violet-100" />
 
-                        <div className="absolute bottom-4 right-4 rtl:right-auto rtl:left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 rtl:-translate-x-2 rtl:group-hover:translate-x-0">
-                            <div className={cn(
-                                "w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-r",
-                                service.gradient
-                            )}>
-                                <ArrowRight className="w-4 h-4 text-white rtl:rotate-180" />
-                            </div>
+                        {/* Feature chips */}
+                        <div className="mt-auto relative z-10 flex flex-wrap gap-1.5">
+                            {features.map((feature, idx) => (
+                                <span
+                                    key={idx}
+                                    className={cn(
+                                        'inline-flex items-center px-2.5 py-1 text-[11px] font-semibold rounded-md',
+                                        'text-slate-500 bg-slate-50 border border-slate-100/80',
+                                        'transition-all duration-300',
+                                        'group-hover:text-violet-700 group-hover:bg-violet-50 group-hover:border-violet-100'
+                                    )}
+                                >
+                                    {feature}
+                                </span>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -505,8 +543,8 @@ function ServiceCardComponent({
 
 export default function ServicesPage() {
     const { dir, locale, t } = useLanguage()
-    const isRTL = locale === 'ar'
     const [isMobile, setIsMobile] = React.useState(false)
+    const [activeCategory, setActiveCategory] = React.useState('digital-presence')
 
     React.useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -515,245 +553,376 @@ export default function ServicesPage() {
         return () => window.removeEventListener('resize', checkMobile)
     }, [])
 
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) setActiveCategory(entry.target.id)
+                })
+            },
+            { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+        )
+        categories.forEach((cat) => {
+            const el = document.getElementById(cat.id)
+            if (el) observer.observe(el)
+        })
+        return () => observer.disconnect()
+    }, [])
+
     const content = {
         en: {
-            badge: 'OUR SERVICES',
-            title: 'Services to Move Your',
-            titleHighlight: 'Business to the Cloud',
-            description: 'From establishing your digital presence to building enterprise-grade systems, we provide end-to-end solutions tailored to your unique needs.',
+            badge: 'Our Services',
+            preTitle: 'Everything You Need to',
+            title: 'Thrive in the Digital Age',
+            description: 'From your first website to enterprise-grade platforms — end-to-end digital solutions engineered for the GCC market.',
             ctaButton: 'Get a Free Consultation',
             replyNote: 'We typically reply within 10 minutes',
             ctaSecondary: 'View Our Work',
             finalCta: {
-                title: 'Ready to Transform Your Business?',
+                preTitle: 'Ready to Begin?',
+                title: 'Transform Your Business Today',
                 description: "Let's discuss how we can help you achieve your goals with our comprehensive digital solutions.",
-                button: 'Start Your Project Today',
+                button: 'Start Your Project',
             }
         },
         ar: {
             badge: 'خدماتنا',
-            title: 'خدمات لنقل',
-            titleHighlight: 'عملك إلى السحابة',
-            description: 'من إنشاء حضورك الرقمي إلى بناء أنظمة بمستوى المؤسسات، نقدم حلولاً شاملة مصممة خصيصاً لاحتياجاتك الفريدة.',
+            preTitle: 'كل ما تحتاجه للنجاح في',
+            title: 'العصر الرقمي',
+            description: 'من موقعك الأول إلى منصات المؤسسات — حلول رقمية شاملة مصممة لسوق الخليج العربي.',
             ctaButton: 'احصل على استشارة مجانية',
-            replyNote: 'عادة ما نرد في غضون 10 دقائق',
+            replyNote: 'عادةً ما نرد خلال 10 دقائق',
             ctaSecondary: 'شاهد أعمالنا',
             finalCta: {
-                title: 'جاهز لتحويل عملك؟',
+                preTitle: 'جاهز للبدء؟',
+                title: 'حوّل عملك اليوم',
                 description: 'دعنا نناقش كيف يمكننا مساعدتك في تحقيق أهدافك من خلال حلولنا الرقمية الشاملة.',
-                button: 'ابدأ مشروعك اليوم',
+                button: 'ابدأ مشروعك',
             }
         },
         tr: {
-            badge: 'HİZMETLERİMİZ',
-            title: 'İşletmenizi',
-            titleHighlight: 'Buluta Taşıyacak Hizmetler',
-            description: 'Dijital varlığınızı oluşturmaktan kurumsal düzeyde sistemler kurmaya kadar, benzersiz ihtiyaçlarınıza göre uyarlanmış uçtan uca çözümler sunuyoruz.',
+            badge: 'Hizmetlerimiz',
+            preTitle: 'Dijital Çağda Başarılı Olmak İçin',
+            title: 'İhtiyacınız Olan Her Şey',
+            description: 'İlk web sitenizden kurumsal platformlara — KİK pazarı için tasarlanmış uçtan uca dijital çözümler.',
             ctaButton: 'Ücretsiz Danışmanlık Alın',
             replyNote: 'Genellikle 10 dakika içinde yanıt veririz',
             ctaSecondary: 'Çalışmalarımızı Görün',
             finalCta: {
-                title: 'İşletmenizi Dönüştürmeye Hazır mısınız?',
+                preTitle: 'Başlamaya Hazır mısınız?',
+                title: 'İşletmenizi Bugün Dönüştürün',
                 description: 'Kapsamlı dijital çözümlerimizle hedeflerinize ulaşmanıza nasıl yardımcı olabileceğimizi tartışalım.',
-                button: 'Projenize Bugün Başlayın',
+                button: 'Projenizi Başlatın',
             }
         }
     }
 
-    const currentContent = locale === 'ar' ? content.ar : (locale === 'tr' ? content.tr : content.en)
+    const c = locale === 'ar' ? content.ar : locale === 'tr' ? content.tr : content.en
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white selection:bg-blue-500/30" dir={dir}>
-            {/* Tech Cursor Effect - Only on Desktop */}
+        <div className="min-h-screen bg-[#f4f1f8] text-slate-900 selection:bg-violet-200/60" dir={dir}>
             {!isMobile && <TechCursor />}
-            {/* Hero Section - Preserved */}
-            <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-                <ProceduralGroundBackground />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/50 to-zinc-950 pointer-events-none" />
 
-                <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 py-16 text-center">
-                    <div className="flex flex-col items-center space-y-8">
+            {/* ─── HERO ─────────────────────────────────────────────── */}
+            <section
+                className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#f4f1f8]"
+                aria-label="Services hero"
+            >
+                {/* Soft radial lavender glow — center */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,#e8e0f7_0%,transparent_70%)] pointer-events-none" aria-hidden="true" />
+
+                {/* Decorative top edge */}
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-300/50 to-transparent" aria-hidden="true" />
+
+                {/* Faint grid texture */}
+                <div
+                    className="absolute inset-0 pointer-events-none opacity-[0.025]"
+                    style={{
+                        backgroundImage: 'linear-gradient(#8b5cf6 1px, transparent 1px), linear-gradient(to right, #8b5cf6 1px, transparent 1px)',
+                        backgroundSize: '64px 64px',
+                    }}
+                    aria-hidden="true"
+                />
+
+                {/* Ambient amber orb — subtle */}
+                <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-amber-300/10 blur-[100px] pointer-events-none" aria-hidden="true" />
+
+                <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 py-14 text-center">
+                    <div className="flex flex-col items-center space-y-5">
+
+                        {/* Badge */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: -12 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
                         >
-                            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                            <span className="text-xs font-bold text-blue-400 tracking-widest uppercase">
-                                {currentContent.badge}
+                            <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-violet-200 bg-white/70 text-violet-600 text-[11px] font-bold tracking-[0.2em] uppercase shadow-sm shadow-violet-100">
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
+                                {c.badge}
                             </span>
                         </motion.div>
 
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
+                        {/* Pre-title + Headline */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 28 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                            className="text-2xl md:text-6xl lg:text-8xl font-black tracking-tight leading-[1.05]"
+                            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            className="space-y-3"
                         >
-                            <span className="text-white">{currentContent.title}</span>
-                            <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                                {currentContent.titleHighlight}
-                            </span>
-                        </motion.h1>
+                            <p className="text-base md:text-lg font-medium text-slate-400 tracking-wide">
+                                {c.preTitle}
+                            </p>
+                            <h1
+                                className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[1.02] text-slate-900"
+                                style={{ textWrap: 'balance' } as React.CSSProperties}
+                            >
+                                {c.title}
+                            </h1>
+                        </motion.div>
 
+                        {/* Gold rule */}
+                        <motion.div
+                            initial={{ scaleX: 0, opacity: 0 }}
+                            animate={{ scaleX: 1, opacity: 1 }}
+                            transition={{ duration: 0.8, delay: 0.38 }}
+                            className="w-14 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+                            aria-hidden="true"
+                        />
+
+                        {/* Description */}
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
-                            className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed mx-auto"
+                            transition={{ duration: 0.8, delay: 0.5 }}
+                            className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed mx-auto"
+                            style={{ textWrap: 'balance' } as React.CSSProperties}
                         >
-                            {currentContent.description}
+                            {c.description}
                         </motion.p>
 
+                        {/* CTAs */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
-                            className="flex flex-col items-center gap-6 pt-4"
+                            transition={{ duration: 0.7, delay: 0.62 }}
+                            className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full"
                         >
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-                                <a
-                                    href="mailto:info@cloudtopia.net"
-                                    className="group relative inline-flex items-center gap-3 px-10 py-4 bg-white text-zinc-950 rounded-xl font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto justify-center"
-                                >
-                                    <span>{currentContent.ctaButton}</span>
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
-                                </a>
-                                <Link
-                                    href={`/${locale}/projects`}
-                                    className="inline-flex items-center gap-2 px-10 py-4 text-white border-2 border-white/10 rounded-xl font-semibold text-lg hover:bg-white/5 transition-all duration-300 w-full sm:w-auto justify-center"
-                                >
-                                    {currentContent.ctaSecondary}
-                                </Link>
-                            </div>
-                            <span className="text-xs font-medium text-slate-500 tracking-wide bg-white/5 py-1.5 px-4 rounded-full border border-white/5">
-                                {currentContent.replyNote}
-                            </span>
+                            <a
+                                href="mailto:info@cloudtopia.net"
+                                className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold text-sm bg-amber-500 text-white hover:bg-amber-400 transition-all duration-300 hover:scale-105 active:scale-95 touch-manipulation w-full sm:w-auto justify-center shadow-md shadow-amber-200"
+                                aria-label={c.ctaButton}
+                            >
+                                {c.ctaButton}
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" aria-hidden="true" />
+                            </a>
+                            <Link
+                                href={`/${locale}/projects`}
+                                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm text-slate-600 border border-slate-200 bg-white/60 hover:border-violet-200 hover:bg-white hover:text-violet-700 transition-all duration-300 w-full sm:w-auto justify-center touch-manipulation"
+                            >
+                                {c.ctaSecondary}
+                            </Link>
                         </motion.div>
+
+                        {/* Reply note */}
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.88 }}
+                            className="text-[11px] text-slate-400 tracking-wide"
+                        >
+                            {c.replyNote}
+                        </motion.p>
                     </div>
                 </div>
 
+                {/* Scroll indicator */}
                 <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, y: [0, 10, 0] }}
-                    transition={{ delay: 1.5, duration: 2, repeat: Infinity }}
+                    animate={{ opacity: 1, y: [0, 8, 0] }}
+                    transition={{ delay: 1.4, duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                     className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                    aria-hidden="true"
                 >
-                    <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/20">
-                        {(t as any).common?.scrollToExplore || (locale === 'ar' ? 'اسحب للاستكشاف' : (locale === 'tr' ? 'Keşfetmek için Kaydırın' : 'Scroll to Explore'))}
-                    </span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500/50 to-transparent" />
+                    <div className="w-px h-10 bg-gradient-to-b from-violet-400/50 to-transparent" />
                 </motion.div>
             </section>
 
-            {/* Continuous Offering Flow */}
-            <AuroraBackground className="!h-auto !bg-lavender">
-                <div className="relative z-10 w-full">
-                    {/* Navigation - Simplified */}
-                    <nav className="sticky top-0 z-50 border-b border-black/5 bg-lavender/80 backdrop-blur-xl">
-                        <div className="max-w-7xl mx-auto px-4 md:px-6">
-                            <div className="flex items-center justify-center gap-4 md:gap-8 py-4 overflow-x-auto no-scrollbar">
-                                {categories.map((category) => (
+            {/* ─── SERVICES ─────────────────────────────────────────── */}
+            <div className="bg-[#f4f1f8]">
+
+                {/* Sticky category nav */}
+                <nav
+                    className="sticky top-0 z-40 border-b border-violet-100/80 bg-[#f4f1f8]/90 backdrop-blur-xl"
+                    aria-label="Service categories"
+                >
+                    <div className="max-w-7xl mx-auto px-4 md:px-8">
+                        <div className="flex items-center justify-center gap-2 md:gap-3 py-3.5 overflow-x-auto no-scrollbar">
+                            {categories.map((category) => {
+                                const catName = locale === 'ar' ? category.nameAr : locale === 'tr' ? category.nameTr : category.name
+                                const isActive = activeCategory === category.id
+                                return (
                                     <Link
                                         key={category.id}
                                         href={`#${category.id}`}
-                                        className="group whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors border border-transparent hover:border-black/5 hover:bg-black/5"
+                                        aria-current={isActive ? 'true' : undefined}
+                                        className={cn(
+                                            'group whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 touch-manipulation',
+                                            isActive
+                                                ? 'bg-white border border-violet-200 text-violet-700 shadow-sm shadow-violet-100'
+                                                : 'text-slate-400 hover:text-slate-700 border border-transparent hover:border-slate-200 hover:bg-white/70'
+                                        )}
                                     >
-                                        <img src={category.icon} alt={locale === 'ar' ? category.nameAr : (locale === 'tr' ? category.nameTr : category.name)} width={16} height={16} className="w-4 h-4 opacity-70 group-hover:opacity-100" />
-                                        {locale === 'ar' ? category.nameAr : (locale === 'tr' ? category.nameTr : category.name)}
+                                        <img
+                                            src={category.icon}
+                                            alt=""
+                                            aria-hidden="true"
+                                            width={14}
+                                            height={14}
+                                            className={cn(
+                                                'w-3.5 h-3.5 transition-opacity duration-300',
+                                                isActive ? 'opacity-70' : 'opacity-35 group-hover:opacity-60'
+                                            )}
+                                        />
+                                        <span>{catName}</span>
+                                        {isActive && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" aria-hidden="true" />
+                                        )}
                                     </Link>
-                                ))}
-                            </div>
+                                )
+                            })}
                         </div>
-                    </nav>
+                    </div>
+                </nav>
 
-                    {/* Categories Narrative */}
-                    <div className="max-w-7xl mx-auto px-4 md:px-6">
-                        {categories.map((category, index) => (
+                {/* Category sections */}
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                    {categories.map((category, catIndex) => {
+                        const catName = locale === 'ar' ? category.nameAr : locale === 'tr' ? category.nameTr : category.name
+                        const catDesc = locale === 'ar' ? category.descriptionAr : locale === 'tr' ? category.descriptionTr : category.description
+                        const [featuredService, ...restServices] = category.services
+
+                        return (
                             <section
                                 key={category.id}
                                 id={category.id}
-                                className="py-24 md:py-40 first:pt-20 border-b border-black/5 last:border-0"
+                                className="py-10 md:py-16 border-b border-violet-100/60 last:border-0"
+                                aria-labelledby={`cat-heading-${category.id}`}
                             >
-                                <div className="grid lg:grid-cols-[1fr_2.5fr] gap-12 items-start">
-                                    {/* Sticky Sidebar Header */}
-                                    <div className="lg:sticky lg:top-32 space-y-6">
-                                        <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-black/5 border border-black/10">
-                                            <span className="text-[10px] font-bold text-blue-600">0{index + 1}</span>
-                                            <div className={cn("w-1.5 h-1.5 rounded-full bg-gradient-to-r", category.gradient)} />
+                                {/* Category header */}
+                                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
+                                    <div className="space-y-2">
+                                        {/* Index + accent line */}
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[11px] font-black tracking-[0.3em] text-amber-500">
+                                                0{catIndex + 1}
+                                            </span>
+                                            <div className={cn(
+                                                'h-px flex-1 max-w-[48px] bg-gradient-to-r',
+                                                category.accentColor
+                                            )} aria-hidden="true" />
                                         </div>
-                                        <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
-                                            {locale === 'ar' ? category.nameAr : (locale === 'tr' ? category.nameTr : category.name)}
-                                        </h2>
-                                        <p className="text-slate-600 text-lg leading-relaxed max-w-sm">
-                                            {locale === 'ar' ? category.descriptionAr : (locale === 'tr' ? category.descriptionTr : category.description)}
-                                        </p>
+
+                                        {/* Category icon + name */}
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-white border border-violet-100 shadow-sm">
+                                                <img
+                                                    src={category.icon}
+                                                    alt=""
+                                                    aria-hidden="true"
+                                                    width={20}
+                                                    height={20}
+                                                    className="w-5 h-5 opacity-75"
+                                                />
+                                            </div>
+                                            <h2
+                                                id={`cat-heading-${category.id}`}
+                                                className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900"
+                                            >
+                                                {catName}
+                                            </h2>
+                                        </div>
                                     </div>
 
-                                    {/* Continuous Cards Grid */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                                        {category.services.map((service, serviceIndex) => (
-                                            <React.Fragment key={service.name}>
-                                                <ServiceCardComponent
-                                                    service={service}
-                                                    locale={locale as string}
-                                                    index={serviceIndex}
-                                                />
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
+                                    {/* Description — right on desktop */}
+                                    <p className="text-sm text-slate-400 max-w-[260px] leading-relaxed md:text-right rtl:md:text-left border-l border-violet-100 pl-4 rtl:border-l-0 rtl:border-r rtl:pl-0 rtl:pr-4">
+                                        {catDesc}
+                                    </p>
+                                </div>
+
+                                {/* Featured card — full width */}
+                                <div className="mb-3">
+                                    <ServiceCardComponent
+                                        service={featuredService}
+                                        locale={locale as string}
+                                        index={0}
+                                        featured={true}
+                                    />
+                                </div>
+
+                                {/* Remaining cards grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {restServices.map((service, idx) => (
+                                        <ServiceCardComponent
+                                            key={service.name}
+                                            service={service}
+                                            locale={locale as string}
+                                            index={idx + 1}
+                                        />
+                                    ))}
                                 </div>
                             </section>
-                        ))}
-                    </div>
+                        )
+                    })}
                 </div>
-            </AuroraBackground>
+            </div>
 
-            {/* Final CTA - Bookended UI (Matches Hero) */}
-            <section className="relative py-32 md:py-48 flex items-center justify-center overflow-hidden bg-zinc-950">
-                <ProceduralGroundBackground />
-                <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/50 to-zinc-950 pointer-events-none" />
+            {/* ─── FINAL CTA ─────────────────────────────────────────── */}
+            {/* Deep violet/plum section — contrasts beautifully with lavender body */}
+            <section
+                className="relative py-16 md:py-24 flex items-center justify-center overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, #1e0b3e 0%, #2d1065 50%, #1a0a38 100%)' }}
+                aria-label="Call to action"
+            >
+                {/* Mesh glow layers */}
+                <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none" aria-hidden="true" />
+                <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-amber-400/8 blur-[100px] pointer-events-none" aria-hidden="true" />
 
-                <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                {/* Top edge shimmer */}
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" aria-hidden="true" />
+
+                <div className="relative z-10 max-w-3xl mx-auto px-5 text-center">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="flex flex-col items-center space-y-8"
+                        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="flex flex-col items-center space-y-5"
                     >
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                            className="space-y-4"
-                        >
-                            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.1]">
-                                <span className="text-white">{currentContent.finalCta.title.split('?')[0]}</span>
-                                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                                    ?
-                                </span>
-                            </h2>
-                            <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                                {currentContent.finalCta.description}
-                            </p>
-                        </motion.div>
+                        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-400/20 bg-violet-400/5 text-violet-300 text-[11px] font-bold tracking-[0.2em] uppercase">
+                            {c.finalCta.preTitle}
+                        </span>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
+                        <h2
+                            className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] text-white"
+                            style={{ textWrap: 'balance' } as React.CSSProperties}
                         >
-                            <Link
-                                href={`/${locale}/contact`}
-                                className="group relative inline-flex items-center gap-3 px-12 py-5 bg-white text-zinc-950 rounded-2xl font-black text-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
-                            >
-                                <span>{currentContent.finalCta.button}</span>
-                                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
-                            </Link>
-                        </motion.div>
+                            {c.finalCta.title}
+                        </h2>
+
+                        <div className="w-12 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" aria-hidden="true" />
+
+                        <p className="text-base md:text-lg text-violet-200/60 max-w-lg mx-auto leading-relaxed">
+                            {c.finalCta.description}
+                        </p>
+
+                        <Link
+                            href={`/${locale}/contact`}
+                            className="group inline-flex items-center gap-3 px-10 py-4 bg-amber-500 text-white rounded-xl font-bold text-base transition-all duration-300 hover:bg-amber-400 hover:scale-105 active:scale-95 touch-manipulation shadow-lg shadow-amber-500/25"
+                            aria-label={c.finalCta.button}
+                        >
+                            {c.finalCta.button}
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" aria-hidden="true" />
+                        </Link>
                     </motion.div>
                 </div>
             </section>

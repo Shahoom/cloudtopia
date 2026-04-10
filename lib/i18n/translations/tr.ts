@@ -6,6 +6,7 @@ export const tr = {
     labs: 'Laboratuvar',
     about: 'Hakkımızda',
     blog: 'Blog',
+    pricing: 'Fiyatlar',
     contact: 'İletişim',
     getStarted: 'Başlayın',
   },
@@ -483,7 +484,7 @@ export const tr = {
           regions: ['Türkiye', 'BAE', 'Suudi Arabistan', 'Katar', 'Irak', 'Küresel Pazarlar'],
           description: 'Türkiye ve Orta Doğu pazarlarında, çok dilli (Türkçe/Arapça/İngilizce) ve RTL desteğiyle işletmenizi global arenaya taşıyoruz.',
         },
-        pricingApproach: 'Proje karmaşıklığına ve ihtiyaçlarınıza göre esnek fiyatlandırma modelleri, şeffaf tekliflendirme ve yapılandırılmış ödeme seçenekleri sunuyoruz.',
+        pricingApproach: '5 sayfalık web siteleri $999\'dan başlar. İş siteleri $2,499\'dan (15 sayfaya kadar + CMS). Özel premium projeler $4,999\'dan. Büyük projelerde kademeli ödeme imkânı. Ücretsiz danışmanlık dahil.',
         slug: 'website-design',
         howItWorks: [
           { title: 'Hedef Keşfi', description: 'İş modelinize, marka kimliğinize ve proje hedeflerinize derinlemesine dalış.' },
@@ -514,7 +515,7 @@ export const tr = {
           regions: ['Türkiye', 'BAE', 'Suudi Arabistan', 'Irak', 'Küresel Pazarlar'],
           description: 'Yerel ödeme sistemleri, çoklu para birimi ve tam çok dilli destekle işletmenizi global ticarete hazırlıyoruz.',
         },
-        pricingApproach: 'İşletme büyüklüğüne ve ürün hacmine göre özelleştirilmiş paketler, şeffaf maliyet yapısı ve sürdürülebilir büyüme odaklı modeller sunuyoruz.',
+        pricingApproach: 'Temel çevrimiçi mağazalar $2,499\'dan. Tam özellikli mağazalar $4,999\'dan. Kurumsal entegrasyonlu çözümler $9,999\'dan. Aylık bakım planları $199/ay\'dan. Ücretsiz demo mevcut.',
         slug: 'ecommerce-solutions',
         howItWorks: [
           { title: 'Stratejik Mimari', description: 'Hedef pazarınıza uygun ürün kategorileri, ödeme akışları ve lojistik mantığının planlanması.' },
@@ -545,7 +546,7 @@ export const tr = {
           regions: ['Türkiye', 'Körfez Bölgesi', 'Irak'],
           description: 'Yerel POS sistemleriyle uyumlu, esnek ve dinamik menü çözümlerimizle gastronomi sektörünün yanındayız.',
         },
-        pricingApproach: 'Şube sayısı ve özellik setine göre şekillenen avantajlı abonelik modelleri ve kurulum paketleri sunuyoruz.',
+        pricingApproach: 'Başlangıç planı $39/ay\'dan (1 lokasyon). Profesyonel $89/ay\'dan (3 lokasyon + analitik). İşletme $179/ay\'dan (sınırsız lokasyon + POS). Yıllık ödemede %17 tasarruf. 14 günlük ücretsiz deneme.',
         slug: 'restaurant-qr-menu',
         howItWorks: [
           { title: 'Menü Dijitalleştirme', description: 'Fiziksel menünüzü profesyonel bir dijital deneyime, kaliteli görsellerle aktarıyoruz.' },
@@ -576,7 +577,7 @@ export const tr = {
           regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel Pazarlar'],
           description: 'Bölgesel trendleri analiz ediyor ve farklı demografikleri etkileyen çok dilli içerik stratejileri kurguluyoruz.',
         },
-        pricingApproach: 'İhtiyaçlarınıza göre şekillenen aylık yönetim paketleri; temel içerik planlamasından kapsamlı büyüme stratejilerine kadar esnek seçenekler.',
+        pricingApproach: 'Aylık $499\'dan (2 platform, 12 gönderi). Büyüme paketi $999/ay (4 platform, 24 gönderi + reels). Premium hizmet $1,999/ay\'dan (tüm platformlar + reklam yönetimi). Kurumsal teklifler mevcut.',
         slug: 'social-media-management',
         howItWorks: [
           { title: 'Marka Denetimi', description: 'Mevcut sosyal varlığınızı ve sektörünüzdeki rekabet ortamını derinlemesine analiz etme.' },
@@ -607,7 +608,7 @@ export const tr = {
           regions: ['Türkiye', 'Körfez Bölgesi', 'Global'],
           description: 'Kültürel ve dilsel nüansları göz önünde bulundurarak, hedef kitlenize en uygun tonda içerikler üretiyoruz.',
         },
-        pricingApproach: 'Kelime sayısına, içerik sıklığına veya tutarlı bir yayın takvimi sağlayan avantajlı aylık paketlere göre fiyatlandırma.',
+        pricingApproach: 'Aylık içerik paketleri $299\'dan (4 blog veya 8 sosyal tasarım). Standart $599/ay (8 gönderi + grafikler + video küçük resimleri). Premium $1,199/ay\'dan (sınırsız içerik + tam editoryal takvim).',
         slug: 'content-creation',
         howItWorks: [
           { title: 'Kitle Analizi', description: 'İçerin etkili olması için ideal müşterinizin psikografik özelliklerini ve ilgi alanlarını tanımlıyoruz.' },
@@ -635,7 +636,7 @@ export const tr = {
         useCases: ['Büyüme Hedefleyen KOBİ\'ler', 'E-ticaret Mağazaları', 'Kurumsal Hizmet Sağlayıcılar', 'Sağlık ve Gayrimenkul Platformları', 'Hukuk ve Danışmanlık Firmaları', 'Niş İçerik Portalları'],
         technologies: ['Google Search Console', 'Ahrefs & SEMrush', 'Google Analytics 4', 'Screaming Frog SEO Spider', 'Schema.org Veri İşaretleme'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Ülkeleri', 'Küresel'], description: 'Bölgesel arama alışkanlıklarını analiz ederek, markanızı hedef kitlenizin arama yaptığı her yerde görünür kılıyoruz.' },
-        pricingApproach: 'Sektör rekabetine ve hedeflere göre özelleştirilmiş, sonuç odaklı aylık yönetim modelleri.',
+        pricingApproach: 'SEO hizmetleri $599/ay\'dan (yerel SEO, 5 anahtar kelime). Büyüme planı $1,199/ay (bölgesel SEO, 20 kelime + içerik). Tam hizmet $2,499/ay\'dan (kurumsal SEO + link inşası). Min. 3 aylık taahhüt.',
         slug: 'seo-optimization',
         howItWorks: [
           { title: 'SEO Check-up', description: 'Sitenizin mevcut durumunu analiz ediyor ve iyileştirme yol haritasını çıkarıyoruz.' },
@@ -660,7 +661,7 @@ export const tr = {
         useCases: ['Yeni Kurulan Girişimler (Startuplar)', 'Yenilenmek İsteyen (Rebranding) Şirketler', 'Gayrimenkul ve Hizmet Sektörü', 'Danışmanlık ve Mühendislik Firmaları', 'Kişisel Marka Gelişimi', 'Büyük Ölçekli Holdingler'],
         technologies: ['Adobe Creative Cloud (Ai, Ps, Id)', 'Görsel Strateji Metodolojileri', 'Renk Teorisi Standartları', 'Dijital Varlık Yönetimi'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Yerel estetik anlayışını uluslararası profesyonel standartlarla birleştirerek markanızı global sahneye hazırlıyoruz.' },
-        pricingApproach: 'Yalnızca logodan, yüzlerce sayfalık kapsamlı kimlik kılavuzlarına kadar ihtiyacınıza uygun esnek paket seçenekleri.',
+        pricingApproach: 'Logo ve kimlik $499\'dan. Başlangıç marka kiti $999\'dan (logo + renk paleti + tipografi). Tam marka kılavuzu $2,499\'dan (100+ sayfa, tüm varlıklar). Kurumsal paketler $4,999\'dan.',
         slug: 'visual-identity',
         howItWorks: [
           { title: 'Marka Keşfi', description: 'Misyonunuzu, değerlerinizi ve pazarınızdaki boşlukları belirlemek için detaylı analiz yapıyoruz.' },
@@ -687,7 +688,7 @@ export const tr = {
         useCases: ['B2B Satış ve Pazarlama Ekipleri', 'Profesyonel Hizmet ve Danışmanlık', 'Gayrimenkul ve Proje Geliştirme', 'Finans ve Sigorta Sektörü', 'Teknoloji ve Yazılım Şirketleri', 'Sağlık ve Turizm Hizmetleri'],
         technologies: ['Özel CRM Yazılımı', 'Salesforce & HubSpot Entegrasyonu', 'RESTful API Mimarisi', 'Güvenli Bulut Altyapısı', 'Hibrit Mobil Uygulamalar'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Bulut tabanlı CRM sistemlerimiz, Türkiye ve Orta Doğu pazarının çok dilli (Türkçe/Arapça/İngilizce) ve yerel mevzuat ihtiyaçlarına tam uyumlu olarak kurgulanmıştır.' },
-        pricingApproach: 'Kullanıcı sayısı, modül çeşitliliği ve entegrasyon seviyesine göre esnek fiyatlandırma; sıfırdan geliştirme veya mevcut sistem optimizasyonu seçenekleri.',
+        pricingApproach: 'Özel CRM $3,999\'dan (5 kullanıcıya kadar). Büyüyen ekipler $6,999\'dan (15 kullanıcı + otomasyon). Kurumsal $12,999\'dan (sınırsız kullanıcı). Aylık SaaS planları $149/ay\'dan. Ücretsiz demo mevcut.',
         slug: 'crm-system',
         howItWorks: [
           { title: 'Süreç Tasarımı', description: 'Potansiyel müşteriyle ilk temastan satış sonrası desteğe kadar olan yolculuğunuzu modelliyoruz.' },
@@ -712,7 +713,7 @@ export const tr = {
         useCases: ['Perakende ve Mağazacılık', 'Üretim ve Ham Madde Takibi', 'Toptan Dağıtım ve Lojistik', 'Gıda, İçecek ve Restoranlar', 'Moda ve Tekstil Üreticileri', 'İlaç ve Sağlık Ekipmanları'],
         technologies: ['Barkod/QR Sistemleri', 'RFID Takip Teknolojileri', 'Yüksek Performanslı Bulut Veritabanı', 'Hibrit Mobil Uygulamalar', 'ERP & API Entegrasyonları'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Global'], description: 'Depo ve stok yönetim sistemlerimiz Türkiye ve bölge ülkelerinde, sınır ötesi ticaret operasyonlarına uygun olarak dağıtılmaktadır.' },
-        pricingApproach: 'SKU (Ürün kalemi) sayısı, depo lokasyonları ve kullanıcı hacmine göre ölçeklenebilir, şeffaf tekliflendirme modelleri.',
+        pricingApproach: 'Bulut planı $199/ay\'dan (1 lokasyon, 1.000 SKU). Çok lokasyonlu $399/ay (5 lokasyon, sınırsız SKU). Kendi sunucusunda $4,999\'dan tek seferlik. Kurulum $499\'dan. Büyük operasyonlara hacim indirimi.',
         slug: 'inventory-management',
         howItWorks: [
           { title: 'Süreç Analizi', description: 'Fiziksel stok hareketlerinizi analiz ederek dijital sistemle kusursuz senkronizasyon sağlıyoruz.' },
@@ -737,7 +738,7 @@ export const tr = {
         useCases: ['Yerel ve Zincir Mağazalar', 'Restoran ve Kafeteryalar', 'Hızlı Tüketim (Hizmet) Noktaları', 'Butikler ve Konsept Tasarım Evleri', 'Hizmet Odaklı Lokal İşletmeler', 'Büyük Ölçekli Karma Alışveriş Noktaları'],
         technologies: ['Bulut POS Mimarisi', 'Tablet ve Mobil Uyumlu Panel', 'Güvenli Ödeme Geçidi Entegrasyonları', 'Termal Fiş ve Etiket Yazıcıları', 'Yeni Nesil Barkod Okuyucular'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Global'], description: 'POS çözümlerimiz Türkiye ve Orta Doğu genelindeki mevzuatlara uyumlu, çok dilli ve dövizli operasyonları destekleyecek şekilde kurgulanmıştır.' },
-        pricingApproach: 'Terminal sayısına ve ek özelliklere göre şekillenen esnek abonelik modelleri veya donanım dahil anahtar teslim paketler.',
+        pricingApproach: 'POS yazılımı terminal başına $99/ay\'dan. Donanım paketleri $799\'dan (tablet + stand + fiş yazıcısı). Tam kurulum $1,499\'dan/terminal. Çoklu terminal indirimleri mevcut. Yazılım güncellemeleri ve destek dahil.',
         slug: 'pos-system',
         howItWorks: [
           { title: 'İş Akışı Analizi', description: 'İşletmenizin satış ve depo hızına en uygun özel arayüz yapılandırmasını seçiyoruz.' },
@@ -762,7 +763,7 @@ export const tr = {
         useCases: ['Hızla Büyüyen Şirketler', 'Üretim ve Sanayi Tesisleri', 'Hizmet Odaklı Ajanslar', 'Sağlık ve Eğitim Kurumları', 'Zincir Mağazacılık Grupları', 'Remote (Uzaktan) Çalışan Ekipler'],
         technologies: ['Güvenli Bulut HR Framework', 'Biyometrik ve Temassız Erişim', 'Entegre Bordro Motorları', 'Mobil Uyumlu Employee Portal', 'RESTful API Katmanı'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'İK sistemlerimiz, Türkiye İş Kanunu ve bölgesel çalışma yasalarıyla tam uyumlu, çok dilli arayüzler sunmaktadır.' },
-        pricingApproach: 'Çalışan sayısına göre ölçeklenen aylık abonelik paketleri veya büyük kurumlara özel "On-Premise" dağıtım seçenekleri.',
+        pricingApproach: 'Çalışan başına $8/ay\'dan (temel İK + izin yönetimi). Tam İK + bordro $14/çalışan/ay\'dan. Performans + gelişmiş analitik $20/çalışan/ay\'dan. Min. 10 çalışan. 30 günlük ücretsiz deneme. 500+ çalışan için kurumsal paketler.',
         slug: 'hr-management',
         howItWorks: [
           { title: 'Politika Yapılandırma', description: 'Kurumunuzun izin, fazla mesai ve yan hak politikalarını sisteme dijital olarak işliyoruz.' },
@@ -787,7 +788,7 @@ export const tr = {
         useCases: ['Güzellik Merkezleri ve Spa\'lar', 'Sağlık ve Diş Kliniklerini', 'Spor Salonları ve Stüdyolar', 'Hukuk ve Danışmanlik Büroarı', 'Etkinlik ve Mekan İşletmeciliği', 'Eğitim ve Özel Ders Platformları'],
         technologies: ['Yüksek Erişilebilirlikli Sunucu Altyapısı', 'Güvenli Ödeme Geçitleri', 'Google & Outlook Takvim Senkronizasyonu', 'Push Bildirim Servisleri'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Rezervasyon çözümlerimiz, farklı zaman dilimlerine ve bölgesel ödeme alışkanlıklarına tam uyumlu olarak her dilde çalışmaktadır.' },
-        pricingApproach: 'Hizmet hacmine ve personel sayısına göre ölçeklendirilebilir aylık üyelik modelleri veya kuruma özel geliştirilmiş çözümler.',
+        pricingApproach: 'Başlangıç $49/ay\'dan (3 personel, 200 rezervasyon). Büyüme $99/ay (10 personel, 1.000 rezervasyon + SMS). İşletme $199/ay (sınırsız personel + rezervasyon + özel domain). 14 günlük ücretsiz deneme. Kurulum ücreti yok.',
         slug: 'booking-system',
         howItWorks: [
           { title: 'Hizmet Tanımlama', description: 'Hizmetlerinizi, personel yetkinliklerini ve müsaitlik periyotlarını sisteme yapılandırıyoruz.' },
@@ -812,7 +813,7 @@ export const tr = {
         useCases: ['Üst Düzey Yönetici Özetleri', 'Satış ve Pazarlama Ekipleri', 'Operasyon ve Lojistik Yönetimi', 'Çok Şubeli İşletme Zincirleri', 'E-ticaret Performans Takibi', 'Finansal Kontrolör ve Denetçiler'],
         technologies: ['Özel Geliştirilmiş BI Panoları', 'Power BI & Tableau Entegrasyonu', 'Modern Veri Ambarı Mimarisi', 'Gerçek Zamanlı API Entegrasyonları', 'Bulut Veri İşleme Birimleri'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Analitik çözümlerimiz, küresel veri standartlarına uygun olarak Türkiye ve Orta Doğu genelindeki kurumsal yapılara hizmet vermektedir.' },
-        pricingApproach: 'Veri kaynağı sayısına, güncelleme sıklığına ve kullanıcı kapasitesine göre özelleştirilmiş şeffaf fiyatlandırma.',
+        pricingApproach: 'Başlangıç dashboard $2,499\'dan (3 veri kaynağı, 5 kullanıcı). İşletme BI $4,999\'dan (10 kaynak, sınırsız kullanıcı + otomatik raporlar). Kurumsal $9,999\'dan. Aylık bulut planı $299/ay\'dan. Eğitim dahil.',
         slug: 'analytics-dashboard',
         howItWorks: [
           { title: 'Veri Denetimi', description: 'Dağınık haldeki veri kaynaklarınızı belirliyor ve ortak bir yapıda birleştirme stratejisini kuruyoruz.' },
@@ -839,7 +840,7 @@ export const tr = {
         useCases: ['B2B İş Ortağı Portalları', 'Eğitim ve Kurs Yönetim Alanları', 'Danışmanlık ve Hizmet Takip Panelleri', 'Yazılım (SaaS) Kullanıcı Portalları', 'Sağlık ve Hasta Kayıt Sistemleri', 'Finans ve Gayrimenkul Yönetim Platformları'],
         technologies: ['React / Next.js Framework', 'Güvenli JWT ve OAuth Mimarisi', 'Dağıtık Bulut Depolama', 'Gerçek Zamanlı WebSocket Bildirimleri', 'Mikroservis API Entegrasyonu'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Müşteri portallarımız Türkiye ve global pazardaki güvenlik standartlarına ve çok dilli kullanım dinamiklerine uygun olarak kurgulanır.' },
-        pricingApproach: 'Gerekli özellik seti, kullanıcı hacmi ve entegrasyon derinliğine göre belirlenen proje tabanlı şeffaf fiyatlandırma.',
+        pricingApproach: 'Müşteri portalları $3,999\'dan (500 kullanıcıya kadar). Ödeme ve belge yönetimli gelişmiş portallar $6,999\'dan. Kurumsal $12,999\'dan. Aylık barındırma $149/ay\'dan. Ücretsiz tasarım danışmanlığı dahil.',
         slug: 'customer-portal',
         howItWorks: [
           { title: 'Deneyim Tasarımı', description: 'Müşterilerinizin bağımsız olarak yapması gereken kritik işlemleri ve erişim ihtiyaçlarını planlıyoruz.' },
@@ -864,7 +865,7 @@ export const tr = {
         useCases: ['E-ticaret ve Katalog Yönetimi', 'SaaS ve Platform Admin Sistemleri', 'Çok Şubeli Operasyon Merkezleri', 'Haber ve İçerik Portalları', 'Hizmet ve Pazaryeri Uygulamaları', 'Kurumsal ERP/CRM Arayüzleri'],
         technologies: ['React / Next.js Framework', 'Modern Admin UI Kitleri', 'Real-time Data Streaming', 'D3.js / Chart.js Entegrasyonu', 'Güvenli Rol Bazlı Erişim (RBAC)'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Yönetim panellerimiz, kurumsal çalışma kültürüne ve bölgesel dillerdeki teknik terimlere uygun olarak anahtar teslim teslim edilir.' },
-        pricingApproach: 'Modül sayısı, veri karmaşıklığı ve kullanıcı rol sayısına göre şekillenen özel fiyatlandırma modelleri.',
+        pricingApproach: 'Admin dashboardlar $4,999\'dan (temel modüller, 10 yönetici). Gelişmiş $8,999\'dan (sınırsız modül + rol yönetimi + denetim kayıtları). Kurumsal $15,999\'dan. Aylık SaaS $249/ay\'dan. Ücretsiz keşif seansı.',
         slug: 'admin-dashboard',
         howItWorks: [
           { title: 'Süreç Denetimi', description: 'Merkezi bir yapıya taşınabilecek manüel iş yüklerini ve onay mekanizmalarını belirliyoruz.' },
@@ -889,7 +890,7 @@ export const tr = {
         useCases: ['Lüks Oteller ve Tatil Köyleri', 'Büyük Ölçekli Etkinlik ve Kongre Merkezleri', 'Sağlık Turizmi ve Klinik Grupları', 'Araç ve Ekipman Kiralama Filoları', 'Modern Ortak Çalışma Alanları', 'Restoran Zincirleri ve Masalı Servisler'],
         technologies: ['React / Next.js Framework', 'Gerçek Zamanlı Veri Senkronizasyonu', 'Iyzico / Stripe / PayTR Entegrasyonları', 'Google & Apple Takvim API\'leri', 'AWS Sunucu Altyapısı'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Global'], description: 'Platformlarımız, Türkiye ve dünya genelindeki konaklama ve hizmet standartlarına tam uyumlu, yerel ödeme sistemlerine entegre olarak çalışır.' },
-        pricingApproach: 'Hizmet modüllerine, beklenen işlem hacmine ve istenen özelleştirme derinliğine göre şekillenen profesyonel fiyatlandırma.',
+        pricingApproach: 'Rezervasyon platformları $5,999\'dan (tek hizmet türü + ödeme). Çok hizmetli $9,999\'dan (oteller, turlar, araçlar). Kurumsal pazar yeri $19,999\'dan. Gelir paylaşım modeli mevcut. Aylık barındırma $199/ay\'dan.',
         slug: 'booking-platform',
         howItWorks: [
           { title: 'Kapasite Mantığı', description: 'Karmaşık randevu kuralları, personel vardiyalarını ve tampon sürelerini sisteme tanımlıyoruz.' },
@@ -914,7 +915,7 @@ export const tr = {
         useCases: ['Canlı Müşteri Destek Operasyonları', 'Şirket İçi Ekip Haberleşmesi', 'Danışman-Müşteri İletişim Panelleri', 'Pazaryeri Satıcı-Alıcı Mesajlaşmaları', 'Tele-Sağlık Görüşme Platformları', 'Eğitim ve Kurs Soru-Cevap Odaları'],
         technologies: ['WebSocket / Socket.io Teknolojisi', 'Hızlı NoSQL Veri Yapıları', 'Bulut Tabanlı Push Servisleri', 'Dağıtık Dosya Depolama Sistemleri', 'Gerçek Zamanlı Veri Şifreleme'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Sohbet sistemlerimiz, bölgesel internet hızlarına ve çok dilli karakter setlerine uygun olarak yüksek performanslı sunucularda barındırılır.' },
-        pricingApproach: 'Eşzamanlı kullanıcı sayısı, mesaj saklama süresi ve ek özelliklere göre özel paketler.',
+        pricingApproach: 'Gerçek zamanlı sohbet sistemleri $4,999\'dan (100 eşzamanlı kullanıcı). İşletme $7,999\'dan (1.000 kullanıcı, dosya paylaşımı, mesaj geçmişi). Kurumsal $14,999\'dan (sınırsız kullanıcı + ses). Aylık altyapı $199/ay\'dan.',
         slug: 'real-time-chat',
         howItWorks: [
           { title: 'İletişim Protokolü', description: 'Başarı kriterlerinize en uygun gerçek zamanlı (WebSocket) mimariyi kurguluyoruz.' },
@@ -939,7 +940,7 @@ export const tr = {
         useCases: ['E-ticaret ve Mikro İhracat', 'SaaS ve Üyelik Platformları', 'Online Eğitim ve Kurs Satışları', 'Hizmet ve Danışmanlık Firmaları', 'Mobil Uygulama İçi Satın Almalar', 'Büyük Ölçekli Faturalama Sistemleri'],
         technologies: ['Iyzico / PayTR / Stripe', 'PayPal ve Dijital Cüzdanlar', 'Güvenli RESTful API Katmanı', 'AES-256 Veri Şifreleme Standartları', 'Otomatik Webhook Bildirimleri'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel Pazarlar'], description: 'Yerel banka entegrasyonlarından (Mada, KNET, Troy) global oyunculara kadar geniş bir finansal kapsama alanı sunuyoruz.' },
-        pricingApproach: 'Entegre edilecek yöntem sayısına, işlem hacmine ve otomasyon derinliğine göre belirlenen şeffaf tekliflendirme.',
+        pricingApproach: 'Tek ödeme entegrasyonu $999\'dan (Stripe, iyzico, PayTabs...). Çok ağ geçitli $2,499\'dan. Pazar yeri ödemesi + emanet $4,999\'dan. Aylık destek $99/ay\'dan. İşlem ücretleri ağ geçidi sağlayıcısına bağlı.',
         slug: 'payment-integration',
         howItWorks: [
           { title: 'Finansal Analiz', description: 'İş modeliniz ve hedef ülkeleriniz için en avantajlı ödeme sağlayıcılarını belirliyoruz.' },
@@ -964,7 +965,7 @@ export const tr = {
         useCases: ['Mobil Alışveriş ve Katalog Apps', 'Saha Operasyon ve Denetim Uygulamaları', 'Hızlı Teslimat ve Takip Platformları', 'Restoran ve Hizmet Veren Sadakat Apps', 'Haber, Medya ve İçerik Servisleri', 'Kişisel Portfolyo ve Marka Uygulamaları'],
         technologies: ['Progresif Web Uygulaması (PWA)', 'Service Workers ve Cache API', 'React Native / Flutter Seçenekleri', 'Duyarlı (Responsive) CSS Mimarisi', 'Güvenli Yerel Veri Depolama'],
         geographicCoverage: { regions: ['Türkiye', 'Körfez Bölgesi', 'Küresel'], description: 'Mobil çözümlerimiz, Türkiye ve Orta Doğu\'daki mobil kullanım alışkanlıklarına ve bölgesel cihaz çeşitliliğine uygun olarak optimize edilir.' },
-        pricingApproach: 'İstenen özellik derinliği, platform sayısı ve tasarım karmaşıklığına göre belirlenen özel teklifler.',
+        pricingApproach: 'Mobil uyumlu web uygulamaları $2,999\'dan. Çevrimdışı destekli PWA $4,999\'dan. Tam çapraz platform uygulama (iOS + Android) $7,999\'dan. Aylık barındırma + güncellemeler $149/ay\'dan. Kurumsal projeler özel teklif.',
         slug: 'mobile-responsive-apps',
         howItWorks: [
           { title: 'Mobil UI Analizi', description: 'Tek el kullanımı ve mikro-hareketler için optimize edilmiş mobil arayüzler planlıyoruz.' },

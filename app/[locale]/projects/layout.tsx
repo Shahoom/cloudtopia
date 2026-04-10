@@ -46,7 +46,15 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
+export default function ProjectsLayout({ children, params }: { children: React.ReactNode; params?: { locale?: string } }) {
+    const locale = params?.locale ?? 'en'
+    const breadcrumbNames: Record<string, { home: string; projects: string }> = {
+        en: { home: 'Home', projects: 'Projects' },
+        ar: { home: 'الرئيسية', projects: 'المشاريع' },
+        tr: { home: 'Ana Sayfa', projects: 'Projeler' },
+    }
+    const names = breadcrumbNames[locale] || breadcrumbNames.en
+
     return (
         <>
             <script
@@ -56,8 +64,8 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
-                            { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://cloudtopia.net/projects' },
+                            { '@type': 'ListItem', position: 1, name: names.home, item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: names.projects, item: `https://cloudtopia.net/${locale}/projects` },
                         ],
                     }),
                 }}
@@ -70,7 +78,8 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
                         '@type': 'CollectionPage',
                         name: 'CloudTopia Projects Portfolio',
                         description: 'Explore our portfolio of successful digital transformation projects.',
-                        url: 'https://cloudtopia.net/projects',
+                        url: `https://cloudtopia.net/${locale}/projects`,
+                        inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

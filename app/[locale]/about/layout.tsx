@@ -56,8 +56,8 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
-                            { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://cloudtopia.net/about' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
+                            { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://cloudtopia.net/en/about' },
                         ],
                     }),
                 }}
@@ -70,7 +70,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
                         '@type': 'AboutPage',
                         name: 'About CloudTopia',
                         description: 'Learn about CloudTopia\'s mission to empower businesses with digital and cloud technologies.',
-                        url: 'https://cloudtopia.net/about',
+                        url: 'https://cloudtopia.net/en/about',
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

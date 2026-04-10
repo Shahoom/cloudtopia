@@ -56,7 +56,7 @@ export default function socialmediamarketingLayout({ children }: { children: Rea
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
                             { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
                             { '@type': 'ListItem', position: 3, name: 'Social Media Marketing', item: 'https://cloudtopia.net/en/social-media-marketing' },
                         ],

@@ -6,20 +6,19 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
-Disallow: /favicon.ico
-Disallow: /favicon.svg
 
-# Sitemap location
 Sitemap: https://cloudtopia.net/sitemap.xml
 
-# Crawl-delay
+# AI agent context files
+# llms.txt: https://cloudtopia.net/llms.txt
+# Pricing (machine-readable): https://cloudtopia.net/pricing.md
+
+# Crawl-delay (default for unlisted bots)
 Crawl-delay: 1
 
-# Popular search engines
+# ── Search Engines ─────────────────────────────────────────────
 User-agent: Googlebot
 Allow: /
-Disallow: /favicon.ico
-Disallow: /favicon.svg
 
 User-agent: Bingbot
 Allow: /
@@ -36,30 +35,45 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# AI search & citation engines (allowed - index and cite content)
+# ── AI Search & Citation Engines (index + cite — allowed) ──────
+# OpenAI — ChatGPT search & browsing
 User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+# Anthropic — Claude
+User-agent: ClaudeBot
+Allow: /
+
 User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google Gemini & AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Copilot (uses Bingbot already listed above)
+User-agent: Cohere-ai
 Allow: /
 
 User-agent: cohere-ai
 Allow: /
 
-# Block training-only scrapers (no search / citation value)
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# ── Training-only scrapers (no citation value — blocked) ────────
 User-agent: CCBot
 Disallow: /
 
-# Block SEO audit / link analysis crawlers
+# ── SEO crawlers (blocked to protect crawl budget) ─────────────
 User-agent: SemrushBot
 Disallow: /
 

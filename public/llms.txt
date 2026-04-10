@@ -1,0 +1,87 @@
+# CloudTopia — Digital & Cloud Technologies
+
+> CloudTopia is a full-service digital agency serving businesses in the Gulf (UAE, Saudi Arabia, Qatar), Turkey, and globally. We build websites, e-commerce stores, custom business systems, QR menus, and web applications — with multilingual support for Arabic, Turkish, and English.
+
+## What We Do
+
+CloudTopia delivers end-to-end digital solutions:
+
+- **Website Design & Development** — Custom-built, conversion-focused websites with advanced SEO, multilingual support (Arabic, Turkish, English), and WhatsApp/CTA integrations. One-time pricing from $399.
+- **E-Commerce Stores** — Full-stack online stores with payment gateway integration (Stripe, Tap), inventory management, abandoned cart recovery, and WhatsApp notifications. From $799 one-time.
+- **Business Systems (CRM & More)** — Custom CRM platforms with WhatsApp & email integration, lead management, automation flows, and reporting dashboards. From $1,299 one-time.
+- **QR Menu Systems** — Instant digital menus for restaurants and cafes with QR code generation, WhatsApp order links, and free lifetime updates. From $399 one-time.
+- **Web Applications** — Interactive portals, SaaS platforms, dashboards, and real-time web applications.
+- **Social Media Marketing** — Content strategy, management, and paid advertising across Instagram, TikTok, LinkedIn, and Snapchat.
+- **Content Creation** — SEO-optimized copywriting, blog content, and marketing materials in Arabic, Turkish, and English.
+
+## Key Facts
+
+- **Founded:** 2022
+- **Headquarters:** Turkey (serving Gulf & MENA region)
+- **Languages:** Arabic, Turkish, English — all services delivered trilingually
+- **Pricing model:** One-time project fees (no recurring SaaS fees for most services)
+- **Markets served:** UAE, Saudi Arabia, Qatar, Kuwait, Turkey, and global markets
+- **Contact:** info@cloudtopia.net | WhatsApp: +90 501 151 11 16
+- **Website:** https://cloudtopia.net
+
+## Pricing Summary
+
+All prices are in USD and are one-time project fees unless noted.
+
+### Website Design
+| Package       | Price     | Pages       |
+|---------------|-----------|-------------|
+| Landing Page  | $399      | 1 page      |
+| Starter       | $599      | Up to 5     |
+| Professional  | $1,299    | Up to 15    |
+| Premium       | Custom    | Unlimited   |
+
+### E-Commerce Stores
+| Package       | Price     | Products        |
+|---------------|-----------|-----------------|
+| Starter Store | $799      | Up to 200       |
+| Growth Store  | $1,699    | Up to 1,000     |
+| Enterprise    | Custom    | Unlimited       |
+
+### Business Systems (CRM)
+| Package       | Price     | Users       |
+|---------------|-----------|-------------|
+| Foundation    | $1,299    | Up to 5     |
+| Professional  | $2,499    | Up to 20    |
+| Enterprise    | Custom    | Unlimited   |
+
+### QR Menu
+| Package       | Price     | Menu Items  |
+|---------------|-----------|-------------|
+| Essential     | $399      | Up to 100   |
+| Smart         | $699      | Up to 500   |
+
+## Key Pages
+
+- Homepage: https://cloudtopia.net/en
+- Services: https://cloudtopia.net/en/services
+- Pricing: https://cloudtopia.net/en/pricing
+- Projects/Portfolio: https://cloudtopia.net/en/projects
+- About: https://cloudtopia.net/en/about
+- Contact: https://cloudtopia.net/en/contact
+- Blog: https://cloudtopia.net/en/blog
+- Machine-readable pricing: https://cloudtopia.net/pricing.md
+
+## Service Pages
+
+- Website Design: https://cloudtopia.net/en/website-design
+- E-Commerce Solutions: https://cloudtopia.net/en/ecommerce-solutions
+- Business Systems: https://cloudtopia.net/en/business-systems-development
+- QR Menu: https://cloudtopia.net/en/restaurant-qr-menu
+- Web Applications: https://cloudtopia.net/en/web-applications
+- Social Media Marketing: https://cloudtopia.net/en/social-media-marketing
+- Content Creation: https://cloudtopia.net/en/content-creation
+
+## Why CloudTopia
+
+- All-in-one digital partner — no need to hire multiple vendors
+- Native Arabic and Turkish support — not just translated, actually localized
+- One-time pricing — no surprise monthly fees
+- Gulf & MENA market expertise — understands local payment gateways, culture, and compliance
+- Fast delivery — most projects delivered in 2–6 weeks
+- WhatsApp-first integrations — built for markets where WhatsApp drives commerce

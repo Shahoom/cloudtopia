@@ -5,6 +5,27 @@ const nextConfig = {
   compress: true,
   transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
 
+  // Explicit 301 redirects for common non-canonical URL variants
+  // These reinforce what middleware already does, ensuring Vercel's edge
+  // and any CDN layer also returns 301 before middleware runs.
+  async redirects() {
+    return [
+      // www → non-www (covers http and https)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.cloudtopia.net' }],
+        destination: 'https://cloudtopia.net/:path*',
+        permanent: true,
+      },
+      // Bare root (no locale) → /en
+      {
+        source: '/',
+        destination: '/en',
+        permanent: true,
+      },
+    ]
+  },
+
   // Security Headers
   async headers() {
     return [

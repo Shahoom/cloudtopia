@@ -56,7 +56,7 @@ export default function webapplicationsLayout({ children }: { children: React.Re
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
                             { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
                             { '@type': 'ListItem', position: 3, name: 'Web Applications', item: 'https://cloudtopia.net/en/web-applications' },
                         ],
