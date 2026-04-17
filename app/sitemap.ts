@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
 import { getPostSlugs, getSlugById } from '@/lib/blog'
+import { getAllProjectIds } from '@/lib/projects'
+import { locationSlugs } from '@/lib/seo/locations'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://cloudtopia.net'
@@ -122,6 +124,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Project detail pages — one entry per (locale × project)
+    const projectIds = getAllProjectIds()
+    projectIds.forEach((pid) => {
+        const languages = buildLanguages(`/projects/${pid}`)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${loc}/projects/${pid}`,
+                lastModified: new Date(),
+                changeFrequency: 'monthly',
+                priority: 0.8,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Location landing pages — one entry per (locale × country)
+    locationSlugs.forEach((country) => {
+        const languages = buildLanguages(`/locations/${country}`)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${loc}/locations/${country}`,
+                lastModified: new Date(),
+                changeFrequency: 'monthly',
+                priority: 0.85,
                 alternates: { languages },
             })
         })

@@ -3,24 +3,24 @@ import type { Metadata } from 'next'
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
     const titles: Record<string, string> = {
-        en: 'About CloudTopia — Digital & Cloud Technologies',
-        ar: 'عن كلاود توبيا — تقنيات رقمية وسحابية',
-        tr: 'CloudTopia Hakkında — Dijital & Bulut Teknolojileri',
+        en: 'About CloudTopia — Gulf-First Digital Agency',
+        ar: 'عن كلاود توبيا — وكالة رقمية خليجية أولاً',
+        tr: 'CloudTopia Hakkında — Körfez Öncelikli Dijital Ajans',
     }
     const descs: Record<string, string> = {
-        en: 'Learn about CloudTopia, our mission, values, and team dedicated to digital excellence.',
-        ar: 'تعرف على كلاود توبيا، مهمتنا، قيمنا، وفريقنا المخصص للتميز الرقمي.',
-        tr: 'CloudTopia, misyonumuz, değerlerimiz ve dijital mükemmelliğe adanmış ekibimiz hakkında bilgi edinin.',
+        en: 'CloudTopia is a Gulf-first digital agency building websites, e-commerce stores, and custom business systems in Arabic, English, and Turkish. Operating from Istanbul, Riyadh, and Dubai.',
+        ar: 'كلاود توبيا وكالة رقمية خليجية أولاً تبني مواقع ومتاجر إلكترونية وأنظمة أعمال مخصصة بالعربية والإنجليزية والتركية. تعمل من إسطنبول والرياض ودبي.',
+        tr: 'CloudTopia, Arapça, İngilizce ve Türkçe web siteleri, e-ticaret mağazaları ve özel iş sistemleri inşa eden Körfez öncelikli bir dijital ajanstır. İstanbul, Riyad ve Dubai\'den çalışıyor.',
     }
     const ogTitles: Record<string, string> = {
-        en: 'About Us — CloudTopia',
-        ar: 'عنا — كلاود توبيا',
-        tr: 'Hakkımızda — CloudTopia',
+        en: 'About CloudTopia',
+        ar: 'عن كلاود توبيا',
+        tr: 'CloudTopia Hakkında',
     }
     const ogDescs: Record<string, string> = {
-        en: 'Our mission, values, and team dedicated to digital excellence.',
-        ar: 'مهمتنا وقيمنا وفريقنا المخصص للتميز الرقمي.',
-        tr: 'Dijital mükemmelliğe adanmış misyonumuz, değerlerimiz ve ekibimiz.',
+        en: 'Gulf-first digital agency building bilingual websites, e-commerce, and business systems.',
+        ar: 'وكالة رقمية خليجية أولاً تبني مواقع ومتاجر وأنظمة أعمال ثنائية اللغة.',
+        tr: 'İki dilli web siteleri, e-ticaret ve iş sistemleri inşa eden Körfez öncelikli dijital ajans.',
     }
     const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
     const title = titles[locale] || titles.en
@@ -46,7 +46,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function AboutLayout({ children }: { children: React.ReactNode }) {
+export default function AboutLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+    const locale = params?.locale ?? 'en'
+
     return (
         <>
             <script
@@ -56,8 +58,8 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
-                            { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://cloudtopia.net/en/about' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: 'About', item: `https://cloudtopia.net/${locale}/about` },
                         ],
                     }),
                 }}
@@ -69,12 +71,60 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
                         '@context': 'https://schema.org',
                         '@type': 'AboutPage',
                         name: 'About CloudTopia',
-                        description: 'Learn about CloudTopia\'s mission to empower businesses with digital and cloud technologies.',
-                        url: 'https://cloudtopia.net/en/about',
+                        description: 'CloudTopia is a Gulf-first digital agency building websites, e-commerce stores, and custom business systems in Arabic, English, and Turkish.',
+                        url: `https://cloudtopia.net/${locale}/about`,
+                        inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',
+                            alternateName: ['كلاود توبيا', 'CloudTopia Digital', 'CloudTopia Technologies'],
                             url: 'https://cloudtopia.net',
+                            logo: 'https://cloudtopia.net/logo.svg',
+                            description: 'Gulf-first digital agency specializing in bilingual websites, e-commerce, custom business systems, and web applications.',
+                            foundingDate: '2024',
+                            areaServed: [
+                                { '@type': 'Country', name: 'Saudi Arabia' },
+                                { '@type': 'Country', name: 'United Arab Emirates' },
+                                { '@type': 'Country', name: 'Kuwait' },
+                                { '@type': 'Country', name: 'Qatar' },
+                                { '@type': 'Country', name: 'Bahrain' },
+                                { '@type': 'Country', name: 'Oman' },
+                                { '@type': 'Country', name: 'Türkiye' },
+                            ],
+                            availableLanguage: [
+                                { '@type': 'Language', name: 'English', alternateName: 'en' },
+                                { '@type': 'Language', name: 'Arabic', alternateName: 'ar' },
+                                { '@type': 'Language', name: 'Turkish', alternateName: 'tr' },
+                            ],
+                            knowsAbout: [
+                                'Website Design and Development',
+                                'E-commerce Development',
+                                'Mada Payment Integration',
+                                'Apple Pay Integration',
+                                'STC Pay Integration',
+                                'Tabby and Tamara BNPL Integration',
+                                'ZATCA E-Invoicing',
+                                'Arabic RTL Web Design',
+                                'Custom CRM Development',
+                                'Web Application Development',
+                                'SaaS Platform Development',
+                                'Digital Transformation',
+                                'Cloud Migration',
+                                'Business Automation',
+                                'AI Integration',
+                            ],
+                            sameAs: [
+                                'https://www.linkedin.com/company/cloudtopia',
+                                'https://twitter.com/cloudtopia',
+                                'https://www.instagram.com/cloudtopia',
+                            ],
+                            contactPoint: {
+                                '@type': 'ContactPoint',
+                                contactType: 'customer service',
+                                email: 'hello@cloudtopia.net',
+                                availableLanguage: ['English', 'Arabic', 'Turkish'],
+                                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM', 'TR'],
+                            },
                         },
                     }),
                 }}

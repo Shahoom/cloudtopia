@@ -124,21 +124,31 @@ export default async function PostPage({ params }: PostPageProps) {
 
     const inLanguage: Record<string, string> = { en: 'en', ar: 'ar', tr: 'tr' }
 
+    const wordCount = (post.content || '').trim().split(/\s+/).length
+    const authorName = post.author || 'Cloudtopia Editorial Team'
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
+        '@id': `${canonicalUrl}#article`,
         headline: post.title,
         description: post.excerpt,
         datePublished: post.date,
         dateModified: post.date,
         author: {
-            '@type': 'Organization',
-            name: 'Cloudtopia',
-            url: BASE_URL,
+            '@type': 'Person',
+            name: authorName,
+            url: `${BASE_URL}/${lang}/about`,
+            worksFor: {
+                '@type': 'Organization',
+                name: 'CloudTopia',
+                url: BASE_URL,
+            },
+            knowsAbout: post.tags || [],
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Cloudtopia',
+            name: 'CloudTopia',
             url: BASE_URL,
             logo: {
                 '@type': 'ImageObject',
@@ -152,12 +162,18 @@ export default async function PostPage({ params }: PostPageProps) {
             height: 630,
         },
         url: canonicalUrl,
+        mainEntityOfPage: canonicalUrl,
         inLanguage: inLanguage[lang] || 'en',
+        keywords: (post.tags || []).join(', '),
+        articleSection: post.tags?.[0] || 'Technology',
+        wordCount,
+        timeRequired: post.readingTime ? `PT${post.readingTime}M` : undefined,
         isPartOf: {
             '@type': 'Blog',
-            name: 'Cloudtopia Blog',
+            name: 'CloudTopia Journal',
             url: `${BASE_URL}/${lang}/blog`,
         },
+        about: (post.tags || []).slice(0, 5).map((tag) => ({ '@type': 'Thing', name: tag })),
     }
 
     // Generate alternate slugs for the language switcher
