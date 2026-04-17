@@ -11,12 +11,12 @@ import {
     ExternalLink,
     Rocket,
 } from 'lucide-react'
-import Hero from '@/components/ui/hero-button-expendable'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import dynamic from 'next/dynamic'
 import type { BlogPostMeta } from '@/lib/blog'
 
+import CloudHero from '@/components/home/CloudHero'
 import StatsBar from '@/components/home/StatsBar'
 import ServicesGrid from '@/components/home/ServicesGrid'
 import HowWeWork from '@/components/home/HowWeWork'
@@ -183,10 +183,8 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
 
     return (
         <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
-            {/* 1. Hero */}
-            <section className="relative bg-[#FAFAFA]" data-header-theme="light">
-                <Hero />
-            </section>
+            {/* 1. Cloud Hero */}
+            <CloudHero />
 
             {/* 2. Stats / Trust bar */}
             <StatsBar />
