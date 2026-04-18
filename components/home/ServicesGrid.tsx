@@ -114,43 +114,51 @@ export default function ServicesGrid() {
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.5, delay: i * 0.05 }}
                             >
-                                <Link
-                                    href={`/${locale}${card.link}`}
-                                    className="group relative flex flex-col h-full p-7 md:p-8 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+                                <div
+                                    className="relative h-full rounded-2xl p-[1.5px] transition-shadow duration-500 hover:-translate-y-1 hover:shadow-xl"
+                                    style={{
+                                        background:
+                                            'conic-gradient(from 180deg at 50% 50%, rgba(14,165,233,0.35), rgba(139,92,246,0.25), rgba(236,72,153,0.3), rgba(14,165,233,0.35))',
+                                    }}
                                 >
                                     <GlowingEffect
-                                        spread={40}
+                                        spread={48}
                                         glow={true}
                                         disabled={false}
-                                        proximity={80}
+                                        proximity={96}
                                         inactiveZone={0.05}
                                         borderWidth={2}
                                     />
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <Link
+                                        href={`/${locale}${card.link}`}
+                                        className="group relative flex flex-col h-full p-7 md:p-8 rounded-[calc(1rem-1px)] bg-white transition-all duration-300 overflow-hidden"
+                                    >
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                    <div className="relative flex items-start justify-between mb-6">
-                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-primary-50 to-secondary-50 border border-neutral-200 flex items-center justify-center group-hover:from-primary-100 group-hover:to-secondary-100 transition-colors">
-                                            <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary-700" strokeWidth={1.75} />
+                                        <div className="relative flex items-start justify-between mb-6">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-primary-50 to-secondary-50 border border-neutral-200 flex items-center justify-center group-hover:from-primary-100 group-hover:to-secondary-100 transition-colors">
+                                                <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary-700" strokeWidth={1.75} />
+                                            </div>
+                                            {card.tag && (
+                                                <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-neutral-500 bg-neutral-100 px-2.5 py-1 rounded-full">
+                                                    {card.tag}
+                                                </span>
+                                            )}
                                         </div>
-                                        {card.tag && (
-                                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-neutral-500 bg-neutral-100 px-2.5 py-1 rounded-full">
-                                                {card.tag}
-                                            </span>
-                                        )}
-                                    </div>
 
-                                    <h3 className="relative text-xl md:text-2xl font-bold text-neutral-900 mb-3 leading-tight">
-                                        {card.title}
-                                    </h3>
-                                    <p className="relative text-neutral-600 text-sm md:text-base leading-relaxed flex-1 mb-5">
-                                        {card.description}
-                                    </p>
+                                        <h3 className="relative text-xl md:text-2xl font-bold text-neutral-900 mb-3 leading-tight">
+                                            {card.title}
+                                        </h3>
+                                        <p className="relative text-neutral-600 text-sm md:text-base leading-relaxed flex-1 mb-5">
+                                            {card.description}
+                                        </p>
 
-                                    <div className="relative flex items-center gap-1.5 text-sm font-semibold text-primary-700 group-hover:text-primary-900 transition-colors">
-                                        <span>{t.common?.learnMore || t.home?.common?.learnMore || 'Learn more'}</span>
-                                        <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
-                                    </div>
-                                </Link>
+                                        <div className="relative flex items-center gap-1.5 text-sm font-semibold text-primary-700 group-hover:text-primary-900 transition-colors">
+                                            <span>{t.common?.learnMore || t.home?.common?.learnMore || 'Learn more'}</span>
+                                            <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+                                        </div>
+                                    </Link>
+                                </div>
                             </motion.div>
                         )
                     })}

@@ -142,25 +142,33 @@ export default function WhyCloudTopia() {
                                 transition={{ duration: 0.5, delay: i * 0.05 }}
                                 className="relative list-none"
                             >
-                                <div className="relative h-full rounded-2xl border border-neutral-200 bg-white p-6 md:p-7 overflow-hidden">
+                                <div
+                                    className="relative h-full rounded-2xl p-[1.5px] transition-shadow duration-500 hover:shadow-xl"
+                                    style={{
+                                        background:
+                                            'conic-gradient(from 180deg at 50% 50%, rgba(14,165,233,0.35), rgba(139,92,246,0.25), rgba(236,72,153,0.3), rgba(14,165,233,0.35))',
+                                    }}
+                                >
                                     <GlowingEffect
-                                        spread={42}
+                                        spread={48}
                                         glow={true}
                                         disabled={false}
-                                        proximity={70}
+                                        proximity={96}
                                         inactiveZone={0.05}
                                         borderWidth={2}
                                     />
-                                    <div className="relative flex flex-col h-full">
-                                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center mb-5">
-                                            <Icon className="w-5 h-5 text-[#0284c7]" strokeWidth={1.75} />
+                                    <div className="relative h-full rounded-[calc(1rem-1px)] bg-white p-6 md:p-7">
+                                        <div className="relative flex flex-col h-full">
+                                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center mb-5">
+                                                <Icon className="w-5 h-5 text-[#0284c7]" strokeWidth={1.75} />
+                                            </div>
+                                            <h3 className="text-lg md:text-xl font-bold text-neutral-900 mb-2 leading-tight">
+                                                {reason.title}
+                                            </h3>
+                                            <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
+                                                {reason.description}
+                                            </p>
                                         </div>
-                                        <h3 className="text-lg md:text-xl font-bold text-neutral-900 mb-2 leading-tight">
-                                            {reason.title}
-                                        </h3>
-                                        <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
-                                            {reason.description}
-                                        </p>
                                     </div>
                                 </div>
                             </motion.li>
