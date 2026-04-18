@@ -61,6 +61,11 @@ export default function CloudHero() {
 
     const cyclingWords = (t.home?.hero?.titleHighlights as string[]) || ['Cloud', 'Internet', 'Web']
     const [wordIndex, setWordIndex] = useState(0)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     useEffect(() => {
         const id = setInterval(() => setWordIndex((i) => (i + 1) % cyclingWords.length), 3000)
@@ -81,55 +86,59 @@ export default function CloudHero() {
 
     // Pointer-move parallax — 5 depth values per scene's 5 layers
     const heroRef = useRef<HTMLElement>(null)
-    const stageRefs = useRef<HTMLDivElement[]>([])
     const rafRef = useRef<number | null>(null)
     const targetRef = useRef({ x: 0, y: 0 })
     const currentRef = useRef({ x: 0, y: 0 })
+    const DEPTHS = [6, 10, 16, 22, 28]
 
-    useEffect(() => {
+    const applyTranslates = () => {
         const hero = heroRef.current
         if (!hero) return
-        const DEPTHS = [6, 10, 16, 22, 28]
-
-        const tick = () => {
-            currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.06
-            currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.06
-            stageRefs.current.forEach((stage) => {
-                if (!stage) return
-                const layers = stage.querySelectorAll<HTMLDivElement>('.layer')
-                layers.forEach((layer, i) => {
-                    const depth = DEPTHS[i] || 6
-                    layer.style.translate = `${(currentRef.current.x * depth).toFixed(2)}px ${(currentRef.current.y * depth).toFixed(2)}px`
-                })
+        const stages = hero.querySelectorAll<HTMLDivElement>('.sky-stage')
+        stages.forEach((stage) => {
+            const layers = stage.querySelectorAll<HTMLDivElement>('.layer')
+            layers.forEach((layer, i) => {
+                const depth = DEPTHS[i] || 6
+                layer.style.translate = `${(currentRef.current.x * depth).toFixed(2)}px ${(currentRef.current.y * depth).toFixed(2)}px`
             })
-            if (
-                Math.abs(targetRef.current.x - currentRef.current.x) > 0.001 ||
-                Math.abs(targetRef.current.y - currentRef.current.y) > 0.001
-            ) {
-                rafRef.current = requestAnimationFrame(tick)
-            } else {
+        })
+    }
+
+    const tick = () => {
+        currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.06
+        currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.06
+        applyTranslates()
+        if (
+            Math.abs(targetRef.current.x - currentRef.current.x) > 0.001 ||
+            Math.abs(targetRef.current.y - currentRef.current.y) > 0.001
+        ) {
+            rafRef.current = requestAnimationFrame(tick)
+        } else {
+            rafRef.current = null
+        }
+    }
+
+    const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
+        const hero = heroRef.current
+        if (!hero) return
+        const r = hero.getBoundingClientRect()
+        targetRef.current.x = ((e.clientX - r.left) / r.width - 0.5) * 2
+        targetRef.current.y = ((e.clientY - r.top) / r.height - 0.5) * 2
+        if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick)
+    }
+
+    const handlePointerLeave = () => {
+        targetRef.current.x = 0
+        targetRef.current.y = 0
+        if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick)
+    }
+
+    useEffect(() => {
+        return () => {
+            if (rafRef.current != null) {
+                cancelAnimationFrame(rafRef.current)
                 rafRef.current = null
             }
-        }
-
-        const onMove = (e: PointerEvent) => {
-            const r = hero.getBoundingClientRect()
-            targetRef.current.x = ((e.clientX - r.left) / r.width - 0.5) * 2
-            targetRef.current.y = ((e.clientY - r.top) / r.height - 0.5) * 2
-            if (!rafRef.current) rafRef.current = requestAnimationFrame(tick)
-        }
-        const onLeave = () => {
-            targetRef.current.x = 0
-            targetRef.current.y = 0
-            if (!rafRef.current) rafRef.current = requestAnimationFrame(tick)
-        }
-
-        hero.addEventListener('pointermove', onMove)
-        hero.addEventListener('pointerleave', onLeave)
-        return () => {
-            hero.removeEventListener('pointermove', onMove)
-            hero.removeEventListener('pointerleave', onLeave)
-            if (rafRef.current) cancelAnimationFrame(rafRef.current)
         }
     }, [])
 
@@ -149,39 +158,43 @@ export default function CloudHero() {
                     will-change: transform, filter, opacity;
                 }
                 .camera.a {
-                    animation: cam-a 30s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+                    animation: cam-a 36s ease-in-out infinite;
                 }
                 @keyframes cam-a {
                     0% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
-                    22% { transform: scale(1.22) translateZ(70px); filter: blur(2px) brightness(1.04); opacity: 1; }
-                    30% { transform: scale(1.5) translateZ(140px); filter: blur(5px) brightness(1.1); opacity: 0.95; }
-                    34% { transform: scale(1.75) translateZ(210px); filter: blur(10px) brightness(1.18); opacity: 0; }
-                    97% { transform: scale(1.75) translateZ(210px); filter: blur(10px) brightness(1.18); opacity: 0; }
+                    25% { transform: scale(1.22) translateZ(70px); filter: blur(1px) brightness(1.03); opacity: 1; }
+                    33% { transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); opacity: 0.5; }
+                    40% { transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); opacity: 0; }
+                    96% { transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); opacity: 0; }
                     100% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
                 }
                 .camera.b {
                     opacity: 0;
-                    animation: cam-b 30s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+                    animation: cam-b 36s ease-in-out infinite;
                 }
                 @keyframes cam-b {
-                    0%, 30% { opacity: 0; transform: scale(1.75) translateZ(-210px); filter: blur(10px) brightness(1.18); }
-                    34% { opacity: 1; transform: scale(1.45) translateZ(-130px); filter: blur(5px) brightness(1.1); }
-                    50% { opacity: 1; transform: scale(1.15) translateZ(-30px); filter: blur(1px) brightness(1.02); }
-                    63% { opacity: 0.95; transform: scale(1.5) translateZ(140px); filter: blur(5px) brightness(1.1); }
-                    67% { opacity: 0; transform: scale(1.75) translateZ(210px); filter: blur(10px) brightness(1.18); }
+                    0%, 26% { opacity: 0; transform: scale(1.6) translateZ(-200px); filter: blur(5px) brightness(1.08); }
+                    33% { opacity: 0.5; transform: scale(1.45) translateZ(-140px); filter: blur(3px) brightness(1.06); }
+                    40% { opacity: 1; transform: scale(1.3) translateZ(-80px); filter: blur(2px) brightness(1.03); }
+                    50% { opacity: 1; transform: scale(1.1) translateZ(-20px); filter: blur(0.5px) brightness(1.01); }
+                    60% { opacity: 1; transform: scale(1.3) translateZ(80px); filter: blur(2px) brightness(1.03); }
+                    66% { opacity: 0.5; transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); }
+                    73% { opacity: 0; transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); }
                     100% { opacity: 0; }
                 }
                 .camera.b :global(.layer) { background-image: url('/images/homepage/clouds-b.webp'); }
                 .camera.c {
                     opacity: 0;
-                    animation: cam-c 30s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+                    animation: cam-c 36s ease-in-out infinite;
                 }
                 @keyframes cam-c {
-                    0%, 63% { opacity: 0; transform: scale(1.75) translateZ(-210px); filter: blur(10px) brightness(1.18); }
-                    67% { opacity: 1; transform: scale(1.45) translateZ(-130px); filter: blur(5px) brightness(1.1); }
-                    83% { opacity: 1; transform: scale(1.15) translateZ(-30px); filter: blur(1px) brightness(1.02); }
-                    96% { opacity: 0.95; transform: scale(1.5) translateZ(140px); filter: blur(5px) brightness(1.1); }
-                    100% { opacity: 0; transform: scale(1.75) translateZ(210px); filter: blur(10px) brightness(1.18); }
+                    0%, 60% { opacity: 0; transform: scale(1.6) translateZ(-200px); filter: blur(5px) brightness(1.08); }
+                    66% { opacity: 0.5; transform: scale(1.45) translateZ(-140px); filter: blur(3px) brightness(1.06); }
+                    73% { opacity: 1; transform: scale(1.3) translateZ(-80px); filter: blur(2px) brightness(1.03); }
+                    83% { opacity: 1; transform: scale(1.1) translateZ(-20px); filter: blur(0.5px) brightness(1.01); }
+                    93% { opacity: 1; transform: scale(1.3) translateZ(80px); filter: blur(2px) brightness(1.03); }
+                    99% { opacity: 0.5; transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); }
+                    100% { opacity: 0; transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); }
                 }
                 .camera.c :global(.layer) { background-image: url('/images/homepage/clouds-c.webp'); }
 
@@ -243,50 +256,6 @@ export default function CloudHero() {
                 @keyframes haze {
                     0% { transform: scale(1.35) translate3d(-1%, 2%, 0); }
                     100% { transform: scale(1.42) translate3d(2%, -1%, 0); }
-                }
-
-                .whiteout {
-                    position: absolute; inset: 0; z-index: 2;
-                    background: radial-gradient(55% 40% at 50% 50%, rgba(255, 250, 235, 0.55) 0%, rgba(235, 245, 255, 0.25) 40%, transparent 75%);
-                    opacity: 0;
-                    pointer-events: none;
-                    animation: whiteout-pulse 30s linear infinite;
-                    mix-blend-mode: screen;
-                }
-                @keyframes whiteout-pulse {
-                    0%, 30%, 38%, 63%, 71%, 96%, 100% { opacity: 0; }
-                    33%, 34% { opacity: 0.55; }
-                    66%, 67% { opacity: 0.55; }
-                    98%, 99% { opacity: 0.55; }
-                }
-
-                .flare {
-                    position: absolute;
-                    left: 50%; top: 50%;
-                    width: 600px; height: 600px;
-                    margin: -300px 0 0 -300px;
-                    z-index: 3;
-                    pointer-events: none;
-                    opacity: 0;
-                    animation: flare-pulse 30s linear infinite;
-                    mix-blend-mode: screen;
-                }
-                .flare::before, .flare::after { content: ''; position: absolute; inset: 0; }
-                .flare::before {
-                    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 230, 180, 0.8) 8%, rgba(255, 200, 140, 0.4) 18%, transparent 45%);
-                    filter: blur(2px);
-                }
-                .flare::after {
-                    top: 46%; left: -40%;
-                    width: 180%; height: 8%;
-                    background: linear-gradient(90deg, transparent, rgba(255, 240, 200, 0.8) 45%, rgba(255, 255, 255, 1) 50%, rgba(255, 240, 200, 0.8) 55%, transparent);
-                    filter: blur(3px);
-                }
-                @keyframes flare-pulse {
-                    0%, 30%, 37%, 63%, 70%, 96%, 100% { opacity: 0; transform: scale(0.4); }
-                    33%, 34% { opacity: 0.55; transform: scale(1); }
-                    66%, 67% { opacity: 0.55; transform: scale(1); }
-                    98%, 99% { opacity: 0.55; transform: scale(1); }
                 }
 
                 .chroma {
@@ -399,8 +368,6 @@ export default function CloudHero() {
                     .star-pulse,
                     .sparkle,
                     .ray,
-                    .whiteout,
-                    .flare,
                     .streak,
                     .chroma {
                         animation: none !important;
@@ -425,16 +392,15 @@ export default function CloudHero() {
 
             <section
                 ref={heroRef}
+                onPointerMove={handlePointerMove}
+                onPointerLeave={handlePointerLeave}
                 className="hero relative min-h-[92vh] sm:min-h-[95vh] md:min-h-screen w-full overflow-hidden isolate flex items-center justify-center"
                 data-header-theme="dark"
                 dir={isRTL ? 'rtl' : 'ltr'}
             >
                 {/* Scene A */}
                 <div className="camera a">
-                    <div
-                        ref={(el) => { if (el) stageRefs.current[0] = el }}
-                        className="sky-stage"
-                    >
+                    <div className="sky-stage">
                         <div className="layer base" />
                         <div className="layer drift-l" />
                         <div className="layer drift-r" />
@@ -445,10 +411,7 @@ export default function CloudHero() {
 
                 {/* Scene B */}
                 <div className="camera b">
-                    <div
-                        ref={(el) => { if (el) stageRefs.current[1] = el }}
-                        className="sky-stage"
-                    >
+                    <div className="sky-stage">
                         <div className="layer base" />
                         <div className="layer drift-l" />
                         <div className="layer drift-r" />
@@ -459,10 +422,7 @@ export default function CloudHero() {
 
                 {/* Scene C */}
                 <div className="camera c">
-                    <div
-                        ref={(el) => { if (el) stageRefs.current[2] = el }}
-                        className="sky-stage"
-                    >
+                    <div className="sky-stage">
                         <div className="layer base" />
                         <div className="layer drift-l" />
                         <div className="layer drift-r" />
@@ -471,8 +431,6 @@ export default function CloudHero() {
                     </div>
                 </div>
 
-                <div className="whiteout" />
-                <div className="flare" />
                 <div className="chroma" />
                 <div className="grade" />
 
@@ -481,43 +439,45 @@ export default function CloudHero() {
                     <div className="ray r2" />
                 </div>
 
-                {/* Stars */}
+                {/* Stars (client-only to avoid hydration mismatch from Math.random) */}
                 <div className="stars-wrap">
                     <svg viewBox="0 0 1600 900" preserveAspectRatio="none">
-                        {stars.map((s, i) => (
-                            <circle
-                                key={i}
-                                className="star star-pulse"
-                                cx={s.cx}
-                                cy={s.cy}
-                                r={s.r}
-                                style={{
-                                    ['--dur' as any]: `${s.dur}s`,
-                                    ['--delay' as any]: `${s.delay}s`,
-                                    ['--min' as any]: String(s.min),
-                                    ['--max' as any]: String(s.max),
-                                }}
-                            />
-                        ))}
+                        {mounted &&
+                            stars.map((s, i) => (
+                                <circle
+                                    key={i}
+                                    className="star star-pulse"
+                                    cx={s.cx}
+                                    cy={s.cy}
+                                    r={s.r}
+                                    style={{
+                                        ['--dur' as any]: `${s.dur}s`,
+                                        ['--delay' as any]: `${s.delay}s`,
+                                        ['--min' as any]: String(s.min),
+                                        ['--max' as any]: String(s.max),
+                                    }}
+                                />
+                            ))}
                     </svg>
                 </div>
 
-                {/* Speed streaks */}
+                {/* Speed streaks (client-only) */}
                 <div className="streaks">
-                    {streaks.map((st, i) => (
-                        <span
-                            key={i}
-                            className="streak"
-                            style={{
-                                ['--angle' as any]: `${st.angle}deg`,
-                                ['--len' as any]: `${st.len}px`,
-                                ['--dist' as any]: `${st.dist}vh`,
-                                ['--dur' as any]: `${st.dur}s`,
-                                ['--op' as any]: String(st.op),
-                                animationDelay: `${st.delay}s`,
-                            }}
-                        />
-                    ))}
+                    {mounted &&
+                        streaks.map((st, i) => (
+                            <span
+                                key={i}
+                                className="streak"
+                                style={{
+                                    ['--angle' as any]: `${st.angle}deg`,
+                                    ['--len' as any]: `${st.len}px`,
+                                    ['--dist' as any]: `${st.dist}vh`,
+                                    ['--dur' as any]: `${st.dur}s`,
+                                    ['--op' as any]: String(st.op),
+                                    animationDelay: `${st.delay}s`,
+                                }}
+                            />
+                        ))}
                 </div>
 
                 {/* Sparkles */}
