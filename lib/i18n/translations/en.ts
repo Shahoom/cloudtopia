@@ -25,7 +25,7 @@ export const en = {
       titleHighlights: ['Internet', 'Cloud', 'Web'],
       description: 'CloudTopia helps businesses move to the cloud — from building their online presence, to developing systems and interactive web applications, and innovating through technology.',
       exploreServices: 'Explore Services',
-      freeConsultation: 'Get Free Consultation',
+      freeConsultation: 'Free Consultation',
       getStarted: 'Get Started',
       viewServices: 'View Services',
       intoThe: 'Into the',

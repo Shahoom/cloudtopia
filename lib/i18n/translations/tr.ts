@@ -17,7 +17,7 @@ export const tr = {
     hero: {
       tags: ['İşletmenizi Buluta Taşıyın', 'Dijital Varlığınızı Dönüştürün', 'Bulut Çözümleriyle Sınırsız Büyüyün'],
       exploreServices: 'Çözümlerimizi Keşfedin',
-      freeConsultation: 'Ücretsiz Danışmanlık Alın',
+      freeConsultation: 'Ücretsiz Danışma',
       getStarted: 'Hemen Başlayın',
       viewServices: 'Hizmetleri İnceleyin',
       intoThe: '',

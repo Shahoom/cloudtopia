@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-const STAR_COUNT = 120
+const STAR_COUNT = 90
 
 type Star = { cx: number; cy: number; r: number; dur: number; delay: number; min: number; max: number }
 
@@ -37,12 +37,8 @@ function useStars(count: number): Star[] {
 }
 
 // Colorful gradients cycled per rotating word
-const WORD_GRADIENTS = [
-    'linear-gradient(135deg, #67e8f9 0%, #38bdf8 45%, #a5f3fc 100%)',
-    'linear-gradient(135deg, #f0abfc 0%, #c084fc 45%, #fbcfe8 100%)',
-    'linear-gradient(135deg, #6ee7b7 0%, #34d399 45%, #a7f3d0 100%)',
-    'linear-gradient(135deg, #fde68a 0%, #fb923c 45%, #fecaca 100%)',
-]
+// One cohesive cyan-to-white gradient for all rotating words (cloud theme, clean on sky bg)
+const WORD_GRADIENT = 'linear-gradient(120deg, #e0f2fe 0%, #7dd3fc 35%, #ffffff 70%, #bae6fd 100%)'
 
 export default function CloudHero() {
     const { t, locale } = useLanguage()
@@ -73,8 +69,15 @@ export default function CloudHero() {
     const titleSuffix = t.home?.hero?.titleSuffix || ''
     const description = t.home?.hero?.description || ''
     const tagline = t.header?.tagline || 'Digital & Cloud Technologies'
-    const getStarted = t.home?.hero?.getStarted || 'Get Started'
+    const freeConsultation = t.home?.hero?.freeConsultation || 'Free Consultation'
     const viewServices = t.home?.hero?.viewServices || 'View Services'
+    const whatsappUrl = `https://wa.me/905011511116?text=${encodeURIComponent(
+        locale === 'ar'
+            ? 'مرحباً كلاود توبيا، أود استشارة مجانية.'
+            : locale === 'tr'
+                ? 'Merhaba CloudTopia, ücretsiz danışmak istiyorum.'
+                : 'Hi CloudTopia, I\'d like a free consultation.'
+    )}`
     const l = (p: string) => `/${locale}${p === '/' ? '' : p}`
 
     const stars = useStars(STAR_COUNT)
@@ -137,8 +140,8 @@ export default function CloudHero() {
         }
     }, [])
 
-    // Font class for the rotating word — Arabic uses Changa, latin uses a serif italic
-    const rotatingFontClass = isRTL ? 'font-arabic not-italic' : 'italic font-serif'
+    // Rotating word keeps heading font (Cairo), no serif / italic — just bold color
+    const rotatingFontClass = ''
 
     return (
         <>
@@ -146,7 +149,12 @@ export default function CloudHero() {
                 .hero {
                     perspective: 1400px;
                     perspective-origin: 50% 55%;
-                    background: #0a1930;
+                    /* Sky-like gradient fallback so the section never shows as black
+                       before the cloud WebPs paint or while the camera is mid-cycle. */
+                    background:
+                        radial-gradient(ellipse 120% 80% at 50% 110%, rgba(186, 230, 253, 0.45), transparent 55%),
+                        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(186, 230, 253, 0.25), transparent 55%),
+                        linear-gradient(180deg, #0a1930 0%, #162a4e 35%, #2e5b9a 65%, #7fb5e0 100%);
                     isolation: isolate;
                 }
                 .camera {
@@ -196,16 +204,27 @@ export default function CloudHero() {
                 }
                 .camera.c :global(.layer) { background-image: url('/images/homepage/clouds-c.webp'); }
 
-                .sky-stage { position: absolute; inset: 0; }
+                .sky-stage {
+                    position: absolute;
+                    inset: 0;
+                    /* Sky-tone fallback behind the image while it loads */
+                    background: linear-gradient(180deg, #162a4e 0%, #2e5b9a 55%, #7fb5e0 100%);
+                }
                 .layer {
                     position: absolute;
                     inset: -15%;
                     background-image: url('/images/homepage/clouds.webp');
                     background-size: cover;
                     background-position: center 55%;
+                    background-color: transparent;
                     will-change: transform;
                     transform: translateZ(0);
                     backface-visibility: hidden;
+                    contain: paint;
+                }
+                /* Disable the expensive SVG displacement filter on small screens */
+                @media (max-width: 768px) {
+                    .layer.churn { filter: blur(2px) brightness(1.08); }
                 }
                 .layer.base {
                     animation: base-drift 65s ease-in-out infinite alternate;
@@ -449,7 +468,7 @@ export default function CloudHero() {
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className={`font-bold tracking-tight leading-[1.08] mb-5 sm:mb-6 md:mb-7 ${isRTL ? 'font-arabic' : ''}`}
+                        className="font-bold tracking-tight leading-[1.08] mb-5 sm:mb-6 md:mb-7"
                         style={{
                             fontSize: 'clamp(2.25rem, 7vw, 5.25rem)',
                             color: '#ffffff',
@@ -469,11 +488,11 @@ export default function CloudHero() {
                                         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                                         exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
                                         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                        className={`inline-block bg-clip-text text-transparent ${rotatingFontClass}`}
+                                        className="inline-block bg-clip-text text-transparent font-extrabold"
                                         style={{
-                                            backgroundImage: WORD_GRADIENTS[wordIndex % WORD_GRADIENTS.length],
+                                            backgroundImage: WORD_GRADIENT,
                                             WebkitBackgroundClip: 'text',
-                                            filter: 'drop-shadow(0 2px 12px rgba(7,15,38,0.4)) drop-shadow(0 0 32px rgba(180,220,255,0.35))',
+                                            filter: 'drop-shadow(0 2px 14px rgba(7,15,38,0.45)) drop-shadow(0 0 32px rgba(186,230,253,0.5))',
                                         }}
                                     >
                                         {cyclingWords[wordIndex]}
@@ -488,7 +507,7 @@ export default function CloudHero() {
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className={`max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 font-light px-2 ${isRTL ? 'font-arabic' : ''}`}
+                        className="max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 font-light px-2"
                         style={{
                             color: '#ffffff',
                             textShadow:
@@ -504,13 +523,15 @@ export default function CloudHero() {
                         transition={{ duration: 0.9, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4"
                     >
-                        <Link
-                            href={l('/contact')}
+                        <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-[#0c1d3e] font-semibold text-sm sm:text-base shadow-[0_12px_44px_rgba(0,0,0,0.35)] hover:bg-cyan-50 hover:shadow-[0_18px_56px_rgba(0,0,0,0.45)] transition-all duration-300"
                         >
-                            {getStarted}
+                            {freeConsultation}
                             <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
-                        </Link>
+                        </a>
                         <Link
                             href={l('/services')}
                             className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border-2 border-white/80 hover:border-white text-white font-semibold text-sm sm:text-base backdrop-blur-md bg-[#0c1d3e]/30 hover:bg-[#0c1d3e]/50 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
