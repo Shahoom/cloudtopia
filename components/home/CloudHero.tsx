@@ -42,31 +42,27 @@ export default function CloudHero() {
                     role="presentation"
                     fill
                     priority
-                    quality={92}
+                    quality={100}
                     sizes="100vw"
-                    className="object-cover object-[28%_50%] sm:object-[35%_50%] md:object-center scale-[1.02]"
+                    unoptimized
+                    className="object-cover object-[28%_50%] sm:object-[35%_50%] md:object-center"
+                    style={{ imageRendering: 'crisp-edges' }}
                 />
             </div>
 
-            {/* Layer 1 — Subtle color grade: cool the deep-blue areas, slightly warmer lift on clouds */}
-            <div
-                className="absolute inset-0 z-[1] pointer-events-none mix-blend-overlay opacity-30"
-                style={{ background: 'radial-gradient(ellipse 80% 60% at 30% 50%, rgba(255,245,220,0.35) 0%, transparent 55%), radial-gradient(ellipse 70% 60% at 80% 20%, rgba(10,20,55,0.5) 0%, transparent 55%)' }}
-            />
-
-            {/* Layer 2 — Dark spot behind content for text contrast (center/lower) */}
+            {/* Layer 2 — Minimal darken behind content only (keeps photo vivid) */}
             <div
                 className="absolute inset-0 z-[2] pointer-events-none"
                 style={{
                     background:
-                        'radial-gradient(ellipse 85% 60% at 50% 58%, rgba(7,15,38,0.55) 0%, rgba(7,15,38,0.3) 40%, transparent 72%)',
+                        'radial-gradient(ellipse 75% 55% at 50% 58%, rgba(7,15,38,0.42) 0%, rgba(7,15,38,0.18) 45%, transparent 75%)',
                 }}
             />
 
-            {/* Layer 3 — Top atmospheric darkening so the header blends cleanly */}
+            {/* Layer 3 — Very light top fade so the header reads */}
             <div
-                className="absolute inset-x-0 top-0 h-44 sm:h-48 z-[3] pointer-events-none"
-                style={{ background: 'linear-gradient(180deg, rgba(7,15,38,0.55) 0%, rgba(7,15,38,0.15) 65%, transparent 100%)' }}
+                className="absolute inset-x-0 top-0 h-32 sm:h-40 z-[3] pointer-events-none"
+                style={{ background: 'linear-gradient(180deg, rgba(7,15,38,0.35) 0%, rgba(7,15,38,0.08) 60%, transparent 100%)' }}
             />
 
             {/* Layer 4 — Extra sparkle accent (matches the existing one in the photo bottom-right) */}
@@ -92,10 +88,10 @@ export default function CloudHero() {
                 <path d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z" fill="rgba(255,255,255,0.85)" />
             </motion.svg>
 
-            {/* Layer 5 — Vignette */}
+            {/* Layer 5 — Very subtle vignette */}
             <div
                 className="absolute inset-0 z-[5] pointer-events-none"
-                style={{ boxShadow: 'inset 0 0 240px 60px rgba(7,15,38,0.45)' }}
+                style={{ boxShadow: 'inset 0 0 200px 40px rgba(7,15,38,0.22)' }}
             />
 
             {/* Bottom fade into next section */}
