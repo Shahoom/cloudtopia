@@ -9,12 +9,12 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 function StarField() {
     const stars = useMemo(
         () =>
-            Array.from({ length: 60 }).map((_, i) => ({
+            Array.from({ length: 40 }).map((_, i) => ({
                 id: i,
                 left: Math.random() * 100,
-                top: Math.random() * 55,
-                size: 0.5 + Math.random() * 1.5,
-                opacity: 0.35 + Math.random() * 0.55,
+                top: Math.random() * 50,
+                size: 0.5 + Math.random() * 1.2,
+                opacity: 0.25 + Math.random() * 0.45,
                 delay: Math.random() * 6,
                 duration: 3 + Math.random() * 4,
             })),
@@ -22,14 +22,12 @@ function StarField() {
     )
 
     const sparkles = useMemo(
-        () =>
-            [
-                { top: 18, left: 88, size: 18, delay: 0 },
-                { top: 44, left: 94, size: 22, delay: 1.5 },
-                { top: 12, left: 72, size: 14, delay: 3 },
-                { top: 32, left: 8, size: 16, delay: 2 },
-                { top: 58, left: 96, size: 20, delay: 4.5 },
-            ],
+        () => [
+            { top: 14, left: 82, size: 14, delay: 0 },
+            { top: 28, left: 6, size: 12, delay: 1.6 },
+            { top: 8, left: 52, size: 10, delay: 3 },
+            { top: 38, left: 92, size: 14, delay: 2.2 },
+        ],
         []
     )
 
@@ -44,28 +42,25 @@ function StarField() {
                         top: `${s.top}%`,
                         width: `${s.size}px`,
                         height: `${s.size}px`,
-                        boxShadow: '0 0 4px rgba(255,255,255,0.6)',
                     }}
                     initial={{ opacity: s.opacity }}
-                    animate={{ opacity: [s.opacity, s.opacity * 0.3, s.opacity] }}
+                    animate={{ opacity: [s.opacity, s.opacity * 0.25, s.opacity] }}
                     transition={{ duration: s.duration, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }}
                 />
             ))}
             {sparkles.map((sp, i) => (
                 <motion.svg
-                    key={`sparkle-${i}`}
-                    className="absolute"
+                    key={i}
+                    className="absolute hidden sm:block"
                     style={{ top: `${sp.top}%`, left: `${sp.left}%`, width: `${sp.size}px`, height: `${sp.size}px` }}
                     viewBox="0 0 24 24"
-                    fill="none"
-                    initial={{ opacity: 0.5, scale: 0.8 }}
-                    animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.1, 0.8], rotate: [0, 45, 0] }}
-                    transition={{ duration: 4, delay: sp.delay, repeat: Infinity, ease: 'easeInOut' }}
+                    initial={{ opacity: 0.5, scale: 0.85 }}
+                    animate={{ opacity: [0.3, 0.9, 0.3], scale: [0.85, 1.05, 0.85], rotate: [0, 45, 0] }}
+                    transition={{ duration: 4.5, delay: sp.delay, repeat: Infinity, ease: 'easeInOut' }}
                 >
                     <path
-                        d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"
-                        fill="white"
-                        opacity="0.9"
+                        d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z"
+                        fill="rgba(255,255,255,0.85)"
                     />
                 </motion.svg>
             ))}
@@ -73,111 +68,102 @@ function StarField() {
     )
 }
 
-function CloudLayers() {
+function AtmosphericLights() {
     return (
-        <div className="pointer-events-none absolute inset-0 z-[3]">
-            <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 1600 900"
-                preserveAspectRatio="xMidYMid slice"
-                aria-hidden="true"
-            >
-                <defs>
-                    <filter id="cloudTurb" x="-20%" y="-20%" width="140%" height="140%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="7" />
-                        <feDisplacementMap in="SourceGraphic" scale="95" />
-                        <feGaussianBlur stdDeviation="2.5" />
-                    </filter>
-                    <filter id="cloudTurbSoft" x="-20%" y="-20%" width="140%" height="140%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="4" seed="3" />
-                        <feDisplacementMap in="SourceGraphic" scale="140" />
-                        <feGaussianBlur stdDeviation="6" />
-                    </filter>
-                    <filter id="cloudTurbDense" x="-20%" y="-20%" width="140%" height="140%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="12" />
-                        <feDisplacementMap in="SourceGraphic" scale="60" />
-                        <feGaussianBlur stdDeviation="1.2" />
-                    </filter>
-                    <linearGradient id="cloudFillWarm" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-                        <stop offset="60%" stopColor="#f0f5fb" stopOpacity="0.95" />
-                        <stop offset="100%" stopColor="#cfdff5" stopOpacity="0.85" />
-                    </linearGradient>
-                    <linearGradient id="cloudFillCool" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
-                        <stop offset="100%" stopColor="#b9cde8" stopOpacity="0.6" />
-                    </linearGradient>
-                </defs>
+        <div className="pointer-events-none absolute inset-0 z-[3] overflow-hidden">
+            {/* Upper-left warm dawn wash */}
+            <div
+                className="absolute -left-[15%] -top-[10%] w-[75%] h-[70%] rounded-full blur-[120px] md:blur-[150px] opacity-60"
+                style={{ background: 'radial-gradient(ellipse at center, rgba(240, 200, 170, 0.35) 0%, rgba(180, 200, 240, 0.15) 40%, transparent 70%)' }}
+            />
 
-                {/* Far background cloud band — very diffuse */}
-                <g filter="url(#cloudTurbSoft)" opacity="0.55">
-                    <ellipse cx="400" cy="620" rx="700" ry="150" fill="url(#cloudFillCool)" />
-                    <ellipse cx="1250" cy="550" rx="500" ry="120" fill="url(#cloudFillCool)" />
-                </g>
+            {/* Right-side soft blue drift */}
+            <div
+                className="absolute -right-[20%] top-[15%] w-[70%] h-[60%] rounded-full blur-[110px] md:blur-[140px] opacity-70"
+                style={{ background: 'radial-gradient(ellipse at center, rgba(180, 215, 255, 0.5) 0%, rgba(140, 180, 230, 0.2) 45%, transparent 75%)' }}
+            />
 
-                {/* Mid cloud layer */}
-                <g filter="url(#cloudTurb)" opacity="0.85">
-                    <ellipse cx="220" cy="720" rx="460" ry="170" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="540" cy="760" rx="380" ry="150" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="380" cy="640" rx="240" ry="140" fill="url(#cloudFillWarm)" />
-                </g>
-
-                {/* Foreground dense cumulus — top-left to evoke image 1 */}
-                <g filter="url(#cloudTurbDense)" opacity="0.96">
-                    <ellipse cx="180" cy="420" rx="240" ry="180" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="330" cy="360" rx="200" ry="140" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="90" cy="480" rx="160" ry="120" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="280" cy="500" rx="220" ry="130" fill="url(#cloudFillWarm)" />
-                </g>
-
-                {/* Additional mid-right puff */}
-                <g filter="url(#cloudTurbDense)" opacity="0.8">
-                    <ellipse cx="1400" cy="700" rx="280" ry="140" fill="url(#cloudFillWarm)" />
-                    <ellipse cx="1500" cy="640" rx="200" ry="110" fill="url(#cloudFillWarm)" />
-                </g>
-            </svg>
-
-            {/* Slow horizontal drift — very subtle */}
+            {/* Bottom-left bright cumulus mass */}
             <motion.div
-                className="absolute inset-0 opacity-40"
-                animate={{ x: [0, 40, 0] }}
-                transition={{ duration: 60, repeat: Infinity, ease: 'easeInOut' }}
-            >
-                <svg
-                    className="absolute inset-0 w-full h-full"
-                    viewBox="0 0 1600 900"
-                    preserveAspectRatio="xMidYMid slice"
-                    aria-hidden="true"
-                >
-                    <g filter="url(#cloudTurbSoft)" opacity="0.4">
-                        <ellipse cx="900" cy="300" rx="260" ry="70" fill="#ffffff" />
-                        <ellipse cx="1200" cy="220" rx="180" ry="50" fill="#ffffff" />
-                    </g>
-                </svg>
-            </motion.div>
+                className="absolute -left-[20%] bottom-[-15%] w-[85%] h-[70%] rounded-full blur-[100px] md:blur-[130px] opacity-80"
+                style={{ background: 'radial-gradient(ellipse at 55% 40%, rgba(255, 255, 255, 0.85) 0%, rgba(235, 245, 255, 0.55) 30%, rgba(200, 220, 245, 0.2) 60%, transparent 80%)' }}
+                animate={{ x: [0, 12, 0], y: [0, -8, 0] }}
+                transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            {/* Right cumulus mass */}
+            <motion.div
+                className="absolute -right-[15%] bottom-[-10%] w-[75%] h-[65%] rounded-full blur-[90px] md:blur-[120px] opacity-75"
+                style={{ background: 'radial-gradient(ellipse at 40% 45%, rgba(255, 255, 255, 0.8) 0%, rgba(230, 240, 255, 0.5) 35%, rgba(195, 215, 240, 0.18) 65%, transparent 80%)' }}
+                animate={{ x: [0, -10, 0], y: [0, 6, 0] }}
+                transition={{ duration: 34, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            {/* Center horizon glow */}
+            <div
+                className="absolute left-1/2 -translate-x-1/2 bottom-[-5%] w-[120%] h-[45%] rounded-full blur-[100px] opacity-60"
+                style={{ background: 'radial-gradient(ellipse at center, rgba(255, 250, 235, 0.55) 0%, rgba(235, 240, 255, 0.25) 40%, transparent 70%)' }}
+            />
+
+            {/* Upper-right subtle wisp */}
+            <motion.div
+                className="absolute right-[5%] top-[20%] w-[50%] h-[25%] rounded-full blur-[80px] opacity-40"
+                style={{ background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%)' }}
+                animate={{ x: [0, 30, 0] }}
+                transition={{ duration: 42, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            {/* Mid-left faint wisp */}
+            <motion.div
+                className="absolute left-[-5%] top-[45%] w-[45%] h-[22%] rounded-full blur-[70px] opacity-35"
+                style={{ background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.45) 0%, transparent 75%)' }}
+                animate={{ x: [0, -20, 0] }}
+                transition={{ duration: 38, repeat: Infinity, ease: 'easeInOut' }}
+            />
         </div>
     )
 }
 
-function WatercolorGrain() {
+function PaperTexture() {
     return (
-        <>
-            <svg className="absolute inset-0 pointer-events-none z-[4] opacity-[0.18] mix-blend-overlay w-full h-full" aria-hidden="true">
-                <filter id="paperGrain">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-                    <feColorMatrix values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 1 0" />
-                </filter>
-                <rect width="100%" height="100%" filter="url(#paperGrain)" />
-            </svg>
-            <svg className="absolute inset-0 pointer-events-none z-[4] opacity-[0.35] w-full h-full" aria-hidden="true">
-                <filter id="splatter">
-                    <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="2" seed="5" />
-                    <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.65  0 0 0 0 0.85  0 0 0 0.12 0" />
-                    <feComposite in2="SourceGraphic" operator="in" />
-                </filter>
-                <rect width="100%" height="100%" filter="url(#splatter)" opacity="0.5" />
-            </svg>
-        </>
+        <svg className="absolute inset-0 pointer-events-none z-[4] opacity-[0.12] mix-blend-overlay w-full h-full" aria-hidden="true">
+            <filter id="paperNoise">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+                <feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.55  0 0 0 0 0.75  0 0 0 1 0" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#paperNoise)" />
+        </svg>
+    )
+}
+
+function SpeckleSplatter() {
+    const dots = useMemo(
+        () =>
+            Array.from({ length: 45 }).map(() => ({
+                left: Math.random() * 100,
+                top: 20 + Math.random() * 70,
+                size: 1 + Math.random() * 2.5,
+                opacity: 0.15 + Math.random() * 0.35,
+            })),
+        []
+    )
+
+    return (
+        <div className="pointer-events-none absolute inset-0 z-[5]">
+            {dots.map((d, i) => (
+                <span
+                    key={i}
+                    className="absolute rounded-full"
+                    style={{
+                        left: `${d.left}%`,
+                        top: `${d.top}%`,
+                        width: `${d.size}px`,
+                        height: `${d.size}px`,
+                        backgroundColor: `rgba(70, 100, 150, ${d.opacity})`,
+                    }}
+                />
+            ))}
+        </div>
     )
 }
 
@@ -204,90 +190,100 @@ export default function CloudHero() {
 
     return (
         <section
-            className="relative min-h-screen w-full overflow-hidden isolate flex items-start justify-center"
+            className="relative min-h-[92vh] sm:min-h-[95vh] md:min-h-screen w-full overflow-hidden isolate flex items-center justify-center"
             data-header-theme="dark"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
-            {/* Layer 0 — Sky gradient base: deep cosmic blue at top → sky blue → cream */}
+            {/* Base painterly sky gradient */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
                     background:
-                        'linear-gradient(180deg, #0b1e3f 0%, #1e3a72 18%, #3b6fc4 44%, #7ea9dd 64%, #cfe0f3 85%, #f0f5fb 100%)',
+                        'linear-gradient(175deg, #0c1d3e 0%, #1f3870 22%, #466fa8 48%, #87b1da 72%, #c9ddf0 90%, #eaf2fa 100%)',
                 }}
             />
 
-            {/* Layer 1 — Atmospheric depth wash (darker top corners, warm glow center) */}
+            {/* Atmospheric depth - darker top corners, warm center-low glow */}
             <div
                 className="absolute inset-0 z-[1]"
                 style={{
                     background:
-                        'radial-gradient(120% 80% at 50% 100%, rgba(255,255,255,0.55) 0%, transparent 55%), radial-gradient(100% 70% at 15% 25%, rgba(12,24,52,0.55) 0%, transparent 55%), radial-gradient(80% 50% at 90% 15%, rgba(12,24,52,0.35) 0%, transparent 50%)',
+                        'radial-gradient(100% 80% at 10% 10%, rgba(8, 18, 42, 0.45) 0%, transparent 55%), radial-gradient(100% 70% at 90% 5%, rgba(8, 18, 42, 0.4) 0%, transparent 55%), radial-gradient(140% 60% at 50% 110%, rgba(255, 245, 225, 0.4) 0%, transparent 50%)',
                 }}
             />
 
-            {/* Layer 2 — Starfield */}
+            {/* Stars */}
             <StarField />
 
-            {/* Layer 3 — Watercolor clouds */}
-            <CloudLayers />
+            {/* Atmospheric cloud washes (the main cloud feeling) */}
+            <AtmosphericLights />
 
-            {/* Layer 4 — Paper grain + watercolor splatter */}
-            <WatercolorGrain />
+            {/* Paper grain */}
+            <PaperTexture />
 
-            {/* Layer 5 — Subtle vignette */}
-            <div className="absolute inset-0 z-[5] pointer-events-none" style={{ boxShadow: 'inset 0 0 200px 40px rgba(11,30,63,0.3)' }} />
+            {/* Watercolor speckles */}
+            <SpeckleSplatter />
+
+            {/* Vignette */}
+            <div
+                className="absolute inset-0 z-[6] pointer-events-none"
+                style={{ boxShadow: 'inset 0 -120px 180px -40px rgba(234, 242, 250, 0.55), inset 0 80px 180px -40px rgba(12, 29, 62, 0.3)' }}
+            />
 
             {/* Bottom soft fade to next section */}
-            <div className="absolute inset-x-0 bottom-0 h-40 z-[6] pointer-events-none bg-gradient-to-b from-transparent via-[#f0f5fb]/50 to-[#FAFAFA]" />
+            <div className="absolute inset-x-0 bottom-0 h-24 sm:h-32 md:h-40 z-[7] pointer-events-none bg-gradient-to-b from-transparent via-[#eaf2fa]/60 to-[#FAFAFA]" />
 
             {/* Content */}
-            <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 md:pt-40 pb-32 text-center">
+            <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 lg:px-10 pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-28 text-center">
                 <motion.div
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/25 backdrop-blur-md text-white/95 text-xs sm:text-sm font-semibold tracking-wide mb-8 shadow-[0_4px_24px_rgba(0,0,0,0.15)]"
+                    className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/12 border border-white/25 backdrop-blur-md text-white/95 text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide mb-6 sm:mb-8 shadow-[0_4px_24px_rgba(0,0,0,0.12)]"
                 >
-                    <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
-                    {tagline}
+                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-200" />
+                    <span className="uppercase tracking-[0.15em]">{tagline}</span>
                 </motion.div>
 
                 <motion.h1
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="text-[clamp(2.25rem,6vw,5.5rem)] font-bold tracking-tight text-white leading-[1.05] mb-6 drop-shadow-[0_2px_20px_rgba(11,30,63,0.4)]"
+                    transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="font-bold tracking-tight text-white leading-[1.08] mb-5 sm:mb-6 md:mb-7"
+                    style={{
+                        fontSize: 'clamp(2.25rem, 7vw, 5.25rem)',
+                        textShadow: '0 2px 12px rgba(8,18,42,0.35), 0 6px 42px rgba(8,18,42,0.3)',
+                    }}
                 >
                     {title}
                     <br className="hidden sm:block" />
-                    <span className="inline-flex items-baseline gap-x-3 flex-wrap justify-center mt-1 sm:mt-2">
-                        {intoThe && <span>{intoThe}</span>}
-                        <span className="relative inline-block overflow-hidden align-baseline" style={{ minWidth: '4ch' }}>
+                    <span className="inline-flex items-baseline gap-x-2 sm:gap-x-3 flex-wrap justify-center mt-1.5 sm:mt-2">
+                        {intoThe && <span className="font-semibold">{intoThe}</span>}
+                        <span className="relative inline-block align-baseline" style={{ minWidth: '3.5ch' }}>
                             <AnimatePresence mode="wait">
                                 <motion.span
                                     key={cyclingWords[wordIndex]}
-                                    initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+                                    initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
                                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                    exit={{ opacity: 0, y: -28, filter: 'blur(8px)' }}
-                                    transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                    className="inline-block italic font-serif text-[#e0f2ff]"
-                                    style={{ textShadow: '0 2px 4px rgba(11,30,63,0.7), 0 4px 24px rgba(11,30,63,0.55), 0 0 48px rgba(162,210,255,0.5)' }}
+                                    exit={{ opacity: 0, y: -22, filter: 'blur(6px)' }}
+                                    transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                    className="inline-block italic font-serif text-[#e8f4ff]"
+                                    style={{ textShadow: '0 2px 6px rgba(8,18,42,0.75), 0 4px 28px rgba(8,18,42,0.55), 0 0 48px rgba(160,210,255,0.4)' }}
                                 >
                                     {cyclingWords[wordIndex]}
                                 </motion.span>
                             </AnimatePresence>
                         </span>
-                        {titleSuffix && <span>{titleSuffix}</span>}
+                        {titleSuffix && <span className="font-semibold">{titleSuffix}</span>}
                     </span>
                 </motion.h1>
 
                 <motion.p
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-white leading-relaxed mb-10 font-light"
-                    style={{ textShadow: '0 1px 2px rgba(11,30,63,0.6), 0 2px 18px rgba(11,30,63,0.55), 0 0 40px rgba(11,30,63,0.35)' }}
+                    transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-white leading-relaxed mb-8 sm:mb-10 font-light px-2"
+                    style={{ textShadow: '0 1px 3px rgba(8,18,42,0.6), 0 2px 14px rgba(8,18,42,0.45)' }}
                 >
                     {description}
                 </motion.p>
@@ -295,33 +291,33 @@ export default function CloudHero() {
                 <motion.div
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
+                    transition={{ duration: 0.9, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4"
                 >
                     <Link
                         href={l('/contact')}
-                        className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0b1e3f] font-semibold shadow-[0_10px_40px_rgba(255,255,255,0.25)] hover:bg-cyan-50 hover:shadow-[0_14px_50px_rgba(255,255,255,0.35)] transition-all duration-300 w-full sm:w-auto"
+                        className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-[#0c1d3e] font-semibold text-sm sm:text-base shadow-[0_10px_40px_rgba(255,255,255,0.2)] hover:bg-cyan-50 hover:shadow-[0_14px_50px_rgba(255,255,255,0.3)] transition-all duration-300"
                     >
                         {getStarted}
                         <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                     </Link>
                     <Link
                         href={l('/services')}
-                        className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border-2 border-white/80 hover:border-white text-white font-semibold backdrop-blur-md bg-[#0b1e3f]/30 hover:bg-[#0b1e3f]/50 transition-all duration-300 w-full sm:w-auto shadow-[0_6px_24px_rgba(11,30,63,0.35)]"
+                        className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border-2 border-white/70 hover:border-white text-white font-semibold text-sm sm:text-base backdrop-blur-md bg-[#0c1d3e]/25 hover:bg-[#0c1d3e]/45 transition-all duration-300"
                     >
                         {viewServices}
                     </Link>
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.75 }}
-                    transition={{ duration: 1.2, delay: 0.8 }}
-                    className="mt-16 flex items-center justify-center gap-3 text-white/60 text-xs sm:text-sm tracking-[0.25em] uppercase"
+                    initial={false}
+                    animate={{ opacity: 0.8, y: 0 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                    className="mt-12 sm:mt-14 md:mt-16 flex items-center justify-center gap-3 text-white/65 text-[10px] sm:text-xs tracking-[0.3em] uppercase"
                 >
-                    <span className="h-px w-8 bg-white/30" />
+                    <span className="h-px w-6 sm:w-8 bg-white/30" />
                     <span>Istanbul · Riyadh · Dubai</span>
-                    <span className="h-px w-8 bg-white/30" />
+                    <span className="h-px w-6 sm:w-8 bg-white/30" />
                 </motion.div>
             </div>
         </section>
