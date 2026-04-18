@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Mail, MapPin, Sparkles } from 'lucide-react'
+import { ArrowRight, Mail, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function FinalCTA() {
@@ -16,9 +16,7 @@ export default function FinalCTA() {
     const primaryCTA = t.home?.finalCTA?.primaryCTA || 'Start a project'
     const secondaryCTA = t.home?.finalCTA?.secondaryCTA || 'See pricing first'
     const emailLabel = t.home?.finalCTA?.emailLabel || 'Or email us directly'
-    const emailAddress = t.home?.finalCTA?.emailAddress || 'hello@cloudtopia.net'
-    const locationsLabel = t.home?.finalCTA?.locationsLabel || 'Operating from'
-    const locations = t.home?.finalCTA?.locations || 'Istanbul · Riyadh · Dubai'
+    const emailAddress = t.home?.finalCTA?.emailAddress || 'info@cloudtopia.net'
 
     return (
         <section
@@ -119,23 +117,19 @@ export default function FinalCTA() {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="relative flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 pt-8 border-t border-white/10"
+                        className="relative flex items-center justify-center pt-8 border-t border-white/10"
                     >
-                        <div className="flex items-center gap-3 text-white/70">
-                            <Mail className="w-4 h-4 text-cyan-300 shrink-0" />
-                            <span className="text-sm">{emailLabel}</span>
+                        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-white/70">
+                            <div className="flex items-center gap-2">
+                                <Mail className="w-4 h-4 text-cyan-300 shrink-0" />
+                                <span className="text-sm">{emailLabel}</span>
+                            </div>
                             <a
                                 href={`mailto:${emailAddress}`}
                                 className="text-sm font-semibold text-white hover:text-cyan-200 transition-colors underline-offset-4 hover:underline"
                             >
                                 {emailAddress}
                             </a>
-                        </div>
-                        <div className="hidden md:block w-px h-5 bg-white/15" />
-                        <div className="flex items-center gap-3 text-white/70">
-                            <MapPin className="w-4 h-4 text-cyan-300 shrink-0" />
-                            <span className="text-sm">{locationsLabel}</span>
-                            <span className="text-sm font-semibold text-white">{locations}</span>
                         </div>
                     </motion.div>
                 </div>

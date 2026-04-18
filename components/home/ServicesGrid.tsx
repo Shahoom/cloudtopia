@@ -14,6 +14,7 @@ import {
     LucideIcon,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 type ServiceCard = {
     icon: string
@@ -117,6 +118,14 @@ export default function ServicesGrid() {
                                     href={`/${locale}${card.link}`}
                                     className="group relative flex flex-col h-full p-7 md:p-8 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
                                 >
+                                    <GlowingEffect
+                                        spread={40}
+                                        glow={true}
+                                        disabled={false}
+                                        proximity={80}
+                                        inactiveZone={0.05}
+                                        borderWidth={2}
+                                    />
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                     <div className="relative flex items-start justify-between mb-6">

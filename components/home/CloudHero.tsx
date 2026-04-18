@@ -6,11 +6,9 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-const STAR_COUNT = 180
-const STREAK_COUNT = 36
+const STAR_COUNT = 120
 
 type Star = { cx: number; cy: number; r: number; dur: number; delay: number; min: number; max: number }
-type Streak = { angle: number; len: number; dist: number; dur: number; delay: number; op: number }
 
 function useStars(count: number): Star[] {
     const [stars] = useState<Star[]>(() => {
@@ -21,9 +19,9 @@ function useStars(count: number): Star[] {
             const v = Math.random()
             const x = (1 - Math.pow(1 - u, 1.7)) * W
             const y = Math.pow(v, 1.7) * H * 0.8
-            const big = Math.random() < 0.1
-            const mid = Math.random() < 0.35
-            const r = big ? 1.9 : mid ? 1.15 : 0.65
+            const big = Math.random() < 0.08
+            const mid = Math.random() < 0.32
+            const r = big ? 1.7 : mid ? 1.05 : 0.55
             return {
                 cx: Number(x.toFixed(1)),
                 cy: Number(y.toFixed(1)),
@@ -31,35 +29,33 @@ function useStars(count: number): Star[] {
                 dur: Number((2 + Math.random() * 4).toFixed(2)),
                 delay: Number((Math.random() * 5).toFixed(2)),
                 min: Number((0.15 + Math.random() * 0.25).toFixed(2)),
-                max: Number((0.75 + Math.random() * 0.25).toFixed(2)),
+                max: Number((0.7 + Math.random() * 0.25).toFixed(2)),
             }
         })
     })
     return stars
 }
 
-function useStreaks(count: number): Streak[] {
-    const [streaks] = useState<Streak[]>(() =>
-        Array.from({ length: count }, () => {
-            const dur = Number((1.5 + Math.random() * 2.2).toFixed(2))
-            return {
-                angle: Number((Math.random() * 360).toFixed(1)),
-                len: Number((40 + Math.random() * 120).toFixed(0)),
-                dist: Number((50 + Math.random() * 70).toFixed(0)),
-                dur,
-                delay: Number((-Math.random() * dur).toFixed(2)),
-                op: Number((0.4 + Math.random() * 0.5).toFixed(2)),
-            }
-        })
-    )
-    return streaks
-}
+// Colorful gradients cycled per rotating word
+const WORD_GRADIENTS = [
+    'linear-gradient(135deg, #67e8f9 0%, #38bdf8 45%, #a5f3fc 100%)',
+    'linear-gradient(135deg, #f0abfc 0%, #c084fc 45%, #fbcfe8 100%)',
+    'linear-gradient(135deg, #6ee7b7 0%, #34d399 45%, #a7f3d0 100%)',
+    'linear-gradient(135deg, #fde68a 0%, #fb923c 45%, #fecaca 100%)',
+]
 
 export default function CloudHero() {
     const { t, locale } = useLanguage()
     const isRTL = locale === 'ar'
 
-    const cyclingWords = (t.home?.hero?.titleHighlights as string[]) || ['Cloud', 'Internet', 'Web']
+    const fallbackCycling: Record<string, string[]> = {
+        en: ['Cloud', 'Internet', 'Web'],
+        ar: ['السحابة', 'الإنترنت', 'العالم الرقمي'],
+        tr: ['Buluta', 'Dijitale', 'Geleceğe'],
+    }
+    const cyclingWords = (t.home?.hero?.titleHighlights as string[]) ||
+        fallbackCycling[locale] ||
+        fallbackCycling.en
     const [wordIndex, setWordIndex] = useState(0)
     const [mounted, setMounted] = useState(false)
 
@@ -68,7 +64,7 @@ export default function CloudHero() {
     }, [])
 
     useEffect(() => {
-        const id = setInterval(() => setWordIndex((i) => (i + 1) % cyclingWords.length), 3000)
+        const id = setInterval(() => setWordIndex((i) => (i + 1) % cyclingWords.length), 3200)
         return () => clearInterval(id)
     }, [cyclingWords.length])
 
@@ -82,14 +78,13 @@ export default function CloudHero() {
     const l = (p: string) => `/${locale}${p === '/' ? '' : p}`
 
     const stars = useStars(STAR_COUNT)
-    const streaks = useStreaks(STREAK_COUNT)
 
     // Pointer-move parallax — 5 depth values per scene's 5 layers
     const heroRef = useRef<HTMLElement>(null)
     const rafRef = useRef<number | null>(null)
     const targetRef = useRef({ x: 0, y: 0 })
     const currentRef = useRef({ x: 0, y: 0 })
-    const DEPTHS = [6, 10, 16, 22, 28]
+    const DEPTHS = [5, 8, 12, 16, 20]
 
     const applyTranslates = () => {
         const hero = heroRef.current
@@ -98,15 +93,15 @@ export default function CloudHero() {
         stages.forEach((stage) => {
             const layers = stage.querySelectorAll<HTMLDivElement>('.layer')
             layers.forEach((layer, i) => {
-                const depth = DEPTHS[i] || 6
+                const depth = DEPTHS[i] || 5
                 layer.style.translate = `${(currentRef.current.x * depth).toFixed(2)}px ${(currentRef.current.y * depth).toFixed(2)}px`
             })
         })
     }
 
     const tick = () => {
-        currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.06
-        currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.06
+        currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.05
+        currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.05
         applyTranslates()
         if (
             Math.abs(targetRef.current.x - currentRef.current.x) > 0.001 ||
@@ -142,6 +137,9 @@ export default function CloudHero() {
         }
     }, [])
 
+    // Font class for the rotating word — Arabic uses Changa, latin uses a serif italic
+    const rotatingFontClass = isRTL ? 'font-arabic not-italic' : 'italic font-serif'
+
     return (
         <>
             <style jsx>{`
@@ -158,43 +156,43 @@ export default function CloudHero() {
                     will-change: transform, filter, opacity;
                 }
                 .camera.a {
-                    animation: cam-a 36s ease-in-out infinite;
+                    animation: cam-a 40s ease-in-out infinite;
                 }
                 @keyframes cam-a {
                     0% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
-                    25% { transform: scale(1.22) translateZ(70px); filter: blur(1px) brightness(1.03); opacity: 1; }
-                    33% { transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); opacity: 0.5; }
-                    40% { transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); opacity: 0; }
-                    96% { transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); opacity: 0; }
+                    25% { transform: scale(1.18) translateZ(60px); filter: blur(1px) brightness(1.02); opacity: 1; }
+                    33% { transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); opacity: 0.55; }
+                    40% { transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); opacity: 0; }
+                    96% { transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); opacity: 0; }
                     100% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
                 }
                 .camera.b {
                     opacity: 0;
-                    animation: cam-b 36s ease-in-out infinite;
+                    animation: cam-b 40s ease-in-out infinite;
                 }
                 @keyframes cam-b {
-                    0%, 26% { opacity: 0; transform: scale(1.6) translateZ(-200px); filter: blur(5px) brightness(1.08); }
-                    33% { opacity: 0.5; transform: scale(1.45) translateZ(-140px); filter: blur(3px) brightness(1.06); }
-                    40% { opacity: 1; transform: scale(1.3) translateZ(-80px); filter: blur(2px) brightness(1.03); }
-                    50% { opacity: 1; transform: scale(1.1) translateZ(-20px); filter: blur(0.5px) brightness(1.01); }
-                    60% { opacity: 1; transform: scale(1.3) translateZ(80px); filter: blur(2px) brightness(1.03); }
-                    66% { opacity: 0.5; transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); }
-                    73% { opacity: 0; transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); }
+                    0%, 26% { opacity: 0; transform: scale(1.5) translateZ(-170px); filter: blur(3.5px) brightness(1.06); }
+                    33% { opacity: 0.55; transform: scale(1.35) translateZ(-120px); filter: blur(2px) brightness(1.04); }
+                    40% { opacity: 1; transform: scale(1.22) translateZ(-60px); filter: blur(1px) brightness(1.02); }
+                    50% { opacity: 1; transform: scale(1.08) translateZ(-10px); filter: blur(0.3px) brightness(1.01); }
+                    60% { opacity: 1; transform: scale(1.22) translateZ(60px); filter: blur(1px) brightness(1.02); }
+                    66% { opacity: 0.55; transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); }
+                    73% { opacity: 0; transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); }
                     100% { opacity: 0; }
                 }
                 .camera.b :global(.layer) { background-image: url('/images/homepage/clouds-b.webp'); }
                 .camera.c {
                     opacity: 0;
-                    animation: cam-c 36s ease-in-out infinite;
+                    animation: cam-c 40s ease-in-out infinite;
                 }
                 @keyframes cam-c {
-                    0%, 60% { opacity: 0; transform: scale(1.6) translateZ(-200px); filter: blur(5px) brightness(1.08); }
-                    66% { opacity: 0.5; transform: scale(1.45) translateZ(-140px); filter: blur(3px) brightness(1.06); }
-                    73% { opacity: 1; transform: scale(1.3) translateZ(-80px); filter: blur(2px) brightness(1.03); }
-                    83% { opacity: 1; transform: scale(1.1) translateZ(-20px); filter: blur(0.5px) brightness(1.01); }
-                    93% { opacity: 1; transform: scale(1.3) translateZ(80px); filter: blur(2px) brightness(1.03); }
-                    99% { opacity: 0.5; transform: scale(1.45) translateZ(140px); filter: blur(3px) brightness(1.06); }
-                    100% { opacity: 0; transform: scale(1.6) translateZ(200px); filter: blur(5px) brightness(1.08); }
+                    0%, 60% { opacity: 0; transform: scale(1.5) translateZ(-170px); filter: blur(3.5px) brightness(1.06); }
+                    66% { opacity: 0.55; transform: scale(1.35) translateZ(-120px); filter: blur(2px) brightness(1.04); }
+                    73% { opacity: 1; transform: scale(1.22) translateZ(-60px); filter: blur(1px) brightness(1.02); }
+                    83% { opacity: 1; transform: scale(1.08) translateZ(-10px); filter: blur(0.3px) brightness(1.01); }
+                    93% { opacity: 1; transform: scale(1.22) translateZ(60px); filter: blur(1px) brightness(1.02); }
+                    99% { opacity: 0.55; transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); }
+                    100% { opacity: 0; transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); }
                 }
                 .camera.c :global(.layer) { background-image: url('/images/homepage/clouds-c.webp'); }
 
@@ -210,8 +208,8 @@ export default function CloudHero() {
                     backface-visibility: hidden;
                 }
                 .layer.base {
-                    animation: base-drift 55s ease-in-out infinite alternate;
-                    filter: saturate(1.1) contrast(1.05) brightness(1.02);
+                    animation: base-drift 65s ease-in-out infinite alternate;
+                    filter: saturate(1.08) contrast(1.04) brightness(1.02);
                 }
                 @keyframes base-drift {
                     0% { transform: scale(1.08) translate3d(-1%, 0, 0); }
@@ -219,9 +217,9 @@ export default function CloudHero() {
                 }
                 .layer.drift-r {
                     mix-blend-mode: screen;
-                    opacity: 0.4;
-                    filter: blur(3px) brightness(1.2) contrast(1.1);
-                    animation: drift-right 35s linear infinite;
+                    opacity: 0.35;
+                    filter: blur(3px) brightness(1.18) contrast(1.08);
+                    animation: drift-right 45s linear infinite;
                 }
                 @keyframes drift-right {
                     0% { transform: scale(1.3) translate3d(-8%, 1%, 0); }
@@ -229,9 +227,9 @@ export default function CloudHero() {
                 }
                 .layer.drift-l {
                     mix-blend-mode: soft-light;
-                    opacity: 0.6;
-                    filter: blur(12px) brightness(1.1);
-                    animation: drift-left 50s linear infinite;
+                    opacity: 0.55;
+                    filter: blur(14px) brightness(1.08);
+                    animation: drift-left 60s linear infinite;
                 }
                 @keyframes drift-left {
                     0% { transform: scale(1.35) translate3d(7%, 1%, 0); }
@@ -239,9 +237,9 @@ export default function CloudHero() {
                 }
                 .layer.churn {
                     mix-blend-mode: screen;
-                    opacity: 0.35;
-                    filter: url(#cloudTurbFilter) blur(1px) brightness(1.1);
-                    animation: churn-drift 30s ease-in-out infinite alternate;
+                    opacity: 0.3;
+                    filter: url(#cloudTurbFilter) blur(1.5px) brightness(1.08);
+                    animation: churn-drift 38s ease-in-out infinite alternate;
                 }
                 @keyframes churn-drift {
                     0% { transform: scale(1.25) translate3d(-2%, 0, 0); }
@@ -249,56 +247,42 @@ export default function CloudHero() {
                 }
                 .layer.haze {
                     mix-blend-mode: soft-light;
-                    opacity: 0.55;
-                    filter: blur(24px);
-                    animation: haze 26s ease-in-out infinite alternate;
+                    opacity: 0.5;
+                    filter: blur(28px);
+                    animation: haze 32s ease-in-out infinite alternate;
                 }
                 @keyframes haze {
                     0% { transform: scale(1.35) translate3d(-1%, 2%, 0); }
                     100% { transform: scale(1.42) translate3d(2%, -1%, 0); }
                 }
 
-                .chroma {
-                    position: absolute; inset: 0; z-index: 3;
-                    pointer-events: none; opacity: 0;
-                    background:
-                        radial-gradient(100% 100% at 50% 50%, transparent 50%, rgba(140, 180, 255, 0.08) 65%, transparent 80%),
-                        radial-gradient(100% 100% at 50% 50%, transparent 55%, rgba(255, 180, 140, 0.08) 70%, transparent 85%);
-                    mix-blend-mode: screen;
-                    animation: chroma-pulse 30s linear infinite;
-                }
-                @keyframes chroma-pulse {
-                    0%, 25%, 40%, 55%, 70%, 85%, 100% { opacity: 0; }
-                    30%, 62%, 92% { opacity: 1; }
-                }
-
                 .grade {
                     position: absolute; inset: 0; z-index: 4;
                     background:
-                        radial-gradient(60% 40% at 22% 18%, rgba(255, 236, 205, 0.2), transparent 65%),
-                        radial-gradient(80% 60% at 80% 0%, rgba(140, 185, 255, 0.18), transparent 60%),
-                        radial-gradient(120% 80% at 50% 110%, rgba(8, 18, 40, 0.4), transparent 60%);
+                        radial-gradient(60% 40% at 22% 18%, rgba(255, 236, 205, 0.18), transparent 65%),
+                        radial-gradient(80% 60% at 80% 0%, rgba(140, 185, 255, 0.16), transparent 60%),
+                        radial-gradient(120% 80% at 50% 110%, rgba(8, 18, 40, 0.32), transparent 60%);
                     mix-blend-mode: screen;
                     pointer-events: none;
                 }
 
                 .rays {
                     position: absolute; inset: 0; z-index: 5;
-                    pointer-events: none; opacity: 0.5; mix-blend-mode: screen;
+                    pointer-events: none; opacity: 0.4; mix-blend-mode: screen;
                 }
                 .ray {
                     position: absolute; top: -20%; left: 0;
                     width: 140%; height: 160%;
-                    background: linear-gradient(100deg, transparent 40%, rgba(255, 240, 210, 0.16) 48%, rgba(255, 240, 210, 0.24) 50%, rgba(255, 240, 210, 0.16) 52%, transparent 60%);
+                    background: linear-gradient(100deg, transparent 40%, rgba(255, 240, 210, 0.14) 48%, rgba(255, 240, 210, 0.2) 50%, rgba(255, 240, 210, 0.14) 52%, transparent 60%);
                     transform-origin: 18% 0%;
-                    animation: ray-sweep 18s ease-in-out infinite alternate;
+                    animation: ray-sweep 22s ease-in-out infinite alternate;
                     filter: blur(8px);
                 }
                 .ray.r2 {
-                    animation-duration: 26s;
+                    animation-duration: 30s;
                     animation-delay: -6s;
-                    opacity: 0.6;
-                    background: linear-gradient(105deg, transparent 42%, rgba(220, 235, 255, 0.14) 50%, transparent 58%);
+                    opacity: 0.5;
+                    background: linear-gradient(105deg, transparent 42%, rgba(220, 235, 255, 0.12) 50%, transparent 58%);
                 }
                 @keyframes ray-sweep {
                     0% { transform: rotate(-2deg) translateX(-4%); }
@@ -314,42 +298,23 @@ export default function CloudHero() {
                     50% { opacity: var(--max, 1); transform: scale(1.25); }
                 }
 
-                .streaks { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
-                .streak {
-                    position: absolute; width: 2px; height: var(--len, 60px);
-                    top: 50%; left: 50%;
-                    border-radius: 2px;
-                    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-                    transform-origin: center top;
-                    opacity: 0;
-                    animation: streak var(--dur, 2s) linear infinite;
-                    animation-delay: var(--delay, 0s);
-                    filter: blur(0.5px);
-                }
-                @keyframes streak {
-                    0% { transform: rotate(var(--angle, 0deg)) translate(0, 0) scale(0.5); opacity: 0; }
-                    20% { opacity: var(--op, 0.7); }
-                    80% { opacity: var(--op, 0.7); }
-                    100% { transform: rotate(var(--angle, 0deg)) translate(0, var(--dist, 70vh)) scale(1.4); opacity: 0; }
-                }
-
                 .sparkle {
                     position: absolute; z-index: 8; pointer-events: none;
-                    animation: sparkle-pulse 3.8s ease-in-out infinite;
-                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+                    animation: sparkle-pulse 4.2s ease-in-out infinite;
+                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
                 }
-                .sparkle.s1 { right: 3.5%; bottom: 9%; width: 30px; height: 30px; animation-delay: 0s; }
-                .sparkle.s2 { right: 9%; bottom: 20%; width: 14px; height: 14px; animation-delay: 1.4s; }
-                .sparkle.s3 { left: 12%; top: 34%; width: 18px; height: 18px; animation-delay: 2.2s; opacity: 0.65; }
-                .sparkle.s4 { right: 22%; top: 16%; width: 12px; height: 12px; animation-delay: 0.6s; opacity: 0.75; }
+                .sparkle.s1 { right: 4%; bottom: 10%; width: 26px; height: 26px; animation-delay: 0s; }
+                .sparkle.s2 { right: 9%; bottom: 22%; width: 12px; height: 12px; animation-delay: 1.6s; }
+                .sparkle.s3 { left: 12%; top: 36%; width: 16px; height: 16px; animation-delay: 2.4s; opacity: 0.6; }
+                .sparkle.s4 { right: 22%; top: 18%; width: 10px; height: 10px; animation-delay: 0.8s; opacity: 0.65; }
                 @keyframes sparkle-pulse {
-                    0%, 100% { opacity: 0.25; transform: scale(0.8) rotate(0deg); }
-                    50% { opacity: 1; transform: scale(1.15) rotate(90deg); }
+                    0%, 100% { opacity: 0.25; transform: scale(0.85) rotate(0deg); }
+                    50% { opacity: 0.95; transform: scale(1.1) rotate(90deg); }
                 }
 
                 .vignette {
                     position: absolute; inset: 0; z-index: 9;
-                    background: radial-gradient(130% 100% at 50% 50%, transparent 58%, rgba(4, 10, 22, 0.55) 100%);
+                    background: radial-gradient(130% 100% at 50% 50%, transparent 58%, rgba(4, 10, 22, 0.45) 100%);
                     pointer-events: none;
                 }
 
@@ -357,7 +322,7 @@ export default function CloudHero() {
                     position: absolute; inset-inline: 0; bottom: 0;
                     height: 6rem;
                     z-index: 10; pointer-events: none;
-                    background: linear-gradient(to bottom, transparent, rgba(250, 250, 250, 0.4) 55%, #fafafa 100%);
+                    background: linear-gradient(to bottom, transparent, rgba(250, 250, 250, 0.35) 55%, #fafafa 100%);
                 }
                 @media (min-width: 640px) { .bottom-fade { height: 9rem; } }
                 @media (min-width: 768px) { .bottom-fade { height: 11rem; } }
@@ -367,9 +332,7 @@ export default function CloudHero() {
                     .layer,
                     .star-pulse,
                     .sparkle,
-                    .ray,
-                    .streak,
-                    .chroma {
+                    .ray {
                         animation: none !important;
                     }
                 }
@@ -380,11 +343,11 @@ export default function CloudHero() {
                 <defs>
                     <filter id="cloudTurbFilter">
                         <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves={2} seed={5}>
-                            <animate attributeName="baseFrequency" dur="22s" values="0.008 0.014; 0.014 0.008; 0.008 0.014" repeatCount="indefinite" />
-                            <animate attributeName="seed" dur="40s" values="5;25;5" repeatCount="indefinite" />
+                            <animate attributeName="baseFrequency" dur="26s" values="0.008 0.014; 0.014 0.008; 0.008 0.014" repeatCount="indefinite" />
+                            <animate attributeName="seed" dur="48s" values="5;25;5" repeatCount="indefinite" />
                         </feTurbulence>
-                        <feDisplacementMap in="SourceGraphic" scale={55}>
-                            <animate attributeName="scale" dur="18s" values="35;75;35" repeatCount="indefinite" />
+                        <feDisplacementMap in="SourceGraphic" scale={45}>
+                            <animate attributeName="scale" dur="22s" values="30;60;30" repeatCount="indefinite" />
                         </feDisplacementMap>
                     </filter>
                 </defs>
@@ -431,7 +394,6 @@ export default function CloudHero() {
                     </div>
                 </div>
 
-                <div className="chroma" />
                 <div className="grade" />
 
                 <div className="rays">
@@ -461,25 +423,6 @@ export default function CloudHero() {
                     </svg>
                 </div>
 
-                {/* Speed streaks (client-only) */}
-                <div className="streaks">
-                    {mounted &&
-                        streaks.map((st, i) => (
-                            <span
-                                key={i}
-                                className="streak"
-                                style={{
-                                    ['--angle' as any]: `${st.angle}deg`,
-                                    ['--len' as any]: `${st.len}px`,
-                                    ['--dist' as any]: `${st.dist}vh`,
-                                    ['--dur' as any]: `${st.dur}s`,
-                                    ['--op' as any]: String(st.op),
-                                    animationDelay: `${st.delay}s`,
-                                }}
-                            />
-                        ))}
-                </div>
-
                 {/* Sparkles */}
                 {['s1', 's2', 's3', 's4'].map((cls) => (
                     <svg key={cls} className={`sparkle ${cls}`} viewBox="0 0 24 24">
@@ -496,21 +439,22 @@ export default function CloudHero() {
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/12 border border-white/30 backdrop-blur-md text-white/95 text-[11px] sm:text-xs md:text-sm font-semibold mb-6 sm:mb-8 shadow-[0_4px_28px_rgba(0,0,0,0.3)]"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/92 border border-white/60 backdrop-blur-md text-[#0284c7] text-[11px] sm:text-xs md:text-sm font-bold mb-6 sm:mb-8 shadow-[0_6px_28px_rgba(2,132,199,0.35)]"
                     >
-                        <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-200" />
-                        <span className="uppercase tracking-[0.18em]">{tagline}</span>
+                        <Sparkles className="w-3.5 h-3.5 text-[#0284c7]" />
+                        <span className="uppercase tracking-[0.2em]">{tagline}</span>
                     </motion.div>
 
                     <motion.h1
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="font-bold tracking-tight text-white leading-[1.08] mb-5 sm:mb-6 md:mb-7"
+                        className={`font-bold tracking-tight leading-[1.08] mb-5 sm:mb-6 md:mb-7 ${isRTL ? 'font-arabic' : ''}`}
                         style={{
                             fontSize: 'clamp(2.25rem, 7vw, 5.25rem)',
+                            color: '#ffffff',
                             textShadow:
-                                '0 2px 6px rgba(7,15,38,0.75), 0 4px 24px rgba(7,15,38,0.55), 0 0 48px rgba(7,15,38,0.35)',
+                                '0 2px 10px rgba(7,15,38,0.65), 0 5px 28px rgba(7,15,38,0.5), 0 0 56px rgba(7,15,38,0.4)',
                         }}
                     >
                         {title}
@@ -521,14 +465,15 @@ export default function CloudHero() {
                                 <AnimatePresence mode="wait">
                                     <motion.span
                                         key={cyclingWords[wordIndex]}
-                                        initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
+                                        initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
                                         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                        exit={{ opacity: 0, y: -22, filter: 'blur(6px)' }}
-                                        transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                        className="inline-block italic font-serif text-[#eaf6ff]"
+                                        exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
+                                        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                        className={`inline-block bg-clip-text text-transparent ${rotatingFontClass}`}
                                         style={{
-                                            textShadow:
-                                                '0 2px 8px rgba(7,15,38,0.85), 0 6px 32px rgba(7,15,38,0.65), 0 0 56px rgba(170,215,255,0.45)',
+                                            backgroundImage: WORD_GRADIENTS[wordIndex % WORD_GRADIENTS.length],
+                                            WebkitBackgroundClip: 'text',
+                                            filter: 'drop-shadow(0 2px 12px rgba(7,15,38,0.4)) drop-shadow(0 0 32px rgba(180,220,255,0.35))',
                                         }}
                                     >
                                         {cyclingWords[wordIndex]}
@@ -543,8 +488,9 @@ export default function CloudHero() {
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-white/95 leading-relaxed mb-8 sm:mb-10 font-light px-2"
+                        className={`max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 font-light px-2 ${isRTL ? 'font-arabic' : ''}`}
                         style={{
+                            color: '#ffffff',
                             textShadow:
                                 '0 1px 4px rgba(7,15,38,0.75), 0 3px 18px rgba(7,15,38,0.6), 0 0 42px rgba(7,15,38,0.4)',
                         }}
@@ -571,18 +517,6 @@ export default function CloudHero() {
                         >
                             {viewServices}
                         </Link>
-                    </motion.div>
-
-                    <motion.div
-                        initial={false}
-                        animate={{ opacity: 0.85, y: 0 }}
-                        transition={{ duration: 1, delay: 0.6 }}
-                        className="mt-12 sm:mt-14 md:mt-16 flex items-center justify-center gap-3 text-white text-[10px] sm:text-xs tracking-[0.32em] uppercase"
-                        style={{ textShadow: '0 2px 12px rgba(7,15,38,0.8)' }}
-                    >
-                        <span className="h-px w-6 sm:w-8 bg-white/40" />
-                        <span>Istanbul · Riyadh · Dubai</span>
-                        <span className="h-px w-6 sm:w-8 bg-white/40" />
                     </motion.div>
                 </div>
             </section>

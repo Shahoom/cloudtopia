@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,16 +9,14 @@ import {
     Code2,
     ArrowRight,
     ExternalLink,
-    Rocket,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { AuroraBackground } from '@/components/ui/aurora-background'
 import dynamic from 'next/dynamic'
 import type { BlogPostMeta } from '@/lib/blog'
 
 import CloudHero from '@/components/home/CloudHero'
-import StatsBar from '@/components/home/StatsBar'
 import ServicesGrid from '@/components/home/ServicesGrid'
+import WhyCloudTopia from '@/components/home/WhyCloudTopia'
 import HowWeWork from '@/components/home/HowWeWork'
 import FAQ from '@/components/home/FAQ'
 import BlogTeaser from '@/components/home/BlogTeaser'
@@ -64,83 +62,6 @@ function FloatingCard({
     )
 }
 
-function JourneyStep({
-    iconImage,
-    number,
-    title,
-    description,
-    accent,
-    href,
-    index,
-}: {
-    iconImage: string
-    number: string
-    title: string
-    description: string
-    accent: string
-    href: string
-    index: number
-}) {
-    const { t } = useLanguage()
-    const [isHovered, setIsHovered] = useState(false)
-
-    const accentStyles: Record<string, { bg: string; border: string; text: string; glow: string; badge: string }> = {
-        blue: { bg: 'bg-white/40', border: 'border-blue-200/50 hover:border-blue-400', text: 'text-blue-600', glow: 'shadow-blue-200/50', badge: 'bg-blue-600' },
-        purple: { bg: 'bg-white/40', border: 'border-purple-200/50 hover:border-purple-400', text: 'text-purple-600', glow: 'shadow-purple-200/50', badge: 'bg-purple-600' },
-        emerald: { bg: 'bg-white/40', border: 'border-emerald-200/50 hover:border-emerald-400', text: 'text-emerald-600', glow: 'shadow-emerald-200/50', badge: 'bg-emerald-600' },
-        amber: { bg: 'bg-white/40', border: 'border-amber-200/50 hover:border-amber-400', text: 'text-amber-600', glow: 'shadow-amber-200/50', badge: 'bg-amber-600' },
-    }
-
-    const s = accentStyles[accent] || accentStyles.blue
-
-    return (
-        <Link href={href}>
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                className={`group relative rounded-2xl border-2 ${s.border} bg-white/40 backdrop-blur-sm p-8 transition-all duration-500 cursor-pointer ${isHovered ? `shadow-xl ${s.glow} -translate-y-2` : 'shadow-sm'}`}
-            >
-                <div className={`absolute -top-4 -left-2 w-10 h-10 rounded-xl ${s.badge} text-white text-sm font-bold flex items-center justify-center shadow-lg transition-transform duration-300 ${isHovered ? 'scale-110 rotate-6' : ''}`}>
-                    {number}
-                </div>
-
-                <div className="flex items-start gap-5">
-                    <motion.div
-                        animate={{ scale: isHovered ? 1.1 : 1, rotate: isHovered ? 5 : 0 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                        className={`flex-shrink-0 w-16 h-16 rounded-2xl ${s.bg} flex items-center justify-center p-3 transition-all duration-300`}
-                    >
-                        <Image src={iconImage} alt={title} width={48} height={48} quality={50} className="w-full h-full object-contain" />
-                    </motion.div>
-
-                    <div className="flex-1 min-w-0">
-                        <h3 className={`text-lg font-bold text-neutral-900 mb-1 transition-colors duration-300 group-hover:${s.text}`}>{title}</h3>
-                        <p className="text-neutral-600 text-sm leading-relaxed">{description}</p>
-
-                        <motion.div
-                            animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
-                            transition={{ duration: 0.3 }}
-                            className={`mt-3 flex items-center gap-1.5 text-sm font-medium ${s.text}`}
-                        >
-                            {t.common?.learnMore || 'Learn more'} <ArrowRight className="w-4 h-4" />
-                        </motion.div>
-                    </div>
-                </div>
-
-                <motion.div
-                    animate={{ scaleX: isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                    className={`absolute bottom-0 left-0 right-0 h-1 ${s.badge} rounded-b-2xl origin-left`}
-                />
-            </motion.div>
-        </Link>
-    )
-}
-
 export default function HomePageClient({ blogPosts }: HomePageClientProps) {
     const { locale, t } = useLanguage()
     const { scrollYProgress } = useScroll()
@@ -165,31 +86,12 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
         [t.projects?.projectCards]
     )
 
-    const journeyStepsData = (t.home?.journey?.steps as Array<{
-        number: string
-        title: string
-        description: string
-    }>) || []
-
-    const journeySteps = useMemo(
-        () => [
-            { iconImage: '/icons/services/digitalpresence.png', number: journeyStepsData[0]?.number || '01', title: journeyStepsData[0]?.title || 'Digital Presence', description: journeyStepsData[0]?.description || 'Establish your online identity with websites, social media, and digital marketing.', accent: 'blue', href: `/${locale}/services` },
-            { iconImage: '/icons/services/systems.png', number: journeyStepsData[1]?.number || '02', title: journeyStepsData[1]?.title || 'Business Systems', description: journeyStepsData[1]?.description || 'Streamline operations with custom CRM, inventory, and management systems.', accent: 'purple', href: `/${locale}/services` },
-            { iconImage: '/icons/services/webapps.png', number: journeyStepsData[2]?.number || '03', title: journeyStepsData[2]?.title || 'Web Applications', description: journeyStepsData[2]?.description || 'Build interactive platforms, portals, and SaaS solutions for your customers.', accent: 'emerald', href: `/${locale}/services` },
-            { iconImage: '/icons/services/Analytics Dashboard.png', number: journeyStepsData[3]?.number || '04', title: journeyStepsData[3]?.title || 'Labs', description: journeyStepsData[3]?.description || 'Explore AI-powered tools and innovative experiments pushing the boundaries of technology.', accent: 'amber', href: `/${locale}/labs` },
-        ],
-        [journeyStepsData, locale]
-    )
-
     return (
         <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* 1. Cloud Hero */}
             <CloudHero />
 
-            {/* 2. Stats / Trust bar */}
-            <StatsBar />
-
-            {/* 3. Philosophy */}
+            {/* 2. Philosophy */}
             <section className="relative py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden" data-header-theme="dark">
                 <StarsCanvas
                     transparent={false}
@@ -239,44 +141,13 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
                 </div>
             </section>
 
-            {/* 4. Services Grid */}
+            {/* 3. Services Grid */}
             <ServicesGrid />
 
-            {/* 5. Journey (existing Aurora section) */}
-            <AuroraBackground className="!h-auto !bg-[#F4F5F5] py-28 px-4 sm:px-6 lg:px-8">
-                <div className="relative z-10 max-w-7xl mx-auto w-full">
-                    <div className="text-center mb-20">
-                        <FloatingCard>
-                            <motion.div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-emerald-200 mb-8 shadow-sm">
-                                <Rocket className="w-5 h-5 text-emerald-600" />
-                                <span className="text-emerald-700 font-semibold text-sm">
-                                    {t.home?.journey?.title || 'Your Cloud Journey'}
-                                </span>
-                            </motion.div>
-                        </FloatingCard>
+            {/* 4. Why CloudTopia */}
+            <WhyCloudTopia />
 
-                        <FloatingCard delay={0.1}>
-                            <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6">
-                                {t.home?.journey?.mainTitle || 'We Meet You Where You Are'}
-                            </h2>
-                        </FloatingCard>
-                        <FloatingCard delay={0.2}>
-                            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-                                {t.home?.journey?.mainSubtitle ||
-                                    "Whether you're just starting your digital journey or ready to scale, we have solutions for every stage."}
-                            </p>
-                        </FloatingCard>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {journeySteps.map((step: any, index: number) => (
-                            <JourneyStep key={step.iconImage} {...step} index={index} />
-                        ))}
-                    </div>
-                </div>
-            </AuroraBackground>
-
-            {/* 6. How We Work */}
+            {/* 5. How We Work */}
             <HowWeWork />
 
             {/* 7. Featured Projects */}
