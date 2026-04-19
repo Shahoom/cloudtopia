@@ -1,3 +1,12 @@
+/* AgharaPro — logo only */
+@font-face {
+  font-family: 'AgharaPro';
+  src: url('/fonts/AgharaProRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Changa Font - Variable Weight (body) */
 @font-face {
   font-family: 'Changa';
@@ -17,8 +26,8 @@
   --font-arabic: 'Changa', sans-serif;
   /* Headings: Cairo (loaded via next/font in layout.tsx) */
   --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
-  /* Logo uses the same Cairo family in heavy weight */
-  --font-logo: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  /* Logo keeps the brand's AgharaPro face */
+  --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', 'Changa', sans-serif;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   

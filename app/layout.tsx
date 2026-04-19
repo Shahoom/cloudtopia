@@ -121,12 +121,19 @@ export default function RootLayout({
   const locale = headers().get('x-locale') ?? 'en'
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <head>
         {/* Preload critical fonts early */}
         <link
           rel="preload"
           href="/fonts/Changa-VariableFont_wght.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/AgharaProRegular.ttf"
           as="font"
           type="font/ttf"
           crossOrigin="anonymous"
@@ -205,7 +212,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`flex flex-col min-h-screen antialiased font-['Changa',sans-serif] ${cairo.variable}`}>
+      <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
