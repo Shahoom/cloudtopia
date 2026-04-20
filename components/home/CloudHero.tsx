@@ -37,8 +37,23 @@ function useStars(count: number): Star[] {
 }
 
 // Colorful gradients cycled per rotating word
-// One cohesive cyan-to-white gradient for all rotating words (cloud theme, clean on sky bg)
-const WORD_GRADIENT = 'linear-gradient(120deg, #e0f2fe 0%, #7dd3fc 35%, #ffffff 70%, #bae6fd 100%)'
+// Sky-palette gradients — each word gets a different time-of-day look
+const WORD_GRADIENTS = [
+    // Blue hour (cool crisp sky)
+    'linear-gradient(120deg, #e0f2fe 0%, #60a5fa 40%, #93c5fd 70%, #dbeafe 100%)',
+    // Golden hour (warm sun on clouds)
+    'linear-gradient(120deg, #fef3c7 0%, #fbbf24 40%, #fde68a 75%, #fffbeb 100%)',
+    // Sunset (peach + pink)
+    'linear-gradient(120deg, #fecdd3 0%, #f9a8d4 40%, #fed7aa 75%, #fff1f2 100%)',
+    // Aurora (mint + teal)
+    'linear-gradient(120deg, #a7f3d0 0%, #67e8f9 40%, #6ee7b7 75%, #ecfeff 100%)',
+]
+const WORD_SHADOWS = [
+    'drop-shadow(0 2px 14px rgba(7,15,38,0.45)) drop-shadow(0 0 36px rgba(147,197,253,0.55))',
+    'drop-shadow(0 2px 14px rgba(120,53,15,0.5)) drop-shadow(0 0 36px rgba(251,191,36,0.55))',
+    'drop-shadow(0 2px 14px rgba(88,28,42,0.45)) drop-shadow(0 0 36px rgba(249,168,212,0.55))',
+    'drop-shadow(0 2px 14px rgba(6,78,59,0.45)) drop-shadow(0 0 36px rgba(103,232,249,0.55))',
+]
 
 export default function CloudHero() {
     const { t, locale } = useLanguage()
@@ -490,9 +505,9 @@ export default function CloudHero() {
                                         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                                         className="inline-block bg-clip-text text-transparent font-extrabold"
                                         style={{
-                                            backgroundImage: WORD_GRADIENT,
+                                            backgroundImage: WORD_GRADIENTS[wordIndex % WORD_GRADIENTS.length],
                                             WebkitBackgroundClip: 'text',
-                                            filter: 'drop-shadow(0 2px 14px rgba(7,15,38,0.45)) drop-shadow(0 0 32px rgba(186,230,253,0.5))',
+                                            filter: WORD_SHADOWS[wordIndex % WORD_SHADOWS.length],
                                         }}
                                     >
                                         {cyclingWords[wordIndex]}
