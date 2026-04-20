@@ -2,35 +2,17 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import {
-    Globe,
-    ShoppingCart,
-    Utensils,
-    Layers,
-    Cpu,
-    Megaphone,
-    ArrowRight,
-    ArrowUpRight,
-    LucideIcon,
-} from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 type ServiceCard = {
-    icon: string
+    iconImage: string
     title: string
     description: string
     link: string
     tag?: string
-}
-
-const ICON_MAP: Record<string, LucideIcon> = {
-    Globe,
-    ShoppingCart,
-    Utensils,
-    Layers,
-    Cpu,
-    Megaphone,
 }
 
 export default function ServicesGrid() {
@@ -105,7 +87,6 @@ export default function ServicesGrid() {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                     {cards.map((card, i) => {
-                        const Icon = ICON_MAP[card.icon] || Globe
                         return (
                             <motion.div
                                 key={card.title}
@@ -136,8 +117,15 @@ export default function ServicesGrid() {
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                         <div className="relative flex items-start justify-between mb-6">
-                                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-primary-50 to-secondary-50 border border-neutral-200 flex items-center justify-center group-hover:from-primary-100 group-hover:to-secondary-100 transition-colors">
-                                                <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary-700" strokeWidth={1.75} />
+                                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-primary-50 to-secondary-50 border border-neutral-200 flex items-center justify-center p-2.5 group-hover:from-primary-100 group-hover:to-secondary-100 transition-colors">
+                                                <Image
+                                                    src={card.iconImage}
+                                                    alt={card.title}
+                                                    width={56}
+                                                    height={56}
+                                                    quality={90}
+                                                    className="w-full h-full object-contain"
+                                                />
                                             </div>
                                             {card.tag && (
                                                 <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-neutral-500 bg-neutral-100 px-2.5 py-1 rounded-full">

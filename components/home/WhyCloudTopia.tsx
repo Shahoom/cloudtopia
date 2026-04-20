@@ -1,24 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import {
-    Puzzle,
-    Languages,
-    FileCheck,
-    KeyRound,
-    Gauge,
-    HeartHandshake,
-    type LucideIcon,
-} from 'lucide-react'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 type Reason = {
-    icon: LucideIcon
     title: string
     description: string
-    accent: string
 }
+
+const REASON_ICONS = [
+    '/icons/services/Admin Dashboard.png',
+    '/icons/services/Professional Content Creation.png',
+    '/icons/services/Payment Integration.png',
+    '/icons/services/Customer Portal.png',
+    '/icons/services/Real-time Chat System.png',
+    '/icons/services/webapps.png',
+]
 
 export default function WhyCloudTopia() {
     const { t, locale } = useLanguage()
@@ -72,7 +71,6 @@ export default function WhyCloudTopia() {
         },
     }[locale as 'en' | 'ar' | 'tr'] || {} as any
 
-    const ICONS: LucideIcon[] = [Puzzle, Languages, FileCheck, KeyRound, Gauge, HeartHandshake]
     const ACCENTS = ['cyan', 'violet', 'emerald', 'amber', 'sky', 'rose']
 
     return (
@@ -132,7 +130,7 @@ export default function WhyCloudTopia() {
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                     {(content.reasons as Reason[]).map((reason: any, i: number) => {
-                        const Icon = ICONS[i] || Puzzle
+                        const iconSrc = REASON_ICONS[i % REASON_ICONS.length]
                         return (
                             <motion.li
                                 key={i}
@@ -159,8 +157,15 @@ export default function WhyCloudTopia() {
                                     />
                                     <div className="relative h-full rounded-[calc(1rem-1px)] bg-white p-6 md:p-7">
                                         <div className="relative flex flex-col h-full">
-                                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center mb-5">
-                                                <Icon className="w-5 h-5 text-[#0284c7]" strokeWidth={1.75} />
+                                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center p-2.5 mb-5">
+                                                <Image
+                                                    src={iconSrc}
+                                                    alt={reason.title}
+                                                    width={56}
+                                                    height={56}
+                                                    quality={90}
+                                                    className="w-full h-full object-contain"
+                                                />
                                             </div>
                                             <h3 className="text-lg md:text-xl font-bold text-neutral-900 mb-2 leading-tight">
                                                 {reason.title}
