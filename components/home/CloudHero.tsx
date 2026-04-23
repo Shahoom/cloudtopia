@@ -149,12 +149,12 @@ export default function CloudHero() {
                 .hero {
                     perspective: 1400px;
                     perspective-origin: 50% 55%;
-                    /* Sky-like gradient fallback so the section never shows as black
-                       before the cloud WebPs paint or while the camera is mid-cycle. */
+                    /* Bright sky fallback — never dark, matches the cloud photo palette
+                       so there's no dark flash while WebPs load or between scenes. */
                     background:
-                        radial-gradient(ellipse 120% 80% at 50% 110%, rgba(186, 230, 253, 0.45), transparent 55%),
-                        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(186, 230, 253, 0.25), transparent 55%),
-                        linear-gradient(180deg, #0a1930 0%, #162a4e 35%, #2e5b9a 65%, #7fb5e0 100%);
+                        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.35), transparent 60%),
+                        radial-gradient(ellipse 120% 70% at 50% 110%, rgba(186, 230, 253, 0.55), transparent 55%),
+                        linear-gradient(180deg, #93c5fd 0%, #bae6fd 40%, #e0f2fe 75%, #f0f9ff 100%);
                     isolation: isolate;
                 }
                 .camera {
@@ -207,8 +207,8 @@ export default function CloudHero() {
                 .sky-stage {
                     position: absolute;
                     inset: 0;
-                    /* Sky-tone fallback behind the image while it loads */
-                    background: linear-gradient(180deg, #162a4e 0%, #2e5b9a 55%, #7fb5e0 100%);
+                    /* Bright sky fallback behind the cloud image while it loads */
+                    background: linear-gradient(180deg, #93c5fd 0%, #bae6fd 50%, #e0f2fe 100%);
                 }
                 .layer {
                     position: absolute;
