@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getPostSlugs, getSlugById } from '@/lib/blog'
+import { getPostSlugs, getSlugById, getPostBySlug } from '@/lib/blog'
+import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds } from '@/lib/projects'
 import { locationSlugs } from '@/lib/seo/locations'
 
@@ -109,11 +110,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
             const localSlug = getSlugById(cid, loc)
             if (!localSlug) return
 
+            // Prefer explicit frontmatter `updated` when present (authoritative freshness
+            // signal), otherwise fall back to `date`, then file mtime as last resort.
             let lastModified = new Date()
             try {
-                const postPath = path.join(process.cwd(), 'blog-posts', loc, `${localSlug}.mdx`)
-                if (fs.existsSync(postPath)) {
-                    lastModified = fs.statSync(postPath).mtime
+                const localPost = getPostBySlug(localSlug, loc)
+                if (localPost?.updated) {
+                    lastModified = new Date(localPost.updated)
+                } else if (localPost?.date) {
+                    lastModified = new Date(localPost.date)
+                } else {
+                    const postPath = path.join(process.cwd(), 'blog-posts', loc, `${localSlug}.mdx`)
+                    if (fs.existsSync(postPath)) {
+                        lastModified = fs.statSync(postPath).mtime
+                    }
                 }
             } catch {
                 // fallback
@@ -124,6 +134,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Author pages — one entry per (locale × author)
+    getAllAuthorSlugs().forEach((authorSlug) => {
+        const languages = buildLanguages(`/authors/${authorSlug}`)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${loc}/authors/${authorSlug}`,
+                lastModified: new Date(),
+                changeFrequency: 'monthly',
+                priority: 0.6,
                 alternates: { languages },
             })
         })
