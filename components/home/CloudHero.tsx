@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-const STAR_COUNT = 90
+const STAR_COUNT = 40
 
 type Star = { cx: number; cy: number; r: number; dur: number; delay: number; min: number; max: number }
 
@@ -87,7 +87,7 @@ export default function CloudHero() {
     const rafRef = useRef<number | null>(null)
     const targetRef = useRef({ x: 0, y: 0 })
     const currentRef = useRef({ x: 0, y: 0 })
-    const DEPTHS = [5, 8, 12, 16, 20]
+    const DEPTHS = [6, 14]
 
     const applyTranslates = () => {
         const hero = heroRef.current
@@ -161,46 +161,35 @@ export default function CloudHero() {
                     position: absolute;
                     inset: 0;
                     transform-style: preserve-3d;
-                    will-change: transform, filter, opacity;
+                    will-change: transform, opacity;
                 }
-                .camera.a {
-                    animation: cam-a 40s ease-in-out infinite;
-                }
+                /* Camera cycle — opacity + very subtle scale only (GPU-composited).
+                   Dropped animated blur/brightness filters (huge perf win). */
+                .camera.a { animation: cam-a 45s ease-in-out infinite; }
                 @keyframes cam-a {
-                    0% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
-                    25% { transform: scale(1.18) translateZ(60px); filter: blur(1px) brightness(1.02); opacity: 1; }
-                    33% { transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); opacity: 0.55; }
-                    40% { transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); opacity: 0; }
-                    96% { transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); opacity: 0; }
-                    100% { transform: scale(1) translateZ(0); filter: blur(0) brightness(1); opacity: 1; }
+                    0%   { transform: scale(1);    opacity: 1; }
+                    30%  { transform: scale(1.12); opacity: 1; }
+                    40%  { transform: scale(1.22); opacity: 0; }
+                    96%  { transform: scale(1.22); opacity: 0; }
+                    100% { transform: scale(1);    opacity: 1; }
                 }
-                .camera.b {
-                    opacity: 0;
-                    animation: cam-b 40s ease-in-out infinite;
-                }
+                .camera.b { opacity: 0; animation: cam-b 45s ease-in-out infinite; }
                 @keyframes cam-b {
-                    0%, 26% { opacity: 0; transform: scale(1.5) translateZ(-170px); filter: blur(3.5px) brightness(1.06); }
-                    33% { opacity: 0.55; transform: scale(1.35) translateZ(-120px); filter: blur(2px) brightness(1.04); }
-                    40% { opacity: 1; transform: scale(1.22) translateZ(-60px); filter: blur(1px) brightness(1.02); }
-                    50% { opacity: 1; transform: scale(1.08) translateZ(-10px); filter: blur(0.3px) brightness(1.01); }
-                    60% { opacity: 1; transform: scale(1.22) translateZ(60px); filter: blur(1px) brightness(1.02); }
-                    66% { opacity: 0.55; transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); }
-                    73% { opacity: 0; transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); }
-                    100% { opacity: 0; }
+                    0%, 32% { opacity: 0; transform: scale(1.22); }
+                    40%     { opacity: 1; transform: scale(1.12); }
+                    55%     { opacity: 1; transform: scale(1.04); }
+                    68%     { opacity: 1; transform: scale(1.12); }
+                    72%     { opacity: 0; transform: scale(1.22); }
+                    100%    { opacity: 0; }
                 }
                 .camera.b :global(.layer) { background-image: url('/images/homepage/clouds-b.webp'); }
-                .camera.c {
-                    opacity: 0;
-                    animation: cam-c 40s ease-in-out infinite;
-                }
+                .camera.c { opacity: 0; animation: cam-c 45s ease-in-out infinite; }
                 @keyframes cam-c {
-                    0%, 60% { opacity: 0; transform: scale(1.5) translateZ(-170px); filter: blur(3.5px) brightness(1.06); }
-                    66% { opacity: 0.55; transform: scale(1.35) translateZ(-120px); filter: blur(2px) brightness(1.04); }
-                    73% { opacity: 1; transform: scale(1.22) translateZ(-60px); filter: blur(1px) brightness(1.02); }
-                    83% { opacity: 1; transform: scale(1.08) translateZ(-10px); filter: blur(0.3px) brightness(1.01); }
-                    93% { opacity: 1; transform: scale(1.22) translateZ(60px); filter: blur(1px) brightness(1.02); }
-                    99% { opacity: 0.55; transform: scale(1.35) translateZ(120px); filter: blur(2px) brightness(1.04); }
-                    100% { opacity: 0; transform: scale(1.5) translateZ(170px); filter: blur(3.5px) brightness(1.06); }
+                    0%, 66% { opacity: 0; transform: scale(1.22); }
+                    72%     { opacity: 1; transform: scale(1.12); }
+                    85%     { opacity: 1; transform: scale(1.04); }
+                    96%     { opacity: 1; transform: scale(1.12); }
+                    100%    { opacity: 0; transform: scale(1.22); }
                 }
                 .camera.c :global(.layer) { background-image: url('/images/homepage/clouds-c.webp'); }
 
@@ -212,67 +201,30 @@ export default function CloudHero() {
                 }
                 .layer {
                     position: absolute;
-                    inset: -15%;
+                    inset: -10%;
                     background-image: url('/images/homepage/clouds.webp');
                     background-size: cover;
                     background-position: center 55%;
-                    background-color: transparent;
-                    will-change: transform;
                     transform: translateZ(0);
                     backface-visibility: hidden;
-                    contain: paint;
-                }
-                /* Disable the expensive SVG displacement filter on small screens */
-                @media (max-width: 768px) {
-                    .layer.churn { filter: blur(2px) brightness(1.08); }
                 }
                 .layer.base {
-                    animation: base-drift 65s ease-in-out infinite alternate;
-                    filter: saturate(1.08) contrast(1.04) brightness(1.02);
+                    animation: base-drift 80s ease-in-out infinite alternate;
+                    filter: saturate(1.05) contrast(1.02);
                 }
                 @keyframes base-drift {
                     0% { transform: scale(1.08) translate3d(-1%, 0, 0); }
-                    100% { transform: scale(1.14) translate3d(1.5%, -1%, 0); }
+                    100% { transform: scale(1.12) translate3d(1.5%, -1%, 0); }
                 }
-                .layer.drift-r {
-                    mix-blend-mode: screen;
-                    opacity: 0.35;
-                    filter: blur(3px) brightness(1.18) contrast(1.08);
-                    animation: drift-right 45s linear infinite;
-                }
-                @keyframes drift-right {
-                    0% { transform: scale(1.3) translate3d(-8%, 1%, 0); }
-                    100% { transform: scale(1.3) translate3d(8%, -2%, 0); }
-                }
-                .layer.drift-l {
+                /* drift-l / drift-r / churn / haze merged into a single cheap tint pass */
+                .layer.tint {
                     mix-blend-mode: soft-light;
-                    opacity: 0.55;
-                    filter: blur(14px) brightness(1.08);
-                    animation: drift-left 60s linear infinite;
+                    opacity: 0.4;
+                    animation: tint-drift 70s linear infinite;
                 }
-                @keyframes drift-left {
-                    0% { transform: scale(1.35) translate3d(7%, 1%, 0); }
-                    100% { transform: scale(1.35) translate3d(-7%, -2%, 0); }
-                }
-                .layer.churn {
-                    mix-blend-mode: screen;
-                    opacity: 0.3;
-                    filter: url(#cloudTurbFilter) blur(1.5px) brightness(1.08);
-                    animation: churn-drift 38s ease-in-out infinite alternate;
-                }
-                @keyframes churn-drift {
-                    0% { transform: scale(1.25) translate3d(-2%, 0, 0); }
-                    100% { transform: scale(1.3) translate3d(2%, -1.5%, 0); }
-                }
-                .layer.haze {
-                    mix-blend-mode: soft-light;
-                    opacity: 0.5;
-                    filter: blur(28px);
-                    animation: haze 32s ease-in-out infinite alternate;
-                }
-                @keyframes haze {
-                    0% { transform: scale(1.35) translate3d(-1%, 2%, 0); }
-                    100% { transform: scale(1.42) translate3d(2%, -1%, 0); }
+                @keyframes tint-drift {
+                    0% { transform: scale(1.25) translate3d(-4%, 0, 0); }
+                    100% { transform: scale(1.25) translate3d(4%, -1%, 0); }
                 }
 
                 .grade {
@@ -357,21 +309,6 @@ export default function CloudHero() {
                 }
             `}</style>
 
-            {/* SVG turbulence filter for the .churn layer */}
-            <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-                <defs>
-                    <filter id="cloudTurbFilter">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves={2} seed={5}>
-                            <animate attributeName="baseFrequency" dur="26s" values="0.008 0.014; 0.014 0.008; 0.008 0.014" repeatCount="indefinite" />
-                            <animate attributeName="seed" dur="48s" values="5;25;5" repeatCount="indefinite" />
-                        </feTurbulence>
-                        <feDisplacementMap in="SourceGraphic" scale={45}>
-                            <animate attributeName="scale" dur="22s" values="30;60;30" repeatCount="indefinite" />
-                        </feDisplacementMap>
-                    </filter>
-                </defs>
-            </svg>
-
             <section
                 ref={heroRef}
                 onPointerMove={handlePointerMove}
@@ -384,10 +321,7 @@ export default function CloudHero() {
                 <div className="camera a">
                     <div className="sky-stage">
                         <div className="layer base" />
-                        <div className="layer drift-l" />
-                        <div className="layer drift-r" />
-                        <div className="layer churn" />
-                        <div className="layer haze" />
+                        <div className="layer tint" />
                     </div>
                 </div>
 
@@ -395,10 +329,7 @@ export default function CloudHero() {
                 <div className="camera b">
                     <div className="sky-stage">
                         <div className="layer base" />
-                        <div className="layer drift-l" />
-                        <div className="layer drift-r" />
-                        <div className="layer churn" />
-                        <div className="layer haze" />
+                        <div className="layer tint" />
                     </div>
                 </div>
 
@@ -406,10 +337,7 @@ export default function CloudHero() {
                 <div className="camera c">
                     <div className="sky-stage">
                         <div className="layer base" />
-                        <div className="layer drift-l" />
-                        <div className="layer drift-r" />
-                        <div className="layer churn" />
-                        <div className="layer haze" />
+                        <div className="layer tint" />
                     </div>
                 </div>
 
