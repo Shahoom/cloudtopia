@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -87,7 +87,7 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
     )
 
     return (
-        <div className="relative min-h-screen bg-[#bae6fd] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
+        <Fragment>
             {/* 1. Cloud Hero */}
             <CloudHero />
 
@@ -267,6 +267,6 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
 
             {/* 10. Final CTA */}
             <FinalCTA />
-        </div>
+        </Fragment>
     )
 }
