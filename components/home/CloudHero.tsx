@@ -435,11 +435,10 @@ export default function CloudHero() {
                         initial={false}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="max-w-xl md:max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 font-light px-2"
+                        className="max-w-2xl md:max-w-3xl mx-auto text-lg sm:text-xl md:text-2xl lg:text-[1.65rem] leading-[1.55] mb-9 sm:mb-11 font-medium px-2"
                         style={{
-                            color: '#ffffff',
-                            textShadow:
-                                '0 1px 4px rgba(7,15,38,0.75), 0 3px 18px rgba(7,15,38,0.6), 0 0 42px rgba(7,15,38,0.4)',
+                            color: '#0c2748',
+                            textShadow: '0 1px 2px rgba(255,255,255,0.5)',
                         }}
                     >
                         {description}
