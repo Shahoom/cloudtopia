@@ -87,7 +87,7 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
     )
 
     return (
-        <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="relative min-h-screen bg-[#bae6fd] overflow-x-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
             {/* 1. Cloud Hero */}
             <CloudHero />
 
