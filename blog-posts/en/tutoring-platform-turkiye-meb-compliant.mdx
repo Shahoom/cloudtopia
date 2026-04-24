@@ -1,0 +1,138 @@
+---
+title: 'Building a Tutoring Platform in Türkiye (MEB-Compliant, 2026)'
+slug: tutoring-platform-turkiye-meb-compliant
+description: 'How to build a tutoring/online education platform for the Turkish market — MEB compliance, payment integration (iyzico, İş Bankası), live class tech, and scale considerations.'
+date: '2026-04-24'
+updated: '2026-04-24'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Founder & Lead Engineer
+category: Education
+tags:
+  - Türkiye
+  - Education
+  - Tutoring
+  - MEB
+coverImage: https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=82
+readingTime: 7
+id: tutoring-platform-turkiye
+lang: en
+---
+
+Türkiye's online tutoring market (YKS prep, İngilizce, matematik özel ders) is huge and still growing. Launching a platform requires not just tech but MEB awareness, Turkish-tuned payments, and the ability to run live classes at scale.
+
+<Callout tone="info" title="Short answer">
+A tutoring platform for Türkiye in 2026 costs **USD 8,000–50,000 to build** depending on live-class complexity and payment integration depth. Critical pieces: iyzico/Esnek POS for payments, Jitsi/Daily.co for live class, Turkish LMS UX, VAT invoicing (KDV), and MEB awareness if you target K-12.
+</Callout>
+
+## Platform architecture
+
+<Compare
+  headers="Piece | Typical choice | Why"
+  caption="Turkish tutoring platform benchmark, Q1 2026."
+  topPickLabel="Our stack"
+>
+  <Row
+    name="CloudTopia — Turkish tutoring stack"
+    url="/contact"
+    verdict="Next.js + Supabase + iyzico + Daily.co live classes + Turkish UX + KDV invoicing + analytics."
+    topPick
+  >
+    Full stack | From USD 8,000 | Managed
+  </Row>
+  <Row
+    name="Off-the-shelf (Teachable, Thinkific)"
+    verdict="Fast but weak on Turkish payments and live classes."
+  >
+    Partial | Monthly | SaaS
+  </Row>
+  <Row
+    name="Zoom + WhatsApp manual"
+    verdict="Scales to ~20 students before operations collapse."
+  >
+    Manual | Free | Hidden cost
+  </Row>
+</Compare>
+
+## Core features
+
+1. **Tutor profiles** with expertise, price, availability, reviews.
+2. **Student booking** — one-off or packaged sessions.
+3. **Payment** — iyzico, Esnek POS, PayTR, İş Bankası for cards + BKM Express.
+4. **Live class** — Daily.co, Zoom SDK, or Jitsi self-hosted. Whiteboard required for math/science.
+5. **Recordings** — replays for students.
+6. **Materials** — document sharing, PDF viewer, assignments.
+7. **Messaging** — tutor ↔ student chat.
+8. **KDV invoicing** — 20% VAT on education services (check current rate).
+9. **Parent portal** — progress reports for K-12.
+10. **Mobile-first UX** — most Turkish students book and attend on phone.
+
+## MEB compliance considerations
+
+- **Private tutoring businesses** (özel ders) must register under local regulations.
+- **K-12 academic-focused platforms** — MEB has specific rules around advertising to minors and curriculum claims.
+- **University prep (YKS, LGS)** — less MEB-restricted but factual accuracy matters for trust.
+- **Data protection (KVKK)** — Turkey's GDPR equivalent applies to all student data.
+
+## Payments in Türkiye specifics
+
+- **iyzico** — developer-friendly, good UX, 2.49–2.99%.
+- **PayTR** — strong local brand, 2.49% typical.
+- **Esnek POS / İşbank / Akbank direct** — lower fees at volume but more integration work.
+- **Taksit (installments)** — Turkish shoppers expect 3–12 month installment options on cards. Critical for 500+ TRY courses.
+- **BKM Express** — one-click checkout, rising adoption.
+
+## Live class tech
+
+- **Daily.co** — cleanest embed, good Türkiye latency, free for small scale.
+- **Zoom SDK** — familiar brand, more expensive at scale.
+- **Jitsi self-hosted** — cheapest long-term but ops overhead.
+- **Livekit** — modern WebRTC stack, growing popularity.
+
+Budget: USD 0.004–0.015 per participant-minute depending on provider.
+
+<Callout tone="tip" title="Taksit is non-negotiable in Türkiye">
+Turkish consumers routinely split 500+ TRY purchases into 3–12 monthly installments on their credit cards. Platforms without taksit show significantly lower conversion on higher-priced courses. iyzico and PayTR both support it.
+</Callout>
+
+<CTA
+  title="Build a Turkish-ready tutoring platform"
+  description="CloudTopia builds online education platforms with iyzico, live classes, Turkish UX, and KDV invoicing. USD or TRY pricing."
+  href="/contact"
+  label="Talk to us"
+/>
+
+<FAQ title="Common questions about Turkish tutoring platforms">
+  <Q q="Do I need MEB approval?">
+    Depends on what you offer. Private tutoring generally requires local business registration. Formal K-12 curriculum delivery requires MEB engagement.
+  </Q>
+  <Q q="Which payment provider is best?">
+    iyzico for ease and clean API. PayTR for slightly lower fees and deeper local bank connections.
+  </Q>
+  <Q q="How much does live class tech cost at scale?">
+    1,000 hours/month with Daily.co: ~USD 200–400. Zoom SDK: 2–3× more.
+  </Q>
+  <Q q="What about KDV on education?">
+    Currently 20% KDV applies to most education services in Türkiye. Check for current exemptions.
+  </Q>
+  <Q q="Can tutors set their own prices?">
+    Yes — that's standard marketplace design. Take a commission (15–30% typical) on each session.
+  </Q>
+  <Q q="How long to build MVP?">
+    8–12 weeks for a tutor marketplace MVP. 12–20 weeks for a fuller LMS.
+  </Q>
+  <Q q="What about mobile apps?">
+    React Native or Flutter on top of the web platform. Budget an extra 6–10 weeks.
+  </Q>
+</FAQ>
+
+## Honest summary
+
+Turkish online tutoring is a high-growth market with real operational complexity (payments, live classes, tutor supply). Platforms that nail iyzico + taksit + clean live class UX capture significant share quickly.
+
+<CTA
+  title="See CloudTopia custom platform pricing"
+  description="Tutoring platforms, LMS, marketplaces — transparent USD/TRY pricing."
+  href="/pricing"
+  label="See pricing"
+/>

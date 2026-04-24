@@ -1,0 +1,137 @@
+---
+title: 'Türkiye''de Özel Ders Platformu Kurma (MEB Uyumlu, 2026)'
+slug: turkiye-ders-platformu-meb-uyumlu
+description: 'Türk pazarı için özel ders/online eğitim platformu nasıl inşa edilir — MEB uyumu, ödeme entegrasyonu (iyzico, İş Bankası), canlı ders teknolojisi ve ölçek değerlendirmeleri.'
+date: '2026-04-24'
+updated: '2026-04-24'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Kurucu & Baş Mühendis
+category: Eğitim
+tags:
+  - Türkiye
+  - Eğitim
+  - Özel Ders
+  - MEB
+coverImage: https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=82
+readingTime: 7
+id: tutoring-platform-turkiye
+lang: tr
+---
+
+Türkiye'nin online özel ders pazarı (YKS hazırlık, İngilizce, matematik özel ders) çok büyüktür ve hala büyümektedir. Bir platform başlatmak sadece teknoloji değil, MEB farkındalığı, Türkçe-ayarlı ödemeler ve canlı dersleri ölçekte yönetebilme yeteneği gerektirir.
+
+<Callout tone="info" title="Kısa cevap">
+2026'da Türkiye için bir özel ders platformu **inşa etmek 8.000–50.000 USD** tutar. Kritik parçalar: ödemeler için iyzico/Esnek POS, canlı ders için Jitsi/Daily.co, Türkçe LMS UX, KDV faturalama ve K-12 hedefliyorsanız MEB farkındalığı.
+</Callout>
+
+## Platform mimarisi
+
+<Compare
+  headers="Parça | Tipik seçim | Neden"
+  caption="Türk özel ders platformu ölçütü, 2026 1. çeyrek."
+  topPickLabel="Yığınımız"
+>
+  <Row
+    name="CloudTopia — Türk özel ders yığını"
+    url="/contact"
+    verdict="Next.js + Supabase + iyzico + Daily.co canlı dersler + Türkçe UX + KDV faturalama + analitik."
+    topPick
+  >
+    Tam yığın | 8.000 USD'den | Yönetilen
+  </Row>
+  <Row
+    name="Hazır çözümler (Teachable, Thinkific)"
+    verdict="Hızlı ama Türk ödemelerinde ve canlı derslerde zayıf."
+  >
+    Kısmi | Aylık | SaaS
+  </Row>
+  <Row
+    name="Zoom + WhatsApp manuel"
+    verdict="Operasyonlar çökmeden ~20 öğrenciye ölçeklenir."
+  >
+    Manuel | Ücretsiz | Gizli maliyet
+  </Row>
+</Compare>
+
+## Temel özellikler
+
+1. **Eğitmen profilleri** — uzmanlık, fiyat, uygunluk, incelemeler.
+2. **Öğrenci rezervasyonu** — tek seferlik veya paketlenmiş oturumlar.
+3. **Ödeme** — iyzico, Esnek POS, PayTR, kartlar için İş Bankası + BKM Express.
+4. **Canlı ders** — Daily.co, Zoom SDK veya kendi barındırılan Jitsi. Matematik/fen için beyaz tahta gereklidir.
+5. **Kayıtlar** — öğrenciler için tekrar oynatmalar.
+6. **Materyaller** — belge paylaşımı, PDF görüntüleyici, ödevler.
+7. **Mesajlaşma** — eğitmen ↔ öğrenci sohbeti.
+8. **KDV faturalama** — eğitim hizmetleri üzerinde %20 KDV.
+9. **Veli portalı** — K-12 için ilerleme raporları.
+10. **Mobil-öncelikli UX** — çoğu Türk öğrenci telefonla rezervasyon yapar ve katılır.
+
+## MEB uyum değerlendirmeleri
+
+- **Özel ders işletmeleri** yerel düzenlemeler altında kayıt olmalıdır.
+- **K-12 akademik odaklı platformlar** — MEB'in reklam ve müfredat iddialarında spesifik kuralları vardır.
+- **Üniversite hazırlık (YKS, LGS)** — daha az MEB-kısıtlı ama doğruluk önemlidir.
+- **Veri koruma (KVKK)** — Türkiye'nin GDPR eşdeğeri tüm öğrenci verilerine uygulanır.
+
+## Türkiye özellikleri
+
+- **iyzico** — geliştirici dostu, iyi UX, %2,49–2,99.
+- **PayTR** — güçlü yerel marka, tipik %2,49.
+- **Esnek POS / İşbank / Akbank doğrudan** — hacimde daha düşük ücretler.
+- **Taksit** — Türk alışverişçileri kartlarda 3–12 aylık taksit bekler. 500+ TL kurslar için kritik.
+- **BKM Express** — tek tıklama ödeme.
+
+## Canlı ders teknolojisi
+
+- **Daily.co** — en temiz gömülü, iyi Türkiye gecikmesi.
+- **Zoom SDK** — tanıdık marka, ölçekte daha pahalı.
+- **Jitsi kendi barındırmalı** — uzun vadede en ucuz ama op yükü.
+
+Bütçe: Sağlayıcıya bağlı olarak katılımcı-dakika başına 0,004–0,015 USD.
+
+<Callout tone="tip" title="Türkiye'de taksit pazarlıksızdır">
+Türk tüketiciler 500+ TL satın almaları düzenli olarak 3–12 aylık taksite böler. Taksit olmayan platformlar daha yüksek fiyatlı kurslarda önemli ölçüde daha düşük dönüşüm gösterir.
+</Callout>
+
+<CTA
+  title="Türkiye hazır özel ders platformu inşa edin"
+  description="CloudTopia, iyzico, canlı dersler, Türkçe UX ve KDV faturalama ile online eğitim platformları inşa eder."
+  href="/contact"
+  label="Bizimle konuş"
+/>
+
+<FAQ title="Türk özel ders platformları hakkında yaygın sorular">
+  <Q q="MEB onayına ihtiyacım var mı?">
+    Ne sunduğunuza bağlı. Özel ders genellikle yerel işletme kaydı gerektirir.
+  </Q>
+  <Q q="Hangi ödeme sağlayıcısı en iyi?">
+    Kolaylık ve temiz API için iyzico. Biraz daha düşük ücretler için PayTR.
+  </Q>
+  <Q q="Canlı ders teknolojisi ölçekte ne kadar maliyeti olur?">
+    Aylık 1.000 saat Daily.co ile: ~200–400 USD.
+  </Q>
+  <Q q="Eğitimde KDV ne olacak?">
+    Türkiye'de şu anda eğitim hizmetlerinin çoğuna %20 KDV uygulanır.
+  </Q>
+  <Q q="Eğitmenler kendi fiyatlarını belirleyebilir mi?">
+    Evet — standart pazar yeri tasarımı. Oturum başına %15–30 komisyon alın.
+  </Q>
+  <Q q="MVP inşa etmek ne kadar sürer?">
+    Eğitmen pazar yeri MVP'si için 8–12 hafta.
+  </Q>
+  <Q q="Mobil uygulamalar ne olacak?">
+    Web platformunun üzerine React Native veya Flutter. Ek 6–10 hafta.
+  </Q>
+</FAQ>
+
+## Dürüst özet
+
+Türk online özel ders, gerçek operasyonel karmaşıklığı olan yüksek büyüme pazarıdır. iyzico + taksit + temiz canlı ders UX'ini yakalayan platformlar hızla önemli pay kapar.
+
+<CTA
+  title="CloudTopia özel platform fiyatlandırmasını görün"
+  description="Özel ders platformları, LMS, pazar yerleri — şeffaf USD/TRY fiyatlandırma."
+  href="/pricing"
+  label="Fiyatlandırmayı gör"
+/>
