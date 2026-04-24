@@ -150,6 +150,9 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
             {/* 5. How We Work */}
             <HowWeWork />
 
+            {/* 6. FAQ */}
+            <FAQ />
+
             {/* 7. Featured Projects */}
             <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a]" data-header-theme="dark">
                 <div className="max-w-7xl mx-auto">
@@ -259,13 +262,10 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
                 </div>
             </section>
 
-            {/* 8. FAQ */}
-            <FAQ />
-
-            {/* 9. Blog Teaser */}
+            {/* 8. Blog Teaser */}
             <BlogTeaser posts={blogPosts} />
 
-            {/* 10. Final CTA */}
+            {/* 9. Final CTA */}
             <FinalCTA />
         </Fragment>
     )
