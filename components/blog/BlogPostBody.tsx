@@ -1,7 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import React from 'react'
-import MDXFAQ from './MDXFAQ'
-import MDXComparisonTable from './MDXComparisonTable'
+import MDXFAQ, { Q } from './MDXFAQ'
+import MDXComparisonTable, { Row } from './MDXComparisonTable'
 import MDXCallout from './MDXCallout'
 import MDXServiceCTA from './MDXServiceCTA'
 
@@ -34,7 +34,9 @@ const components = {
         return <h3 id={id} {...props} />
     },
     FAQ: MDXFAQ,
+    Q: Q,
     Compare: MDXComparisonTable,
+    Row: Row,
     Callout: MDXCallout,
     CTA: MDXServiceCTA,
 }

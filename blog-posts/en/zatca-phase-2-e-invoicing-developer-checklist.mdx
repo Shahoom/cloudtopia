@@ -114,57 +114,37 @@ Teams deploy to production, issue the first real invoice, and watch their hash c
 For a Saudi merchant choosing how to get Phase 2 compliant, there are four realistic paths. Here is how they compare on the things that actually matter after year one.
 
 <Compare
-  headers={["Option", "Upfront cost", "Monthly cost", "Own your code", "Multi-branch", "Best for"]}
-  rows={[
-    {
-      name: "CloudTopia (custom integration)",
-      url: "/business-systems-development",
-      verdict: "End-to-end ownership of invoice XML, signing, CSID, and reconciliation. Best value once your invoice volume scales.",
-      values: [
-        "From $3,999",
-        "Hosting only",
-        true,
-        true,
-        "Mid-market and enterprise retailers, custom ERPs, multi-branch groups"
-      ]
-    },
-    {
-      name: "ClearTax / Avalara / SovOS SaaS",
-      verdict: "Plug-and-play but you pay per invoice forever and the XML logic stays opaque.",
-      values: [
-        "~$2,000 setup",
-        "$300–$1,500+",
-        false,
-        true,
-        "Businesses that don't want engineering involvement at all"
-      ]
-    },
-    {
-      name: "Salla / Zid built-in",
-      verdict: "Zero dev work if your store already runs on one of these platforms, but you're locked to their roadmap.",
-      values: [
-        "Included",
-        "Plan dependent",
-        false,
-        "Platform dependent",
-        "Online-only retailers already on Salla or Zid"
-      ]
-    },
-    {
-      name: "DIY against the Fatoora sandbox",
-      verdict: "Cheap if you have a strong in-house team, expensive if you don't — one wrong XML schema means audit risk.",
-      values: [
-        "Free",
-        "Free",
-        true,
-        true,
-        "Teams with a dedicated integrations engineer and 3+ months"
-      ]
-    }
-  ]}
+  headers="Option | Upfront | Monthly | Own code | Multi-branch | Best for"
   caption="Based on live client engagements and ZATCA fee guidance, 2026."
   topPickLabel="Our recommendation"
-/>
+>
+  <Row
+    name="CloudTopia (custom integration)"
+    url="/business-systems-development"
+    verdict="End-to-end ownership of invoice XML, signing, CSID, and reconciliation. Best value once invoice volume scales."
+    topPick
+  >
+    From $3,999 | Hosting only | ✓ | ✓ | Mid-market + enterprise retailers, custom ERPs, multi-branch groups
+  </Row>
+  <Row
+    name="ClearTax / Avalara / SovOS SaaS"
+    verdict="Plug-and-play but you pay per invoice forever and the XML logic stays opaque."
+  >
+    ~$2,000 setup | $300–$1,500+ | ✗ | ✓ | Businesses that don't want engineering involvement at all
+  </Row>
+  <Row
+    name="Salla / Zid built-in"
+    verdict="Zero dev work if your store already runs on one of these platforms, but you're locked to their roadmap."
+  >
+    Included | Plan dependent | ✗ | Platform dependent | Online-only retailers already on Salla or Zid
+  </Row>
+  <Row
+    name="DIY against the Fatoora sandbox"
+    verdict="Cheap if you have a strong in-house team, expensive if you don't — one wrong XML schema means audit risk."
+  >
+    Free | Free | ✓ | ✓ | Teams with a dedicated integrations engineer and 3+ months
+  </Row>
+</Compare>
 
 <CTA
   title="Need ZATCA Phase 2 done without the guesswork?"
@@ -201,43 +181,32 @@ When you are ready, request production CSIDs from the Fatoora Portal, exchange t
 
 Notify the merchant's **VAT officer** (not just finance) on the day. ZATCA audits typically start by pulling the first week of cleared invoices directly from the portal, so have your reconciliation dashboard ready.
 
-<FAQ
-  title="Common questions about ZATCA Phase 2"
-  items={[
-    {
-      q: "How do I know if our company is in Phase 2 yet?",
-      a: "ZATCA announces waves by VAT turnover. Log into the Fatoora Portal with the merchant's VAT account — your assigned wave and the start date are in the dashboard. If the portal shows 'Not yet integrated', you still have time, but ZATCA has been waving everyone in. Assume you're in the next wave."
-    },
-    {
-      q: "What is the difference between clearance and reporting?",
-      a: "Clearance (standard, B2B) means ZATCA must stamp the invoice BEFORE you send it to your customer. It's a blocking real-time API call. Reporting (simplified, B2C) means you issue the invoice to the customer immediately, then send a copy to ZATCA within 24 hours. Both flows need to work in production."
-    },
-    {
-      q: "Can we keep issuing invoices if ZATCA's API is down?",
-      a: "Standard tax invoices: no. They legally can't be issued without a clearance response. You need to queue and retry. Simplified invoices: yes — you issue them to the customer as normal and report within 24 hours. Plan for a 1-2 hour ZATCA outage per quarter and build a retry queue."
-    },
-    {
-      q: "Does Shopify handle ZATCA Phase 2 for us?",
-      a: "Shopify out of the box does not. You need an app (Salla and Zid are the native Saudi alternatives that do), a middleware integration, or a custom build. If you're on Shopify and need Phase 2 compliance, the two options are: switch to Salla/Zid, or add a middleware layer that intercepts orders and calls ZATCA. CloudTopia builds the middleware option."
-    },
-    {
-      q: "What happens if our hash chain breaks?",
-      a: "Every invoice after the break is rejected until you contact ZATCA, explain the gap, and get a formal reset. Audit exposure. The fix is process: single-threaded access to CSID per device, careful deploys around ICV, and nightly reconciliation that catches a broken chain within 24 hours — not 6 months."
-    },
-    {
-      q: "How long does a ZATCA Phase 2 integration take?",
-      a: "A clean custom integration — XML build, signing, CSID provisioning, clearance + reporting, storage, monitoring — takes 6–10 weeks for a single business unit. Multi-branch or multi-ERP setups add 2–4 weeks per additional system. SaaS solutions can be live in 1–2 weeks but leave you paying per-invoice forever."
-    },
-    {
-      q: "What does a ZATCA integration cost in 2026?",
-      a: "Custom middleware: SAR 15,000–90,000 one-time, depending on whether you're touching one system or many. SaaS: no upfront, SAR 1,000–6,000 monthly plus per-invoice fees. DIY: free tooling but engineering time is the real cost. We publish tiered CloudTopia pricing on our /pricing page for transparency."
-    },
-    {
-      q: "Can we pass a ZATCA audit if we used SaaS?",
-      a: "Yes — the compliance responsibility is yours, but the SaaS vendor has to prove their signing and clearance is compliant. Ask for their ZATCA compliance letter and the full XML of a recent cleared invoice. If they hesitate on either, that's your answer."
-    }
-  ]}
-/>
+<FAQ title="Common questions about ZATCA Phase 2">
+  <Q q="How do I know if our company is in Phase 2 yet?">
+    ZATCA announces waves by VAT turnover. Log into the Fatoora Portal with the merchant's VAT account — your assigned wave and the start date are in the dashboard. If the portal shows "Not yet integrated", you still have time, but ZATCA has been waving everyone in. Assume you're in the next wave.
+  </Q>
+  <Q q="What is the difference between clearance and reporting?">
+    Clearance (standard, B2B) means ZATCA must stamp the invoice BEFORE you send it to your customer. It's a blocking real-time API call. Reporting (simplified, B2C) means you issue the invoice to the customer immediately, then send a copy to ZATCA within 24 hours. Both flows need to work in production.
+  </Q>
+  <Q q="Can we keep issuing invoices if ZATCA's API is down?">
+    Standard tax invoices: no. They legally can't be issued without a clearance response. You need to queue and retry. Simplified invoices: yes — you issue them to the customer as normal and report within 24 hours. Plan for a 1–2 hour ZATCA outage per quarter and build a retry queue.
+  </Q>
+  <Q q="Does Shopify handle ZATCA Phase 2 for us?">
+    Shopify out of the box does not. You need an app (Salla and Zid are the native Saudi alternatives that do), a middleware integration, or a custom build. If you're on Shopify and need Phase 2 compliance, the two options are: switch to Salla/Zid, or add a middleware layer that intercepts orders and calls ZATCA. CloudTopia builds the middleware option.
+  </Q>
+  <Q q="What happens if our hash chain breaks?">
+    Every invoice after the break is rejected until you contact ZATCA, explain the gap, and get a formal reset. Audit exposure. The fix is process: single-threaded access to CSID per device, careful deploys around ICV, and nightly reconciliation that catches a broken chain within 24 hours — not 6 months.
+  </Q>
+  <Q q="How long does a ZATCA Phase 2 integration take?">
+    A clean custom integration — XML build, signing, CSID provisioning, clearance + reporting, storage, monitoring — takes 6–10 weeks for a single business unit. Multi-branch or multi-ERP setups add 2–4 weeks per additional system. SaaS solutions can be live in 1–2 weeks but leave you paying per-invoice forever.
+  </Q>
+  <Q q="What does a ZATCA integration cost in 2026?">
+    Custom middleware: SAR 15,000–90,000 one-time, depending on whether you're touching one system or many. SaaS: no upfront, SAR 1,000–6,000 monthly plus per-invoice fees. DIY: free tooling but engineering time is the real cost. We publish tiered CloudTopia pricing on our /pricing page for transparency.
+  </Q>
+  <Q q="Can we pass a ZATCA audit if we used SaaS?">
+    Yes — the compliance responsibility is yours, but the SaaS vendor has to prove their signing and clearance is compliant. Ask for their ZATCA compliance letter and the full XML of a recent cleared invoice. If they hesitate on either, that's your answer.
+  </Q>
+</FAQ>
 
 ## The short version
 

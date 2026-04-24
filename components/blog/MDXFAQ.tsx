@@ -1,24 +1,56 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Plus, Minus } from 'lucide-react'
 
-export type FAQItem = { q: string; a: string }
+/**
+ * Children-based FAQ. Usage in MDX:
+ *   <FAQ title="Common questions">
+ *     <Q q="How much does it cost?">
+ *       Between $399 and $3,999 one-time, depending on scope.
+ *     </Q>
+ *     <Q q="How long does it take?">Landing pages 1–2 weeks, business 3–5 weeks.</Q>
+ *   </FAQ>
+ *
+ * MDX reliably passes children; it does NOT reliably pass complex array props
+ * through next-mdx-remote/rsc serialization.
+ */
 
-type MDXFAQProps = {
-    title?: string
-    items: FAQItem[]
+type QProps = { q?: string; children?: React.ReactNode }
+
+const getTextFromNode = (node: React.ReactNode): string => {
+    if (typeof node === 'string') return node
+    if (typeof node === 'number') return String(node)
+    if (node instanceof Array) return node.map(getTextFromNode).join('')
+    if (React.isValidElement(node)) return getTextFromNode(node.props.children)
+    return ''
 }
 
-/**
- * In-post FAQ component. Renders a visible accordion AND injects
- * FAQPage JSON-LD so the questions are eligible for Google People Also
- * Ask rich results.
- */
-export default function MDXFAQ({ title, items }: MDXFAQProps) {
+export function Q(_props: QProps) {
+    // Consumed by parent <FAQ>
+    return null
+}
+
+type FAQProps = {
+    title?: string
+    children?: React.ReactNode
+}
+
+export default function MDXFAQ({ title, children }: FAQProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(0)
 
-    if (!items || items.length === 0) return null
+    const items = React.Children.toArray(children)
+        .filter((c): c is React.ReactElement => React.isValidElement(c))
+        .map((el) => {
+            const props = (el.props || {}) as QProps
+            return {
+                q: props.q || '',
+                a: getTextFromNode(props.children).trim(),
+            }
+        })
+        .filter((item) => item.q && item.a)
+
+    if (items.length === 0) return null
 
     const faqSchema = {
         '@context': 'https://schema.org',
@@ -26,10 +58,7 @@ export default function MDXFAQ({ title, items }: MDXFAQProps) {
         mainEntity: items.map((item) => ({
             '@type': 'Question',
             name: item.q,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.a,
-            },
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
         })),
     }
 
