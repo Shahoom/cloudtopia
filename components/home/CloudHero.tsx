@@ -322,6 +322,12 @@ export default function CloudHero() {
                 className="hero relative min-h-[92vh] sm:min-h-[95vh] md:min-h-screen w-full overflow-hidden isolate flex items-center justify-center"
                 data-header-theme="dark"
                 dir={isRTL ? 'rtl' : 'ltr'}
+                style={{
+                    /* Inline fallback so the sky color is in SSR HTML
+                       before styled-jsx / cloud WebPs load. */
+                    background:
+                        'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.35), transparent 60%), radial-gradient(ellipse 120% 70% at 50% 110%, rgba(186,230,253,0.55), transparent 55%), linear-gradient(180deg, #93c5fd 0%, #bae6fd 40%, #e0f2fe 75%, #f0f9ff 100%)',
+                }}
             >
                 {/* Scene A */}
                 <div className="camera a">
@@ -378,7 +384,7 @@ export default function CloudHero() {
 
                 {/* Sparkles */}
                 {['s1', 's2', 's3', 's4'].map((cls) => (
-                    <svg key={cls} className={`sparkle ${cls}`} viewBox="0 0 24 24">
+                    <svg key={cls} className={`sparkle ${cls}`} viewBox="0 0 24 24" width={24} height={24} aria-hidden="true">
                         <path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z" fill="#fff" />
                     </svg>
                 ))}
