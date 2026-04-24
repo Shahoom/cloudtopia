@@ -229,10 +229,10 @@ export const tr = {
       ],
     },
     howWeWork: {
-      badge: 'Sürecimiz',
-      title: 'Brief\'ten lansmana dört adım',
-      titleHighlight: 'arada gizemli haftalar yok',
-      description: 'Net kilometre taşları, sabit kapsamlı fiyatlandırma ve her Cuma haftalık demolar. Ne üzerinde çalışıldığını — ve sırada neyin geleceğini — her zaman bilirsiniz.',
+      badge: 'Nasıl çalışıyoruz',
+      title: 'Dört adım.',
+      titleHighlight: 'Süreç bu kadar basit.',
+      description: 'Her proje aynı akışla ilerler. Bir adımı onaylamadan bir sonrakine geçmeyiz — kapsam kayması yok, sürpriz yok, her zaman projenin tam olarak neresinde olduğunuzu bilirsiniz.',
       steps: [
         {
           number: '01',

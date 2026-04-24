@@ -234,10 +234,10 @@ export const en = {
       ],
     },
     howWeWork: {
-      badge: 'Our process',
-      title: 'From idea to launch —',
-      titleHighlight: 'a clear path, every time',
-      description: 'Transparent milestones, fixed-scope pricing, and weekly progress demos. You always know what\'s being built and what ships next.',
+      badge: 'How we work',
+      title: 'Four steps.',
+      titleHighlight: 'That\'s the whole process.',
+      description: 'Every project runs the same way. You sign off on each step before we move on — so nothing drifts, nothing surprises you, and you always know where things stand.',
       steps: [
         {
           number: '01',
