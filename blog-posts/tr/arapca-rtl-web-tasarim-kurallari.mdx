@@ -1,0 +1,185 @@
+---
+title: '12 Arapça RTL Web Tasarım Kuralı (2026)'
+slug: arapca-rtl-web-tasarim-kurallari
+description: 'Çoğu Arapça web sitesi, bir ana dil konuşanı açar açmaz testten geçemez. Tipografi, aynalama, rakamlar, ikonlar, formlar — bu 12 kural gerçek iki dilli siteyi çevrilmişten ayırır.'
+date: '2026-04-24'
+updated: '2026-04-24'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Kurucu & Baş Mühendis
+category: Tasarım
+tags:
+  - Arapça
+  - RTL
+  - Web Tasarım
+  - Tipografi
+coverImage: https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1600&q=82
+readingTime: 10
+id: arabic-rtl-web-design-rules
+lang: tr
+---
+
+Çoğu "Arapça" web sitesi Arapça değildir. İngilizce sitelerdir, metni çevrilmiş ve `dir="rtl"` body etiketine eklenmiştir. Ana dil konuşan Araplar bunu üç saniyeden az sürede fark eder ve ayrılır.
+
+Her CloudTopia iki dilli yapımında uyguladığımız 12 kural. Hiçbiri görüş değildir — gerçek bir site ile aceleyle çevrilmiş arasındaki fark.
+
+<Callout tone="info" title="Kısa sürüm">
+İyi Arapça RTL gerektirir: düzgün Arapça fontlar (her şeyde Cairo değil), aynalanmış düzenler (sadece metin yönü değil), kültürel olarak beklendiği yerde Arap rakamları, ikon yönü farkındalığı, yerel tarih/para biçimi ve sıfırdan sağa hizalı formlar. Makine çevirisi + `dir="rtl"` bir strateji değildir.
+</Callout>
+
+## 12 kural
+
+### 1. Arapça-öncelikli fontlar kullanın, sadece Arapça yetenekli değil
+
+Herkesin başvurduğu Cairo her bağlam için ideal değil. Gövde metni için **IBM Plex Arabic** ve **Noto Sans Arabic** daha rahat okunur. Uzun yazı için **Amiri** veya **Noto Naskh Arabic** daha doğal. **Changa** modern UI için iyi çalışır. Cairo ekran/başlıklar için en iyisi.
+
+### 2. Düzeni aynalayın, sadece metni değil
+
+RTL bir metin özelliği değil — bir düzen özelliğidir. Gezinme, yan çubuklar, form etiketleri, ikonlar, ilerleme göstergeleri — hepsinin dönmesi gerekir. CSS mantıksal özelliklerini (`margin-inline-start`) kullanın. Tailwind'de `ms-4`/`me-4` kullanın.
+
+### 3. Yönsel ikonları çevirin
+
+Oklar, geri/ileri, send butonu RTL'de döner. Ama **her ikon dönmez**. Alışveriş sepeti dönmez. Takvim dönmez. Logolar dönmez. Video oynat düğmesi dönmez.
+
+Kural: UI'da *hareket yönünü* gösteren ikonları çevirin. *Nesneleri* temsil edenleri koruyun.
+
+### 4. Beklendiği yerde Arap-Hint rakamları kullanın
+
+- **Fiyatlar:** genellikle Batı rakamları (0-9). Çoğu Körfez alışverişçisi her ikisini de bilir ve netlik için Batı'yı tercih eder.
+- **Tarihler (Hicri bağlamı):** Arap-Hint daha doğal.
+- **Telefon numaraları:** Batı rakamları, tuş takımı ve uluslararası formatla eşleşirler.
+
+### 5. Varsayılan olarak sağa hizalayın, ama istisnalara izin verin
+
+Gövde metni, form etiketleri, buton metni — sağa hizala. Tablolar metin sütunları için sağa hizalı etiketler alır, sayısal sütunlar sağa hizalı kalır. Uzun gövde metnini "dengeli göründüğü için" merkezleme.
+
+### 6. Formlar: etiketler üstte, sola değil
+
+Arapça formlarda üstte etiketler doğal olur. Alan etiketin altında görsel olarak sabitlenir.
+
+### 7. Arapça için satır yüksekliği daha yüksektir
+
+Arapça harf şekillerinin güçlü çıkıcı ve inicileri vardır. Latin için çalışan satır yüksekliği (`1.4`) Arapça'da sıkışık görünür. Arapça gövde metni için `1.7`–`1.9` kullanın.
+
+### 8. RTL içindeki karma LTR içerik Unicode izolasyonu gerektirir
+
+URL'ler, İngilizce marka isimleri, kod parçacıkları, `+` içeren telefon numaraları — bunlar RTL metin içindeki LTR adalarıdır. `<bdi>` ile sarın veya `unicode-bidi: isolate` CSS'i kullanın.
+
+### 9. Tarihler: ilgili olduğunda hem Miladi hem Hicri gösterin
+
+Suudi kitleler için — özellikle hükümet, dini ve sivil içerik — iki takvimi göstermek okuyucuya saygıdır. Çoğu e-ticaret ve SaaS için Miladi tek başına iyidir.
+
+### 10. Para biçimi Arap kurallarıyla eşleşir
+
+İngilizce'deki `SAR 250` Arapça'da `250 ر.س` olur — sembol rakamdan sonra. Salla, Zid ve Amazon.sa ne kullanıyorsa onu kullanın.
+
+### 11. Butonlar ve CTA'lar: amacı çevirin, kelimeleri değil
+
+"Click here" harfi harfine Arapça'ya çevrildiğinde yanlış okunur. Arapça CTA'yı okuyucunun ne *hissetmesini* istediğinize göre sıfırdan yazın: `ابدأ الآن`, `تواصل معنا`, `احجز الآن`.
+
+### 12. Gerçek Arap kullanıcılarla test edin, sadece Google Çeviri ile değil
+
+Makine çevirisi her zamankinden iyi ama yine de ana dil konuşanın kullanmayacağı ifadeler üretir. Lansmandan önce en az bir ana dil konuşan Arap — ideal olarak hedef Körfez ülkesinden — her sayfayı okusun.
+
+## Arapça site denetimlerinde gördüklerimiz
+
+<Compare
+  headers="Site | RTL kalite | Tipografi | Formlar | Metin | Genel"
+  caption="CloudTopia'nın 2025'te yaptığı 20+ Suudi/BAE site denetimi boyunca gözlenen desenler."
+  topPickLabel="Bizim inşa ettiğimiz"
+>
+  <Row
+    name="CloudTopia yerel iki dilli yapım"
+    url="/website-design"
+    verdict="Birinci günden RTL, yerel Arapça tipografi, çevrilmiş ikonlar, uygun yerlerde Arap-Hint, sağa yeniden inşa edilmiş formlar, yerel Körfez Arapça yazar tarafından metin."
+    topPick
+  >
+    Yerel | IBM Plex + Cairo | Yerel | Yerel | ★★★★★
+  </Row>
+  <Row
+    name="Arapça eklentili WordPress"
+    verdict="dir='rtl' uygulandı ama tema düzeni yerlerde kırık. İkonlar sık sık çevrilmemiş. Metin sıklıkla makine çevirisi."
+  >
+    Eklenti düzeyi | Tema varsayılan | Sadece çevrilmiş metin | Çevrilmiş | ★★
+  </Row>
+  <Row
+    name="'Arapça-hazır' temalı Shopify"
+    verdict="Tema RTL çoğunlukla çalışır ama ödeme ve e-posta şablonları sık kırılır. Tipografi orta."
+  >
+    Kısmi | Tema varsayılan | Ödemede kırık | Çevrilmiş | ★★★
+  </Row>
+  <Row
+    name="RTL geçişli Wix / Squarespace"
+    verdict="Yalnızca yüzey düzeyi RTL. Tipografi zayıf, ikonlar çevrilmemiş, formlar garip."
+  >
+    Yüzey | Zayıf | Zayıf | Çevrilmiş | ★
+  </Row>
+</Compare>
+
+## Gördüğümüz 3 en kötü hata
+
+1. **Arapça ve İngilizce için aynı satır yüksekliği.** Sıkıca istiflenen Arapça harfler sıkışık ve okunaksız görünür. Düzeltme: `[lang="ar"]` için `line-height: 1.8`.
+2. **Arapça metin içinde RTL olarak işlenen İngilizce marka adı.** "Apple Pay" görsel olarak "yaP elppA" olur. Düzeltme: `<bdi>` ile sarın.
+3. **İngilizce pazarlama ifadelerinin çevirisi gibi okunan Arapça metin.** Harfi harfine çevrilmiş "Potansiyelini serbest bırak" utanç verici. Düzeltme: Arapça metni yerel yazın.
+
+<Callout tone="warning" title="Google Fonts tuzağı">
+"Arapça desteği" için 8 font ailesi yüklemek performans felaketidir. 2 Arapça font seçin (bir ekran, bir gövde), Arapça + Latin'e alt kümelendirin.
+</Callout>
+
+## Geliştiriciler için uygulama kontrol listesi
+
+- [ ] `dir` özniteliği `<html>`'de, `<body>`'de değil
+- [ ] CSS mantıksal özellikleri (`margin-inline-start`)
+- [ ] `font-family` Arapça-öncelikli yığın ile `[lang="ar"]` kapsamlı
+- [ ] `[lang="ar"]` için daha yüksek `line-height`
+- [ ] İkon çevirme: yalnızca yönsel ikonlara sınıf tabanlı (`.rtl-flip`)
+- [ ] Karma numerik içerik `<bdi>` ile sarılmış
+- [ ] Form etiketleri üstte
+- [ ] Ana dil test edenle doğrulanmış para birimi biçimi
+- [ ] E-postalar ve PDF faturalar RTL olarak yeniden inşa edilmiş
+
+Next.js App Router için [çok dilli SEO yazımıza](/tr/blog/cok-dilli-seo-nextjs) bakın.
+
+<CTA
+  title="Gerçekten yerel bir Arapça siteye mi ihtiyacınız var?"
+  description="Arapça'nın sonradan eklenmediği iki dilli siteler inşa ederiz — RTL birinci tasarım, yerel tipografi, Körfez-ayarlı metin."
+  href="/website-design"
+  label="Web tasarım hizmetlerimiz"
+/>
+
+<FAQ title="Arapça RTL web tasarımı hakkında yaygın sorular">
+  <Q q="Cairo en iyi Arapça font mu?">
+    Cairo başlıklar ve UI için harikadır ama uzun gövde metni için çok dekoratiftir. Gövde için IBM Plex Arabic veya Noto Sans Arabic kullanın.
+  </Q>
+  <Q q="Arap-Hint rakamları mı kullanmalıyım?">
+    Çoğu modern e-ticaret ve SaaS bağlamı için Batı rakamları (0-9) daha nettir. Arap-Hint (٠-٩) dini veya yayın içeriği için.
+  </Q>
+  <Q q="Tailwind RTL'yi düzgün destekliyor mu?">
+    Evet, mantıksal özellik yardımcı programları (`ms-4`, `me-4`) ve `rtl:` varyantı aracılığıyla. İki dilli projelerde `ml-`/`mr-`'den kaçının.
+  </Q>
+  <Q q="Arapça metin içindeki İngilizce marka isimlerini nasıl işlerim?">
+    `<bdi>` ile sarın veya CSS aracılığıyla `unicode-bidi: isolate` uygulayın.
+  </Q>
+  <Q q="İngilizce ve Arapça sayfalar için aynı düzeni kullanabilir miyim?">
+    Aynı bileşenleri kullanabilirsiniz ama düzen aynalanmalıdır. CSS mantıksal özelliklerine işi yapmasına izin verin.
+  </Q>
+  <Q q="Hicri tarihler ne olacak — her zaman göster mi?">
+    Yalnızca kültürel olarak beklendiğinde. Çoğu e-ticaret ve SaaS için Miladi yeterli.
+  </Q>
+  <Q q="Arapça'yı düzgün nasıl test ederim?">
+    Gerçek cihaz + gerçek ana dil okuyucu. DevTools'un RTL simülasyonu düzen hatalarını yakalar ama tipografi ve metin kalitesini kaçırır.
+  </Q>
+</FAQ>
+
+## Dürüst özet
+
+Arapça bir web sitesi çeviri değildir — paralel bir tasarımdır. Aynı bilgi mimarisi, farklı düzen aynası, farklı tipografi, farklı ton, farklı sayısal kurallar.
+
+Mevcut bir İngilizce siteye Arapça ekliyorsanız, Arapça katmanı için orijinal tasarım ve geliştirme maliyetinin %25–35'ini bütçeleyin.
+
+<CTA
+  title="İki dilde de yerel okunan bir site inşa edin"
+  description="2.250 SAR'dan başlayan sabit kapsamlı iki dilli siteler. Birinci günden Arapça ve İngilizce eşitliği."
+  href="/pricing"
+  label="Fiyatlandırmayı gör"
+/>
