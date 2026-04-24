@@ -265,10 +265,11 @@ export const tr = {
       title: 'Bize yazmadan önce yanıtlar',
       titleHighlight: 'dosdoğru, satış konuşması yok',
       description: 'Körfez işletmelerinin projeye başlamadan önce en çok sorduğu şeylere hızlı yanıtlar. Sizinki burada yoksa, iletişim sayfasına bir iş günü içinde yanıt alırsınız.',
+      contactCTA: 'Sorunu bulamadın mı? Bize yaz',
       items: [
         {
           question: 'CloudTopia üzerinden web sitesi ne kadara mal olur?',
-          answer: 'Sitelerimiz tek sayfalık açılış sayfası için $399\'dan, 5 sayfalık başlangıç iş sitesi için $599\'dan, tam çok sayfalı profesyonel site için $1.299\'dan ve premium özel yapım için $3.999\'dan başlar. E-ticaret mağazaları $1.299\'dan başlar. Tüm kademeler fiyatlandırma sayfamızda halka açıktır — teklif veya "bizi arayın" gerekmez.',
+          answer: 'Sitelerimiz tek sayfalık açılış sayfası için $299\'dan, 5 sayfalık başlangıç iş sitesi için $499\'dan, tam çok sayfalı profesyonel site için $999\'dan ve premium özel yapım için $2.499\'dan başlar. E-ticaret mağazaları $599\'dan başlar. Tüm kademeler fiyatlandırma sayfamızda halka açıktır — teklif veya "bizi arayın" gerekmez.',
         },
         {
           question: 'Arapça çalışır mısınız? RTL düzgün destekleniyor mu?',
@@ -296,7 +297,7 @@ export const tr = {
         },
         {
           question: 'Lansmandan sonra değişikliklere ihtiyacımız olursa?',
-          answer: 'İlk 30 gün hata düzeltmeleri ve küçük ayarlamalar ücretsizdir. Sonrasında küçük güncellemeler aylık bakım planlarımıza ($99/ay\'dan başlar) dahildir ve büyük özellikler proje bazında fiyatlandırılır. Sürpriz fatura yok — çalışma başlamadan önce her şey yazılı olarak fiyatlandırılır.',
+          answer: 'İlk 30 gün hata düzeltmeleri ve küçük ayarlamalar ücretsizdir. Sonrasında küçük güncellemeler aylık bakım planlarımıza ($79/ay\'dan başlar) dahildir ve büyük özellikler proje bazında fiyatlandırılır. Sürpriz fatura yok — çalışma başlamadan önce her şey yazılı olarak fiyatlandırılır.',
         },
       ],
     },

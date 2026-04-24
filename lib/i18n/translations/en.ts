@@ -270,10 +270,11 @@ export const en = {
       title: 'Answers before you email us',
       titleHighlight: 'straight, no sales pitch',
       description: 'Quick answers to the things most clients ask before starting a project. If yours isn\'t here, drop us a line and we\'ll reply within one business day.',
+      contactCTA: 'Don\'t see your question? Email us',
       items: [
         {
           question: 'How much does a project with CloudTopia cost?',
-          answer: 'Websites start at $399, e-commerce stores at $1,299, and custom business systems at $3,999. Every tier is listed on our pricing page — no quotes or "call us to find out" required. We agree the scope and price up front, in writing.',
+          answer: 'Landing pages start at $299, full websites from $499, e-commerce stores from $599, and custom business systems from $1,999. Every tier is listed on our pricing page — no quotes or "call us to find out" required. We agree the scope and price up front, in writing.',
         },
         {
           question: 'Which languages do you build in?',
@@ -297,7 +298,7 @@ export const en = {
         },
         {
           question: 'What happens after launch if we need changes?',
-          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates are included in our monthly care plans (starting $99/month), and larger features are quoted per project. No surprise invoices — everything in writing before we start.',
+          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates are included in our monthly care plans (starting $79/month), and larger features are quoted per project. No surprise invoices — everything in writing before we start.',
         },
         {
           question: 'Can you integrate payment systems from different markets?',

@@ -42,7 +42,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Landing Page', ar: 'صفحة هبوط', tr: 'Açılış Sayfası' },
-        price: { oneTime: 399 },
+        price: { oneTime: 299 },
         description: { en: 'A single, high-converting page to capture leads or launch a campaign — fast.', ar: 'صفحة واحدة عالية التحويل لاستقطاب العملاء أو إطلاق حملة في وقت قصير.', tr: 'Müşteri toplamak veya kampanya başlatmak için tek, yüksek dönüşümlü sayfa.' },
         features: [
           { text: { en: '1 page with multi-section layout', ar: 'صفحة واحدة بتصميم متعدد الأقسام', tr: 'Çok bölümlü tek sayfa tasarımı' }, included: true },
@@ -58,7 +58,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Starter', ar: 'الأساسي', tr: 'Başlangıç' },
-        price: { oneTime: 599 },
+        price: { oneTime: 499 },
         description: { en: 'A clean, professional website for startups and small businesses making their mark online.', ar: 'موقع احترافي وأنيق للشركات الناشئة والصغيرة التي تبدأ حضورها الرقمي.', tr: 'Çevrimiçi varlık oluşturmak isteyen küçük işletmeler için temiz, profesyonel web sitesi.' },
         features: [
           { text: { en: 'Up to 5 pages', ar: 'حتى 5 صفحات', tr: '5 sayfaya kadar' }, included: true },
@@ -74,7 +74,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Professional', ar: 'الاحترافي', tr: 'Profesyonel' },
-        price: { oneTime: 1299 },
+        price: { oneTime: 999 },
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'For businesses serious about their digital presence — built to impress and convert.', ar: 'للشركات الجادة في حضورها الرقمي — مصمم ليُبهر ويحوّل الزوار إلى عملاء.', tr: 'Dijital varlığına önem veren işletmeler için — etkilemek ve dönüştürmek üzere inşa edildi.' },
         features: [
@@ -94,7 +94,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Premium', ar: 'المتميز', tr: 'Premium' },
-        price: { oneTime: 3999 },
+        price: { oneTime: 2499 },
         description: { en: 'Enterprise-grade web presence with custom everything — no compromises, no limits.', ar: 'حضور ويب على مستوى المؤسسات بتخصيص كامل — بلا قيود ولا تنازلات.', tr: 'Sınırsız özelleştirmeyle kurumsal düzey web varlığı — hiçbir ödün vermeden.' },
         features: [
           { text: { en: 'Unlimited pages', ar: 'صفحات غير محدودة', tr: 'Sınırsız sayfa' }, included: true },
@@ -121,7 +121,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Starter Store', ar: 'المتجر الأساسي', tr: 'Başlangıç Mağazası' },
-        price: { oneTime: 799 },
+        price: { oneTime: 599 },
         description: { en: 'Launch your online store fast with everything you need to start selling today.', ar: 'أطلق متجرك الإلكتروني بسرعة بكل ما تحتاجه للبيع اليوم.', tr: 'Bugün satışa başlamak için ihtiyacınız olan her şeyle çevrimiçi mağazanızı hızla başlatın.' },
         features: [
           { text: { en: 'Up to 100 products', ar: 'حتى 100 منتج', tr: '100 ürüne kadar' }, included: true },
@@ -138,7 +138,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Growth Store', ar: 'متجر النمو', tr: 'Büyüme Mağazası' },
-        price: { oneTime: 1699 },
+        price: { oneTime: 1299 },
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'The complete e-commerce engine for businesses ready to scale across GCC, Turkey and the Arab world.', ar: 'المحرك الكامل للتجارة الإلكترونية للشركات المستعدة للتوسع.', tr: 'Körfez, Türkiye ve Arap dünyasında ölçeklenmek için hazır işletmeler için.' },
         features: [
@@ -183,7 +183,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Essential', ar: 'الأساسي', tr: 'Temel' },
-        price: { oneTime: 2999 },
+        price: { oneTime: 1999 },
         description: { en: 'A functional, well-designed web app for your core business process.', ar: 'تطبيق ويب وظيفي ومصمم جيداً لعمليتك التجارية الأساسية.', tr: 'Temel iş süreciniz için işlevsel, iyi tasarlanmış bir web uygulaması.' },
         features: [
           { text: { en: 'Up to 3 user roles', ar: 'حتى 3 أدوار مستخدمين', tr: '3 kullanıcı rolüne kadar' }, included: true },
@@ -198,7 +198,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Advanced', ar: 'المتقدم', tr: 'Gelişmiş' },
-        price: { oneTime: 4999 },
+        price: { oneTime: 3499 },
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'A full-featured platform built for complex workflows, teams and real business scale.', ar: 'منصة كاملة المزايا مبنية للسير العمل المعقدة والفرق ونطاق الأعمال الحقيقي.', tr: 'Karmaşık iş akışları, ekipler ve gerçek iş ölçeği için tam özellikli platform.' },
         features: [
@@ -239,7 +239,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Foundation', ar: 'الأساس', tr: 'Temel' },
-        price: { oneTime: 1299 },
+        price: { oneTime: 999 },
         description: { en: 'Streamline your operations with a custom CRM and automation tailored to your workflow.', ar: 'بسّط عمليتك مع نظام CRM مخصص وأتمتة تناسب سير عملك.', tr: 'İş akışınıza göre özelleştirilmiş CRM ve otomasyon ile operasyonlarınızı kolaylaştırın.' },
         features: [
           { text: { en: 'Custom CRM', ar: 'نظام CRM مخصص', tr: 'Özel CRM' }, included: true },
@@ -256,7 +256,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Professional', ar: 'الاحترافي', tr: 'Profesyonel' },
-        price: { oneTime: 3999 },
+        price: { oneTime: 2499 },
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'A complete business operating system — manage leads, teams, inventory and reporting in one place.', ar: 'نظام تشغيل أعمال متكامل — إدارة العملاء والفرق والمخزون والتقارير في مكان واحد.', tr: 'Eksiksiz iş işletim sistemi — potansiyel müşterileri, ekipleri, envanteri ve raporlamayı tek yerden yönetin.' },
         features: [
@@ -299,7 +299,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Starter', ar: 'البداية', tr: 'Başlangıç' },
-        price: { monthly: 249 },
+        price: { monthly: 199 },
         annualPrice: 199,
         description: { en: 'Consistent presence on your most important platforms, handled professionally.', ar: 'حضور ثابت على أهم منصاتك، مُدار باحترافية.', tr: 'En önemli platformlarınızda tutarlı varlık, profesyonelce yönetilir.' },
         features: [
@@ -315,7 +315,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Growth', ar: 'النمو', tr: 'Büyüme' },
-        price: { monthly: 549 },
+        price: { monthly: 449 },
         annualPrice: 439,
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'Full social media management with ads — for brands ready to dominate their market.', ar: 'إدارة كاملة لوسائل التواصل مع إعلانات — للعلامات التجارية المستعدة للهيمنة على سوقها.', tr: 'Reklamlarla tam sosyal medya yönetimi — pazarlarına hakim olmaya hazır markalar için.' },
@@ -333,7 +333,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Scale', ar: 'التوسع', tr: 'Ölçek' },
-        price: { monthly: 999 },
+        price: { monthly: 799 },
         annualPrice: 799,
         description: { en: 'Complete brand domination — every platform, every format, paid + organic, full strategy.', ar: 'هيمنة كاملة على العلامة التجارية — كل منصة وكل تنسيق، مدفوع وعضوي، استراتيجية كاملة.', tr: 'Tam marka hakimiyeti — her platform, her format, ücretli + organik, tam strateji.' },
         features: [
@@ -358,7 +358,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Basic', ar: 'الأساسي', tr: 'Temel' },
-        price: { monthly: 199 },
+        price: { monthly: 149 },
         annualPrice: 159,
         description: { en: 'A steady stream of quality content to keep your brand visible and credible.', ar: 'تدفق ثابت من المحتوى عالي الجودة للحفاظ على ظهور علامتك وموثوقيتها.', tr: 'Markanızı görünür ve güvenilir tutan istikrarlı içerik akışı.' },
         features: [
@@ -373,7 +373,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Professional', ar: 'الاحترافي', tr: 'Profesyonel' },
-        price: { monthly: 399 },
+        price: { monthly: 329 },
         annualPrice: 319,
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'A full content operation — SEO-driven writing, social captions and video scripts in multiple languages.', ar: 'عملية محتوى كاملة — كتابة موجهة بـSEO وتعليقات اجتماعية ونصوص فيديو بلغات متعددة.', tr: 'Tam içerik operasyonu — SEO odaklı yazarlık, sosyal başlıklar ve çok dilli video senaryoları.' },
@@ -390,7 +390,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Agency', ar: 'الوكالة', tr: 'Ajans' },
-        price: { monthly: 699 },
+        price: { monthly: 549 },
         annualPrice: 559,
         description: { en: 'A dedicated content team working as your in-house creative department — tri-lingual, full-volume.', ar: 'فريق محتوى مخصص يعمل كقسم إبداعي داخلي — ثلاثي اللغات، بأعلى حجم.', tr: 'Şirket içi yaratıcı departmanınız olarak çalışan özel içerik ekibi — üç dilli, tam hacim.' },
         features: [
@@ -414,7 +414,7 @@ const services: ServiceCategory[] = [
     tiers: [
       {
         name: { en: 'Essential Menu', ar: 'القائمة الأساسية', tr: 'Temel Menü' },
-        price: { oneTime: 399 },
+        price: { oneTime: 249 },
         description: { en: 'Replace printed menus with a clean, instant QR menu your guests scan and browse.', ar: 'استبدل القوائم المطبوعة بقائمة QR نظيفة يمسحها ضيوفك ويتصفحونها.', tr: 'Basılı menüleri, misafirlerinizin tarayıp gezebileceği temiz, anlık bir QR menüyle değiştirin.' },
         features: [
           { text: { en: 'Up to 100 menu items', ar: 'حتى 100 عنصر في القائمة', tr: '100 menü öğesine kadar' }, included: true },
@@ -431,7 +431,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Smart Menu', ar: 'القائمة الذكية', tr: 'Akıllı Menü' },
-        price: { oneTime: 699 },
+        price: { oneTime: 499 },
         badge: { en: 'Most Popular', ar: 'الأكثر طلباً', tr: 'En Popüler' },
         description: { en: 'Let your customers order directly from the menu — reduce wait staff load, increase table turnover.', ar: 'دع عملاءك يطلبون مباشرة من القائمة — قلل عبء النادلين وزد معدل دوران الطاولات.', tr: 'Müşterilerinizin doğrudan menüden sipariş vermesine izin verin.' },
         features: [
@@ -450,7 +450,7 @@ const services: ServiceCategory[] = [
       },
       {
         name: { en: 'Full System', ar: 'النظام الكامل', tr: 'Tam Sistem' },
-        price: { oneTime: 799 },
+        price: { oneTime: 649 },
         description: { en: 'A full restaurant management platform — orders, tables, kitchen display, analytics and POS.', ar: 'منصة إدارة مطعم متكاملة — الطلبات والطاولات وشاشة المطبخ والتحليلات ونقطة البيع.', tr: 'Tam restoran yönetim platformu — siparişler, masalar, mutfak ekranı, analitik ve POS.' },
         features: [
           { text: { en: 'Unlimited menu items', ar: 'عناصر قائمة غير محدودة', tr: 'Sınırsız menü öğesi' }, included: true },
