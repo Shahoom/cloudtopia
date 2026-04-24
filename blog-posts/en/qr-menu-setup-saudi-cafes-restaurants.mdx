@@ -1,0 +1,135 @@
+---
+title: 'QR Menu Setup for Saudi Cafés & Restaurants (2026)'
+slug: qr-menu-setup-saudi-cafes-restaurants
+description: 'How to set up a QR menu in Saudi Arabia properly — bilingual AR+EN, photo quality, order and pay integration, VAT invoicing, and what to avoid.'
+date: '2026-04-24'
+updated: '2026-04-24'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Founder & Lead Engineer
+category: F&B
+tags:
+  - QR Menu
+  - Saudi Arabia
+  - Restaurants
+  - F&B
+coverImage: https://images.unsplash.com/photo-1559329007-40df8a9345d8?auto=format&fit=crop&w=1600&q=82
+readingTime: 7
+id: qr-menu-saudi-setup
+lang: en
+---
+
+Every café in Riyadh, Jeddah, and Dammam has a QR menu taped to the table. Most of them are PDFs uploaded to random hosting, loading 6 MB images over 4G, with broken Arabic typography. The customer leaves the table, not the menu.
+
+A proper QR menu is a full digital ordering experience: bilingual, image-optimized, fast, with optional order-and-pay. Here's how to build one that actually converts.
+
+<Callout tone="info" title="Short answer">
+A good Saudi QR menu in 2026 costs **SAR 800–2,500 for a browse-only menu**, **SAR 3,000–6,000 with order-to-kitchen**, and **SAR 5,000–15,000 with full order-and-pay + ZATCA-compliant receipts**. Avoid PDF-on-Google-Drive setups — they kill conversion.
+</Callout>
+
+## QR menu tiers
+
+<Compare
+  headers="Tier | Cost (SAR) | Bilingual | Order to kitchen | Order + Pay | ZATCA"
+  caption="Ranges observed across CloudTopia F&B client projects, Q1 2026."
+  topPickLabel="Our recommendation"
+>
+  <Row
+    name="CloudTopia — QR Menu Platform"
+    url="/contact"
+    verdict="Bilingual, fast, order-and-pay with Mada/Apple Pay, ZATCA-compliant receipts, kitchen printer integration."
+    topPick
+  >
+    From SAR 5,000 | ✓ | ✓ | ✓ | ✓
+  </Row>
+  <Row
+    name="Foodics / Marn / Rewaa QR"
+    verdict="POS-native, strong for chains. Monthly subscription + setup."
+  >
+    SAR 300–800/mo | ✓ | ✓ | ✓ | ✓
+  </Row>
+  <Row
+    name="PDF on Google Drive"
+    verdict="Free but terrible UX. Slow, no ordering, Arabic breaks on mobile PDF readers."
+  >
+    0 | ✗ | ✗ | ✗ | ✗
+  </Row>
+  <Row
+    name="Wix/WordPress QR page"
+    verdict="OK for browse-only, no native ordering without paid plugins."
+  >
+    SAR 500–2,000 | ✓ | ✗ | ✗ | ✗
+  </Row>
+</Compare>
+
+## What a proper QR menu needs
+
+1. **Bilingual AR+EN by default.** Arabic speakers get Arabic first; tourists and expats get English. Same menu, toggled.
+2. **Optimized photos.** WebP or AVIF, lazy-loaded, CDN-served. Each item image under 80 KB. A 6 MB PDF menu is 75× larger than it needs to be.
+3. **Fast first paint.** Under 1.5 seconds on 4G. Customers scan and want food fast.
+4. **Category navigation.** Sticky category tabs, clear pricing, allergen info where relevant.
+5. **Mada + Apple Pay** if you offer pay-at-table. See our [Gulf payment gateways guide](/en/blog/gulf-payment-gateways-mada-stc-pay-tabby).
+6. **ZATCA-compliant e-receipt** if you're VAT-registered. See our [ZATCA Phase 2 checklist](/en/blog/zatca-phase-2-e-invoicing-developer-checklist).
+7. **Kitchen printer integration** if ordering to kitchen. Star or Epson thermal printers over LAN/Bluetooth.
+8. **Admin dashboard** to update menu items without calling the developer every time.
+
+## Common mistakes we see
+
+- **PDF menus:** 5–10 MB files, no search, broken Arabic on iOS PDF viewer.
+- **Foreign platforms without Arabic:** Menu pictures with the English-first layout, Arabic translation bolted on.
+- **No photos:** 40%+ conversion drop versus menus with good food photography.
+- **No price on menu card:** Customers resent having to open a separate page to see price.
+- **Heavy hero videos:** Auto-playing 10 MB hero videos on a QR menu is hostile.
+
+<Callout tone="tip" title="Photograph your menu in batches">
+Budget one half-day with a food photographer (SAR 2,000–4,000) to shoot every item on a neutral background plus 3–5 lifestyle shots. Reuse across QR menu, Instagram, Google Business Profile, and any delivery app.
+</Callout>
+
+## The implementation plan
+
+Week 1: Menu structure + item photography + copy in AR+EN.
+Week 2: Platform build — menu, cart, checkout.
+Week 3: Payments + kitchen printer + ZATCA receipts.
+Week 4: Staff training + QR code printing + launch.
+
+<CTA
+  title="Need a proper Saudi QR menu?"
+  description="Bilingual, bright, fast, with Mada + Apple Pay and ZATCA receipts built in."
+  href="/contact"
+  label="Get a quote"
+/>
+
+<FAQ title="Common questions about Saudi QR menus">
+  <Q q="How much should a café spend on a QR menu?">
+    SAR 800–2,500 for browse-only, SAR 3,000–6,000 with ordering. Anything above SAR 10,000 usually includes multi-branch + POS integration.
+  </Q>
+  <Q q="Do I need Mada and Apple Pay for a QR menu?">
+    Only if you enable pay-at-table. For browse-and-call-waiter, no. For self-service order + pay, yes.
+  </Q>
+  <Q q="Can I use Foodics or Marn?">
+    Yes — good POS-native options, especially for chains. Monthly subscription is the trade-off. For a single-location independent café, custom is often cheaper over 2 years.
+  </Q>
+  <Q q="Is PDF really that bad?">
+    Yes. Slow, no search, broken Arabic on some iOS PDF viewers, no analytics, no ordering, no updates without reprinting. Don't.
+  </Q>
+  <Q q="What if I just want to update prices easily?">
+    Any admin-backed menu (custom or SaaS) lets you update prices in 30 seconds. PDF means you reprint QR stickers every time you change a price.
+  </Q>
+  <Q q="Can the QR menu print to my kitchen printer?">
+    Yes — via LAN or Bluetooth connection to a Star/Epson thermal printer, or via POS integration. Budget 1–2 days of setup per location.
+  </Q>
+  <Q q="Does Arabic SEO matter for a QR menu?">
+    For walk-in tables, no. But your QR menu URL is often shared on Google Business Profile, Instagram, and WhatsApp — Arabic SEO on that URL helps local discovery.
+  </Q>
+</FAQ>
+
+## The honest summary
+
+A QR menu is a digital product, not a PDF. Cafés and restaurants that treat it as a product — photography, bilingual copy, ordering, payments, analytics — outperform PDF-menu competitors on table turnover, upsell, and customer return.
+
+<CTA
+  title="See CloudTopia's F&B and custom system pricing"
+  description="QR menus, order-and-pay, POS integration — transparent SAR pricing."
+  href="/pricing"
+  label="See pricing"
+/>
