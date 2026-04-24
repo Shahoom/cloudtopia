@@ -19,6 +19,7 @@ export default function BlogCard({ post, translations }: BlogCardProps) {
             title={post.title}
             excerpt={post.excerpt}
             image={post.coverImage || undefined}
+            imageAlt={post.coverImageAlt || post.title}
             author={{
                 name: post.author,
                 avatar: avatarUrl

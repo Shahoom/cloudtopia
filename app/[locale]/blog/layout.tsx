@@ -46,6 +46,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
                 'tr': 'https://cloudtopia.net/tr/blog',
                 'x-default': 'https://cloudtopia.net/en/blog',
             },
+            // RSS feed discovery — browsers and feed readers will auto-detect this
+            // via the rendered <link rel="alternate" type="application/rss+xml"> tag.
+            types: {
+                'application/rss+xml': `https://cloudtopia.net/${locale}/blog/feed.xml`,
+            },
         },
     }
 }
@@ -71,7 +76,7 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
                                 url: 'https://cloudtopia.net/favicon.svg',
                             },
                         },
-                        inLanguage: ['en', 'ar', 'tr'],
+                        inLanguage: ['en-US', 'ar-SA', 'tr-TR'],
                     }),
                 }}
             />

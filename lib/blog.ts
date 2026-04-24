@@ -18,7 +18,12 @@ export type BlogPost = {
     category?: string
     excerpt: string
     coverImage: string
+    coverImageAlt?: string
     readingTime: number
+    /** Optional schema extensions. e.g. schema: 'HowTo' enables HowTo JSON-LD. */
+    schema?: 'HowTo' | 'Article'
+    /** Ordered step list for HowTo schema when `schema: HowTo` is set. */
+    howToSteps?: Array<{ name: string; text: string }>
     content: string
 }
 
@@ -66,7 +71,10 @@ export function getPostBySlug(slug: string, lang: string): BlogPost | null {
             category: data.category || undefined,
             excerpt: data.description || data.excerpt || '',
             coverImage: data.coverImage || '',
+            coverImageAlt: data.coverImageAlt || undefined,
             readingTime: data.readingTime || 0,
+            schema: data.schema || undefined,
+            howToSteps: Array.isArray(data.howToSteps) ? data.howToSteps : undefined,
             content,
         } as BlogPost
     } catch (error) {

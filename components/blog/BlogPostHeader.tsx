@@ -42,7 +42,7 @@ export default function BlogPostHeader({ post, translations }: BlogPostHeaderPro
                 <div className="absolute inset-0 z-0">
                     <Image
                         src={post.coverImage}
-                        alt={post.title}
+                        alt={post.coverImageAlt || post.title}
                         fill
                         className="object-cover"
                         priority

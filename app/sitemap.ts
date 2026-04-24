@@ -89,6 +89,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
         })
     })
 
+    // RSS feeds — one per locale
+    const feedLanguages = buildLanguages('/blog/feed.xml')
+    locales.forEach((loc) => {
+        sitemapEntries.push({
+            url: `${baseUrl}/${loc}/blog/feed.xml`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.5,
+            alternates: { languages: feedLanguages },
+        })
+    })
+
     // Blog posts — locale-aware with cross-locale hreflang
     const canonicalSlugs = getPostSlugs('en')
     canonicalSlugs.forEach((cid) => {

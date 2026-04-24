@@ -35,6 +35,19 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
         ? `${BASE_URL}${post.coverImage}`
         : `${BASE_URL}/images/og-image.jpg`
 
+    // Resolve author page URL for OG `article:author` metadata
+    const authorSlug = post.authorSlug || 'editorial-team'
+    const authorProfile = getAuthor(authorSlug)
+    const authorUrl = authorProfile
+        ? `${BASE_URL}/${lang}/authors/${authorProfile.slug}`
+        : `${BASE_URL}/${lang}/about`
+
+    // Localized alt text for cover image (falls back to title)
+    const coverAlt = post.coverImageAlt || post.title
+
+    // Derive a modifiedTime for article freshness
+    const modifiedTime = post.updated || post.date
+
     // Generate alternate links for all languages
     const alternateLanguages: Record<string, string> = {}
     const locales = ['en', 'ar', 'tr']
@@ -55,6 +68,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     return {
         title: post.title,
         description: post.excerpt,
+        authors: [{ name: post.author || 'CloudTopia', url: authorUrl }],
         robots: {
             index: true,
             follow: true,
@@ -71,11 +85,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
                     url: imageUrl,
                     width: 1200,
                     height: 630,
-                    alt: post.title,
+                    alt: coverAlt,
                 },
             ],
             publishedTime: post.date,
-            authors: [`${BASE_URL}`],
+            modifiedTime,
+            authors: [authorUrl],
+            tags: post.tags,
+            section: post.category,
         },
         twitter: {
             card: 'summary_large_image',
@@ -115,7 +132,17 @@ export default async function PostPage({ params }: PostPageProps) {
     }
 
     const allPosts = getAllPosts(lang)
-    const morePosts = allPosts.filter(p => p.slug !== post.slug)
+    // Tag-aware related posts: score candidates by shared tags with the current post,
+    // then break ties by recency. Falls back to most recent posts when tags are sparse.
+    const postTagSet = new Set(post.tags || [])
+    const morePosts = allPosts
+        .filter((p) => p.slug !== post.slug)
+        .map((p) => {
+            const shared = (p.tags || []).filter((t) => postTagSet.has(t)).length
+            return { p, shared, time: new Date(p.date).getTime() }
+        })
+        .sort((a, b) => (b.shared - a.shared) || (b.time - a.time))
+        .map((x) => x.p)
 
     const dict = await getDictionary(lang as Locale)
 
@@ -124,7 +151,8 @@ export default async function PostPage({ params }: PostPageProps) {
         ? `${BASE_URL}${post.coverImage}`
         : `${BASE_URL}/images/og-image.jpg`
 
-    const inLanguage: Record<string, string> = { en: 'en', ar: 'ar', tr: 'tr' }
+    // Full BCP-47 locale codes for schema.org `inLanguage` (aligned with OG_LOCALES)
+    const inLanguage: Record<string, string> = { en: 'en-US', ar: 'ar-SA', tr: 'tr-TR' }
 
     const wordCount = (post.content || '').trim().split(/\s+/).length
     const authorSlug = post.authorSlug || 'editorial-team'
@@ -189,6 +217,26 @@ export default async function PostPage({ params }: PostPageProps) {
         about: (post.tags || []).slice(0, 5).map((tag) => ({ '@type': 'Thing', name: tag })),
     }
 
+    // Optional HowTo schema — emitted only when the post opts in via frontmatter
+    // (`schema: HowTo` + `howToSteps: [{ name, text }, ...]`). Invisible otherwise.
+    const howToSchema = post.schema === 'HowTo' && Array.isArray(post.howToSteps) && post.howToSteps.length > 0
+        ? {
+              '@context': 'https://schema.org',
+              '@type': 'HowTo',
+              name: post.title,
+              description: post.excerpt,
+              inLanguage: inLanguage[lang] || 'en-US',
+              totalTime: post.readingTime ? `PT${post.readingTime}M` : undefined,
+              image: imageUrl,
+              step: post.howToSteps.map((s, i) => ({
+                  '@type': 'HowToStep',
+                  position: i + 1,
+                  name: s.name,
+                  text: s.text,
+              })),
+          }
+        : null
+
     // BreadcrumbList schema
     const breadcrumbLabels: Record<string, { home: string; blog: string }> = {
         en: { home: 'Home', blog: 'Blog' },
@@ -226,6 +274,12 @@ export default async function PostPage({ params }: PostPageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
+            {howToSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+                />
+            )}
             <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-32">
                 <BlogBreadcrumb
                     locale={lang}

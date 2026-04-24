@@ -1,7 +1,7 @@
 ---
 title: 'ZATCA Phase 2 E-Invoicing: Developer Checklist (2026)'
 slug: zatca-phase-2-e-invoicing-developer-checklist
-description: 'Integrating with ZATCA Phase 2 in Saudi Arabia? Here is the exact checklist we use for every go-live — CSID, XML, signing, clearance vs reporting, and the gotchas that break timelines.'
+description: 'Integrating ZATCA Phase 2 e-invoicing? The exact checklist we use for every go-live — CSID, XML, signing, clearance vs reporting, and timeline traps.'
 date: '2026-04-20'
 updated: '2026-04-20'
 author: Mohamad Shahm
@@ -17,9 +17,22 @@ tags:
   - POS
   - API Integration
 coverImage: https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=82
+coverImageAlt: 'Digital tax invoice and compliance icons representing ZATCA Phase 2 e-invoicing in Saudi Arabia'
 readingTime: 11
 id: zatca-phase-2-developer-checklist
 lang: en
+schema: HowTo
+howToSteps:
+  - name: Obtain your CSID
+    text: Register as a taxpayer with ZATCA and generate a Cryptographic Stamp Identifier through the compliance portal before any integration work starts.
+  - name: Build UBL 2.1 compliant invoices
+    text: Generate UBL 2.1 XML invoices including TRN, invoice hash, previous invoice hash, and all required Saudi-specific fields.
+  - name: Sign invoices with ECDSA secp256k1
+    text: Apply an ECDSA secp256k1 digital signature using your CSID and embed it in the UBL XML before submission.
+  - name: Route to clearance or reporting
+    text: Clear B2B invoices in real time via the clearance API; report B2C invoices within 24 hours via the reporting endpoint.
+  - name: Preserve invoices with hash chain integrity
+    text: Store every signed XML and its hash chain for at least 6 years to satisfy ZATCA audit requirements.
 ---
 
 If you are building or retrofitting an ERP, POS, or e-commerce store for a Saudi merchant in 2026, you are integrating with **ZATCA Phase 2 — the Integration Phase** that started rolling out in waves from January 2023. The old Phase 1 (just a QR-tagged PDF) is not enough anymore.

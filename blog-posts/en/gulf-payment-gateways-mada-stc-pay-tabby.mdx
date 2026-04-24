@@ -1,7 +1,7 @@
 ---
 title: 'Gulf Payment Gateways: Mada, Apple Pay, STC Pay, Tabby & Tamara (2026 Guide)'
 slug: gulf-payment-gateways-mada-stc-pay-tabby
-description: 'Which payment gateways do you actually need for a Saudi or Gulf ecommerce store in 2026? A practical guide to Mada, Apple Pay, STC Pay, Tabby and Tamara — fees, integration, and what happens if you skip them.'
+description: 'The payment gateways a Saudi or Gulf ecommerce store actually needs in 2026 — Mada, Apple Pay, STC Pay, Tabby, Tamara: fees and integration tradeoffs.'
 date: '2026-04-24'
 updated: '2026-04-24'
 author: Mohamad Shahm
@@ -15,9 +15,22 @@ tags:
   - Gulf
   - BNPL
 coverImage: https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1600&q=82
+coverImageAlt: 'Credit and debit cards fanned out on a dark surface, symbolising Gulf payment gateway options'
 readingTime: 11
 id: gulf-payment-gateways-guide
 lang: en
+schema: HowTo
+howToSteps:
+  - name: Complete KYC and PSP applications
+    text: Prepare your commercial registration, VAT certificate, and bank account, then apply to a local PSP (HyperPay, Moyasar, PayTabs, or Checkout.com) for Mada + Apple Pay + Visa/Mastercard access.
+  - name: Build the checkout flow
+    text: Develop the cart, shipping, address, tax, and checkout pages — then integrate Mada + Apple Pay, STC Pay as a named button, and Tabby/Tamara for BNPL.
+  - name: Wire ZATCA Phase 2 e-invoicing
+    text: Generate ZATCA-compliant UBL 2.1 invoices per order, sign them with your CSID, and route to clearance or reporting as required.
+  - name: Run sandbox and real-device tests
+    text: Test every gateway end to end — card, Apple Pay, STC Pay, and BNPL — including refund and 3DS flows on a real iOS device before going live.
+  - name: Launch and monitor
+    text: Switch to production PSP credentials, monitor the first real transactions, and keep unified reporting across all gateways in one admin dashboard.
 ---
 
 Running an ecommerce store in Saudi Arabia or the wider Gulf without Mada and Apple Pay is like opening a store in Riyadh that only accepts US dollars. The card is in the customer's wallet — but your checkout refuses it. Cart abandonment is immediate and silent.
