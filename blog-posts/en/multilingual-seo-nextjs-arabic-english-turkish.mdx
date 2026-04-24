@@ -1,0 +1,239 @@
+---
+title: 'Multilingual SEO for Next.js: Arabic, English, Turkish Done Right (2026)'
+slug: multilingual-seo-nextjs-arabic-english-turkish
+description: 'A practical Next.js App Router guide for multilingual SEO — hreflang, localized slugs, canonical IDs, sitemap, and metadata for EN/AR/TR sites that actually rank.'
+date: '2026-04-24'
+updated: '2026-04-24'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Founder & Lead Engineer
+category: SEO
+tags:
+  - Next.js
+  - SEO
+  - i18n
+  - Multilingual
+  - hreflang
+coverImage: https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1600&q=82
+readingTime: 9
+id: multilingual-seo-nextjs-guide
+lang: en
+---
+
+A multilingual site that ranks is not three translated copies of the same content. It's three independent sites linked by hreflang, with localized slugs, native metadata per locale, and a sitemap that tells Google exactly which version to serve to which user.
+
+We run this stack on every CloudTopia bilingual/trilingual project. Here's how to do it in Next.js 14 App Router without leaking ranking authority across locales.
+
+<Callout tone="info" title="Short version">
+For a Next.js EN/AR/TR site in 2026: use the `[locale]` dynamic segment, **localize slugs in the native script** (not English across all), tie translations together with a canonical `id`, emit `hreflang` tags per page, and build a sitemap that lists every locale variant with proper lastmod. Skip any of these and you split link equity across languages.
+</Callout>
+
+## The architecture that ranks
+
+<Compare
+  headers="Approach | Setup effort | SEO quality | Arabic/Turkish ranking"
+  caption="Patterns observed across multilingual site audits, Q1 2026."
+  topPickLabel="What we implement"
+>
+  <Row
+    name="CloudTopia multilingual Next.js"
+    url="/website-design"
+    verdict="[locale] segment, localized slugs, canonical id linking, full hreflang, per-locale OG images, per-locale structured data."
+    topPick
+  >
+    Clean | ★★★★★ | Ranks natively in both scripts
+  </Row>
+  <Row
+    name="English slug + ?lang=ar param"
+    verdict="Worst pattern. Google may index the param, AR content often gets swallowed by EN ranking."
+  >
+    Low | ★ | Barely ranks in AR
+  </Row>
+  <Row
+    name="Same English slug across all locales"
+    verdict="Common but suboptimal — Arabic/Turkish keywords in URL are a strong local ranking signal you're throwing away."
+  >
+    Low | ★★★ | OK but misses easy wins
+  </Row>
+  <Row
+    name="Subdomain per locale (ar.site.com)"
+    verdict="Works but harder to manage, splits domain authority unless well-linked."
+  >
+    High | ★★★★ | Ranks but needs more internal linking
+  </Row>
+</Compare>
+
+## 1. The `[locale]` segment
+
+In Next.js 14, nest all routes under `app/[locale]/`. Middleware detects the request locale (from path, cookie, or `Accept-Language`) and rewrites/redirects as needed.
+
+```
+app/
+  [locale]/
+    layout.tsx
+    page.tsx
+    blog/
+      [slug]/
+        page.tsx
+    pricing/page.tsx
+```
+
+In your root layout, set `<html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>`. Never set `dir` on `body` — form controls and scrollbars inherit from `html`.
+
+## 2. Localized slugs with canonical IDs
+
+The key trick: every translated post shares a canonical `id` in its frontmatter, but each locale has its own slug in the native script or Turkish orthography.
+
+```yaml
+# blog-posts/en/gulf-payment-gateways.mdx
+slug: gulf-payment-gateways-mada-stc-pay-tabby
+id: gulf-payment-gateways-guide
+lang: en
+```
+
+```yaml
+# blog-posts/ar/بوابات-الدفع-الخليجية.mdx
+slug: بوابات-الدفع-الخليجية-مدى-اس-تي-سي-باي-تابي
+id: gulf-payment-gateways-guide
+lang: ar
+```
+
+Then a helper resolves translations by `id`:
+
+```ts
+// lib/blog.ts
+export function getSlugById(id: string, locale: 'en'|'ar'|'tr') {
+  return allPosts.find(p => p.id === id && p.lang === locale)?.slug
+}
+```
+
+This unlocks clean hreflang and proper language switchers that don't drop users back to the homepage.
+
+## 3. hreflang tags per page
+
+In each `page.tsx`'s `generateMetadata`, emit hreflang for every available locale:
+
+```ts
+export async function generateMetadata({ params }) {
+  const post = await getPostBySlug(params.slug, params.locale)
+  const languages: Record<string, string> = {}
+  for (const locale of ['en','ar','tr']) {
+    const slug = getSlugById(post.id, locale)
+    if (slug) languages[locale] = `/${locale}/blog/${slug}`
+  }
+  return {
+    alternates: {
+      canonical: `/${params.locale}/blog/${post.slug}`,
+      languages,
+    },
+  }
+}
+```
+
+Next.js Metadata API serializes `alternates.languages` into `<link rel="alternate" hreflang="...">` tags automatically.
+
+## 4. The sitemap
+
+`app/sitemap.ts` must list every URL for every locale, with correct `lastModified`:
+
+```ts
+export default async function sitemap() {
+  const posts = await getAllPostsAllLocales()
+  return posts.map(post => ({
+    url: `https://cloudtopia.net/${post.lang}/blog/${post.slug}`,
+    lastModified: post.updated ?? post.date,
+    alternates: {
+      languages: buildLanguageMap(post.id),
+    },
+  }))
+}
+```
+
+Submit the sitemap in Google Search Console under each locale property, or (simpler) use a single domain property and let Google discover locales from hreflang.
+
+## 5. Per-locale metadata — not translated metadata
+
+Translate titles, descriptions, and OG images *natively* per locale. A translated English title often becomes a 70-character Arabic title (Arabic is denser). Rewrite it:
+
+- EN: `Gulf Payment Gateways: Mada, Apple Pay, STC Pay, Tabby & Tamara (2026 Guide)`
+- AR: `بوابات الدفع الخليجية: مدى وApple Pay وSTC Pay وتابي وتمارا (دليل 2026)`
+- TR: `Körfez Ödeme Geçitleri: Mada, Apple Pay, STC Pay, Tabby ve Tamara (2026 Rehberi)`
+
+Same intent, native phrasing, optimal length for each SERP.
+
+## 6. Structured data per locale
+
+BlogPosting, FAQPage, BreadcrumbList, Person — all should emit with `inLanguage: 'ar'` (or `en-SA`, `tr-TR`) matching the page locale. Machine translation of structured data is fine; wrong `inLanguage` tags confuse Google.
+
+## 7. Internal linking across locales
+
+Never link from an Arabic blog post to an English service page. Always link within locale. Use a helper:
+
+```ts
+function localeLink(path: string, locale: string) {
+  return `/${locale}${path}`
+}
+// In MDX/JSX: <Link href={localeLink('/pricing', locale)}>
+```
+
+This keeps crawl paths clean and each locale fully self-contained from a discovery perspective.
+
+<Callout tone="warning" title="The worst mistake in Next.js i18n">
+Using the same English slug for Arabic and Turkish posts. Google sees `/ar/blog/gulf-payment-gateways` and finds no Arabic keywords in the URL. You've thrown away a major ranking signal. Rename your MDX files to native-script slugs and update the frontmatter `slug:` field to match.
+</Callout>
+
+## Checklist
+
+- [ ] `app/[locale]/` segment with middleware
+- [ ] `<html lang dir>` set from `params.locale`
+- [ ] Frontmatter uses canonical `id` + locale-specific `slug`
+- [ ] `getSlugById` helper used in metadata and language switcher
+- [ ] `generateMetadata` emits `alternates.languages`
+- [ ] `sitemap.ts` includes every locale × slug with `lastModified`
+- [ ] OG images localized (Arabic OG should be in Arabic)
+- [ ] Structured data `inLanguage` matches page locale
+- [ ] Internal links stay within current locale
+
+<CTA
+  title="Need a multilingual Next.js site that ranks?"
+  description="We build EN/AR/TR sites with SEO baked in from the start — not bolted on after launch."
+  href="/website-design"
+  label="See our website design services"
+/>
+
+<FAQ title="Common questions about multilingual SEO in Next.js">
+  <Q q="Should Arabic and Turkish slugs be transliterated or in native script?">
+    Native script. Google rankings in Arabic markets reward Arabic keywords in the URL. Same for Turkish — use Turkish orthography, not English transliteration.
+  </Q>
+  <Q q="How do I handle RTL and SEO at the same time?">
+    They're independent. SEO is served via metadata and hreflang; RTL is a CSS/layout concern. See our [Arabic RTL design rules](/en/blog/arabic-rtl-web-design-rules) for the RTL side.
+  </Q>
+  <Q q="Do I need separate Google Search Console properties per locale?">
+    Optional. A single domain property is fine if hreflang is correct. Separate properties per subdirectory give you cleaner per-locale reports but don't change rankings.
+  </Q>
+  <Q q="What's the difference between hreflang="ar" and hreflang="ar-SA"?">
+    Use `ar` for generic Arabic, `ar-SA` when you specifically target Saudi Arabia, `ar-AE` for UAE, etc. If you serve one Arabic variant across the Gulf, `ar` + `x-default` is fine.
+  </Q>
+  <Q q="Should I use next-intl or a custom i18n setup?">
+    For App Router sites, `next-intl` handles message loading well. For SEO metadata and sitemaps, you'll still write custom logic. We use a hybrid: `next-intl` for translations, custom helpers for slugs/hreflang.
+  </Q>
+  <Q q="How does dateModified affect multilingual ranking?">
+    Freshness matters per locale. If your Arabic version was translated months after the English, the Arabic `dateModified` should reflect that, not copy the English date. Lying about dates eventually backfires.
+  </Q>
+  <Q q="Can I use automatic translation for SEO pages?">
+    You can, but results are mediocre. Google's spam detection now flags machine-translated content at scale. Use translation as a draft; have a native speaker rewrite for ranking-critical pages.
+  </Q>
+</FAQ>
+
+## The honest summary
+
+Multilingual SEO in Next.js isn't hard, but it's unforgiving. Get the `[locale]` segment, native-script slugs, canonical IDs, hreflang, and per-locale metadata right on day one. Retrofitting these later requires URL redirects and ranking recovery that takes months.
+
+The teams that treat each locale as a first-class site — native URLs, native copy, native metadata — outrank competitors who shipped a translation-layer site, every single time.
+
+<CTA
+  title="Multilingual build done right"
+  description="EN/AR/TR sites with SEO, hreflang, localized slugs, and RTL baked in. Fixed scope, fixed price."
+  href="/pricing"
+  label="See pricing"
+/>
