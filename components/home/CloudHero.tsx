@@ -37,8 +37,14 @@ function useStars(count: number): Star[] {
 }
 
 // Colorful gradients cycled per rotating word
-// Flat, saturated colors — one per word. No gradient stacks, no shadows.
+// Flat color per cycle — with a color-matched glow halo so the word pops.
 const WORD_COLORS = ['#0ea5e9', '#f59e0b', '#ec4899', '#10b981']
+const WORD_GLOWS = [
+    '0 0 18px rgba(14,165,233,0.65), 0 0 42px rgba(14,165,233,0.45), 0 0 80px rgba(14,165,233,0.3)',
+    '0 0 18px rgba(245,158,11,0.65), 0 0 42px rgba(245,158,11,0.45), 0 0 80px rgba(245,158,11,0.3)',
+    '0 0 18px rgba(236,72,153,0.65), 0 0 42px rgba(236,72,153,0.45), 0 0 80px rgba(236,72,153,0.3)',
+    '0 0 18px rgba(16,185,129,0.65), 0 0 42px rgba(16,185,129,0.45), 0 0 80px rgba(16,185,129,0.3)',
+]
 
 export default function CloudHero() {
     const { t, locale } = useLanguage()
@@ -419,7 +425,7 @@ export default function CloudHero() {
                                         className="inline-block font-extrabold"
                                         style={{
                                             color: WORD_COLORS[wordIndex % WORD_COLORS.length],
-                                            textShadow: 'none',
+                                            textShadow: WORD_GLOWS[wordIndex % WORD_GLOWS.length],
                                             filter: 'none',
                                         }}
                                     >
@@ -437,8 +443,8 @@ export default function CloudHero() {
                         transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="max-w-2xl md:max-w-3xl mx-auto text-lg sm:text-xl md:text-2xl lg:text-[1.65rem] leading-[1.55] mb-9 sm:mb-11 font-medium px-2"
                         style={{
-                            color: '#0c2748',
-                            textShadow: '0 1px 2px rgba(255,255,255,0.5)',
+                            color: '#334d6e',
+                            textShadow: '0 1px 2px rgba(255,255,255,0.45)',
                         }}
                     >
                         {description}
