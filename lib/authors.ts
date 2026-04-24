@@ -29,20 +29,20 @@ export type Author = {
 }
 
 export const authors: Record<string, Author> = {
-    'shahm-sabagh': {
-        slug: 'shahm-sabagh',
-        name: 'Shahm Sabagh',
+    'mohamad-shahm': {
+        slug: 'mohamad-shahm',
+        name: 'Mohamad Shahm',
         role: {
             en: 'Founder & Lead Engineer',
             ar: 'المؤسّس والمهندس الرئيسي',
             tr: 'Kurucu ve Baş Mühendis',
         },
         bio: {
-            en: 'Shahm founded CloudTopia after a decade building web platforms, e-commerce systems, and bilingual (Arabic + English) experiences for Gulf businesses. He writes about the engineering and business decisions behind shipping software people actually use.',
-            ar: 'أسّس شهم كلاود توبيا بعد عقدٍ من بناء منصّات الويب وأنظمة التجارة الإلكترونية وتجارب ثنائية اللغة (عربي + إنجليزي) لشركات الخليج. يكتب عن القرارات الهندسية والتجارية خلف تسليم برمجيات يستخدمها الناس فعلاً.',
-            tr: 'Shahm, Körfez işletmeleri için on yıl boyunca web platformları, e-ticaret sistemleri ve iki dilli (Arapça + İngilizce) deneyimler geliştirdikten sonra CloudTopia\'yı kurdu. İnsanların gerçekten kullandığı yazılımları teslim etmenin ardındaki mühendislik ve iş kararları hakkında yazıyor.',
+            en: 'Mohamad founded CloudTopia after a decade building web platforms, e-commerce systems, and bilingual (Arabic + English) experiences for Gulf businesses. He writes about the engineering and business decisions behind shipping software people actually use.',
+            ar: 'أسّس محمد كلاود توبيا بعد عقدٍ من بناء منصّات الويب وأنظمة التجارة الإلكترونية وتجارب ثنائية اللغة (عربي + إنجليزي) لشركات الخليج. يكتب عن القرارات الهندسية والتجارية خلف تسليم برمجيات يستخدمها الناس فعلاً.',
+            tr: 'Mohamad, Körfez işletmeleri için on yıl boyunca web platformları, e-ticaret sistemleri ve iki dilli (Arapça + İngilizce) deneyimler geliştirdikten sonra CloudTopia\'yı kurdu. İnsanların gerçekten kullandığı yazılımları teslim etmenin ardındaki mühendislik ve iş kararları hakkında yazıyor.',
         },
-        image: '/images/authors/shahm-sabagh.jpg',
+        image: '/images/authors/mohamad-shahm.jpg',
         knowsAbout: [
             'Next.js',
             'TypeScript',
@@ -53,7 +53,7 @@ export const authors: Record<string, Author> = {
             'Gulf digital transformation',
         ],
         sameAs: [
-            'https://www.linkedin.com/in/shahm-sabagh',
+            'https://www.linkedin.com/in/mohamad-shahm',
             'https://github.com/Shahoom',
         ],
     },
