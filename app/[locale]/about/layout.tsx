@@ -9,9 +9,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         tr: 'CloudTopia Hakkında — Körfez Öncelikli Dijital Ajans',
     }
     const descs: Record<string, string> = {
-        en: 'CloudTopia is a Gulf-first digital agency building websites, e-commerce stores, and custom business systems in Arabic, English, and Turkish. Operating from Istanbul, Riyadh, and Dubai.',
-        ar: 'كلاود توبيا وكالة رقمية خليجية أولاً تبني مواقع ومتاجر إلكترونية وأنظمة أعمال مخصصة بالعربية والإنجليزية والتركية. تعمل من إسطنبول والرياض ودبي.',
-        tr: 'CloudTopia, Arapça, İngilizce ve Türkçe web siteleri, e-ticaret mağazaları ve özel iş sistemleri inşa eden Körfez öncelikli bir dijital ajanstır. İstanbul, Riyad ve Dubai\'den çalışıyor.',
+        en: 'Gulf-first digital agency building websites, e-commerce, and custom business systems in Arabic, English, and Turkish. Istanbul · Riyadh · Dubai.',
+        ar: 'وكالة رقمية خليجية تبني مواقع ومتاجر وأنظمة أعمال بالعربية والإنجليزية والتركية. إسطنبول · الرياض · دبي.',
+        tr: 'Arapça, İngilizce ve Türkçe web sitesi, e-ticaret ve özel iş sistemleri inşa eden Körfez ajansı. İstanbul · Riyad · Dubai.',
     }
     const ogTitles: Record<string, string> = {
         en: 'About CloudTopia',

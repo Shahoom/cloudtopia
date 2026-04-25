@@ -4,15 +4,16 @@ import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
+    // Titles trimmed for SERP fit; descriptions reflect new pricing ($149/mo).
     const titles: Record<string, string> = {
-        en: 'Bilingual Content Creation (Arabic + English) for Gulf Brands',
-        ar: 'إنشاء محتوى ثنائي اللغة (عربي + إنجليزي) لعلامات الخليج',
-        tr: 'Körfez Markaları için İki Dilli (Arapça + İngilizce) İçerik Üretimi',
+        en: 'Bilingual Content Creation — Arabic + English',
+        ar: 'إنشاء محتوى ثنائي اللغة — عربي وإنجليزي',
+        tr: 'İki Dilli İçerik Üretimi — Arapça + İngilizce',
     }
     const descs: Record<string, string> = {
-        en: 'Arabic + English content: blogs, social, video scripts, newsletters, SEO articles. Original writing, not machine translation. From $499/month.',
-        ar: 'محتوى عربي + إنجليزي: مدوّنات، تواصل اجتماعي، سكربتات فيديو، نشرات، مقالات سيو. كتابة أصلية، لا ترجمة آلية. من 499$/شهرياً.',
-        tr: 'Arapça + İngilizce içerik: bloglar, sosyal, video senaryoları, bültenler, SEO makaleleri. Orijinal yazım, makine çevirisi değil. $499/ay\'dan.',
+        en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, SEO articles. Native-written, not machine translated. From $149/month.',
+        ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، مقالات SEO. مكتوب بأقلام أصيلة. من 149$/شهرياً.',
+        tr: 'Orijinal Arapça + İngilizce içerik: bloglar, sosyal, video senaryoları, bültenler, SEO. Yerli yazım. $149/ay\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Content Creation — CloudTopia',

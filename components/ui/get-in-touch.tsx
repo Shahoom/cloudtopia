@@ -84,11 +84,14 @@ export const ProfessionalConnect = () => {
                         </span>
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                    {/* Section heading — demoted from h1 to h2 because the
+                        page-level hero on /contact already has an h1.
+                        SEO requires exactly one h1 per page. */}
+                    <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
                         <span className="bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-500 bg-clip-text text-transparent">
                             {t.contact.social.title}
                         </span>
-                    </h1>
+                    </h2>
 
                     <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed font-medium">
                         {t.contact.social.description}

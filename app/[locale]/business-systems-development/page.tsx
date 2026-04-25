@@ -9,6 +9,7 @@ const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then(
 const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then(mod => mod.HeroModern), { ssr: false })
 const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
+import { SeoH1 } from '@/components/seo/SeoH1'
 
 export default function BusinessSystemsDevelopmentPage() {
     const { dir, locale, t } = useLanguage()
@@ -144,6 +145,9 @@ export default function BusinessSystemsDevelopmentPage() {
 
     return (
         <div className="min-h-screen bg-lavender" dir={dir}>
+            {/* SSR-rendered h1 for SEO — HeroParallax is dynamic with ssr:false. */}
+            <SeoH1>{currentContent.title} — CloudTopia</SeoH1>
+
             {/* Section 1: Hero Parallax */}
             <HeroParallax
                 products={products}

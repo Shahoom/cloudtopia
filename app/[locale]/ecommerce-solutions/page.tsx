@@ -153,10 +153,12 @@ export default function EcommerceSolutionsPage() {
                   {section.subtitle}
                 </span>
 
-                {/* Main title */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
+                {/* Section title — h2 because the page-level h1 already
+                    sits in <EcommerceServiceSection> above. SEO requires
+                    one h1 per page. */}
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
                   {section.title}
-                </h1>
+                </h2>
 
                 {/* Highlighted part with gradient text */}
                 <p className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black bg-gradient-to-r ${accentColors[index]} bg-clip-text text-transparent leading-tight`}>

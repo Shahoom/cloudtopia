@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
 
+// Titles do NOT include "| CloudTopia" — root metadata template appends it.
 const titles: Record<string, string> = {
-    en: 'Pricing — Transparent Plans from $299 | CloudTopia',
-    ar: 'الأسعار — خطط شفافة تبدأ من 299$ | كلاود توبيا',
-    tr: 'Fiyatlandırma — $299\'dan Başlayan Şeffaf Planlar | CloudTopia',
+    en: 'Pricing — Transparent Plans from $299',
+    ar: 'الأسعار — خطط شفافة تبدأ من 299$',
+    tr: 'Fiyatlandırma — $299\'dan Başlayan Şeffaf Planlar',
 }
 const descriptions: Record<string, string> = {
-    en: 'Transparent pricing for every CloudTopia service — landing pages from $299, websites from $499, e-commerce from $599, and custom systems from $1,999. No hidden fees.',
-    ar: 'أسعار شفافة لجميع خدمات كلاود توبيا — صفحات هبوط من 299$، مواقع من 499$، متاجر من 599$، وأنظمة مخصصة من 1,999$. بدون رسوم خفية.',
-    tr: 'Tüm CloudTopia hizmetleri için şeffaf fiyatlandırma — açılış sayfaları $299\'dan, web siteleri $499\'dan, e-ticaret $599\'dan ve özel sistemler $1,999\'dan. Gizli ücret yok.',
+    en: 'Transparent pricing for every CloudTopia service. Landing pages from $299, websites from $499, e-commerce from $599, custom systems from $1,999.',
+    ar: 'أسعار شفافة لخدمات كلاود توبيا. صفحات هبوط من 299$، مواقع من 499$، متاجر من 599$، أنظمة مخصصة من 1,999$. بدون رسوم خفية.',
+    tr: 'CloudTopia hizmetleri için şeffaf fiyatlandırma. Açılış $299, siteler $499, e-ticaret $599, özel sistemler $1,999. Gizli ücret yok.',
 }
 
 const crumbLabels: Record<string, { home: string; pricing: string }> = {

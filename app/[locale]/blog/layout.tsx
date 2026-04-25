@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import './blog.css'
 
+// Titles intentionally do NOT include "| CloudTopia" — the root metadata
+// template (`'%s | CloudTopia'`) appends it. Including it twice produced
+// "... | CloudTopia | CloudTopia" in <title> tags.
 const titles: Record<string, string> = {
-    en: 'Blog — Digital Marketing, Web Design & Tech Insights | CloudTopia',
-    ar: 'المدونة — رؤى التسويق الرقمي وتصميم المواقع | كلاود توبيا',
-    tr: 'Blog — Dijital Pazarlama, Web Tasarım & Teknoloji | CloudTopia',
+    en: 'Blog — Web Design, E-commerce & Tech Insights',
+    ar: 'المدونة — رؤى تصميم المواقع والتجارة الإلكترونية',
+    tr: 'Blog — Web Tasarım, E-Ticaret & Teknoloji',
 }
 const descriptions: Record<string, string> = {
     en: 'Expert insights on web design, e-commerce, digital marketing, business systems, and cloud technology — written for Gulf and Arab market businesses.',

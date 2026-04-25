@@ -10,9 +10,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         tr: 'Özel Web Uygulamaları ve SaaS Geliştirme',
     }
     const descs: Record<string, string> = {
-        en: 'Custom web apps, portals, dashboards, and SaaS platforms built on Next.js, React, and Node.js. Real-time features, Arabic + English UI. From $5,999.',
-        ar: 'تطبيقات ويب، بوابات، لوحات تحكم، ومنصات SaaS مخصصة مبنية على Next.js وReact وNode.js. ميزات حية، واجهة عربية + إنجليزية. تبدأ من 5,999$.',
-        tr: 'Next.js, React ve Node.js üzerinde inşa edilmiş özel web uygulamaları, portallar, panolar ve SaaS platformları. Gerçek zamanlı özellikler, Arapça + İngilizce UI. $5.999\'dan başlar.',
+        en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React. Real-time features, bilingual Arabic + English UI. From $999.',
+        ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact. ميزات حية، واجهة عربي + إنجليزي. من 999$.',
+        tr: 'Next.js + React üzerinde özel web uygulamaları, portallar, panolar ve SaaS. Gerçek zamanlı, iki dilli Arapça + İngilizce UI. $999\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Web Applications — CloudTopia',

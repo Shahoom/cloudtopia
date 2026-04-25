@@ -199,7 +199,11 @@ export default function RestaurantQRMenuPage() {
   const isRTL = dir === 'rtl'
   const currentContent = (content as any)[locale] || content.en
   const currentItems = (menuItems as any)[locale] || menuItems.en
-  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+  // Defaults to false at SSR (desktop) — the page renders FULL content
+  // server-side instead of the previous loading-spinner gate which hid
+  // every heading and paragraph from crawlers. After hydration the hook
+  // checks the actual viewport and updates as needed.
+  const [isMobile, setIsMobile] = useState<boolean>(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -207,17 +211,6 @@ export default function RestaurantQRMenuPage() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  // Prevent hydration mismatch
-  if (isMobile === null) {
-    return (
-      <main className="flex-grow min-h-screen bg-lavender" dir={isRTL ? "rtl" : "ltr"}>
-        <div className="flex items-center justify-center h-screen">
-          <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-        </div>
-      </main>
-    )
-  }
 
   return (
     <main className="flex-grow" dir={isRTL ? "rtl" : "ltr"}>
@@ -242,9 +235,11 @@ export default function RestaurantQRMenuPage() {
           </ContainerAnimated>
 
           <ContainerAnimated>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900">
+            {/* Continuation of the page hero — kept as a heading but
+                demoted from h1 to h2 to keep one h1 per page. */}
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900">
               {currentContent.title2}
-            </h1>
+            </h2>
           </ContainerAnimated>
 
           <ContainerAnimated className="my-4 sm:my-6">

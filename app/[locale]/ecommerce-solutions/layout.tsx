@@ -4,15 +4,16 @@ import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
+    // Titles trimmed to fit Google's ~60-char SERP display.
     const titles: Record<string, string> = {
-        en: 'E-Commerce Stores for the Gulf — Mada, Apple Pay, STC Pay, Tabby, Tamara',
-        ar: 'متاجر إلكترونية للخليج — مدى، آبل باي، STC Pay، تابي، تمارا',
-        tr: 'Körfez için E-Ticaret Mağazaları — Mada, Apple Pay, STC Pay, Tabby, Tamara',
+        en: 'Gulf E-Commerce — Mada, Apple Pay, Tabby, Tamara',
+        ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
+        tr: 'Körfez E-Ticaret — Mada, Apple Pay, Tabby, Tamara',
     }
     const descs: Record<string, string> = {
-        en: 'Full online stores with Gulf payment gateways (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA e-invoicing, and bilingual checkout. From $1,299.',
-        ar: 'متاجر إلكترونية كاملة مع بوابات الدفع الخليجية (مدى، آبل باي، STC Pay، تابي، تمارا)، فوترة إلكترونية ZATCA، ودفع ثنائي اللغة. تبدأ من 1,299$.',
-        tr: 'Körfez ödeme ağ geçitleri (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA e-faturalandırma ve iki dilli ödeme ile tam online mağazalar. $1.299\'dan başlar.',
+        en: 'Online stores with Gulf payment gateways (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA e-invoicing, bilingual checkout. From $599.',
+        ar: 'متاجر إلكترونية مع بوابات دفع خليجية (مدى، آبل باي، STC Pay، تابي، تمارا)، فوترة ZATCA، ودفع ثنائي. من 599$.',
+        tr: 'Körfez ödeme geçitleri (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA, iki dilli ödeme ile online mağazalar. $599\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'E-Commerce — CloudTopia',

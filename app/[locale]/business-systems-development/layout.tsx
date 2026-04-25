@@ -4,15 +4,16 @@ import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
+    // Titles trimmed for SERP fit; descriptions reflect new pricing.
     const titles: Record<string, string> = {
-        en: 'Custom Business Systems & CRM Development — Gulf + Global',
-        ar: 'تطوير أنظمة الأعمال وCRM المخصصة — الخليج والعالم',
-        tr: 'Özel İş Sistemleri ve CRM Geliştirme — Körfez + Global',
+        en: 'Custom Business Systems & CRM Development',
+        ar: 'تطوير أنظمة أعمال وCRM مخصصة',
+        tr: 'Özel İş Sistemleri ve CRM Geliştirme',
     }
     const descs: Record<string, string> = {
-        en: 'Custom CRM, inventory, POS, HR, and booking systems built around Gulf business workflows. Bilingual Arabic + English. From $3,999.',
-        ar: 'أنظمة CRM، مخزون، POS، HR، وحجوزات مخصصة مبنية حول سير عمل أعمال الخليج. ثنائية اللغة عربي + إنجليزي. تبدأ من 3,999$.',
-        tr: 'Körfez iş akışları etrafında inşa edilmiş özel CRM, envanter, POS, İK ve rezervasyon sistemleri. İki dilli Arapça + İngilizce. $3.999\'dan başlar.',
+        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows. Bilingual Arabic + English. From $1,999.',
+        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج. ثنائية اللغة عربي + إنجليزي. من 1,999$.',
+        tr: 'Körfez iş akışları için özel CRM, envanter, POS, İK ve rezervasyon sistemleri. İki dilli Arapça + İngilizce. $1.999\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Business Systems — CloudTopia',
