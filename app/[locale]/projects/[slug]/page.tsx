@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
 import { getProjectById, getAllProjects, getAllProjectIds } from '@/lib/projects'
+import { getOgImage } from '@/lib/og/og-image'
 
 type PageProps = {
     params: { locale: string; slug: string }
@@ -30,10 +31,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: `https://cloudtopia.net/${locale}/projects/${params.slug}`,
-            images: [{ url: project.image || '/images/og-image.jpg', width: 1200, height: 630, alt: project.title }],
+            // Per-project OG image override at /public/images/og/projects/{slug}-{locale}.jpg
+            // falls back to project.image, then brand default per locale.
+            images: (() => {
+                const og = getOgImage({
+                    page: `projects/${params.slug}`,
+                    locale,
+                    override: project.image || undefined,
+                })
+                return [{ url: og.url, width: 1200, height: 630, alt: project.title }]
+            })(),
             type: 'article',
         },
-        twitter: { card: 'summary_large_image', title, description, images: [project.image] },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined }).url],
+        },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/projects/${params.slug}`,
             languages: {
@@ -68,7 +83,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
         '@id': `https://cloudtopia.net/${locale}/projects/${project.id}#article`,
         headline: project.title,
         description: project.solution,
-        image: project.image ? `https://cloudtopia.net${project.image}` : 'https://cloudtopia.net/images/og-image.jpg',
+        image: getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined }).url,
         datePublished: '2025-06-01',
         dateModified: new Date().toISOString().split('T')[0],
         author: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },

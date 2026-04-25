@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, MapPin, CreditCard, Building2, TrendingUp, Globe, CheckCircle2 } from 'lucide-react'
 import { getLocation, locationSlugs } from '@/lib/seo/locations'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
     params: { locale: string; country: string }
@@ -48,7 +49,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title: titles[locale],
             description: descs[locale],
             url: `https://cloudtopia.net/${locale}/locations/${params.country}`,
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: titles[locale] }],
+            // Per-country OG override: /public/images/og/locations/{country}-{locale}.jpg
+            // Drop a Saudi/Riyadh image at locations/saudi-arabia-en.jpg etc.
+            images: ogImagesFor({ page: `locations/${params.country}`, locale }),
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/locations/${params.country}`,

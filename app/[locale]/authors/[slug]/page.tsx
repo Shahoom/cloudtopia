@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import { getAuthor, getAllAuthorSlugs } from '@/lib/authors'
 import { getAllPosts } from '@/lib/blog'
+import { getOgImage } from '@/lib/og/og-image'
 
 const BASE_URL = 'https://cloudtopia.net'
 const LOCALES = ['en', 'ar', 'tr'] as const
@@ -34,8 +35,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             description: bio.slice(0, 200),
             type: 'profile',
             url: `${BASE_URL}/${locale}/authors/${author.slug}`,
+            // Per-author OG override: /public/images/og/authors/{slug}-{locale}.jpg
+            // Falls back to author profile image, then brand default.
             images: [
-                { url: author.image ? `${BASE_URL}${author.image}` : `${BASE_URL}/images/og-image.jpg`, width: 1200, height: 630, alt: author.name },
+                {
+                    url: getOgImage({
+                        page: `authors/${author.slug}`,
+                        locale,
+                        override: author.image || undefined,
+                    }).url,
+                    width: 1200,
+                    height: 630,
+                    alt: author.name,
+                },
             ],
         },
         alternates: {

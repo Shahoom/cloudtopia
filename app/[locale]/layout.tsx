@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -21,6 +22,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     const ogLocale = ogLocales[locale] || ogLocales.en
     const alternateOgLocales = Object.entries(ogLocales).filter(([k]) => k !== locale).map(([, v]) => v)
 
+    // Per-locale OG image — drop a file at /public/images/og/home-{locale}.jpg
+    // (1200×630) to override; falls back to /images/og/default-{locale}.jpg,
+    // then default.jpg, then legacy /images/og-image.jpg.
+    const images = ogImagesFor({ page: 'home', locale })
+
     return {
         title: {
             absolute: title,
@@ -35,17 +41,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             title,
             description,
             siteName: siteNames[locale] || siteNames.en,
-            images: [{
-                url: '/images/og-image.jpg',
-                width: 1200,
-                height: 630,
-                alt: title,
-            }],
+            images,
         },
         twitter: {
             card: 'summary_large_image',
             title,
             description: descriptions[locale] || descriptions.en,
+            images: images.map((i) => i.url),
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}`,

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import './blog.css'
 
@@ -30,13 +31,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
             type: 'website',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: title }],
+            images: ogImagesFor({ page: 'blog', locale }),
         },
         twitter: {
             card: 'summary_large_image',
             title,
             description,
-            images: ['/images/og-image.jpg'],
+            images: ogImagesFor({ page: 'blog', locale }).map(i => i.url),
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/blog`,

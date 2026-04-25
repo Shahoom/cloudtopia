@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 const titles: Record<string, string> = {
     en: 'Pricing — Transparent Plans from $299 | CloudTopia',
@@ -38,13 +39,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
             type: 'website',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: title }],
+            images: ogImagesFor({ page: 'pricing', locale }),
         },
         twitter: {
             card: 'summary_large_image',
             title,
             description,
-            images: ['/images/og-image.jpg'],
+            images: ogImagesFor({ page: 'pricing', locale }).map(i => i.url),
         },
         alternates: {
             canonical: `${BASE_URL}/${locale}/pricing`,

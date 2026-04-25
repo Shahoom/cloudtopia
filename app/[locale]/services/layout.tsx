@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/services`,
             locale: ogLocales[locale] || 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
+            images: ogImagesFor({ page: 'services', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {

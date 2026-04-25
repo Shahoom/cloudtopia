@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 const cairo = Cairo({
   subsets: ['latin', 'arabic'],
@@ -55,15 +56,9 @@ export const metadata: Metadata = {
     title: 'CloudTopia — Digital & Cloud Technologies',
     description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     siteName: 'CloudTopia',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CloudTopia — Digital & Cloud Technologies',
-        type: 'image/jpeg',
-      },
-    ],
+    // Root-level fallback uses the brand default. Per-page layouts override
+    // this with their own ogImagesFor({ page, locale }).
+    images: ogImagesFor({ page: 'home', locale: 'en' }),
   },
   twitter: {
     card: 'summary_large_image',
@@ -71,7 +66,7 @@ export const metadata: Metadata = {
     description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     creator: '@thecloudtopia',
     site: '@thecloudtopia',
-    images: ['/images/og-image.jpg'],
+    images: ogImagesFor({ page: 'home', locale: 'en' }).map((i) => i.url),
   },
   robots: {
     index: true,
