@@ -1,16 +1,19 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
+import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
+    // Titles trimmed for SERP fit; descriptions reflect new pricing ($149/mo).
     const titles: Record<string, string> = {
-        en: 'Professional Content Creation & Copywriting',
-        ar: 'إنشاء المحتوى الاحترافي والكتابة الإبداعية',
-        tr: 'Profesyonel İçerik Üretimi & Metin Yazarlığı',
+        en: 'Bilingual Content Creation — Arabic + English',
+        ar: 'إنشاء محتوى ثنائي اللغة — عربي وإنجليزي',
+        tr: 'İki Dilli İçerik Üretimi — Arapça + İngilizce',
     }
     const descs: Record<string, string> = {
-        en: 'SEO-optimized content creation for websites, social media, and marketing.',
-        ar: 'إنشاء محتوى محسّن لمحركات البحث للمواقع ووسائل التواصل والتسويق.',
-        tr: 'Web siteleri, sosyal medya ve pazarlama için SEO optimize edilmiş içerik üretimi.',
+        en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, SEO articles. Native-written, not machine translated. From $149/month.',
+        ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، مقالات SEO. مكتوب بأقلام أصيلة. من 149$/شهرياً.',
+        tr: 'Orijinal Arapça + İngilizce içerik: bloglar, sosyal, video senaryoları, bültenler, SEO. Yerli yazım. $149/ay\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Content Creation — CloudTopia',
@@ -18,9 +21,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         tr: 'İçerik Üretimi — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
-        en: 'Professional content creation and copywriting services.',
-        ar: 'خدمات إنشاء محتوى وكتابة إبداعية احترافية.',
-        tr: 'Profesyonel içerik üretimi ve metin yazarlığı hizmetleri.',
+        en: 'Bilingual content creation, copywriting, and SEO writing for Gulf brands.',
+        ar: 'إنشاء محتوى ثنائي اللغة، كتابة إبداعية، وكتابة سيو لعلامات الخليج.',
+        tr: 'Körfez markaları için iki dilli içerik üretimi, metin yazarlığı ve SEO yazımı.',
     }
     const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
     const title = titles[locale] || titles.en
@@ -36,7 +39,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/content-creation`,
             locale: ogLocales[locale] || 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
+            images: ogImagesFor({ page: 'content-creation', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
@@ -46,7 +49,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function contentcreationLayout({ children }: { children: React.ReactNode }) {
+export default function ContentCreationLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+    const locale = params?.locale ?? 'en'
+    const faqSchema = buildFAQSchema('content-creation', locale)
+
     return (
         <>
             <script
@@ -56,9 +62,9 @@ export default function contentcreationLayout({ children }: { children: React.Re
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
-                            { '@type': 'ListItem', position: 3, name: 'Content Creation', item: 'https://cloudtopia.net/en/content-creation' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
+                            { '@type': 'ListItem', position: 3, name: 'Content Creation', item: `https://cloudtopia.net/${locale}/content-creation` },
                         ],
                     }),
                 }}
@@ -70,18 +76,35 @@ export default function contentcreationLayout({ children }: { children: React.Re
                         '@context': 'https://schema.org',
                         '@type': 'Service',
                         name: 'Content Creation & Copywriting',
-                        description: 'SEO-optimized content creation for websites, social media, and marketing.',
-                        url: 'https://cloudtopia.net/en/content-creation',
-                        provider: {
-                            '@type': 'Organization',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
-                        },
+                        description: 'Bilingual Arabic + English content, blog writing, video scripts, and SEO content for Gulf brands.',
+                        url: `https://cloudtopia.net/${locale}/content-creation`,
+                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Content Marketing',
-                        areaServed: 'Worldwide',
+                        areaServed: [
+                            { '@type': 'Country', name: 'Saudi Arabia' },
+                            { '@type': 'Country', name: 'United Arab Emirates' },
+                            { '@type': 'Country', name: 'Kuwait' },
+                            { '@type': 'Country', name: 'Qatar' },
+                            { '@type': 'Country', name: 'Bahrain' },
+                            { '@type': 'Country', name: 'Oman' },
+                            { '@type': 'Country', name: 'Türkiye' },
+                        ],
+                        offers: {
+                            '@type': 'AggregateOffer',
+                            priceCurrency: 'USD',
+                            lowPrice: '499',
+                            highPrice: '2499',
+                            offerCount: '3',
+                        },
                     }),
                 }}
             />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
             {children}
         </>
     )

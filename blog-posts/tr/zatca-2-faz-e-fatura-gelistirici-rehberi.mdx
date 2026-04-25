@@ -1,0 +1,215 @@
+---
+title: 'ZATCA 2. Faz E-Fatura: Geliştirici Kontrol Listesi (2026)'
+slug: zatca-2-faz-e-fatura-gelistirici-rehberi
+description: 'ZATCA 2. Faz geliştirici kontrol listesi — CSID, XML, imzalama, clearance vs reporting ve gerçek hatalar.'
+date: '2026-04-20'
+updated: '2026-04-20'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Kurucu ve Baş Mühendis
+category: E-Fatura
+tags:
+  - ZATCA
+  - Suudi Arabistan
+  - E-Fatura
+  - Uyumluluk
+  - ERP
+  - POS
+  - API Entegrasyonu
+coverImage: https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=82
+readingTime: 11
+id: zatca-phase-2-developer-checklist
+lang: tr
+---
+
+Bir Türk şirketi olarak Suudi Arabistan pazarına açılıyorsanız ya da bir Suudi müşteri için ERP, POS veya e-ticaret mağazası inşa ediyorsanız, 2026'da entegre olacağınız sistem **ZATCA 2. Faz — Entegrasyon Fazı**'dır. Ocak 2023'ten bu yana dalgalar halinde yayılıyor ve eski 1. Faz (QR'lı PDF) artık yeterli değil.
+
+Aşağıda her 2. Faz canlıya alma öncesinde kullandığım kontrol listesi yer alıyor. Teori değil — gerçek adımlar, API'ler ve ekiplerin tam olarak nerede takıldığı.
+
+<Callout tone="info" title="Bu rehber kime için">
+ZATCA Fatoora ile entegrasyon yapan Türk geliştiriciler, teknik liderler ve CTO'lar için. Anahtar teslim çözüm arayan bir tüccar iseniz, doğrudan aşağıdaki [entegrasyon seçenekleri tablosuna](#entegrasyon-seçenekleri-karşılaştırma) atlayın.
+</Callout>
+
+## 2. Faz gerçekte ne gerektiriyor
+
+2. Faz sadece yeni bir fatura formatı değil — bir gerçek zamanlı uyumluluk hattı. ZATCA, vergiye tabi her işlemin kriptografik olarak imzalanmasını, bir önceki fatura ile hash zinciri oluşturmasını ve ya müşteriye ulaşmadan önce **onay (clearance)** almasını ya da ulaştıktan sonra kısa sürede **rapor (reporting)** edilmesini bekliyor.
+
+Sisteminizin desteklemesi gereken iki akış var:
+
+- **Standart vergi faturası** (B2B). Alıcıya gönderilmeden önce ZATCA tarafından **onaylanması** gerekir. Bloklayan API çağrısı. Onay yoksa fatura yok.
+- **Basit vergi faturası** (B2C). Müşteriye hemen düzenlenir, ardından 24 saat içinde ZATCA'ya **raporlanır**. Bloklamayan ama zorunlu.
+
+Sisteminiz her ikisini de destekleyemiyorsa, 2. Faz uyumlu değilsiniz.
+
+## 8 adımlı entegrasyon kontrol listesi
+
+### 1. Tüccarın kapsamda olduğunu doğrulayın
+
+ZATCA, yıllık KDV cirosuna göre tüccarları 2. Faza **dalgalar (waves)** halinde dahil ediyor. Dalgalar Ocak 2023'ten beri devam ediyor ve 2026'da hâlâ sürüyor. Kod yazmadan önce, tüccarın KDV hesabıyla Fatoora Portal'a giriş yapın ve atanan dalga + başlangıç tarihini kontrol edin. Kapsam dışı olduğunu varsaymayın — ZATCA sürekli ağı genişletiyor.
+
+### 2. CSID (Compliance Service ID) oluşturun
+
+Her **faturalama çözümü** (POS cihazı, ERP örneği, kasa) kendi CSID'ine ihtiyaç duyar. Akış:
+
+1. Tüccar Fatoora'ya giriş yapar ve çözümünüz için bir OTP talep eder.
+2. Kodunuz **ECDSA secp256k1** eğrisi kullanarak bir CSR (Sertifika İmzalama Talebi) üretir — Bitcoin'in kullandığı eğriyle aynı. RSA değil, secp256r1 değil. Bunu yanlış yaparsanız sonraki her API çağrısı `INVALID_CERTIFICATE` hatasıyla reddedilir.
+3. CSR + OTP'yi sandbox'ta `/compliance` endpoint'ine POST edin, geçici bir **Compliance CSID** alın.
+4. Üç örnek uyumluluk faturası (bir standart, iki basit) çalıştırıp imzalamanızın çalıştığını kanıtlayın.
+5. Compliance CSID'ini `/production/csids` üzerinden **Production CSID** ile değiştirin.
+
+Her CSID bir **cihaza** bağlıdır — şirkete değil. 12 şubeli bir tüccarın 12 CSID'ine ihtiyacı var, ve her CSID rotasyonu yeni bir deploy demek.
+
+### 3. UBL 2.1 + ZATCA profiline göre fatura XML'i inşa edin
+
+ZATCA, **UBL 2.1** formatını Suudi'ye özgü bir profille kullanır. `cbc:InvoiceTypeCode` ve satır kalemleri kolay. Ekipleri yakalayan kısımlar:
+
+- Her parasal değerin element üzerinde `currencyID="SAR"` ihtiyacı var — sadece belge para birimi beyanında değil.
+- Zaman damgaları **Asia/Riyadh** saat diliminde ISO 8601 formatında. UTC kabul edilir ama mutabakat acılı olur.
+- `cac:AdditionalDocumentReference` içinde `ICV` (Fatura Sayacı) o CSID'den üretilen her fatura için global olarak 1 artmalı, asla sıfırlanmamalı. Bunu kırarsanız, baştan kayıt.
+- Her faturaya `cbc:UUID`, ZATCA'nın zaten onaylı ID'si olsa bile.
+
+### 4. ECDSA ile imzalayın ve QR TLV'yi gömün
+
+XML inşa edildikten sonra, CSID'inizle eşleştirilmiş özel anahtarla kanonik hash'ini imzalarsınız. Ardından faturaya **base64 kodlu bir TLV** QR gömülür. Tag'ler pozisyonel:
+
+```
+Tag 1 — Satıcı adı
+Tag 2 — Vergi numarası
+Tag 3 — Tarih/saat (ISO 8601, Asia/Riyadh)
+Tag 4 — KDV dahil toplam
+Tag 5 — Toplam KDV
+Tag 6 — İmzalanmış XML hash'i
+Tag 7 — ECDSA imzası
+Tag 8 — ECDSA genel anahtarı
+Tag 9 — Mühür imzası (sadece standart faturalar için)
+```
+
+Tag uzunlukları **byte** ile sayılır, karakter değil. Çok baytlı karakterlerle Arapça satıcı isimleri ekipleri her seferinde yakalıyor. `Buffer.byteLength(name, 'utf8')` kullanın, `name.length` değil.
+
+### 5. Fatura hash zincirini koruyun
+
+Her fatura o CSID'nin **bir önceki fatura hash'ini** referans alır. Bir tanesini atlarsanız, atlarsanız veya yanlış sırada düzenlerseniz, zincir kırılır ve ZATCA sonraki her şeyi reddeder. `previous_invoice_hash` sütununu kritik altyapı olarak görün — yedekleyin, replike edin ve aynı CSID üzerinde iki thread'in yarışmasına asla izin vermeyin.
+
+### 6. Onay veya raporlama endpoint'ini çağırın
+
+- Standart fatura (B2B): `POST /invoices/clearance/single` — bloklayan. ZATCA'nın mührüyle onaylanmış XML bekleyin. Alıcıya onu verin, orijinalinizi değil.
+- Basit fatura (B2C): `POST /invoices/reporting/single` — bloklamayan. Müşteriye faturayı zaten verdiniz. 24 saat içinde ZATCA'ya bildiriyorsunuz.
+
+Her ikisi de `UUID` ile idempotent'tir. Aynı UUID ile aynı payload'u yeniden göndermek orijinal yanıtı döndürür. Bunu kullanın — ağ hatası istisna değil, kural.
+
+### 7. ZATCA damgalı XML'i 6 yıl saklayın
+
+ZATCA, **onaylanmış XML'i** (imza mührüyle) en az 6 yıl saklamanızı şart koşar. Gönderdiğiniz XML'i değil — onların iade ettiğini. Versioning'li object storage (S3, R2 veya MinIO) standart. Sadece veritabanında saklamayın.
+
+### 8. İzleyin, uyarın ve günlük mutabakat yapın
+
+Gecelik mutabakat işi çalıştırın: son 24 saatte ZATCA portalından raporlanan tüm faturaları çekin, sisteminizin gönderdiğini düşündüğü sayılarla karşılaştırın. Eşleşmeme = on-call'a alarm. ZATCA denetimleri bu sayılardan başlar.
+
+<Callout tone="warn" title="Canlıya alma haftasını öldüren hata">
+Ekipler production'a deploy eder, ilk gerçek faturayı çıkarır ve hash zincirleri 2. faturada kırılır çünkü ICV sayaç durumunu sandbox'ta paylaşımlı bırakmışlardır. ICV geçişini freeze window'lu deploy görevi olarak ele alın. Sadece ileri gidebilirsiniz, geri değil.
+</Callout>
+
+## Entegrasyon seçenekleri karşılaştırma
+
+ZATCA 2. Faz uyumluluğu için Suudi bir tüccarın 4 gerçekçi yolu var. İşte birinci yıldan sonra önemli olan kriterlerde karşılaştırma.
+
+<Compare
+  headers="Seçenek | Ön maliyet | Aylık | Kod mülkiyeti | Çoklu şube | En uygun"
+  caption="Canlı müşteri projeleri ve ZATCA resmi rehberine dayanarak, 2026."
+  topPickLabel="Önerimiz"
+>
+  <Row
+    name="CloudTopia (özel entegrasyon)"
+    url="/business-systems-development"
+    verdict="Fatura XML, imzalama, CSID ve mutabakat üzerinde uçtan uca sahiplik. Fatura hacmi büyüdükçe en iyi değer."
+    topPick
+  >
+    $3,999'dan | Sadece barındırma | ✓ | ✓ | Orta-büyük ölçekli perakendeciler, özel ERP'ler, çok şubeli gruplar
+  </Row>
+  <Row
+    name="ClearTax / Avalara / SovOS SaaS"
+    verdict="Tak-çalıştır ama her fatura için sonsuza dek ödeme; XML mantığı kapalı kutu."
+  >
+    ~$2,000 kurulum | $300–$1,500+ | ✗ | ✓ | Mühendis dahil etmek istemeyen işletmeler
+  </Row>
+  <Row
+    name="Salla / Zid dahili"
+    verdict="Mağazanız bu platformlardaysa sıfır iş, ama yol haritalarına bağımlısınız."
+  >
+    Dahil | Plana bağlı | ✗ | Platforma bağlı | Zaten Salla veya Zid üzerindeki e-perakendeciler
+  </Row>
+  <Row
+    name="Fatoora sandbox üzerinde DIY"
+    verdict="Güçlü iç ekibi olanlara ucuz, olmayanlara pahalı — bir XML hatası denetim riski."
+  >
+    Ücretsiz | Ücretsiz | ✓ | ✓ | Özel entegrasyon mühendisi ve 3+ ayı olan ekipler
+  </Row>
+</Compare>
+
+<CTA
+  title="ZATCA 2. Fazı tahminsiz halletmek mi?"
+  description="Özel 2. Faz entegrasyonları inşa ediyoruz — CSID provizyon, XML, imzalama, onay, sandbox sertifikasyonu ve sürekli izleme — tüm dalgalarda canlıya almış tek bir ekipten. Sabit fiyat, sabit kapsam, kod sizin."
+  href="/business-systems-development"
+  label="Yaklaşımımızı görün"
+/>
+
+## 2026'da hâlâ gördüğümüz yaygın hatalar
+
+Bu yıl incelediğimiz neredeyse her projede karşılaştığımız konular:
+
+- **Arapça satıcı adı byte uzunlukları**. TLV tag uzunlukları byte sayımıdır. "مؤسسة الرياض التجارية" gibi bir isim 40 byte'tır, 22 karakter değil. Neredeyse her ekip ilk seferde yanlış yapıyor.
+- **SAR'ı 2 ondalık üstü hassasiyetle karıştırmak**. ZATCA toplamları tam olarak 2 ondalıkla doğrular. Yuvarlama-öncesi-toplam vs toplama-öncesi-yuvarlama 0.01 SAR farklara neden olur — trivial görünür ama belgeyi tümüyle reddettirir.
+- **Saat kayması**. Sunucunuz gerçek zamandan 3 dakikadan fazla saparsa, ZATCA zaman damgalarını gelecek tarihli veya süresi dolmuş olarak reddeder. NTP opsiyonel değil.
+- **CSID ömrü**. Production CSID'leri 12 ay geçerli. Provizyon ettiğiniz gün son kullanma tarihini takvime koyun. Sessiz süre dolumu, bir yıl sonra sessiz fatura başarısızlığı demek.
+- **İadeler ve kredi notları**. Kredi notları (`388`) ve borç notları (`383`), orijinal fatura UUID + hash'ine atıfta bulunur. Kredi notunuz production'da test-mode faturasına atıfta bulunursa, onay başarısız olur. Ortam başına ayrı ICV zincirleri tutun.
+
+## Test stratejisi
+
+Canlıya almadan önce, ZATCA sandbox uyumluluk kontrolünden geçmeniz gerekir — imzalama ve onay akışının uçtan uca çalıştığını kanıtlayan üç fatura (bir standart, iki basit). Uyumluluk API'si `gw-fatoora.zatca.gov.sa/e-invoicing/developer-portal`, sandbox ise `gw-fatoora.zatca.gov.sa/e-invoicing/simulation` adresinde.
+
+Production öncesi önerilen test matrisi:
+
+1. Üç uyumluluk faturasının tamamı sandbox'ta geçer.
+2. Onaylı bir standart faturaya karşı **standart kredi notu** — çünkü kredi notları hash zincirinin ilk kırıldığı yer.
+3. **Çok satırlı SAR faturası** karışık KDV oranları ile (%15 + %0 sıfır-oranlı).
+4. 00:00 Asia/Riyadh'da **basit fatura** — tarih geçişi bug'ları yaygın.
+5. 1,000,000 SAR üstü **yüksek tutarlı fatura** — ZATCA'nın orada ek doğrulaması var.
+
+## Canlıya alma ve ZATCA bildirimi
+
+Hazır olduğunuzda, Fatoora Portal'dan production CSID'leri talep edin, `/production/csids` üzerinden değiştirin ve base URL'nizi `simulation` yerine `core` olarak geçin. Bunun ötesinde açık bir "canlıya alma" sinyali yok — ilk onaylanmış production faturası sizin onayınız.
+
+Canlıya alma günü tüccarın **KDV sorumlusunu** (sadece finansı değil) bilgilendirin. ZATCA denetimleri tipik olarak ilk haftanın onaylı faturalarını portal'dan doğrudan çekerek başlar, dolayısıyla mutabakat panelinizi hazır tutun.
+
+<FAQ title="ZATCA 2. Faz hakkında sık sorulan sorular">
+  <Q q="Şirketimizin 2. Fazda olup olmadığını nasıl anlarım?">
+    ZATCA, dalgaları KDV cirosuna göre duyurur. Tüccarın KDV hesabıyla Fatoora Portal'a giriş yapın — atanan dalganız ve başlangıç tarihi panelde. "Henüz entegre değil" yazıyorsa zamanınız var, ama ZATCA herkesi sırayla dahil ediyor. Bir sonraki dalgada olduğunuzu varsayın.
+  </Q>
+  <Q q="Onay (clearance) ile raporlama (reporting) arasındaki fark ne?">
+    Onay (standart, B2B) ZATCA'nın faturayı müşteriye göndermeden önce damgalaması gerekir anlamına gelir. Gerçek zamanlı bloklayan bir API çağrısıdır. Raporlama (basit, B2C) faturayı müşteriye hemen verirsiniz, ardından 24 saat içinde ZATCA'ya bir kopya gönderirsiniz. İki akışın da production'da çalışması gerekir.
+  </Q>
+  <Q q="ZATCA API'si çökerse fatura çıkarmaya devam edebilir miyiz?">
+    Standart vergi faturaları: hayır. Onay yanıtı olmadan yasal olarak düzenlenemez. Kuyruğa alıp tekrar denemeniz gerekir. Basit faturalar: evet — müşteriye normal şekilde düzenler ve 24 saat içinde raporlarsınız. Üç ayda bir ZATCA'da 1–2 saatlik kesinti için plan yapın ve retry kuyruğu inşa edin.
+  </Q>
+  <Q q="Shopify bizim için ZATCA 2. Fazı hallediyor mu?">
+    Shopify kutudan çıktığı gibi hayır. Uygulama (Salla ve Zid yerel Suudi alternatifleri var), middleware entegrasyonu veya özel bir build'e ihtiyacınız var. Shopify'dasınız ve 2. Faz uyumluluğu gerekiyorsa, iki seçenek: Salla/Zid'e geçin, ya da siparişleri yakalayıp ZATCA'yı çağıran bir middleware katmanı ekleyin. CloudTopia middleware seçeneğini inşa ediyor.
+  </Q>
+  <Q q="Hash zincirimiz kırılırsa ne olur?">
+    Kırıktan sonraki her fatura reddedilir — ta ki ZATCA ile iletişime geçip boşluğu açıklayana ve resmi sıfırlama alana dek. Denetim riski. Çözüm süreçtir: cihaz başına tek-thread CSID erişimi, ICV çevresinde dikkatli deploy ve 6 ay değil, 24 saat içinde kırık zinciri yakalayan gecelik mutabakat.
+  </Q>
+  <Q q="ZATCA 2. Faz entegrasyonu ne kadar sürer?">
+    Temiz özel entegrasyon — XML inşası, imzalama, CSID provizyon, onay + raporlama, saklama, izleme — tek bir iş birimi için 6–10 hafta sürer. Çok şubeli veya çok ERP'li kurulumlar sistem başına 2–4 hafta ekler. SaaS çözümleri 1–2 haftada canlıda olabilir ama sonsuza dek fatura başına ödeme yaparsınız.
+  </Q>
+  <Q q="2026'da ZATCA entegrasyonu ne kadara mal olur?">
+    Özel middleware: tek sistem veya çokluya dokunduğunuza göre 15,000–90,000 SAR tek seferlik. SaaS: ön maliyet yok, aylık 1,000–6,000 SAR artı fatura başına ücretler. DIY: araçlar ücretsiz ama gerçek maliyet mühendislik zamanı. Şeffaflık için /pricing sayfamızda CloudTopia fiyatlandırmasını yayınlıyoruz.
+  </Q>
+  <Q q="SaaS kullandıysak ZATCA denetimini geçebilir miyiz?">
+    Evet — uyumluluk sorumluluğu sizde, ama SaaS satıcısının imzalama ve onaylamasının uyumlu olduğunu kanıtlaması gerekir. ZATCA uyumluluk mektubunu ve yakın zamanda onaylanmış bir faturanın tam XML'ini isteyin. Her ikisinde de tereddüt ederlerse, cevabınız orada.
+  </Q>
+</FAQ>
+
+## Kısa versiyon
+
+ZATCA 2. Faz tek başına zor değil. **Kriptografik imzalama, hash zinciri, gerçek zamanlı API'ler ve çok yıllık kayıt saklamanın** canlıya alma baskısı altında birleşimi ekipleri kırıyor. 2 hafta değil 8 hafta mühendislik planlayın. XML mantığını sahip olduğunuz kodda tutan bir entegrasyon yolu seçin. İlk günden gecelik mutabakat çalıştırın.
+
+Tüm dalgalarda 2. Fazı canlıya almış ve sonunda kodu size teslim etmek isteyen bir ekibe ihtiyacınız varsa, bunu biz yapıyoruz.

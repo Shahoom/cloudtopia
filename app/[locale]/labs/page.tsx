@@ -27,6 +27,7 @@ const InteractiveNebulaShader = dynamic(
 )
 
 import { GlowingEffect } from '@/components/ui/glowing-effect'
+import { SeoH1 } from '@/components/seo/SeoH1'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -185,6 +186,12 @@ export default function LabsPage() {
 
     return (
         <div className="bg-[#060611]">
+            {/* SSR-rendered h1 for SEO. The visible hero (RainingLetters)
+                is loaded with ssr:false because it uses canvas/DOM
+                measurement, so without this the page would have zero h1
+                in server-rendered HTML. */}
+            <SeoH1>{t.labs.hero.scramblePhrases?.[0] || 'Applied AI, Engineered for Impact'} — CloudTopia Labs</SeoH1>
+
             {/* ━━━ Section 1: Raining Letters Hero ━━━ */}
             <div style={{ marginTop: '-80px' }}>
                 <RainingLetters

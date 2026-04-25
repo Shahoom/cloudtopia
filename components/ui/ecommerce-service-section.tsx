@@ -338,6 +338,8 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
+            {/* Page-level h1 for /ecommerce-solutions. Other section
+                titles in the parent page (in the .map() loop) are h2. */}
             <h1 id="ecommerce-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
               {t.heroTitle}{" "}
               <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">

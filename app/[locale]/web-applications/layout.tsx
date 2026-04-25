@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
+import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
     const titles: Record<string, string> = {
-        en: 'Custom Web Applications Development',
-        ar: 'تطوير تطبيقات ويب مخصصة',
-        tr: 'Özel Web Uygulamaları Geliştirme',
+        en: 'Custom Web Applications & SaaS Development',
+        ar: 'تطوير تطبيقات ويب مخصصة ومنصات SaaS',
+        tr: 'Özel Web Uygulamaları ve SaaS Geliştirme',
     }
     const descs: Record<string, string> = {
-        en: 'Interactive web applications with real-time features, portals, and SaaS platforms.',
-        ar: 'تطبيقات ويب تفاعلية مع ميزات في الوقت الفعلي، بوابات، ومنصات SaaS.',
-        tr: 'Gerçek zamanlı özellikler, portallar ve SaaS platformları ile interaktif web uygulamaları.',
+        en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React. Real-time features, bilingual Arabic + English UI. From $999.',
+        ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact. ميزات حية، واجهة عربي + إنجليزي. من 999$.',
+        tr: 'Next.js + React üzerinde özel web uygulamaları, portallar, panolar ve SaaS. Gerçek zamanlı, iki dilli Arapça + İngilizce UI. $999\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Web Applications — CloudTopia',
@@ -36,7 +38,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/web-applications`,
             locale: ogLocales[locale] || 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
+            images: ogImagesFor({ page: 'web-applications', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
@@ -46,7 +48,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function webapplicationsLayout({ children }: { children: React.ReactNode }) {
+export default function WebApplicationsLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+    const locale = params?.locale ?? 'en'
+    const faqSchema = buildFAQSchema('web-applications', locale)
+
     return (
         <>
             <script
@@ -56,9 +61,9 @@ export default function webapplicationsLayout({ children }: { children: React.Re
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
-                            { '@type': 'ListItem', position: 3, name: 'Web Applications', item: 'https://cloudtopia.net/en/web-applications' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
+                            { '@type': 'ListItem', position: 3, name: 'Web Applications', item: `https://cloudtopia.net/${locale}/web-applications` },
                         ],
                     }),
                 }}
@@ -71,17 +76,34 @@ export default function webapplicationsLayout({ children }: { children: React.Re
                         '@type': 'Service',
                         name: 'Custom Web Applications Development',
                         description: 'Interactive web applications with real-time features, portals, and SaaS platforms.',
-                        url: 'https://cloudtopia.net/en/web-applications',
-                        provider: {
-                            '@type': 'Organization',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
-                        },
+                        url: `https://cloudtopia.net/${locale}/web-applications`,
+                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Web Application Development',
-                        areaServed: 'Worldwide',
+                        areaServed: [
+                            { '@type': 'Country', name: 'Saudi Arabia' },
+                            { '@type': 'Country', name: 'United Arab Emirates' },
+                            { '@type': 'Country', name: 'Kuwait' },
+                            { '@type': 'Country', name: 'Qatar' },
+                            { '@type': 'Country', name: 'Bahrain' },
+                            { '@type': 'Country', name: 'Oman' },
+                            { '@type': 'Country', name: 'Türkiye' },
+                        ],
+                        offers: {
+                            '@type': 'AggregateOffer',
+                            priceCurrency: 'USD',
+                            lowPrice: '5999',
+                            highPrice: '50000',
+                            offerCount: '3',
+                        },
                     }),
                 }}
             />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
             {children}
         </>
     )

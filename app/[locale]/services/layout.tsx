@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
+    // Titles trimmed to fit Google's ~60-char SERP display.
     const titles: Record<string, string> = {
-        en: 'Services — Web Design, E-Commerce, Marketing & More',
-        ar: 'خدماتنا — تصميم مواقع، تجارة إلكترونية، تسويق والمزيد',
-        tr: 'Hizmetler — Web Tasarım, E-Ticaret, Pazarlama ve Daha Fazlası',
+        en: 'Services — Web, E-Commerce & Marketing',
+        ar: 'خدماتنا — مواقع، تجارة إلكترونية وتسويق',
+        tr: 'Hizmetler — Web, E-Ticaret & Pazarlama',
     }
     const descs: Record<string, string> = {
         en: 'Professional website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications. Free consultation available.',
@@ -36,7 +38,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/services`,
             locale: ogLocales[locale] || 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
+            images: ogImagesFor({ page: 'services', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {

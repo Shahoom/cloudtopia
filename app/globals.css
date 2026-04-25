@@ -1,3 +1,4 @@
+/* AgharaPro — logo only */
 @font-face {
   font-family: 'AgharaPro';
   src: url('/fonts/AgharaProRegular.ttf') format('truetype');
@@ -6,7 +7,7 @@
   font-display: swap;
 }
 
-/* Changa Font - Variable Weight */
+/* Changa Font - Variable Weight (body) */
 @font-face {
   font-family: 'Changa';
   src: url('/fonts/Changa-VariableFont_wght.ttf') format('truetype-variations');
@@ -20,10 +21,13 @@
 @import "tailwindcss/utilities";
 
 :root {
+  /* Body text: Changa */
   --font-inter: 'Changa', sans-serif;
-  --font-poppins: 'Changa', sans-serif;
-  --font-logo: 'AgharaPro', 'Changa', sans-serif;
   --font-arabic: 'Changa', sans-serif;
+  /* Headings: Cairo (loaded via next/font in layout.tsx) */
+  --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  /* Logo keeps the brand's AgharaPro face */
+  --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', 'Changa', sans-serif;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   
@@ -58,7 +62,7 @@
 [dir="rtl"] h4,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
-  font-family: var(--font-arabic);
+  font-family: var(--font-poppins);
   line-height: 1.6;
 }
 
@@ -74,6 +78,7 @@
   body {
     @apply bg-lavender text-neutral-700 antialiased;
     font-family: var(--font-inter);
+    overflow-x: hidden;
   }
 
   h1,

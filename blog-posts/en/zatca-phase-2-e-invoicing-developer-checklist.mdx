@@ -1,0 +1,228 @@
+---
+title: 'ZATCA Phase 2 E-Invoicing: Developer Checklist (2026)'
+slug: zatca-phase-2-e-invoicing-developer-checklist
+description: 'Integrating ZATCA Phase 2 e-invoicing? The exact checklist we use for every go-live — CSID, XML, signing, clearance vs reporting, and timeline traps.'
+date: '2026-04-20'
+updated: '2026-04-20'
+author: Mohamad Shahm
+authorSlug: mohamad-shahm
+authorRole: Founder & Lead Engineer
+category: E-Invoicing
+tags:
+  - ZATCA
+  - Saudi Arabia
+  - E-Invoicing
+  - Compliance
+  - ERP
+  - POS
+  - API Integration
+coverImage: https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=82
+coverImageAlt: 'Digital tax invoice and compliance icons representing ZATCA Phase 2 e-invoicing in Saudi Arabia'
+readingTime: 11
+id: zatca-phase-2-developer-checklist
+lang: en
+schema: HowTo
+howToSteps:
+  - name: Obtain your CSID
+    text: Register as a taxpayer with ZATCA and generate a Cryptographic Stamp Identifier through the compliance portal before any integration work starts.
+  - name: Build UBL 2.1 compliant invoices
+    text: Generate UBL 2.1 XML invoices including TRN, invoice hash, previous invoice hash, and all required Saudi-specific fields.
+  - name: Sign invoices with ECDSA secp256k1
+    text: Apply an ECDSA secp256k1 digital signature using your CSID and embed it in the UBL XML before submission.
+  - name: Route to clearance or reporting
+    text: Clear B2B invoices in real time via the clearance API; report B2C invoices within 24 hours via the reporting endpoint.
+  - name: Preserve invoices with hash chain integrity
+    text: Store every signed XML and its hash chain for at least 6 years to satisfy ZATCA audit requirements.
+---
+
+If you are building or retrofitting an ERP, POS, or e-commerce store for a Saudi merchant in 2026, you are integrating with **ZATCA Phase 2 — the Integration Phase** that started rolling out in waves from January 2023. The old Phase 1 (just a QR-tagged PDF) is not enough anymore.
+
+This is the checklist I run for every Phase 2 go-live. No theory — the actual steps, the APIs, and the places teams keep getting stuck.
+
+<Callout tone="info" title="Who this is for">
+Developers, tech leads, and CTOs integrating with **ZATCA Fatoora** on behalf of a Saudi-based seller. If you are a merchant looking for a turnkey solution, skip to the [integration options table](#integration-options-ranked) below.
+</Callout>
+
+## What Phase 2 actually requires
+
+Phase 2 is not just an invoice format — it is a real-time compliance pipeline. ZATCA expects every taxable transaction to be cryptographically signed, hash-chained to the previous invoice, and either **cleared** or **reported** to ZATCA's Fatoora system before (or shortly after) it reaches the customer.
+
+There are two invoice flows, and your system must support both:
+
+- **Standard tax invoice** (B2B). Must be **cleared** by ZATCA before you can issue it to the buyer. Blocking call. No clearance response, no invoice.
+- **Simplified tax invoice** (B2C). Issued to the customer immediately, then **reported** to ZATCA within 24 hours. Non-blocking but not optional.
+
+If your system cannot do both, you are not Phase 2 compliant.
+
+## The 8-step integration checklist
+
+### 1. Confirm the merchant is in scope
+
+ZATCA enrolls merchants into Phase 2 in **waves**, based on annual VAT-reportable turnover. Waves have been rolling out since January 2023 and are still going in 2026. Before writing any code, log into the Fatoora Portal for the merchant's VAT account and check their assigned wave and go-live date. Do not assume they are exempt — ZATCA has been steadily widening the net.
+
+### 2. Generate the CSID (Compliance Service ID)
+
+Each **billing solution** (POS device, ERP instance, cash register) needs its own Compliance Cryptographic Stamp Identifier. The flow:
+
+1. Merchant logs into Fatoora and requests an OTP for your solution.
+2. Your code generates a CSR (Certificate Signing Request) using ECDSA with the secp256k1 curve — the same curve Bitcoin uses. Not RSA, not secp256r1. Get this wrong and the API rejects every subsequent call with a cryptic `INVALID_CERTIFICATE` response.
+3. POST the CSR + OTP to `/compliance` on the sandbox, get back a temporary **Compliance CSID**.
+4. Run the three sample compliance invoices (one standard, two simplified) to prove your signing works.
+5. Exchange the Compliance CSID for a **Production CSID** via `/production/csids`.
+
+Each CSID is bound to a **device** — not a company. A merchant with 12 branches needs 12 CSIDs, and every CSID rotation is a deploy.
+
+### 3. Build the invoice XML per UBL 2.1 + ZATCA profile
+
+ZATCA uses **UBL 2.1** with a Saudi-specific profile. The easy parts are the `cbc:InvoiceTypeCode` and the line items. The parts that trip people up:
+
+- Every monetary amount needs `currencyID="SAR"` on the element — not just the document currency declaration.
+- Timestamps are **Asia/Riyadh** in ISO 8601. UTC is wrong and will clear, but reconciliations get painful.
+- `cac:AdditionalDocumentReference` with `ICV` (Invoice Counter Value) must increment by 1 per invoice issued from that CSID, globally, never reset. You break this, you re-onboard.
+- `cbc:UUID` on every invoice, even if ZATCA already has a cleared ID.
+
+### 4. Sign with ECDSA + embed the QR TLV
+
+Once the XML is built, you sign a canonical hash of the document using the private key paired with your CSID. Then you embed a **base64-encoded TLV** QR in the invoice. The tags are positional:
+
+```
+Tag 1 — Seller name
+Tag 2 — VAT registration number
+Tag 3 — Timestamp (ISO 8601, Asia/Riyadh)
+Tag 4 — Invoice total with VAT
+Tag 5 — VAT total
+Tag 6 — Hash of the signed XML
+Tag 7 — ECDSA signature
+Tag 8 — ECDSA public key
+Tag 9 — Signature of the stamp (for tax invoices only)
+```
+
+Tag lengths are counted as **bytes**, not characters. Arabic seller names with multi-byte characters catch teams out every single time. Use `Buffer.byteLength(name, 'utf8')` not `name.length`.
+
+### 5. Maintain the invoice hash chain
+
+Every invoice references the **hash of the previous invoice** from that CSID. If you miss one, skip one, or issue them out of order, the chain breaks and ZATCA will reject everything that follows. Treat your `previous_invoice_hash` column as critical infrastructure — back it up, replicate it, and never let two threads on the same CSID race each other.
+
+### 6. Call the clearance or reporting endpoint
+
+- Standard invoice (B2B): `POST /invoices/clearance/single` — blocking. Expect a cleared XML back with ZATCA's stamp. You issue _that_ to the buyer, not your original.
+- Simplified invoice (B2C): `POST /invoices/reporting/single` — non-blocking. You already gave the customer their invoice. You are just notifying ZATCA within 24 hours.
+
+Both are idempotent by `UUID`. Retrying the same payload with the same UUID returns the original response. Use it — network failures are the norm, not the exception.
+
+### 7. Store the ZATCA-stamped XML for 6 years
+
+ZATCA requires you to retain the **cleared XML** (with its signature stamp) for at least 6 years. Not the XML you sent — the one they returned. Object storage with versioning (S3, R2, or your own MinIO) is the standard. Do not store only in your database.
+
+### 8. Monitor, alert, and reconcile daily
+
+Run a nightly reconciliation job: pull all reported invoices from the last 24 hours from ZATCA's portal, compare counts with what your system thinks it sent. Mismatch = alert on-call. ZATCA audits these numbers.
+
+<Callout tone="warn" title="The mistake that kills launch week">
+Teams deploy to production, issue the first real invoice, and watch their hash chain break on invoice #2 because they left the ICV counter in a shared sandbox state. Treat ICV migration as a deploy-time task with a freeze window. You can only go forward, not back.
+</Callout>
+
+## Integration options ranked
+
+For a Saudi merchant choosing how to get Phase 2 compliant, there are four realistic paths. Here is how they compare on the things that actually matter after year one.
+
+<Compare
+  headers="Option | Upfront | Monthly | Own code | Multi-branch | Best for"
+  caption="Based on live client engagements and ZATCA fee guidance, 2026."
+  topPickLabel="Our recommendation"
+>
+  <Row
+    name="CloudTopia (custom integration)"
+    url="/business-systems-development"
+    verdict="End-to-end ownership of invoice XML, signing, CSID, and reconciliation. Best value once invoice volume scales."
+    topPick
+  >
+    From $2,499 | Hosting only | ✓ | ✓ | Mid-market + enterprise retailers, custom ERPs, multi-branch groups
+  </Row>
+  <Row
+    name="ClearTax / Avalara / SovOS SaaS"
+    verdict="Plug-and-play but you pay per invoice forever and the XML logic stays opaque."
+  >
+    ~$2,000 setup | $300–$1,500+ | ✗ | ✓ | Businesses that don't want engineering involvement at all
+  </Row>
+  <Row
+    name="Salla / Zid built-in"
+    verdict="Zero dev work if your store already runs on one of these platforms, but you're locked to their roadmap."
+  >
+    Included | Plan dependent | ✗ | Platform dependent | Online-only retailers already on Salla or Zid
+  </Row>
+  <Row
+    name="DIY against the Fatoora sandbox"
+    verdict="Cheap if you have a strong in-house team, expensive if you don't — one wrong XML schema means audit risk."
+  >
+    Free | Free | ✓ | ✓ | Teams with a dedicated integrations engineer and 3+ months
+  </Row>
+</Compare>
+
+<CTA
+  title="Need ZATCA Phase 2 done without the guesswork?"
+  description="We build custom Phase 2 integrations — CSID provisioning, XML, signing, clearance, sandbox certification, and ongoing monitoring — from one team that has shipped across all waves so far. Fixed price, fixed scope, code is yours."
+  href="/business-systems-development"
+  label="See our approach"
+/>
+
+## Common gotchas we still see in 2026
+
+A few issues that have bitten almost every project we have reviewed this year:
+
+- **Arabic seller name byte lengths**. TLV tag lengths are byte counts. A name like "مؤسسة الرياض التجارية" is 40 bytes, not 22 characters. Nearly every team gets this wrong on first try.
+- **Mixing SAR with fractional precision above 2 decimal places**. ZATCA validates totals at exactly 2 decimal places. Rounding-before-summing vs summing-before-rounding causes 0.01 SAR mismatches that look trivial but reject the whole document.
+- **Clock drift**. If your server is off by more than 3 minutes from real time, ZATCA will reject timestamps as either future-dated or expired. NTP is not optional.
+- **CSID lifetime**. Production CSIDs are valid for 12 months. Put the expiry on the calendar the day you provision. Silent expiry means silent invoice failure a year later.
+- **Refunds and credit notes**. Credit notes (`388`) and debit notes (`383`) reference the original invoice UUID + hash. If your credit note references a test-mode invoice in production, clearance fails. Maintain separate ICV chains per environment.
+
+## Testing strategy
+
+Before going live, you need to pass ZATCA's sandbox compliance check — three invoices (one standard, two simplified) that prove your signing and clearance flow end-to-end. The compliance API lives at `gw-fatoora.zatca.gov.sa/e-invoicing/developer-portal` and the sandbox is `gw-fatoora.zatca.gov.sa/e-invoicing/simulation`.
+
+Recommended test matrix before production:
+
+1. All three compliance invoices pass on sandbox.
+2. A **standard credit note** against a cleared standard invoice — because credit notes are where hash chaining first breaks.
+3. A **multi-line invoice in SAR** with mixed VAT rates (15% + 0% zero-rated).
+4. A **simplified invoice** at 00:00 Asia/Riyadh — date rollover bugs are common.
+5. A **high-value invoice** above 1,000,000 SAR — ZATCA has additional validation there.
+
+## Go-live and the ZATCA notification
+
+When you are ready, request production CSIDs from the Fatoora Portal, exchange them via `/production/csids`, and switch your base URL from `simulation` to `core`. There is no explicit "go-live" signal beyond that — the first cleared production invoice is your confirmation.
+
+Notify the merchant's **VAT officer** (not just finance) on the day. ZATCA audits typically start by pulling the first week of cleared invoices directly from the portal, so have your reconciliation dashboard ready.
+
+<FAQ title="Common questions about ZATCA Phase 2">
+  <Q q="How do I know if our company is in Phase 2 yet?">
+    ZATCA announces waves by VAT turnover. Log into the Fatoora Portal with the merchant's VAT account — your assigned wave and the start date are in the dashboard. If the portal shows "Not yet integrated", you still have time, but ZATCA has been waving everyone in. Assume you're in the next wave.
+  </Q>
+  <Q q="What is the difference between clearance and reporting?">
+    Clearance (standard, B2B) means ZATCA must stamp the invoice BEFORE you send it to your customer. It's a blocking real-time API call. Reporting (simplified, B2C) means you issue the invoice to the customer immediately, then send a copy to ZATCA within 24 hours. Both flows need to work in production.
+  </Q>
+  <Q q="Can we keep issuing invoices if ZATCA's API is down?">
+    Standard tax invoices: no. They legally can't be issued without a clearance response. You need to queue and retry. Simplified invoices: yes — you issue them to the customer as normal and report within 24 hours. Plan for a 1–2 hour ZATCA outage per quarter and build a retry queue.
+  </Q>
+  <Q q="Does Shopify handle ZATCA Phase 2 for us?">
+    Shopify out of the box does not. You need an app (Salla and Zid are the native Saudi alternatives that do), a middleware integration, or a custom build. If you're on Shopify and need Phase 2 compliance, the two options are: switch to Salla/Zid, or add a middleware layer that intercepts orders and calls ZATCA. CloudTopia builds the middleware option.
+  </Q>
+  <Q q="What happens if our hash chain breaks?">
+    Every invoice after the break is rejected until you contact ZATCA, explain the gap, and get a formal reset. Audit exposure. The fix is process: single-threaded access to CSID per device, careful deploys around ICV, and nightly reconciliation that catches a broken chain within 24 hours — not 6 months.
+  </Q>
+  <Q q="How long does a ZATCA Phase 2 integration take?">
+    A clean custom integration — XML build, signing, CSID provisioning, clearance + reporting, storage, monitoring — takes 6–10 weeks for a single business unit. Multi-branch or multi-ERP setups add 2–4 weeks per additional system. SaaS solutions can be live in 1–2 weeks but leave you paying per-invoice forever.
+  </Q>
+  <Q q="What does a ZATCA integration cost in 2026?">
+    Custom middleware: SAR 15,000–90,000 one-time, depending on whether you're touching one system or many. SaaS: no upfront, SAR 1,000–6,000 monthly plus per-invoice fees. DIY: free tooling but engineering time is the real cost. We publish tiered CloudTopia pricing on our /pricing page for transparency.
+  </Q>
+  <Q q="Can we pass a ZATCA audit if we used SaaS?">
+    Yes — the compliance responsibility is yours, but the SaaS vendor has to prove their signing and clearance is compliant. Ask for their ZATCA compliance letter and the full XML of a recent cleared invoice. If they hesitate on either, that's your answer.
+  </Q>
+</FAQ>
+
+## The short version
+
+ZATCA Phase 2 is not hard in isolation. It is the combination of **cryptographic signing, hash chaining, real-time APIs, and multi-year record retention** that breaks teams under launch pressure. Plan for 8 weeks of engineering, not 2. Pick an integration path that keeps the XML logic in code you own. Run nightly reconciliation from day one.
+
+If you need a team that has shipped Phase 2 across every wave so far and wants to hand you the code at the end, we do this for a living.

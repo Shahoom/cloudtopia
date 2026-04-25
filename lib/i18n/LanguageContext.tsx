@@ -6,6 +6,7 @@ import { Locale, defaultLocale, localeDirection, locales } from './config'
 import { en } from './translations/en'
 import { ar } from './translations/ar'
 import { tr } from './translations/tr'
+import { useRouteAlternates } from './RouteAlternatesContext'
 
 type Translations = typeof en
 
@@ -47,6 +48,11 @@ function getLocaleFromCookie(): Locale | null {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  // Pages with locale-specific URL shapes (e.g. blog posts with native-script
+  // slugs) publish their localized URLs via RouteAlternatesProvider. We consult
+  // it here so switching languages always lands on the correct localized URL,
+  // not a 404 from naive segment-swap.
+  const routeAlternates = useRouteAlternates()
 
   // Get initial locale from URL or cookie
   const initialLocale = getLocaleFromPathname(pathname) || getLocaleFromCookie() || defaultLocale
@@ -79,18 +85,27 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLocale = (newLocale: Locale) => {
     if (newLocale === locale) return
 
-    // Get current path without locale prefix
-    const currentPath = pathname
-    const segments = currentPath.split('/')
+    let newPath: string
 
-    // Check if current path has a locale
-    if (locales.includes(segments[1] as Locale)) {
-      segments[1] = newLocale
+    // 1) If the current page published an explicit alternate URL for the
+    //    target locale (e.g. blog posts with native-script slugs), use it.
+    //    This is the only correct path for routes whose URL shape depends
+    //    on locale.
+    const explicitAlt = routeAlternates?.[newLocale]
+    if (explicitAlt) {
+      newPath = explicitAlt
     } else {
-      segments.splice(1, 0, newLocale)
+      // 2) Fallback: shape-preserving segment swap. Works for static pages
+      //    like /pricing, /contact, /about whose URLs are identical across
+      //    locales except the leading /[locale]/ segment.
+      const segments = pathname.split('/')
+      if (locales.includes(segments[1] as Locale)) {
+        segments[1] = newLocale
+      } else {
+        segments.splice(1, 0, newLocale)
+      }
+      newPath = segments.join('/') || `/${newLocale}`
     }
-
-    const newPath = segments.join('/') || `/${newLocale}`
 
     // Update state first for immediate UI update
     setLocaleState(newLocale)

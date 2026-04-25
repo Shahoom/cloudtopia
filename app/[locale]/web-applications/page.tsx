@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic'
 const DotGlobeHero = dynamic(() => import('@/components/ui/globe-hero').then(mod => mod.DotGlobeHero), { ssr: false })
 const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
+import { SeoH1 } from '@/components/seo/SeoH1'
 const WebAppFeatures = dynamic(() => import('@/components/ui/features-8').then(mod => mod.WebAppFeatures), { ssr: false })
 const StickyFeatureSection = dynamic(() => import('@/components/ui/sticky-scroll-cards-section').then(mod => mod.StickyFeatureSection), { ssr: false })
 
@@ -90,6 +91,9 @@ export default function WebApplicationsPage() {
 
     return (
         <div className="min-h-screen bg-lavender" dir={dir}>
+            {/* SSR-rendered h1 for SEO — DotGlobeHero is dynamic with ssr:false. */}
+            <SeoH1>{currentContent.title} {currentContent.titleHighlight} — CloudTopia</SeoH1>
+
             {/* Section 1: Globe Hero */}
             <DotGlobeHero
                 rotationSpeed={0.004}

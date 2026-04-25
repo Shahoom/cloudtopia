@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
+import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
     const titles: Record<string, string> = {
-        en: 'Professional Website Design & Development',
-        ar: 'تصميم وتطوير مواقع ويب احترافية',
-        tr: 'Profesyonel Web Sitesi Tasarım & Geliştirme',
+        en: 'Website Design & Development in the Gulf',
+        ar: 'تصميم وتطوير مواقع الويب في الخليج',
+        tr: 'Körfez\'de Web Sitesi Tasarım & Geliştirme',
     }
     const descs: Record<string, string> = {
-        en: 'Custom websites designed for performance, SEO, and user experience.',
-        ar: 'مواقع ويب مخصصة مصممة للأداء وتحسين محركات البحث وتجربة المستخدم.',
-        tr: 'Performans, SEO ve kullanıcı deneyimi için tasarlanmış özel web siteleri.',
+        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct. From $299.',
+        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح. تبدأ من 299$.',
+        tr: 'Körfez işletmeleri için iki dilli Arapça + İngilizce web siteleri. Hızlı, SEO hazır, RTL doğru. $299\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Website Design — CloudTopia',
@@ -36,7 +38,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/website-design`,
             locale: ogLocales[locale] || 'en_US',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: ogTitle }],
+            images: ogImagesFor({ page: 'website-design', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
@@ -46,7 +48,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     }
 }
 
-export default function websitedesignLayout({ children }: { children: React.ReactNode }) {
+export default function WebsiteDesignLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+    const locale = params?.locale ?? 'en'
+    const faqSchema = buildFAQSchema('website-design', locale)
+
     return (
         <>
             <script
@@ -56,9 +61,9 @@ export default function websitedesignLayout({ children }: { children: React.Reac
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://cloudtopia.net/en/services' },
-                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: 'https://cloudtopia.net/en/website-design' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
+                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: `https://cloudtopia.net/${locale}/website-design` },
                         ],
                     }),
                 }}
@@ -70,18 +75,35 @@ export default function websitedesignLayout({ children }: { children: React.Reac
                         '@context': 'https://schema.org',
                         '@type': 'Service',
                         name: 'Website Design & Development',
-                        description: 'Custom websites designed for performance, SEO, and user experience.',
-                        url: 'https://cloudtopia.net/en/website-design',
-                        provider: {
-                            '@type': 'Organization',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
-                        },
+                        description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
+                        url: `https://cloudtopia.net/${locale}/website-design`,
+                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Web Design',
-                        areaServed: 'Worldwide',
+                        areaServed: [
+                            { '@type': 'Country', name: 'Saudi Arabia' },
+                            { '@type': 'Country', name: 'United Arab Emirates' },
+                            { '@type': 'Country', name: 'Kuwait' },
+                            { '@type': 'Country', name: 'Qatar' },
+                            { '@type': 'Country', name: 'Bahrain' },
+                            { '@type': 'Country', name: 'Oman' },
+                            { '@type': 'Country', name: 'Türkiye' },
+                        ],
+                        offers: {
+                            '@type': 'AggregateOffer',
+                            priceCurrency: 'USD',
+                            lowPrice: '399',
+                            highPrice: '3999',
+                            offerCount: '4',
+                        },
                     }),
                 }}
             />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
             {children}
         </>
     )

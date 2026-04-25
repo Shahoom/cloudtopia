@@ -531,12 +531,13 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            <h1 id="qr-menu-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
+            {/* Section heading — h2 because the parent page already has h1. */}
+            <h2 id="qr-menu-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
               {t.heroTitle}{" "}
               <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                 {t.heroHighlight}
               </span>
-            </h1>
+            </h2>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>

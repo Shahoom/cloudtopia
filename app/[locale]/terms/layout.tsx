@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale

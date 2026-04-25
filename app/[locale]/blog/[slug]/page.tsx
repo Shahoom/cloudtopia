@@ -1,10 +1,13 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPostBySlug, getPostSlugs, getAllPosts, getSlugById } from '@/lib/blog'
+import { getAuthor } from '@/lib/authors'
 import { getDictionary } from '@/lib/i18n'
 import type { Locale } from '@/lib/i18n/config'
 import BlogPostLayout from '@/components/blog/BlogPostLayout'
 import BlogPostBody from '@/components/blog/BlogPostBody'
+import BlogBreadcrumb from '@/components/blog/BlogBreadcrumb'
+import { getOgImage } from '@/lib/og/og-image'
 
 const BASE_URL = 'https://cloudtopia.net'
 
@@ -29,9 +32,26 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     }
 
     const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
-    const imageUrl = post.coverImage
-        ? `${BASE_URL}${post.coverImage}`
-        : `${BASE_URL}/images/og-image.jpg`
+    // OG image for blog posts: use the post's own coverImage as the OG.
+    // (Per user instruction. Falls back to brand default if no coverImage.)
+    const imageUrl = getOgImage({
+        page: `blog/${decodedSlug}`,
+        locale: lang,
+        override: post.coverImage || undefined,
+    })!.url
+
+    // Resolve author page URL for OG `article:author` metadata
+    const authorSlug = post.authorSlug || 'editorial-team'
+    const authorProfile = getAuthor(authorSlug)
+    const authorUrl = authorProfile
+        ? `${BASE_URL}/${lang}/authors/${authorProfile.slug}`
+        : `${BASE_URL}/${lang}/about`
+
+    // Localized alt text for cover image (falls back to title)
+    const coverAlt = post.coverImageAlt || post.title
+
+    // Derive a modifiedTime for article freshness
+    const modifiedTime = post.updated || post.date
 
     // Generate alternate links for all languages
     const alternateLanguages: Record<string, string> = {}
@@ -53,6 +73,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     return {
         title: post.title,
         description: post.excerpt,
+        authors: [{ name: post.author || 'CloudTopia', url: authorUrl }],
         robots: {
             index: true,
             follow: true,
@@ -69,11 +90,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
                     url: imageUrl,
                     width: 1200,
                     height: 630,
-                    alt: post.title,
+                    alt: coverAlt,
                 },
             ],
             publishedTime: post.date,
-            authors: [`${BASE_URL}`],
+            modifiedTime,
+            authors: [authorUrl],
+            tags: post.tags,
+            section: post.category,
         },
         twitter: {
             card: 'summary_large_image',
@@ -113,32 +137,77 @@ export default async function PostPage({ params }: PostPageProps) {
     }
 
     const allPosts = getAllPosts(lang)
-    const morePosts = allPosts.filter(p => p.slug !== post.slug)
+    // Tag-aware related posts: score candidates by shared tags with the current post,
+    // then break ties by recency. Falls back to most recent posts when tags are sparse.
+    const postTagSet = new Set(post.tags || [])
+    const morePosts = allPosts
+        .filter((p) => p.slug !== post.slug)
+        .map((p) => {
+            const shared = (p.tags || []).filter((t) => postTagSet.has(t)).length
+            return { p, shared, time: new Date(p.date).getTime() }
+        })
+        .sort((a, b) => (b.shared - a.shared) || (b.time - a.time))
+        .map((x) => x.p)
 
     const dict = await getDictionary(lang as Locale)
 
     const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
-    const imageUrl = post.coverImage
-        ? `${BASE_URL}${post.coverImage}`
-        : `${BASE_URL}/images/og-image.jpg`
+    // OG image for blog posts: use the post's own coverImage as the OG.
+    // (Per user instruction. Falls back to brand default if no coverImage.)
+    const imageUrl = getOgImage({
+        page: `blog/${decodedSlug}`,
+        locale: lang,
+        override: post.coverImage || undefined,
+    })!.url
 
-    const inLanguage: Record<string, string> = { en: 'en', ar: 'ar', tr: 'tr' }
+    // Full BCP-47 locale codes for schema.org `inLanguage` (aligned with OG_LOCALES)
+    const inLanguage: Record<string, string> = { en: 'en-US', ar: 'ar-SA', tr: 'tr-TR' }
+
+    const wordCount = (post.content || '').trim().split(/\s+/).length
+    const authorSlug = post.authorSlug || 'editorial-team'
+    const authorProfile = getAuthor(authorSlug)
+    const authorName = authorProfile?.name || post.author || 'CloudTopia Editorial Team'
+    const authorUrl = authorProfile
+        ? `${BASE_URL}/${lang}/authors/${authorProfile.slug}`
+        : `${BASE_URL}/${lang}/about`
+    const publishedDate = post.date
+    const modifiedDate = post.updated || post.date
 
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
+        '@id': `${canonicalUrl}#article`,
         headline: post.title,
         description: post.excerpt,
-        datePublished: post.date,
-        dateModified: post.date,
+        // SpeakableSpecification — Google Assistant, Siri, and AI search
+        // engines (ChatGPT, Perplexity) use this to identify which parts of
+        // the article are best suited for voice/audio answers. We point at
+        // the H1, the first paragraph, and any FAQ blocks (highest CSS
+        // selector specificity that matches across our blog templates).
+        speakable: {
+            '@type': 'SpeakableSpecification',
+            cssSelector: ['h1', '.prose > p:first-of-type', 'h2', '.faq-question', '.faq-answer'],
+        },
+        datePublished: publishedDate,
+        dateModified: modifiedDate,
         author: {
-            '@type': 'Organization',
-            name: 'Cloudtopia',
-            url: BASE_URL,
+            '@type': 'Person',
+            name: authorName,
+            url: authorUrl,
+            ...(authorProfile?.image && {
+                image: `${BASE_URL}${authorProfile.image}`,
+            }),
+            ...(authorProfile?.knowsAbout && { knowsAbout: authorProfile.knowsAbout }),
+            ...(authorProfile?.sameAs && { sameAs: authorProfile.sameAs }),
+            worksFor: {
+                '@type': 'Organization',
+                name: 'CloudTopia',
+                url: BASE_URL,
+            },
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Cloudtopia',
+            name: 'CloudTopia',
             url: BASE_URL,
             logo: {
                 '@type': 'ImageObject',
@@ -152,12 +221,55 @@ export default async function PostPage({ params }: PostPageProps) {
             height: 630,
         },
         url: canonicalUrl,
+        mainEntityOfPage: canonicalUrl,
         inLanguage: inLanguage[lang] || 'en',
+        keywords: (post.tags || []).join(', '),
+        articleSection: post.category || post.tags?.[0] || 'Technology',
+        wordCount,
+        timeRequired: post.readingTime ? `PT${post.readingTime}M` : undefined,
         isPartOf: {
             '@type': 'Blog',
-            name: 'Cloudtopia Blog',
+            name: 'CloudTopia Journal',
             url: `${BASE_URL}/${lang}/blog`,
         },
+        about: (post.tags || []).slice(0, 5).map((tag) => ({ '@type': 'Thing', name: tag })),
+    }
+
+    // Optional HowTo schema — emitted only when the post opts in via frontmatter
+    // (`schema: HowTo` + `howToSteps: [{ name, text }, ...]`). Invisible otherwise.
+    const howToSchema = post.schema === 'HowTo' && Array.isArray(post.howToSteps) && post.howToSteps.length > 0
+        ? {
+              '@context': 'https://schema.org',
+              '@type': 'HowTo',
+              name: post.title,
+              description: post.excerpt,
+              inLanguage: inLanguage[lang] || 'en-US',
+              totalTime: post.readingTime ? `PT${post.readingTime}M` : undefined,
+              image: imageUrl,
+              step: post.howToSteps.map((s, i) => ({
+                  '@type': 'HowToStep',
+                  position: i + 1,
+                  name: s.name,
+                  text: s.text,
+              })),
+          }
+        : null
+
+    // BreadcrumbList schema
+    const breadcrumbLabels: Record<string, { home: string; blog: string }> = {
+        en: { home: 'Home', blog: 'Blog' },
+        ar: { home: 'الرئيسية', blog: 'المدونة' },
+        tr: { home: 'Ana Sayfa', blog: 'Blog' },
+    }
+    const crumbs = breadcrumbLabels[lang] || breadcrumbLabels.en
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: crumbs.home, item: `${BASE_URL}/${lang}` },
+            { '@type': 'ListItem', position: 2, name: crumbs.blog, item: `${BASE_URL}/${lang}/blog` },
+            { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+        ],
     }
 
     // Generate alternate slugs for the language switcher
@@ -176,6 +288,26 @@ export default async function PostPage({ params }: PostPageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            {howToSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+                />
+            )}
+            <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-32">
+                <BlogBreadcrumb
+                    locale={lang}
+                    items={[
+                        { label: crumbs.home, href: `/${lang}` },
+                        { label: crumbs.blog, href: `/${lang}/blog` },
+                        { label: post.title },
+                    ]}
+                />
+            </div>
             <BlogPostLayout
                 post={post}
                 morePosts={morePosts}
@@ -193,7 +325,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 }}
                 alternateSlugs={alternateSlugs}
             >
-                <BlogPostBody content={post.content} />
+                <BlogPostBody content={post.content} locale={lang} />
             </BlogPostLayout>
         </>
     )

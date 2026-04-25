@@ -7,6 +7,7 @@ interface GlassBlogCardProps {
     title?: string;
     excerpt?: string;
     image?: string;
+    imageAlt?: string;
     author?: {
         name: string;
         avatar: string;
@@ -24,6 +25,7 @@ export function GlassBlogCard({
     title = "Untitled Post",
     excerpt = "",
     image,
+    imageAlt,
     author,
     date,
     readTime,
@@ -48,7 +50,7 @@ export function GlassBlogCard({
                     {image ? (
                         <img
                             src={image}
-                            alt={title}
+                            alt={imageAlt || title}
                             className="h-full w-full object-cover transition-transform duration-600 group-hover:scale-[1.06]"
                         />
                     ) : (

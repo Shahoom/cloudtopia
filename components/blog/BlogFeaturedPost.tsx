@@ -53,7 +53,7 @@ export default function BlogFeaturedPost({ post, translations }: BlogFeaturedPos
                 {post.coverImage ? (
                     <Image
                         src={post.coverImage}
-                        alt={post.title}
+                        alt={post.coverImageAlt || post.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         priority

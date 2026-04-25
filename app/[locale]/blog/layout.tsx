@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import './blog.css'
 
+// Titles intentionally do NOT include "| CloudTopia" — the root metadata
+// template (`'%s | CloudTopia'`) appends it. Including it twice produced
+// "... | CloudTopia | CloudTopia" in <title> tags.
 const titles: Record<string, string> = {
-    en: 'Blog — Digital Marketing, Web Design & Tech Insights | CloudTopia',
-    ar: 'المدونة — رؤى التسويق الرقمي وتصميم المواقع | كلاود توبيا',
-    tr: 'Blog — Dijital Pazarlama, Web Tasarım & Teknoloji | CloudTopia',
+    en: 'Blog — Web Design, E-commerce & Tech Insights',
+    ar: 'المدونة — رؤى تصميم المواقع والتجارة الإلكترونية',
+    tr: 'Blog — Web Tasarım, E-Ticaret & Teknoloji',
 }
 const descriptions: Record<string, string> = {
     en: 'Expert insights on web design, e-commerce, digital marketing, business systems, and cloud technology — written for Gulf and Arab market businesses.',
@@ -19,6 +22,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     const title = titles[locale] || titles.en
     const description = descriptions[locale] || descriptions.en
 
+    // Per user instruction: blog index page does NOT emit an OG image.
+    // OG images for individual blog posts are set per-post in
+    // app/[locale]/blog/[slug]/page.tsx using each post's coverImage.
     return {
         title,
         description,
@@ -30,13 +36,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
             type: 'website',
-            images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: title }],
         },
         twitter: {
-            card: 'summary_large_image',
+            card: 'summary',
             title,
             description,
-            images: ['/images/og-image.jpg'],
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/blog`,
@@ -45,6 +49,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
                 'ar': 'https://cloudtopia.net/ar/blog',
                 'tr': 'https://cloudtopia.net/tr/blog',
                 'x-default': 'https://cloudtopia.net/en/blog',
+            },
+            // RSS feed discovery — browsers and feed readers will auto-detect this
+            // via the rendered <link rel="alternate" type="application/rss+xml"> tag.
+            types: {
+                'application/rss+xml': `https://cloudtopia.net/${locale}/blog/feed.xml`,
             },
         },
     }
@@ -71,7 +80,7 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
                                 url: 'https://cloudtopia.net/favicon.svg',
                             },
                         },
-                        inLanguage: ['en', 'ar', 'tr'],
+                        inLanguage: ['en-US', 'ar-SA', 'tr-TR'],
                     }),
                 }}
             />

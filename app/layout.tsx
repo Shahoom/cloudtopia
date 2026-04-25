@@ -1,16 +1,20 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
-import { Playfair_Display, DM_Sans, Noto_Naskh_Arabic } from 'next/font/google'
+import { Cairo } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
-const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ['arabic'], variable: '--font-noto-naskh' })
+const cairo = Cairo({
+  subsets: ['latin', 'arabic'],
+  variable: '--font-cairo',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cloudtopia.net'),
@@ -18,27 +22,15 @@ export const metadata: Metadata = {
     default: 'CloudTopia — Digital & Cloud Technologies',
     template: '%s | CloudTopia'
   },
-  description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+  description: 'CloudTopia is a Gulf-first digital agency building bilingual Arabic + English websites, e-commerce stores with Mada and Apple Pay, and custom business systems. Fixed pricing from $299.',
   keywords: [
-    'cloud solutions',
-    'digital agency',
-    'web development',
-    'cloud infrastructure',
-    'digital transformation',
-    'business systems',
-    'web applications',
-    'AI tools',
-    'worldwide',
-    'global services',
-    'custom software',
-    'digital presence',
-    'CloudTopia',
-    'website design',
-    'e-commerce solutions',
-    'social media marketing',
-    'content creation',
-    'QR menu',
-    'cloud computing',
+    'Gulf digital agency',
+    'Saudi Arabia website design',
+    'UAE web development',
+    'Arabic RTL website',
+    'Mada payment integration',
+    'bilingual website Arabic English',
+    'Gulf e-commerce',
   ],
   authors: [{ name: 'CloudTopia', url: 'https://cloudtopia.net' }],
   creator: 'CloudTopia',
@@ -64,15 +56,9 @@ export const metadata: Metadata = {
     title: 'CloudTopia — Digital & Cloud Technologies',
     description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     siteName: 'CloudTopia',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CloudTopia — Digital & Cloud Technologies',
-        type: 'image/jpeg',
-      },
-    ],
+    // Root-level fallback uses the brand default. Per-page layouts override
+    // this with their own ogImagesFor({ page, locale }).
+    images: ogImagesFor({ page: 'home', locale: 'en' }),
   },
   twitter: {
     card: 'summary_large_image',
@@ -80,7 +66,7 @@ export const metadata: Metadata = {
     description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
     creator: '@thecloudtopia',
     site: '@thecloudtopia',
-    images: ['/images/og-image.jpg'],
+    images: ogImagesFor({ page: 'home', locale: 'en' }).map((i) => i.url),
   },
   robots: {
     index: true,
@@ -130,7 +116,7 @@ export default function RootLayout({
   const locale = headers().get('x-locale') ?? 'en'
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <head>
         {/* Preload critical fonts early */}
         <link
@@ -147,6 +133,10 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
+        {/* Preload cloud hero images so there's no black flash */}
+        <link rel="preload" as="image" href="/images/homepage/clouds.webp" type="image/webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/homepage/clouds-b.webp" type="image/webp" />
+        <link rel="preload" as="image" href="/images/homepage/clouds-c.webp" type="image/webp" />
         <link rel="manifest" href="/manifest.json" />
 
 
@@ -166,13 +156,22 @@ export default function RootLayout({
               image: 'https://cloudtopia.net/images/og-image.jpg',
               description: 'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
               foundingDate: '2024',
+              areaServed: [
+                { '@type': 'Country', name: 'Saudi Arabia' },
+                { '@type': 'Country', name: 'United Arab Emirates' },
+                { '@type': 'Country', name: 'Kuwait' },
+                { '@type': 'Country', name: 'Qatar' },
+                { '@type': 'Country', name: 'Bahrain' },
+                { '@type': 'Country', name: 'Oman' },
+                { '@type': 'Country', name: 'Türkiye' },
+              ],
               contactPoint: {
                 '@type': 'ContactPoint',
                 telephone: '+90-501-151-11-16',
                 contactType: 'customer service',
                 email: 'info@cloudtopia.net',
                 availableLanguage: ['English', 'Arabic', 'Turkish'],
-                areaServed: 'Worldwide',
+                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM', 'TR'],
               },
               sameAs: [
                 'https://x.com/thecloudtopia',
@@ -188,27 +187,42 @@ export default function RootLayout({
           }}
         />
 
-        {/* JSON-LD WebSite Schema for Sitelinks Search */}
+        {/* JSON-LD WebSite Schema with SearchAction (Google sitelinks search box) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
+              '@id': 'https://cloudtopia.net/#website',
               name: 'CloudTopia',
+              alternateName: ['كلاود توبيا', 'CloudTopia Digital Agency'],
               url: 'https://cloudtopia.net',
               description: 'Digital & Cloud Technologies — Website design, business systems, e-commerce, and custom web applications for growing businesses.',
-              inLanguage: ['en', 'ar', 'tr'],
+              // Full BCP-47 codes — aligned with our OG locales (en_US, ar_SA, tr_TR)
+              inLanguage: ['en-US', 'ar-SA', 'tr-TR'],
               publisher: {
                 '@type': 'Organization',
+                '@id': 'https://cloudtopia.net/#organization',
                 name: 'CloudTopia',
                 url: 'https://cloudtopia.net',
+              },
+              // Sitelinks search box — appears under the homepage in SERPs
+              // when a user searches for the brand. Pointing search at the
+              // blog because that's where on-site search is most useful.
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://cloudtopia.net/en/blog?q={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
               },
             }),
           }}
         />
       </head>
-      <body className={`flex flex-col min-h-screen antialiased font-['Changa',sans-serif] ${playfair.variable} ${dmSans.variable} ${notoNaskhArabic.variable}`}>
+      <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
         <LanguageProvider>
           <ThemeProvider
             attribute="class"

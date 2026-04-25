@@ -152,10 +152,12 @@ const Hero = () => {
               </div>
             </div>
 
-            <h1 className="mt-8 text-2xl md:text-2xl">
+            {/* Sub-heading — demoted from h1 because the section above
+                already has the page's primary h1. One h1 per page. */}
+            <h2 className="mt-8 text-2xl md:text-2xl">
               {currentT.welcome}{" "}
               <span className="text-pink-500 font-bold">{currentT.brand}</span>
-            </h1>
+            </h2>
 
             <div className="text-primary/60 py-4">
               {currentT.description}{" "}

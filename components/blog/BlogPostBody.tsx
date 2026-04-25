@@ -1,5 +1,9 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import React from 'react'
+import MDXFAQ, { Q } from './MDXFAQ'
+import MDXComparisonTable, { Row } from './MDXComparisonTable'
+import MDXCallout from './MDXCallout'
+import MDXServiceCTA from './MDXServiceCTA'
 
 const getTextFromNode = (node: React.ReactNode): string => {
     if (typeof node === 'string') return node
@@ -9,24 +13,43 @@ const getTextFromNode = (node: React.ReactNode): string => {
     return ''
 }
 
+const slugify = (text: string) =>
+    text
+        .normalize('NFC')
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\p{M}\s-]/gu, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || ''
+
 const components = {
     h2: (props: any) => {
         const text = getTextFromNode(props.children).trim()
-        const id = text.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{N}\p{M}\s-]/gu, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || ''
+        const id = slugify(text)
         return <h2 id={id} {...props} />
     },
     h3: (props: any) => {
         const text = getTextFromNode(props.children).trim()
-        const id = text.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{N}\p{M}\s-]/gu, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || ''
+        const id = slugify(text)
         return <h3 id={id} {...props} />
     },
-    // The rest are handled directly by blog.css targeting standard HTML tags
+    FAQ: MDXFAQ,
+    Q: Q,
+    Compare: MDXComparisonTable,
+    Row: Row,
+    Callout: MDXCallout,
+    CTA: MDXServiceCTA,
 }
 
-export default function BlogPostBody({ content }: { content: string }) {
+export default function BlogPostBody({ content, locale }: { content: string; locale?: string }) {
+    // Inject locale into CTA component defaults via a wrapper
+    const boundComponents = {
+        ...components,
+        CTA: (props: any) => <MDXServiceCTA locale={locale || 'en'} {...props} />,
+    }
     return (
         <div className="blog-prose mx-auto">
-            <MDXRemote source={content} components={components} />
+            <MDXRemote source={content} components={boundComponents} />
         </div>
     )
 }
