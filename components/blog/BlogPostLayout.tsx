@@ -79,7 +79,7 @@ export default function BlogPostLayout({ post, morePosts, children, translations
     return (
         <article className="min-h-screen bg-[var(--blog-bg)] text-[var(--blog-text)] font-['Inter']" dir={isRtl ? 'rtl' : 'ltr'}>
             <RouteAlternatesPublisher value={localizedHrefs} />
-            <BlogPostHeader post={post} translations={translations} />
+            <BlogPostHeader post={post} translations={translations} alternateSlugs={alternateSlugs} />
 
             <div className="w-full max-w-7xl mx-auto px-6 py-12 lg:py-20 relative flex flex-col lg:flex-row items-start gap-12 xl:gap-24">
 

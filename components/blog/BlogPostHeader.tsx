@@ -15,6 +15,13 @@ interface BlogPostHeaderProps {
         readingTime: string
         readInAnotherLanguage: string
     }
+    /**
+     * Per-locale slug map shared with BlogPostLayout. Required so the
+     * in-hero language switcher links to the actual translated post URL
+     * (e.g. /ar/blog/<arabic-script-slug>) instead of /ar/blog/<en-slug>
+     * which 404s.
+     */
+    alternateSlugs?: Record<string, string>
 }
 
 const LANG_LABELS: Record<string, string> = {
@@ -29,7 +36,7 @@ const LANG_ARIA: Record<string, string> = {
     tr: "Türkçe oku",
 }
 
-export default function BlogPostHeader({ post, translations }: BlogPostHeaderProps) {
+export default function BlogPostHeader({ post, translations, alternateSlugs }: BlogPostHeaderProps) {
     const isRtl = post.lang === 'ar'
 
     return (
@@ -144,7 +151,7 @@ export default function BlogPostHeader({ post, translations }: BlogPostHeaderPro
                             {(['en', 'ar', 'tr'] as const).map(l => (
                                 <Link
                                     key={l}
-                                    href={`/${l}/blog/${post.slug}`}
+                                    href={`/${l}/blog/${alternateSlugs?.[l] || post.slug}`}
                                     aria-label={LANG_ARIA[l]}
                                     aria-current={post.lang === l ? 'page' : undefined}
                                     className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${post.lang === l
