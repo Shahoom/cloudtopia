@@ -27,8 +27,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/services',                      priority: 0.9, changeFrequency: 'monthly', ogPage: 'services' },
         { path: '/pricing',                       priority: 0.9, changeFrequency: 'weekly',  ogPage: 'pricing' },
         { path: '/projects',                      priority: 0.8, changeFrequency: 'weekly',  ogPage: 'projects' },
-        // /about — user requested NO OG image; ogPage intentionally unset
-        { path: '/about',                         priority: 0.7, changeFrequency: 'monthly' },
+        { path: '/about',                         priority: 0.7, changeFrequency: 'monthly', ogPage: 'about' },
         { path: '/contact',                       priority: 0.7, changeFrequency: 'yearly',  ogPage: 'contact' },
         { path: '/labs',                          priority: 0.7, changeFrequency: 'monthly', ogPage: 'labs' },
         // Service detail pages

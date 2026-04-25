@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -28,7 +29,6 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     const ogTitle = ogTitles[locale] || ogTitles.en
     const ogDesc = ogDescs[locale] || ogDescs.en
 
-    // Per user instruction: about page does NOT emit an OG image.
     return {
         title,
         description: desc,
@@ -37,8 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description: ogDesc,
             url: `https://cloudtopia.net/${locale}/about`,
             locale: ogLocales[locale] || 'en_US',
+            images: ogImagesFor({ page: 'about', locale }),
         },
-        twitter: { card: 'summary', title: ogTitle, description: ogDesc },
+        twitter: {
+            card: 'summary_large_image',
+            title: ogTitle,
+            description: ogDesc,
+            images: ogImagesFor({ page: 'about', locale }).map((i) => i.url),
+        },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/about`,
             languages: { 'en': 'https://cloudtopia.net/en/about', 'ar': 'https://cloudtopia.net/ar/about', 'tr': 'https://cloudtopia.net/tr/about', 'x-default': 'https://cloudtopia.net/en/about' },
