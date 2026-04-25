@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -9,6 +9,8 @@ import BlogPostHeader from './BlogPostHeader'
 import TableOfContents from './TableOfContents'
 import BlogCard from './BlogCard'
 import { MoveLeft, MoveRight, Twitter, Linkedin, Link as LinkIcon, Check } from 'lucide-react'
+import { RouteAlternatesPublisher, type RouteAlternates } from '@/lib/i18n/RouteAlternatesContext'
+import type { Locale } from '@/lib/i18n/config'
 
 interface BlogPostLayoutProps {
     post: BlogPost
@@ -33,6 +35,22 @@ export default function BlogPostLayout({ post, morePosts, children, translations
     const isRtl = post.lang === 'ar'
     const [copied, setCopied] = useState(false)
 
+    // Publish localized URLs for the global LanguageSwitcher so switching
+    // locale on a blog post lands on the *correct* native-script slug
+    // instead of a 404. We use the resolved alternateSlugs map and fall
+    // back to the current slug when a particular locale isn't translated.
+    const localizedHrefs = useMemo<RouteAlternates>(() => {
+        const out: RouteAlternates = {}
+        const localesList: Locale[] = ['en', 'ar', 'tr']
+        for (const loc of localesList) {
+            const slug = alternateSlugs[loc] || (loc === post.lang ? post.slug : undefined)
+            if (slug) {
+                out[loc] = `/${loc}/blog/${encodeURIComponent(slug)}`
+            }
+        }
+        return out
+    }, [alternateSlugs, post.lang, post.slug])
+
     const handleCopy = () => {
         if (typeof window !== 'undefined') {
             navigator.clipboard.writeText(window.location.href)
@@ -55,6 +73,7 @@ export default function BlogPostLayout({ post, morePosts, children, translations
 
     return (
         <article className="min-h-screen bg-[var(--blog-bg)] text-[var(--blog-text)] font-['Inter']" dir={isRtl ? 'rtl' : 'ltr'}>
+            <RouteAlternatesPublisher value={localizedHrefs} />
             <BlogPostHeader post={post} translations={translations} />
 
             <div className="w-full max-w-7xl mx-auto px-6 py-12 lg:py-20 relative flex flex-col lg:flex-row items-start gap-12 xl:gap-24">
@@ -134,7 +153,7 @@ export default function BlogPostLayout({ post, morePosts, children, translations
                                 ).map(({ code, label, ariaLabel }) => (
                                     <Link
                                         key={code}
-                                        href={`/${code}/blog/${alternateSlugs[code] || post.slug}`}
+                                        href={`/${code}/blog/${encodeURIComponent(alternateSlugs[code] || post.slug)}`}
                                         aria-label={ariaLabel}
                                         aria-current={post.lang === code ? 'page' : undefined}
                                         role="listitem"
