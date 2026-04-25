@@ -15,6 +15,7 @@ tags:
   - Multilingual
   - hreflang
 coverImage: https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1600&q=82
+coverImageAlt: 'World map with multilingual text overlays, representing multilingual SEO strategy'
 readingTime: 9
 id: multilingual-seo-nextjs-guide
 lang: en
@@ -211,7 +212,7 @@ Using the same English slug for Arabic and Turkish posts. Google sees `/ar/blog/
   <Q q="Do I need separate Google Search Console properties per locale?">
     Optional. A single domain property is fine if hreflang is correct. Separate properties per subdirectory give you cleaner per-locale reports but don't change rankings.
   </Q>
-  <Q q="What's the difference between hreflang="ar" and hreflang="ar-SA"?">
+  <Q q="What's the difference between hreflang='ar' and hreflang='ar-SA'?">
     Use `ar` for generic Arabic, `ar-SA` when you specifically target Saudi Arabia, `ar-AE` for UAE, etc. If you serve one Arabic variant across the Gulf, `ar` + `x-default` is fine.
   </Q>
   <Q q="Should I use next-intl or a custom i18n setup?">
