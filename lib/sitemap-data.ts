@@ -5,31 +5,43 @@ import { getPostSlugs, getPostBySlug } from '@/lib/blog'
 import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds } from '@/lib/projects'
 import { locationSlugs } from '@/lib/seo/locations'
+import { hasPageOgImage } from '@/lib/og/og-image'
 
 export function buildSitemapEntries(): MetadataRoute.Sitemap {
     const baseUrl = 'https://cloudtopia.net'
     const locales = ['en', 'ar', 'tr']
 
-    // All static routes with SEO priority/frequency
-    const routes = [
-        { path: '/',                              priority: 1.0, changeFrequency: 'weekly'  as const },
-        { path: '/services',                      priority: 0.9, changeFrequency: 'monthly' as const },
-        { path: '/pricing',                       priority: 0.9, changeFrequency: 'weekly'  as const },
-        { path: '/projects',                      priority: 0.8, changeFrequency: 'weekly'  as const },
-        { path: '/about',                         priority: 0.7, changeFrequency: 'monthly' as const },
-        { path: '/contact',                       priority: 0.7, changeFrequency: 'yearly'  as const },
-        { path: '/labs',                          priority: 0.7, changeFrequency: 'monthly' as const },
+    // All static routes with SEO priority/frequency.
+    //
+    // `ogPage` — folder name under /public/og/ used to look up the per-locale
+    // OG image and emit it in the sitemap as <image:image>. Pages explicitly
+    // opted out of OG images (about, blog index per user request) leave it
+    // unset.
+    const routes: Array<{
+        path: string
+        priority: number
+        changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
+        ogPage?: string
+    }> = [
+        { path: '/',                              priority: 1.0, changeFrequency: 'weekly',  ogPage: 'home' },
+        { path: '/services',                      priority: 0.9, changeFrequency: 'monthly', ogPage: 'services' },
+        { path: '/pricing',                       priority: 0.9, changeFrequency: 'weekly',  ogPage: 'pricing' },
+        { path: '/projects',                      priority: 0.8, changeFrequency: 'weekly',  ogPage: 'projects' },
+        // /about — user requested NO OG image; ogPage intentionally unset
+        { path: '/about',                         priority: 0.7, changeFrequency: 'monthly' },
+        { path: '/contact',                       priority: 0.7, changeFrequency: 'yearly',  ogPage: 'contact' },
+        { path: '/labs',                          priority: 0.7, changeFrequency: 'monthly', ogPage: 'labs' },
         // Service detail pages
-        { path: '/website-design',                priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/ecommerce-solutions',           priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/business-systems-development',  priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/restaurant-qr-menu',            priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/content-creation',              priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/social-media-marketing',        priority: 0.8, changeFrequency: 'monthly' as const },
-        { path: '/web-applications',              priority: 0.8, changeFrequency: 'monthly' as const },
+        { path: '/website-design',                priority: 0.8, changeFrequency: 'monthly', ogPage: 'website-design' },
+        { path: '/ecommerce-solutions',           priority: 0.8, changeFrequency: 'monthly', ogPage: 'ecommerce-solutions' },
+        { path: '/business-systems-development',  priority: 0.8, changeFrequency: 'monthly', ogPage: 'business-systems-development' },
+        { path: '/restaurant-qr-menu',            priority: 0.8, changeFrequency: 'monthly', ogPage: 'restaurant-qr-menu' },
+        { path: '/content-creation',              priority: 0.8, changeFrequency: 'monthly', ogPage: 'content-creation' },
+        { path: '/social-media-marketing',        priority: 0.8, changeFrequency: 'monthly', ogPage: 'social-media-marketing' },
+        { path: '/web-applications',              priority: 0.8, changeFrequency: 'monthly', ogPage: 'web-applications' },
         // Legal
-        { path: '/privacy',                       priority: 0.3, changeFrequency: 'yearly'  as const },
-        { path: '/terms',                         priority: 0.3, changeFrequency: 'yearly'  as const },
+        { path: '/privacy',                       priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/terms',                         priority: 0.3, changeFrequency: 'yearly' },
     ]
 
     const sitemapEntries: MetadataRoute.Sitemap = []
@@ -60,24 +72,50 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         return languages
     }
 
-    // Static routes — one entry per locale
+    // Static routes — one entry per locale, with image extension where the
+    // page has a real OG image folder (and has not been opted out).
     routes.forEach((route) => {
         const pathSuffix = route.path === '/' ? '' : route.path
         const languages = buildLanguages(pathSuffix)
         const lastModified = getLastModified(route.path)
 
         locales.forEach((loc) => {
+            // Per-locale image lookup: emit /og/<page>/<locale>.jpg (or .png)
+            // when it exists; falls back gracefully when only some locales
+            // have the image.
+            let images: string[] | undefined
+            if (route.ogPage && hasPageOgImage(route.ogPage, loc)) {
+                // We pick the literal candidate path here rather than going
+                // through getOgImage() to avoid the brand-default fallback —
+                // sitemap should only declare images that actually exist for
+                // the route, not generic brand placeholders.
+                const candidates = [
+                    `/og/${route.ogPage}/${loc}.jpg`,
+                    `/og/${route.ogPage}/${loc}.png`,
+                    `/og/${route.ogPage}/default.jpg`,
+                    `/og/${route.ogPage}/default.png`,
+                ]
+                for (const c of candidates) {
+                    if (fs.existsSync(path.join(process.cwd(), 'public', c.replace(/^\//, '')))) {
+                        images = [`${baseUrl}${c}`]
+                        break
+                    }
+                }
+            }
+
             sitemapEntries.push({
                 url: `${baseUrl}/${loc}${pathSuffix}`,
                 lastModified,
                 changeFrequency: route.changeFrequency,
                 priority: route.priority,
                 alternates: { languages },
+                ...(images && { images }),
             })
         })
     })
 
-    // Blog listing page — one entry per locale
+    // Blog listing page — one entry per locale.
+    // Per user instruction: NO image extension for the blog index.
     const blogLanguages = buildLanguages('/blog')
     locales.forEach((loc) => {
         sitemapEntries.push({

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { ogImagesFor } from '@/lib/og/og-image'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import './blog.css'
 
@@ -20,6 +19,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     const title = titles[locale] || titles.en
     const description = descriptions[locale] || descriptions.en
 
+    // Per user instruction: blog index page does NOT emit an OG image.
+    // OG images for individual blog posts are set per-post in
+    // app/[locale]/blog/[slug]/page.tsx using each post's coverImage.
     return {
         title,
         description,
@@ -31,13 +33,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
             type: 'website',
-            images: ogImagesFor({ page: 'blog', locale }),
         },
         twitter: {
-            card: 'summary_large_image',
+            card: 'summary',
             title,
             description,
-            images: ogImagesFor({ page: 'blog', locale }).map(i => i.url),
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/blog`,

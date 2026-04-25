@@ -4,36 +4,35 @@ import path from 'path'
 /**
  * Per-page, per-locale Open Graph image resolver.
  *
- * Naming convention (always 1200×630 JPG):
- *   public/images/og/<page>-<locale>.jpg
+ * Convention (1200×630 JPG/PNG):
+ *   public/og/<page>/<locale>.jpg
  *
  * Examples:
- *   public/images/og/home-en.jpg
- *   public/images/og/home-ar.jpg
- *   public/images/og/pricing-en.jpg
- *   public/images/og/website-design-en.jpg
+ *   public/og/home/en.jpg
+ *   public/og/home/ar.jpg
+ *   public/og/pricing/en.jpg
+ *   public/og/services/tr.jpg
  *
- * Fallback chain (first match wins):
- *   1. /images/og/<page>-<locale>.jpg            ← page-specific, locale-specific
- *   2. /images/og/<page>.jpg                     ← page-specific, locale-agnostic
- *   3. /images/og/default-<locale>.jpg           ← brand default, locale-specific
- *   4. /images/og/default.jpg                    ← brand default, locale-agnostic
- *   5. /images/og-image.jpg                      ← legacy fallback (already in repo)
+ * Lookup chain (first match wins):
+ *   1. /og/<page>/<locale>.jpg|.png            ← page-specific, locale-specific
+ *   2. /og/<page>/default.jpg|.png             ← page-specific, locale fallback
+ *   3. /og/default/<locale>.jpg|.png           ← brand default per locale
+ *   4. /og/default.jpg|.png                    ← brand default
+ *   5. /images/og-image.jpg                    ← legacy fallback
  *
- * This means you can roll out OG images gradually — drop one in for /pricing
- * today, add one for /website-design tomorrow, and pages without a custom
- * image still serve the brand default.
+ * To roll out OG images gradually: drop a folder for one page and the rest
+ * of the site keeps falling back to the brand default until you ship more.
+ *
+ * Pages that should NOT emit an OG image (per user request: blog index,
+ * about page) pass `omit: true`. The `ogImagesFor` helper then returns an
+ * empty array, which Next.js treats as "no OG image".
  */
 
 const BASE_URL = 'https://cloudtopia.net'
 const PUBLIC_DIR = path.join(process.cwd(), 'public')
-const OG_DIR = '/images/og'
+const OG_DIR = '/og'
 const LEGACY_FALLBACK = '/images/og-image.jpg'
 
-/**
- * In-memory cache so we don't fs.statSync on every page render.
- * Cleared on dev hot-reload because the module re-loads.
- */
 const existsCache = new Map<string, boolean>()
 
 function publicFileExists(publicPath: string): boolean {
@@ -47,45 +46,55 @@ function publicFileExists(publicPath: string): boolean {
 }
 
 export type OgImageInput = {
-    page: string // e.g. 'home', 'pricing', 'website-design', 'blog/gulf-payment-gateways-mada-stc-pay-tabby'
-    locale: string // 'en' | 'ar' | 'tr'
+    /** Folder name under /public/og/. e.g. 'home', 'pricing', 'website-design' */
+    page: string
+    locale: string
     /**
-     * Absolute URL override — when a page already has a topical image (e.g. blog
-     * cover image from Unsplash) and you want to use that instead of looking up
-     * a local OG file. Pass it directly and the resolver returns it unchanged.
+     * Absolute or root-relative URL override. Used by blog posts to use
+     * the post's own cover image as the OG image.
      */
     override?: string
+    /**
+     * If true, the resolver returns null (no OG image emitted). Use for
+     * pages explicitly opted out — currently the blog index and about page.
+     */
+    omit?: boolean
 }
 
 export type OgImageResult = {
-    url: string // absolute URL safe to put in OG metadata
-    alt: string // suggested alt text
+    url: string
+    alt: string
     width: 1200
     height: 630
 }
 
 /**
- * Resolve the best-available OG image for a given page + locale.
- *
- * Always returns an absolute URL (Open Graph requires absolute URLs).
+ * Resolve the best-available OG image for a page + locale, or null when
+ * the caller passes `omit: true`.
  */
-export function getOgImage({ page, locale, override }: OgImageInput): OgImageResult {
-    // Override path — used by blog posts whose cover image is the OG image
+export function getOgImage({
+    page,
+    locale,
+    override,
+    omit,
+}: OgImageInput): OgImageResult | null {
+    if (omit) return null
+
     if (override) {
         const url = override.startsWith('http') ? override : `${BASE_URL}${override}`
         return { url, alt: page, width: 1200, height: 630 }
     }
 
     const candidates = [
-        `${OG_DIR}/${page}-${locale}.jpg`, // most specific
-        `${OG_DIR}/${page}-${locale}.png`,
-        `${OG_DIR}/${page}.jpg`, // page-specific, locale-agnostic
-        `${OG_DIR}/${page}.png`,
-        `${OG_DIR}/default-${locale}.jpg`, // brand default, locale-specific
-        `${OG_DIR}/default-${locale}.png`,
+        `${OG_DIR}/${page}/${locale}.jpg`, // page + locale
+        `${OG_DIR}/${page}/${locale}.png`,
+        `${OG_DIR}/${page}/default.jpg`, // page locale fallback
+        `${OG_DIR}/${page}/default.png`,
+        `${OG_DIR}/default/${locale}.jpg`, // brand default per locale
+        `${OG_DIR}/default/${locale}.png`,
         `${OG_DIR}/default.jpg`, // brand default
         `${OG_DIR}/default.png`,
-        LEGACY_FALLBACK, // existing /images/og-image.jpg
+        LEGACY_FALLBACK,
     ]
 
     for (const candidate of candidates) {
@@ -99,8 +108,6 @@ export function getOgImage({ page, locale, override }: OgImageInput): OgImageRes
         }
     }
 
-    // Last-resort fallback — should never hit because /images/og-image.jpg
-    // already exists in the repo, but kept for safety.
     return {
         url: `${BASE_URL}${LEGACY_FALLBACK}`,
         alt: page,
@@ -110,10 +117,12 @@ export function getOgImage({ page, locale, override }: OgImageInput): OgImageRes
 }
 
 /**
- * Convenience for Next.js metadata. Returns the array shape Next expects.
+ * Convenience for Next.js metadata. Returns the array shape Next expects,
+ * or an empty array when the page opts out (`omit: true`).
  */
 export function ogImagesFor(input: OgImageInput) {
     const img = getOgImage(input)
+    if (!img) return []
     return [
         {
             url: img.url,
@@ -123,4 +132,18 @@ export function ogImagesFor(input: OgImageInput) {
             type: img.url.endsWith('.png') ? ('image/png' as const) : ('image/jpeg' as const),
         },
     ]
+}
+
+/**
+ * True when a page has its own per-page OG image (not falling back to the
+ * brand default). Used by the sitemap to decide whether to emit
+ * `<image:image>` for static pages.
+ */
+export function hasPageOgImage(page: string, locale: string = 'en'): boolean {
+    return (
+        publicFileExists(`${OG_DIR}/${page}/${locale}.jpg`) ||
+        publicFileExists(`${OG_DIR}/${page}/${locale}.png`) ||
+        publicFileExists(`${OG_DIR}/${page}/default.jpg`) ||
+        publicFileExists(`${OG_DIR}/${page}/default.png`)
+    )
 }

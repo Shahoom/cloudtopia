@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
                         page: `authors/${author.slug}`,
                         locale,
                         override: author.image || undefined,
-                    }).url,
+                    })!.url,
                     width: 1200,
                     height: 630,
                     alt: author.name,

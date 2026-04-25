@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
                     locale,
                     override: project.image || undefined,
                 })
-                return [{ url: og.url, width: 1200, height: 630, alt: project.title }]
+                return [{ url: og!.url, width: 1200, height: 630, alt: project.title }]
             })(),
             type: 'article',
         },
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             card: 'summary_large_image',
             title,
             description,
-            images: [getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined }).url],
+            images: [getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined })!.url],
         },
         alternates: {
             canonical: `https://cloudtopia.net/${locale}/projects/${params.slug}`,
@@ -83,7 +83,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
         '@id': `https://cloudtopia.net/${locale}/projects/${project.id}#article`,
         headline: project.title,
         description: project.solution,
-        image: getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined }).url,
+        image: getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined })!.url,
         datePublished: '2025-06-01',
         dateModified: new Date().toISOString().split('T')[0],
         author: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },

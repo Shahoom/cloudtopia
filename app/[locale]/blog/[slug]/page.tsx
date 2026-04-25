@@ -32,15 +32,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     }
 
     const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
-    // OG image: lookup priority is (1) per-post override at
-    //   /public/images/og/blog/{slug}-{locale}.jpg
-    // then (2) the post's own coverImage (Unsplash or local)
-    // then (3) brand default per locale.
+    // OG image for blog posts: use the post's own coverImage as the OG.
+    // (Per user instruction. Falls back to brand default if no coverImage.)
     const imageUrl = getOgImage({
         page: `blog/${decodedSlug}`,
         locale: lang,
         override: post.coverImage || undefined,
-    }).url
+    })!.url
 
     // Resolve author page URL for OG `article:author` metadata
     const authorSlug = post.authorSlug || 'editorial-team'
@@ -154,15 +152,13 @@ export default async function PostPage({ params }: PostPageProps) {
     const dict = await getDictionary(lang as Locale)
 
     const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
-    // OG image: lookup priority is (1) per-post override at
-    //   /public/images/og/blog/{slug}-{locale}.jpg
-    // then (2) the post's own coverImage (Unsplash or local)
-    // then (3) brand default per locale.
+    // OG image for blog posts: use the post's own coverImage as the OG.
+    // (Per user instruction. Falls back to brand default if no coverImage.)
     const imageUrl = getOgImage({
         page: `blog/${decodedSlug}`,
         locale: lang,
         override: post.coverImage || undefined,
-    }).url
+    })!.url
 
     // Full BCP-47 locale codes for schema.org `inLanguage` (aligned with OG_LOCALES)
     const inLanguage: Record<string, string> = { en: 'en-US', ar: 'ar-SA', tr: 'tr-TR' }
