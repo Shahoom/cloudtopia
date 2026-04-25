@@ -39,13 +39,18 @@ export default function BlogPostLayout({ post, morePosts, children, translations
     // locale on a blog post lands on the *correct* native-script slug
     // instead of a 404. We use the resolved alternateSlugs map and fall
     // back to the current slug when a particular locale isn't translated.
+    // Localized hrefs for the global LanguageSwitcher. We use the *raw*
+    // slug (no encodeURIComponent) so the browser address bar shows
+    // readable Arabic/Turkish on hover and copy. Browsers transparently
+    // percent-encode UTF-8 when making the actual HTTP request, so the
+    // route still resolves correctly.
     const localizedHrefs = useMemo<RouteAlternates>(() => {
         const out: RouteAlternates = {}
         const localesList: Locale[] = ['en', 'ar', 'tr']
         for (const loc of localesList) {
             const slug = alternateSlugs[loc] || (loc === post.lang ? post.slug : undefined)
             if (slug) {
-                out[loc] = `/${loc}/blog/${encodeURIComponent(slug)}`
+                out[loc] = `/${loc}/blog/${slug}`
             }
         }
         return out
@@ -153,7 +158,7 @@ export default function BlogPostLayout({ post, morePosts, children, translations
                                 ).map(({ code, label, ariaLabel }) => (
                                     <Link
                                         key={code}
-                                        href={`/${code}/blog/${encodeURIComponent(alternateSlugs[code] || post.slug)}`}
+                                        href={`/${code}/blog/${alternateSlugs[code] || post.slug}`}
                                         aria-label={ariaLabel}
                                         aria-current={post.lang === code ? 'page' : undefined}
                                         role="listitem"

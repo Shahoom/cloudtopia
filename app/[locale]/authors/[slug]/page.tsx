@@ -180,7 +180,7 @@ export default function AuthorPage({ params }: PageProps) {
                             {posts.map((p) => (
                                 <li key={p.id}>
                                     <Link
-                                        href={`/${locale}/blog/${encodeURIComponent(p.slug)}`}
+                                        href={`/${locale}/blog/${p.slug}`}
                                         className="block h-full rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 hover:shadow-md transition-all p-6"
                                     >
                                         {p.tags?.[0] && (
