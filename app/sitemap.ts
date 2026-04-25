@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getPostSlugs, getSlugById, getPostBySlug } from '@/lib/blog'
+import { getPostSlugs, getPostBySlug } from '@/lib/blog'
 import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds } from '@/lib/projects'
 import { locationSlugs } from '@/lib/seo/locations'
@@ -102,37 +102,59 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
 
     // Blog posts — locale-aware with cross-locale hreflang
-    const canonicalSlugs = getPostSlugs('en')
-    canonicalSlugs.forEach((cid) => {
+    //
+    // We collect every post in every locale and deduplicate by canonical `id`
+    // (frontmatter field shared across locale variants of the same article).
+    // For each canonical id we emit one URL per locale that has the post,
+    // each with a full hreflang alternates map.
+    //
+    // The previous implementation iterated over `getPostSlugs('en')` and
+    // treated each *slug* as if it were the canonical id, which silently
+    // dropped every post whose slug ≠ id (i.e. every post with a localized
+    // native-script slug + a shared canonical id).
+    type LocalePostSummary = {
+        loc: string
+        slug: string
+        updated?: string
+        date?: string
+    }
+    const idToLocalePosts = new Map<string, LocalePostSummary[]>()
+
+    locales.forEach((loc) => {
+        const slugs = getPostSlugs(loc)
+        slugs.forEach((slug) => {
+            const post = getPostBySlug(slug, loc)
+            if (!post) return
+            const canonicalId = post.id || post.slug
+            const arr = idToLocalePosts.get(canonicalId) ?? []
+            arr.push({ loc, slug: post.slug, updated: post.updated, date: post.date })
+            idToLocalePosts.set(canonicalId, arr)
+        })
+    })
+
+    idToLocalePosts.forEach((entries) => {
+        // Build hreflang map for this canonical id
         const languages: Record<string, string> = {}
-
-        const enSlug = getSlugById(cid, 'en')
-        if (enSlug) {
-            languages['x-default'] = `${baseUrl}/en/blog/${encodeURIComponent(enSlug)}`
+        const enEntry = entries.find((e) => e.loc === 'en')
+        if (enEntry) {
+            languages['x-default'] = `${baseUrl}/en/blog/${encodeURIComponent(enEntry.slug)}`
         }
-
-        locales.forEach((loc) => {
-            const localSlug = getSlugById(cid, loc)
-            if (localSlug) {
-                languages[loc] = `${baseUrl}/${loc}/blog/${encodeURIComponent(localSlug)}`
-            }
+        entries.forEach((e) => {
+            languages[e.loc] = `${baseUrl}/${e.loc}/blog/${encodeURIComponent(e.slug)}`
         })
 
-        locales.forEach((loc) => {
-            const localSlug = getSlugById(cid, loc)
-            if (!localSlug) return
-
-            // Prefer explicit frontmatter `updated` when present (authoritative freshness
-            // signal), otherwise fall back to `date`, then file mtime as last resort.
+        // Emit one URL entry per locale variant
+        entries.forEach((e) => {
+            // Prefer explicit frontmatter `updated` (authoritative freshness signal),
+            // fall back to `date`, then to file mtime as last resort.
             let lastModified = new Date()
             try {
-                const localPost = getPostBySlug(localSlug, loc)
-                if (localPost?.updated) {
-                    lastModified = new Date(localPost.updated)
-                } else if (localPost?.date) {
-                    lastModified = new Date(localPost.date)
+                if (e.updated) {
+                    lastModified = new Date(e.updated)
+                } else if (e.date) {
+                    lastModified = new Date(e.date)
                 } else {
-                    const postPath = path.join(process.cwd(), 'blog-posts', loc, `${localSlug}.mdx`)
+                    const postPath = path.join(process.cwd(), 'blog-posts', e.loc, `${e.slug}.mdx`)
                     if (fs.existsSync(postPath)) {
                         lastModified = fs.statSync(postPath).mtime
                     }
@@ -142,7 +164,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             }
 
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}/blog/${encodeURIComponent(localSlug)}`,
+                url: `${baseUrl}/${e.loc}/blog/${encodeURIComponent(e.slug)}`,
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,
