@@ -14,7 +14,7 @@ export const areaServed = {
 export const serviceFAQs: Record<string, ServiceFAQs> = {
     'website-design': {
         en: [
-            { q: 'How much does a business website cost in the Gulf?', a: 'Our websites start at $399 for a single-page landing site, $599 for a 5-page starter business site, $1,299 for a full multi-page pro site, and $3,999 for premium custom builds. All prices are public on our pricing page.' },
+            { q: 'How much does a business website cost in the Gulf?', a: 'Our websites start at $299 for a single-page landing site, $499 for a 5-page starter business site, $999 for a full multi-page pro site, and $2,499 for premium custom builds. All prices are public on our pricing page.' },
             { q: 'Do you design websites in Arabic with RTL support?', a: 'Yes. Every site ships bilingual Arabic + English by default with full RTL layout — mirrored icons, Arabic typography (Changa variable font), and culturally appropriate imagery. Turkish is also available.' },
             { q: 'How long does it take to build a business website?', a: 'Landing pages take 1–2 weeks. Business websites take 3–5 weeks. Discovery is always the first 3–5 days with a written scope and fixed quote before design starts.' },
             { q: 'Do you optimize websites for Google and search engines?', a: 'Yes. Every site includes technical SEO (schema markup, sitemaps, fast Core Web Vitals, Arabic + English meta tags), Google Search Console setup, and Google Analytics integration.' },
@@ -22,7 +22,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'Do I own the website and the code after launch?', a: 'Yes — 100%. You own the domain, hosting account, code, design files, and content. No licensing traps, no vendor lock-in. We hand over everything at launch.' },
         ],
         ar: [
-            { q: 'كم تكلفة موقع الأعمال في الخليج؟', a: 'مواقعنا تبدأ من 399$ لصفحة هبوط واحدة، 599$ لموقع من 5 صفحات، 1,299$ لموقع متعدد الصفحات كامل، و3,999$ لبناء مخصص راقٍ. كل الأسعار معلنة في صفحة التسعير.' },
+            { q: 'كم تكلفة موقع الأعمال في الخليج؟', a: 'مواقعنا تبدأ من 299$ لصفحة هبوط واحدة، 499$ لموقع من 5 صفحات، 999$ لموقع متعدد الصفحات كامل، و2,499$ لبناء مخصص راقٍ. كل الأسعار معلنة في صفحة التسعير.' },
             { q: 'هل تصممون مواقع بالعربية مع دعم RTL؟', a: 'نعم. كل موقع يأتي ثنائي اللغة عربي + إنجليزي افتراضياً، بتخطيط RTL كامل — أيقونات معكوسة، طباعة عربية (خط Changa)، وصور مناسبة ثقافياً. التركية متاحة أيضاً.' },
             { q: 'كم يستغرق بناء موقع أعمال؟', a: 'صفحات الهبوط: ١–٢ أسبوع. مواقع الأعمال: ٣–٥ أسابيع. الاستكشاف دائماً ٣–٥ أيام أولى بنطاق مكتوب وسعر ثابت قبل أن يبدأ التصميم.' },
             { q: 'هل تحسّنون المواقع لجوجل ومحركات البحث؟', a: 'نعم. كل موقع يتضمن SEO تقني (مخطط Schema، خرائط مواقع، Core Web Vitals سريعة، وسوم عربية + إنجليزية)، وإعداد Google Search Console وGoogle Analytics.' },
@@ -30,7 +30,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'هل أملك الموقع والكود بعد الإطلاق؟', a: 'نعم — 100%. أنت تملك النطاق، حساب الاستضافة، الكود، ملفات التصميم، والمحتوى. بدون فخاخ تراخيص، بدون قيود مورّد. نسلّم كل شيء عند الإطلاق.' },
         ],
         tr: [
-            { q: 'Körfez\'de bir iş web sitesi ne kadara mal olur?', a: 'Sitelerimiz tek sayfalık açılış sayfası için $399\'dan, 5 sayfalık site için $599\'dan, çok sayfalı profesyonel site için $1.299\'dan ve premium özel yapım için $3.999\'dan başlar. Tüm fiyatlar fiyatlandırma sayfamızda halka açıktır.' },
+            { q: 'Körfez\'de bir iş web sitesi ne kadara mal olur?', a: 'Sitelerimiz tek sayfalık açılış sayfası için $299\'dan, 5 sayfalık site için $499\'dan, çok sayfalı profesyonel site için $999\'dan ve premium özel yapım için $2.499\'dan başlar. Tüm fiyatlar fiyatlandırma sayfamızda halka açıktır.' },
             { q: 'Arapça sitelerde RTL desteği var mı?', a: 'Evet. Her site varsayılan olarak iki dilli Arapça + İngilizce ve tam RTL düzenli gelir — aynalanmış ikonlar, Arapça tipografi (Changa değişken yazı tipi) ve kültürel olarak uygun görseller. Türkçe de mevcuttur.' },
             { q: 'Bir iş sitesi ne kadar sürer?', a: 'Açılış sayfaları 1–2 hafta. İş siteleri 3–5 hafta. Keşif her zaman ilk 3–5 gün yazılı bir kapsam ve sabit teklifle başlar, tasarım sonra gelir.' },
             { q: 'Siteleri Google ve arama motorları için optimize ediyor musunuz?', a: 'Evet. Her site teknik SEO (schema işaretleme, site haritaları, hızlı Core Web Vitals, Arapça + İngilizce meta etiketleri), Google Search Console kurulumu ve Google Analytics entegrasyonu içerir.' },
@@ -40,7 +40,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
     },
     'ecommerce-solutions': {
         en: [
-            { q: 'How much does an e-commerce store cost in the Gulf?', a: 'E-commerce stores start at $1,299 and go up to $3,999+ for custom multi-vendor or high-volume builds. All tiers include Mada, Apple Pay, and STC Pay out of the box.' },
+            { q: 'How much does an e-commerce store cost in the Gulf?', a: 'E-commerce stores start at $599 and go up to $2,499+ for custom multi-vendor or high-volume builds. All tiers include Mada, Apple Pay, and STC Pay out of the box.' },
             { q: 'Can you integrate Mada, Apple Pay, STC Pay, Tabby, and Tamara?', a: 'Yes. Every Gulf e-commerce build we ship includes Mada, Apple Pay, STC Pay, Tabby, and Tamara as standard. Benefit (Bahrain), NBK (Kuwait), and international rails like Stripe and PayPal are all supported.' },
             { q: 'Do you handle VAT, tax invoicing, and ZATCA e-invoicing in Saudi Arabia?', a: 'Yes. We configure 15% KSA VAT, 5% UAE VAT, ZATCA-compliant e-invoicing (Phase 1 and Phase 2), and bilingual tax invoices in Arabic and English at launch.' },
             { q: 'Which platforms do you build e-commerce stores on?', a: 'We build on Shopify, WooCommerce, and custom Next.js stacks depending on scope. For Gulf SMBs, Shopify is usually fastest; for custom logic or multi-vendor, we use WooCommerce or Next.js.' },
@@ -48,7 +48,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'Do you help with product photography and content?', a: 'Yes. We offer product photography in Riyadh, Jeddah, Dubai, and Istanbul, plus Arabic + English product copy, category descriptions, and SEO-optimized product pages.' },
         ],
         ar: [
-            { q: 'كم تكلفة المتجر الإلكتروني في الخليج؟', a: 'المتاجر الإلكترونية تبدأ من 1,299$ وترتفع إلى 3,999$+ للبنايات المخصصة متعددة البائعين أو عالية الحجم. كل المستويات تتضمن مدى، آبل باي، وSTC Pay جاهزة.' },
+            { q: 'كم تكلفة المتجر الإلكتروني في الخليج؟', a: 'المتاجر الإلكترونية تبدأ من 599$ وترتفع إلى 2,499$+ للبنايات المخصصة متعددة البائعين أو عالية الحجم. كل المستويات تتضمن مدى، آبل باي، وSTC Pay جاهزة.' },
             { q: 'هل تدمجون مدى، آبل باي، STC Pay، تابي، وتمارا؟', a: 'نعم. كل متجر خليجي نشحنه يتضمن مدى، آبل باي، STC Pay، تابي، وتمارا قياسياً. Benefit (البحرين)، NBK (الكويت)، والبوابات الدولية مثل Stripe وPayPal مدعومة جميعها.' },
             { q: 'هل تتولّون ضريبة القيمة المضافة والفوترة الإلكترونية ZATCA في السعودية؟', a: 'نعم. نُعدّ ضريبة 15% سعودية، 5% إماراتية، فوترة إلكترونية متوافقة مع ZATCA (المرحلة 1 والمرحلة 2)، وفواتير ضريبية ثنائية اللغة بالعربية والإنجليزية عند الإطلاق.' },
             { q: 'على أي منصات تبنون المتاجر الإلكترونية؟', a: 'نبني على Shopify وWooCommerce ومكدسات Next.js مخصصة حسب النطاق. للشركات الخليجية المتوسطة، Shopify عادةً الأسرع؛ للمنطق المخصص أو متعدد البائعين، نستخدم WooCommerce أو Next.js.' },
@@ -56,7 +56,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'هل تساعدون في تصوير المنتجات والمحتوى؟', a: 'نعم. نقدّم تصوير المنتجات في الرياض، جدة، دبي، وإسطنبول، بالإضافة إلى نصوص عربية + إنجليزية للمنتجات، وصفات الفئات، وصفحات منتجات محسّنة للسيو.' },
         ],
         tr: [
-            { q: 'Körfez\'de bir e-ticaret mağazası ne kadara mal olur?', a: 'E-ticaret mağazaları $1.299\'dan başlar ve özel çok satıcılı veya yüksek hacimli yapımlar için $3.999+\'ye kadar çıkar. Tüm kademeler Mada, Apple Pay ve STC Pay\'i hazır içerir.' },
+            { q: 'Körfez\'de bir e-ticaret mağazası ne kadara mal olur?', a: 'E-ticaret mağazaları $599\'dan başlar ve özel çok satıcılı veya yüksek hacimli yapımlar için $2.499+\'ye kadar çıkar. Tüm kademeler Mada, Apple Pay ve STC Pay\'i hazır içerir.' },
             { q: 'Mada, Apple Pay, STC Pay, Tabby ve Tamara entegre edilebilir mi?', a: 'Evet. Teslim ettiğimiz her Körfez e-ticaret projesi Mada, Apple Pay, STC Pay, Tabby ve Tamara\'yı standart olarak içerir. Benefit (Bahreyn), NBK (Kuveyt) ve Stripe, PayPal gibi uluslararası raylar desteklenir.' },
             { q: 'KSA\'da KDV, vergi faturalandırma ve ZATCA e-faturalandırmayı yönetiyor musunuz?', a: 'Evet. %15 KSA KDV, %5 UAE KDV, ZATCA uyumlu e-faturalandırma (Faz 1 ve Faz 2) ve lansmanda Arapça + İngilizce iki dilli vergi faturalarını yapılandırıyoruz.' },
             { q: 'Hangi platformlarda e-ticaret mağazası kuruyorsunuz?', a: 'Kapsama göre Shopify, WooCommerce ve özel Next.js yığınları üzerinde kurarız. Körfez KOBİ\'leri için Shopify genellikle en hızlısıdır; özel mantık veya çok satıcılı için WooCommerce veya Next.js kullanırız.' },
@@ -67,7 +67,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
     'restaurant-qr-menu': {
         en: [
             { q: 'How does a QR menu work in a restaurant?', a: 'Customers scan a QR code on the table with their phone camera and see your full menu instantly. No app download needed. Menu updates go live in seconds — you edit once, all tables see the change.' },
-            { q: 'How much does a QR menu system cost?', a: 'Our QR menu systems start at $599 for a single location and go up to $2,499 for multi-branch chains with ordering, table management, and POS integration.' },
+            { q: 'How much does a QR menu system cost?', a: 'Our QR menu systems start at $249 for a single location and go up to $649 for multi-branch chains with ordering, table management, and POS integration.' },
             { q: 'Does the QR menu support Arabic, English, and Turkish?', a: 'Yes. Every QR menu is multilingual out of the box — Arabic (RTL), English, Turkish, and any language you need. Customers pick their language with one tap.' },
             { q: 'Can customers order and pay through the QR menu?', a: 'Yes. Our premium QR menu includes table ordering, tip splitting, and payment via Apple Pay, Mada, STC Pay, and credit card. Kitchen receives orders instantly.' },
             { q: 'Do I need to print new menus every time prices change?', a: 'No. You edit prices, items, and photos from a dashboard and the change is live immediately. Zero reprinting costs after launch.' },
@@ -75,7 +75,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
         ],
         ar: [
             { q: 'كيف تعمل قائمة QR في المطعم؟', a: 'العملاء يمسحون رمز QR على الطاولة بكاميرا الهاتف ويرون قائمتك الكاملة فوراً. بدون تحميل تطبيق. تحديثات القائمة تظهر خلال ثوانٍ — تعدّل مرة واحدة، كل الطاولات ترى التغيير.' },
-            { q: 'كم تكلفة نظام قائمة QR؟', a: 'أنظمة قائمة QR لدينا تبدأ من 599$ لموقع واحد وترتفع إلى 2,499$ لسلاسل متعددة الفروع مع الطلب، إدارة الطاولات، وتكامل POS.' },
+            { q: 'كم تكلفة نظام قائمة QR؟', a: 'أنظمة قائمة QR لدينا تبدأ من 249$ لموقع واحد وترتفع إلى 649$ لسلاسل متعددة الفروع مع الطلب، إدارة الطاولات، وتكامل POS.' },
             { q: 'هل تدعم قائمة QR العربية والإنجليزية والتركية؟', a: 'نعم. كل قائمة QR متعددة اللغات جاهزة — العربية (RTL)، الإنجليزية، التركية، وأي لغة تحتاجها. العملاء يختارون لغتهم بنقرة واحدة.' },
             { q: 'هل يستطيع العملاء الطلب والدفع عبر قائمة QR؟', a: 'نعم. قائمة QR المميزة تتضمن الطلب من الطاولة، تقسيم الإكراميات، والدفع عبر آبل باي، مدى، STC Pay، وبطاقة الائتمان. المطبخ يستلم الطلبات فوراً.' },
             { q: 'هل أحتاج لطباعة قوائم جديدة عند تغيير الأسعار؟', a: 'لا. تعدّل الأسعار، الأصناف، والصور من لوحة تحكم والتغيير يظهر فوراً. صفر تكاليف طباعة بعد الإطلاق.' },
@@ -83,7 +83,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
         ],
         tr: [
             { q: 'QR menü bir restoranda nasıl çalışır?', a: 'Müşteriler masadaki QR kodu telefon kameralarıyla tarar ve tüm menünüzü anında görür. Uygulama indirmeye gerek yok. Menü güncellemeleri saniyeler içinde yayına girer — bir kez düzenlersiniz, tüm masalar değişikliği görür.' },
-            { q: 'QR menü sistemi ne kadara mal olur?', a: 'QR menü sistemlerimiz tek lokasyon için $599\'dan başlar ve sipariş, masa yönetimi ve POS entegrasyonu olan çok şubeli zincirler için $2.499\'ye kadar çıkar.' },
+            { q: 'QR menü sistemi ne kadara mal olur?', a: 'QR menü sistemlerimiz tek lokasyon için $249\'dan başlar ve sipariş, masa yönetimi ve POS entegrasyonu olan çok şubeli zincirler için $649\'ye kadar çıkar.' },
             { q: 'QR menü Arapça, İngilizce ve Türkçeyi destekliyor mu?', a: 'Evet. Her QR menü çok dilli olarak gelir — Arapça (RTL), İngilizce, Türkçe ve ihtiyacınız olan her dil. Müşteriler dilini tek dokunuşla seçer.' },
             { q: 'Müşteriler QR menü üzerinden sipariş verip ödeme yapabilir mi?', a: 'Evet. Premium QR menümüz masa sipariş, bahşiş paylaşımı ve Apple Pay, Mada, STC Pay ve kredi kartı ile ödeme içerir. Mutfak siparişleri anında alır.' },
             { q: 'Fiyatlar değiştiğinde yeni menü bastırmam gerekir mi?', a: 'Hayır. Fiyatları, öğeleri ve fotoğrafları bir panelden düzenlersiniz ve değişiklik anında yayına girer. Lansmandan sonra sıfır baskı maliyeti.' },
@@ -93,7 +93,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
     'business-systems-development': {
         en: [
             { q: 'What is a custom business system?', a: 'A custom business system is software built around your specific workflows — CRM, inventory management, booking systems, HR platforms, or field-service tools — instead of forcing you to fit into a generic SaaS template.' },
-            { q: 'How much does a custom CRM or business system cost?', a: 'Custom business systems typically range from $3,999 to $25,000+ depending on scope. Smaller internal tools start at $3,999; enterprise-grade platforms with multi-tenant architecture are quoted per project.' },
+            { q: 'How much does a custom CRM or business system cost?', a: 'Custom business systems typically range from $1,999 to $25,000+ depending on scope. Smaller internal tools start at $999; the Essential tier is $1,999, Advanced is $3,499, and enterprise-grade platforms with multi-tenant architecture are quoted per project.' },
             { q: 'How long does it take to build a custom business system?', a: 'Most business systems take 6–16 weeks from kickoff to launch, broken into discovery (1 week), design (2 weeks), build with weekly demos (4–12 weeks), and launch + training (1 week).' },
             { q: 'Can you replace our existing outdated system?', a: 'Yes. We regularly migrate businesses off spreadsheets, legacy ERPs, and outgrown SaaS tools into purpose-built platforms. Data migration, parallel running, and staff training are standard parts of the process.' },
             { q: 'Do business systems work in Arabic and English?', a: 'Yes. Every system is bilingual Arabic + English with full RTL support — menus, reports, emails, and dashboards all mirror correctly. Turkish is also available.' },
@@ -101,7 +101,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
         ],
         ar: [
             { q: 'ما هو نظام الأعمال المخصص؟', a: 'نظام الأعمال المخصص هو برنامج مبني حول سير العمل المحدد لشركتك — CRM، إدارة مخزون، أنظمة حجز، منصات موارد بشرية، أو أدوات خدمة ميدانية — بدلاً من إجبارك على التكيّف مع قالب SaaS عام.' },
-            { q: 'كم تكلفة CRM أو نظام أعمال مخصص؟', a: 'أنظمة الأعمال المخصصة عادةً تتراوح من 3,999$ إلى 25,000$+ حسب النطاق. الأدوات الداخلية الصغيرة تبدأ من 3,999$؛ المنصات المؤسسية ببنية متعددة المستأجرين تُسعَّر لكل مشروع.' },
+            { q: 'كم تكلفة CRM أو نظام أعمال مخصص؟', a: 'أنظمة الأعمال المخصصة تتراوح من 1,999$ إلى 25,000$+ حسب النطاق. الأدوات الداخلية تبدأ من 999$؛ المستوى الأساسي 1,999$، المتقدم 3,499$، والمنصات المؤسسية تُسعَّر لكل مشروع.' },
             { q: 'كم يستغرق بناء نظام أعمال مخصص؟', a: 'معظم أنظمة الأعمال تستغرق ٦–١٦ أسبوعاً من الانطلاق إلى الإطلاق، مقسّمة إلى استكشاف (أسبوع)، تصميم (أسبوعان)، بناء بعروض أسبوعية (٤–١٢ أسبوعاً)، وإطلاق + تدريب (أسبوع).' },
             { q: 'هل يمكنكم استبدال نظامنا القديم الحالي؟', a: 'نعم. ننقل الشركات بانتظام من جداول البيانات، أنظمة ERP القديمة، وأدوات SaaS التي تجاوزناها إلى منصات مخصصة. نقل البيانات، التشغيل المتوازي، وتدريب الموظفين أجزاء قياسية من العملية.' },
             { q: 'هل تعمل أنظمة الأعمال بالعربية والإنجليزية؟', a: 'نعم. كل نظام ثنائي اللغة عربي + إنجليزي بدعم RTL كامل — القوائم، التقارير، الرسائل الإلكترونية، ولوحات التحكم تنعكس بشكل صحيح. التركية متاحة أيضاً.' },
@@ -109,7 +109,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
         ],
         tr: [
             { q: 'Özel iş sistemi nedir?', a: 'Özel iş sistemi, sizi genel bir SaaS şablonuna uymaya zorlamak yerine belirli iş akışlarınız etrafında inşa edilen bir yazılımdır — CRM, envanter yönetimi, rezervasyon sistemleri, İK platformları veya saha servisi araçları.' },
-            { q: 'Özel bir CRM veya iş sistemi ne kadara mal olur?', a: 'Özel iş sistemleri kapsama göre tipik olarak $3.999 ile $25.000+ arasında değişir. Küçük dahili araçlar $3.999\'dan başlar; çok kiracılı mimariye sahip kurumsal platformlar proje bazında fiyatlandırılır.' },
+            { q: 'Özel bir CRM veya iş sistemi ne kadara mal olur?', a: 'Özel iş sistemleri kapsama göre $1.999 ile $25.000+ arasında değişir. Küçük dahili araçlar $999\'dan başlar; Essential kademe $1.999, Advanced $3.499 ve çok kiracılı kurumsal platformlar proje bazında fiyatlandırılır.' },
             { q: 'Özel bir iş sistemi inşa etmek ne kadar sürer?', a: 'Çoğu iş sistemi başlangıçtan lansmana 6–16 hafta sürer: keşif (1 hafta), tasarım (2 hafta), haftalık demolarla inşa (4–12 hafta) ve lansman + eğitim (1 hafta).' },
             { q: 'Mevcut eski sistemimizi değiştirebilir misiniz?', a: 'Evet. İşletmeleri düzenli olarak elektronik tablolardan, eski ERP\'lerden ve büyümüş SaaS araçlarından amaca yönelik platformlara taşıyoruz. Veri taşıma, paralel çalışma ve personel eğitimi sürecin standart parçalarıdır.' },
             { q: 'İş sistemleri Arapça ve İngilizcede çalışıyor mu?', a: 'Evet. Her sistem tam RTL desteğiyle iki dillidir Arapça + İngilizce — menüler, raporlar, e-postalar ve panolar doğru şekilde yansıtılır. Türkçe de mevcuttur.' },

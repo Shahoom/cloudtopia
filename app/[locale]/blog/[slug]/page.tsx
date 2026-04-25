@@ -170,6 +170,15 @@ export default async function PostPage({ params }: PostPageProps) {
         '@id': `${canonicalUrl}#article`,
         headline: post.title,
         description: post.excerpt,
+        // SpeakableSpecification — Google Assistant, Siri, and AI search
+        // engines (ChatGPT, Perplexity) use this to identify which parts of
+        // the article are best suited for voice/audio answers. We point at
+        // the H1, the first paragraph, and any FAQ blocks (highest CSS
+        // selector specificity that matches across our blog templates).
+        speakable: {
+            '@type': 'SpeakableSpecification',
+            cssSelector: ['h1', '.prose > p:first-of-type', 'h2', '.faq-question', '.faq-answer'],
+        },
         datePublished: publishedDate,
         dateModified: modifiedDate,
         author: {

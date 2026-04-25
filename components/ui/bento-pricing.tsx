@@ -34,7 +34,7 @@ function getData(locale: string, href: (p: string) => string): BentoCell[] {
     {
       badge: isAr ? 'الأكثر طلباً' : isTr ? 'En Popüler' : 'Most Popular',
       title: isAr ? 'موقع احترافي' : isTr ? 'Profesyonel Web Sitesi' : 'Professional Website',
-      price: '$1,299',
+      price: '$999',
       priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
       desc: isAr
         ? 'موقع يحوّل الزوار إلى عملاء — SEO متكامل، واتساب، وتحليلات متقدمة.'
@@ -54,7 +54,7 @@ function getData(locale: string, href: (p: string) => string): BentoCell[] {
     {
       badge: isAr ? 'متجر إلكتروني' : isTr ? 'E-Ticaret' : 'E-Commerce',
       title: isAr ? 'متجر النمو' : isTr ? 'Büyüme Mağazası' : 'Growth Store',
-      price: '$1,699',
+      price: '$1,299',
       priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
       desc: isAr
         ? 'متجر متكامل مع بوابة دفع، مخزون، وكوبونات ترويجية.'
@@ -73,7 +73,7 @@ function getData(locale: string, href: (p: string) => string): BentoCell[] {
     {
       badge: isAr ? 'نظام إدارة' : isTr ? 'CRM Sistemi' : 'CRM System',
       title: isAr ? 'نظام CRM' : isTr ? 'CRM Temeli' : 'CRM Foundation',
-      price: '$1,299',
+      price: '$1,999',
       priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
       desc: isAr
         ? 'CRM مخصص مع واتساب والبريد الإلكتروني وتقارير متقدمة.'
@@ -92,7 +92,7 @@ function getData(locale: string, href: (p: string) => string): BentoCell[] {
     {
       badge: isAr ? 'قائمة QR' : isTr ? 'QR Menü' : 'QR Menu',
       title: isAr ? 'القائمة الأساسية' : isTr ? 'Temel QR Menü' : 'Essential QR Menu',
-      price: '$399',
+      price: '$249',
       priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
       desc: isAr
         ? 'قائمة رقمية فورية للمطاعم مع تحديثات مجانية دائمة.'

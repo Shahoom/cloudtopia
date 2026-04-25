@@ -9,9 +9,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         tr: 'Körfez\'de Web Sitesi Tasarım & Geliştirme',
     }
     const descs: Record<string, string> = {
-        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct. From $399.',
-        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح. تبدأ من 399$.',
-        tr: 'Körfez işletmeleri için iki dilli Arapça + İngilizce web siteleri. Hızlı, SEO hazır, RTL doğru. $399\'dan başlar.',
+        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct. From $299.',
+        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح. تبدأ من 299$.',
+        tr: 'Körfez işletmeleri için iki dilli Arapça + İngilizce web siteleri. Hızlı, SEO hazır, RTL doğru. $299\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Website Design — CloudTopia',

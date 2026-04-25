@@ -9,9 +9,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         tr: 'Körfez\'deki Restoranlar için QR Menü Sistemleri',
     }
     const descs: Record<string, string> = {
-        en: 'Multilingual QR menus for Gulf restaurants and cafés. Arabic, English, Turkish. Table ordering, payments, instant updates. From $599.',
-        ar: 'قوائم QR متعددة اللغات لمطاعم ومقاهي الخليج. العربية، الإنجليزية، التركية. طلب من الطاولة، مدفوعات، تحديثات فورية. تبدأ من 599$.',
-        tr: 'Körfez restoranları ve kafeleri için çok dilli QR menüler. Arapça, İngilizce, Türkçe. Masa siparişi, ödemeler, anında güncellemeler. $599\'dan başlar.',
+        en: 'Multilingual QR menus for Gulf restaurants and cafés. Arabic, English, Turkish. Table ordering, payments, instant updates. From $249.',
+        ar: 'قوائم QR متعددة اللغات لمطاعم ومقاهي الخليج. العربية، الإنجليزية، التركية. طلب من الطاولة، مدفوعات، تحديثات فورية. تبدأ من 249$.',
+        tr: 'Körfez restoranları ve kafeleri için çok dilli QR menüler. Arapça, İngilizce, Türkçe. Masa siparişi, ödemeler, anında güncellemeler. $249\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'QR Menu Systems — CloudTopia',

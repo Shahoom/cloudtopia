@@ -6,7 +6,7 @@ import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds } from '@/lib/projects'
 import { locationSlugs } from '@/lib/seo/locations'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export function buildSitemapEntries(): MetadataRoute.Sitemap {
     const baseUrl = 'https://cloudtopia.net'
     const locales = ['en', 'ar', 'tr']
 
@@ -117,6 +117,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         slug: string
         updated?: string
         date?: string
+        coverImage?: string
+        title?: string
     }
     const idToLocalePosts = new Map<string, LocalePostSummary[]>()
 
@@ -127,7 +129,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
             if (!post) return
             const canonicalId = post.id || post.slug
             const arr = idToLocalePosts.get(canonicalId) ?? []
-            arr.push({ loc, slug: post.slug, updated: post.updated, date: post.date })
+            arr.push({
+                loc,
+                slug: post.slug,
+                updated: post.updated,
+                date: post.date,
+                coverImage: post.coverImage,
+                title: post.title,
+            })
             idToLocalePosts.set(canonicalId, arr)
         })
     })
@@ -163,12 +172,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 // fallback
             }
 
+            // Image sitemap extension — surfaces blog covers in Google Images.
+            // Image URLs MUST be absolute. Relative paths (legacy posts using
+            // /images/blog/...) get prefixed with the canonical base URL;
+            // full URLs (Unsplash CDN) pass through.
+            const absoluteImage = e.coverImage
+                ? (e.coverImage.startsWith('http') ? e.coverImage : `${baseUrl}${e.coverImage}`)
+                : undefined
+
             sitemapEntries.push({
                 url: `${baseUrl}/${e.loc}/blog/${encodeURIComponent(e.slug)}`,
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,
                 alternates: { languages },
+                ...(absoluteImage && {
+                    images: [absoluteImage],
+                }),
             })
         })
     })

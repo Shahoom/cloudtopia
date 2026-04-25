@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: 'CloudTopia — Digital & Cloud Technologies',
     template: '%s | CloudTopia'
   },
-  description: 'CloudTopia is a Gulf-first digital agency building bilingual Arabic + English websites, e-commerce stores with Mada and Apple Pay, and custom business systems. Fixed pricing, from $399.',
+  description: 'CloudTopia is a Gulf-first digital agency building bilingual Arabic + English websites, e-commerce stores with Mada and Apple Pay, and custom business systems. Fixed pricing from $299.',
   keywords: [
     'Gulf digital agency',
     'Saudi Arabia website design',
@@ -192,21 +192,36 @@ export default function RootLayout({
           }}
         />
 
-        {/* JSON-LD WebSite Schema for Sitelinks Search */}
+        {/* JSON-LD WebSite Schema with SearchAction (Google sitelinks search box) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
+              '@id': 'https://cloudtopia.net/#website',
               name: 'CloudTopia',
+              alternateName: ['كلاود توبيا', 'CloudTopia Digital Agency'],
               url: 'https://cloudtopia.net',
               description: 'Digital & Cloud Technologies — Website design, business systems, e-commerce, and custom web applications for growing businesses.',
-              inLanguage: ['en', 'ar', 'tr'],
+              // Full BCP-47 codes — aligned with our OG locales (en_US, ar_SA, tr_TR)
+              inLanguage: ['en-US', 'ar-SA', 'tr-TR'],
               publisher: {
                 '@type': 'Organization',
+                '@id': 'https://cloudtopia.net/#organization',
                 name: 'CloudTopia',
                 url: 'https://cloudtopia.net',
+              },
+              // Sitelinks search box — appears under the homepage in SERPs
+              // when a user searches for the brand. Pointing search at the
+              // blog because that's where on-site search is most useful.
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://cloudtopia.net/en/blog?q={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
               },
             }),
           }}
