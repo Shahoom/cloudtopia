@@ -71,7 +71,10 @@ export default function CloudHero() {
     }, [cyclingWords.length])
 
     const title = t.home?.hero?.title || 'Elevate Your Business'
-    const intoThe = t.home?.hero?.intoThe || 'Into the'
+    // `??` (not `||`) so a deliberately-empty Turkish value isn't replaced
+    // with the English fallback. Turkish doesn't need a word between
+    // "İşletmenizi" and "Buluta Yükseltin"; the dative is on the noun.
+    const intoThe = t.home?.hero?.intoThe ?? 'Into the'
     const titleSuffix = t.home?.hero?.titleSuffix || ''
     const description = t.home?.hero?.description || ''
     const tagline = t.header?.tagline || 'Digital & Cloud Technologies'
