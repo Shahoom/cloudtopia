@@ -5,19 +5,32 @@ const nextConfig = {
   compress: true,
   transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
 
-  // Explicit 301 redirects for common non-canonical URL variants
-  // These reinforce what middleware already does, ensuring Vercel's edge
-  // and any CDN layer also returns 301 before middleware runs.
+  // Explicit 308 redirects for common non-canonical URL variants.
+  // Order matters: the first matching rule wins, so the most specific
+  // rule (www root) sits above the generic www rule. This collapses
+  // what was a 3-hop chain (www/ → non-www/ → /en) into a single hop
+  // for both www and non-www visitors. Google flags chains as
+  // "Page with redirect" status in Search Console; single hops keep
+  // crawl budget tight and indexing clean.
   async redirects() {
     return [
-      // www → non-www (covers http and https)
+      // www root → /en directly (single hop, skips the intermediate
+      // non-www root that itself redirects).
+      {
+        source: '/',
+        has: [{ type: 'host', value: 'www.cloudtopia.net' }],
+        destination: 'https://cloudtopia.net/en',
+        permanent: true,
+      },
+      // www any other path → non-www same path (preserves /en/blog,
+      // /ar/pricing, etc. with one hop).
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.cloudtopia.net' }],
         destination: 'https://cloudtopia.net/:path*',
         permanent: true,
       },
-      // Bare root (no locale) → /en
+      // non-www bare root → /en
       {
         source: '/',
         destination: '/en',
