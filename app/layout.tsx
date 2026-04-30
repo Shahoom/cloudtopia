@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 
 const cairo = Cairo({
   subsets: ['latin', 'arabic'],
@@ -223,6 +224,11 @@ export default function RootLayout({
         />
       </head>
       <body className="flex flex-col min-h-screen antialiased font-['Changa',sans-serif]">
+        {/* Meta (Facebook) Pixel — boots once, then PixelRouteChangeTracker
+            re-fires PageView on App Router client-side navigations. */}
+        <MetaPixelBoot />
+        <PixelRouteChangeTracker />
+
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
