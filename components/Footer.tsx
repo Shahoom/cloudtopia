@@ -16,9 +16,12 @@ export default function Footer() {
       { name: t.footer.links.businessSystems, href: l('/services#business-systems') },
       { name: t.footer.links.webApplications, href: l('/services#web-applications') },
       { name: t.footer.links.allServices, href: l('/services') },
+      { name: t.footer.links.pricing, href: l('/pricing') },
     ],
     [t.footer.company]: [
       { name: t.footer.links.aboutUs, href: l('/about') },
+      { name: t.footer.links.projects, href: l('/projects') },
+      { name: t.footer.links.blog, href: l('/blog') },
       { name: t.footer.links.ourLabs, href: l('/labs') },
       { name: t.footer.links.contactUs, href: l('/contact') },
     ],

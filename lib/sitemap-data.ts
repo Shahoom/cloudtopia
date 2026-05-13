@@ -47,6 +47,17 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     // Helper: get last-modified date from file system
     function getLastModified(routePath: string): Date {
+        // /projects is data-driven from lib/i18n/translations/<loc>.ts, so
+        // its lastmod must track that file — page.tsx mtime resets on every
+        // Vercel deploy and creates the freshness noise that 'Discovered –
+        // currently not indexed' feeds on. Same pattern as /projects/[id].
+        if (routePath === '/projects') {
+            try {
+                const p = path.join(process.cwd(), 'lib/i18n/translations/en.ts')
+                if (fs.existsSync(p)) return fs.statSync(p).mtime
+            } catch { /* fall through to template mtime */ }
+        }
+
         try {
             const filePath = routePath === '/'
                 ? path.join(process.cwd(), 'app/[locale]/page.tsx')
