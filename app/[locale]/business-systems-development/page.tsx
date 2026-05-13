@@ -212,7 +212,7 @@ export default function BusinessSystemsDevelopmentPage() {
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
-                            href="/contact"
+                            href={`/${locale}/contact`}
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {p?.cta?.button || 'Start Your Project Today'}
@@ -221,7 +221,7 @@ export default function BusinessSystemsDevelopmentPage() {
                             </svg>
                         </Link>
                         <Link
-                            href="/services"
+                            href={`/${locale}/services`}
                             className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"
                         >
                             {p?.cta?.explore || 'Explore All Services'}

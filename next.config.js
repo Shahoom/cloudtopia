@@ -5,41 +5,16 @@ const nextConfig = {
   compress: true,
   transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
 
-  // Explicit 308 redirects for common non-canonical URL variants.
-  // Order matters: the first matching rule wins, so the most specific
-  // rule (www root) sits above the generic www rule. This collapses
-  // what was a 3-hop chain (www/ → non-www/ → /en) into a single hop
-  // for both www and non-www visitors. Google flags chains as
-  // "Page with redirect" status in Search Console; single hops keep
-  // crawl budget tight and indexing clean.
-  async redirects() {
-    return [
-      // www root → /en directly (single hop, skips the intermediate
-      // non-www root that itself redirects).
-      {
-        source: '/',
-        has: [{ type: 'host', value: 'www.cloudtopia.net' }],
-        destination: 'https://cloudtopia.net/en',
-        permanent: true,
-      },
-      // www any other path → non-www same path (preserves /en/blog,
-      // /ar/pricing, etc. with one hop).
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.cloudtopia.net' }],
-        destination: 'https://cloudtopia.net/:path*',
-        permanent: true,
-      },
-      // non-www bare root → /en
-      {
-        source: '/',
-        destination: '/en',
-        permanent: true,
-      },
-    ]
-  },
+  // Redirects are handled entirely by middleware.ts so that www-stripping,
+  // trailing-slash removal, and locale-prefix injection happen in a single
+  // 301 hop. Routing-layer redirects in next.config.js evaluate before
+  // middleware and preserve `:path*` literally (including the trailing
+  // slash), which produced a 2-hop chain like:
+  //     www/en/  →  /en/  (next.config)  →  /en  (middleware)
+  // Google flags that destination as "Page with redirect" because the
+  // first redirect lands on another redirect. Letting middleware own the
+  // logic guarantees a single hop for every variant.
 
-  // Security Headers
   async headers() {
     return [
       {

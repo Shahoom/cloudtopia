@@ -416,7 +416,7 @@ export default function AboutPage() {
                                     {t.about.cta.description}
                                 </p>
                                 <Link
-                                    href="/contact"
+                                    href={`/${locale}/contact`}
                                     className="group relative inline-flex items-center gap-3 px-12 py-5 bg-blue-600 text-white rounded-2xl font-black text-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(37,99,235,0.2)]"
                                 >
                                     <span>{t.about.cta.button}</span>

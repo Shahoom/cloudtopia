@@ -113,25 +113,48 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         })
     })
 
+    // Helper: latest post date for a given locale (falls back across
+    // locales when one has no posts). Used as a stable freshness signal
+    // for aggregate listing pages — sending `new Date()` on every fetch
+    // tells Google the page changed even when no content moved, which
+    // Google learns to discount and which can demote crawl priority.
+    function latestPostDate(loc: string): Date {
+        const fromLocale = (l: string): Date | null => {
+            let latest: Date | null = null
+            for (const slug of getPostSlugs(l)) {
+                const post = getPostBySlug(slug, l)
+                if (!post) continue
+                const raw = post.updated || post.date
+                if (!raw) continue
+                const d = new Date(raw)
+                if (Number.isNaN(d.getTime())) continue
+                if (!latest || d > latest) latest = d
+            }
+            return latest
+        }
+        return fromLocale(loc) || fromLocale('en') || new Date()
+    }
+
     // Blog listing page — one entry per locale.
     // Per user instruction: NO image extension for the blog index.
     const blogLanguages = buildLanguages('/blog')
     locales.forEach((loc) => {
         sitemapEntries.push({
             url: `${baseUrl}/${loc}/blog`,
-            lastModified: new Date(),
+            lastModified: latestPostDate(loc),
             changeFrequency: 'weekly',
             priority: 0.9,
             alternates: { languages: blogLanguages },
         })
     })
 
-    // RSS feeds — one per locale
+    // RSS feeds — one per locale. Freshness tracks newest post, not
+    // wall-clock time, so crawlers see honest update signals.
     const feedLanguages = buildLanguages('/blog/feed.xml')
     locales.forEach((loc) => {
         sitemapEntries.push({
             url: `${baseUrl}/${loc}/blog/feed.xml`,
-            lastModified: new Date(),
+            lastModified: latestPostDate(loc),
             changeFrequency: 'daily',
             priority: 0.5,
             alternates: { languages: feedLanguages },
@@ -230,13 +253,35 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         })
     })
 
+    // Stable last-modified dates for aggregate / template-driven pages.
+    // Author pages: pinned to the page-template mtime (changes when the
+    // template is edited). Projects: project data lives in i18n
+    // translations, so use the translation-file mtime. Locations: same —
+    // backed by lib/seo/locations. These are deploy-time stable; Google
+    // gets a real freshness signal only when content actually changes.
+    const authorTemplateMtime = getLastModified('/authors/[slug]')
+    const projectsDataMtime = (() => {
+        try {
+            const p = path.join(process.cwd(), 'lib/i18n/translations/en.ts')
+            if (fs.existsSync(p)) return fs.statSync(p).mtime
+        } catch { /* ignore */ }
+        return new Date()
+    })()
+    const locationsDataMtime = (() => {
+        try {
+            const p = path.join(process.cwd(), 'lib/seo/locations.ts')
+            if (fs.existsSync(p)) return fs.statSync(p).mtime
+        } catch { /* ignore */ }
+        return new Date()
+    })()
+
     // Author pages — one entry per (locale × author)
     getAllAuthorSlugs().forEach((authorSlug) => {
         const languages = buildLanguages(`/authors/${authorSlug}`)
         locales.forEach((loc) => {
             sitemapEntries.push({
                 url: `${baseUrl}/${loc}/authors/${authorSlug}`,
-                lastModified: new Date(),
+                lastModified: authorTemplateMtime,
                 changeFrequency: 'monthly',
                 priority: 0.6,
                 alternates: { languages },
@@ -251,7 +296,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         locales.forEach((loc) => {
             sitemapEntries.push({
                 url: `${baseUrl}/${loc}/projects/${pid}`,
-                lastModified: new Date(),
+                lastModified: projectsDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.8,
                 alternates: { languages },
@@ -265,7 +310,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         locales.forEach((loc) => {
             sitemapEntries.push({
                 url: `${baseUrl}/${loc}/locations/${country}`,
-                lastModified: new Date(),
+                lastModified: locationsDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.85,
                 alternates: { languages },
