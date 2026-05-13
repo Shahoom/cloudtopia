@@ -13,15 +13,17 @@ Sitemap: https://cloudtopia.net/sitemap.xml
 # llms.txt: https://cloudtopia.net/llms.txt
 # Pricing (machine-readable): https://cloudtopia.net/pricing.md
 
-# Crawl-delay (default for unlisted bots)
-Crawl-delay: 1
-
 # ── Search Engines ─────────────────────────────────────────────
+# Note: Googlebot ignores Crawl-delay; setting it in the User-agent: *
+# block signalled to Google that the site is slow/limited and was
+# correlated with reduced crawl frequency. Per-bot rules below — apply
+# Crawl-delay only to bots that respect it (Bing, Yandex).
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Slurp
 Allow: /
