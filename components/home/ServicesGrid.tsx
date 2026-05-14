@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 type ServiceCard = {
@@ -111,7 +112,7 @@ export default function ServicesGrid() {
                                         borderWidth={2}
                                     />
                                     <Link
-                                        href={`/${locale}${card.link}`}
+                                        href={localePath(locale, card.link)}
                                         className="group relative flex flex-col h-full p-7 md:p-8 rounded-[calc(1rem-1px)] bg-white transition-all duration-300 overflow-hidden"
                                     >
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -160,7 +161,7 @@ export default function ServicesGrid() {
                     className="mt-12 md:mt-16 flex justify-center"
                 >
                     <Link
-                        href={`/${locale}/services`}
+                        href={localePath(locale, '/services')}
                         className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-neutral-900 text-white font-semibold hover:bg-neutral-800 transition-colors"
                     >
                         {viewAll}

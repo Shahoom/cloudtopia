@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -36,14 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/web-applications`,
+            url: canonicalUrl(locale, '/web-applications'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'web-applications', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/web-applications`,
-            languages: { 'en': 'https://cloudtopia.net/en/web-applications', 'ar': 'https://cloudtopia.net/ar/web-applications', 'tr': 'https://cloudtopia.net/tr/web-applications', 'x-default': 'https://cloudtopia.net/en/web-applications' },
+            canonical: canonicalUrl(locale, '/web-applications'),
+            languages: buildHreflangMap('/web-applications'),
         },
     }
 }
@@ -61,9 +62,9 @@ export default function WebApplicationsLayout({ children, params }: { children: 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'Web Applications', item: `https://cloudtopia.net/${locale}/web-applications` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'Web Applications', item: canonicalUrl(locale, '/web-applications') },
                         ],
                     }),
                 }}
@@ -76,7 +77,7 @@ export default function WebApplicationsLayout({ children, params }: { children: 
                         '@type': 'Service',
                         name: 'Custom Web Applications Development',
                         description: 'Interactive web applications with real-time features, portals, and SaaS platforms.',
-                        url: `https://cloudtopia.net/${locale}/web-applications`,
+                        url: canonicalUrl(locale, '/web-applications'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Web Application Development',
                         areaServed: [

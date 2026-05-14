@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, dir, locale } = useLanguage()
 
-  const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+  const l = (path: string) => localePath(locale, path)
 
   const footerLinks = {
     [t.footer.services]: [
@@ -16,9 +17,12 @@ export default function Footer() {
       { name: t.footer.links.businessSystems, href: l('/services#business-systems') },
       { name: t.footer.links.webApplications, href: l('/services#web-applications') },
       { name: t.footer.links.allServices, href: l('/services') },
+      { name: t.footer.links.pricing, href: l('/pricing') },
     ],
     [t.footer.company]: [
       { name: t.footer.links.aboutUs, href: l('/about') },
+      { name: t.footer.links.projects, href: l('/projects') },
+      { name: t.footer.links.blog, href: l('/blog') },
       { name: t.footer.links.ourLabs, href: l('/labs') },
       { name: t.footer.links.contactUs, href: l('/contact') },
     ],

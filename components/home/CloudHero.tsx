@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 
 const STAR_COUNT = 40
 
@@ -87,7 +88,7 @@ export default function CloudHero() {
                 ? 'Merhaba CloudTopia, ücretsiz danışmak istiyorum.'
                 : 'Hi CloudTopia, I\'d like a free consultation.'
     )}`
-    const l = (p: string) => `/${locale}${p === '/' ? '' : p}`
+    const l = (p: string) => localePath(locale, p)
 
     const stars = useStars(STAR_COUNT)
 

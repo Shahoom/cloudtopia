@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -36,14 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/services`,
+            url: canonicalUrl(locale, '/services'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'services', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/services`,
-            languages: { 'en': 'https://cloudtopia.net/en/services', 'ar': 'https://cloudtopia.net/ar/services', 'tr': 'https://cloudtopia.net/tr/services', 'x-default': 'https://cloudtopia.net/en/services' },
+            canonical: canonicalUrl(locale, '/services'),
+            languages: buildHreflangMap('/services'),
         },
     }
 }
@@ -87,8 +88,8 @@ export default function ServicesLayout({ children, params: { locale } }: { child
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: b.home, item: `https://cloudtopia.net/${l}` },
-                            { '@type': 'ListItem', position: 2, name: b.services, item: `https://cloudtopia.net/${l}/services` },
+                            { '@type': 'ListItem', position: 1, name: b.home, item: canonicalUrl(l, '/') },
+                            { '@type': 'ListItem', position: 2, name: b.services, item: canonicalUrl(l, '/services') },
                         ],
                     }),
                 }}
@@ -101,12 +102,12 @@ export default function ServicesLayout({ children, params: { locale } }: { child
                         '@type': 'ItemList',
                         name: i.name,
                         description: i.desc,
-                        url: `https://cloudtopia.net/${l}/services`,
+                        url: canonicalUrl(l, '/services'),
                         numberOfItems: 3,
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: i.items[0], url: `https://cloudtopia.net/${l}/services#digital-presence` },
-                            { '@type': 'ListItem', position: 2, name: i.items[1], url: `https://cloudtopia.net/${l}/services#business-systems` },
-                            { '@type': 'ListItem', position: 3, name: i.items[2], url: `https://cloudtopia.net/${l}/services#web-applications` },
+                            { '@type': 'ListItem', position: 1, name: i.items[0], url: `${canonicalUrl(l, '/services')}#digital-presence` },
+                            { '@type': 'ListItem', position: 2, name: i.items[1], url: `${canonicalUrl(l, '/services')}#business-systems` },
+                            { '@type': 'ListItem', position: 3, name: i.items[2], url: `${canonicalUrl(l, '/services')}#web-applications` },
                         ],
                     }),
                 }}

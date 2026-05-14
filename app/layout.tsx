@@ -81,9 +81,10 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Add your verification codes here when available
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+    // Set GOOGLE_VERIFICATION in Vercel project env after creating the GSC
+    // property with HTML-tag verification. Tag emits only when the env var
+    // is set, so dev/preview deploys don't claim ownership unintentionally.
+    ...(process.env.GOOGLE_VERIFICATION && { google: process.env.GOOGLE_VERIFICATION }),
   },
   category: 'technology',
   other: {
@@ -215,7 +216,7 @@ export default function RootLayout({
                 '@type': 'SearchAction',
                 target: {
                   '@type': 'EntryPoint',
-                  urlTemplate: 'https://cloudtopia.net/en/blog?q={search_term_string}',
+                  urlTemplate: 'https://cloudtopia.net/blog?q={search_term_string}',
                 },
                 'query-input': 'required name=search_term_string',
               },

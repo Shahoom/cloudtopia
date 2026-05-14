@@ -5,6 +5,7 @@ import Link from "next/link"
 import { renderCanvas, TypeWriter } from "@/components/ui/hero-designali"
 import { Plus, CheckCircle } from "lucide-react"
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import {
   HoverSlider,
   HoverSliderImage,
@@ -106,7 +107,7 @@ const Hero = () => {
             <div className="relative flex items-center rounded-full border bg-popover px-3 py-1 text-xs text-primary/60">
               {currentT.badge}
               <Link
-                href={`/${locale}/services`}
+                href={localePath(locale, '/services')}
                 rel="noreferrer"
                 className={`${locale === 'ar' ? 'mr-1' : 'ml-1'} flex items-center font-semibold`}
               >
@@ -1028,7 +1029,7 @@ const ServiceExplainer = ({ locale }: { locale: string }) => {
             {currentT.ctaDescription}
           </p>
           <Link
-            href={`/${locale}/contact`}
+            href={localePath(locale, '/contact')}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
           >
             {currentT.ctaButton}

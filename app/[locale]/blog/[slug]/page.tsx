@@ -8,8 +8,7 @@ import BlogPostLayout from '@/components/blog/BlogPostLayout'
 import BlogPostBody from '@/components/blog/BlogPostBody'
 import BlogBreadcrumb from '@/components/blog/BlogBreadcrumb'
 import { getOgImage } from '@/lib/og/og-image'
-
-const BASE_URL = 'https://cloudtopia.net'
+import { BASE_URL, canonicalUrl as canonicalForLocale, localePath } from '@/lib/i18n/url'
 
 const OG_LOCALES: Record<string, string> = {
     en: 'en_US',
@@ -31,7 +30,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
         return { title: 'Post Not Found' }
     }
 
-    const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
+    const canonicalUrl = canonicalForLocale(lang, `/blog/${params.slug}`)
     // OG image for blog posts: use the post's own coverImage as the OG.
     // (Per user instruction. Falls back to brand default if no coverImage.)
     const imageUrl = getOgImage({
@@ -44,8 +43,8 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     const authorSlug = post.authorSlug || 'editorial-team'
     const authorProfile = getAuthor(authorSlug)
     const authorUrl = authorProfile
-        ? `${BASE_URL}/${lang}/authors/${authorProfile.slug}`
-        : `${BASE_URL}/${lang}/about`
+        ? canonicalForLocale(lang, `/authors/${authorProfile.slug}`)
+        : canonicalForLocale(lang, '/about')
 
     // Localized alt text for cover image (falls back to title)
     const coverAlt = post.coverImageAlt || post.title
@@ -60,14 +59,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     locales.forEach(loc => {
         const localSlug = getSlugById(post.id, loc)
         if (localSlug) {
-            alternateLanguages[loc] = `${BASE_URL}/${loc}/blog/${encodeURIComponent(localSlug)}`
+            alternateLanguages[loc] = canonicalForLocale(loc, `/blog/${encodeURIComponent(localSlug)}`)
         }
     })
 
     // Add x-default
     const enSlug = getSlugById(post.id, 'en')
     if (enSlug) {
-        alternateLanguages['x-default'] = `${BASE_URL}/en/blog/${encodeURIComponent(enSlug)}`
+        alternateLanguages['x-default'] = canonicalForLocale('en', `/blog/${encodeURIComponent(enSlug)}`)
     }
 
     return {
@@ -151,7 +150,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
     const dict = await getDictionary(lang as Locale)
 
-    const canonicalUrl = `${BASE_URL}/${lang}/blog/${params.slug}`
+    const canonicalUrl = canonicalForLocale(lang, `/blog/${params.slug}`)
     // OG image for blog posts: use the post's own coverImage as the OG.
     // (Per user instruction. Falls back to brand default if no coverImage.)
     const imageUrl = getOgImage({
@@ -168,8 +167,8 @@ export default async function PostPage({ params }: PostPageProps) {
     const authorProfile = getAuthor(authorSlug)
     const authorName = authorProfile?.name || post.author || 'CloudTopia Editorial Team'
     const authorUrl = authorProfile
-        ? `${BASE_URL}/${lang}/authors/${authorProfile.slug}`
-        : `${BASE_URL}/${lang}/about`
+        ? canonicalForLocale(lang, `/authors/${authorProfile.slug}`)
+        : canonicalForLocale(lang, '/about')
     const publishedDate = post.date
     const modifiedDate = post.updated || post.date
 
@@ -230,7 +229,7 @@ export default async function PostPage({ params }: PostPageProps) {
         isPartOf: {
             '@type': 'Blog',
             name: 'CloudTopia Journal',
-            url: `${BASE_URL}/${lang}/blog`,
+            url: canonicalForLocale(lang, '/blog'),
         },
         about: (post.tags || []).slice(0, 5).map((tag) => ({ '@type': 'Thing', name: tag })),
     }
@@ -266,8 +265,8 @@ export default async function PostPage({ params }: PostPageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: crumbs.home, item: `${BASE_URL}/${lang}` },
-            { '@type': 'ListItem', position: 2, name: crumbs.blog, item: `${BASE_URL}/${lang}/blog` },
+            { '@type': 'ListItem', position: 1, name: crumbs.home, item: canonicalForLocale(lang, '/') },
+            { '@type': 'ListItem', position: 2, name: crumbs.blog, item: canonicalForLocale(lang, '/blog') },
             { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
         ],
     }
@@ -302,8 +301,8 @@ export default async function PostPage({ params }: PostPageProps) {
                 <BlogBreadcrumb
                     locale={lang}
                     items={[
-                        { label: crumbs.home, href: `/${lang}` },
-                        { label: crumbs.blog, href: `/${lang}/blog` },
+                        { label: crumbs.home, href: localePath(lang, '/') },
+                        { label: crumbs.blog, href: localePath(lang, '/blog') },
                         { label: post.title },
                     ]}
                 />

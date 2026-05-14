@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, HelpCircle, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 
 type FAQItem = {
     question: string
@@ -100,7 +101,7 @@ export default function FAQ() {
                             className={`flex ${isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}
                         >
                             <Link
-                                href={`/${locale}/contact`}
+                                href={localePath(locale, '/contact')}
                                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-900 transition-colors group"
                             >
                                 <MessageCircle className="w-4 h-4" />

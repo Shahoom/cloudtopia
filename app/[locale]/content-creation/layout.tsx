@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -37,14 +38,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/content-creation`,
+            url: canonicalUrl(locale, '/content-creation'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'content-creation', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/content-creation`,
-            languages: { 'en': 'https://cloudtopia.net/en/content-creation', 'ar': 'https://cloudtopia.net/ar/content-creation', 'tr': 'https://cloudtopia.net/tr/content-creation', 'x-default': 'https://cloudtopia.net/en/content-creation' },
+            canonical: canonicalUrl(locale, '/content-creation'),
+            languages: buildHreflangMap('/content-creation'),
         },
     }
 }
@@ -62,9 +63,9 @@ export default function ContentCreationLayout({ children, params }: { children: 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'Content Creation', item: `https://cloudtopia.net/${locale}/content-creation` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'Content Creation', item: canonicalUrl(locale, '/content-creation') },
                         ],
                     }),
                 }}
@@ -77,7 +78,7 @@ export default function ContentCreationLayout({ children, params }: { children: 
                         '@type': 'Service',
                         name: 'Content Creation & Copywriting',
                         description: 'Bilingual Arabic + English content, blog writing, video scripts, and SEO content for Gulf brands.',
-                        url: `https://cloudtopia.net/${locale}/content-creation`,
+                        url: canonicalUrl(locale, '/content-creation'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Content Marketing',
                         areaServed: [

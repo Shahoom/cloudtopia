@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 import { Home, Briefcase, Sparkles, Info, Mail, FolderKanban, BookOpen, Tag } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export default function Header() {
@@ -54,7 +55,7 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
-  const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+  const l = (path: string) => localePath(locale, path)
   const isTr = locale === 'tr'
 
   const navigation = [

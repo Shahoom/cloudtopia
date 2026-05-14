@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, MapPin, CreditCard, Building2, TrendingUp, Globe, CheckCircle2 } from 'lucide-react'
 import { getLocation, locationSlugs } from '@/lib/seo/locations'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, localePath } from '@/lib/i18n/url'
 
 type PageProps = {
     params: { locale: string; country: string }
@@ -48,18 +49,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title: titles[locale],
             description: descs[locale],
-            url: `https://cloudtopia.net/${locale}/locations/${params.country}`,
+            url: canonicalUrl(locale, `/locations/${params.country}`),
             // Per-country OG override: /public/images/og/locations/{country}-{locale}.jpg
             // Drop a Saudi/Riyadh image at locations/saudi-arabia-en.jpg etc.
             images: ogImagesFor({ page: `locations/${params.country}`, locale }),
         },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/locations/${params.country}`,
+            canonical: canonicalUrl(locale, `/locations/${params.country}`),
             languages: {
-                'en': `https://cloudtopia.net/en/locations/${params.country}`,
-                'ar': `https://cloudtopia.net/ar/locations/${params.country}`,
-                'tr': `https://cloudtopia.net/tr/locations/${params.country}`,
-                'x-default': `https://cloudtopia.net/en/locations/${params.country}`,
+                'en': canonicalUrl('en', `/locations/${params.country}`),
+                'ar': canonicalUrl('ar', `/locations/${params.country}`),
+                'tr': canonicalUrl('tr', `/locations/${params.country}`),
+                'x-default': canonicalUrl('en', `/locations/${params.country}`),
             },
         },
     }
@@ -144,7 +145,7 @@ export default function LocationPage({ params }: PageProps) {
         '@type': 'ProfessionalService',
         name: `CloudTopia — ${location.country}`,
         description: `Digital agency serving ${location.country}: websites, e-commerce, custom CRMs, and web applications.`,
-        url: `https://cloudtopia.net/${locale}/locations/${location.slug}`,
+        url: canonicalUrl(locale, `/locations/${location.slug}`),
         image: 'https://cloudtopia.net/logo.svg',
         priceRange: '$$',
         areaServed: { '@type': 'Country', name: location.country, identifier: location.countryCode },
@@ -167,9 +168,9 @@ export default function LocationPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-            { '@type': 'ListItem', position: 2, name: 'Locations', item: `https://cloudtopia.net/${locale}/locations` },
-            { '@type': 'ListItem', position: 3, name: location.country, item: `https://cloudtopia.net/${locale}/locations/${location.slug}` },
+            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: 'Locations', item: canonicalUrl(locale, '/locations') },
+            { '@type': 'ListItem', position: 3, name: location.country, item: canonicalUrl(locale, `/locations/${location.slug}`) },
         ],
     }
 
@@ -202,14 +203,14 @@ export default function LocationPage({ params }: PageProps) {
 
                     <div className="flex flex-col sm:flex-row gap-3">
                         <Link
-                            href={`/${locale}/contact`}
+                            href={localePath(locale, '/contact')}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-neutral-900 text-white font-semibold hover:bg-neutral-800 transition-colors"
                         >
                             {L.ctaStart}
                             <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                         </Link>
                         <Link
-                            href={`/${locale}/pricing`}
+                            href={localePath(locale, '/pricing')}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-neutral-300 hover:border-neutral-900 font-semibold transition-colors"
                         >
                             {L.ctaPricing}
@@ -281,7 +282,7 @@ export default function LocationPage({ params }: PageProps) {
                             return (
                                 <Link
                                     key={s}
-                                    href={`/${locale}/${s}`}
+                                    href={localePath(locale, `/${s}`)}
                                     className="group flex items-center justify-between p-5 rounded-2xl bg-lavender border border-neutral-200 hover:border-neutral-900 hover:bg-white transition-all"
                                 >
                                     <span className="text-base md:text-lg font-semibold text-neutral-900">{label}</span>
@@ -345,7 +346,7 @@ export default function LocationPage({ params }: PageProps) {
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-5">{L.readyTitle}</h2>
                     <p className="text-lg text-white/75 mb-8">{L.readyDesc}</p>
                     <Link
-                        href={`/${locale}/contact`}
+                        href={localePath(locale, '/contact')}
                         className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-neutral-900 font-semibold hover:bg-cyan-100 transition-colors"
                     >
                         {L.ctaStart}

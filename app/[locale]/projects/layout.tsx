@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -35,14 +36,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/projects`,
+            url: canonicalUrl(locale, '/projects'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'projects', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/projects`,
-            languages: { 'en': 'https://cloudtopia.net/en/projects', 'ar': 'https://cloudtopia.net/ar/projects', 'tr': 'https://cloudtopia.net/tr/projects', 'x-default': 'https://cloudtopia.net/en/projects' },
+            canonical: canonicalUrl(locale, '/projects'),
+            languages: buildHreflangMap('/projects'),
         },
     }
 }
@@ -65,8 +66,8 @@ export default function ProjectsLayout({ children, params }: { children: React.R
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: names.home, item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: names.projects, item: `https://cloudtopia.net/${locale}/projects` },
+                            { '@type': 'ListItem', position: 1, name: names.home, item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: names.projects, item: canonicalUrl(locale, '/projects') },
                         ],
                     }),
                 }}
@@ -79,7 +80,7 @@ export default function ProjectsLayout({ children, params }: { children: React.R
                         '@type': 'CollectionPage',
                         name: 'CloudTopia Projects Portfolio',
                         description: 'Explore our portfolio of successful digital transformation projects.',
-                        url: `https://cloudtopia.net/${locale}/projects`,
+                        url: canonicalUrl(locale, '/projects'),
                         inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',

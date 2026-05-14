@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale
@@ -20,18 +21,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         title: titles[locale] || titles.en,
         description: descriptions[locale] || descriptions.en,
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/terms`,
-            languages: {
-                'en': 'https://cloudtopia.net/en/terms',
-                'ar': 'https://cloudtopia.net/ar/terms',
-                'tr': 'https://cloudtopia.net/tr/terms',
-                'x-default': 'https://cloudtopia.net/en/terms',
-            },
+            canonical: canonicalUrl(locale, '/terms'),
+            languages: buildHreflangMap('/terms'),
         },
         openGraph: {
             title: titles[locale] || titles.en,
             description: descriptions[locale] || descriptions.en,
-            url: `https://cloudtopia.net/${locale}/terms`,
+            url: canonicalUrl(locale, '/terms'),
             type: 'website',
         }
     }

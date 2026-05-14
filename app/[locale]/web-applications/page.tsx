@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import { ArrowRight, Globe, Layers, Code2, Shield, Rocket } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -228,7 +229,7 @@ export default function WebApplicationsPage() {
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
-                            href={`/${locale}/contact`}
+                            href={localePath(locale, '/contact')}
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {p?.cta?.button || 'Start Your Project Today'}
@@ -237,7 +238,7 @@ export default function WebApplicationsPage() {
                             </svg>
                         </Link>
                         <Link
-                            href={`/${locale}/services`}
+                            href={localePath(locale, '/services')}
                             className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"
                         >
                             {p?.cta?.explore || 'Explore All Services'}

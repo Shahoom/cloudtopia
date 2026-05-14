@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -36,14 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/social-media-marketing`,
+            url: canonicalUrl(locale, '/social-media-marketing'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'social-media-marketing', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/social-media-marketing`,
-            languages: { 'en': 'https://cloudtopia.net/en/social-media-marketing', 'ar': 'https://cloudtopia.net/ar/social-media-marketing', 'tr': 'https://cloudtopia.net/tr/social-media-marketing', 'x-default': 'https://cloudtopia.net/en/social-media-marketing' },
+            canonical: canonicalUrl(locale, '/social-media-marketing'),
+            languages: buildHreflangMap('/social-media-marketing'),
         },
     }
 }
@@ -61,9 +62,9 @@ export default function SocialMediaMarketingLayout({ children, params }: { child
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'Social Media Marketing', item: `https://cloudtopia.net/${locale}/social-media-marketing` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'Social Media Marketing', item: canonicalUrl(locale, '/social-media-marketing') },
                         ],
                     }),
                 }}
@@ -76,7 +77,7 @@ export default function SocialMediaMarketingLayout({ children, params }: { child
                         '@type': 'Service',
                         name: 'Social Media Marketing & Management',
                         description: 'Arabic-first content and paid social for Gulf audiences. TikTok, Snapchat, Instagram, Meta, YouTube.',
-                        url: `https://cloudtopia.net/${locale}/social-media-marketing`,
+                        url: canonicalUrl(locale, '/social-media-marketing'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Social Media Marketing',
                         areaServed: [

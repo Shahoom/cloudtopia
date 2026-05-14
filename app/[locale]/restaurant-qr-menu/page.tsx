@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/animated-gallery"
 import { Button } from "@/components/ui/Button"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
+import { localePath } from "@/lib/i18n/url"
 import { QrCode, Smartphone, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -249,7 +250,7 @@ export default function RestaurantQRMenuPage() {
           </ContainerAnimated>
 
           <ContainerAnimated className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 md:mb-0">
-            <Link href={`/${locale}/contact`}>
+            <Link href={localePath(locale, '/contact')}>
               <Button className="gap-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
                 {currentContent.cta} <Smartphone className="w-4 h-4" />
               </Button>

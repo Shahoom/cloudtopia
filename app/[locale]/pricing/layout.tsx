@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 // Titles do NOT include "| CloudTopia" — root metadata template appends it.
 const titles: Record<string, string> = {

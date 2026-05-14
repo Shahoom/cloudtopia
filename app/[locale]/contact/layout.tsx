@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -35,14 +36,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/contact`,
+            url: canonicalUrl(locale, '/contact'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'contact', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/contact`,
-            languages: { 'en': 'https://cloudtopia.net/en/contact', 'ar': 'https://cloudtopia.net/ar/contact', 'tr': 'https://cloudtopia.net/tr/contact', 'x-default': 'https://cloudtopia.net/en/contact' },
+            canonical: canonicalUrl(locale, '/contact'),
+            languages: buildHreflangMap('/contact'),
         },
     }
 }
@@ -65,8 +66,8 @@ export default function ContactLayout({ children, params }: { children: React.Re
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: names.home, item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: names.contact, item: `https://cloudtopia.net/${locale}/contact` },
+                            { '@type': 'ListItem', position: 1, name: names.home, item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: names.contact, item: canonicalUrl(locale, '/contact') },
                         ],
                     }),
                 }}
@@ -79,7 +80,7 @@ export default function ContactLayout({ children, params }: { children: React.Re
                         '@type': 'ContactPage',
                         name: 'Contact CloudTopia',
                         description: 'Get in touch with CloudTopia for a free consultation.',
-                        url: `https://cloudtopia.net/${locale}/contact`,
+                        url: canonicalUrl(locale, '/contact'),
                         inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',

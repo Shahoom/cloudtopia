@@ -8,6 +8,7 @@ import Floating, { FloatingElement } from "@/components/ui/parallax-floating"
 import { ScrollHeroSection } from "@/components/ui/scroll-hero-section"
 import { ServiceExplanationSection } from "@/components/ui/service-explanation-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
+import { localePath } from "@/lib/i18n/url"
 
 const exampleImages = [
   {
@@ -189,7 +190,7 @@ function WebDesignHero() {
               transition: { type: "spring", damping: 30, stiffness: 400 },
             }}
           >
-            <Link href={`/${locale}/contact`}>
+            <Link href={localePath(locale, '/contact')}>
               {p?.hero?.ctaStart || (isRTL ? "ابدأ مشروعك" : "Start Your Project")} <span className={`font-serif ${isRTL ? 'mr-1' : 'ml-1'}`}>{isRTL ? '←' : '→'}</span>
             </Link>
           </motion.button>
@@ -208,7 +209,7 @@ function WebDesignHero() {
               transition: { type: "spring", damping: 30, stiffness: 400 },
             }}
           >
-            <Link href={`/${locale}/projects`}>
+            <Link href={localePath(locale, '/projects')}>
               {p?.hero?.ctaWork || (isRTL ? "شاهد أعمالنا" : "View Our Work")}
             </Link>
           </motion.button>

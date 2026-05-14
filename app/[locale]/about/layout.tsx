@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/about`,
+            url: canonicalUrl(locale, '/about'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'about', locale }),
         },
@@ -46,8 +47,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             images: ogImagesFor({ page: 'about', locale }).map((i) => i.url),
         },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/about`,
-            languages: { 'en': 'https://cloudtopia.net/en/about', 'ar': 'https://cloudtopia.net/ar/about', 'tr': 'https://cloudtopia.net/tr/about', 'x-default': 'https://cloudtopia.net/en/about' },
+            canonical: canonicalUrl(locale, '/about'),
+            languages: buildHreflangMap('/about'),
         },
     }
 }
@@ -64,8 +65,8 @@ export default function AboutLayout({ children, params }: { children: React.Reac
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'About', item: `https://cloudtopia.net/${locale}/about` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'About', item: canonicalUrl(locale, '/about') },
                         ],
                     }),
                 }}
@@ -78,7 +79,7 @@ export default function AboutLayout({ children, params }: { children: React.Reac
                         '@type': 'AboutPage',
                         name: 'About CloudTopia',
                         description: 'CloudTopia is a Gulf-first digital agency building websites, e-commerce stores, and custom business systems in Arabic, English, and Turkish.',
-                        url: `https://cloudtopia.net/${locale}/about`,
+                        url: canonicalUrl(locale, '/about'),
                         inLanguage: locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en',
                         mainEntity: {
                             '@type': 'Organization',

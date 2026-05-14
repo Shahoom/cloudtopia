@@ -7,6 +7,7 @@ import { en } from './translations/en'
 import { ar } from './translations/ar'
 import { tr } from './translations/tr'
 import { useRouteAlternates } from './RouteAlternatesContext'
+import { localePath, stripLocalePrefix } from './url'
 
 type Translations = typeof en
 
@@ -25,14 +26,15 @@ const translations: Record<Locale, Translations> = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-// Helper to get locale from pathname
-function getLocaleFromPathname(pathname: string): Locale | null {
+// Extract locale from pathname. Unprefixed paths are English-canonical, so
+// `/projects` → 'en', `/ar/projects` → 'ar', `/tr/projects` → 'tr'.
+function getLocaleFromPathname(pathname: string): Locale {
   const segments = pathname.split('/')
   const potentialLocale = segments[1]
   if (locales.includes(potentialLocale as Locale)) {
     return potentialLocale as Locale
   }
-  return null
+  return defaultLocale
 }
 
 // Helper to get locale from cookie
@@ -54,7 +56,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // not a 404 from naive segment-swap.
   const routeAlternates = useRouteAlternates()
 
-  // Get initial locale from URL or cookie
+  // Get initial locale from URL (cookie is fallback for the SSR-hydrate
+  // transition; URL is authoritative)
   const initialLocale = getLocaleFromPathname(pathname) || getLocaleFromCookie() || defaultLocale
   const [locale, setLocaleState] = useState<Locale>(initialLocale)
   const [mounted, setMounted] = useState(false)
@@ -62,7 +65,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // On mount, sync locale from URL
     const urlLocale = getLocaleFromPathname(pathname)
-    if (urlLocale && urlLocale !== locale) {
+    if (urlLocale !== locale) {
       setLocaleState(urlLocale)
     }
     setMounted(true)
@@ -95,16 +98,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (explicitAlt) {
       newPath = explicitAlt
     } else {
-      // 2) Fallback: shape-preserving segment swap. Works for static pages
-      //    like /pricing, /contact, /about whose URLs are identical across
-      //    locales except the leading /[locale]/ segment.
-      const segments = pathname.split('/')
-      if (locales.includes(segments[1] as Locale)) {
-        segments[1] = newLocale
-      } else {
-        segments.splice(1, 0, newLocale)
-      }
-      newPath = segments.join('/') || `/${newLocale}`
+      // 2) Fallback: strip the current locale prefix (if any) and re-apply
+      //    the target locale through localePath. Handles all three cases:
+      //    en→ar (no prefix → /ar/...), ar→en (/ar/... → /...), ar→tr.
+      const basePath = stripLocalePrefix(pathname)
+      newPath = localePath(newLocale, basePath)
     }
 
     // Update state first for immediate UI update

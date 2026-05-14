@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Mail, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 
 export default function FinalCTA() {
     const { t, locale } = useLanguage()
@@ -98,14 +99,14 @@ export default function FinalCTA() {
                         className="relative flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mb-12"
                     >
                         <Link
-                            href={`/${locale}/contact`}
+                            href={localePath(locale, '/contact')}
                             className="group inline-flex items-center gap-2 px-7 md:px-8 py-4 rounded-full bg-white text-neutral-900 font-semibold hover:bg-cyan-100 transition-colors w-full sm:w-auto justify-center"
                         >
                             {primaryCTA}
                             <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                         </Link>
                         <Link
-                            href={`/${locale}/pricing`}
+                            href={localePath(locale, '/pricing')}
                             className="group inline-flex items-center gap-2 px-7 md:px-8 py-4 rounded-full border border-white/25 hover:border-white/60 text-white font-semibold hover:bg-white/5 transition-colors w-full sm:w-auto justify-center"
                         >
                             {secondaryCTA}
