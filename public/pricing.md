@@ -3,7 +3,7 @@
 Last updated: April 2026
 Currency: USD (United States Dollar)
 All prices are one-time project fees unless noted.
-Full details: https://cloudtopia.net/en/pricing
+Full details: https://cloudtopia.net/pricing
 
 ---
 
@@ -218,4 +218,4 @@ Full details: https://cloudtopia.net/en/pricing
 
 - Email: info@cloudtopia.net
 - WhatsApp: +90 501 151 11 16
-- Contact form: https://cloudtopia.net/en/contact
+- Contact form: https://cloudtopia.net/contact

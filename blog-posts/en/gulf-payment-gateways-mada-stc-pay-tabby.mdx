@@ -145,7 +145,7 @@ We audit Saudi stores regularly and these five issues show up again and again:
 - **Cards-only checkout.** Visa/Mastercard input form, no Mada button, no Apple Pay button. Mobile conversion stuck at 1.2% when it should be 3.5%+.
 - **Apple Pay only on the cart page, not on product detail pages.** The express checkout Apple Pay button on PDP can lift conversion 15–25% on its own.
 - **BNPL installment amounts not shown until checkout.** Display "or 4 payments of SAR X with Tabby" on the product page. The shopper decides to buy there, not at checkout.
-- **No ZATCA-compliant invoice emitted after purchase.** Saudi B2B customers won't buy from a store that can't give them a proper tax invoice. [See our ZATCA Phase 2 checklist](/en/blog/zatca-phase-2-e-invoicing-developer-checklist) for the compliant setup.
+- **No ZATCA-compliant invoice emitted after purchase.** Saudi B2B customers won't buy from a store that can't give them a proper tax invoice. [See our ZATCA Phase 2 checklist](/blog/zatca-phase-2-e-invoicing-developer-checklist) for the compliant setup.
 - **One PSP for everything, priced badly.** The "all-in-one" PSP quote often has hidden cross-border fees. Splitting Mada via a local PSP and international cards via a separate route usually saves 0.3–0.8% on blended fees.
 
 <Callout tone="warning" title="Don't treat BNPL as a toggle">
@@ -203,7 +203,7 @@ We've worked with all five. For most Saudi SMBs we recommend Moyasar for the cle
     For BNPL (Tabby, Tamara) and STC Pay, yes — separate merchant agreements. For Mada + Apple Pay + Visa/Mastercard, one PSP contract covers all three. Plan the KYC timeline accordingly — it's 2–4 weeks of back-and-forth per contract, in parallel with dev.
   </Q>
   <Q q="How does ZATCA Phase 2 fit into checkout?">
-    Every order above the VAT threshold needs a ZATCA-compliant e-invoice generated at purchase, signed with your CSID, and cleared or reported to ZATCA. This is backend work, not a gateway setting — see our [ZATCA Phase 2 developer checklist](/en/blog/zatca-phase-2-e-invoicing-developer-checklist).
+    Every order above the VAT threshold needs a ZATCA-compliant e-invoice generated at purchase, signed with your CSID, and cleared or reported to ZATCA. This is backend work, not a gateway setting — see our [ZATCA Phase 2 developer checklist](/blog/zatca-phase-2-e-invoicing-developer-checklist).
   </Q>
   <Q q="Can I use these gateways in the UAE, Kuwait, Bahrain?">
     Mada is KSA-only. Apple Pay, Tabby, Tamara, and most international cards work across the GCC. For UAE you'll typically add Telr or Network International, and you won't need Mada. Each country has its own dominant debit scheme worth researching.

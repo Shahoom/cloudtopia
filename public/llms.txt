@@ -28,63 +28,63 @@
 
 - Pricing (machine-readable): https://cloudtopia.net/pricing.md
 - Sitemap (XML): https://cloudtopia.net/sitemap.xml
-- RSS feeds: https://cloudtopia.net/en/blog/feed.xml · https://cloudtopia.net/ar/blog/feed.xml · https://cloudtopia.net/tr/blog/feed.xml
+- RSS feeds: https://cloudtopia.net/blog/feed.xml · https://cloudtopia.net/ar/blog/feed.xml · https://cloudtopia.net/tr/blog/feed.xml
 
 ## Service pages
 
-- https://cloudtopia.net/en/services
-- https://cloudtopia.net/en/website-design
-- https://cloudtopia.net/en/ecommerce-solutions
-- https://cloudtopia.net/en/business-systems-development
-- https://cloudtopia.net/en/web-applications
-- https://cloudtopia.net/en/restaurant-qr-menu
-- https://cloudtopia.net/en/social-media-marketing
-- https://cloudtopia.net/en/content-creation
-- https://cloudtopia.net/en/pricing
-- https://cloudtopia.net/en/projects
-- https://cloudtopia.net/en/labs
-- https://cloudtopia.net/en/about
-- https://cloudtopia.net/en/contact
+- https://cloudtopia.net/services
+- https://cloudtopia.net/website-design
+- https://cloudtopia.net/ecommerce-solutions
+- https://cloudtopia.net/business-systems-development
+- https://cloudtopia.net/web-applications
+- https://cloudtopia.net/restaurant-qr-menu
+- https://cloudtopia.net/social-media-marketing
+- https://cloudtopia.net/content-creation
+- https://cloudtopia.net/pricing
+- https://cloudtopia.net/projects
+- https://cloudtopia.net/labs
+- https://cloudtopia.net/about
+- https://cloudtopia.net/contact
 
 ## Blog — English (37 posts)
 
-- [AI Customer Service in 2026: What Works, What Does Not, and How to Get It Right](https://cloudtopia.net/en/blog/ai-customer-service)
-- [AI Lead Qualification for Gulf SMBs (2026 Playbook)](https://cloudtopia.net/en/blog/ai-lead-qualification-gulf-smbs)
-- [12 Arabic RTL Web Design Rules That Actually Matter (2026)](https://cloudtopia.net/en/blog/arabic-rtl-web-design-rules)
-- [Building Multilingual Digital Products That Actually Work](https://cloudtopia.net/en/blog/building-multilingual-digital-products)
-- [The 7 Business Processes You Should Automate First (and Why Most Companies Get the Order Wrong)](https://cloudtopia.net/en/blog/business-process-automation-priority)
-- [Why Your Business Website Is Costing You Customers in 2026](https://cloudtopia.net/en/blog/business-website-costing-you-customers-2026)
-- [Clinic Booking System for Saudi Healthcare (2026 Guide)](https://cloudtopia.net/en/blog/clinic-booking-system-saudi-healthcare)
-- [The Complete Cloud Migration Guide for Growing Businesses: Move Smart, Not Just Fast](https://cloudtopia.net/en/blog/cloud-migration-guide-growing-businesses)
-- [Moving to the Cloud in 2026: What Gulf Businesses Need to Know Before They Start](https://cloudtopia.net/en/blog/cloud-migration-guide-gulf)
-- [Your Company Website Is Losing You Business. Here's What to Fix in 2026.](https://cloudtopia.net/en/blog/company-website-mistakes)
-- [Custom Business System Cost: $299 to $3,499 Tiers Explained (2026)](https://cloudtopia.net/en/blog/custom-business-system-cost-299-to-3499)
-- [Custom Software vs. Off-the-Shelf: How to Make the Decision That's Right for Your Business](https://cloudtopia.net/en/blog/custom-software-vs-off-the-shelf)
-- [Cybersecurity for Gulf Businesses in 2026: The Threats Are Real and the Protection Is Not That Complicated](https://cloudtopia.net/en/blog/cybersecurity-gulf-businesses)
-- [Data Analytics Without a Data Team: How Small and Mid-Size Businesses Can Make Smarter Decisions in 2026](https://cloudtopia.net/en/blog/data-analytics-small-business)
-- [The Digital Transformation Roadmap That Actually Works: From Strategy to Execution](https://cloudtopia.net/en/blog/digital-transformation-roadmap)
-- [What Is a Digital Transformation Strategy (And Why Most Fail Before They Start)](https://cloudtopia.net/en/blog/digital-transformation-strategy)
-- [Ecommerce Website Cost in the UAE (2026 Guide)](https://cloudtopia.net/en/blog/ecommerce-website-cost-uae-2026)
-- [Gulf Payment Gateways: Mada, Apple Pay, STC Pay, Tabby & Tamara (2026 Guide)](https://cloudtopia.net/en/blog/gulf-payment-gateways-mada-stc-pay-tabby)
-- [How Smart Businesses Are Using AI to Stay Ahead in 2026](https://cloudtopia.net/en/blog/how-businesses-are-using-ai-2026)
-- [How to Choose a Technology Partner for Your Business (Without Getting Burned)](https://cloudtopia.net/en/blog/how-to-choose-tech-partner)
-- [Launching an Online Store in Kuwait: Legal + Tech (2026)](https://cloudtopia.net/en/blog/launching-online-store-kuwait-legal-tech)
-- [Multilingual SEO for Next.js: Arabic, English, Turkish Done Right (2026)](https://cloudtopia.net/en/blog/multilingual-seo-nextjs-arabic-english-turkish)
-- [The Best No-Code AI Tools Every Business Should Know in 2026](https://cloudtopia.net/en/blog/no-code-ai-tools)
-- [Online Ordering System for UAE Restaurants (2026 Guide)](https://cloudtopia.net/en/blog/online-ordering-system-uae-restaurants)
-- [QR Menu Setup for Saudi Cafés & Restaurants (2026)](https://cloudtopia.net/en/blog/qr-menu-setup-saudi-cafes-restaurants)
-- [QR Menu System Price in Saudi Arabia (2026 Pricing Guide)](https://cloudtopia.net/en/blog/qr-menu-system-price-saudi-arabia)
-- [Ramadan 2026 Digital Marketing Checklist for Gulf Brands](https://cloudtopia.net/en/blog/ramadan-2026-digital-marketing-checklist)
-- [Real Estate Listing Website for UAE Brokers (2026)](https://cloudtopia.net/en/blog/real-estate-listing-website-uae-brokers)
-- [Salla vs Zid vs Shopify for Saudi Merchants (2026 Comparison)](https://cloudtopia.net/en/blog/salla-vs-zid-vs-shopify-saudi-merchants)
-- [Saudi National Day 2026 Campaign Playbook for Gulf Brands](https://cloudtopia.net/en/blog/saudi-national-day-2026-campaign-playbook)
-- [Building a Tutoring Platform in Türkiye (MEB-Compliant, 2026)](https://cloudtopia.net/en/blog/tutoring-platform-turkiye-meb-compliant)
-- [Website Design Cost in Saudi Arabia (2026 Guide)](https://cloudtopia.net/en/blog/website-design-cost-saudi-arabia-2026)
-- [WhatsApp Business AI Bot for Arabic Customer Support (2026)](https://cloudtopia.net/en/blog/whatsapp-business-ai-bot-arabic-support)
-- [White Friday UAE: 8-Week Ecommerce Prep Plan (2026)](https://cloudtopia.net/en/blog/white-friday-uae-ecommerce-prep)
-- [Wix vs Custom Next.js for Arabic Businesses (2026)](https://cloudtopia.net/en/blog/wix-vs-custom-nextjs-arabic-businesses)
-- [WooCommerce vs Shopify for Gulf SMBs (2026 Honest Comparison)](https://cloudtopia.net/en/blog/woocommerce-vs-shopify-gulf-smbs)
-- [ZATCA Phase 2 E-Invoicing: Developer Checklist (2026)](https://cloudtopia.net/en/blog/zatca-phase-2-e-invoicing-developer-checklist)
+- [AI Customer Service in 2026: What Works, What Does Not, and How to Get It Right](https://cloudtopia.net/blog/ai-customer-service)
+- [AI Lead Qualification for Gulf SMBs (2026 Playbook)](https://cloudtopia.net/blog/ai-lead-qualification-gulf-smbs)
+- [12 Arabic RTL Web Design Rules That Actually Matter (2026)](https://cloudtopia.net/blog/arabic-rtl-web-design-rules)
+- [Building Multilingual Digital Products That Actually Work](https://cloudtopia.net/blog/building-multilingual-digital-products)
+- [The 7 Business Processes You Should Automate First (and Why Most Companies Get the Order Wrong)](https://cloudtopia.net/blog/business-process-automation-priority)
+- [Why Your Business Website Is Costing You Customers in 2026](https://cloudtopia.net/blog/business-website-costing-you-customers-2026)
+- [Clinic Booking System for Saudi Healthcare (2026 Guide)](https://cloudtopia.net/blog/clinic-booking-system-saudi-healthcare)
+- [The Complete Cloud Migration Guide for Growing Businesses: Move Smart, Not Just Fast](https://cloudtopia.net/blog/cloud-migration-guide-growing-businesses)
+- [Moving to the Cloud in 2026: What Gulf Businesses Need to Know Before They Start](https://cloudtopia.net/blog/cloud-migration-guide-gulf)
+- [Your Company Website Is Losing You Business. Here's What to Fix in 2026.](https://cloudtopia.net/blog/company-website-mistakes)
+- [Custom Business System Cost: $299 to $3,499 Tiers Explained (2026)](https://cloudtopia.net/blog/custom-business-system-cost-299-to-3499)
+- [Custom Software vs. Off-the-Shelf: How to Make the Decision That's Right for Your Business](https://cloudtopia.net/blog/custom-software-vs-off-the-shelf)
+- [Cybersecurity for Gulf Businesses in 2026: The Threats Are Real and the Protection Is Not That Complicated](https://cloudtopia.net/blog/cybersecurity-gulf-businesses)
+- [Data Analytics Without a Data Team: How Small and Mid-Size Businesses Can Make Smarter Decisions in 2026](https://cloudtopia.net/blog/data-analytics-small-business)
+- [The Digital Transformation Roadmap That Actually Works: From Strategy to Execution](https://cloudtopia.net/blog/digital-transformation-roadmap)
+- [What Is a Digital Transformation Strategy (And Why Most Fail Before They Start)](https://cloudtopia.net/blog/digital-transformation-strategy)
+- [Ecommerce Website Cost in the UAE (2026 Guide)](https://cloudtopia.net/blog/ecommerce-website-cost-uae-2026)
+- [Gulf Payment Gateways: Mada, Apple Pay, STC Pay, Tabby & Tamara (2026 Guide)](https://cloudtopia.net/blog/gulf-payment-gateways-mada-stc-pay-tabby)
+- [How Smart Businesses Are Using AI to Stay Ahead in 2026](https://cloudtopia.net/blog/how-businesses-are-using-ai-2026)
+- [How to Choose a Technology Partner for Your Business (Without Getting Burned)](https://cloudtopia.net/blog/how-to-choose-tech-partner)
+- [Launching an Online Store in Kuwait: Legal + Tech (2026)](https://cloudtopia.net/blog/launching-online-store-kuwait-legal-tech)
+- [Multilingual SEO for Next.js: Arabic, English, Turkish Done Right (2026)](https://cloudtopia.net/blog/multilingual-seo-nextjs-arabic-english-turkish)
+- [The Best No-Code AI Tools Every Business Should Know in 2026](https://cloudtopia.net/blog/no-code-ai-tools)
+- [Online Ordering System for UAE Restaurants (2026 Guide)](https://cloudtopia.net/blog/online-ordering-system-uae-restaurants)
+- [QR Menu Setup for Saudi Cafés & Restaurants (2026)](https://cloudtopia.net/blog/qr-menu-setup-saudi-cafes-restaurants)
+- [QR Menu System Price in Saudi Arabia (2026 Pricing Guide)](https://cloudtopia.net/blog/qr-menu-system-price-saudi-arabia)
+- [Ramadan 2026 Digital Marketing Checklist for Gulf Brands](https://cloudtopia.net/blog/ramadan-2026-digital-marketing-checklist)
+- [Real Estate Listing Website for UAE Brokers (2026)](https://cloudtopia.net/blog/real-estate-listing-website-uae-brokers)
+- [Salla vs Zid vs Shopify for Saudi Merchants (2026 Comparison)](https://cloudtopia.net/blog/salla-vs-zid-vs-shopify-saudi-merchants)
+- [Saudi National Day 2026 Campaign Playbook for Gulf Brands](https://cloudtopia.net/blog/saudi-national-day-2026-campaign-playbook)
+- [Building a Tutoring Platform in Türkiye (MEB-Compliant, 2026)](https://cloudtopia.net/blog/tutoring-platform-turkiye-meb-compliant)
+- [Website Design Cost in Saudi Arabia (2026 Guide)](https://cloudtopia.net/blog/website-design-cost-saudi-arabia-2026)
+- [WhatsApp Business AI Bot for Arabic Customer Support (2026)](https://cloudtopia.net/blog/whatsapp-business-ai-bot-arabic-support)
+- [White Friday UAE: 8-Week Ecommerce Prep Plan (2026)](https://cloudtopia.net/blog/white-friday-uae-ecommerce-prep)
+- [Wix vs Custom Next.js for Arabic Businesses (2026)](https://cloudtopia.net/blog/wix-vs-custom-nextjs-arabic-businesses)
+- [WooCommerce vs Shopify for Gulf SMBs (2026 Honest Comparison)](https://cloudtopia.net/blog/woocommerce-vs-shopify-gulf-smbs)
+- [ZATCA Phase 2 E-Invoicing: Developer Checklist (2026)](https://cloudtopia.net/blog/zatca-phase-2-e-invoicing-developer-checklist)
 
 ## Blog — العربية (38 posts)
 

@@ -12,7 +12,7 @@
  *     method: 'POST',
  *     headers: { 'Content-Type': 'application/json' },
  *     body: JSON.stringify({
- *       urls: ['https://cloudtopia.net/en/blog/my-new-post']
+ *       urls: ['https://cloudtopia.net/blog/my-new-post']
  *     }),
  *   })
  *

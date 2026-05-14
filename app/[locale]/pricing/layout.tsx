@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
+import { BASE_URL, canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 // Titles do NOT include "| CloudTopia" — root metadata template appends it.
 const titles: Record<string, string> = {
@@ -23,8 +23,6 @@ const crumbLabels: Record<string, { home: string; pricing: string }> = {
 const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
 const bcp47: Record<string, string> = { en: 'en-US', ar: 'ar-SA', tr: 'tr-TR' }
 
-const BASE_URL = 'https://cloudtopia.net'
-
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
     const title = titles[locale] || titles.en
@@ -36,7 +34,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title,
             description,
-            url: `${BASE_URL}/${locale}/pricing`,
+            url: canonicalUrl(locale, '/pricing'),
             locale: ogLocales[locale] || 'en_US',
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
@@ -50,13 +48,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             images: ogImagesFor({ page: 'pricing', locale }).map(i => i.url),
         },
         alternates: {
-            canonical: `${BASE_URL}/${locale}/pricing`,
-            languages: {
-                'en': `${BASE_URL}/en/pricing`,
-                'ar': `${BASE_URL}/ar/pricing`,
-                'tr': `${BASE_URL}/tr/pricing`,
-                'x-default': `${BASE_URL}/en/pricing`,
-            },
+            canonical: canonicalUrl(locale, '/pricing'),
+            languages: buildHreflangMap('/pricing'),
         },
     }
 }
@@ -77,8 +70,8 @@ export default function PricingLayout({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: crumbs.home, item: `${BASE_URL}/${locale}` },
-            { '@type': 'ListItem', position: 2, name: crumbs.pricing, item: `${BASE_URL}/${locale}/pricing` },
+            { '@type': 'ListItem', position: 1, name: crumbs.home, item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: crumbs.pricing, item: canonicalUrl(locale, '/pricing') },
         ],
     }
 
@@ -94,6 +87,8 @@ export default function PricingLayout({
             name: 'CloudTopia',
             url: BASE_URL,
         },
+        // (offers below all use canonicalUrl() so English emits unprefixed
+        // URLs and AR/TR emit /<locale>/<page>, matching site canonical rules.)
         areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM', 'TR'],
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
@@ -107,7 +102,7 @@ export default function PricingLayout({
                     price: '299',
                     priceCurrency: 'USD',
                     category: 'Website Design',
-                    url: `${BASE_URL}/${locale}/website-design`,
+                    url: canonicalUrl(locale, '/website-design'),
                 },
                 {
                     '@type': 'Offer',
@@ -115,7 +110,7 @@ export default function PricingLayout({
                     price: '499',
                     priceCurrency: 'USD',
                     category: 'Website Design',
-                    url: `${BASE_URL}/${locale}/website-design`,
+                    url: canonicalUrl(locale, '/website-design'),
                 },
                 {
                     '@type': 'Offer',
@@ -123,7 +118,7 @@ export default function PricingLayout({
                     price: '999',
                     priceCurrency: 'USD',
                     category: 'Website Design',
-                    url: `${BASE_URL}/${locale}/website-design`,
+                    url: canonicalUrl(locale, '/website-design'),
                 },
                 {
                     '@type': 'Offer',
@@ -131,7 +126,7 @@ export default function PricingLayout({
                     price: '2499',
                     priceCurrency: 'USD',
                     category: 'Website Design',
-                    url: `${BASE_URL}/${locale}/website-design`,
+                    url: canonicalUrl(locale, '/website-design'),
                 },
                 // Ecommerce
                 {
@@ -140,7 +135,7 @@ export default function PricingLayout({
                     price: '599',
                     priceCurrency: 'USD',
                     category: 'Ecommerce',
-                    url: `${BASE_URL}/${locale}/ecommerce-solutions`,
+                    url: canonicalUrl(locale, '/ecommerce-solutions'),
                 },
                 {
                     '@type': 'Offer',
@@ -148,7 +143,7 @@ export default function PricingLayout({
                     price: '1299',
                     priceCurrency: 'USD',
                     category: 'Ecommerce',
-                    url: `${BASE_URL}/${locale}/ecommerce-solutions`,
+                    url: canonicalUrl(locale, '/ecommerce-solutions'),
                 },
                 // Business Systems
                 {
@@ -157,7 +152,7 @@ export default function PricingLayout({
                     price: '1999',
                     priceCurrency: 'USD',
                     category: 'Business Systems',
-                    url: `${BASE_URL}/${locale}/business-systems-development`,
+                    url: canonicalUrl(locale, '/business-systems-development'),
                 },
                 {
                     '@type': 'Offer',
@@ -165,7 +160,7 @@ export default function PricingLayout({
                     price: '3499',
                     priceCurrency: 'USD',
                     category: 'Business Systems',
-                    url: `${BASE_URL}/${locale}/business-systems-development`,
+                    url: canonicalUrl(locale, '/business-systems-development'),
                 },
                 // Web Apps
                 {
@@ -174,7 +169,7 @@ export default function PricingLayout({
                     price: '999',
                     priceCurrency: 'USD',
                     category: 'Web Applications',
-                    url: `${BASE_URL}/${locale}/web-applications`,
+                    url: canonicalUrl(locale, '/web-applications'),
                 },
                 {
                     '@type': 'Offer',
@@ -182,7 +177,7 @@ export default function PricingLayout({
                     price: '2499',
                     priceCurrency: 'USD',
                     category: 'Web Applications',
-                    url: `${BASE_URL}/${locale}/web-applications`,
+                    url: canonicalUrl(locale, '/web-applications'),
                 },
                 // QR Menu
                 {
@@ -191,7 +186,7 @@ export default function PricingLayout({
                     price: '249',
                     priceCurrency: 'USD',
                     category: 'QR Menu',
-                    url: `${BASE_URL}/${locale}/restaurant-qr-menu`,
+                    url: canonicalUrl(locale, '/restaurant-qr-menu'),
                 },
                 {
                     '@type': 'Offer',
@@ -199,7 +194,7 @@ export default function PricingLayout({
                     price: '499',
                     priceCurrency: 'USD',
                     category: 'QR Menu',
-                    url: `${BASE_URL}/${locale}/restaurant-qr-menu`,
+                    url: canonicalUrl(locale, '/restaurant-qr-menu'),
                 },
                 {
                     '@type': 'Offer',
@@ -207,7 +202,7 @@ export default function PricingLayout({
                     price: '649',
                     priceCurrency: 'USD',
                     category: 'QR Menu',
-                    url: `${BASE_URL}/${locale}/restaurant-qr-menu`,
+                    url: canonicalUrl(locale, '/restaurant-qr-menu'),
                 },
                 // Social Media (monthly)
                 {
@@ -216,7 +211,7 @@ export default function PricingLayout({
                     price: '199',
                     priceCurrency: 'USD',
                     category: 'Social Media Marketing',
-                    url: `${BASE_URL}/${locale}/social-media-marketing`,
+                    url: canonicalUrl(locale, '/social-media-marketing'),
                 },
                 {
                     '@type': 'Offer',
@@ -224,7 +219,7 @@ export default function PricingLayout({
                     price: '449',
                     priceCurrency: 'USD',
                     category: 'Social Media Marketing',
-                    url: `${BASE_URL}/${locale}/social-media-marketing`,
+                    url: canonicalUrl(locale, '/social-media-marketing'),
                 },
                 {
                     '@type': 'Offer',
@@ -232,7 +227,7 @@ export default function PricingLayout({
                     price: '799',
                     priceCurrency: 'USD',
                     category: 'Social Media Marketing',
-                    url: `${BASE_URL}/${locale}/social-media-marketing`,
+                    url: canonicalUrl(locale, '/social-media-marketing'),
                 },
                 // Content
                 {
@@ -241,7 +236,7 @@ export default function PricingLayout({
                     price: '149',
                     priceCurrency: 'USD',
                     category: 'Content Creation',
-                    url: `${BASE_URL}/${locale}/content-creation`,
+                    url: canonicalUrl(locale, '/content-creation'),
                 },
                 {
                     '@type': 'Offer',
@@ -249,7 +244,7 @@ export default function PricingLayout({
                     price: '329',
                     priceCurrency: 'USD',
                     category: 'Content Creation',
-                    url: `${BASE_URL}/${locale}/content-creation`,
+                    url: canonicalUrl(locale, '/content-creation'),
                 },
                 {
                     '@type': 'Offer',
@@ -257,7 +252,7 @@ export default function PricingLayout({
                     price: '549',
                     priceCurrency: 'USD',
                     category: 'Content Creation',
-                    url: `${BASE_URL}/${locale}/content-creation`,
+                    url: canonicalUrl(locale, '/content-creation'),
                 },
             ],
         },
