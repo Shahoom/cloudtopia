@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { localePath } from '@/lib/i18n/url'
 
 type MDXServiceCTAProps = {
     title: string
@@ -21,7 +22,7 @@ export default function MDXServiceCTA({
     label,
     locale = 'en',
 }: MDXServiceCTAProps) {
-    const resolvedHref = href.startsWith('http') ? href : `/${locale}${href}`
+    const resolvedHref = href.startsWith('http') ? href : localePath(locale, href)
     const ctaLabel = label || (locale === 'ar' ? 'اقرأ أكثر' : locale === 'tr' ? 'Daha fazla bilgi' : 'Learn more')
     return (
         <aside className="not-prose my-10 rounded-3xl border border-primary-200 bg-gradient-to-br from-primary-50/80 via-white to-secondary-50/60 p-6 md:p-8 shadow-sm">

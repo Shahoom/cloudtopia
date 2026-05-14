@@ -11,6 +11,7 @@ import {
     ExternalLink,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'
 import type { BlogPostMeta } from '@/lib/blog'
 
@@ -248,7 +249,7 @@ export default function HomePageClient({ blogPosts }: HomePageClientProps) {
                     </div>
 
                     <FloatingCard delay={0.4} className="text-center mt-12">
-                        <Link href={`/${locale}/projects`}>
+                        <Link href={localePath(locale, '/projects')}>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}

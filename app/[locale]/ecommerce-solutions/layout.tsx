@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -37,14 +38,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/ecommerce-solutions`,
+            url: canonicalUrl(locale, '/ecommerce-solutions'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'ecommerce-solutions', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/ecommerce-solutions`,
-            languages: { 'en': 'https://cloudtopia.net/en/ecommerce-solutions', 'ar': 'https://cloudtopia.net/ar/ecommerce-solutions', 'tr': 'https://cloudtopia.net/tr/ecommerce-solutions', 'x-default': 'https://cloudtopia.net/en/ecommerce-solutions' },
+            canonical: canonicalUrl(locale, '/ecommerce-solutions'),
+            languages: buildHreflangMap('/ecommerce-solutions'),
         },
     }
 }
@@ -62,9 +63,9 @@ export default function EcommerceSolutionsLayout({ children, params }: { childre
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'E-Commerce Solutions', item: `https://cloudtopia.net/${locale}/ecommerce-solutions` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'E-Commerce Solutions', item: canonicalUrl(locale, '/ecommerce-solutions') },
                         ],
                     }),
                 }}
@@ -77,7 +78,7 @@ export default function EcommerceSolutionsLayout({ children, params }: { childre
                         '@type': 'Service',
                         name: 'E-Commerce Solutions & Online Stores',
                         description: 'Full e-commerce stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA e-invoicing, and Arabic + English checkout.',
-                        url: `https://cloudtopia.net/${locale}/ecommerce-solutions`,
+                        url: canonicalUrl(locale, '/ecommerce-solutions'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'E-Commerce Development',
                         areaServed: [

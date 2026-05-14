@@ -6,9 +6,9 @@ import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds } from '@/lib/projects'
 import { locationSlugs } from '@/lib/seo/locations'
 import { hasPageOgImage } from '@/lib/og/og-image'
+import { BASE_URL, canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export function buildSitemapEntries(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://cloudtopia.net'
     const locales = ['en', 'ar', 'tr']
 
     // All static routes with SEO priority/frequency.
@@ -45,19 +45,37 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     const sitemapEntries: MetadataRoute.Sitemap = []
 
-    // Helper: get last-modified date from file system
+    // Routes whose VISIBLE content is data-driven from a content source file
+    // (translations or seo data). lastmod tracks that file's mtime, not the
+    // page template's mtime. The template mtime resets on every Vercel
+    // deploy and creates the freshness noise Google learns to discount —
+    // see the previous fix at commit 507d968 which established this pattern
+    // for /projects/[id]. We extend it here to every listing-style route.
+    // Routes NOT in this map fall through to page.tsx mtime, which is the
+    // correct signal for content-in-template pages (about, contact, legal).
+    const DATA_DRIVEN: Record<string, string> = {
+        '/':                              'lib/i18n/translations/en.ts',
+        '/services':                      'lib/i18n/translations/en.ts',
+        '/pricing':                       'lib/i18n/translations/en.ts',
+        '/projects':                      'lib/i18n/translations/en.ts',
+        '/labs':                          'lib/i18n/translations/en.ts',
+        '/website-design':                'lib/i18n/translations/en.ts',
+        '/ecommerce-solutions':           'lib/i18n/translations/en.ts',
+        '/business-systems-development':  'lib/i18n/translations/en.ts',
+        '/restaurant-qr-menu':            'lib/i18n/translations/en.ts',
+        '/content-creation':              'lib/i18n/translations/en.ts',
+        '/social-media-marketing':        'lib/i18n/translations/en.ts',
+        '/web-applications':              'lib/i18n/translations/en.ts',
+    }
+
     function getLastModified(routePath: string): Date {
-        // /projects is data-driven from lib/i18n/translations/<loc>.ts, so
-        // its lastmod must track that file — page.tsx mtime resets on every
-        // Vercel deploy and creates the freshness noise that 'Discovered –
-        // currently not indexed' feeds on. Same pattern as /projects/[id].
-        if (routePath === '/projects') {
+        const dataSource = DATA_DRIVEN[routePath]
+        if (dataSource) {
             try {
-                const p = path.join(process.cwd(), 'lib/i18n/translations/en.ts')
+                const p = path.join(process.cwd(), dataSource)
                 if (fs.existsSync(p)) return fs.statSync(p).mtime
             } catch { /* fall through to template mtime */ }
         }
-
         try {
             const filePath = routePath === '/'
                 ? path.join(process.cwd(), 'app/[locale]/page.tsx')
@@ -71,22 +89,11 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         return new Date()
     }
 
-    // Helper: build full hreflang map for a given path suffix
-    function buildLanguages(pathSuffix: string): Record<string, string> {
-        const languages: Record<string, string> = {
-            'x-default': `${baseUrl}/en${pathSuffix}`,
-        }
-        locales.forEach((loc) => {
-            languages[loc] = `${baseUrl}/${loc}${pathSuffix}`
-        })
-        return languages
-    }
-
     // Static routes — one entry per locale, with image extension where the
     // page has a real OG image folder (and has not been opted out).
     routes.forEach((route) => {
         const pathSuffix = route.path === '/' ? '' : route.path
-        const languages = buildLanguages(pathSuffix)
+        const languages = buildHreflangMap(pathSuffix || '/')
         const lastModified = getLastModified(route.path)
 
         locales.forEach((loc) => {
@@ -107,14 +114,14 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
                 ]
                 for (const c of candidates) {
                     if (fs.existsSync(path.join(process.cwd(), 'public', c.replace(/^\//, '')))) {
-                        images = [`${baseUrl}${c}`]
+                        images = [`${BASE_URL}${c}`]
                         break
                     }
                 }
             }
 
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}${pathSuffix}`,
+                url: canonicalUrl(loc, route.path),
                 lastModified,
                 changeFrequency: route.changeFrequency,
                 priority: route.priority,
@@ -148,10 +155,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     // Blog listing page — one entry per locale.
     // Per user instruction: NO image extension for the blog index.
-    const blogLanguages = buildLanguages('/blog')
+    const blogLanguages = buildHreflangMap('/blog')
     locales.forEach((loc) => {
         sitemapEntries.push({
-            url: `${baseUrl}/${loc}/blog`,
+            url: canonicalUrl(loc, '/blog'),
             lastModified: latestPostDate(loc),
             changeFrequency: 'weekly',
             priority: 0.9,
@@ -161,10 +168,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     // RSS feeds — one per locale. Freshness tracks newest post, not
     // wall-clock time, so crawlers see honest update signals.
-    const feedLanguages = buildLanguages('/blog/feed.xml')
+    const feedLanguages = buildHreflangMap('/blog/feed.xml')
     locales.forEach((loc) => {
         sitemapEntries.push({
-            url: `${baseUrl}/${loc}/blog/feed.xml`,
+            url: canonicalUrl(loc, '/blog/feed.xml'),
             lastModified: latestPostDate(loc),
             changeFrequency: 'daily',
             priority: 0.5,
@@ -213,14 +220,16 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
     })
 
     idToLocalePosts.forEach((entries) => {
-        // Build hreflang map for this canonical id
+        // Build hreflang map for this canonical id. Native-script slugs
+        // mean we can't use buildHreflangMap (which assumes the slug is the
+        // same for every locale) — each locale has its own slug.
         const languages: Record<string, string> = {}
         const enEntry = entries.find((e) => e.loc === 'en')
         if (enEntry) {
-            languages['x-default'] = `${baseUrl}/en/blog/${encodeURIComponent(enEntry.slug)}`
+            languages['x-default'] = canonicalUrl('en', `/blog/${encodeURIComponent(enEntry.slug)}`)
         }
         entries.forEach((e) => {
-            languages[e.loc] = `${baseUrl}/${e.loc}/blog/${encodeURIComponent(e.slug)}`
+            languages[e.loc] = canonicalUrl(e.loc, `/blog/${encodeURIComponent(e.slug)}`)
         })
 
         // Emit one URL entry per locale variant
@@ -248,11 +257,11 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
             // /images/blog/...) get prefixed with the canonical base URL;
             // full URLs (Unsplash CDN) pass through.
             const absoluteImage = e.coverImage
-                ? (e.coverImage.startsWith('http') ? e.coverImage : `${baseUrl}${e.coverImage}`)
+                ? (e.coverImage.startsWith('http') ? e.coverImage : `${BASE_URL}${e.coverImage}`)
                 : undefined
 
             sitemapEntries.push({
-                url: `${baseUrl}/${e.loc}/blog/${encodeURIComponent(e.slug)}`,
+                url: canonicalUrl(e.loc, `/blog/${encodeURIComponent(e.slug)}`),
                 lastModified,
                 changeFrequency: 'monthly',
                 priority: 0.8,
@@ -288,10 +297,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     // Author pages — one entry per (locale × author)
     getAllAuthorSlugs().forEach((authorSlug) => {
-        const languages = buildLanguages(`/authors/${authorSlug}`)
+        const languages = buildHreflangMap(`/authors/${authorSlug}`)
         locales.forEach((loc) => {
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}/authors/${authorSlug}`,
+                url: canonicalUrl(loc, `/authors/${authorSlug}`),
                 lastModified: authorTemplateMtime,
                 changeFrequency: 'monthly',
                 priority: 0.6,
@@ -303,10 +312,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
     // Project detail pages — one entry per (locale × project)
     const projectIds = getAllProjectIds()
     projectIds.forEach((pid) => {
-        const languages = buildLanguages(`/projects/${pid}`)
+        const languages = buildHreflangMap(`/projects/${pid}`)
         locales.forEach((loc) => {
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}/projects/${pid}`,
+                url: canonicalUrl(loc, `/projects/${pid}`),
                 lastModified: projectsDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.8,
@@ -317,10 +326,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
 
     // Location landing pages — one entry per (locale × country)
     locationSlugs.forEach((country) => {
-        const languages = buildLanguages(`/locations/${country}`)
+        const languages = buildHreflangMap(`/locations/${country}`)
         locales.forEach((loc) => {
             sitemapEntries.push({
-                url: `${baseUrl}/${loc}/locations/${country}`,
+                url: canonicalUrl(loc, `/locations/${country}`),
                 lastModified: locationsDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.85,

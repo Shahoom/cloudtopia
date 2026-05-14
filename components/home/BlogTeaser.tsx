@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowUpRight, Clock, BookOpen } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 import type { BlogPostMeta } from '@/lib/blog'
 
 type BlogTeaserProps = {
@@ -88,7 +89,7 @@ export default function BlogTeaser({ posts }: BlogTeaserProps) {
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
                         <Link
-                            href={`/${locale}/blog`}
+                            href={localePath(locale, '/blog')}
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white/50 text-white text-sm font-semibold transition-colors group"
                         >
                             {viewAll}
@@ -107,7 +108,7 @@ export default function BlogTeaser({ posts }: BlogTeaserProps) {
                             transition={{ duration: 0.5, delay: i * 0.08 }}
                         >
                             <Link
-                                href={`/${locale}/blog/${post.slug}`}
+                                href={localePath(locale, `/blog/${post.slug}`)}
                                 className="group block h-full rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/25 hover:bg-white/[0.06] transition-all duration-300 overflow-hidden"
                             >
                                 <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">

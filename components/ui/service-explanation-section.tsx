@@ -4,6 +4,7 @@ import { ArrowDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import TextBlockAnimation from "@/components/ui/text-block-animation"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
+import { localePath } from "@/lib/i18n/url"
 
 interface ServiceExplanationProps {
   isRTL?: boolean
@@ -241,7 +242,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
       <footer className="h-[30vh] sm:h-[35vh] md:h-[40vh] flex items-center justify-center px-4 border-t border-slate-200 dark:border-zinc-800 bg-lavender dark:bg-zinc-950">
         <TextBlockAnimation blockColor="#ef4444" duration={0.8}>
           <a
-            href={`/${locale}/contact`}
+            href={localePath(locale, '/contact')}
             className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black hover:text-primary-600 dark:hover:text-primary-400 transition-colors cursor-pointer text-center"
           >
             {t.ctaText}

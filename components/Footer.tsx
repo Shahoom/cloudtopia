@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localePath } from '@/lib/i18n/url'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, dir, locale } = useLanguage()
 
-  const l = (path: string) => `/${locale}${path === '/' ? '' : path}`
+  const l = (path: string) => localePath(locale, path)
 
   const footerLinks = {
     [t.footer.services]: [

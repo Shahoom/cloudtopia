@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion"
 import { ArrowRight, ArrowLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
+import { localePath } from "@/lib/i18n/url"
 
 interface EcommerceServiceSectionProps {
   isRTL?: boolean
@@ -448,7 +449,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
               {t.ctaDescription}
             </p>
             <a
-              href={`/${locale}/contact`}
+              href={localePath(locale, '/contact')}
               className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-violet-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
               {t.ctaButton}

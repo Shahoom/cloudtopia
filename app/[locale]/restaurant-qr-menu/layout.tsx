@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -36,14 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/restaurant-qr-menu`,
+            url: canonicalUrl(locale, '/restaurant-qr-menu'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'restaurant-qr-menu', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/restaurant-qr-menu`,
-            languages: { 'en': 'https://cloudtopia.net/en/restaurant-qr-menu', 'ar': 'https://cloudtopia.net/ar/restaurant-qr-menu', 'tr': 'https://cloudtopia.net/tr/restaurant-qr-menu', 'x-default': 'https://cloudtopia.net/en/restaurant-qr-menu' },
+            canonical: canonicalUrl(locale, '/restaurant-qr-menu'),
+            languages: buildHreflangMap('/restaurant-qr-menu'),
         },
     }
 }
@@ -61,9 +62,9 @@ export default function RestaurantQrMenuLayout({ children, params }: { children:
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'Restaurant QR Menu', item: `https://cloudtopia.net/${locale}/restaurant-qr-menu` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'Restaurant QR Menu', item: canonicalUrl(locale, '/restaurant-qr-menu') },
                         ],
                     }),
                 }}
@@ -76,7 +77,7 @@ export default function RestaurantQrMenuLayout({ children, params }: { children:
                         '@type': 'Service',
                         name: 'Restaurant QR Menu Systems',
                         description: 'Multilingual QR menus with ordering, payment, and instant updates for Gulf restaurants and cafés.',
-                        url: `https://cloudtopia.net/${locale}/restaurant-qr-menu`,
+                        url: canonicalUrl(locale, '/restaurant-qr-menu'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Digital Menu Solutions',
                         areaServed: [

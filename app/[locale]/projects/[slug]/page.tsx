@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
 import { getProjectById, getAllProjects, getAllProjectIds } from '@/lib/projects'
 import { getOgImage } from '@/lib/og/og-image'
+import { canonicalUrl, localePath } from '@/lib/i18n/url'
 
 type PageProps = {
     params: { locale: string; slug: string }
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title,
             description,
-            url: `https://cloudtopia.net/${locale}/projects/${params.slug}`,
+            url: canonicalUrl(locale, `/projects/${params.slug}`),
             // Per-project OG image override at /public/images/og/projects/{slug}-{locale}.jpg
             // falls back to project.image, then brand default per locale.
             images: (() => {
@@ -50,12 +51,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             images: [getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined })!.url],
         },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/projects/${params.slug}`,
+            canonical: canonicalUrl(locale, `/projects/${params.slug}`),
             languages: {
-                'en': `https://cloudtopia.net/en/projects/${params.slug}`,
-                'ar': `https://cloudtopia.net/ar/projects/${params.slug}`,
-                'tr': `https://cloudtopia.net/tr/projects/${params.slug}`,
-                'x-default': `https://cloudtopia.net/en/projects/${params.slug}`,
+                'en': canonicalUrl('en', `/projects/${params.slug}`),
+                'ar': canonicalUrl('ar', `/projects/${params.slug}`),
+                'tr': canonicalUrl('tr', `/projects/${params.slug}`),
+                'x-default': canonicalUrl('en', `/projects/${params.slug}`),
             },
         },
     }
@@ -80,7 +81,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
     const caseStudySchema = {
         '@context': 'https://schema.org',
         '@type': 'Article',
-        '@id': `https://cloudtopia.net/${locale}/projects/${project.id}#article`,
+        '@id': `${canonicalUrl(locale, `/projects/${project.id}`)}#article`,
         headline: project.title,
         description: project.solution,
         image: getOgImage({ page: `projects/${params.slug}`, locale, override: project.image || undefined })!.url,
@@ -93,7 +94,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
             url: 'https://cloudtopia.net',
             logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/logo.svg' },
         },
-        mainEntityOfPage: `https://cloudtopia.net/${locale}/projects/${project.id}`,
+        mainEntityOfPage: canonicalUrl(locale, `/projects/${project.id}`),
         about: project.type,
         keywords: project.features.join(', '),
         articleSection: 'Case Study',
@@ -103,9 +104,9 @@ export default function ProjectDetailPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-            { '@type': 'ListItem', position: 2, name: 'Projects', item: `https://cloudtopia.net/${locale}/projects` },
-            { '@type': 'ListItem', position: 3, name: project.title, item: `https://cloudtopia.net/${locale}/projects/${project.id}` },
+            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: 'Projects', item: canonicalUrl(locale, '/projects') },
+            { '@type': 'ListItem', position: 3, name: project.title, item: canonicalUrl(locale, `/projects/${project.id}`) },
         ],
     }
 
@@ -121,7 +122,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
                 <div className="relative max-w-5xl mx-auto">
                     <Link
-                        href={`/${locale}/projects`}
+                        href={localePath(locale, '/projects')}
                         className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors mb-8"
                     >
                         <ArrowLeft className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
@@ -245,7 +246,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
                         <div className="flex items-end justify-between mb-10">
                             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">{L.relatedProjects}</h2>
                             <Link
-                                href={`/${locale}/projects`}
+                                href={localePath(locale, '/projects')}
                                 className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-primary-700 hover:text-primary-900 transition-colors"
                             >
                                 {L.backToProjects}
@@ -256,7 +257,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
                             {relatedProjects.map((p) => (
                                 <Link
                                     key={p.id}
-                                    href={`/${locale}/projects/${p.id}`}
+                                    href={localePath(locale, `/projects/${p.id}`)}
                                     className="group block rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 hover:shadow-xl transition-all duration-300 overflow-hidden"
                                 >
                                     {p.image && (
@@ -302,14 +303,14 @@ export default function ProjectDetailPage({ params }: PageProps) {
                     <h2 className="text-3xl md:text-5xl font-bold mb-5">{L.readyForYours}</h2>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
                         <Link
-                            href={`/${locale}/contact`}
+                            href={localePath(locale, '/contact')}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white text-primary-700 font-semibold hover:bg-lavender transition-colors"
                         >
                             {L.startProject}
                             <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                         </Link>
                         <Link
-                            href={`/${locale}/pricing`}
+                            href={localePath(locale, '/pricing')}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-white/30 hover:border-white font-semibold transition-colors"
                         >
                             {L.viewPricing}

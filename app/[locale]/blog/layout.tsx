@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import './blog.css'
 
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title,
             description,
-            url: `https://cloudtopia.net/${locale}/blog`,
+            url: canonicalUrl(locale, '/blog'),
             locale: ogLocales[locale] || 'en_US',
             alternateLocale: Object.values(ogLocales).filter(l => l !== (ogLocales[locale] || 'en_US')),
             siteName: 'CloudTopia',
@@ -43,17 +44,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
             description,
         },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/blog`,
-            languages: {
-                'en': 'https://cloudtopia.net/en/blog',
-                'ar': 'https://cloudtopia.net/ar/blog',
-                'tr': 'https://cloudtopia.net/tr/blog',
-                'x-default': 'https://cloudtopia.net/en/blog',
-            },
+            canonical: canonicalUrl(locale, '/blog'),
+            languages: buildHreflangMap('/blog'),
             // RSS feed discovery — browsers and feed readers will auto-detect this
             // via the rendered <link rel="alternate" type="application/rss+xml"> tag.
             types: {
-                'application/rss+xml': `https://cloudtopia.net/${locale}/blog/feed.xml`,
+                'application/rss+xml': canonicalUrl(locale, '/blog/feed.xml'),
             },
         },
     }
@@ -70,7 +66,7 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
                         '@type': 'Blog',
                         name: 'CloudTopia Blog',
                         description: 'Expert insights on web design, e-commerce, digital marketing, and cloud technology for Gulf and Arab market businesses.',
-                        url: 'https://cloudtopia.net/en/blog',
+                        url: canonicalUrl('en', '/blog'),
                         publisher: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

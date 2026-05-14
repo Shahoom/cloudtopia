@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
     const locale = params.locale ?? 'en'
@@ -35,14 +36,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/labs`,
+            url: canonicalUrl(locale, '/labs'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'labs', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/labs`,
-            languages: { 'en': 'https://cloudtopia.net/en/labs', 'ar': 'https://cloudtopia.net/ar/labs', 'tr': 'https://cloudtopia.net/tr/labs', 'x-default': 'https://cloudtopia.net/en/labs' },
+            canonical: canonicalUrl(locale, '/labs'),
+            languages: buildHreflangMap('/labs'),
         },
     }
 }
@@ -57,8 +58,8 @@ export default function LabsLayout({ children }: { children: React.ReactNode }) 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/en' },
-                            { '@type': 'ListItem', position: 2, name: 'Labs', item: 'https://cloudtopia.net/en/labs' },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl('en', '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Labs', item: canonicalUrl('en', '/labs') },
                         ],
                     }),
                 }}
@@ -71,7 +72,7 @@ export default function LabsLayout({ children }: { children: React.ReactNode }) 
                         '@type': 'WebPage',
                         name: 'CloudTopia Labs — Innovation Hub',
                         description: 'Our innovation hub for AI, cloud-native, and cutting-edge experimental prototypes.',
-                        url: 'https://cloudtopia.net/en/labs',
+                        url: canonicalUrl('en', '/labs'),
                         mainEntity: {
                             '@type': 'Organization',
                             name: 'CloudTopia',

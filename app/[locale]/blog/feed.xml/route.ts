@@ -1,6 +1,5 @@
 import { getAllPosts } from '@/lib/blog'
-
-const BASE_URL = 'https://cloudtopia.net'
+import { canonicalUrl } from '@/lib/i18n/url'
 
 const FEED_META: Record<string, { title: string; description: string; language: string }> = {
     en: {
@@ -38,12 +37,12 @@ export async function GET(
     const meta = FEED_META[lang] || FEED_META.en
     const posts = getAllPosts(lang).slice(0, 50)
 
-    const feedUrl = `${BASE_URL}/${lang}/blog/feed.xml`
-    const blogUrl = `${BASE_URL}/${lang}/blog`
+    const feedUrl = canonicalUrl(lang, '/blog/feed.xml')
+    const blogUrl = canonicalUrl(lang, '/blog')
 
     const items = posts
         .map((p) => {
-            const postUrl = `${BASE_URL}/${lang}/blog/${encodeURIComponent(p.slug)}`
+            const postUrl = canonicalUrl(lang, `/blog/${encodeURIComponent(p.slug)}`)
             const pubDate = new Date(p.updated || p.date).toUTCString()
             const categories = (p.tags || [])
                 .map((tag) => `      <category>${xmlEscape(tag)}</category>`)

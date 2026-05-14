@@ -6,8 +6,8 @@ import { ArrowUpRight } from 'lucide-react'
 import { getAuthor, getAllAuthorSlugs } from '@/lib/authors'
 import { getAllPosts } from '@/lib/blog'
 import { getOgImage } from '@/lib/og/og-image'
+import { BASE_URL, canonicalUrl, localePath } from '@/lib/i18n/url'
 
-const BASE_URL = 'https://cloudtopia.net'
 const LOCALES = ['en', 'ar', 'tr'] as const
 
 type PageProps = { params: { locale: string; slug: string } }
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description: bio.slice(0, 200),
             type: 'profile',
-            url: `${BASE_URL}/${locale}/authors/${author.slug}`,
+            url: canonicalUrl(locale, `/authors/${author.slug}`),
             // Per-author OG override: /public/images/og/authors/{slug}-{locale}.jpg
             // Falls back to author profile image, then brand default.
             images: [
@@ -51,12 +51,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             ],
         },
         alternates: {
-            canonical: `${BASE_URL}/${locale}/authors/${author.slug}`,
+            canonical: canonicalUrl(locale, `/authors/${author.slug}`),
             languages: {
-                en: `${BASE_URL}/en/authors/${author.slug}`,
-                ar: `${BASE_URL}/ar/authors/${author.slug}`,
-                tr: `${BASE_URL}/tr/authors/${author.slug}`,
-                'x-default': `${BASE_URL}/en/authors/${author.slug}`,
+                en: canonicalUrl('en', `/authors/${author.slug}`),
+                ar: canonicalUrl('ar', `/authors/${author.slug}`),
+                tr: canonicalUrl('tr', `/authors/${author.slug}`),
+                'x-default': canonicalUrl('en', `/authors/${author.slug}`),
             },
         },
     }
@@ -84,11 +84,11 @@ export default function AuthorPage({ params }: PageProps) {
     const personSchema = {
         '@context': 'https://schema.org',
         '@type': 'Person',
-        '@id': `${BASE_URL}/${locale}/authors/${author.slug}#person`,
+        '@id': `${canonicalUrl(locale, `/authors/${author.slug}`)}#person`,
         name: author.name,
         jobTitle: role,
         description: bio,
-        url: `${BASE_URL}/${locale}/authors/${author.slug}`,
+        url: canonicalUrl(locale, `/authors/${author.slug}`),
         ...(author.image && { image: `${BASE_URL}${author.image}` }),
         ...(author.knowsAbout && { knowsAbout: author.knowsAbout }),
         ...(author.sameAs && { sameAs: author.sameAs }),
@@ -103,9 +103,9 @@ export default function AuthorPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : lang === 'tr' ? 'Ana Sayfa' : 'Home', item: `${BASE_URL}/${locale}` },
-            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'المدونة' : 'Blog', item: `${BASE_URL}/${locale}/blog` },
-            { '@type': 'ListItem', position: 3, name: author.name, item: `${BASE_URL}/${locale}/authors/${author.slug}` },
+            { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : lang === 'tr' ? 'Ana Sayfa' : 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'المدونة' : 'Blog', item: canonicalUrl(locale, '/blog') },
+            { '@type': 'ListItem', position: 3, name: author.name, item: canonicalUrl(locale, `/authors/${author.slug}`) },
         ],
     }
 
@@ -192,7 +192,7 @@ export default function AuthorPage({ params }: PageProps) {
                             {posts.map((p) => (
                                 <li key={p.id}>
                                     <Link
-                                        href={`/${locale}/blog/${p.slug}`}
+                                        href={localePath(locale, `/blog/${p.slug}`)}
                                         className="block h-full rounded-2xl bg-white border border-neutral-200 hover:border-neutral-900 hover:shadow-md transition-all p-6"
                                     >
                                         {p.tags?.[0] && (
@@ -218,7 +218,7 @@ export default function AuthorPage({ params }: PageProps) {
 
                     <div className="mt-12">
                         <Link
-                            href={`/${locale}/blog`}
+                            href={localePath(locale, '/blog')}
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neutral-300 hover:border-neutral-900 text-neutral-900 font-semibold text-sm transition-colors"
                         >
                             {labels.backToBlog}

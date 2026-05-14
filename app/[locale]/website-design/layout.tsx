@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -36,14 +37,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         openGraph: {
             title: ogTitle,
             description: ogDesc,
-            url: `https://cloudtopia.net/${locale}/website-design`,
+            url: canonicalUrl(locale, '/website-design'),
             locale: ogLocales[locale] || 'en_US',
             images: ogImagesFor({ page: 'website-design', locale }),
         },
         twitter: { title: ogTitle, description: ogDesc },
         alternates: {
-            canonical: `https://cloudtopia.net/${locale}/website-design`,
-            languages: { 'en': 'https://cloudtopia.net/en/website-design', 'ar': 'https://cloudtopia.net/ar/website-design', 'tr': 'https://cloudtopia.net/tr/website-design', 'x-default': 'https://cloudtopia.net/en/website-design' },
+            canonical: canonicalUrl(locale, '/website-design'),
+            languages: buildHreflangMap('/website-design'),
         },
     }
 }
@@ -61,9 +62,9 @@ export default function WebsiteDesignLayout({ children, params }: { children: Re
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: `https://cloudtopia.net/${locale}` },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: `https://cloudtopia.net/${locale}/services` },
-                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: `https://cloudtopia.net/${locale}/website-design` },
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: canonicalUrl(locale, '/website-design') },
                         ],
                     }),
                 }}
@@ -76,7 +77,7 @@ export default function WebsiteDesignLayout({ children, params }: { children: Re
                         '@type': 'Service',
                         name: 'Website Design & Development',
                         description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
-                        url: `https://cloudtopia.net/${locale}/website-design`,
+                        url: canonicalUrl(locale, '/website-design'),
                         provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
                         serviceType: 'Web Design',
                         areaServed: [
