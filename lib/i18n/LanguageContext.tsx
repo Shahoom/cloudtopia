@@ -16,6 +16,9 @@ interface LanguageContextType {
   setLocale: (locale: Locale) => void
   t: Translations
   dir: 'ltr' | 'rtl'
+  design: Record<string, unknown> | null
+  navigation: Record<string, any> | null
+  settings: Record<string, any> | null
 }
 
 const translations: Record<Locale, Translations> = {
@@ -47,7 +50,21 @@ function getLocaleFromCookie(): Locale | null {
   return null
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export function LanguageProvider({
+  children,
+  initialLocale,
+  initialDictionary,
+  initialDesign = null,
+  initialNavigation = null,
+  initialSettings = null,
+}: {
+  children: ReactNode
+  initialLocale?: Locale
+  initialDictionary?: Translations
+  initialDesign?: Record<string, unknown> | null
+  initialNavigation?: Record<string, any> | null
+  initialSettings?: Record<string, any> | null
+}) {
   const pathname = usePathname()
   const router = useRouter()
   // Pages with locale-specific URL shapes (e.g. blog posts with native-script
@@ -58,8 +75,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   // Get initial locale from URL (cookie is fallback for the SSR-hydrate
   // transition; URL is authoritative)
-  const initialLocale = getLocaleFromPathname(pathname) || getLocaleFromCookie() || defaultLocale
-  const [locale, setLocaleState] = useState<Locale>(initialLocale)
+  const resolvedInitialLocale = initialLocale || getLocaleFromPathname(pathname) || getLocaleFromCookie() || defaultLocale
+  const [locale, setLocaleState] = useState<Locale>(resolvedInitialLocale)
+  const [cmsTranslations, setCmsTranslations] = useState<Record<Locale, Translations>>({
+    ...translations,
+    ...(initialDictionary ? { [resolvedInitialLocale]: initialDictionary } : {}),
+  })
+  const [design, setDesign] = useState<Record<string, unknown> | null>(initialDesign)
+  const [navigation, setNavigation] = useState<Record<string, any> | null>(initialNavigation)
+  const [settings, setSettings] = useState<Record<string, any> | null>(initialSettings)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -84,6 +108,28 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('cloudtopia-locale', locale)
     }
   }, [locale, mounted])
+
+  useEffect(() => {
+    if (initialDictionary) {
+      setCmsTranslations((current) => ({
+        ...current,
+        [resolvedInitialLocale]: initialDictionary,
+      }))
+    }
+    setDesign(initialDesign)
+    setNavigation(initialNavigation)
+    setSettings(initialSettings)
+  }, [initialDictionary, initialDesign, initialNavigation, initialSettings, resolvedInitialLocale])
+
+  useEffect(() => {
+    if (!mounted || !design) return
+    const theme = (design as { theme?: Record<string, unknown> }).theme
+    if (!theme || typeof theme !== 'object') return
+    const colors = (theme as { colors?: Record<string, string> }).colors
+    if (colors?.primary) document.documentElement.style.setProperty('--cms-primary', colors.primary)
+    if (colors?.secondary) document.documentElement.style.setProperty('--cms-secondary', colors.secondary)
+    if (colors?.background) document.documentElement.style.setProperty('--cms-background', colors.background)
+  }, [design, mounted])
 
   const setLocale = (newLocale: Locale) => {
     if (newLocale === locale) return
@@ -115,8 +161,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const value: LanguageContextType = {
     locale,
     setLocale,
-    t: translations[locale],
+    t: cmsTranslations[locale],
     dir: localeDirection[locale],
+    design,
+    navigation,
+    settings,
   }
 
   return (

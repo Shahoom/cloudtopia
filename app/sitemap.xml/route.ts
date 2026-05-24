@@ -10,9 +10,12 @@
  * this route just re-encodes it into a richer XML format.
  */
 
-import { buildSitemapEntries } from '@/lib/sitemap-data'
+import { buildSitemapEntriesFromCMS } from '@/lib/sitemap-data'
 
 const BASE_URL = 'https://cloudtopia.net'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 function escape(s: string): string {
     return s
@@ -24,7 +27,7 @@ function escape(s: string): string {
 }
 
 export async function GET() {
-    const entries = buildSitemapEntries()
+    const entries = await buildSitemapEntriesFromCMS()
 
     const urls = entries
         .map((entry) => {

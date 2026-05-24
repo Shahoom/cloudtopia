@@ -1,0 +1,391 @@
+:root {
+  --ct-admin-ink: #1b1712;
+  --ct-admin-muted: #6d604e;
+  --ct-admin-line: #e3d8c5;
+  --ct-admin-soft: #f6f1e8;
+  --ct-admin-panel: #fffaf1;
+  --ct-admin-primary: #201b14;
+  --ct-admin-accent: #d8b86e;
+  --ct-admin-success: #0f8a57;
+  --ct-admin-radius: 8px;
+  --ct-admin-shadow: 0 24px 70px rgba(7, 21, 34, 0.08);
+}
+
+html,
+body {
+  background: var(--ct-admin-soft);
+}
+
+body {
+  color: var(--ct-admin-ink);
+  font-family: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+}
+
+body * {
+  letter-spacing: 0;
+}
+
+.template-default {
+  min-height: 100vh !important;
+  display: grid !important;
+  grid-template-columns: minmax(228px, 264px) minmax(0, 1fr) !important;
+  background:
+    linear-gradient(135deg, rgba(216, 184, 110, 0.12), transparent 34%),
+    var(--ct-admin-soft) !important;
+  color: var(--ct-admin-ink) !important;
+}
+
+.template-default__nav-toggler-wrapper,
+.template-default__nav-toggler-container,
+.template-default__nav-toggler,
+.app-header {
+  display: none !important;
+}
+
+.template-default__wrap,
+.template-default__main,
+.template-default main,
+.template-default .gutter {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  background: transparent !important;
+}
+
+nav[aria-label="CloudTopia CMS navigation"] {
+  isolation: isolate;
+}
+
+nav[aria-label="CloudTopia CMS navigation"] a {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+nav[aria-label="CloudTopia CMS navigation"] a:hover {
+  background: rgba(255, 255, 255, 0.72) !important;
+  color: var(--ct-admin-ink) !important;
+  transform: translateX(2px);
+}
+
+nav[aria-label="CloudTopia CMS navigation"] a:focus-visible,
+.ct-fast-list a:focus-visible,
+.ct-auth a:focus-visible,
+.ct-auth button:focus-visible,
+.template-default button:focus-visible,
+.template-default a:focus-visible,
+.template-default input:focus-visible,
+.template-default textarea:focus-visible,
+.template-default select:focus-visible {
+  outline: 3px solid rgba(216, 184, 110, 0.32) !important;
+  outline-offset: 2px !important;
+}
+
+.collection-list,
+.collection-list__wrap,
+.doc,
+.doc-header,
+.render-fields,
+.form-submit,
+.list-controls,
+.before-list,
+.after-list,
+.payload-settings,
+.account,
+.preferences,
+.dashboard {
+  border-radius: var(--ct-admin-radius) !important;
+}
+
+.doc-header,
+.collection-list__wrap,
+.render-fields,
+.form-submit,
+.list-controls,
+.before-list,
+.after-list {
+  border: 1px solid var(--ct-admin-line) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: var(--ct-admin-shadow) !important;
+}
+
+.doc-header,
+.list-controls {
+  margin-bottom: 16px !important;
+}
+
+.render-fields,
+.form-submit {
+  padding: clamp(16px, 3vw, 28px) !important;
+}
+
+.doc-header__title,
+.collection-list__header h1,
+.template-default h1,
+.template-default h2 {
+  color: var(--ct-admin-ink) !important;
+  line-height: 1.05 !important;
+}
+
+.template-default h1 {
+  font-size: clamp(30px, 4vw, 48px) !important;
+}
+
+.template-default h2 {
+  font-size: clamp(22px, 3vw, 32px) !important;
+}
+
+.template-default p,
+.template-default .field-description,
+.template-default .description {
+  color: var(--ct-admin-muted) !important;
+  line-height: 1.5 !important;
+}
+
+.field-type,
+.field-type__wrap,
+.field-type input,
+.field-type textarea,
+.field-type select {
+  max-width: 100%;
+}
+
+.field-type input,
+.field-type textarea,
+.field-type select,
+.react-select,
+.rs__control {
+  border-radius: var(--ct-admin-radius) !important;
+}
+
+.field-type input,
+.field-type textarea,
+.field-type select,
+.rs__control {
+  border: 1px solid #ddd0ba !important;
+  background: #fffdf8 !important;
+  color: var(--ct-admin-ink) !important;
+  box-shadow: none !important;
+}
+
+.field-type input,
+.field-type select {
+  min-height: 44px !important;
+}
+
+.field-type textarea {
+  min-height: 132px !important;
+  resize: vertical;
+}
+
+.field-type label,
+.field-label,
+.label {
+  color: #3a3025 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.btn,
+button[type="submit"],
+.form-submit button,
+.template-default .btn {
+  min-height: 42px !important;
+  border-radius: var(--ct-admin-radius) !important;
+  font-weight: 950 !important;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease !important;
+}
+
+.btn:hover,
+button[type="submit"]:hover,
+.form-submit button:hover {
+  transform: translateY(-1px);
+}
+
+.btn--style-primary,
+button[type="submit"] {
+  border-color: var(--ct-admin-ink) !important;
+  background: var(--ct-admin-ink) !important;
+  color: #fff !important;
+  box-shadow: 0 16px 34px rgba(7, 21, 34, 0.14) !important;
+}
+
+.btn--style-secondary {
+  border-color: var(--ct-admin-line) !important;
+  background: #fffaf1 !important;
+  color: var(--ct-admin-ink) !important;
+}
+
+.table,
+.collection-list table,
+.ct-fast-list table {
+  overflow: hidden;
+  border-radius: var(--ct-admin-radius) !important;
+}
+
+.table th,
+.collection-list th,
+.ct-fast-list th {
+  background: #f8f1e4 !important;
+  color: #6d604e !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  text-transform: uppercase !important;
+}
+
+.table td,
+.collection-list td,
+.ct-fast-list td {
+  border-color: #eee3d0 !important;
+}
+
+.ct-fast-list {
+  min-height: 100vh;
+}
+
+.ct-fast-list a {
+  transition:
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.ct-fast-list a:hover {
+  opacity: 0.82;
+}
+
+.ct-auth {
+  min-height: 100vh;
+}
+
+.ct-auth form {
+  position: relative;
+}
+
+.ct-auth form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.ct-auth input,
+.ct-auth button,
+.ct-auth a {
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.ct-auth button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 38px rgba(7, 21, 34, 0.16);
+}
+
+.loading,
+.payload-loading,
+[class*="loading"] {
+  color: var(--ct-admin-muted) !important;
+}
+
+@media (max-width: 1100px) {
+  .template-default {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] {
+    padding: 12px 10px !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] span:not([aria-hidden="true"]) {
+    font-size: 0 !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] svg {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .template-default {
+    display: block !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 80 !important;
+    min-height: auto !important;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(7, 21, 34, 0.09) !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] > div:nth-of-type(1) {
+    display: flex !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] > div:nth-of-type(2) {
+    display: flex !important;
+    gap: 6px !important;
+  }
+
+  nav[aria-label="CloudTopia CMS navigation"] a {
+    min-width: 42px !important;
+    width: auto !important;
+  }
+
+  .template-default__wrap {
+    min-height: calc(100vh - 72px) !important;
+  }
+
+  .ct-fast-list {
+    padding: 16px !important;
+  }
+
+  .ct-fast-list-header {
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+  }
+
+  .render-fields,
+  .form-submit {
+    padding: 16px !important;
+  }
+
+  .ct-auth {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ct-auth__visual {
+    min-height: auto !important;
+    gap: 28px !important;
+    padding: 28px 20px !important;
+  }
+
+  .ct-auth__copy h1 {
+    font-size: clamp(36px, 12vw, 58px) !important;
+  }
+
+  .ct-auth__form {
+    min-height: auto !important;
+    padding: 24px 16px 34px !important;
+  }
+}

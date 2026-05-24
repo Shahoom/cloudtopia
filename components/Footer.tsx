@@ -7,11 +7,27 @@ import { localePath } from '@/lib/i18n/url'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  const { t, dir, locale } = useLanguage()
+  const { t, dir, locale, navigation: cmsNavigation, settings } = useLanguage()
 
   const l = (path: string) => localePath(locale, path)
+  const insightsLabel = locale === 'ar' ? 'الرؤى' : locale === 'tr' ? 'İçgörüler' : 'Insights'
+  const normalizeFooterHref = (href: string) => (href === '/blog' ? '/insights' : href)
 
-  const footerLinks = {
+  const cmsFooter = cmsNavigation?.footer as
+    | { description?: string; copyright?: string; columns?: Array<{ title: string; links: Array<{ label: string; href: string }> }> }
+    | undefined
+
+  const footerLinks = cmsFooter?.columns
+    ? Object.fromEntries(
+      cmsFooter.columns.map((column) => [
+        column.title,
+        column.links.map((link) => ({
+          name: link.href === '/blog' ? insightsLabel : link.label,
+          href: l(normalizeFooterHref(link.href)),
+        })),
+      ]),
+    )
+    : {
     [t.footer.services]: [
       { name: t.footer.links.digitalPresence, href: l('/services#digital-presence') },
       { name: t.footer.links.businessSystems, href: l('/services#business-systems') },
@@ -21,7 +37,7 @@ export default function Footer() {
     [t.footer.company]: [
       { name: t.footer.links.aboutUs, href: l('/about') },
       { name: t.footer.links.projects, href: l('/projects') },
-      { name: t.footer.links.blog, href: l('/blog') },
+      { name: insightsLabel, href: l('/insights') },
       { name: t.footer.links.ourLabs, href: l('/labs') },
       { name: t.footer.links.contactUs, href: l('/contact') },
     ],
@@ -31,7 +47,14 @@ export default function Footer() {
     ],
   }
 
-  const socialLinks = [
+  const configuredSocialLinks = Array.isArray(settings?.social) ? settings.social : null
+  const socialLinks = configuredSocialLinks
+    ? configuredSocialLinks.map((link: any) => ({
+      name: link.label,
+      href: link.href,
+      icon: null,
+    }))
+    : [
     {
       name: 'WhatsApp',
       href: 'https://wa.me/905011511116',
@@ -92,7 +115,7 @@ export default function Footer() {
                 </span>
               </Link>
               <p className="text-neutral-600 mb-6 max-w-sm font-medium">
-                {t.footer.description}
+                {cmsFooter?.description || t.footer.description}
               </p>
               <div className={`flex ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
                 {socialLinks.map((social) => (
@@ -102,7 +125,7 @@ export default function Footer() {
                     className="w-10 h-10 rounded-lg bg-lavender border border-neutral-200 flex items-center justify-center text-neutral-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200"
                     aria-label={social.name}
                   >
-                    {social.icon}
+                    {social.icon || social.name.slice(0, 1)}
                   </Link>
                 ))}
               </div>
@@ -135,7 +158,7 @@ export default function Footer() {
         <div className="border-t border-neutral-200 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-neutral-600 text-sm font-medium">
-              {t.footer.copyright.replace('{year}', currentYear.toString())}
+              {(cmsFooter?.copyright || t.footer.copyright).replace('{year}', currentYear.toString())}
             </p>
             <div className={`flex text-sm ${dir === 'rtl' ? 'space-x-reverse space-x-6' : 'space-x-6'}`}>
               <Link href={l('/privacy')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">

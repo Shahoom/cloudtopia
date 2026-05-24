@@ -1,6 +1,7 @@
 import { en } from '@/lib/i18n/translations/en'
 import { ar } from '@/lib/i18n/translations/ar'
 import { tr } from '@/lib/i18n/translations/tr'
+import { getProject, getProjects } from '@/lib/cms/content'
 
 export type Project = {
     id: string
@@ -18,18 +19,27 @@ export type Project = {
 
 const translations: Record<string, any> = { en, ar, tr }
 
-export function getAllProjects(locale: string): Project[] {
+export function getStaticProjects(locale: string): Project[] {
     const t = translations[locale] || translations.en
     const projects = (t?.projects?.projectCards as Project[]) || []
     return projects
 }
 
-export function getProjectById(id: string, locale: string): Project | null {
-    const projects = getAllProjects(locale)
-    return projects.find((p) => p.id === id) || null
+export async function getAllProjects(locale: string): Promise<Project[]> {
+    return getProjects(locale)
+}
+
+export async function getProjectById(id: string, locale: string): Promise<Project | null> {
+    return getProject(locale, id)
 }
 
 export function getAllProjectIds(): string[] {
-    const enProjects = getAllProjects('en')
+    const enProjects = getStaticProjects('en')
     return enProjects.map((p) => p.id)
+}
+
+export async function getAllProjectIdsFromCMS(): Promise<string[]> {
+    const projects = await getProjects('en')
+    const ids = projects.map((project) => project.id).filter(Boolean)
+    return ids.length > 0 ? ids : getAllProjectIds()
 }

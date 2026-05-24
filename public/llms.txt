@@ -7,7 +7,7 @@
 - **Website Design & Development** — Custom-built, conversion-focused websites with advanced SEO and bilingual support (Arabic + English + Turkish). One-time pricing from $299 (landing) / $499 (5-page) / $999 (15-page) / $2,499 (premium).
 - **E-Commerce Stores** — Full Gulf-ready stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA Phase 2 e-invoicing, and bilingual checkout. From $599 (starter) / $1,299 (growth) / custom (enterprise).
 - **Business Systems & Custom Software** — Custom CRM, inventory, POS, HR, booking, and ERP-style systems built around Gulf workflows. From $1,999 (essential) / $3,499 (advanced) / custom (enterprise).
-- **Web Applications** — Custom web apps, portals, dashboards, SaaS platforms on Next.js + React + Supabase. From $999 (foundation) / $2,499 (professional) / custom (enterprise ERP).
+- **Web Applications** — Custom web apps, portals, dashboards, SaaS platforms on Next.js + React + PostgreSQL. From $999 (foundation) / $2,499 (professional) / custom (enterprise ERP).
 - **QR Menu Systems** — Bilingual QR menus for cafés and restaurants with order-and-pay, Mada/Apple Pay, ZATCA receipts, kitchen printer integration. From $249 (essential) / $499 (smart) / $649 (full multi-branch).
 - **Social Media Marketing** — Strategy, content, ads, and community for Gulf brands. From $199/mo (starter) / $449/mo (growth) / $799/mo (scale).
 - **Content Creation** — SEO-optimized blogs, articles, and copy in Arabic + English + Turkish. From $149/mo (basic) / $329/mo (professional) / $549/mo (agency).
@@ -28,7 +28,7 @@
 
 - Pricing (machine-readable): https://cloudtopia.net/pricing.md
 - Sitemap (XML): https://cloudtopia.net/sitemap.xml
-- RSS feeds: https://cloudtopia.net/blog/feed.xml · https://cloudtopia.net/ar/blog/feed.xml · https://cloudtopia.net/tr/blog/feed.xml
+- RSS feeds: https://cloudtopia.net/insights/rss.xml · https://cloudtopia.net/ar/insights/rss.xml · https://cloudtopia.net/tr/insights/rss.xml
 
 ## Service pages
 

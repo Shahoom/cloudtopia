@@ -1,84 +1,76 @@
-# Deployment Guide — CloudTopia
+# Deployment Guide - CloudTopia V2
 
-## Recommended: Vercel
+This project deploys as one Next.js app with Payload CMS mounted under `/admin` and Payload API routes under `/api`. The database is PostgreSQL, not Supabase.
 
-Vercel is the recommended platform for deploying Next.js applications.
+## Recommended Production Shape
 
-### Steps
+| Layer | Recommendation |
+| --- | --- |
+| App hosting | Vercel |
+| Database | Managed PostgreSQL such as Neon, Railway, Render, or a self-managed Postgres server |
+| File uploads | Current setup uses local/public uploads; for multi-instance production, move Payload media storage to persistent object storage |
+| Domains | `cloudtopia.net` and optional `www.cloudtopia.net` |
 
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Production ready"
-   git push origin main
-   ```
+## Required Environment Variables
 
-2. **Import on Vercel**
-   - Go to [vercel.com/new](https://vercel.com/new)
-   - Select your GitHub repository
-   - Vercel auto-detects Next.js — no extra config needed
-   - Click **Deploy**
+Set these in the hosting provider before building:
 
-3. **Custom Domain** (optional)
-   - In Vercel Dashboard → Settings → Domains
-   - Add `cloudtopia.net` and configure DNS:
-     - `A` record → `76.76.21.21`
-     - `CNAME` for `www` → `cname.vercel-dns.com`
+```env
+DATABASE_URL=postgres://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require
+PAYLOAD_SECRET=use-a-long-random-production-secret
+OPENAI_API_KEY=optional-for-auto-translation
+OPENAI_TRANSLATION_MODEL=gpt-5.2
+```
 
-### Build Settings (auto-detected)
+`DATABASE_URL` and `PAYLOAD_SECRET` are mandatory in production. The local development fallback is intentionally disabled when `NODE_ENV=production`.
 
-| Setting | Value |
-|---------|-------|
-| Framework | Next.js |
-| Build Command | `next build` |
-| Output Directory | `.next` |
-| Install Command | `npm install` |
+## Vercel Deployment
 
----
+1. Create a production Postgres database.
+2. Copy the database connection string into Vercel as `DATABASE_URL`.
+3. Add a strong `PAYLOAD_SECRET`.
+4. Push the repository to GitHub.
+5. Import the repository in Vercel.
+6. Use the default install and build commands:
 
-## Alternative Platforms
-
-### Netlify
 ```bash
+npm install --legacy-peer-deps
 npm run build
-# Deploy the `.next` output via Netlify CLI or Git integration
 ```
 
-### Docker
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
+7. After the first deployment, run Payload migrations against the production database from a trusted machine:
+
+```bash
+DATABASE_URL="postgres://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require" \
+PAYLOAD_SECRET="your-production-secret" \
+npm run payload:migrate
 ```
 
----
+8. Seed initial content if the production database is empty:
+
+```bash
+DATABASE_URL="postgres://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require" \
+PAYLOAD_SECRET="your-production-secret" \
+npm run seed:payload
+```
+
+9. Visit `/admin`, create the first admin user, and verify the dashboard health checks.
+
+## Database Migration Notes
+
+- Migrations live in `migrations/`.
+- Check local status with `npm run payload:migrate:status`.
+- Apply migrations with `npm run payload:migrate`.
+- Do not point production at the local fallback database URL.
+- Back up the production database before running new migrations.
 
 ## Post-Deployment Checklist
 
-- [ ] Verify all pages load correctly
-- [ ] Test both English and Arabic language modes
-- [ ] Submit sitemap to [Google Search Console](https://search.google.com/search-console)
-- [ ] Submit sitemap to [Bing Webmaster Tools](https://www.bing.com/webmasters)
-- [ ] Verify `robots.txt` at `https://cloudtopia.net/robots.txt`
-- [ ] Verify `sitemap.xml` at `https://cloudtopia.net/sitemap.xml`
-- [ ] Test security headers at [securityheaders.com](https://securityheaders.com)
-- [ ] Run [PageSpeed Insights](https://pagespeed.web.dev) audit
-- [ ] Set up Google Analytics 4 or Plausible Analytics
-- [ ] Add favicon files (`favicon.ico`, `icon-192x192.png`, `icon-512x512.png`, `apple-touch-icon.png`)
-- [ ] Add Open Graph image (`og-image.png`) for social sharing
-
----
-
-## Environment
-
-No environment variables are required for the base deployment. If adding analytics or third-party integrations, configure them in `.env.local`:
-
-```env
-# Example (not currently required)
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
+- Public routes load for `en`, `ar`, and `tr`.
+- `/admin` opens and allows login.
+- Dashboard shows local/production database as online.
+- Migrations show as run.
+- Seeded records exist for pages, site content, site design, projects, media, and FAQs.
+- `https://cloudtopia.net/sitemap.xml` and `https://cloudtopia.net/robots.txt` load.
+- Forms and contact CTAs point to the right production destinations.
+- Media upload/storage strategy is persistent before multiple server instances are used.

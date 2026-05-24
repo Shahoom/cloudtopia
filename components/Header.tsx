@@ -14,7 +14,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isDarkSection, setIsDarkSection] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
-  const { t, dir, locale } = useLanguage()
+  const { t, dir, locale, navigation: cmsNavigation } = useLanguage()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,26 +57,55 @@ export default function Header() {
 
   const l = (path: string) => localePath(locale, path)
   const isTr = locale === 'tr'
+  const insightsLabel = locale === 'ar' ? 'الرؤى' : locale === 'tr' ? 'İçgörüler' : 'Insights'
+  const normalizeNavHref = (href: string) => (href === '/blog' ? '/insights' : href)
 
-  const navigation = [
+  const cmsHeaderLinks = Array.isArray(cmsNavigation?.header) ? cmsNavigation.header : null
+  const navigation = cmsHeaderLinks
+    ? cmsHeaderLinks.map((item: any) => ({
+      name: item.href === '/blog' ? insightsLabel : item.label,
+      href: l(normalizeNavHref(item.href || '/')),
+    }))
+    : [
     { name: t.nav.home, href: l('/') },
     { name: t.nav.services, href: l('/services') },
     { name: t.nav.projects, href: l('/projects') },
     { name: t.nav.labs, href: l('/labs') },
     { name: t.nav.about, href: l('/about') },
-    { name: t.nav.blog, href: l('/blog') },
+    { name: insightsLabel, href: l('/insights') },
     ...(!isTr ? [{ name: t.nav.contact, href: l('/contact') }] : []),
   ]
 
-  const navItems = [
+  const iconForHref = (href: string) => {
+    if (href.includes('/services')) return Briefcase
+    if (href.includes('/projects')) return FolderKanban
+    if (href.includes('/labs')) return Sparkles
+    if (href.includes('/about')) return Info
+    if (href.includes('/blog') || href.includes('/insights')) return BookOpen
+    if (href.includes('/contact')) return Mail
+    return Home
+  }
+
+  const navItems = cmsHeaderLinks
+    ? cmsHeaderLinks.map((item: any) => ({
+      name: item.href === '/blog' ? insightsLabel : item.label,
+      url: l(normalizeNavHref(item.href || '/')),
+      icon: iconForHref(item.href || '/'),
+    }))
+    : [
     { name: t.nav.home, url: l('/'), icon: Home },
     { name: t.nav.services, url: l('/services'), icon: Briefcase },
     { name: t.nav.projects, url: l('/projects'), icon: FolderKanban },
     { name: t.nav.labs, url: l('/labs'), icon: Sparkles },
     { name: t.nav.about, url: l('/about'), icon: Info },
-    { name: t.nav.blog, url: l('/blog'), icon: BookOpen },
+    { name: insightsLabel, url: l('/insights'), icon: BookOpen },
     ...(!isTr ? [{ name: t.nav.contact, url: l('/contact'), icon: Mail }] : []),
   ]
+
+  const cta = (cmsNavigation?.cta as { label?: string; href?: string } | undefined) || {
+    label: t.nav.getStarted,
+    href: '/contact',
+  }
 
   return (
     <header
@@ -108,7 +137,7 @@ export default function Header() {
                 className={`relative z-10 transition-all duration-300 group-hover:scale-110 w-auto ${isScrolled ? 'h-8 sm:h-9' : 'h-10 sm:h-11'}`}
               />
             </div>
-            <div className="flex flex-col -space-y-1 min-w-0">
+            <div className="flex min-w-0 flex-col -space-y-1 max-[420px]:hidden">
               <span className={`font-logo font-bold leading-tight transition-all duration-500 group-hover:tracking-wide ${isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'} ${isDarkSection ? 'text-white' : 'text-neutral-900'}`}>
                 Cloud<span className={`bg-clip-text text-transparent ${isDarkSection
                   ? 'bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400'
@@ -130,10 +159,10 @@ export default function Header() {
           <div className={`hidden xl:flex items-center ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
             <LanguageSwitcher isDark={isDarkSection} />
             <Link
-              href={l('/contact')}
+              href={l(cta.href || '/contact')}
               className="relative px-6 py-2.5 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-lg overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/50 hover:scale-105"
             >
-              <span className="relative z-10">{t.nav.getStarted}</span>
+              <span className="relative z-10">{cta.label || t.nav.getStarted}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-secondary-600 to-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               <span className="absolute inset-0 opacity-0 group-hover:opacity-20">
                 <span className="absolute inset-0 animate-pulse bg-lavender"></span>
@@ -187,7 +216,7 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href={l('/contact')}
+                href={l(cta.href || '/contact')}
                 className="mt-4 w-full btn btn-primary bg-gradient-to-r from-primary-600 to-secondary-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-center text-white font-semibold py-3 rounded-lg"
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
@@ -195,7 +224,7 @@ export default function Header() {
                   opacity: mobileMenuOpen ? 1 : 0
                 }}
               >
-                {t.nav.getStarted}
+                {cta.label || t.nav.getStarted}
               </Link>
             </div>
           </div>

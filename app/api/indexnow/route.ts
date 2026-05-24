@@ -6,13 +6,13 @@
  * of waiting for crawlers to discover updated content, you POST a list of
  * URLs and the change is reflected within minutes.
  *
- * Usage (server-side, after publishing/updating a blog post):
+ * Usage (server-side, after publishing/updating an insight):
  *
  *   await fetch('https://cloudtopia.net/api/indexnow', {
  *     method: 'POST',
  *     headers: { 'Content-Type': 'application/json' },
  *     body: JSON.stringify({
- *       urls: ['https://cloudtopia.net/blog/my-new-post']
+ *       urls: ['https://cloudtopia.net/insights/my-new-post']
  *     }),
  *   })
  *

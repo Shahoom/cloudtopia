@@ -1,31 +1,29 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-export default function ReadingProgress() {
-    const { scrollYProgress } = useScroll()
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    })
+export function ReadingProgress() {
+  const [progress, setProgress] = useState(0)
 
-    const { dir } = useLanguage()
-    const isRtl = dir === 'rtl'
+  useEffect(() => {
+    function update() {
+      const scrollTop = window.scrollY
+      const height = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      setProgress(Math.min(100, Math.max(0, (scrollTop / height) * 100)))
+    }
 
-    const bgGradient = 'linear-gradient(90deg, #0ea5e9, #6366f1)'
-    const opacity = useTransform(scrollYProgress, [0, 0.95, 1], [1, 1, 0])
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
 
-    return (
-        <motion.div
-            className={`fixed top-0 left-0 right-0 h-[2.5px] z-[9999] ${isRtl ? 'origin-right' : 'origin-left'}`}
-            style={{
-                scaleX,
-                background: bgGradient,
-                opacity
-            }}
-        />
-    )
+  return (
+    <div className="fixed inset-x-0 top-0 z-[70] h-1 bg-transparent" aria-hidden="true">
+      <div className="h-full bg-primary-600 transition-[width] duration-150" style={{ width: `${progress}%` }} />
+    </div>
+  )
 }

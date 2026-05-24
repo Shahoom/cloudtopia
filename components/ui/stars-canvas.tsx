@@ -26,7 +26,7 @@ export function StarsCanvas({
 }: StarsCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const animationRef = useRef<number>();
+    const animationRef = useRef<number | null>(null);
     const starsRef = useRef<Array<{
         orbitRadius: number;
         radius: number;
@@ -39,7 +39,7 @@ export function StarsCanvas({
     const [isVisible, setIsVisible] = useState(false);
 
     // Debounced resize handler
-    const resizeTimeoutRef = useRef<NodeJS.Timeout>();
+    const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Intersection Observer for lazy loading
     useEffect(() => {
@@ -144,7 +144,7 @@ export function StarsCanvas({
 
         const animate = (currentTime: number) => {
             if (paused || !isVisible) {
-                animationRef.current = undefined;
+                animationRef.current = null;
                 return;
             }
 

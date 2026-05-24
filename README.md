@@ -1,125 +1,77 @@
-# CloudTopia — Digital & Cloud Technologies
+# CloudTopia V2
 
-A bilingual (English/Arabic) marketing website for CloudTopia, built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Features rich animations, 3D elements, and a modern design system.
+CloudTopia is a multilingual agency website and local CMS built with Next.js, Payload CMS, PostgreSQL, TypeScript, and Tailwind CSS. Supabase has been removed from the app source; content now comes from Payload tables in a local or production Postgres database, with static dictionaries as a safe public-site fallback.
 
-## 🚀 Tech Stack
+## Stack
 
-| Category | Technologies |
-|----------|-------------|
-| **Framework** | Next.js 14 (App Router) |
-| **Language** | TypeScript, React 18 |
-| **Styling** | Tailwind CSS 3.4 |
-| **Animations** | Framer Motion, GSAP |
-| **3D / Visual** | Three.js, React Three Fiber/Drei, Spline, tsparticles |
-| **UI** | Radix UI primitives, Lucide icons |
-| **i18n** | Custom bilingual system (EN/AR with RTL support) |
+| Area | Tech |
+| --- | --- |
+| Website | Next.js 16 App Router, React 19, TypeScript |
+| CMS | Payload CMS 3, custom admin dashboard |
+| Database | PostgreSQL through `@payloadcms/db-postgres` and `pg` |
+| Styling | Tailwind CSS, custom Payload admin CSS |
+| Content | Payload pages, projects, media, FAQs, site design, site dictionaries |
 
-## 📋 Prerequisites
+## Local Development
 
-- **Node.js** ≥ 18.0 — [download](https://nodejs.org/)
-- **npm** (comes with Node.js)
-
-## 🛠️ Getting Started
+1. Install dependencies:
 
 ```bash
-# Install dependencies
-npm install
+npm install --legacy-peer-deps
+```
 
-# Start dev server (http://localhost:3000)
+2. Create a local Postgres database:
+
+```bash
+createdb payload_db
+```
+
+3. Create `.env.local` from the template:
+
+```bash
+cp .env.example .env.local
+```
+
+The development fallback is `postgres://127.0.0.1:5432/payload_db`, so local development works with the default Homebrew/Postgres user once that database exists. Production still requires explicit `DATABASE_URL` and `PAYLOAD_SECRET`.
+
+4. Run migrations and seed content:
+
+```bash
+npm run payload:migrate
+npm run seed:payload
+```
+
+5. Start the app:
+
+```bash
 npm run dev
-
-# Production build
-npm run build
-
-# Start production server
-npm start
 ```
 
-## 📁 Project Structure
+Open the public site at `http://localhost:3000` and the CMS at `http://localhost:3000/admin`.
 
-```
-CloudTopia/
-├── app/                          # Next.js App Router pages
-│   ├── layout.tsx                # Root layout (Header, Footer, i18n, theme)
-│   ├── page.tsx                  # Homepage
-│   ├── globals.css               # Global styles
-│   ├── sitemap.ts                # Auto-generated XML sitemap
-│   ├── about/                    # About Us page
-│   ├── services/                 # Services overview
-│   ├── website-design/           # Website Design service page
-│   ├── content-creation/         # Content Creation service page
-│   ├── social-media-marketing/   # Social Media Marketing page
-│   ├── ecommerce-solutions/      # E-Commerce Solutions page
-│   ├── restaurant-qr-menu/       # Restaurant QR Menu page
-│   ├── business-systems-development/ # Business Systems page
-│   ├── web-applications/         # Web Applications page
-│   ├── labs/                     # CloudTopia Labs (R&D)
-│   ├── projects/                 # Projects portfolio
-│   ├── contact/                  # Contact page
-│   ├── privacy/                  # Privacy Policy
-│   └── terms/                    # Terms of Service
-├── components/
-│   ├── Header.tsx                # Navigation with tubelight navbar
-│   ├── Footer.tsx                # Site footer
-│   ├── LanguageSwitcher.tsx      # EN/AR toggle
-│   ├── theme-provider.tsx        # Dark/light theme
-│   └── ui/                       # 40 reusable UI components
-├── lib/
-│   ├── utils.ts                  # Utility functions
-│   └── i18n/                     # Internationalization
-│       ├── LanguageContext.tsx    # Language context provider
-│       ├── config.ts             # i18n config
-│       └── translations/         # EN & AR translation files
-├── hooks/                        # Custom React hooks
-├── public/
-│   ├── fonts/                    # Custom fonts
-│   ├── icons/                    # Service & project icons
-│   ├── images/                   # Images & assets
-│   ├── robots.txt                # Search engine crawler rules
-│   └── manifest.json             # PWA manifest
-├── middleware.ts                  # i18n middleware
-├── next.config.js                # Next.js config + security headers
-├── tailwind.config.ts            # Tailwind theme & custom colors
-└── tsconfig.json                 # TypeScript config
-```
+## Useful Commands
 
-## 🌐 Bilingual Support
-
-The site supports **English** and **Arabic** with full RTL layout:
-- Language toggle in the header
-- All page content available in both languages
-- Translation files in `lib/i18n/translations/`
-- RTL-aware component layouts
-
-## 🔒 Security
-
-Security headers configured in `next.config.js`:
-- HSTS, CSP, X-Frame-Options, XSS Protection
-- Referrer Policy, Permissions Policy
-- No `X-Powered-By` header exposed
-
-## 📝 Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Create production build |
-| `npm start` | Start production server |
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the local Next.js and Payload dev server |
+| `npm run build` | Build the production app |
+| `npm run start` | Start the production build |
 | `npm run lint` | Run ESLint |
+| `npm run test:smoke` | Run local integration smoke tests |
+| `npm run payload:migrate` | Apply Payload migrations to Postgres |
+| `npm run payload:migrate:status` | Check which migrations have run |
+| `npm run seed:payload` | Seed local Payload tables from existing site content |
+| `npm run payload:types` | Regenerate Payload type definitions |
 
-## 🚢 Deployment
+## Data Flow
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for full instructions.
+- Payload collections live in `collections/`.
+- Payload config and local Postgres adapter live in `payload.config.ts`.
+- Shared CMS environment behavior lives in `lib/cms/env.ts`.
+- The public site reads Payload data through `lib/cms/content.ts`.
+- `/api/site-data` exposes the same public bundle for development checks.
+- If Postgres is unavailable, the public site falls back to static dictionaries in `lib/i18n/translations/`.
 
-**Quick deploy to Vercel:**
-1. Push to GitHub
-2. Import on [vercel.com/new](https://vercel.com/new)
-3. Deploy — Vercel auto-detects Next.js
+## Deployment
 
-## 📄 License
-
-Proprietary — CloudTopia © 2025
-
----
-
-**Built for [CloudTopia](https://cloudtopia.net)**
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for Vercel plus database deployment steps.

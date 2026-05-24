@@ -1,4 +1,4 @@
-import { buildSitemapEntries } from '@/lib/sitemap-data'
+import { buildSitemapEntriesFromCMS } from '@/lib/sitemap-data'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -22,7 +22,7 @@ export async function GET(req: Request) {
         return Response.json({ error: 'unauthorized' }, { status: 401 })
     }
 
-    const urls = buildSitemapEntries()
+    const urls = (await buildSitemapEntriesFromCMS())
         .map((e) => (typeof e.url === 'string' ? e.url : String(e.url)))
         .filter((u) => u.startsWith(`https://${HOST}`))
 

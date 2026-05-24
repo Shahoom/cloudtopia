@@ -10,6 +10,7 @@ import { localePath } from "@/lib/i18n/url"
 interface EcommerceServiceSectionProps {
   isRTL?: boolean
   locale?: string
+  t?: any
 }
 
 const content = {
@@ -319,9 +320,23 @@ const GlowingCard = ({ title, description, area }: GlowingCardProps) => {
   )
 }
 
-export function EcommerceServiceSection({ isRTL = false, locale = "en" }: EcommerceServiceSectionProps) {
-  const t: typeof content.en = content[locale as keyof typeof content] || (isRTL ? content.ar : content.en)
+export function EcommerceServiceSection({ isRTL = false, locale = "en", t: overrideT }: EcommerceServiceSectionProps) {
+  const staticT = content[locale as keyof typeof content] || (isRTL ? content.ar : content.en)
+  const t = overrideT || staticT
   const Arrow = isRTL ? ArrowLeft : ArrowRight
+
+  const heroDescriptionVal = t?.heroDescription || staticT.heroDescription
+  const featuresTitleVal = t?.featuresTitle || staticT.featuresTitle
+  const featuresSubtitleVal = t?.featuresSubtitle || staticT.featuresSubtitle
+  const featuresVal = t?.features || staticT.features
+  const processTitleVal = t?.processTitle || staticT.processTitle
+  const processSubtitleVal = t?.processSubtitle || staticT.processSubtitle
+  const processVal = t?.process || staticT.process
+  const platformsTitleVal = t?.platformsTitle || staticT.platformsTitle
+  const platformsVal = t?.platforms || staticT.platforms
+  const ctaTitleVal = t?.ctaTitle || staticT.ctaTitle
+  const ctaDescriptionVal = t?.ctaDescription || staticT.ctaDescription
+  const ctaButtonVal = t?.ctaButton || staticT.ctaButton
 
   return (
     <section
@@ -363,16 +378,16 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
           <div className="text-center mb-12 sm:mb-16">
             <AnimatedSection>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                {t.featuresTitle}
+                {featuresTitleVal}
               </h2>
               <p className="text-lg sm:text-xl text-slate-600">
-                {t.featuresSubtitle}
+                {featuresSubtitleVal}
               </p>
             </AnimatedSection>
           </div>
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {t.features.map((feature, index) => (
+            {featuresVal.map((feature: any, index: number) => (
               <GlowingCard
                 key={index}
                 title={feature.title}
@@ -389,16 +404,16 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
           <div className="text-center mb-12 sm:mb-16">
             <AnimatedSection>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-                {t.processTitle}
+                {processTitleVal}
               </h2>
               <p className="text-lg sm:text-xl text-slate-400">
-                {t.processSubtitle}
+                {processSubtitleVal}
               </p>
             </AnimatedSection>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {t.process.map((step, index) => (
+            {processVal.map((step: any, index: number) => (
               <AnimatedSection key={index} delay={index * 0.1}>
                 <div className="relative">
                   <div className="text-6xl sm:text-7xl font-black text-violet-500/20 mb-4">
@@ -422,10 +437,10 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-8">
-              {t.platformsTitle}
+              {platformsTitleVal}
             </h3>
             <div className="flex flex-wrap justify-center gap-4">
-              {t.platforms.map((platform, index) => (
+              {platformsVal.map((platform: string, index: number) => (
                 <span
                   key={index}
                   className="px-6 py-3 bg-lavender rounded-full text-slate-700 font-medium border border-slate-200 hover:border-violet-300 hover:text-violet-600 transition-colors"
@@ -443,16 +458,16 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-              {t.ctaTitle}
+              {ctaTitleVal}
             </h2>
             <p className="text-lg sm:text-xl text-violet-100 mb-8 max-w-2xl mx-auto">
-              {t.ctaDescription}
+              {ctaDescriptionVal}
             </p>
             <a
               href={localePath(locale, '/contact')}
               className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-violet-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
-              {t.ctaButton}
+              {ctaButtonVal}
               <Arrow className="w-5 h-5" />
             </a>
           </AnimatedSection>
@@ -468,7 +483,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             "@type": "Service",
             "serviceType": isRTL ? "تطوير التجارة الإلكترونية والمتاجر الإلكترونية" : "E-Commerce Development & Online Store Solutions",
             "name": isRTL ? "خدمات التجارة الإلكترونية - كلاود توبيا" : "E-Commerce Solutions - CloudTopia",
-            "description": t.heroDescription,
+            "description": heroDescriptionVal,
             "provider": {
               "@type": "Organization",
               "name": "CloudTopia",
@@ -493,7 +508,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en" }: Ecomme
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
               "name": isRTL ? "خدمات تطوير التجارة الإلكترونية" : "E-Commerce Development Services",
-              "itemListElement": t.features.map((feature, index) => ({
+              "itemListElement": featuresVal.map((feature: any, index: number) => ({
                 "@type": "Offer",
                 "position": index + 1,
                 "itemOffered": {

@@ -8,6 +8,7 @@ import { en } from './translations/en'
 import { ar } from './translations/ar'
 import { tr } from './translations/tr'
 import type { Locale } from './config'
+import { getPageBundle, getCMSDictionary } from '@/lib/cms/content'
 
 const dictionaries = {
     en,
@@ -15,4 +16,10 @@ const dictionaries = {
     tr,
 }
 
-export const getDictionary = async (locale: Locale) => dictionaries[locale] || dictionaries.en
+export const getStaticDictionary = (locale: Locale) => dictionaries[locale] || dictionaries.en
+
+export const getDictionary = async (locale: Locale, slug?: string) => {
+    if (!slug) return getCMSDictionary(locale)
+    const bundle = await getPageBundle(locale, slug)
+    return bundle.dictionary
+}

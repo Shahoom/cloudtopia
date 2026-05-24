@@ -1,0 +1,127 @@
+import type { BlogPost, BlogPostSummary } from '@/lib/blog/data'
+import type { TableOfContentsItem } from '@/lib/blog/utils'
+import { AuthorBox } from './AuthorBox'
+import { BlogCTA } from './BlogCTA'
+import { ContentBlockRenderer } from './ContentBlockRenderer'
+import { PreviousNextPosts } from './PreviousNextPosts'
+import { RichTextRenderer } from './RichTextRenderer'
+import { ShareButtons } from './ShareButtons'
+import { TableOfContents } from './TableOfContents'
+
+function articleCTA(post: BlogPost) {
+  if (post.ctaTitle || post.ctaDescription) {
+    return {
+      title: post.ctaTitle || 'Need a website, dashboard, or business system like this?',
+      text: post.ctaDescription || 'CloudTopia can help you turn your idea into a scalable digital solution.',
+      primaryLabel: post.ctaButtonText || 'Talk to CloudTopia',
+    }
+  }
+
+  const service = post.serviceFocus || post.category?.slug || ''
+  if (service.includes('ai')) {
+    return {
+      title: 'Want to use AI inside your business workflow?',
+      text: 'CloudTopia designs practical AI-powered systems that help teams qualify leads, automate support, summarize operations, and move faster.',
+      primaryLabel: 'Talk AI with CloudTopia',
+    }
+  }
+  if (service.includes('crm') || service.includes('erp') || service.includes('business')) {
+    return {
+      title: 'Need a CRM, ERP, or dashboard built around your workflow?',
+      text: 'CloudTopia turns messy spreadsheets and manual processes into clear business systems your team can actually use.',
+      primaryLabel: 'Plan Your System',
+    }
+  }
+  if (service.includes('automation')) {
+    return {
+      title: 'Ready to automate repetitive business operations?',
+      text: 'CloudTopia helps connect your tools, data, and team workflows into reliable automation systems.',
+      primaryLabel: 'Explore Automation',
+    }
+  }
+  return {
+    title: 'Need a website, dashboard, or business system like this?',
+    text: 'CloudTopia can help you turn your idea into a scalable digital solution.',
+    primaryLabel: 'Talk to CloudTopia',
+  }
+}
+
+export function ArticleContent({
+  post,
+  locale,
+  toc,
+  canonical,
+  relatedPosts = [],
+  previous,
+  next,
+}: {
+  post: BlogPost
+  locale: string
+  toc: TableOfContentsItem[]
+  canonical: string
+  relatedPosts?: BlogPostSummary[]
+  previous?: BlogPostSummary | null
+  next?: BlogPostSummary | null
+}) {
+  const cta = articleCTA(post)
+
+  return (
+    <section className="bg-[#f8f7fb] px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[240px_minmax(0,760px)_280px]">
+        <TableOfContents items={toc} />
+        <article className="min-w-0 rounded-3xl border border-sky-100 bg-white p-6 shadow-sm md:p-10">
+          {post.series && (
+            <aside className="mb-10 rounded-2xl border border-primary-200 bg-primary-50/70 p-5">
+              <p className="text-xs font-black uppercase tracking-normal text-primary-700">Part of a guide series</p>
+              <h2 className="mt-2 text-2xl font-black tracking-normal text-neutral-950">{post.series.title}</h2>
+              {post.series.description && (
+                <p className="mt-2 text-sm leading-6 text-neutral-700">{post.series.description}</p>
+              )}
+            </aside>
+          )}
+          <RichTextRenderer content={post.content} />
+          <ContentBlockRenderer blocks={post.contentBlocks} relatedPostLookup={relatedPosts} />
+          {post.showCTA && (
+            <div className="mt-12">
+              <BlogCTA
+                locale={locale}
+                compact
+                title={cta.title}
+                text={cta.text}
+                primaryLabel={cta.primaryLabel}
+                primaryHref={post.ctaButtonUrl || '/contact'}
+                secondaryHref={post.secondaryCTAButtonUrl || '/services'}
+              />
+            </div>
+          )}
+          <div className="mt-12 border-t border-neutral-200 pt-8">
+            <p className="mb-4 text-sm font-black uppercase tracking-normal text-neutral-500">Share this article</p>
+            <ShareButtons url={canonical} title={post.title} />
+          </div>
+          <AuthorBox author={post.author} locale={locale} />
+          <PreviousNextPosts previous={previous || null} next={next || null} locale={locale} />
+        </article>
+        <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          <BlogCTA
+            locale={locale}
+            compact
+            title={cta.title}
+            text={cta.text}
+            primaryLabel={cta.primaryLabel}
+            primaryHref={post.ctaButtonUrl || '/contact'}
+            secondaryHref={post.secondaryCTAButtonUrl || '/services'}
+          />
+          {post.category && (
+            <div className="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-normal text-neutral-500">Related service</p>
+              <h2 className="mt-3 text-xl font-black tracking-normal text-neutral-950">{post.category.name}</h2>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                Explore how CloudTopia turns this topic into practical websites, platforms, and business systems.
+              </p>
+            </div>
+          )}
+        </aside>
+      </div>
+    </section>
+  )
+}

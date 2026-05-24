@@ -1,0 +1,11 @@
+import { redirect } from 'next/navigation'
+import { localePath } from '@/lib/i18n/url'
+
+type PageProps = {
+  params: Promise<{ locale: string; slug: string }>
+}
+
+export default async function OldBlogPostRedirect({ params }: PageProps) {
+  const { locale, slug } = await params
+  redirect(localePath((locale || 'en') as 'en' | 'ar' | 'tr', `/insights/${slug}`))
+}

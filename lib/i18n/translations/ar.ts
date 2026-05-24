@@ -2419,6 +2419,7 @@ export const ar = {
           value: '+150%'
         }
       },
+
     ],
     labsSection: {
       badge: 'مختبر الابتكار',

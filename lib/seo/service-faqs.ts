@@ -121,7 +121,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'What is a web application and how is it different from a website?', a: 'A website is mostly static content (pages, articles, products). A web application is interactive software that runs in the browser — dashboards, portals, SaaS platforms, collaboration tools, or customer-facing apps with real-time data and user accounts.' },
             { q: 'How much does a custom web application cost?', a: 'Web applications typically range from $5,999 to $50,000+ depending on scope and complexity. Simple dashboards and portals start at $5,999; multi-tenant SaaS platforms are quoted per project based on features and scale.' },
             { q: 'How long does it take to build a web application?', a: 'Most web apps take 8–20 weeks: discovery and architecture (2 weeks), design (2–3 weeks), build with weekly demos (4–14 weeks), and launch with QA (1 week). Complex SaaS platforms can take 4–9 months.' },
-            { q: 'Which tech stack do you build web applications on?', a: 'We build on Next.js, React, Node.js, PostgreSQL, and TypeScript as defaults. For real-time features we use WebSockets or Supabase Realtime. For AI features we integrate Claude, GPT, or open-source models.' },
+            { q: 'Which tech stack do you build web applications on?', a: 'We build on Next.js, React, Node.js, PostgreSQL, and TypeScript as defaults. For real-time features we use WebSockets or Server-Sent Events (SSE). For AI features we integrate Claude, GPT, or open-source models.' },
             { q: 'Do you handle hosting, scaling, and monitoring?', a: 'Yes. We deploy on Vercel, AWS, or your cloud of choice. Auto-scaling, SSL, CDN, error monitoring (Sentry), and uptime monitoring are all configured at launch. Care plans cover ongoing maintenance.' },
             { q: 'Can the web app integrate with our existing tools and APIs?', a: 'Yes. We integrate with Salesforce, HubSpot, Slack, Zapier, Stripe, Mada, Apple Pay, Google Workspace, Microsoft 365, and any REST/GraphQL API. Custom integrations and middleware are part of our standard work.' },
         ],
@@ -129,7 +129,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'ما تطبيق الويب وكيف يختلف عن الموقع؟', a: 'الموقع محتوى ثابت في الغالب (صفحات، مقالات، منتجات). تطبيق الويب هو برنامج تفاعلي يعمل في المتصفح — لوحات تحكم، بوابات، منصات SaaS، أدوات تعاون، أو تطبيقات عملاء ببيانات حية وحسابات مستخدمين.' },
             { q: 'كم تكلفة تطبيق ويب مخصص؟', a: 'تطبيقات الويب عادةً تتراوح من 5,999$ إلى 50,000$+ حسب النطاق والتعقيد. لوحات التحكم والبوابات البسيطة تبدأ من 5,999$؛ منصات SaaS متعددة المستأجرين تُسعَّر لكل مشروع حسب الميزات والحجم.' },
             { q: 'كم يستغرق بناء تطبيق ويب؟', a: 'معظم تطبيقات الويب تستغرق ٨–٢٠ أسبوعاً: استكشاف وبنية (أسبوعان)، تصميم (٢–٣ أسابيع)، بناء بعروض أسبوعية (٤–١٤ أسبوعاً)، وإطلاق مع ضمان الجودة (أسبوع). منصات SaaS المعقدة قد تستغرق ٤–٩ أشهر.' },
-            { q: 'على أي مكدس تقني تبنون تطبيقات الويب؟', a: 'نبني على Next.js، React، Node.js، PostgreSQL، وTypeScript افتراضياً. للميزات الحية نستخدم WebSockets أو Supabase Realtime. لميزات الذكاء الاصطناعي ندمج Claude، GPT، أو نماذج مفتوحة المصدر.' },
+            { q: 'على أي مكدس تقني تبنون تطبيقات الويب؟', a: 'نبني على Next.js، React، Node.js، PostgreSQL، وTypeScript افتراضياً. للميزات الحية نستخدم WebSockets أو تقنيات الأحداث المرسلة من الخادم (SSE). لميزات الذكاء الاصطناعي ندمج Claude، GPT، أو نماذج مفتوحة المصدر.' },
             { q: 'هل تتولّون الاستضافة، التوسع، والمراقبة؟', a: 'نعم. ننشر على Vercel، AWS، أو السحابة التي تختارها. التوسع التلقائي، SSL، CDN، مراقبة الأخطاء (Sentry)، ومراقبة وقت التشغيل تُعدّ جميعها عند الإطلاق. خطط العناية تغطي الصيانة المستمرة.' },
             { q: 'هل يمكن لتطبيق الويب التكامل مع أدواتنا وواجهات API الحالية؟', a: 'نعم. ندمج مع Salesforce، HubSpot، Slack، Zapier، Stripe، مدى، آبل باي، Google Workspace، Microsoft 365، وأي REST/GraphQL API. التكاملات المخصصة والوسيط (middleware) جزء من عملنا القياسي.' },
         ],
@@ -137,7 +137,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
             { q: 'Web uygulaması nedir ve web sitesinden nasıl farklıdır?', a: 'Web sitesi çoğunlukla statik içeriktir (sayfalar, makaleler, ürünler). Web uygulaması tarayıcıda çalışan etkileşimli yazılımdır — panolar, portallar, SaaS platformları, işbirliği araçları veya gerçek zamanlı verili ve kullanıcı hesaplı müşteri uygulamaları.' },
             { q: 'Özel bir web uygulaması ne kadara mal olur?', a: 'Web uygulamaları kapsam ve karmaşıklığa göre tipik olarak $5.999 ile $50.000+ arasında değişir. Basit panolar ve portallar $5.999\'dan başlar; çok kiracılı SaaS platformları özellik ve ölçeğe göre proje bazında fiyatlandırılır.' },
             { q: 'Bir web uygulaması inşa etmek ne kadar sürer?', a: 'Çoğu web uygulaması 8–20 hafta sürer: keşif ve mimari (2 hafta), tasarım (2–3 hafta), haftalık demolarla inşa (4–14 hafta) ve QA ile lansman (1 hafta). Karmaşık SaaS platformları 4–9 ay sürebilir.' },
-            { q: 'Hangi teknoloji yığınında web uygulamaları geliştiriyorsunuz?', a: 'Varsayılan olarak Next.js, React, Node.js, PostgreSQL ve TypeScript üzerinde inşa ediyoruz. Gerçek zamanlı özellikler için WebSockets veya Supabase Realtime kullanırız. Yapay zeka özellikleri için Claude, GPT veya açık kaynak modelleri entegre ederiz.' },
+            { q: 'Hangi teknoloji yığınında web uygulamaları geliştiriyorsunuz?', a: 'Varsayılan olarak Next.js, React, Node.js, PostgreSQL ve TypeScript üzerinde inşa ediyoruz. Gerçek zamanlı özellikler için WebSockets veya Server-Sent Events (SSE) kullanırız. Yapay zeka özellikleri için Claude, GPT veya açık kaynak modelleri entegre ederiz.' },
             { q: 'Barındırma, ölçeklendirme ve izlemeyi yönetiyor musunuz?', a: 'Evet. Vercel, AWS veya seçtiğiniz bulutta dağıtıyoruz. Otomatik ölçeklendirme, SSL, CDN, hata izleme (Sentry) ve çalışma süresi izleme lansmanda yapılandırılır. Bakım planları süregelen bakımı kapsar.' },
             { q: 'Web uygulaması mevcut araçlarımız ve API\'lerimizle entegre olabilir mi?', a: 'Evet. Salesforce, HubSpot, Slack, Zapier, Stripe, Mada, Apple Pay, Google Workspace, Microsoft 365 ve herhangi bir REST/GraphQL API ile entegre ediyoruz. Özel entegrasyonlar ve ara yazılım standart çalışmamızın bir parçasıdır.' },
         ],
@@ -196,8 +196,15 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
     },
 }
 
-export function buildFAQSchema(serviceSlug: string, locale: string) {
-    const faqs = serviceFAQs[serviceSlug]?.[locale as 'en' | 'ar' | 'tr']
+async function getServiceFAQs(serviceSlug: string, locale: string): Promise<FAQ[] | undefined> {
+    const fallback = serviceFAQs[serviceSlug]?.[locale as 'en' | 'ar' | 'tr']
+    const { getCMSServiceFAQs } = await import('../cms/content')
+    const cmsFAQs = await getCMSServiceFAQs(serviceSlug, locale)
+    return Array.isArray(cmsFAQs) && cmsFAQs.length > 0 ? cmsFAQs : fallback
+}
+
+export async function buildFAQSchema(serviceSlug: string, locale: string) {
+    const faqs = await getServiceFAQs(serviceSlug, locale)
     if (!faqs || faqs.length === 0) return null
     return {
         '@context': 'https://schema.org',

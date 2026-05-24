@@ -214,6 +214,22 @@
   .gradient-bg {
     @apply bg-gradient-hero;
   }
+
+  .blog-article-prose {
+    @apply text-neutral-700;
+  }
+
+  .blog-article-prose strong {
+    @apply font-black text-neutral-950;
+  }
+
+  .blog-article-prose code:not(pre code) {
+    @apply rounded-md border border-sky-100 bg-sky-50 px-1.5 py-0.5 text-[0.9em] font-bold text-primary-700;
+  }
+
+  .blog-article-prose a {
+    overflow-wrap: anywhere;
+  }
 }
 
 @layer utilities {
