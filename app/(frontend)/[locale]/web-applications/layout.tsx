@@ -10,24 +10,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Custom Web Applications & SaaS Development',
         ar: 'تطوير تطبيقات ويب مخصصة ومنصات SaaS',
-        tr: 'Özel Web Uygulamaları ve SaaS Geliştirme',
     }
     const descs: Record<string, string> = {
         en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React. Real-time features, bilingual Arabic + English UI. From $999.',
         ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact. ميزات حية، واجهة عربي + إنجليزي. من 999$.',
-        tr: 'Next.js + React üzerinde özel web uygulamaları, portallar, panolar ve SaaS. Gerçek zamanlı, iki dilli Arapça + İngilizce UI. $999\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Web Applications — CloudTopia',
         ar: 'تطبيقات الويب — كلاود توبيا',
-        tr: 'Web Uygulamaları — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Custom web applications with modern functionality.',
         ar: 'تطبيقات ويب مخصصة بوظائف حديثة.',
-        tr: 'Modern işlevselliğe sahip özel web uygulamaları.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -89,7 +85,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

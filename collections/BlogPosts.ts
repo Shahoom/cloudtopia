@@ -186,11 +186,10 @@ export const BlogPosts: CollectionConfig = {
                   options: [
                     { label: 'English', value: 'en' },
                     { label: 'Arabic', value: 'ar' },
-                    { label: 'Turkish', value: 'tr' },
                   ],
                   admin: {
                     width: '33%',
-                    description: 'English posts appear on /insights. Arabic and Turkish use prefixed locale routes.',
+                    description: 'English posts appear on /insights. Arabic uses prefixed locale routes.',
                   },
                 },
                 {

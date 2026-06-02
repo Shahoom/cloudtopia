@@ -10,24 +10,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Services — Web, E-Commerce & Marketing',
         ar: 'خدماتنا — مواقع، تجارة إلكترونية وتسويق',
-        tr: 'Hizmetler — Web, E-Ticaret & Pazarlama',
     }
     const descs: Record<string, string> = {
         en: 'Professional website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications. Free consultation available.',
         ar: 'تصميم مواقع احترافي، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل الاجتماعي، منصات حجز، وتطبيقات ويب مخصصة. استشارة مجانية متاحة.',
-        tr: 'Profesyonel web sitesi tasarımı, e-ticaret mağazaları, CRM sistemleri, sosyal medya pazarlama, rezervasyon platformları ve özel web uygulamaları. Ücretsiz danışmanlık.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Our Services — CloudTopia',
         ar: 'خدماتنا — كلاود توبيا',
-        tr: 'Hizmetlerimiz — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Website design, e-commerce stores, CRM systems, social media marketing, booking platforms, and custom web applications.',
         ar: 'تصميم مواقع، متاجر إلكترونية، أنظمة CRM، إدارة وسائل التواصل، منصات حجز، وتطبيقات ويب مخصصة.',
-        tr: 'Web sitesi tasarımı, e-ticaret mağazaları, CRM sistemleri, sosyal medya pazarlama, rezervasyon platformları ve özel web uygulamaları.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -58,7 +54,6 @@ export default async function ServicesLayout({ children, params }: { children: R
     const breadcrumbNames: Record<string, { home: string, services: string }> = {
         en: { home: 'Home', services: 'Services' },
         ar: { home: 'الرئيسية', services: 'خدماتنا' },
-        tr: { home: 'Ana Sayfa', services: 'Hizmetler' },
     }
 
     const itemListContent: Record<string, { name: string, desc: string, items: string[] }> = {
@@ -72,11 +67,6 @@ export default async function ServicesLayout({ children, params }: { children: R
             desc: 'خدمات رقمية شاملة: تصميم مواقع، تجارة إلكترونية، تسويq، إنشاء محتوى، أنظمة أعمال، وتطبيقات ويب.',
             items: ['الحضور الرقمي', 'أنظمة الأعمال', 'تطبيقات الويب']
         },
-        tr: {
-            name: 'CloudTopia Dijital Hizmetleri',
-            desc: 'Kapsamlı dijital hizmetler: web tasarımı, e-ticaret, pazarlama, içerik üretimi, iş sistemleri ve web uygulamaları.',
-            items: ['Dijital Varlık', 'İş Sistemleri', 'Web Uygulamaları']
-        }
     }
 
     const b = breadcrumbNames[l] || breadcrumbNames.en

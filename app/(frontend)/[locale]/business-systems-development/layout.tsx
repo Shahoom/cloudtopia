@@ -11,24 +11,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Custom Business Systems & CRM Development',
         ar: 'تطوير أنظمة أعمال وCRM مخصصة',
-        tr: 'Özel İş Sistemleri ve CRM Geliştirme',
     }
     const descs: Record<string, string> = {
         en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows. Bilingual Arabic + English. From $1,999.',
         ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج. ثنائية اللغة عربي + إنجليزي. من 1,999$.',
-        tr: 'Körfez iş akışları için özel CRM, envanter, POS, İK ve rezervasyon sistemleri. İki dilli Arapça + İngilizce. $1.999\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Business Systems — CloudTopia',
         ar: 'أنظمة الأعمال — كلاود توبيا',
-        tr: 'İş Sistemleri — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Custom CRM, POS, inventory, and HR systems for your business.',
         ar: 'أنظمة CRM وPOS وإدارة المخزون وHR مخصصة لعملك.',
-        tr: 'İşletmeniz için özel CRM, POS, envanter ve İK sistemleri.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -90,7 +86,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

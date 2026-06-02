@@ -1,6 +1,5 @@
 import { en } from '@/lib/i18n/translations/en'
 import { ar } from '@/lib/i18n/translations/ar'
-import { tr } from '@/lib/i18n/translations/tr'
 import { getProject, getProjects } from '@/lib/cms/content'
 
 export type Project = {
@@ -17,7 +16,7 @@ export type Project = {
     link?: string
 }
 
-const translations: Record<string, any> = { en, ar, tr }
+const translations: Record<string, any> = { en, ar }
 
 export function getStaticProjects(locale: string): Project[] {
     const t = translations[locale] || translations.en

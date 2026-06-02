@@ -28,83 +28,66 @@ interface BentoPricingProps {
 // ─── Localised data ───────────────────────────────────────────────────────────
 function getData(locale: string, href: (p: string) => string): BentoCell[] {
   const isAr = locale === 'ar'
-  const isTr = locale === 'tr'
 
   return [
     {
-      badge: isAr ? 'الأكثر طلباً' : isTr ? 'En Popüler' : 'Most Popular',
-      title: isAr ? 'موقع احترافي' : isTr ? 'Profesyonel Web Sitesi' : 'Professional Website',
+      badge: isAr ? 'الأكثر طلباً' : 'Most Popular',
+      title: isAr ? 'موقع احترافي' : 'Professional Website',
       price: '$999',
-      priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
+      priceSuffix: isAr ? 'دفعة واحدة' : 'one-time',
       desc: isAr
         ? 'موقع يحوّل الزوار إلى عملاء — SEO متكامل، واتساب، وتحليلات متقدمة.'
-        : isTr
-        ? 'Ziyaretçileri müşteriye dönüştüren site — SEO, WhatsApp ve analitik.'
         : 'A site built to convert — advanced SEO, WhatsApp integration & analytics.',
       features: isAr
         ? ['حتى 15 صفحة', 'SEO متقدم + خريطة الموقع', 'نموذج تواصل + زر واتساب', 'Google Analytics + خرائط الحرارة', 'مدونة + نظام إدارة محتوى', 'عدد اللغات حسب الحاجة']
-        : isTr
-        ? ['15 sayfaya kadar', 'Gelişmiş SEO + site haritası', 'Form + WhatsApp butonu', 'Google Analytics + ısı haritası', 'Blog + içerik yönetimi', 'İhtiyaç kadar dil desteği']
         : ['Up to 15 pages', 'Advanced SEO + sitemap', 'Smart forms + WhatsApp button', 'Google Analytics + heatmap', 'Blog / news CMS included', 'Multi-language support'],
-      cta: isAr ? 'ابنِ موقعي' : isTr ? 'Web Sitemizi Kur' : 'Build My Website',
+      cta: isAr ? 'ابنِ موقعي' : 'Build My Website',
       href: href('/pricing#website'),
       featured: true,
       colSpan: 'lg:col-span-4',
     },
     {
-      badge: isAr ? 'متجر إلكتروني' : isTr ? 'E-Ticaret' : 'E-Commerce',
-      title: isAr ? 'متجر النمو' : isTr ? 'Büyüme Mağazası' : 'Growth Store',
+      badge: isAr ? 'متجر إلكتروني' : 'E-Commerce',
+      title: isAr ? 'متجر النمو' : 'Growth Store',
       price: '$1,299',
-      priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
+      priceSuffix: isAr ? 'دفعة واحدة' : 'one-time',
       desc: isAr
         ? 'متجر متكامل مع بوابة دفع، مخزون، وكوبونات ترويجية.'
-        : isTr
-        ? 'Ödeme, envanter ve kupon sistemiyle tam e-ticaret mağazası.'
         : 'Full store with payment gateway, inventory management & coupons.',
       features: isAr
         ? ['حتى 1,000 منتج', 'بوابة دفع (Stripe/Tap)', 'استرداد السلة المتروكة', 'إشعارات واتساب والبريد']
-        : isTr
-        ? ['1.000 ürüne kadar', 'Ödeme sistemi (Stripe/Tap)', 'Terk sepet kurtarma', 'WhatsApp & e-posta bildirimleri']
         : ['Up to 1,000 products', 'Payment gateway (Stripe/Tap)', 'Abandoned cart recovery', 'WhatsApp & email notifications'],
-      cta: isAr ? 'طوّر متجري' : isTr ? 'Mağazamı Kur' : 'Launch My Store',
+      cta: isAr ? 'طوّر متجري' : 'Launch My Store',
       href: href('/pricing#ecommerce'),
       colSpan: 'lg:col-span-4',
     },
     {
-      badge: isAr ? 'نظام إدارة' : isTr ? 'CRM Sistemi' : 'CRM System',
-      title: isAr ? 'نظام CRM' : isTr ? 'CRM Temeli' : 'CRM Foundation',
+      badge: isAr ? 'نظام إدارة' : 'CRM System',
+      title: isAr ? 'نظام CRM' : 'CRM Foundation',
       price: '$1,999',
-      priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
+      priceSuffix: isAr ? 'دفعة واحدة' : 'one-time',
       desc: isAr
         ? 'CRM مخصص مع واتساب والبريد الإلكتروني وتقارير متقدمة.'
-        : isTr
-        ? 'WhatsApp, e-posta ve raporlarla özel CRM.'
         : 'Custom CRM with WhatsApp & email automation plus reports.',
       features: isAr
         ? ['حتى 5 مستخدمين', 'إدارة العملاء المحتملين', 'تكامل واتساب + بريد', 'تقارير ولوحات تحكم']
-        : isTr
-        ? ['5 kullanıcıya kadar', 'Potansiyel müşteri yönetimi', 'WhatsApp + e-posta entegrasyonu', 'Raporlar ve panolar']
         : ['Up to 5 users', 'Lead & contact management', 'WhatsApp & email integration', 'Reports & dashboards'],
-      cta: isAr ? 'ابنِ نظامي' : isTr ? 'CRM Sistemimi Kur' : 'Build My CRM',
+      cta: isAr ? 'ابنِ نظامي' : 'Build My CRM',
       href: href('/pricing#systems'),
       colSpan: 'lg:col-span-4',
     },
     {
-      badge: isAr ? 'قائمة QR' : isTr ? 'QR Menü' : 'QR Menu',
-      title: isAr ? 'القائمة الأساسية' : isTr ? 'Temel QR Menü' : 'Essential QR Menu',
+      badge: isAr ? 'قائمة QR' : 'QR Menu',
+      title: isAr ? 'القائمة الأساسية' : 'Essential QR Menu',
       price: '$249',
-      priceSuffix: isAr ? 'دفعة واحدة' : isTr ? 'tek seferlik' : 'one-time',
+      priceSuffix: isAr ? 'دفعة واحدة' : 'one-time',
       desc: isAr
         ? 'قائمة رقمية فورية للمطاعم مع تحديثات مجانية دائمة.'
-        : isTr
-        ? 'Restoranlar için anlık dijital menü — ücretsiz güncellemeler.'
         : 'Instant digital menu for restaurants & cafes — free updates.',
       features: isAr
         ? ['حتى 100 عنصر', 'عربي + إنجليزي', 'رمز QR', 'رابط طلب واتساب']
-        : isTr
-        ? ['100 öğeye kadar', 'Arapça + İngilizce', 'QR kod', 'WhatsApp sipariş linki']
         : ['Up to 100 menu items', 'Arabic + English', 'QR code generation', 'WhatsApp order link'],
-      cta: isAr ? 'احصل على قائمتي' : isTr ? 'Menüme Başla' : 'Get My Menu',
+      cta: isAr ? 'احصل على قائمتي' : 'Get My Menu',
       href: href('/pricing#qrmenu'),
       colSpan: 'lg:col-span-4',
     },
@@ -260,7 +243,6 @@ export function BentoPricing({ locale, dir }: BentoPricingProps) {
   const [featured, ...rest] = cells
 
   const isAr = locale === 'ar'
-  const isTr = locale === 'tr'
   const isRtl = dir === 'rtl'
 
   return (
@@ -268,16 +250,14 @@ export function BentoPricing({ locale, dir }: BentoPricingProps) {
       {/* Section heading */}
       <div className={cn('text-center', isRtl && 'text-right lg:text-center')}>
         <span className="inline-block bg-white border border-primary-100 text-primary-600 text-xs font-semibold px-3 py-1 rounded-full mb-3 shadow-sm">
-          {isAr ? '✦ أبرز الباقات' : isTr ? '✦ Öne Çıkan Paketler' : '✦ Popular Packages'}
+          {isAr ? '✦ أبرز الباقات' : '✦ Popular Packages'}
         </span>
         <h2 className="text-2xl md:text-3xl font-bold text-neutral-800 mb-1.5">
-          {isAr ? 'ابدأ بالخيار المناسب لك' : isTr ? 'Size Uygun Paketle Başlayın' : 'Start with the right plan'}
+          {isAr ? 'ابدأ بالخيار المناسب لك' : 'Start with the right plan'}
         </h2>
         <p className="text-neutral-500 text-sm">
           {isAr
             ? 'اختر الباقة المثالية وانطلق — يمكنك التوسع لاحقاً'
-            : isTr
-            ? 'Doğru paketi seçin ve başlayın — sonra büyütün'
             : 'Pick your package and get started — scale anytime'}
         </p>
       </div>

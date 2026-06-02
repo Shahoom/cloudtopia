@@ -77,7 +77,7 @@ export default function Hero() {
                         {t.home?.hero?.intoThe && (
                             <span className="text-neutral-900">{t.home?.hero?.intoThe}</span>
                         )}
-                        {!t.home?.hero?.intoThe && !locale.startsWith('tr') && (
+                        {!t.home?.hero?.intoThe && !false && (
                             <span className="text-neutral-900">{isRTL ? 'إلى' : 'Into the'}</span>
                         )}
                         <div className="relative flex items-center h-[1.2em] min-w-[2ch]">

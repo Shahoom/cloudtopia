@@ -249,7 +249,7 @@ async function getDashboardData(): Promise<DashboardData> {
       { label: 'Supabase', value: 'Removed' },
     ],
     stats: [
-      { label: 'Locales', value: '3', hint: 'EN / AR / TR', icon: Globe2 },
+      { label: 'Locales', value: '2', hint: 'EN / AR', icon: Globe2 },
       { label: 'Published Pages', value: '0', hint: 'Connect DATABASE_URL to load live counts', icon: FileText },
       { label: 'Projects', value: '0', hint: 'Portfolio entries in Payload', icon: FolderKanban },
       { label: 'Insights', value: '0', hint: 'Blog posts in Payload', icon: FileText },
@@ -302,7 +302,7 @@ async function getDashboardData(): Promise<DashboardData> {
     const media = Number(countRow?.media || 0)
     const users = Number(countRow?.users || 0)
     const missingMediaAlt = Number(mediaMissingAlt[0]?.count || 0)
-    const requiredLocales = ['en', 'ar', 'tr']
+    const requiredLocales = ['en', 'ar']
     const pageKeys = new Set(pages.map((page) => `${page.locale}:${page.slug}`))
     const missingLocalePages = requiredLocales.flatMap((locale) =>
       cmsPageSlugs
@@ -327,7 +327,7 @@ async function getDashboardData(): Promise<DashboardData> {
         { label: 'Supabase', value: 'Removed' },
       ],
       stats: [
-        { label: 'Locales', value: String(localesComplete), hint: 'Complete locale sets out of 3', icon: Globe2 },
+        { label: 'Locales', value: String(localesComplete), hint: 'Complete locale sets out of 2', icon: Globe2 },
         { label: 'Published Pages', value: String(publishedPages), hint: `${draftPages} drafts waiting`, icon: FileText },
         { label: 'Projects', value: String(projects), hint: 'Portfolio entries in Payload', icon: FolderKanban },
         { label: 'Insights', value: String(blogPosts), hint: 'CMS-powered published and draft articles', icon: FileText },
@@ -345,7 +345,7 @@ async function getDashboardData(): Promise<DashboardData> {
         {
           label: 'Missing locale pages',
           value: String(missingLocalePages.length),
-          detail: missingLocalePages.length ? missingLocalePages.slice(0, 3).join(', ') : 'All required routes exist in EN / AR / TR.',
+          detail: missingLocalePages.length ? missingLocalePages.slice(0, 3).join(', ') : 'All required routes exist in EN / AR.',
           ok: missingLocalePages.length === 0,
         },
         {

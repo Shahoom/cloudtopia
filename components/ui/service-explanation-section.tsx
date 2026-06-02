@@ -82,41 +82,6 @@ const content = {
     ],
     ctaText: "ابدأ مشروعك اليوم"
   },
-  tr: {
-    heroTitle: "Web Siteniz",
-    heroHighlight: "Dönüştürmeli.",
-    scrollHint: "Yaklaşımımızı Keşfedin",
-    pitchTitle: "Sonuç Veren Profesyonel Web Tasarımı",
-    pitchDescription: "Ziyaretçileri müşteriye dönüştüren, yüksek dönüşümlü web siteleri hazırlıyoruz. Uzman ekibimiz, sadece olağanüstü görünmekle kalmayan, aynı zamanda Orta Doğu'daki şirketler için ölçülebilir iş büyümesi sağlayan web siteleri inşa etmek için çarpıcı görsel tasarımı stratejik kullanıcı deneyimiyle birleştiriyor.",
-    quote: "Harika bir web sitesi sadece estetikten ibaret değildir — 7/24 çalışan en güçlü satış aracınızdır.",
-    features: [
-      {
-        title: "Yüksek Performanslı Web Geliştirme",
-        description: "Web sitelerimiz; optimize edilmiş kod, Next.js ve React gibi modern framework'ler ve dönüşümleri ve arama sıralamalarını artıran gelişmiş önbellekleme stratejileri sayesinde 90+ Google PageSpeed puanı elde eder."
-      },
-      {
-        title: "Mobil Öncelikli Duyarlı Tasarım",
-        description: "Web trafiğinin %60'ından fazlasının mobil cihazlardan gelmesiyle, akıllı telefonlarda, tabletlerde ve masaüstü bilgisayarlarda kusursuz deneyimler sunan mobil öncelikli duyarlı web siteleri tasarlıyoruz."
-      },
-      {
-        title: "Arama Motoru Optimizasyonu (SEO)",
-        description: "Her web sitesi teknik SEO en iyi uygulamalarıyla oluşturulur: semantik HTML5, yapılandırılmış veri işaretlemesi, optimize edilmiş meta etiketler, hızlı yükleme süreleri ve Google'da daha üst sıralarda yer almanıza yardımcı olacak temiz URL yapıları."
-      },
-      {
-        title: "Kurumsal Düzeyde Güvenlik",
-        description: "İşletmenizi ve müşteri verilerinizi siber tehditlerden korumak için SSL/TLS şifreleme, güvenli kimlik doğrulama, DDoS koruması ve düzenli güvenlik denetimleri uyguluyoruz."
-      },
-      {
-        title: "Çok Dilli Web Siteleri",
-        description: "Türkiye, Suudi Arabistan, BAE, Katar ve tüm Orta Doğu bölgesindeki kitlelerle bağlantı kurmanıza yardımcı olan, tam dil desteği ve modern tasarım konusunda uzmanlaşmış bir ekibimiz var."
-      },
-      {
-        title: "Özel Destek ve Bakım",
-        description: "Ortaklığımız yayında sona ermez. Sitenizin güvenli ve güncel kalmasını sağlamak için sürekli web sitesi bakımı, performans izleme, içerik güncellemeleri ve teknik destek sağlıyoruz."
-      }
-    ],
-    ctaText: "Projenize Bugün Başlayın"
-  }
 }
 
 interface GlowingCardProps {
@@ -152,7 +117,7 @@ const GlowingCard = ({ title, description }: GlowingCardProps) => {
 }
 
 export function ServiceExplanationSection({ isRTL = false, locale = "en" }: ServiceExplanationProps) {
-  const t = locale === 'ar' ? content.ar : (locale === 'tr' ? content.tr : content.en)
+  const t = locale === 'ar' ? content.ar : (content.en)
 
   return (
     <section
@@ -221,7 +186,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <TextBlockAnimation blockColor="#2563eb" duration={0.6}>
               <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-50">
-                {locale === 'ar' ? "خدمات تصميم المواقع لدينا" : locale === 'tr' ? "Web Tasarım Hizmetlerimiz" : "Our Web Design Services"}
+                {locale === 'ar' ? "خدمات تصميم المواقع لدينا" : "Our Web Design Services"}
               </h3>
             </TextBlockAnimation>
           </div>
@@ -257,8 +222,8 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            "serviceType": locale === 'ar' ? "تصميم وتطوير المواقع الإلكترونية" : locale === 'tr' ? "Profesyonel Web Tasarımı ve Geliştirme Hizmetleri" : "Professional Web Design & Development Services",
-            "name": locale === 'ar' ? "خدمات تصميم المواقع - كلاود توبيا" : locale === 'tr' ? "Web Tasarım Hizmetleri - CloudTopia" : "Web Design Services - CloudTopia",
+            "serviceType": locale === 'ar' ? "تصميم وتطوير المواقع الإلكترونية" : "Professional Web Design & Development Services",
+            "name": locale === 'ar' ? "خدمات تصميم المواقع - كلاود توبيا" : "Web Design Services - CloudTopia",
             "description": t.pitchDescription,
             "provider": {
               "@type": "Organization",
@@ -281,7 +246,7 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             ],
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
-              "name": locale === 'ar' ? "خدمات تصميم وتطوير المواقع" : locale === 'tr' ? "Web Tasarımı ve Geliştirme Hizmetleri" : "Web Design & Development Services",
+              "name": locale === 'ar' ? "خدمات تصميم وتطوير المواقع" : "Web Design & Development Services",
               "itemListElement": t.features.map((feature: any, index: number) => ({
                 "@type": "Offer",
                 "position": index + 1,

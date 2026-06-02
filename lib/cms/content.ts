@@ -4,7 +4,6 @@ import { unstable_cache } from 'next/cache'
 import type { Locale } from '../i18n/config.ts'
 import { ar } from '../i18n/translations/ar.ts'
 import { en } from '../i18n/translations/en.ts'
-import { tr } from '../i18n/translations/tr.ts'
 import { canonicalUrl } from '../i18n/url.ts'
 import { isDatabaseConfigured, queryDatabase } from './db.ts'
 import {
@@ -17,7 +16,7 @@ import {
 } from './page-structure.ts'
 import { composeSiteDesignJSON, flattenSiteDesignRow } from './site-design-structure.ts'
 
-const staticDictionaries = { en, ar, tr }
+const staticDictionaries = { en, ar }
 const CMS_REVALIDATE_SECONDS = 60
 
 export type SiteDesign = {
@@ -247,7 +246,6 @@ async function getCMSServiceFAQsUncached(serviceSlug: string, locale: string) {
   const validTables: Record<string, string> = {
     en: 'service_faqs_faqs_en',
     ar: 'service_faqs_faqs_ar',
-    tr: 'service_faqs_faqs_tr',
   }
   const table = validTables[locale]
   if (!table) return null
@@ -355,7 +353,6 @@ export function pageToSitemapEntry(page: any): MetadataRoute.Sitemap[number] {
       languages: {
         en: canonicalUrl('en', path),
         ar: canonicalUrl('ar', path),
-        tr: canonicalUrl('tr', path),
         'x-default': canonicalUrl('en', path),
       },
     },

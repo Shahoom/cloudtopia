@@ -209,7 +209,7 @@ export function buildPageSEO(locale: Locale, slug: string, dictionary: Dictionar
 export function buildNavigation(locale: Locale, dictionary: Dictionary) {
   const nav = dictionary.nav || {}
   const footer = dictionary.footer || {}
-  const showContact = locale !== 'tr'
+  const showContact = true
 
   return {
     header: [
@@ -266,7 +266,7 @@ export function buildSiteSettings(dictionary: Dictionary) {
     },
     contact: {
       email: 'info@cloudtopia.net',
-      phone: '+90-501-151-11-16',
+      phone: '',
       whatsapp: 'https://wa.me/905011511116',
     },
     social: [

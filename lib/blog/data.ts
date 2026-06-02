@@ -7,7 +7,7 @@ import { buildTableOfContents, normalizeMediaUrl } from './utils'
 import { filterAndSortBlogPosts, type BlogSearchSort } from './search'
 
 const CMS_REVALIDATE_SECONDS = 60
-const locales = ['en', 'ar', 'tr'] as const
+const locales = ['en', 'ar'] as const
 
 export type BlogMedia = {
   id: number | null

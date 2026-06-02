@@ -112,7 +112,6 @@ export async function FastServiceFAQsListView() {
     en_count: string
     id: number
     service_slug: string
-    tr_count: string
     updated_at: string
   }>(`
     select
@@ -120,8 +119,7 @@ export async function FastServiceFAQsListView() {
       sf.service_slug,
       sf.updated_at,
       (select count(*)::text from service_faqs_faqs_en where _parent_id = sf.id) as en_count,
-      (select count(*)::text from service_faqs_faqs_ar where _parent_id = sf.id) as ar_count,
-      (select count(*)::text from service_faqs_faqs_tr where _parent_id = sf.id) as tr_count
+      (select count(*)::text from service_faqs_faqs_ar where _parent_id = sf.id) as ar_count
     from service_faqs sf
     order by sf.service_slug asc
   `)
@@ -139,7 +137,6 @@ export async function FastServiceFAQsListView() {
         { key: 'slug', label: 'Slug', render: (row) => value(row.service_slug) },
         { key: 'en', label: 'EN', render: (row) => countBadge(row.en_count) },
         { key: 'ar', label: 'AR', render: (row) => countBadge(row.ar_count) },
-        { key: 'tr', label: 'TR', render: (row) => countBadge(row.tr_count) },
         { key: 'updated', label: 'Updated', render: (row) => small(formatDate(row.updated_at)) },
       ]}
       countLabel={`${rows.length} service FAQ sets`}

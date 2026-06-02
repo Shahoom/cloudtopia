@@ -3,12 +3,11 @@ import config from '../payload.config.ts'
 import { authors } from '../lib/authors.ts'
 import { ar } from '../lib/i18n/translations/ar.ts'
 import { en } from '../lib/i18n/translations/en.ts'
-import { tr } from '../lib/i18n/translations/tr.ts'
 import { serviceFAQs } from '../lib/seo/service-faqs.ts'
 import { isPayloadConfigured } from '../lib/cms/env.ts'
 
-const dictionaries = { en, ar, tr }
-const locales = ['en', 'ar', 'tr'] as const
+const dictionaries = { en, ar }
+const locales = ['en', 'ar'] as const
 
 async function upsertByField({
   collection,

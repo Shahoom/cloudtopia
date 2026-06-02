@@ -10,24 +10,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Website Design & Development in the Gulf',
         ar: 'تصميم وتطوير مواقع الويب في الخليج',
-        tr: 'Körfez\'de Web Sitesi Tasarım & Geliştirme',
     }
     const descs: Record<string, string> = {
         en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct. From $299.',
         ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح. تبدأ من 299$.',
-        tr: 'Körfez işletmeleri için iki dilli Arapça + İngilizce web siteleri. Hızlı, SEO hazır, RTL doğru. $299\'dan başlar.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Website Design — CloudTopia',
         ar: 'تصميم المواقع — كلاود توبيا',
-        tr: 'Web Sitesi Tasarımı — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Custom responsive websites with modern UI/UX design.',
         ar: 'مواقع ويب مخصصة متجاوبة بتصميم UI/UX حديث.',
-        tr: 'Modern UI/UX tasarıma sahip özel duyarlı web siteleri.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -89,7 +85,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

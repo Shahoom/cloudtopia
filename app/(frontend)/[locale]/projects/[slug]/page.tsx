@@ -53,7 +53,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             languages: {
                 'en': canonicalUrl('en', `/projects/${slug}`),
                 'ar': canonicalUrl('ar', `/projects/${slug}`),
-                'tr': canonicalUrl('tr', `/projects/${slug}`),
                 'x-default': canonicalUrl('en', `/projects/${slug}`),
             },
         },
@@ -72,9 +71,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     const labels = {
         en: { backToProjects: 'All Projects', problem: 'The Challenge', solution: 'Our Solution', features: 'What We Shipped', outcome: 'The Outcome', visitProject: 'Visit live project', relatedProjects: 'More Case Studies', readyForYours: 'Ready to ship yours?', startProject: 'Start a Project', viewPricing: 'See Pricing' },
         ar: { backToProjects: 'جميع المشاريع', problem: 'التحدي', solution: 'حلّنا', features: 'ما شحنّاه', outcome: 'النتيجة', visitProject: 'زيارة المشروع المباشر', relatedProjects: 'المزيد من دراسات الحالة', readyForYours: 'جاهز لشحن مشروعك؟', startProject: 'ابدأ مشروعاً', viewPricing: 'شاهد الأسعار' },
-        tr: { backToProjects: 'Tüm Projeler', problem: 'Zorluk', solution: 'Çözümümüz', features: 'Teslim Ettiklerimiz', outcome: 'Sonuç', visitProject: 'Canlı projeyi ziyaret et', relatedProjects: 'Daha Fazla Vaka Çalışması', readyForYours: 'Kendininkini yayına almaya hazır mısın?', startProject: 'Projeye Başla', viewPricing: 'Fiyatları Gör' },
     }
-    const L = labels[locale as 'en' | 'ar' | 'tr'] || labels.en
+    const L = labels[locale as 'en' | 'ar'] || labels.en
 
     const caseStudySchema = {
         '@context': 'https://schema.org',

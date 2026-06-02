@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -37,54 +37,38 @@ function useStars(count: number): Star[] {
     return stars
 }
 
-// Colorful gradients cycled per rotating word
-// Flat color per cycle — with a color-matched glow halo so the word pops.
-const WORD_COLORS = ['#0ea5e9', '#f59e0b', '#ec4899', '#10b981']
-const WORD_GLOWS = [
-    '0 0 18px rgba(14,165,233,0.65), 0 0 42px rgba(14,165,233,0.45), 0 0 80px rgba(14,165,233,0.3)',
-    '0 0 18px rgba(245,158,11,0.65), 0 0 42px rgba(245,158,11,0.45), 0 0 80px rgba(245,158,11,0.3)',
-    '0 0 18px rgba(236,72,153,0.65), 0 0 42px rgba(236,72,153,0.45), 0 0 80px rgba(236,72,153,0.3)',
-    '0 0 18px rgba(16,185,129,0.65), 0 0 42px rgba(16,185,129,0.45), 0 0 80px rgba(16,185,129,0.3)',
-]
-
 export default function CloudHero() {
     const { t, locale } = useLanguage()
     const isRTL = locale === 'ar'
 
-    const fallbackCycling: Record<string, string[]> = {
-        en: ['Cloud', 'Internet', 'Web'],
-        ar: ['السحابة', 'الإنترنت', 'العالم الرقمي'],
-        tr: ['Buluta', 'Dijitale', 'Geleceğe'],
-    }
-    const cyclingWords = (t.home?.hero?.titleHighlights as string[]) ||
-        fallbackCycling[locale] ||
-        fallbackCycling.en
-    const [wordIndex, setWordIndex] = useState(0)
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
         setMounted(true)
     }, [])
 
-    useEffect(() => {
-        const id = setInterval(() => setWordIndex((i) => (i + 1) % cyclingWords.length), 3200)
-        return () => clearInterval(id)
-    }, [cyclingWords.length])
-
-    const title = t.home?.hero?.title || 'Elevate Your Business'
-    // `??` (not `||`) so a deliberately-empty Turkish value isn't replaced
-    // with the English fallback. Turkish doesn't need a word between
-    // "İşletmenizi" and "Buluta Yükseltin"; the dative is on the noun.
-    const intoThe = t.home?.hero?.intoThe ?? 'Into the'
-    const titleSuffix = t.home?.hero?.titleSuffix || ''
-    const description = t.home?.hero?.description || ''
+    const heroCopy = locale === 'ar'
+        ? {
+            title: 'شركة برمجيات وسحابة تبني حلولاً رقمية واضحة',
+            description:
+                'كلاود توبيا تطور مواقع شركات، متاجر إلكترونية، تطبيقات ويب وجوال، أنظمة CRM وERP، ترحيل سحابي، نقل بيانات، وأتمتة بالذكاء الاصطناعي للشركات التي تريد نتيجة قابلة للقياس.',
+            proof: ['استشارة مجانية', 'معاينة ديمو مجانية', 'نطاق وسعر واضحان'],
+        }
+        : {
+            title: 'Software and cloud solutions built with business clarity',
+            description:
+                'CloudTopia builds company websites, e-commerce stores, web and mobile apps, CRM and ERP systems, cloud migration, data migration, and AI automation for businesses that need measurable results.',
+            proof: ['Free consultation', 'Free custom demo preview', 'Clear scope and pricing'],
+        }
+    const title = heroCopy.title
+    const description = heroCopy.description
     const tagline = t.header?.tagline || 'Digital & Cloud Technologies'
     const freeConsultation = t.home?.hero?.freeConsultation || 'Free Consultation'
     const viewServices = t.home?.hero?.viewServices || 'View Services'
     const whatsappUrl = `https://wa.me/905011511116?text=${encodeURIComponent(
         locale === 'ar'
             ? 'مرحباً كلاود توبيا، أود استشارة مجانية.'
-            : locale === 'tr'
+            : false
                 ? 'Merhaba CloudTopia, ücretsiz danışmak istiyorum.'
                 : 'Hi CloudTopia, I\'d like a free consultation.'
     )}`
@@ -149,9 +133,6 @@ export default function CloudHero() {
             }
         }
     }, [])
-
-    // Rotating word keeps heading font (Cairo), no serif / italic — just bold color
-    const rotatingFontClass = ''
 
     return (
         <>
@@ -397,91 +378,83 @@ export default function CloudHero() {
                 <div className="bottom-fade" />
 
                 {/* Content overlay */}
-                <div className="relative z-[11] w-full max-w-5xl mx-auto px-5 sm:px-8 lg:px-10 pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-28 text-center">
-                    <motion.div
-                        initial={false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/92 border border-white/60 backdrop-blur-md text-[#0284c7] text-[11px] sm:text-xs md:text-sm font-bold mb-6 sm:mb-8 shadow-[0_6px_28px_rgba(2,132,199,0.35)]"
-                    >
-                        <Sparkles className="w-3.5 h-3.5 text-[#0284c7]" />
-                        <span className="uppercase tracking-[0.2em]">{tagline}</span>
-                    </motion.div>
+                <div className="relative z-[11] w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-28 sm:pt-32 md:pt-36 pb-20 sm:pb-24 md:pb-28">
+                    <div className="grid gap-8 lg:grid-cols-[1.05fr_0.75fr] lg:items-end">
+                        <div className={isRTL ? 'text-right' : 'text-left'}>
+                            <motion.div
+                                initial={false}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                className="mb-6 inline-flex items-center gap-2 rounded-md bg-white/92 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0284c7] shadow-[0_6px_28px_rgba(2,132,199,0.25)] backdrop-blur-md"
+                            >
+                                <Sparkles className="h-3.5 w-3.5 text-[#0284c7]" aria-hidden="true" />
+                                <span>{tagline}</span>
+                            </motion.div>
 
-                    <motion.h1
-                        initial={false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="font-bold tracking-tight leading-[1.08] mb-5 sm:mb-6 md:mb-7"
-                        style={{
-                            fontSize: 'clamp(2.25rem, 7vw, 5.25rem)',
-                            color: '#ffffff',
-                            textShadow:
-                                '0 2px 10px rgba(7,15,38,0.65), 0 5px 28px rgba(7,15,38,0.5), 0 0 56px rgba(7,15,38,0.4)',
-                        }}
-                    >
-                        {title}
-                        <br className="hidden sm:block" />
-                        <span className="inline-flex items-baseline gap-x-2 sm:gap-x-3 flex-wrap justify-center mt-1.5 sm:mt-2">
-                            {intoThe && <span className="font-semibold">{intoThe}</span>}
-                            <span className="relative inline-block align-baseline" style={{ minWidth: '3.5ch' }}>
-                                <AnimatePresence mode="wait">
-                                    <motion.span
-                                        key={cyclingWords[wordIndex]}
-                                        initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-                                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                        exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
-                                        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                        className="inline-block font-extrabold"
-                                        style={{
-                                            color: WORD_COLORS[wordIndex % WORD_COLORS.length],
-                                            textShadow: WORD_GLOWS[wordIndex % WORD_GLOWS.length],
-                                            filter: 'none',
-                                        }}
-                                    >
-                                        {cyclingWords[wordIndex]}
-                                    </motion.span>
-                                </AnimatePresence>
-                            </span>
-                            {titleSuffix && <span className="font-semibold">{titleSuffix}</span>}
-                        </span>
-                    </motion.h1>
+                            <motion.h1
+                                initial={false}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                className="max-w-5xl font-bold tracking-tight leading-[1.05]"
+                                style={{
+                                    fontSize: 'clamp(2.35rem, 6vw, 5.1rem)',
+                                    color: '#ffffff',
+                                    textShadow:
+                                        '0 2px 10px rgba(7,15,38,0.65), 0 5px 28px rgba(7,15,38,0.5), 0 0 56px rgba(7,15,38,0.36)',
+                                    textWrap: 'balance',
+                                } as React.CSSProperties}
+                            >
+                                {title}
+                            </motion.h1>
 
-                    <motion.p
-                        initial={false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="max-w-2xl md:max-w-3xl mx-auto text-lg sm:text-xl md:text-2xl lg:text-[1.65rem] leading-[1.55] mb-9 sm:mb-11 font-medium px-2"
-                        style={{
-                            color: '#334d6e',
-                            textShadow: '0 1px 2px rgba(255,255,255,0.45)',
-                        }}
-                    >
-                        {description}
-                    </motion.p>
+                            <motion.p
+                                initial={false}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                className="mt-6 max-w-3xl text-base font-semibold leading-8 text-slate-900 sm:text-lg md:text-xl"
+                                style={{ textShadow: '0 1px 2px rgba(255,255,255,0.72)' }}
+                            >
+                                {description}
+                            </motion.p>
 
-                    <motion.div
-                        initial={false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4"
-                    >
-                        <a
-                            href={whatsappUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white text-[#0c1d3e] font-semibold text-sm sm:text-base shadow-[0_12px_44px_rgba(0,0,0,0.35)] hover:bg-cyan-50 hover:shadow-[0_18px_56px_rgba(0,0,0,0.45)] transition-all duration-300"
+                            <motion.div
+                                initial={false}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.9, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+                            >
+                                <a
+                                    href={whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm font-bold text-[#0c1d3e] shadow-[0_12px_44px_rgba(0,0,0,0.28)] transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-cyan-50 hover:shadow-[0_18px_56px_rgba(0,0,0,0.36)] sm:text-base"
+                                >
+                                    {freeConsultation}
+                                    <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} aria-hidden="true" />
+                                </a>
+                                <Link
+                                    href={l('/services')}
+                                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/85 bg-[#0c1d3e]/34 px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_30px_rgba(0,0,0,0.24)] backdrop-blur-md transition-[background-color,border-color] duration-300 hover:border-white hover:bg-[#0c1d3e]/52 sm:text-base"
+                                >
+                                    {viewServices}
+                                </Link>
+                            </motion.div>
+                        </div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 22 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.22 }}
+                            className="grid gap-px bg-white/30 text-slate-950 shadow-2xl shadow-slate-950/16 backdrop-blur-md sm:grid-cols-3 lg:grid-cols-1"
                         >
-                            {freeConsultation}
-                            <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
-                        </a>
-                        <Link
-                            href={l('/services')}
-                            className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border-2 border-white/80 hover:border-white text-white font-semibold text-sm sm:text-base backdrop-blur-md bg-[#0c1d3e]/30 hover:bg-[#0c1d3e]/50 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
-                        >
-                            {viewServices}
-                        </Link>
-                    </motion.div>
+                            {heroCopy.proof.map((item, index) => (
+                                <div key={item} className="bg-white/82 p-5">
+                                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-700">{String(index + 1).padStart(2, '0')}</p>
+                                    <p className="mt-2 text-base font-black">{item}</p>
+                                </div>
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
             </section>
         </>

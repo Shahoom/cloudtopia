@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, Send, MessageSquare, Globe, Clock, CheckCircle, Sp
 import { useState, useRef, useEffect } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ProfessionalConnect } from '@/components/ui/get-in-touch'
+import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
 
 interface MousePosition {
   x: number
@@ -232,10 +233,45 @@ const IntroSection = ({ t }: { t: any }) => {
 }
 
 export default function ContactClient({ t: pageT }: { t?: any }) {
-  const { t: contextT, dir } = useLanguage()
+  const { t: contextT, dir, locale } = useLanguage()
   const t = pageT || contextT
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [activeTab, setActiveTab] = useState('email')
+  const intakeContent = locale === 'ar'
+    ? {
+      eyebrow: 'مكتب استقبال المشاريع',
+      title: 'أرسل التفاصيل التي تجعل أول رد عملياً.',
+      description: 'نراجع النطاق والسوق والتكاملات والجدول الزمني قبل الرد، حتى تحصل على مسار واضح بدلاً من رسالة عامة.',
+      response: 'رد شخصي خلال يوم عمل واحد.',
+      steps: [
+        { title: 'مراجعة النطاق', body: 'نحدد نوع المشروع والصفحات أو الوحدات أو سير العمل المطلوب.' },
+        { title: 'المسار التقني', body: 'نقترح المنصة والتكاملات وخطة المحتوى ثنائية اللغة المناسبة.' },
+        { title: 'عرض ثابت', body: 'تحصل على باقة أو تقدير مخصص مع مراحل تسليم واضحة.' },
+      ],
+      checklistTitle: 'يساعدنا أن تذكر',
+      checklist: ['السوق المستهدف أو الدولة', 'الخدمات أو الباقات التي تقارنها', 'أي تكاملات مطلوبة', 'موعد الإطلاق أو أولوية المشروع'],
+      signalsTitle: 'مناسب خصوصاً لـ',
+      signals: ['إطلاق عربي + إنجليزي', 'متاجر ومدفوعات إقليمية', 'أنظمة داخلية وCRM', 'تحسين SEO والتحويل'],
+      briefTitle: 'مختصر أفضل، رد أسرع',
+      briefBody: 'استخدم حقل الرسالة لوصف الهدف التجاري، الجمهور، الصفحات أو الوحدات، الأنظمة الحالية، وأي أمثلة تريد الاقتراب منها أو تجنبها.',
+    }
+    : {
+      eyebrow: 'Project intake desk',
+      title: 'Send the details that make the first reply useful.',
+      description: 'We review scope, market, integrations, and timeline before replying, so you get a clear path instead of a generic acknowledgement.',
+      response: 'Personal response within one business day.',
+      steps: [
+        { title: 'Scope review', body: 'We map the project type, pages, modules, workflows, and commercial goal.' },
+        { title: 'Technical route', body: 'We recommend the platform, integrations, bilingual content structure, and delivery path.' },
+        { title: 'Fixed proposal', body: 'You receive a package recommendation or custom estimate with clear delivery milestones.' },
+      ],
+      checklistTitle: 'Helpful to include',
+      checklist: ['Target market or country', 'Services or packages you are comparing', 'Required integrations', 'Launch date or urgency'],
+      signalsTitle: 'Especially useful for',
+      signals: ['Arabic + English launches', 'Regional commerce and payments', 'Internal systems and CRM', 'SEO and conversion upgrades'],
+      briefTitle: 'Better brief, faster reply',
+      briefBody: 'Use the message field to describe the business goal, audience, pages or modules, current systems, and any examples you want us to match or avoid.',
+    }
 
   const [formData, setFormData] = useState({
     name: '',
@@ -340,8 +376,8 @@ ${formData.message}`
                   <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-green-600">
                     <MessageSquare className="w-8 h-8" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{t.contact.info.phone}</h3>
-                  <a href="https://wa.me/905011511116" target="_blank" rel="noopener noreferrer" className="text-green-600 font-bold hover:underline" dir="ltr">+90 501 151 11 16</a>
+                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{locale === 'ar' ? 'استقبال المشاريع' : 'Project Intake'}</h3>
+                  <a href="mailto:info@cloudtopia.net" className="text-green-600 font-bold hover:underline" dir="ltr">info@cloudtopia.net</a>
                 </TiltCard>
               </div>
             </div>
@@ -404,6 +440,68 @@ ${formData.message}`
                 </motion.a>
               ))}
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="rounded-[32px] border border-neutral-900 bg-neutral-950 p-7 text-white shadow-2xl"
+            >
+              <div className="mb-6 flex items-start justify-between gap-5">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-primary-200">{intakeContent.eyebrow}</p>
+                  <h2 className="mt-3 text-3xl font-black tracking-tight">{intakeContent.title}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-white/70">{intakeContent.description}</p>
+                </div>
+                <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-primary-100 sm:flex">
+                  <Shield className="h-6 w-6" />
+                </div>
+              </div>
+
+              <div className="grid gap-3">
+                {intakeContent.steps.map((step, index) => (
+                  <div key={step.title} className="grid grid-cols-[2rem_1fr] gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-300 text-sm font-black text-neutral-950">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{step.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-white/70">{step.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div>
+                  <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white/50">{intakeContent.checklistTitle}</h3>
+                  <ul className="mt-3 space-y-2">
+                    {intakeContent.checklist.map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-white/75">
+                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-primary-200" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white/50">{intakeContent.signalsTitle}</h3>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {intakeContent.signals.map((signal) => (
+                      <span key={signal} className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-white/80">
+                        {signal}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3 rounded-2xl bg-primary-300 px-4 py-3 text-neutral-950">
+                <Clock className="h-5 w-5 shrink-0" />
+                <p className="text-sm font-black">{intakeContent.response}</p>
+              </div>
+            </motion.div>
           </div>
 
           {/* Right Column: Interactive Form */}
@@ -423,6 +521,7 @@ ${formData.message}`
                   <div>
                     <h2 className="text-4xl font-black text-neutral-900 tracking-tight">{t.contact.form.title}</h2>
                     <p className="text-neutral-500 font-medium mt-2">{t.contact.form.description}</p>
+                    <p className="mt-2 text-sm font-semibold text-primary-700">Personal response within one business day.</p>
                   </div>
 
                   <div className="flex bg-lavender/50 p-1 rounded-2xl border border-neutral-200">
@@ -485,13 +584,10 @@ ${formData.message}`
                       value={formData.interest}
                       onChange={(e: any) => setFormData({ ...formData, interest: e.target.value })}
                       required
-                      options={[
-                        { value: 'digital-presence', label: t.contact.form.serviceOptions.website },
-                        { value: 'business-systems', label: t.contact.form.serviceOptions.systems },
-                        { value: 'web-apps', label: t.contact.form.serviceOptions.webApp },
-                        { value: 'marketing', label: t.contact.form.serviceOptions.marketing },
-                        { value: 'other', label: t.contact.form.serviceOptions.other },
-                      ]}
+                      options={serviceCategories.map((category) => ({
+                        value: category.slug,
+                        label: localizedServiceValue(category.name, locale),
+                      }))}
                     />
                     <CustomSelect
                       label={t.contact.form.budget}
@@ -527,6 +623,22 @@ ${formData.message}`
                     onChange={(e: any) => setFormData({ ...formData, message: e.target.value })}
                     required
                   />
+
+                  <div className="rounded-3xl border border-primary-100 bg-white/45 p-5">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                      <div>
+                        <h3 className="text-lg font-black text-neutral-950">{intakeContent.briefTitle}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-neutral-600">{intakeContent.briefBody}</p>
+                      </div>
+                      <div className="flex shrink-0 flex-wrap gap-2 md:max-w-[260px] md:justify-end">
+                        {intakeContent.checklist.map((item) => (
+                          <span key={item} className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
 
                   <motion.button
                     type="submit"

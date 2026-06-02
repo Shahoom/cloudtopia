@@ -3,8 +3,8 @@ import { defaultLocale, locales, type Locale } from './config'
 export const BASE_URL = 'https://cloudtopia.net'
 
 /**
- * English is unprefixed-canonical: `cloudtopia.net/projects`. Arabic and
- * Turkish keep the locale segment: `cloudtopia.net/ar/projects`. Every
+ * English is unprefixed-canonical: `cloudtopia.net/projects`. Arabic keeps
+ * the locale segment: `cloudtopia.net/ar/projects`. Every
  * URL the site emits — internal `<Link>`, canonical, hreflang, sitemap,
  * RSS, JSON-LD — flows through this single helper so the rule is enforced
  * in one place.
@@ -24,7 +24,6 @@ export function buildHreflangMap(pathSuffix: string): Record<string, string> {
     return {
         en: canonicalUrl('en', path),
         ar: canonicalUrl('ar', path),
-        tr: canonicalUrl('tr', path),
         'x-default': canonicalUrl('en', path),
     }
 }

@@ -33,7 +33,6 @@ export const SiteContent: CollectionConfig = {
       options: [
         { label: 'English', value: 'en' },
         { label: 'Arabic', value: 'ar' },
-        { label: 'Turkish', value: 'tr' },
       ],
     },
     {

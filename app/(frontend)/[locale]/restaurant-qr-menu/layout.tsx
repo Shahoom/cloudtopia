@@ -10,24 +10,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'QR Menu Systems for Restaurants in the Gulf',
         ar: 'أنظمة قائمة QR للمطاعم في الخليج',
-        tr: 'Körfez\'deki Restoranlar için QR Menü Sistemleri',
     }
     const descs: Record<string, string> = {
-        en: 'Multilingual QR menus for Gulf restaurants and cafés. Arabic, English, Turkish. Table ordering, payments, instant updates. From $249.',
-        ar: 'قوائم QR متعددة اللغات لمطاعم ومقاهي الخليج. العربية، الإنجليزية، التركية. طلب من الطاولة، مدفوعات، تحديثات فورية. تبدأ من 249$.',
-        tr: 'Körfez restoranları ve kafeleri için çok dilli QR menüler. Arapça, İngilizce, Türkçe. Masa siparişi, ödemeler, anında güncellemeler. $249\'dan başlar.',
+        en: 'Bilingual QR menus for Gulf restaurants and cafés. Arabic and English. Table ordering, payments, instant updates. From $249.',
+        ar: 'قوائم QR ثنائية اللغة لمطاعم ومقاهي الخليج. العربية والإنجليزية، طلب من الطاولة، مدفوعات، تحديثات فورية. تبدأ من 249$.',
     }
     const ogTitles: Record<string, string> = {
         en: 'QR Menu Systems — CloudTopia',
         ar: 'أنظمة قائمة QR — كلاود توبيا',
-        tr: 'QR Menü Sistemleri — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Interactive QR-based digital menus for the hospitality industry.',
         ar: 'قوائم رقمية تفاعلية بتقنية QR لقطاع الضيافة.',
-        tr: 'Konaklama sektörü için interaktif QR tabanlı dijital menüler.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -89,7 +85,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

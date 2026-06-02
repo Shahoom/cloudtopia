@@ -4,7 +4,7 @@ import { ogImagesFor } from '../og/og-image.ts'
 import { getPageBundle } from './content.ts'
 import { normalizePageSlug } from './page-structure.ts'
 
-const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
 
 export async function getCMSMetadata(locale: string, slug: string, ogPage?: string): Promise<Metadata> {
   const normalized = normalizePageSlug(slug)

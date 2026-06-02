@@ -9,6 +9,7 @@ import { ScrollHeroSection } from "@/components/ui/scroll-hero-section"
 import { ServiceExplanationSection } from "@/components/ui/service-explanation-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { localePath } from "@/lib/i18n/url"
+import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 
 const exampleImages = [
   {
@@ -136,7 +137,7 @@ function WebDesignHero({ t }: { t: any }) {
           transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
         >
           <span className="text-slate-900">
-            {p?.hero?.prefix || (locale === 'ar' ? "اجعل موقعك" : (locale === 'tr' ? "Web sitenizi" : "Make your"))}
+            {p?.hero?.prefix || (locale === 'ar' ? "اجعل موقعك" : "Make your")}
           </span>
           <LayoutGroup>
             <motion.span layout className="flex whitespace-pre justify-center" dir={isRTL ? "rtl" : "ltr"}>
@@ -145,7 +146,7 @@ function WebDesignHero({ t }: { t: any }) {
                 className="flex whitespace-pre text-slate-900"
                 transition={{ type: "spring", damping: 30, stiffness: 400 }}
               >
-                {p?.hero?.suffix ? `${p.hero.suffix} ` : (locale === 'ar' ? "الويب " : (locale === 'tr' ? "yapın " : "website "))}
+                {p?.hero?.suffix ? `${p.hero.suffix} ` : (locale === 'ar' ? "الويب " : "website ")}
               </motion.span>
               <TextRotate
                 texts={texts}
@@ -168,7 +169,7 @@ function WebDesignHero({ t }: { t: any }) {
         >
           {p?.hero?.description || (locale === 'ar'
             ? "نصمم ونطور مواقع إلكترونية احترافية تعكس هويتك التجارية وتحول الزوار إلى عملاء. تصاميم عصرية، سريعة، ومتجاوبة مع جميع الأجهزة."
-            : locale === 'tr'
+            : false
               ? "Marka kimliğinizi yansıtan ve ziyaretçileri müşteriye dönüştüren profesyonel web siteleri tasarlıyor ve geliştiriyoruz. Tüm cihazlar için modern, hızlı ve duyarlı tasarımlar."
               : "We design and develop professional websites that reflect your brand identity and convert visitors into customers. Modern, fast, and responsive designs for all devices."
           )}
@@ -250,7 +251,7 @@ function WebDesignServiceSection() {
 }
 
 export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
-  const { t: contextT } = useLanguage()
+  const { t: contextT, locale } = useLanguage()
   const t = pageT || contextT
 
   return (
@@ -273,6 +274,8 @@ export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
 
       {/* Service Explanation Section */}
       <WebDesignServiceSection />
+
+      <ServicePricingSection service="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
     </div>
   )
 }

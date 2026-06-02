@@ -7,6 +7,7 @@ import { MagicText } from "@/components/ui/magic-text"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ContentBlock from "@/components/ui/content-block"
 import { ParticleTextEffect } from "@/components/ui/interactive-text-particle"
+import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 
 const localContent = {
   en: {
@@ -26,15 +27,6 @@ const localContent = {
     generateTitle: "لماذا تختار خدمات إنشاء المحتوى لدينا؟",
     generateText: "كل قطعة محتوى نصنعها مصممة استراتيجياً لتتواصل مع جمهورك المستهدف. من منشورات انستغرام الجذابة إلى مقالات لينكد إن الاحترافية، ومن فيديوهات تيك توك الفيروسية إلى محتوى المدونات المحسّن لمحركات البحث — نقدم حلولاً إبداعية تعزز صوت علامتك التجارية وتحقق نتائج ملموسة.",
     particleText: "عالم من الإبداع",
-  },
-  tr: {
-    title: "Profesyonel",
-    sliderText: "İçerik Üretimi",
-    subtitle: "Hedef kitlenizi etkileyen büyüleyici görseller, videolar ve metinler üretiyoruz. Sosyal medya grafiklerinden marka hikayeciliğine kadar, fikirlerinizi yaratıcılık ve hassasiyetle hayata geçiriyoruz.",
-    magicText: "Premium içerik üretimi hizmetleri ile markanızı dönüştürün. Çarpıcı sosyal medya grafikleri tasarlıyor, ilgi çekici video içerikleri üretiyor, etkileyici metinler yazıyor ve trafik çeken, etkileşimi artıran ve ziyaretçileri sadık müşterilere dönüştüren stratejik içerik pazarlaması geliştiriyoruz. Hikayeniz güzelce anlatılmayı hak ediyor.",
-    generateTitle: "Neden Bizim İçerik Üretimimizi Seçmelisiniz?",
-    generateText: "Oluşturduğumuz her içerik parçası, hedef kitlenizde yankı uyandıracak şekilde stratejik olarak tasarlanmıştır. Dikkat çekici Instagram gönderilerinden profesyonel LinkedIn makalelerine, viral TikTok videolarından SEO uyumlu blog içeriklerine kadar — marka sesinizi yükselten ve ölçülebilir sonuçlar sağlayan yaratıcı çözümler sunuyoruz.",
-    particleText: "yaratıcılık dünyası",
   },
 }
 
@@ -76,7 +68,7 @@ export default function ContentCreationClient({ t: pageT }: { t?: any }) {
         </div>
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 animate-bounce">
-          <span className="text-sm">{p?.common?.scrollDown || (locale === 'ar' ? 'مرر للأسفل' : (locale === 'tr' ? 'Aşağı Kaydır' : 'Scroll Down'))}</span>
+          <span className="text-sm">{p?.common?.scrollDown || (locale === 'ar' ? 'مرر للأسفل' : 'Scroll Down')}</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
@@ -109,9 +101,11 @@ export default function ContentCreationClient({ t: pageT }: { t?: any }) {
           colors={particleColors}
           animationForce={70}
           particleDensity={4}
-          fontFamily={locale === 'ar' || locale === 'tr' ? 'Changa, sans-serif' : 'Verdana, sans-serif'}
+          fontFamily={locale === 'ar' ? 'Changa, sans-serif' : 'Verdana, sans-serif'}
         />
       </section>
+
+      <ServicePricingSection service="content-creation" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>
   )
 }

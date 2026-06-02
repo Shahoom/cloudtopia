@@ -27,10 +27,7 @@ const autoLocalizeAuthor: CollectionAfterChangeHook = async ({ doc, req }) => {
     ...(bioEn ? { bio: bioEn } : {}),
   }
 
-  const [ar, tr] = await Promise.all([
-    translatePayload(source, 'ar'),
-    translatePayload(source, 'tr'),
-  ])
+  const ar = await translatePayload(source, 'ar')
 
   await req.payload.update({
     collection: 'authors',
@@ -39,12 +36,10 @@ const autoLocalizeAuthor: CollectionAfterChangeHook = async ({ doc, req }) => {
       role: {
         en: roleEn || '',
         ar: (ar as any).role || doc?.role?.ar || '',
-        tr: (tr as any).role || doc?.role?.tr || '',
       },
       bio: {
         en: bioEn || '',
         ar: (ar as any).bio || doc?.bio?.ar || '',
-        tr: (tr as any).bio || doc?.bio?.tr || '',
       },
     },
     overrideAccess: true,
@@ -107,7 +102,6 @@ export const Authors: CollectionConfig = {
               fields: [
                 { name: 'en', type: 'text' },
                 { name: 'ar', type: 'text' },
-                { name: 'tr', type: 'text' },
               ],
             },
             {
@@ -123,7 +117,6 @@ export const Authors: CollectionConfig = {
               fields: [
                 { name: 'en', type: 'textarea' },
                 { name: 'ar', type: 'textarea' },
-                { name: 'tr', type: 'textarea' },
               ],
             },
             { name: 'email', type: 'email' },

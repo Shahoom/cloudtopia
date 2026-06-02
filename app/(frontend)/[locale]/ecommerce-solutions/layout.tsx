@@ -11,24 +11,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Gulf E-Commerce — Mada, Apple Pay, Tabby, Tamara',
         ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
-        tr: 'Körfez E-Ticaret — Mada, Apple Pay, Tabby, Tamara',
     }
     const descs: Record<string, string> = {
         en: 'Online stores with Gulf payment gateways (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA e-invoicing, bilingual checkout. From $599.',
         ar: 'متاجر إلكترونية مع بوابات دفع خليجية (مدى، آبل باي، STC Pay، تابي، تمارا)، فوترة ZATCA، ودفع ثنائي. من 599$.',
-        tr: 'Körfez ödeme geçitleri (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA, iki dilli ödeme ile online mağazalar. $599\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'E-Commerce — CloudTopia',
         ar: 'التجارة الإلكترونية — كلاود توبيا',
-        tr: 'E-Ticaret — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Enterprise-grade e-commerce solutions for Gulf businesses.',
         ar: 'حلول تجارة إلكترونية على مستوى المؤسسات لأعمال الخليج.',
-        tr: 'Körfez işletmeleri için kurumsal düzey e-ticaret çözümleri.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -90,7 +86,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

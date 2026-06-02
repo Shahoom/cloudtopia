@@ -50,7 +50,7 @@ function CloudTopiaAuthShell({
         <div className="ct-auth__signals">
           <span>Payload 3</span>
           <span>Local Postgres</span>
-          <span>EN / AR / TR</span>
+          <span>EN / AR</span>
         </div>
       </section>
       <section className="ct-auth__form" aria-label="Authentication form">

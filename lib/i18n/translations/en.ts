@@ -177,8 +177,8 @@ export const en = {
       badge: 'Trusted across the Gulf',
       items: [
         { value: '50+', label: 'Projects delivered', hint: 'Websites, stores, and custom systems shipped.' },
-        { value: '3', label: 'Languages by default', hint: 'English · العربية · Türkçe — not add-ons.' },
-        { value: '7', label: 'Countries served', hint: 'KSA · UAE · Kuwait · Qatar · Bahrain · Oman · Türkiye.' },
+        { value: '2', label: 'Languages by default', hint: 'English · العربية — built in, not add-ons.' },
+        { value: '6', label: 'Countries served', hint: 'KSA · UAE · Kuwait · Qatar · Bahrain · Oman.' },
         { value: '< 24h', label: 'Response time', hint: 'Every weekday. First reply from a human, not a form.' },
       ],
     },
@@ -278,7 +278,7 @@ export const en = {
         },
         {
           question: 'Which languages do you build in?',
-          answer: 'English, Arabic, and Turkish as first-class defaults — real bilingual craftsmanship with full RTL support for Arabic, proper typography, and culturally appropriate design. Other languages are available on request.',
+          answer: 'English, Arabic as first-class defaults — real bilingual craftsmanship with full RTL support for Arabic, proper typography, and culturally appropriate design. Other languages are available on request.',
         },
         {
           question: 'How long does a typical project take?',
@@ -667,7 +667,7 @@ export const en = {
           'Cloud Infrastructure',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We serve businesses across the GCC and the wider Middle East with full multilingual support (Arabic/English) and RTL capabilities, ensuring your message is clear to both local and international audiences.',
         },
         pricingApproach: 'Starting from $999 for a 5-page website. Business sites from $2,499 (up to 15 pages + CMS). Custom premium builds from $4,999. Structured payment milestones on larger projects. Free consultation included.',
@@ -727,7 +727,7 @@ export const en = {
           'Inventory Management Tools',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We support GCC merchants with local gateway integrations (Telr, PayTabs, HyperPay), multi-currency support, and dual-language interfaces with full RTL support.',
         },
         pricingApproach: 'Starting from $2,499 for a basic online store. Full-featured stores from $4,999. Enterprise solutions with custom integrations from $9,999. Monthly maintenance plans from $199/mo. Free demo available.',
@@ -787,7 +787,7 @@ export const en = {
           'Payment Gateway Integration',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Serving the hospitality sector across the GCC and Middle East with full local POS integration compatibility and flexible payment solutions.',
         },
         pricingApproach: 'Starter plan from $39/mo (1 location). Professional from $89/mo (up to 3 locations + analytics). Business from $179/mo (unlimited locations + POS integration). Save 17% with annual billing. 14-day free trial on all plans.',
@@ -847,7 +847,7 @@ export const en = {
           'Social Listening Software',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We understand regional Middle Eastern trends and design bilingual content (Arabic/English) that engages various demographics across the GCC.',
         },
         pricingApproach: 'Monthly retainers from $499 (2 platforms, 12 posts/mo). Growth package $999/mo (4 platforms, 24 posts + stories/reels). Full-service Premium from $1,999/mo (all platforms + paid ads management). Custom enterprise quotes available.',
@@ -907,7 +907,7 @@ export const en = {
           'Performance Tracking Tools',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We produce culturally and linguistically relevant content for the Arab audience and GCC, considering local nuances to ensure maximum impact.',
         },
         pricingApproach: 'Monthly content packages from $299 (4 blog posts or 8 social assets). Standard from $599/mo (8 posts + graphics + video thumbnails). Premium from $1,199/mo (unlimited content + full editorial calendar management).',
@@ -967,7 +967,7 @@ export const en = {
           'Schema Markup Implementation',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We target regional search engines with a full understanding of GCC search behavior, helping you stand out in local markets like Dubai, Riyadh, and Kuwait.',
         },
         pricingApproach: 'SEO retainers from $599/mo (local SEO, 5 keywords). Growth plan $1,199/mo (regional SEO, 20 keywords + content). Full-service from $2,499/mo (enterprise SEO, unlimited keywords, link building). Minimum 3-month engagement.',
@@ -1026,7 +1026,7 @@ export const en = {
           'Digital Asset Management',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We design robust identities that respect local GCC tastes and international standards, ensuring your brand gains strong acceptance and reach in the region.',
         },
         pricingApproach: 'Logo & identity from $499. Brand starter kit from $999 (logo + color palette + typography). Full brand guide from $2,499 (100+ page specifications, all assets). Corporate identity packages for enterprises from $4,999.',
@@ -1089,8 +1089,8 @@ export const en = {
           'Mobile Apps',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our custom CRM systems are deployed for sales teams and businesses across the GCC, Iraq, Syria, Turkey, and throughout the Arab world. We build bilingual CRMs (Arabic/English), integrate with regional payment systems, and ensure compliance with local data protection regulations.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our custom CRM systems are deployed for sales teams and businesses across the GCC, Iraq, Syria, and throughout the Arab world. We build bilingual CRMs (Arabic/English), integrate with regional payment systems, and ensure compliance with local data protection regulations.',
         },
         pricingApproach: 'Custom CRM from $3,999 (up to 5 users, core pipeline). Growing teams from $6,999 (15 users, automation + integrations). Enterprise from $12,999 (unlimited users, custom modules). Monthly SaaS plans from $149/mo. Free demo available.',
         slug: 'crm-system',
@@ -1150,8 +1150,8 @@ export const en = {
           'REST APIs',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our inventory management systems serve retailers, wholesalers, and manufacturers across the GCC, Iraq, Syria, Turkey, and the entire Middle East region. We support bilingual interfaces (Arabic/English), multi-currency pricing, and integration with regional accounting systems.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our inventory management systems serve retailers, wholesalers, and manufacturers across the GCC, Iraq, Syria, and the entire Middle East region. We support bilingual interfaces (Arabic/English), multi-currency pricing, and integration with regional accounting systems.',
         },
         pricingApproach: 'Cloud plan from $199/mo (1 location, up to 1,000 SKUs). Multi-location from $399/mo (5 locations, unlimited SKUs). Self-hosted build from $4,999 one-time. Setup fee from $499. Volume discounts for 10+ locations.',
         slug: 'inventory-management',
@@ -1211,8 +1211,8 @@ export const en = {
           'Touch Screen Interface',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our POS systems are deployed in retail and hospitality businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We support regional payment gateways, multi-currency transactions, VAT compliance, and bilingual receipts (Arabic/English).',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our POS systems are deployed in retail and hospitality businesses across the GCC, Iraq, Syria, and the Middle East. We support regional payment gateways, multi-currency transactions, VAT compliance, and bilingual receipts (Arabic/English).',
         },
         pricingApproach: 'POS software from $99/mo per terminal. Hardware bundles from $799 (tablet + stand + receipt printer). Full setup (software + hardware) from $1,499 per terminal. Multi-terminal discounts available. Includes software updates and support.',
         slug: 'pos-system',
@@ -1274,8 +1274,8 @@ export const en = {
           'API Integrations',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our HR management systems serve companies across the GCC, Iraq, Syria, Turkey, and the Arab world. We ensure compliance with regional labor laws (UAE WPS, Saudi GOSI, etc.), support bilingual interfaces, and integrate with local payroll requirements.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our HR management systems serve companies across the GCC, Iraq, Syria, and the Arab world. We ensure compliance with regional labor laws (UAE WPS, Saudi GOSI, etc.), support bilingual interfaces, and integrate with local payroll requirements.',
         },
         pricingApproach: 'From $8/employee/mo (basic HR + leave management). Full HR + payroll from $14/employee/mo. Performance + advanced analytics from $20/employee/mo. Minimum 10 employees. Free 30-day trial. Enterprise packages for 500+ employees.',
         slug: 'hr-management',
@@ -1337,8 +1337,8 @@ export const en = {
           'Google Calendar Sync',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our booking systems serve service providers across the GCC, Iraq, Syria, Turkey, and the Middle East. We support bilingual booking pages (Arabic/English), local payment methods, and integration with regional SMS providers for automated reminders.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our booking systems serve service providers across the GCC, Iraq, Syria, and the Middle East. We support bilingual booking pages (Arabic/English), local payment methods, and integration with regional SMS providers for automated reminders.',
         },
         pricingApproach: 'Starter from $49/mo (up to 3 staff, 200 bookings/mo). Growth from $99/mo (10 staff, 1,000 bookings + SMS reminders). Business from $199/mo (unlimited staff + bookings, custom domain). Free 14-day trial. No setup fee.',
         slug: 'booking-system',
@@ -1400,8 +1400,8 @@ export const en = {
           'Cloud Analytics',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our analytics dashboards serve businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We integrate with regional systems, support multi-currency reporting, and provide bilingual interfaces (Arabic/English) for comprehensive business intelligence.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our analytics dashboards serve businesses across the GCC, Iraq, Syria, and the Middle East. We integrate with regional systems, support multi-currency reporting, and provide bilingual interfaces (Arabic/English) for comprehensive business intelligence.',
         },
         pricingApproach: 'Starter dashboard from $2,499 (up to 3 data sources, 5 users). Business BI from $4,999 (10 sources, unlimited users + automated reports). Enterprise custom from $9,999. Monthly cloud plan from $299/mo. Training included.',
         slug: 'analytics-dashboard',
@@ -1465,8 +1465,8 @@ export const en = {
           'API Integration',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our customer portals serve businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We build secure, bilingual portals (Arabic/English) with full RTL support, integrate with regional payment systems, and ensure data privacy compliance.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our customer portals serve businesses across the GCC, Iraq, Syria, and the Middle East. We build secure, bilingual portals (Arabic/English) with full RTL support, integrate with regional payment systems, and ensure data privacy compliance.',
         },
         pricingApproach: 'Customer portals from $3,999 (core features, up to 500 users). Advanced portals with payment & document management from $6,999. Enterprise from $12,999. Monthly hosting from $149/mo. Free design consultation included.',
         slug: 'customer-portal',
@@ -1528,8 +1528,8 @@ export const en = {
           'Cloud Infrastructure',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our admin dashboards serve businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We build bilingual interfaces (Arabic/English with RTL), integrate with regional systems, and ensure secure, scalable management platforms.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our admin dashboards serve businesses across the GCC, Iraq, Syria, and the Middle East. We build bilingual interfaces (Arabic/English with RTL), integrate with regional systems, and ensure secure, scalable management platforms.',
         },
         pricingApproach: 'Admin dashboards from $4,999 (core management modules, up to 10 admin users). Full-featured from $8,999 (unlimited modules, role-based access, audit logs). Enterprise from $15,999. Monthly SaaS plan from $249/mo. Free discovery session.',
         slug: 'admin-dashboard',
@@ -1591,8 +1591,8 @@ export const en = {
           'Email Automation',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our booking platforms serve hospitality and service businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We integrate regional payment gateways, support multiple currencies, and provide bilingual booking experiences (Arabic/English).',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our booking platforms serve hospitality and service businesses across the GCC, Iraq, Syria, and the Middle East. We integrate regional payment gateways, support multiple currencies, and provide bilingual booking experiences (Arabic/English).',
         },
         pricingApproach: 'Booking platforms from $5,999 (single service type, payment integration). Multi-service platforms from $9,999 (hotels, tours, vehicles). Enterprise marketplace from $19,999. Revenue-share model available. Monthly hosting from $199/mo.',
         slug: 'booking-platform',
@@ -1654,8 +1654,8 @@ export const en = {
           'Mobile SDKs',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our chat systems serve businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We build bilingual chat interfaces (Arabic/English with RTL), ensure low-latency messaging, and comply with regional data privacy regulations.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our chat systems serve businesses across the GCC, Iraq, Syria, and the Middle East. We build bilingual chat interfaces (Arabic/English with RTL), ensure low-latency messaging, and comply with regional data privacy regulations.',
         },
         pricingApproach: 'Real-time chat systems from $4,999 (up to 100 concurrent users). Business plan from $7,999 (1,000 users, file sharing, message history). Enterprise from $14,999 (unlimited users + voice). Monthly infrastructure from $199/mo.',
         slug: 'real-time-chat',
@@ -1717,8 +1717,8 @@ export const en = {
           'Payment Webhooks',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our payment integrations serve online businesses across the GCC, Iraq, Syria, Turkey, and the Middle East. We integrate with regional payment gateways (Telr, PayTabs, etc.), support multiple currencies (AED, SAR, KWD, USD), and ensure compliance with local regulations.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our payment integrations serve online businesses across the GCC, Iraq, Syria, and the Middle East. We integrate with regional payment gateways (Telr, PayTabs, etc.), support multiple currencies (AED, SAR, KWD, USD), and ensure compliance with local regulations.',
         },
         pricingApproach: 'Single gateway integration from $999 (Stripe, PayTabs, Telr, etc.). Multi-gateway with full checkout from $2,499. Marketplace payment split + escrow from $4,999. Monthly support from $99/mo. Transaction fees per gateway provider.',
         slug: 'payment-integration',
@@ -1780,8 +1780,8 @@ export const en = {
           'Offline Storage',
         ],
         geographicCoverage: {
-          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria', 'Turkey'],
-          description: 'Our mobile-responsive apps serve users across the GCC, Iraq, Syria, Turkey, and the Middle East. We optimize for regional mobile networks, support bilingual interfaces (Arabic/English with RTL), and ensure fast performance on all devices.',
+          regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
+          description: 'Our mobile-responsive apps serve users across the GCC, Iraq, Syria, and the Middle East. We optimize for regional mobile networks, support bilingual interfaces (Arabic/English with RTL), and ensure fast performance on all devices.',
         },
         pricingApproach: 'Mobile-optimized web apps from $2,999. PWA with offline support from $4,999. Full cross-platform app (iOS + Android) from $7,999. Monthly hosting + updates from $149/mo. Enterprise custom builds on request.',
         slug: 'mobile-responsive-apps',
@@ -2305,8 +2305,8 @@ export const en = {
         type: 'Corporate Website',
         featured: true,
         title: 'KVAII Import-Export & Logistics Website',
-        problem: 'Turkey-based logistics company needed professional web presence for international trade services',
-        solution: 'Developed modern corporate website showcasing import-export services, freight solutions, and Turkey-Syria trade corridor expertise with multilingual support',
+        problem: 'regional logistics company needed professional web presence for international trade services',
+        solution: 'Developed modern corporate website showcasing import-export services, freight solutions, and regional trade corridor expertise with multilingual support',
         features: ['Multilingual Support', 'Service Showcase', 'Contact Forms', 'Responsive Design'],
         image: '/images/projects/kvaii.png',
         metrics: {
@@ -2337,8 +2337,8 @@ export const en = {
         type: 'E-Commerce Store',
         featured: true,
         title: 'ARTUCKY - Art-Inspired E-Commerce Platform',
-        problem: 'Turkish art brand needed a premium online store to sell art-themed products including bags, blankets, scarves, and home decor featuring famous paintings',
-        solution: 'Built a beautiful e-commerce platform showcasing art-inspired products from Van Gogh, Klimt, Monet, and more with seamless shopping experience and Turkish payment integration',
+        problem: 'art brand needed a premium online store to sell art-themed products including bags, blankets, scarves, and home decor featuring famous paintings',
+        solution: 'Built a beautiful e-commerce platform showcasing art-inspired products from Van Gogh, Klimt, Monet, and more with seamless shopping experience payment integration',
         features: ['Product Catalog', 'Shopping Cart', 'Secure Payments', 'Art Collections'],
         image: '/images/projects/artucky-ecommerce.png',
         metrics: {
@@ -2566,8 +2566,7 @@ export const en = {
         content: 'If you have any questions about this Privacy Policy or how we handle your information, please contact us:',
         items: [
           'Email: info@cloudtopia.net',
-          'Phone: +90 501 151 11 16',
-          'Service Areas: Worldwide',
+                    'Service Areas: Worldwide',
         ],
       },
     ],
@@ -2694,4 +2693,3 @@ export const en = {
     onThisPage: "On this page",
   },
 }
-

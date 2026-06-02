@@ -32,7 +32,7 @@ Phase 1 does not include:
 The existing app already has:
 
 - Next.js App Router with locale-aware routes under `app/(frontend)/[locale]`.
-- Localized dictionaries for English, Turkish, and Arabic.
+- Localized dictionaries for English and Arabic.
 - A sticky animated header with dark-section awareness.
 - Reusable homepage sections such as `CloudHero`, `ServicesGrid`, `WhyCloudTopia`, `HowWeWork`, `FAQ`, and `FinalCTA`.
 - Dedicated routes for key services, projects, locations, insights, about, contact, privacy, and terms.
@@ -176,7 +176,7 @@ All Phase 1 copy should be:
 - Clear and benefit-oriented.
 - Specific enough to feel mature, but not inflated.
 - Consistent with CloudTopia's values of transparency, modularity, and ownership.
-- Suitable for English, Arabic, and Turkish localization.
+- Suitable for English and Arabic localization.
 - Direct about pricing/process expectations where the site already supports that promise.
 
 Avoid claims that require proof if no source exists, such as awards, named enterprise clients, or exact performance results.
@@ -185,7 +185,7 @@ Avoid claims that require proof if no source exists, such as awards, named enter
 
 The implementation should preserve locale-aware routing and `localePath` usage. Arabic support must continue to respect RTL layout.
 
-Phase 1 should update English first if that is the existing source of truth, then mirror the new content structure into Arabic and Turkish dictionaries with natural localized messaging. If full translation would make the first implementation too large, the code should fall back safely without broken labels.
+Phase 1 should update English first if that is the existing source of truth, then mirror the new content structure into Arabic dictionaries with natural localized messaging. If full translation would make the first implementation too large, the code should fall back safely without broken labels.
 
 ## SEO And Conversion Foundations
 
@@ -225,5 +225,5 @@ Phase 1 is successful when:
 - The homepage communicates CloudTopia's full service breadth and core values without changing the brand style.
 - CTAs are clearer and repeated at natural decision points.
 - The footer provides useful secondary navigation across services, industries, locations, company, and legal pages.
-- Existing locale behavior remains intact for English, Arabic, and Turkish.
+- Existing locale behavior remains intact for English and Arabic.
 - The app builds successfully and the main homepage/header/footer flow is visually verified.

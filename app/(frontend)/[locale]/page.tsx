@@ -18,8 +18,9 @@ export default async function HomePage({
     const locale = rawLocale as Locale
     const { dictionary } = await getPageBundle(locale, '/')
     const t = dictionary as any
-    const heroTitle = t.home?.hero?.title ?? 'Elevate Your Business'
-    const heroDesc = t.home?.hero?.description ?? ''
+    const heroDesc = locale === 'ar'
+        ? 'كلاود توبيا تطور مواقع شركات، متاجر إلكترونية، تطبيقات ويب وجوال، أنظمة CRM وERP، ترحيل سحابي، نقل بيانات، وأتمتة بالذكاء الاصطناعي.'
+        : 'CloudTopia builds company websites, e-commerce stores, web and mobile apps, CRM and ERP systems, cloud migration, data migration, and AI automation.'
     const featured = ((t.projects?.projectCards || []) as ProjectCardSummary[]).filter(
         (p) => p.featured,
     )
@@ -27,7 +28,6 @@ export default async function HomePage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <h1>{heroTitle}</h1>
                 {heroDesc && <p>{heroDesc}</p>}
                 {featured.length > 0 && (
                     <ul>

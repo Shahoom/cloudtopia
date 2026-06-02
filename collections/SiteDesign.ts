@@ -154,7 +154,7 @@ export const SiteDesign: CollectionConfig = {
       type: 'group',
       fields: [
         { name: 'email', type: 'email', defaultValue: 'info@cloudtopia.net', required: true },
-        { name: 'phone', type: 'text', defaultValue: '+90-501-151-11-16', required: true },
+        { name: 'phone', type: 'text', defaultValue: '', required: false },
         { name: 'whatsapp', type: 'text', defaultValue: 'https://wa.me/905011511116', required: true },
       ],
     },

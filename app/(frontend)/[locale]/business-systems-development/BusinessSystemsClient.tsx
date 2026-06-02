@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'
+import { ServicePricingSection } from '@/components/services/ServicePricingSection'
 
 const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then(mod => mod.HeroParallax), { ssr: false })
 const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then(mod => mod.HeroModern), { ssr: false })
@@ -189,13 +190,15 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                 }}
                 showThemeToggle={false}
                 isRTL={locale === 'ar'}
-                modeLabels={locale === 'ar' ? { strategy: 'الاستراتيجية', execution: 'التنفيذ' } : locale === 'tr' ? { strategy: 'Strateji', execution: 'Uygulama' } : { strategy: 'Strategy', execution: 'Execution' }}
-                controlStackBadge={locale === 'ar' ? 'مخصص' : locale === 'tr' ? 'Özel' : 'Custom'}
-                protocolsBadge={locale === 'ar' ? '٣ مراحل' : locale === 'tr' ? '3 Aşama' : '3 Phases'}
-                labelAvailable={locale === 'ar' ? 'متاح الآن' : locale === 'tr' ? 'Mevcut' : 'Available Now'}
-                labelCustomSolutions={locale === 'ar' ? 'حلول مخصصة' : locale === 'tr' ? 'Özel Çözümler' : 'Custom Solutions'}
-                labelApproach={locale === 'ar' ? 'نهجنا' : locale === 'tr' ? 'Yaklaşımımız' : 'Our Approach'}
+                modeLabels={locale === 'ar' ? { strategy: 'الاستراتيجية', execution: 'التنفيذ' } : { strategy: 'Strategy', execution: 'Execution' }}
+                controlStackBadge={locale === 'ar' ? 'مخصص' : 'Custom'}
+                protocolsBadge={locale === 'ar' ? '٣ مراحل' : '3 Phases'}
+                labelAvailable={locale === 'ar' ? 'متاح الآن' : 'Available Now'}
+                labelCustomSolutions={locale === 'ar' ? 'حلول مخصصة' : 'Custom Solutions'}
+                labelApproach={locale === 'ar' ? 'نهجنا' : 'Our Approach'}
             />
+
+            <ServicePricingSection service="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             {/* Final CTA Section */}
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">

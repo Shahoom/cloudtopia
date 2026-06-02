@@ -50,7 +50,6 @@ export interface Media {
 export interface LocalizedText {
   en?: string | null
   ar?: string | null
-  tr?: string | null
 }
 
 export interface Author {
@@ -77,7 +76,7 @@ export interface BlogSEO {
 
 export interface BlogCategory {
   id: string | number
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   name: string
   slug: string
   description?: string | null
@@ -93,7 +92,7 @@ export interface BlogCategory {
 
 export interface BlogTag {
   id: string | number
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   name: string
   slug: string
   createdAt: string
@@ -102,7 +101,7 @@ export interface BlogTag {
 
 export interface BlogPost {
   id: string | number
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   title: string
   slug: string
   excerpt: string
@@ -138,7 +137,7 @@ export interface NewsletterSubscriber {
 export interface Project {
   id: string
   cmsKey: string
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   category: string
   type: string
   featured?: boolean | null
@@ -159,7 +158,6 @@ export interface ServiceFAQ {
   faqs?: {
     en?: { q: string; a: string; id?: string | null }[] | null
     ar?: { q: string; a: string; id?: string | null }[] | null
-    tr?: { q: string; a: string; id?: string | null }[] | null
   } | null
   createdAt: string
   updatedAt: string
@@ -167,7 +165,7 @@ export interface ServiceFAQ {
 
 export interface SiteContent {
   id: string | number
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   dictionary: Record<string, unknown>
   createdAt: string
   updatedAt: string
@@ -175,7 +173,7 @@ export interface SiteContent {
 
 export interface Page {
   id: string | number
-  locale: 'en' | 'ar' | 'tr'
+  locale: 'en' | 'ar'
   slug: string
   title: string
   template: 'home' | 'services' | 'service-detail' | 'projects' | 'about' | 'contact' | 'labs' | 'legal' | 'blog-coming-soon' | 'content'

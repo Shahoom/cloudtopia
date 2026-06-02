@@ -1,41 +1,49 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, MapPin, CreditCard, Building2, TrendingUp, Globe, CheckCircle2 } from 'lucide-react'
 import { getLocation } from '@/lib/seo/locations'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { getCountryRedirect } from '@/lib/seo/country-redirects'
 
 type PageProps = {
     params: Promise<{ locale: string; country: string }>
 }
 
 const SERVICE_LABELS: Record<string, Record<string, string>> = {
-    'website-design': { en: 'Websites & Landing Pages', ar: 'مواقع وصفحات هبوط', tr: 'Web Siteleri' },
-    'ecommerce-solutions': { en: 'E-commerce Stores', ar: 'متاجر إلكترونية', tr: 'E-ticaret Mağazaları' },
-    'restaurant-qr-menu': { en: 'QR Menu Systems', ar: 'أنظمة قائمة QR', tr: 'QR Menü Sistemleri' },
-    'business-systems-development': { en: 'Custom CRM & Business Systems', ar: 'أنظمة CRM وأعمال مخصصة', tr: 'Özel CRM & İş Sistemleri' },
-    'web-applications': { en: 'Web Applications & SaaS', ar: 'تطبيقات ويب وSaaS', tr: 'Web Uygulamaları & SaaS' },
-    'social-media-marketing': { en: 'Social Media Marketing', ar: 'تسويق التواصل الاجتماعي', tr: 'Sosyal Medya Pazarlama' },
-    'content-creation': { en: 'Bilingual Content Creation', ar: 'إنشاء محتوى ثنائي اللغة', tr: 'İki Dilli İçerik Üretimi' },
+    'website-design': { en: 'Websites & Landing Pages', ar: 'مواقع وصفحات هبوط' },
+    'ecommerce-solutions': { en: 'E-commerce Stores', ar: 'متاجر إلكترونية' },
+    'restaurant-qr-menu': { en: 'QR Menu Systems', ar: 'أنظمة قائمة QR' },
+    'business-systems-development': { en: 'Custom CRM & Business Systems', ar: 'أنظمة CRM وأعمال مخصصة' },
+    'web-applications': { en: 'Web Applications & SaaS', ar: 'تطبيقات ويب وSaaS' },
+    'social-media-marketing': { en: 'Social Media Marketing', ar: 'تسويق التواصل الاجتماعي' },
+    'content-creation': { en: 'Bilingual Content Creation', ar: 'إنشاء محتوى ثنائي اللغة' },
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', country } = await params
+    const duplicateRedirect = getCountryRedirect(locale === 'ar' ? `/ar/locations/${country}` : `/locations/${country}`)
+    if (duplicateRedirect) {
+        return {
+            title: 'Redirecting',
+            alternates: {
+                canonical: `https://cloudtopia.net${duplicateRedirect}`,
+            },
+        }
+    }
     const location = getLocation(country)
     if (!location) return { title: 'Location Not Found' }
 
-    const name = locale === 'ar' ? location.nameAr : locale === 'tr' ? location.nameTr : location.nameEn
+    const name = locale === 'ar' ? location.nameAr : location.nameEn
 
     const titles: Record<string, string> = {
         en: `Digital Agency in ${name} — Websites, E-commerce & Custom Systems`,
         ar: `وكالة رقمية في ${name} — مواقع، متاجر إلكترونية، وأنظمة مخصصة`,
-        tr: `${name} Dijital Ajans — Web Siteleri, E-Ticaret & Özel Sistemler`,
     }
     const descs: Record<string, string> = {
         en: `CloudTopia builds bilingual Arabic + English websites, e-commerce stores, and custom business systems for companies in ${location.country}. ${location.paymentMethods.slice(0, 3).join(', ')} ready. Fixed pricing.`,
         ar: `كلاود توبيا تبني مواقع ومتاجر إلكترونية وأنظمة أعمال مخصصة ثنائية اللغة عربي + إنجليزي للشركات في ${name}. ${location.paymentMethods.slice(0, 3).join('، ')} جاهزة. تسعير ثابت.`,
-        tr: `CloudTopia, ${name}\'deki şirketler için iki dilli Arapça + İngilizce web siteleri, e-ticaret mağazaları ve özel iş sistemleri inşa eder. ${location.paymentMethods.slice(0, 3).join(', ')} hazır. Sabit fiyatlandırma.`,
     }
 
     return {
@@ -54,7 +62,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             languages: {
                 'en': canonicalUrl('en', `/locations/${country}`),
                 'ar': canonicalUrl('ar', `/locations/${country}`),
-                'tr': canonicalUrl('tr', `/locations/${country}`),
                 'x-default': canonicalUrl('en', `/locations/${country}`),
             },
         },
@@ -63,11 +70,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function LocationPage({ params }: PageProps) {
     const { locale = 'en', country } = await params
+    const duplicateRedirect = getCountryRedirect(locale === 'ar' ? `/ar/locations/${country}` : `/locations/${country}`)
+    if (duplicateRedirect) permanentRedirect(duplicateRedirect)
+
     const location = getLocation(country)
     if (!location) notFound()
 
     const isRTL = locale === 'ar'
-    const name = locale === 'ar' ? location.nameAr : locale === 'tr' ? location.nameTr : location.nameEn
+    const name = locale === 'ar' ? location.nameAr : location.nameEn
 
     const L = {
         en: {
@@ -78,6 +88,8 @@ export default async function LocationPage({ params }: PageProps) {
             ctaStart: 'Start a project',
             ctaPricing: 'See pricing',
             marketTitle: `The ${location.country} market`,
+            marketNoteTitle: 'Local delivery focus',
+            keywordTitle: 'SEO themes',
             paymentsTitle: 'Local payment methods we integrate',
             servicesTitle: `What we build for ${location.country} businesses`,
             citiesTitle: `Cities we serve`,
@@ -99,6 +111,8 @@ export default async function LocationPage({ params }: PageProps) {
             ctaStart: 'ابدأ مشروعاً',
             ctaPricing: 'شاهد الأسعار',
             marketTitle: `سوق ${name}`,
+            marketNoteTitle: 'تركيز التنفيذ المحلي',
+            keywordTitle: 'محاور SEO',
             paymentsTitle: 'طرق الدفع المحلية التي ندمجها',
             servicesTitle: `ما نبنيه لأعمال ${name}`,
             citiesTitle: `المدن التي نخدمها`,
@@ -112,28 +126,9 @@ export default async function LocationPage({ params }: PageProps) {
             readyTitle: `جاهز للبناء في ${name}؟`,
             readyDesc: 'رد خلال يوم عمل واحد. مسوّدة نطاق أو مكالمة 20 دقيقة.',
         },
-        tr: {
-            badge: `${name}\'de hizmet veriyoruz`,
-            heroTitleStart: 'Dijital ajansınız',
-            heroTitleEnd: '\'de.',
-            heroDesc: `CloudTopia, ${name}\'deki şirketler için iki dilli Arapça + İngilizce web siteleri, e-ticaret mağazaları ve özel iş sistemleri inşa eder. Tam yerel ödeme entegrasyonu, KDV hazır ve ${name} müşterileri için optimize edilmiştir.`,
-            ctaStart: 'Projeye başla',
-            ctaPricing: 'Fiyatları gör',
-            marketTitle: `${name} pazarı`,
-            paymentsTitle: 'Entegre ettiğimiz yerel ödeme yöntemleri',
-            servicesTitle: `${name} işletmeleri için ne inşa ediyoruz`,
-            citiesTitle: `Hizmet verdiğimiz şehirler`,
-            faqTitle: `${name}\'deki ekiplerden sorular`,
-            faq1Q: `${name}\'de yerel bir ofisiniz var mı?`,
-            faq1A: `Körfez genelinde uzaktan çalışıyoruz. Ekip üyelerimiz saha keşfi, fotoğrafçılık ve eğitim için ${location.capital} ve büyük ${name} şehirlerine düzenli olarak gider. Çoğu proje ${location.language} anadil iletişimiyle tamamen uzaktan teslim edilir.`,
-            faq2Q: `${name} e-ticareti için hangi ödeme yöntemlerini entegre ediyorsunuz?`,
-            faq2A: `${name} e-ticareti için ${location.paymentMethods.join(', ')} entegre ediyoruz. KDV varsayılan olarak ${location.vatRate} yapılandırılır ve vergi faturaları iki dillidir Arapça + İngilizce.`,
-            faq3Q: `${name}\'de bir proje ne kadar sürer?`,
-            faq3A: `Küresel müşterilerimizle aynı zaman çizelgeleri: açılış sayfaları 1–2 hafta, iş siteleri 3–5 hafta, e-ticaret mağazaları 4–8 hafta, özel sistemler 6–16 hafta. Yerel nüanslar (Hicri tarihler, namaz vakti entegrasyonu, Arapça içerik) baştan inşa edilmiştir, sonradan eklenmez.`,
-            readyTitle: `${name}\'de inşa etmeye hazır mısın?`,
-            readyDesc: 'Bir iş günü içinde yanıt. Kapsam taslağı veya 20 dakikalık görüşme.',
-        },
-    }[locale as 'en' | 'ar' | 'tr'] || {} as any
+    }[locale as 'en' | 'ar'] || {} as any
+
+    const localizedMarketNote = location.marketNotes[locale as 'en' | 'ar'] || location.marketNotes.en
 
     const localBusinessSchema = {
         '@context': 'https://schema.org',
@@ -223,6 +218,10 @@ export default async function LocationPage({ params }: PageProps) {
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">{L.marketTitle}</h2>
                         <p className="text-base text-neutral-600 leading-relaxed mb-5">{location.marketInsight}</p>
+                        <div className="rounded-2xl bg-lavender border border-neutral-200 p-4 mb-5">
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500 mb-2">{L.marketNoteTitle}</h3>
+                            <p className="text-sm text-neutral-700 leading-relaxed">{localizedMarketNote}</p>
+                        </div>
                         <dl className="grid grid-cols-2 gap-4 pt-5 border-t border-neutral-200">
                             <div>
                                 <dt className="text-xs font-bold uppercase tracking-wider text-neutral-500">Capital</dt>
@@ -305,6 +304,19 @@ export default async function LocationPage({ params }: PageProps) {
                                 {city}
                             </span>
                         ))}
+                    </div>
+                    <div className="mt-10">
+                        <h3 className="text-xl md:text-2xl font-bold text-neutral-900 mb-5">{L.keywordTitle}</h3>
+                        <div className="flex flex-wrap gap-2">
+                            {location.seoKeywords.map((keyword) => (
+                                <span
+                                    key={keyword}
+                                    className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-sm font-semibold text-neutral-700"
+                                >
+                                    {keyword}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

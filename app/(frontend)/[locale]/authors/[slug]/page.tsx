@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const author = getAuthor(slug)
     if (!author) return { title: 'Author Not Found' }
 
-    const lang = (locale as 'en' | 'ar' | 'tr') ?? 'en'
+    const lang = (locale as 'en' | 'ar') ?? 'en'
     const bio = author.bio[lang] || author.bio.en
     const role = author.role[lang] || author.role.en
     const title = `${author.name} — ${role} | CloudTopia`
@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             languages: {
                 en: canonicalUrl('en', `/authors/${author.slug}`),
                 ar: canonicalUrl('ar', `/authors/${author.slug}`),
-                tr: canonicalUrl('tr', `/authors/${author.slug}`),
                 'x-default': canonicalUrl('en', `/authors/${author.slug}`),
             },
         },
@@ -59,7 +58,7 @@ export default async function AuthorPage({ params }: PageProps) {
     const author = getAuthor(slug)
     if (!author) notFound()
 
-    const lang = (locale as 'en' | 'ar' | 'tr') ?? 'en'
+    const lang = (locale as 'en' | 'ar') ?? 'en'
     const isRTL = locale === 'ar'
     const role = author.role[lang] || author.role.en
     const bio = author.bio[lang] || author.bio.en
@@ -67,7 +66,6 @@ export default async function AuthorPage({ params }: PageProps) {
     const labels = {
         en: { backToBlog: 'CloudTopia Insights', noPosts: 'Published author articles appear in the Insights hub.', knowsAbout: 'Topics' },
         ar: { backToBlog: 'رؤى كلاود توبيا', noPosts: 'تظهر مقالات الكاتب المنشورة في مركز الرؤى.', knowsAbout: 'المواضيع' },
-        tr: { backToBlog: 'CloudTopia İçgörüleri', noPosts: 'Yayınlanan yazar yazıları İçgörüler bölümünde görünür.', knowsAbout: 'Konular' },
     }[lang]
 
     const personSchema = {
@@ -92,8 +90,8 @@ export default async function AuthorPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : lang === 'tr' ? 'Ana Sayfa' : 'Home', item: canonicalUrl(locale, '/') },
-            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'الرؤى' : lang === 'tr' ? 'İçgörüler' : 'Insights', item: canonicalUrl(locale, '/insights') },
+            { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'الرؤى' : 'Insights', item: canonicalUrl(locale, '/insights') },
             { '@type': 'ListItem', position: 3, name: author.name, item: canonicalUrl(locale, `/authors/${author.slug}`) },
         ],
     }

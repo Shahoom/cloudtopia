@@ -17,6 +17,7 @@ import { localePath } from "@/lib/i18n/url"
 import { QrCode, Smartphone, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 
 // All images combined for mobile carousel - mix of restaurants and digital menus
 const ALL_IMAGES = [
@@ -74,15 +75,6 @@ const localContent = {
     cta: "ابدأ الآن",
     learnMore: "اعرف المزيد",
   },
-  tr: {
-    badge: "Restoran QR Menü Sistemleri",
-    title1: "Restoran",
-    titleHighlight: "Deneyiminizi",
-    title2: "Dijitalle Dönüştürün",
-    description: "Temassız dijital menülerle yemek deneyiminizi bir üst seviyeye taşıyın. QR kod çözümlerimiz restoranların maliyetlerini düşürmesine, menülerini anında güncellemesine ve müşterilerin sevdiği modern bir dokunuş sunmasına yardımcı olur.",
-    cta: "Hemen Başlayın",
-    learnMore: "Daha Fazla Bilgi",
-  }
 }
 
 const localMenuItems = {
@@ -126,26 +118,6 @@ const localMenuItems = {
       image: "/images/services/restaurant-qr-menu/8.avif"
     }
   ],
-  tr: [
-    {
-      num: "01",
-      name: "QR Menüler",
-      clipId: "clip-original",
-      image: "/images/services/restaurant-qr-menu/1.webp"
-    },
-    {
-      num: "02",
-      name: "Dijital Sipariş",
-      clipId: "clip-hexagons",
-      image: "/images/services/restaurant-qr-menu/5.avif"
-    },
-    {
-      num: "03",
-      name: "Akıllı Masalar",
-      clipId: "clip-pixels",
-      image: "/images/services/restaurant-qr-menu/8.avif"
-    }
-  ]
 }
 
 // Mobile Image Carousel Component
@@ -169,7 +141,7 @@ function MobileImageCarousel() {
         <motion.img
           key={currentIndex}
           src={ALL_IMAGES[currentIndex]}
-          alt={locale === 'ar' ? 'مطعم' : (locale === 'tr' ? 'Restoran' : 'Restaurant')}
+          alt={locale === 'ar' ? 'مطعم' : 'Restaurant'}
           className="absolute inset-0 w-full h-full object-cover rounded-2xl"
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -296,7 +268,7 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt={locale === 'ar' ? 'تصميم داخلي للمطعم' : (locale === 'tr' ? 'Restoran iç mekanı' : 'Restaurant interior')}
+                      alt={locale === 'ar' ? 'تصميم داخلي للمطعم' : 'Restaurant interior'}
                     />
                   ))}
                 </GalleryCol>
@@ -306,7 +278,7 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt={locale === 'ar' ? 'تجربة القائمة الرقمية' : (locale === 'tr' ? 'Dijital menü deneyimi' : 'Digital menu experience')}
+                      alt={locale === 'ar' ? 'تجربة القائمة الرقمية' : 'Digital menu experience'}
                     />
                   ))}
                 </GalleryCol>
@@ -316,7 +288,7 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                       key={index}
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
-                      alt={locale === 'ar' ? 'تقنية المطاعم' : (locale === 'tr' ? 'Restoran teknolojisi' : 'Restaurant technology')}
+                      alt={locale === 'ar' ? 'تقنية المطاعم' : 'Restaurant technology'}
                     />
                   ))}
                 </GalleryCol>
@@ -331,6 +303,8 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
 
       {/* Service Explanation Section - SEO Optimized */}
       <QRMenuServiceSection isRTL={isRTL} locale={locale} />
+
+      <ServicePricingSection service="restaurant-qr-menu" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>
   )
 }

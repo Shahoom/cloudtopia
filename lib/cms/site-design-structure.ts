@@ -45,7 +45,7 @@ export function buildStructuredSiteDesign(dictionary: AnyRecord = en) {
     },
     contact: {
       email: settings.contact?.email || 'info@cloudtopia.net',
-      phone: settings.contact?.phone || '+90-501-151-11-16',
+      phone: settings.contact?.phone || '',
       whatsapp: settings.contact?.whatsapp || 'https://wa.me/905011511116',
     },
     social: {

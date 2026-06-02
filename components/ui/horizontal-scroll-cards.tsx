@@ -125,7 +125,7 @@ export function HorizontalScrollCards({
     variant = 'light'
 }: HorizontalScrollCardsProps) {
     const { dir, locale } = useLanguage()
-    const defaultWhatsIncluded = locale === 'ar' ? 'ما يتضمنه:' : (locale === 'tr' ? 'Neler Dahil:' : "What's Included:")
+    const defaultWhatsIncluded = locale === 'ar' ? 'ما يتضمنه:' : (false ? 'Neler Dahil:' : "What's Included:")
     const effectiveWhatsIncluded = whatsIncludedLabel || defaultWhatsIncluded
     const scrollRef = useRef<HTMLDivElement>(null)
     const [constraints, setConstraints] = useState(0)
@@ -244,8 +244,7 @@ export function HorizontalScrollCards({
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                             {dir === 'rtl'
-                                ? 'اسحب للتنقل'
-                                : (locale === 'tr' ? 'Keşfetmek için kaydırın' : 'Drag to explore')}
+                                ? 'اسحب للاستكشاف' : 'Drag to explore'}
                         </span>
                         <div className="w-12 h-[1px] bg-slate-200" />
                     </div>

@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
   const name = String(body.name || '').trim()
   const source = String(body.source || 'insights').trim() || 'insights'
   const interest = String(body.interest || '').trim()
-  const locale = ['en', 'ar', 'tr'].includes(String(body.locale)) ? String(body.locale) : 'en'
+  const locale = ['en', 'ar'].includes(String(body.locale)) ? String(body.locale) : 'en'
   const consent = body.consent !== false
   const utmSource = String(body.utmSource || '').trim()
   const utmCampaign = String(body.utmCampaign || '').trim()

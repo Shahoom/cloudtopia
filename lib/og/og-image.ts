@@ -11,7 +11,7 @@ import path from 'path'
  *   public/og/home/en.jpg
  *   public/og/home/ar.jpg
  *   public/og/pricing/en.jpg
- *   public/og/services/tr.jpg
+ *   public/og/services/default.jpg
  *
  * Lookup chain (first match wins):
  *   1. /og/<page>/<locale>.jpg|.png            ← page-specific, locale-specific

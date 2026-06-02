@@ -57,7 +57,7 @@ const autoLocalizeProject: CollectionAfterChangeHook = async ({ doc, req }) => {
   }
 
   await Promise.all(
-    (['ar', 'tr'] as const).map(async (locale) => {
+    (['ar'] as const).map(async (locale) => {
       const translated = await translatePayload(source, locale)
       const targetId = `${locale}:${publicId}`
       const data = {
@@ -180,7 +180,6 @@ export const Projects: CollectionConfig = {
       options: [
         { label: 'English', value: 'en' },
         { label: 'Arabic', value: 'ar' },
-        { label: 'Turkish', value: 'tr' },
       ],
     },
     {

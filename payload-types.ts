@@ -206,7 +206,6 @@ export interface Author {
   role?: {
     en?: string | null;
     ar?: string | null;
-    tr?: string | null;
   };
   /**
    * Compact author card biography.
@@ -215,7 +214,6 @@ export interface Author {
   bio?: {
     en?: string | null;
     ar?: string | null;
-    tr?: string | null;
   };
   email?: string | null;
   /**
@@ -261,9 +259,9 @@ export interface Author {
 export interface BlogCategory {
   id: number;
   /**
-   * Use English for the main /insights route. Arabic and Turkish power localized archive pages.
+   * Use English for the main /insights route. Arabic power localized archive pages.
    */
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   name: string;
   /**
    * Auto-generated from the name when empty. Used in /insights/category/[slug].
@@ -345,7 +343,7 @@ export interface BlogTag {
   /**
    * Match the post locale that should use this tag.
    */
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   name: string;
   /**
    * Auto-generated from the name when empty. Used in /insights/tag/[slug].
@@ -401,9 +399,9 @@ export interface BlogSery {
 export interface BlogPost {
   id: number;
   /**
-   * English posts appear on /insights. Arabic and Turkish use prefixed locale routes.
+   * English posts appear on /insights. Arabic use prefixed locale routes.
    */
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   /**
    * Workflow: idea -> outline -> draft -> in review -> scheduled -> published.
    */
@@ -880,7 +878,7 @@ export interface NewsletterSubscriber {
    * Tracks that the subscriber consented to receive CloudTopia insights.
    */
   consent?: boolean | null;
-  locale?: ('en' | 'ar' | 'tr') | null;
+  locale?: ('en' | 'ar') | null;
   utmSource?: string | null;
   utmCampaign?: string | null;
   subscribedAt?: string | null;
@@ -893,7 +891,7 @@ export interface NewsletterSubscriber {
  * via the `definition` "projects".
  */
 export interface Project {
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   /**
    * Auto-generated in the format locale:project-id when left empty.
    */
@@ -952,13 +950,6 @@ export interface ServiceFaq {
           id?: string | null;
         }[]
       | null;
-    tr?:
-      | {
-          q: string;
-          a: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -969,7 +960,7 @@ export interface ServiceFaq {
  */
 export interface SiteContent {
   id: number;
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   /**
    * Full structured site dictionary for this locale. Seeded from the existing translation files.
    */
@@ -993,7 +984,7 @@ export interface SiteContent {
  */
 export interface Page {
   id: number;
-  locale: 'en' | 'ar' | 'tr';
+  locale: 'en' | 'ar';
   /**
    * Route path without locale, for example "/", "services", or "website-design".
    */
@@ -1304,7 +1295,6 @@ export interface AuthorsSelect<T extends boolean = true> {
     | {
         en?: T;
         ar?: T;
-        tr?: T;
       };
   shortBio?: T;
   bio?:
@@ -1312,7 +1302,6 @@ export interface AuthorsSelect<T extends boolean = true> {
     | {
         en?: T;
         ar?: T;
-        tr?: T;
       };
   email?: T;
   showProfile?: T;
@@ -1848,13 +1837,6 @@ export interface ServiceFaqsSelect<T extends boolean = true> {
               id?: T;
             };
         ar?:
-          | T
-          | {
-              q?: T;
-              a?: T;
-              id?: T;
-            };
-        tr?:
           | T
           | {
               q?: T;

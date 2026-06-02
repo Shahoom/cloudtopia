@@ -26,50 +26,35 @@ export default function WhyCloudTopia() {
     const content = {
         en: {
             badge: 'Why CloudTopia',
-            title: 'Built the way',
-            titleHighlight: 'you\'d want it built',
+            title: 'Why companies choose',
+            titleHighlight: 'CloudTopia',
             description:
-                'No forced bundles, no hidden scope changes, no vendor lock-in. A transparent way to work with a team that actually ships.',
+                'A practical software, cloud, and digital growth partner for companies that want clear scope, strong execution, and ownership after launch.',
             reasons: [
-                { title: 'Modular by design', description: 'Pick exactly what you need. Every service has its own packages and transparent pricing — no forced bundles.' },
-                { title: 'Multilingual, not translated', description: 'Arabic, English, and Turkish as first-class defaults. Real bilingual craftsmanship, not plugin translation.' },
-                { title: 'Fixed scope, fixed price', description: 'Written scope and fixed quote before design starts. What you sign is what you pay — no surprise invoices.' },
+                { title: 'Free consultation and demo preview', description: 'Before the project starts, we review your inquiry and prepare a free demo direction so the scope feels concrete.' },
+                { title: 'Software plus cloud thinking', description: 'Websites, apps, CRM, ERP, data migration, cloud hosting, and AI automation are planned as one operating system.' },
+                { title: 'Fixed scope, fixed price', description: 'Written scope and a clear quote before production starts. What you approve is what the team builds.' },
                 { title: 'You own everything', description: 'Code, design files, accounts, and domain — 100% yours at launch. No licensing traps or lock-in.' },
-                { title: 'Fast response, real humans', description: 'One business day reply from a real engineer or designer, not a sales funnel or chatbot.' },
-                { title: 'Built to last', description: 'Modern stack, accessible by default, and care plans that keep your project healthy for years — not just the launch week.' },
+                { title: 'Search-ready content structure', description: 'Pages are written and structured for Google, local SEO, answer engines, and customers who need quick clarity.' },
+                { title: 'Support after launch', description: 'Maintenance, monitoring, analytics, performance checks, and practical improvements keep the system useful after delivery.' },
             ],
         },
         ar: {
             badge: 'لماذا كلاود توبيا',
-            title: 'نعمل معك',
-            titleHighlight: 'بالطريقة التي تحبّها',
+            title: 'لماذا تختار الشركات',
+            titleHighlight: 'كلاود توبيا',
             description:
-                'من غير باقات تُفرض عليك، ولا تعديلات تظهر فجأة، ولا ارتباط ملزم معنا. نخطّ معك خطواتك بوضوح من البداية، وننفّذ ما اتفقنا عليه بالضبط.',
+                'شريك برمجيات وسحابة ونمو رقمي للشركات التي تريد نطاقاً واضحاً، تنفيذاً قوياً، وملكية كاملة بعد الإطلاق.',
             reasons: [
-                { title: 'خدمات تُفصّل لك', description: 'كل خدمة لها باقاتها وسعرها المعلن. تأخذ ما يخدم مشروعك فعلاً، وما تدفع مقابل ما لا تحتاجه.' },
-                { title: 'ثلاث لغات، لا ترجمة آلية', description: 'نكتب ونصمّم بالعربية والإنجليزية والتركية بروح كل لغة. محتوى مبني من الصفر، لا نسخة مترجمة على موقع أجنبي.' },
-                { title: 'سعر ثابت من البداية', description: 'تصلك وثيقة نطاق وسعر محدّد قبل بدء التصميم. ما توقّعت عليه هو ما تدفعه — لا فواتير إضافية مفاجئة لاحقاً.' },
+                { title: 'استشارة وديمو مجانيان', description: 'قبل بدء المشروع نراجع طلبك ونجهز اتجاه ديمو مجاني حتى ترى الفكرة والنطاق بشكل ملموس.' },
+                { title: 'برمجيات مع تفكير سحابي', description: 'المواقع، التطبيقات، CRM، ERP، نقل البيانات، الاستضافة السحابية، وأتمتة AI تُخطط كنظام واحد.' },
+                { title: 'سعر ونطاق واضحان', description: 'نطاق مكتوب وسعر محدد قبل الإنتاج. ما تعتمده هو ما يتم بناؤه، بلا مفاجآت في منتصف الطريق.' },
                 { title: 'كل شيء باسمك', description: 'الكود، ملفات التصميم، الحسابات، والنطاق — كلها تُسجَّل باسمك يوم الإطلاق. لا تراخيص مقيِّدة ولا احتكار.' },
-                { title: 'يردّ عليك إنسان', description: 'تراسلنا فيصلك ردّ من مهندس أو مصمّم فعلي خلال يوم عمل. بلا قمع مبيعات، وبلا ردود آلية جاهزة.' },
-                { title: 'مشروع يدوم', description: 'نبنيه بأدوات حديثة وبنية مستقرّة، وندعمك بعد الإطلاق بخطط متابعة تبقي مشروعك سليماً لسنوات قادمة.' },
+                { title: 'محتوى مناسب للبحث', description: 'نكتب ونرتب الصفحات لتكون واضحة في Google والبحث المحلي وإجابات الذكاء الاصطناعي والعملاء.' },
+                { title: 'دعم بعد الإطلاق', description: 'صيانة، مراقبة، تحليلات، تحسين أداء، وتطوير عملي يحافظ على قيمة النظام بعد التسليم.' },
             ],
         },
-        tr: {
-            badge: 'Neden CloudTopia',
-            title: 'İstediğin şekilde',
-            titleHighlight: 'inşa edilmiş',
-            description:
-                'Dayatılmış paketler yok, gizli kapsam değişiklikleri yok, tedarikçi kilidi yok. Gerçekten teslim eden bir ekiple şeffaf bir çalışma biçimi.',
-            reasons: [
-                { title: 'Modüler tasarım', description: 'İhtiyacın olanı tam olarak seç. Her hizmetin kendi paketleri ve şeffaf fiyatlandırması vardır — dayatma paket yok.' },
-                { title: 'Gerçekten çok dilli', description: 'Arapça, İngilizce ve Türkçe birinci sınıf varsayılanlar. Eklenti çevirisi değil, gerçek iki dilli zanaat.' },
-                { title: 'Sabit kapsam, sabit fiyat', description: 'Tasarıma başlamadan önce yazılı kapsam ve sabit teklif. İmzaladığın şey ödediğin şeydir — sürpriz fatura yok.' },
-                { title: 'Her şey senin', description: 'Kod, tasarım dosyaları, hesaplar ve alan adı — lansmanda %100 senin. Lisans tuzağı veya kilit yok.' },
-                { title: 'Hızlı yanıt, gerçek insanlar', description: 'Satış hunisi veya sohbet botu değil, gerçek bir mühendis veya tasarımcıdan bir iş günü içinde yanıt.' },
-                { title: 'Kalıcı inşa', description: 'Modern yığın, varsayılan olarak erişilebilir ve projenin sadece lansman haftasında değil, yıllarca sağlıklı kalmasını sağlayan bakım planları.' },
-            ],
-        },
-    }[locale as 'en' | 'ar' | 'tr'] || {} as any
+    }[locale as 'en' | 'ar'] || {} as any
 
     const ACCENTS = ['cyan', 'violet', 'emerald', 'amber', 'sky', 'rose']
 
@@ -141,7 +126,7 @@ export default function WhyCloudTopia() {
                                 className="relative list-none"
                             >
                                 <div
-                                    className="relative h-full rounded-2xl p-[1.5px] transition-shadow duration-500 hover:shadow-xl"
+                                    className="relative h-full rounded-lg p-[1.5px] transition-shadow duration-500 hover:shadow-xl"
                                     style={{
                                         background:
                                             'conic-gradient(from 180deg at 50% 50%, rgba(14,165,233,0.35), rgba(139,92,246,0.25), rgba(236,72,153,0.3), rgba(14,165,233,0.35))',
@@ -155,9 +140,9 @@ export default function WhyCloudTopia() {
                                         inactiveZone={0.05}
                                         borderWidth={2}
                                     />
-                                    <div className="relative h-full rounded-[calc(1rem-1px)] bg-white p-6 md:p-7">
+                                    <div className="relative h-full rounded-[7px] bg-white p-6 md:p-7">
                                         <div className="relative flex flex-col h-full">
-                                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center p-2.5 mb-5">
+                                            <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center p-2.5 mb-5">
                                                 <Image
                                                     src={iconSrc}
                                                     alt={reason.title}

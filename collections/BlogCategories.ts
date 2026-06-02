@@ -61,10 +61,9 @@ export const BlogCategories: CollectionConfig = {
               options: [
                 { label: 'English', value: 'en' },
                 { label: 'Arabic', value: 'ar' },
-                { label: 'Turkish', value: 'tr' },
               ],
               admin: {
-                description: 'Use English for the main /insights route. Arabic and Turkish power localized archive pages.',
+                description: 'Use English for the main /insights route. Arabic powers localized archive pages.',
               },
             },
             {

@@ -20,14 +20,7 @@ export default function PrivacyClient({ t: pageT }: { t?: any }) {
             <span className="font-bold text-primary-700">{p.title}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            {locale === 'tr' ? (
-              <>
-                Gizliliğiniz{' '}
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                  Önemlidir
-                </span>
-              </>
-            ) : locale === 'ar' ? (
+            {locale === 'ar' ? (
               <>
                 خصوصيتك{' '}
                 <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
@@ -44,7 +37,7 @@ export default function PrivacyClient({ t: pageT }: { t?: any }) {
             )}
           </h1>
           <p className="text-lg text-neutral-600 mb-4">
-            {p.lastUpdated} {new Date().toLocaleDateString(locale === 'en' ? 'en-US' : locale === 'ar' ? 'ar-EG' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {p.lastUpdated} {new Date().toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
           <p className="text-neutral-600">
             {p.description}

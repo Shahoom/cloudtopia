@@ -9,10 +9,7 @@ const autoLocalizeFAQs: CollectionAfterChangeHook = async ({ doc, req }) => {
   if (!isAutoTranslationConfigured()) return doc
   if (!Array.isArray(doc?.faqs?.en) || doc.faqs.en.length === 0) return doc
 
-  const [ar, tr] = await Promise.all([
-    translatePayload(doc.faqs.en, 'ar'),
-    translatePayload(doc.faqs.en, 'tr'),
-  ])
+  const ar = await translatePayload(doc.faqs.en, 'ar')
 
   await req.payload.update({
     collection: 'service-faqs',
@@ -21,7 +18,6 @@ const autoLocalizeFAQs: CollectionAfterChangeHook = async ({ doc, req }) => {
       faqs: {
         en: doc.faqs.en,
         ar,
-        tr,
       },
     },
     overrideAccess: true,
@@ -71,14 +67,6 @@ export const ServiceFAQs: CollectionConfig = {
         },
         {
           name: 'ar',
-          type: 'array',
-          fields: [
-            { name: 'q', type: 'text', required: true },
-            { name: 'a', type: 'textarea', required: true },
-          ],
-        },
-        {
-          name: 'tr',
           type: 'array',
           fields: [
             { name: 'q', type: 'text', required: true },

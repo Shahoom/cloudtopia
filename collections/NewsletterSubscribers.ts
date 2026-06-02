@@ -58,7 +58,6 @@ export const NewsletterSubscribers: CollectionConfig = {
       options: [
         { label: 'English', value: 'en' },
         { label: 'Arabic', value: 'ar' },
-        { label: 'Turkish', value: 'tr' },
       ],
     },
     { name: 'utmSource', type: 'text' },

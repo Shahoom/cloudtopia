@@ -65,27 +65,6 @@ const content: Record<string, ContentData> = {
             { icon: <Megaphone className="size-5" />, title: "الحملات", desc: "حملات تسويقية متكاملة" },
         ],
     },
-    tr: {
-        sectionLabel: "Yaratıcı Hizmetlerimiz",
-        title: "Markanızı Profesyonel İçerikle Yükseltin",
-        description: "Fikirden uygulamaya kadar, hedef kitlenizde yankı uyandıran kapsamlı içerik üretimi çözümleri sunuyoruz. Tasarımcılar, videograflar, metin yazarları ve stratejistlerden oluşan ekibimiz, sadece harika görünmekle kalmayıp aynı zamanda gerçek iş sonuçları sağlayan içerikler üretmek için birlikte çalışır.",
-        feature1Title: "Sosyal Medya İçeriği",
-        feature1Desc: "Instagram, TikTok, LinkedIn ve Facebook'ta etkileşimi en üst düzeye çıkarmak için tasarlanmış görseller, reels ve hikayeler. Hedef kitlenizin dilini konuşan platforma özel içerikler üretiyoruz.",
-        feature1Label: "Yüksek Etkileşim",
-        feature2Title: "Video Prodüksiyonu",
-        feature2Desc: "Tanıtım videolarından marka belgesellerine kadar, video prodüksiyon ekibimiz sinematik kalitede içerikler sunar. Senaryo ve çekimden kurgu ve post-prodüksiyona kadar her şeyi biz hallediyoruz.",
-        feature2Label: "Profesyonel Prodüksiyon",
-        qualityBadge: "4K Kalite",
-
-        services: [
-            { icon: <Palette className="size-5" />, title: "Marka Kimliği", desc: "Logolar, renkler ve görsel rehberler" },
-            { icon: <Video className="size-5" />, title: "Video İçeriği", desc: "Reels, reklamlar ve tanıtım videoları" },
-            { icon: <PenTool className="size-5" />, title: "Grafik Tasarım", desc: "Gönderiler, bannerlar ve infografikler" },
-            { icon: <FileText className="size-5" />, title: "Metin Yazarlığı", desc: "Açıklamalar, bloglar ve reklam metinleri" },
-            { icon: <Camera className="size-5" />, title: "Fotoğrafçılık", desc: "Ürün ve yaşam tarzı çekimleri" },
-            { icon: <Megaphone className="size-5" />, title: "Kampanyalar", desc: "Uçtan uca pazarlama kampanyaları" },
-        ],
-    },
 }
 
 export default function ContentBlock({ locale = 'en' }: ContentBlockProps) {

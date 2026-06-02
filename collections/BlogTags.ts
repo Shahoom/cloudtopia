@@ -55,7 +55,6 @@ export const BlogTags: CollectionConfig = {
       options: [
         { label: 'English', value: 'en' },
         { label: 'Arabic', value: 'ar' },
-        { label: 'Turkish', value: 'tr' },
       ],
       admin: {
         description: 'Match the post locale that should use this tag.',

@@ -105,7 +105,7 @@ export default function FAQ() {
                                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-900 transition-colors group"
                             >
                                 <MessageCircle className="w-4 h-4" />
-                                {t.home?.faq?.contactCTA || (locale === 'ar' ? 'لا تجد سؤالك؟ راسلنا' : locale === 'tr' ? 'Sorunu bulamadın mı? Bize yaz' : 'Don\'t see your question? Email us')}
+                                {t.home?.faq?.contactCTA || (locale === 'ar' ? 'لا تجد سؤالك؟ راسلنا' : "Don't see your question? Email us")}
                             </Link>
                         </motion.div>
                     </div>

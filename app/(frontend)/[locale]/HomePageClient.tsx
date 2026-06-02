@@ -16,10 +16,14 @@ import dynamic from 'next/dynamic'
 
 import CloudHero from '@/components/home/CloudHero'
 import ServicesGrid from '@/components/home/ServicesGrid'
+import IndustriesPreview from '@/components/home/IndustriesPreview'
+import EnterpriseProof from '@/components/home/EnterpriseProof'
 import WhyCloudTopia from '@/components/home/WhyCloudTopia'
 import HowWeWork from '@/components/home/HowWeWork'
 import FAQ from '@/components/home/FAQ'
 import FinalCTA from '@/components/home/FinalCTA'
+import InsightsTeaser from '@/components/home/InsightsTeaser'
+import Testimonials from '@/components/home/Testimonials'
 
 const StarsCanvas = dynamic(
     () => import('@/components/ui/stars-canvas').then((mod) => mod.StarsCanvas),
@@ -89,7 +93,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             {/* 1. Cloud Hero */}
             <CloudHero />
 
-            {/* 2. Philosophy */}
+            {/* 3. Philosophy */}
             <section className="relative py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden" data-header-theme="dark">
                 <StarsCanvas
                     transparent={false}
@@ -139,19 +143,28 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                 </div>
             </section>
 
-            {/* 3. Services Grid */}
+            {/* 4. Services Grid */}
             <ServicesGrid />
 
-            {/* 4. Why CloudTopia */}
+            {/* 5. Industries */}
+            <IndustriesPreview />
+
+            {/* 6. Enterprise Proof */}
+            <EnterpriseProof />
+
+            {/* 7. Why CloudTopia */}
             <WhyCloudTopia />
 
-            {/* 5. How We Work */}
+            {/* 8. Testimonials */}
+            <Testimonials />
+
+            {/* 9. How We Work */}
             <HowWeWork />
 
-            {/* 6. FAQ */}
+            {/* 9. FAQ */}
             <FAQ />
 
-            {/* 7. Featured Projects */}
+            {/* 10. Featured Projects */}
             <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a]" data-header-theme="dark">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
@@ -260,7 +273,10 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                 </div>
             </section>
 
-            {/* 8. Final CTA */}
+            {/* 10. Insights */}
+            <InsightsTeaser />
+
+            {/* 11. Final CTA */}
             <FinalCTA />
         </Fragment>
     )

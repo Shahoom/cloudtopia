@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getCountryRedirect } from '@/lib/seo/country-redirects'
 
-const locales = ['en', 'ar', 'tr'] as const
+const locales = ['en', 'ar'] as const
 type Locale = (typeof locales)[number]
 const defaultLocale: Locale = 'en'
 
@@ -9,7 +10,6 @@ const defaultLocale: Locale = 'en'
  *   /            → English (rewritten internally to /en)
  *   /projects    → English (rewritten internally to /en/projects)
  *   /ar/projects → Arabic (passes through to app/[locale]/projects with locale='ar')
- *   /tr/projects → Turkish
  *   /en/projects → 301 redirect to /projects  (migration of old indexed URLs)
  *
  * Invariants:
@@ -35,6 +35,7 @@ function isStaticPath(pathname: string): boolean {
 
 export function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname
+    const requestLocale = request.headers.get('x-locale')
     const host = request.headers.get('host') || ''
     const isWww = host.startsWith('www.')
     const apexHost = isWww ? host.replace(/^www\./, '') : host
@@ -55,21 +56,32 @@ export function proxy(request: NextRequest) {
             ? pathname.slice(0, -1)
             : pathname
 
-    const seg1 = cleanPath.split('/')[1] // '', 'en', 'ar', 'tr', or something else
+    const seg1 = cleanPath.split('/')[1] // '', 'en', 'ar', or something else
     const isEnPrefixed = seg1 === 'en'
-    const isNonEnLocale = seg1 === 'ar' || seg1 === 'tr'
+    const isNonEnLocale = seg1 === 'ar'
+    const countryRedirect = getCountryRedirect(cleanPath)
+
+    if (countryRedirect) {
+        const url = request.nextUrl.clone()
+        url.host = apexHost
+        url.pathname = countryRedirect
+        return NextResponse.redirect(url, { status: 301 })
+    }
 
     // (D) /en/... — migrate to clean URL. Single 301 combining www-strip,
     // trailing-slash-strip, and locale-strip into one hop.
     if (isEnPrefixed) {
+        if (requestLocale === defaultLocale) {
+            return NextResponse.next()
+        }
         const stripped = cleanPath === '/en' ? '/' : cleanPath.slice(3)
         const url = request.nextUrl.clone()
         url.host = apexHost
-        url.pathname = stripped
+        url.pathname = getCountryRedirect(stripped) || stripped
         return NextResponse.redirect(url, { status: 301 })
     }
 
-    // (E) /ar/... or /tr/... — pass through. Redirect first if we need
+    // (E) /ar/... — pass through. Redirect first if we need
     // to fix www or trailing slash; otherwise serve as-is with x-locale
     // header + NEXT_LOCALE cookie.
     if (isNonEnLocale) {

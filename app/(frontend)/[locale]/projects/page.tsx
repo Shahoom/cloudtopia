@@ -55,12 +55,61 @@ export default async function ProjectsPage({
             name: p.title,
         })),
     }
+    const projectsCollectionSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: locale === 'ar' ? 'دراسات حالة كلاود توبيا' : 'CloudTopia Case Studies',
+        description: locale === 'ar'
+            ? 'مشاريع كلاود توبيا تعرض المشكلة والحل والميزات والنتيجة لمواقع ومتاجر وأنظمة وتطبيقات ثنائية اللغة.'
+            : 'CloudTopia projects document the challenge, solution, shipped features, and outcome across bilingual websites, stores, systems, and applications.',
+        url: canonicalUrl(locale, '/projects'),
+        mainEntity: itemListSchema,
+        publisher: {
+            '@type': 'Organization',
+            name: 'CloudTopia',
+            url: 'https://cloudtopia.net',
+        },
+    }
+    const projectsFaqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+            {
+                '@type': 'Question',
+                name: locale === 'ar' ? 'كيف أستخدم صفحة المشاريع لاختيار خدمة؟' : 'How should I use the projects page to choose a service?',
+                acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: locale === 'ar'
+                        ? 'ابدأ بالبحث حسب القطاع أو الخدمة أو الميزة، ثم افتح دراسة حالة لمراجعة المشكلة والحل والميزات والنتيجة قبل التواصل.'
+                        : 'Search by industry, service, feature, or result, then open a case study to review the challenge, solution, features, and outcome before contacting CloudTopia.',
+                },
+            },
+            {
+                '@type': 'Question',
+                name: locale === 'ar' ? 'هل تعرض المشاريع نتائج قابلة للقياس؟' : 'Do the projects show measurable outcomes?',
+                acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: locale === 'ar'
+                        ? 'نعم. كل بطاقة مشروع تعرض مؤشر نتيجة مثل الأداء أو النمو أو التحسين بجانب المشكلة والحل.'
+                        : 'Yes. Each project card includes an outcome signal such as performance, growth, or improvement alongside the challenge and solution.',
+                },
+            },
+        ],
+    }
 
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsCollectionSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsFaqSchema) }}
             />
             <div className="sr-only" aria-hidden="false">
                 <h1>{heroTitle} {heroHighlight}</h1>

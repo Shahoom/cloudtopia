@@ -11,24 +11,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Bilingual Content Creation — Arabic + English',
         ar: 'إنشاء محتوى ثنائي اللغة — عربي وإنجليزي',
-        tr: 'İki Dilli İçerik Üretimi — Arapça + İngilizce',
     }
     const descs: Record<string, string> = {
         en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, SEO articles. Native-written, not machine translated. From $149/month.',
         ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، مقالات SEO. مكتوب بأقلام أصيلة. من 149$/شهرياً.',
-        tr: 'Orijinal Arapça + İngilizce içerik: bloglar, sosyal, video senaryoları, bültenler, SEO. Yerli yazım. $149/ay\'dan.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Content Creation — CloudTopia',
         ar: 'إنشاء المحتوى — كلاود توبيا',
-        tr: 'İçerik Üretimi — CloudTopia',
     }
     const ogDescs: Record<string, string> = {
         en: 'Bilingual content creation, copywriting, and SEO writing for Gulf brands.',
         ar: 'إنشاء محتوى ثنائي اللغة، كتابة إبداعية، وكتابة سيو لعلامات الخليج.',
-        tr: 'Körfez markaları için iki dilli içerik üretimi, metin yazarlığı ve SEO yazımı.',
     }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA', tr: 'tr_TR' }
+    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
     const title = titles[locale] || titles.en
     const desc = descs[locale] || descs.en
     const ogTitle = ogTitles[locale] || ogTitles.en
@@ -90,7 +86,6 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Qatar' },
                             { '@type': 'Country', name: 'Bahrain' },
                             { '@type': 'Country', name: 'Oman' },
-                            { '@type': 'Country', name: 'Türkiye' },
                         ],
                         offers: {
                             '@type': 'AggregateOffer',

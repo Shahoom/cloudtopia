@@ -133,6 +133,34 @@ Full details: https://cloudtopia.net/pricing
 
 ---
 
+## Mobile App Development
+
+### Mobile App Starter — $2,999 (one-time)
+- Mobile UX and app flow
+- Customer or staff app foundation
+- Backend connection
+- Push-ready structure
+- Free consultation and custom demo preview
+- Delivery: 4–7 weeks
+
+### Cross-Platform App — $7,999 (one-time) ⭐ Most Popular
+- iOS and Android app build
+- Admin dashboard
+- Secure authentication
+- Payment, booking, or CRM integration
+- Analytics event tracking
+- Launch handoff and documentation
+- Delivery: 8–12 weeks
+
+### App Ecosystem — Custom pricing
+- Customer app plus operations dashboard
+- API layer and cloud deployment
+- CRM, ERP, inventory, or support integrations
+- Ongoing support and optimization path
+- Contact: info@cloudtopia.net
+
+---
+
 ## Social Media Marketing (Monthly)
 
 ### Starter — $199/month

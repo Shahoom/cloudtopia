@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Locale, defaultLocale, localeDirection, locales } from './config'
 import { en } from './translations/en'
 import { ar } from './translations/ar'
-import { tr } from './translations/tr'
 import { useRouteAlternates } from './RouteAlternatesContext'
 import { localePath, stripLocalePrefix } from './url'
 
@@ -24,13 +23,12 @@ interface LanguageContextType {
 const translations: Record<Locale, Translations> = {
   en,
   ar,
-  tr: tr as unknown as Translations,
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 // Extract locale from pathname. Unprefixed paths are English-canonical, so
-// `/projects` → 'en', `/ar/projects` → 'ar', `/tr/projects` → 'tr'.
+// `/projects` → 'en', `/ar/projects` → 'ar'.
 function getLocaleFromPathname(pathname: string): Locale {
   const segments = pathname.split('/')
   const potentialLocale = segments[1]
@@ -145,8 +143,7 @@ export function LanguageProvider({
       newPath = explicitAlt
     } else {
       // 2) Fallback: strip the current locale prefix (if any) and re-apply
-      //    the target locale through localePath. Handles all three cases:
-      //    en→ar (no prefix → /ar/...), ar→en (/ar/... → /...), ar→tr.
+      //    the target locale through localePath. Handles en→ar and ar→en.
       const basePath = stripLocalePrefix(pathname)
       newPath = localePath(newLocale, basePath)
     }

@@ -5,7 +5,7 @@ import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
 
 function formatDate(value: string, locale: string) {
-  return new Intl.DateTimeFormat(locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en', {
+  return new Intl.DateTimeFormat(locale === 'ar' ? 'ar' : 'en', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',

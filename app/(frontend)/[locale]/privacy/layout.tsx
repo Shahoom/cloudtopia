@@ -11,13 +11,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const titles: Record<string, string> = {
         en: 'Privacy Policy - CloudTopia',
         ar: 'سياسة الخصوصية - كلاود توبيا',
-        tr: 'Gizlilik Politikası - CloudTopia',
     }
 
     const descriptions: Record<string, string> = {
         en: 'CloudTopia\'s Privacy Policy. Learn how we collect, use, and protect your personal information.',
         ar: 'سياسة الخصوصية لكلاود توبيا. تعرف على كيفية جمع معلوماتك الشخصية واستخدامها وحمايتها.',
-        tr: 'CloudTopia\'nın Gizlilik Politikası. Kişisel bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu öğrenin.',
     }
 
     return {

@@ -4,7 +4,7 @@ import type { BlogPost } from '@/lib/blog/data'
 import { Breadcrumbs } from './Breadcrumbs'
 
 function formatDate(value: string, locale: string) {
-  return new Intl.DateTimeFormat(locale === 'ar' ? 'ar' : locale === 'tr' ? 'tr' : 'en', {
+  return new Intl.DateTimeFormat(locale === 'ar' ? 'ar' : 'en', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',

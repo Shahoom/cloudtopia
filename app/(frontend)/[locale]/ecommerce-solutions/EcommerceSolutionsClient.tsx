@@ -4,6 +4,7 @@ import ContainerScroll from "@/components/ui/container-scroll"
 import InfiniteGallery from "@/components/ui/3d-gallery"
 import EcommerceServiceSection from "@/components/ui/ecommerce-service-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
+import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 
 const content = {
   en: {
@@ -70,38 +71,6 @@ const content = {
       hint: "استخدم عجلة الماوس أو مفاتيح الأسهم أو اللمس للتنقل"
     }
   },
-  tr: {
-    sections: [
-      {
-        subtitle: "Online Mağazanızı Başlatın",
-        title: "E-Ticaret Çözümleriyle",
-        highlight: "Satışlarınızı Artırın",
-        image: "/images/services/ecommerce-solutions/1.jpg",
-        alt: "Ürün listeleri ve alışveriş sepeti içeren modern e-ticaret web sitesi arayüzü"
-      },
-      {
-        subtitle: "Kusursuz Alışveriş Deneyimi",
-        title: "Ziyaretçileri",
-        highlight: "Sadık Müşterilere Dönüştürün",
-        image: "/images/services/ecommerce-solutions/2.webp",
-        alt: "E-ticaret ödeme süreci ve ödeme ağ geçidi arayüzü"
-      },
-      {
-        subtitle: "Ölçeklenebilir ve Güvenli Platform",
-        title: "İşinizle Birlikte",
-        highlight: "Büyümek İçin İnşa Edildi",
-        image: "/images/services/ecommerce-solutions/3.avif",
-        alt: "Satış performansını ve büyüme metriklerini gösteren e-ticaret analitik panosu"
-      }
-    ],
-    gallery: {
-      badge: "Ürün Sergileme",
-      title: "Etkileyici Ürün Sunumları",
-      highlight: "Kendini Satan Ürünler",
-      description: "Müşterilerinizi sürükleyici 3D ürün galerileri, yüksek kaliteli görseller ve etkileşimi ile dönüşümleri artıran interaktif alışveriş deneyimleriyle büyüleyin.",
-      hint: "Gezinmek için fare tekerleğini, ok tuşlarını veya dokunmatik ekranı kullanın"
-    }
-  }
 }
 
 // E-commerce product images for the gallery
@@ -231,6 +200,8 @@ export default function EcommerceSolutionsClient({ t: pageT }: { t?: any }) {
 
         {/* Service Explanation Section */}
         <EcommerceServiceSection isRTL={isRTL} locale={locale} t={p} />
+
+        <ServicePricingSection service="ecommerce-solutions" locale={locale === 'ar' ? 'ar' : 'en'} />
       </div>
     </main>
   )

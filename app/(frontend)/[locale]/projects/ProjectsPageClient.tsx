@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring 
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
+import { serviceCategories } from '@/lib/seo/services'
 import {
   Sparkles,
   Globe,
@@ -23,7 +24,8 @@ import {
   Rocket,
   X,
   Lightbulb,
-  Wrench
+  Wrench,
+  Search
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -521,6 +523,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
   const t = pageT || contextT
   const router = useRouter()
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>('all')
+  const [searchQuery, setSearchQuery] = useState('')
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -568,12 +571,68 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
   }
 
   const projects = t.projects.projectCards as Project[]
-
-  const filteredProjects = activeFilter === 'all'
-    ? projects
-    : projects.filter(p => p.category === activeFilter)
-
   const featuredProjects = projects.filter(p => p.featured)
+  const projectCategoryLabels = {
+    digitalPresence: t.projects.filters.digitalPresence,
+    businessSystems: t.projects.filters.businessSystems,
+    webApps: t.projects.filters.webApps,
+    labs: t.projects.filters.labs,
+  } as Record<string, string>
+  const enterpriseProof = locale === 'ar'
+    ? {
+      eyebrow: 'دليل تنفيذ مؤسسي',
+      title: 'دراسات حالة تشرح المشكلة، الحل، والنتيجة قبل أن تتواصل معنا.',
+      answer: 'صفحة مشاريع كلاود توبيا تعرض كيف نحول المواقع والمتاجر والأنظمة والتطبيقات إلى أصول قابلة للقياس: مشكلة واضحة، حل قابل للتسليم، ميزات مشحونة، ومؤشر نتيجة لكل مشروع.',
+      stats: [
+        { value: projects.length, label: 'مشروعاً قابلاً للبحث' },
+        { value: featuredProjects.length, label: 'دراسات حالة مميزة' },
+        { value: serviceCategories.reduce((total, category) => total + category.services.length, 0), label: 'خدمة مرتبطة بالنطاق' },
+      ],
+      proofTitle: 'كيف تقرأ الدليل',
+      proofPoints: [
+        'ابدأ بالمشاريع المميزة لمعرفة شكل النتيجة النهائية.',
+        'استخدم البحث للعثور على قطاع أو خدمة أو ميزة مشابهة لمشروعك.',
+        'افتح دراسة الحالة لمراجعة التحدي والحل والميزات والنتيجة.',
+      ],
+      categoriesTitle: 'تغطية المشاريع',
+      cta: 'حوّل مشروعك إلى دراسة حالة',
+      ctaSecondary: 'قارن الخدمات',
+    }
+    : {
+      eyebrow: 'Enterprise delivery evidence',
+      title: 'Case studies that explain the problem, solution, and outcome before you contact us.',
+      answer: 'CloudTopia project pages show how websites, stores, systems, and applications become measurable business assets: a clear challenge, shipped solution, delivered features, and outcome signal for every project.',
+      stats: [
+        { value: projects.length, label: 'searchable projects' },
+        { value: featuredProjects.length, label: 'featured case studies' },
+        { value: serviceCategories.reduce((total, category) => total + category.services.length, 0), label: 'scoped service paths' },
+      ],
+      proofTitle: 'How to read the evidence',
+      proofPoints: [
+        'Start with featured projects to understand the finished product quality.',
+        'Search by industry, service, feature, or result to find a similar build.',
+        'Open a case study to review the challenge, solution, shipped features, and outcome.',
+      ],
+      categoriesTitle: 'Project coverage',
+      cta: 'Turn your project into the next case study',
+      ctaSecondary: 'Compare services',
+    }
+
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase()
+  const filteredProjects = projects.filter((project) => {
+    const matchesCategory = activeFilter === 'all' || project.category === activeFilter
+    const projectSearchText = [
+      project.title,
+      project.type,
+      project.problem,
+      project.solution,
+      project.metrics?.label,
+      project.metrics?.value,
+      ...(project.features || []),
+    ].join(' ').toLowerCase()
+
+    return matchesCategory && (!normalizedSearchQuery || projectSearchText.includes(normalizedSearchQuery))
+  })
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -711,6 +770,99 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
 
       </section>
 
+      {/* ENTERPRISE PROOF SECTION */}
+      <section className="relative overflow-hidden bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_30%,#000_35%,transparent_100%)]" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-200">
+              <Award className="h-4 w-4" />
+              {enterpriseProof.eyebrow}
+            </div>
+            <h2 className="max-w-4xl text-3xl font-black tracking-tight md:text-5xl">
+              {enterpriseProof.title}
+            </h2>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/70">
+              {enterpriseProof.answer}
+            </p>
+
+            <div className="mt-9 grid gap-3 sm:grid-cols-3">
+              {enterpriseProof.stats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                  <div className="text-3xl font-black text-cyan-200">{stat.value}</div>
+                  <div className="mt-1 text-sm font-semibold text-white/60">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => router.push(localePath(locale, '/contact'))}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-300 px-6 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-200"
+              >
+                {enterpriseProof.cta}
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push(localePath(locale, '/services'))}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 px-6 py-4 text-sm font-black text-white transition hover:border-white/35 hover:bg-white/10"
+              >
+                {enterpriseProof.ctaSecondary}
+              </button>
+            </div>
+          </div>
+
+          <div className="grid gap-5">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-cyan-200">
+                  <Target className="h-5 w-5" />
+                </div>
+                <h3 className="text-xl font-black">{enterpriseProof.proofTitle}</h3>
+              </div>
+              <div className="space-y-3">
+                {enterpriseProof.proofPoints.map((point) => (
+                  <div key={point} className="flex gap-3 rounded-2xl border border-white/10 bg-neutral-900/60 p-4">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-200" />
+                    <p className="text-sm leading-relaxed text-white/70">{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <h3 className="mb-4 text-xl font-black">{enterpriseProof.categoriesTitle}</h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {Object.entries(projectCategoryLabels).map(([category, label]) => {
+                  const count = projects.filter((project) => project.category === category).length
+                  return (
+                    <button
+                      type="button"
+                      key={category}
+                      onClick={() => {
+                        setActiveFilter(category as ProjectCategory)
+                        document.getElementById('all-projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      }}
+                      className="group flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+                    >
+                      <span className="flex items-center gap-3 text-sm font-bold text-white/80">
+                        {getCategoryIcon(category)}
+                        {label}
+                      </span>
+                      <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-black text-cyan-200 group-hover:bg-cyan-300 group-hover:text-neutral-950">
+                        {count}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FEATURED PROJECTS - Apple-like reveal */}
       <section id="projects" className="pt-16 pb-32 relative overflow-hidden bg-gradient-to-b from-lavender via-lavender to-lavender">
         {/* Animated grid background */}
@@ -807,7 +959,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
       </section>
 
       {/* ALL PROJECTS WITH FILTERS - Smooth Apple-like transitions */}
-      <section className="py-32 bg-lavender relative overflow-hidden">
+      <section id="all-projects" className="py-32 bg-lavender relative overflow-hidden">
         {/* Subtle animated gradient */}
         <motion.div
           style={{ y: gradientParallax }}
@@ -821,32 +973,48 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
             viewport={{ once: true, margin: "-50px" }}
-            className="flex flex-wrap justify-center gap-3 mb-16"
+            className="mb-16"
           >
-            {(['all', 'digitalPresence', 'businessSystems', 'webApps', 'labs'] as ProjectCategory[]).map((filter, i) => (
-              <motion.button
-                key={filter}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.05, ease: [0.25, 0.1, 0, 1] }}
-                viewport={{ once: true }}
-                onClick={() => setActiveFilter(filter)}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className={`
-                  relative px-6 py-3 rounded-full font-semibold transition-all duration-500
-                  ${activeFilter === filter
-                    ? 'bg-neutral-900 text-white shadow-xl shadow-neutral-900/20'
-                    : 'bg-lavender text-neutral-600 hover:bg-lavender shadow-md hover:shadow-lg'
-                  }
-                `}
-              >
-                <span className="flex items-center gap-2">
-                  {filter !== 'all' && getCategoryIcon(filter)}
-                  {t.projects.filters[filter]}
-                </span>
-              </motion.button>
-            ))}
+            <div className="mx-auto mb-8 max-w-xl">
+              <label htmlFor="project-search" className="sr-only">Search projects</label>
+              <div className="relative">
+                <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+                <input
+                  id="project-search"
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder={locale === 'ar' ? 'ابحث حسب الخدمة أو القطاع أو الميزة أو النتيجة' : 'Search by service, industry, feature, or result'}
+                  className="w-full rounded-2xl border border-neutral-200 bg-white px-14 py-4 text-neutral-900 shadow-lg outline-none transition-all focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10"
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3">
+              {(['all', 'digitalPresence', 'businessSystems', 'webApps', 'labs'] as ProjectCategory[]).map((filter, i) => (
+                <motion.button
+                  key={filter}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.05, ease: [0.25, 0.1, 0, 1] }}
+                  viewport={{ once: true }}
+                  onClick={() => setActiveFilter(filter)}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`
+                    relative px-6 py-3 rounded-full font-semibold transition-all duration-500
+                    ${activeFilter === filter
+                      ? 'bg-neutral-900 text-white shadow-xl shadow-neutral-900/20'
+                      : 'bg-lavender text-neutral-600 hover:bg-lavender shadow-md hover:shadow-lg'
+                    }
+                  `}
+                >
+                  <span className="flex items-center gap-2">
+                    {filter !== 'all' && getCategoryIcon(filter)}
+                    {t.projects.filters[filter]}
+                  </span>
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
 
           {/* Projects Grid - Smooth layout animations */}
@@ -911,6 +1079,12 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
               ))}
             </AnimatePresence>
           </motion.div>
+          {filteredProjects.length === 0 && (
+            <div className="mx-auto mt-12 max-w-xl rounded-3xl border border-neutral-200 bg-white p-8 text-center shadow-lg">
+              <h3 className="text-2xl font-bold text-neutral-900">No projects found</h3>
+              <p className="mt-3 text-neutral-600">Try another search term or switch the category filter.</p>
+            </div>
+          )}
         </div>
       </section>
 

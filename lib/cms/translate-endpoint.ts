@@ -22,7 +22,7 @@ function writeDebugLog(message: string, data?: any) {
 /**
  * Handles the POST /api/translate custom endpoint.
  * Reads the English source document, translates it, and
- * creates/updates Arabic + Turkish locale variants.
+ * creates/updates Arabic locale variants.
  * Does NOT modify the English document.
  */
 export async function handleTranslateEndpoint(req: PayloadRequest): Promise<Response> {
@@ -118,7 +118,7 @@ export async function handleTranslateEndpoint(req: PayloadRequest): Promise<Resp
     writeDebugLog('Document found, starting translation', { title: doc.title || doc.id })
     await handler(req.payload, doc, req)
     writeDebugLog('Translation completed successfully')
-    return Response.json({ success: true, message: 'Translated to Arabic & Turkish.' })
+    return Response.json({ success: true, message: 'Translated to Arabic.' })
   } catch (error: any) {
     writeDebugLog('Error in handler execution', { error: error?.message || String(error) })
     console.error('[translate] Error:', error?.message || error)
@@ -160,7 +160,7 @@ async function translateProject(payload: any, doc: any, req: PayloadRequest) {
   }
 
   await Promise.all(
-    (['ar', 'tr'] as const).map(async (locale) => {
+    (['ar'] as const).map(async (locale) => {
       const translated = await translatePayload(source, locale)
       const targetId = `${locale}:${publicId}`
       const data = {
@@ -226,11 +226,11 @@ async function translatePage(payload: any, doc: any, req: PayloadRequest) {
   if (doc.sections) source.sections = doc.sections
 
   await Promise.all(
-    (['ar', 'tr'] as const).map(async (locale) => {
+    (['ar'] as const).map(async (locale) => {
       const translated = await translatePayload(source, locale)
       const targetSlug = doc.slug
       const targetPublicPath = doc.publicPath
-        ? doc.publicPath.replace(/^\/(en|ar|tr)\//, `/${locale}/`)
+        ? doc.publicPath.replace(/^\/(en|ar)\//, `/${locale}/`)
         : undefined
 
       const data: Record<string, unknown> = {
@@ -288,16 +288,13 @@ async function translatePage(payload: any, doc: any, req: PayloadRequest) {
 async function translateServiceFAQs(payload: any, doc: any, req: PayloadRequest) {
   if (!Array.isArray(doc?.faqs?.en) || doc.faqs.en.length === 0) return
 
-  const [ar, tr] = await Promise.all([
-    translatePayload(doc.faqs.en, 'ar'),
-    translatePayload(doc.faqs.en, 'tr'),
-  ])
+  const ar = await translatePayload(doc.faqs.en, 'ar')
 
   await payload.update({
     collection: 'service-faqs',
     id: doc.id,
     data: {
-      faqs: { en: doc.faqs.en, ar, tr },
+      faqs: { en: doc.faqs.en, ar },
     },
     overrideAccess: true,
     req,
@@ -316,10 +313,7 @@ async function translateAuthor(payload: any, doc: any, req: PayloadRequest) {
   if (roleEn) source.role = roleEn
   if (bioEn) source.bio = bioEn
 
-  const [ar, tr] = await Promise.all([
-    translatePayload(source, 'ar'),
-    translatePayload(source, 'tr'),
-  ])
+  const ar = await translatePayload(source, 'ar')
 
   await payload.update({
     collection: 'authors',
@@ -328,12 +322,10 @@ async function translateAuthor(payload: any, doc: any, req: PayloadRequest) {
       role: {
         en: roleEn || '',
         ar: (ar as any).role || doc?.role?.ar || '',
-        tr: (tr as any).role || doc?.role?.tr || '',
       },
       bio: {
         en: bioEn || '',
         ar: (ar as any).bio || doc?.bio?.ar || '',
-        tr: (tr as any).bio || doc?.bio?.tr || '',
       },
     },
     overrideAccess: true,

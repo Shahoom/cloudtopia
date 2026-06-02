@@ -89,7 +89,7 @@ export function TranslateButton() {
             ? 'Translating…'
             : status === 'success'
               ? 'Done!'
-              : 'Translate to Arabic & Turkish'}
+              : 'Translate to Arabic'}
         </span>
       </button>
       {message && (

@@ -3,9 +3,12 @@ import fs from 'fs'
 import path from 'path'
 import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
-import { locationSlugs } from '@/lib/seo/locations'
+import { industrySlugs } from '@/lib/seo/industries'
+import { serviceDetailSlugs } from '@/lib/seo/services'
+import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { hasPageOgImage } from '@/lib/og/og-image'
 import { BASE_URL, canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
+import { locales } from '@/lib/i18n/config'
 import { getPublishedCMSPages, pageToSitemapEntry } from '@/lib/cms/content'
 import { getBlogSitemapEntries } from '@/lib/blog/data'
 
@@ -13,10 +16,33 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     const pages = await getPublishedCMSPages()
     if (pages.length === 0) return buildSitemapEntries()
 
-    const entries = pages.filter((page: any) => page.slug !== 'blog').map(pageToSitemapEntry)
+    const entries = pages.filter((page: any) => !['blog', 'locations'].includes(page.slug)).map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
-    const locales = ['en', 'ar', 'tr']
     const lastModified = new Date()
+    const staticNonCmsRoutes: Array<{
+        path: string
+        priority: number
+        changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
+    }> = [
+        { path: '/process', priority: 0.76, changeFrequency: 'monthly' },
+        { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
+        { path: '/markets', priority: 0.86, changeFrequency: 'monthly' },
+    ]
+
+    staticNonCmsRoutes.forEach((route) => {
+        const languages = buildHreflangMap(route.path)
+        locales.forEach((loc) => {
+            const url = canonicalUrl(loc, route.path)
+            if (entries.some((entry) => entry.url === url)) return
+            entries.push({
+                url,
+                lastModified,
+                changeFrequency: route.changeFrequency,
+                priority: route.priority,
+                alternates: { languages },
+            })
+        })
+    })
 
     projectIds.forEach((projectId) => {
         const languages = buildHreflangMap(`/projects/${projectId}`)
@@ -33,11 +59,59 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
 
     entries.push(...(await getBlogSitemapEntries()))
 
+    const dynamicMtime = new Date()
+    countryLandingPages.forEach((country) => {
+        const languages = {
+            [country.hreflangEnglish]: `${BASE_URL}${country.englishUrl}`,
+            [country.hreflangArabic]: `${BASE_URL}${country.arabicUrl}`,
+            'x-default': `${BASE_URL}${country.englishUrl}`,
+        }
+        entries.push({
+            url: `${BASE_URL}${country.englishUrl}`,
+            lastModified: dynamicMtime,
+            changeFrequency: 'monthly',
+            priority: 0.88,
+            alternates: { languages },
+        })
+        entries.push({
+            url: `${BASE_URL}${country.arabicUrl}`,
+            lastModified: dynamicMtime,
+            changeFrequency: 'monthly',
+            priority: 0.88,
+            alternates: { languages },
+        })
+    })
+
+    industrySlugs.forEach((industry) => {
+        const languages = buildHreflangMap(`/industries/${industry}`)
+        locales.forEach((loc) => {
+            entries.push({
+                url: canonicalUrl(loc, `/industries/${industry}`),
+                lastModified: dynamicMtime,
+                changeFrequency: 'monthly',
+                priority: 0.78,
+                alternates: { languages },
+            })
+        })
+    })
+
+    serviceDetailSlugs.forEach((service) => {
+        const languages = buildHreflangMap(`/services/${service}`)
+        locales.forEach((loc) => {
+            entries.push({
+                url: canonicalUrl(loc, `/services/${service}`),
+                lastModified: dynamicMtime,
+                changeFrequency: 'monthly',
+                priority: 0.76,
+                alternates: { languages },
+            })
+        })
+    })
+
     return entries
 }
 
 export function buildSitemapEntries(): MetadataRoute.Sitemap {
-    const locales = ['en', 'ar', 'tr']
     const routes: Array<{
         path: string
         priority: number
@@ -46,9 +120,13 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
     }> = [
         { path: '/', priority: 1.0, changeFrequency: 'weekly', ogPage: 'home' },
         { path: '/services', priority: 0.9, changeFrequency: 'monthly', ogPage: 'services' },
+        { path: '/industries', priority: 0.86, changeFrequency: 'monthly' },
+        { path: '/markets', priority: 0.86, changeFrequency: 'monthly' },
         { path: '/pricing', priority: 0.9, changeFrequency: 'weekly', ogPage: 'pricing' },
         { path: '/projects', priority: 0.8, changeFrequency: 'weekly', ogPage: 'projects' },
         { path: '/insights', priority: 0.85, changeFrequency: 'weekly' },
+        { path: '/process', priority: 0.76, changeFrequency: 'monthly' },
+        { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
         { path: '/about', priority: 0.7, changeFrequency: 'monthly', ogPage: 'about' },
         { path: '/contact', priority: 0.7, changeFrequency: 'yearly', ogPage: 'contact' },
         { path: '/labs', priority: 0.7, changeFrequency: 'monthly', ogPage: 'labs' },
@@ -160,22 +238,73 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         })
     })
 
-    const locationsDataMtime = (() => {
+    const countryLandingDataMtime = (() => {
         try {
-            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), 'lib/seo/locations.ts')
+            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), 'lib/seo/country-landing-pages.ts')
             if (fs.existsSync(p)) return fs.statSync(p).mtime
         } catch { /* ignore */ }
         return new Date()
     })()
 
-    locationSlugs.forEach((country) => {
-        const languages = buildHreflangMap(`/locations/${country}`)
+    countryLandingPages.forEach((country) => {
+        const languages = {
+            [country.hreflangEnglish]: `${BASE_URL}${country.englishUrl}`,
+            [country.hreflangArabic]: `${BASE_URL}${country.arabicUrl}`,
+            'x-default': `${BASE_URL}${country.englishUrl}`,
+        }
+        sitemapEntries.push({
+            url: `${BASE_URL}${country.englishUrl}`,
+            lastModified: countryLandingDataMtime,
+            changeFrequency: 'monthly',
+            priority: 0.88,
+            alternates: { languages },
+        })
+        sitemapEntries.push({
+            url: `${BASE_URL}${country.arabicUrl}`,
+            lastModified: countryLandingDataMtime,
+            changeFrequency: 'monthly',
+            priority: 0.88,
+            alternates: { languages },
+        })
+    })
+
+    const industriesDataMtime = (() => {
+        try {
+            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), 'lib/seo/industries.ts')
+            if (fs.existsSync(p)) return fs.statSync(p).mtime
+        } catch { /* ignore */ }
+        return new Date()
+    })()
+
+    industrySlugs.forEach((industry) => {
+        const languages = buildHreflangMap(`/industries/${industry}`)
         locales.forEach((loc) => {
             sitemapEntries.push({
-                url: canonicalUrl(loc, `/locations/${country}`),
-                lastModified: locationsDataMtime,
+                url: canonicalUrl(loc, `/industries/${industry}`),
+                lastModified: industriesDataMtime,
                 changeFrequency: 'monthly',
-                priority: 0.85,
+                priority: 0.78,
+                alternates: { languages },
+            })
+        })
+    })
+
+    const servicesDataMtime = (() => {
+        try {
+            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), 'lib/seo/services.ts')
+            if (fs.existsSync(p)) return fs.statSync(p).mtime
+        } catch { /* ignore */ }
+        return new Date()
+    })()
+
+    serviceDetailSlugs.forEach((service) => {
+        const languages = buildHreflangMap(`/services/${service}`)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: canonicalUrl(loc, `/services/${service}`),
+                lastModified: servicesDataMtime,
+                changeFrequency: 'monthly',
+                priority: 0.76,
                 alternates: { languages },
             })
         })

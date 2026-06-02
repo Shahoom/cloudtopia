@@ -1,11 +1,10 @@
 import type { PayloadRequest } from 'payload'
 
-type TargetLocale = 'ar' | 'tr'
+type TargetLocale = 'ar'
 type TranslationPayload = Record<string, unknown> | unknown[]
 
 const targetNames: Record<TargetLocale, string> = {
   ar: 'Arabic',
-  tr: 'Turkish',
 }
 
 const skipKeys = new Set([

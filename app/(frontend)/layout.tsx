@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    alternateLocale: ['ar_SA', 'tr_TR'],
+    alternateLocale: ['ar_SA'],
     url: 'https://cloudtopia.net',
     title: 'CloudTopia - Digital & Cloud Technologies',
     description:
@@ -150,22 +150,16 @@ export default async function FrontendLayout({
                 { '@type': 'Country', name: 'Qatar' },
                 { '@type': 'Country', name: 'Bahrain' },
                 { '@type': 'Country', name: 'Oman' },
-                { '@type': 'Country', name: 'Turkiye' },
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
-                telephone: '+90-501-151-11-16',
                 contactType: 'customer service',
                 email: 'info@cloudtopia.net',
-                availableLanguage: ['English', 'Arabic', 'Turkish'],
-                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM', 'TR'],
+                availableLanguage: ['English', 'Arabic'],
+                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
               },
               sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'TR',
-              },
-              knowsLanguage: ['en', 'ar', 'tr'],
+              knowsLanguage: ['en', 'ar'],
             }),
           }}
         />
@@ -181,7 +175,7 @@ export default async function FrontendLayout({
               url: 'https://cloudtopia.net',
               description:
                 'Digital & Cloud Technologies - Website design, business systems, e-commerce, and custom web applications for growing businesses.',
-              inLanguage: ['en-US', 'ar-SA', 'tr-TR'],
+              inLanguage: ['en-US', 'ar-SA'],
               publisher: {
                 '@type': 'Organization',
                 '@id': 'https://cloudtopia.net/#organization',

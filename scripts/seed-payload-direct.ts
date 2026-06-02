@@ -6,7 +6,6 @@ import sharp from 'sharp'
 import { authors } from '../lib/authors.ts'
 import { ar } from '../lib/i18n/translations/ar.ts'
 import { en } from '../lib/i18n/translations/en.ts'
-import { tr } from '../lib/i18n/translations/tr.ts'
 import { serviceFAQs } from '../lib/seo/service-faqs.ts'
 import {
   buildPageCTA,
@@ -27,10 +26,10 @@ import {
 } from '../lib/blog/sample-content.ts'
 import { calculateReadingTime } from '../lib/blog/utils.ts'
 
-type Locale = 'en' | 'ar' | 'tr'
+type Locale = 'en' | 'ar'
 
-const dictionaries = { en, ar, tr }
-const locales: Locale[] = ['en', 'ar', 'tr']
+const dictionaries = { en, ar }
+const locales: Locale[] = ['en', 'ar']
 
 export function loadLocalEnv() {
   if (!fs.existsSync('.env.local')) return
@@ -196,7 +195,7 @@ export async function upsertAuthors(client: Client) {
          bio_tr = excluded.bio_tr,
          updated_at = now()
        returning id`,
-      [author.slug, author.name, author.role.en, author.role.ar, author.role.tr, author.bio.en, author.bio.ar, author.bio.tr],
+      [author.slug, author.name, author.role.en, author.role.ar, '', author.bio.en, author.bio.ar, ''],
     )
     const parentId = result.rows[0].id
 

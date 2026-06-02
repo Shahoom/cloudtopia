@@ -15,6 +15,7 @@ import {
 import { GlowingEffect } from "@/components/ui/glowing-effect"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
+import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 
 const RevealWaveImage = dynamic(
   () => import("@/components/ui/reveal-wave-image").then((m) => m.RevealWaveImage),
@@ -59,7 +60,7 @@ const Hero = ({ t: pageT }: { t?: any }) => {
     "Influencer İletişimi",
   ]
 
-  const talkAbout = p?.hero?.talkAbout || (locale === 'ar' ? talkAboutAr : (locale === 'tr' ? talkAboutTr : talkAboutEn))
+  const talkAbout = p?.hero?.talkAbout || (locale === 'ar' ? talkAboutAr : talkAboutEn)
 
   useEffect(() => {
     renderCanvas()
@@ -85,16 +86,6 @@ const Hero = ({ t: pageT }: { t?: any }) => {
       welcome: "مرحباً بك في مستقبل التسويق الاجتماعي! نحن",
       brand: "كلاود توبيا",
       description: "نصنع استراتيجيات قوية للتواصل الاجتماعي للعلامات التجارية، ونبتكر محتوى جذاباً لدفع النمو. نحن خبراء في",
-    },
-    tr: {
-      badge: "Sosyal Medya Mükemmeliyeti",
-      badgeLink: "Daha Fazla Bilgi",
-      headline: "Şunun için eksiksiz platformunuz:",
-      highlight: "Sosyal Medya",
-      available: "Şimdi Müsait",
-      welcome: "Sosyal pazarlamanın geleceğine hoş geldiniz! Biz",
-      brand: "CloudTopia",
-      description: "Markalar için güçlü sosyal medya stratejileri kurguluyor ve büyümeyi teşvik edecek etkileyici içerikler üretiyoruz. Biz şu konularda uzmanız:",
     },
   }
 
@@ -318,14 +309,12 @@ const ServicesSlideshow = ({ locale, t: pageT }: { locale: string, t?: any }) =>
   const isRTL = locale === 'ar'
   const p = pageT?.services?.socialMediaPage || pageT?.socialMediaPage
 
-  const SLIDES = p?.slides || (locale === 'ar' ? SLIDES_AR : (locale === 'tr' ? SLIDES_TR : SLIDES_EN))
-  const sectionLabel = p?.slideshowLabel || (locale === 'ar' ? "/ خدماتنا" : (locale === 'tr' ? "/ hizmetlerimiz" : "/ our services"))
-  const sectionTitle = p?.slideshowTitle || (locale === 'ar' ? "ماذا نقدم لك" : (locale === 'tr' ? "Neler Sunuyoruz?" : "What We Offer"))
+  const SLIDES = p?.slides || (locale === 'ar' ? SLIDES_AR : SLIDES_EN)
+  const sectionLabel = p?.slideshowLabel || (locale === 'ar' ? "/ خدماتنا" : "/ our services")
+  const sectionTitle = p?.slideshowTitle || (locale === 'ar' ? "ماذا نقدم لك" : "What We Offer")
   const sectionDesc = p?.slideshowDesc || (locale === 'ar'
     ? "حلول تسويق رقمي شاملة لتنمية حضورك على وسائل التواصل الاجتماعي"
-    : (locale === 'tr'
-      ? "Sosyal medya varlığınızı büyütmek için kapsamlı dijital pazarlama çözümleri"
-      : "Comprehensive digital marketing solutions to grow your social media presence"))
+    : "Comprehensive digital marketing solutions to grow your social media presence")
 
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -409,15 +398,6 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
       quote1: "نحوّل الأفكار إلى محتوى فيروسي",
       quote2: "نبني مجتمعات تتفاعل",
       quote3: "نجعل العلامات التجارية لا تُنسى",
-    },
-    tr: {
-      label: "/ işlerimiz",
-      title: "Birçok Şeye Işık ve",
-      subtitle: "Güzellik Katıyoruz",
-      description: "Yaratıcı çalışmalarımızı keşfedin - sihirli dokunuşları görmek için görsellerin üzerine gelin",
-      quote1: "Fikirleri viral içeriklere dönüştürüyoruz",
-      quote2: "Etkileşim kuran topluluklar inşa ediyoruz",
-      quote3: "Markaları unutulmaz kılıyoruz",
     },
   }
 
@@ -503,7 +483,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
               />
             </div>
             <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-              {locale === 'ar' ? imageData[0].captionAr : (locale === 'tr' ? (imageData[0] as any).captionTr : imageData[0].captionEn)}
+              {locale === 'ar' ? imageData[0].captionAr : imageData[0].captionEn}
             </p>
           </div>
           <div className="relative group">
@@ -520,7 +500,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
               />
             </div>
             <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-              {locale === 'ar' ? imageData[1].captionAr : (locale === 'tr' ? (imageData[1] as any).captionTr : imageData[1].captionEn)}
+              {locale === 'ar' ? imageData[1].captionAr : imageData[1].captionEn}
             </p>
           </div>
         </div>
@@ -546,7 +526,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
               />
             </div>
             <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-              {locale === 'ar' ? imageData[2].captionAr : (locale === 'tr' ? (imageData[2] as any).captionTr : imageData[2].captionEn)}
+              {locale === 'ar' ? imageData[2].captionAr : imageData[2].captionEn}
             </p>
           </div>
           <div className="relative group">
@@ -563,7 +543,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
               />
             </div>
             <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-              {locale === 'ar' ? imageData[3].captionAr : (locale === 'tr' ? (imageData[3] as any).captionTr : imageData[3].captionEn)}
+              {locale === 'ar' ? imageData[3].captionAr : imageData[3].captionEn}
             </p>
           </div>
           <div className="relative group">
@@ -580,7 +560,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
               />
             </div>
             <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-              {locale === 'ar' ? imageData[4].captionAr : (locale === 'tr' ? (imageData[4] as any).captionTr : imageData[4].captionEn)}
+              {locale === 'ar' ? imageData[4].captionAr : imageData[4].captionEn}
             </p>
           </div>
         </div>
@@ -605,7 +585,7 @@ const CreativeShowcase = ({ locale, t: pageT }: { locale: string, t?: any }) => 
             />
           </div>
           <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 text-center">
-            {locale === 'ar' ? imageData[5].captionAr : (locale === 'tr' ? (imageData[5] as any).captionTr : imageData[5].captionEn)}
+            {locale === 'ar' ? imageData[5].captionAr : imageData[5].captionEn}
           </p>
         </div>
 
@@ -758,75 +738,6 @@ const ServiceExplainer = ({ locale, t: pageT }: { locale: string, t?: any }) => 
         {
           question: "هل تنشئون المحتوى أم نحتاج لتوفيره؟",
           answer: "نتولى إنشاء كل المحتوى بما في ذلك الرسومات والفيديوهات والنصوص والهاشتاقات. نعمل معك لفهم صوت علامتك وإنشاء محتوى يمثل عملك بشكل أصيل."
-        }
-      ]
-    },
-    tr: {
-      mainTitle: "Sosyal Medya Pazarlama Hizmetleri",
-      mainSubtitle: "Profesyonel Sosyal Medya Yönetimi ile İşinizi Büyütün",
-      introParagraph: "CloudTopia olarak, her ölçekten işletmenin online varlığını oluşturmasına, hedef kitlesiyle etkileşim kurmasına ve ölçülebilir sonuçlar elde etmesine yardımcı olmak için kapsamlı sosyal medya pazarlama hizmetleri sunuyoruz. Sosyal medya uzmanlarından oluşan ekibimiz, markanızın tüm ana platformlardaki etkisini maksimize etmek için yaratıcı içerik stratejilerini veri odaklı içgörülerle birleştirir.",
-      whatWeOfferTitle: "Neler Sunuyoruz?",
-      services: [
-        {
-          title: "Sosyal Medya Strateji Geliştirme",
-          description: "İş hedeflerinize, hedef kitlenize ve sektöre özel olarak tasarlanmış özelleştirilmiş sosyal medya stratejileri oluşturuyoruz. Stratejik yaklaşımımız, her paylaşımın, kampanyanın ve etkileşimin genel pazarlama hedeflerinize katkıda bulunmasını sağlar.",
-        },
-        {
-          title: "İçerik Üretimi ve Yönetimi",
-          description: "Yaratıcı ekibimiz, hedef kitlenizde yankı uyandıran grafikler, videolar, hikayeler ve reels videoları dahil olmak üzere yüksek kaliteli içerikler üretir. İçerik planlamasından yayına ve topluluk yönetimine kadar her şeyi biz hallediyoruz.",
-        },
-        {
-          title: "Ücretli Sosyal Medya Reklamcılığı",
-          description: "Gelişmiş reklam kampanyaları ile yatırım getirinizi (ROI) maksimize edin. Meta Business Suite (Facebook ve Instagram), Google Ads ve TikTok Ads konularında derin uzmanlığa sahibiz. En düşük edinim maliyetini sağlamak için teknik kurulum, piksel entegrasyonu, hedef kitle daraltma ve sürekli A/B testlerini yönetiyoruz.",
-        },
-        {
-          title: "Analitik ve Raporlama",
-          description: "Ayrıntılı analitikler ve aylık raporlarla sosyal medya performansınızı takip edin. Etkileşim oranları, takipçi artışı, erişim ve dönüşüm metrikleri hakkında eyleme dönüştürülebilir içgörüler sunuyoruz.",
-        },
-        {
-          title: "Topluluk Yönetimi",
-          description: "Duyarlı etkileşimlerle online topluluğunuzu inşa edin ve besleyin. Pozitif bir marka imajını korumak ve müşteri sadakatini artırmak için yorumları, mesajları ve etkileşimleri yönetiyoruz.",
-        }
-      ],
-      whyChooseTitle: "Sosyal Medya Pazarlaması İçin Neden CloudTopia?",
-      whyChoosePoints: [
-        "Meta Business Suite ve Gelişmiş Reklam Araçlarında Uzmanlık",
-        "Birden fazla sektörde kanıtlanmış başarıya sahip deneyimli ekip",
-        "Benzersiz iş hedeflerinizle uyumlu kişiselleştirilmiş stratejiler",
-        "Şeffaf raporlama ve düzenli performans güncellemeleri",
-        "Kalabalık sosyal akışlarda öne çıkan yaratıcı içerikler",
-        "Etkileşimi ve dönüşümleri maksimize etmek için veri odaklı yaklaşım",
-        "Stratejiden uygulamaya kadar tam kapsamlı yönetim"
-      ],
-      platformsTitle: "Uzmanlaştığımız Platformlar",
-      platforms: [
-        { name: "Instagram", desc: "Görsel hikayeleştirme ve etkileşim" },
-        { name: "Facebook", desc: "Topluluk oluşturma ve reklamcılık" },
-        { name: "TikTok", desc: "Viral içerik ve Gen-Z erişimi" },
-        { name: "LinkedIn", desc: "B2B pazarlama ve düşünce liderliği" },
-        { name: "Twitter/X", desc: "Gerçek zamanlı etkileşim ve marka sesi" },
-        { name: "YouTube", desc: "Video pazarlaması ve SEO" }
-      ],
-      ctaTitle: "Sosyal Medya Varlığınızı Dönüştürmeye Hazır mısınız?",
-      ctaDescription: "Sosyal medya pazarlama hizmetlerimizin işinizi büyütmenize nasıl yardımcı olabileceğini tartışalım. Ücretsiz danışmanlık ve hedeflerinize özel strateji alın.",
-      ctaButton: "Bugün Başlayın",
-      faqTitle: "Sıkça Sorulan Sorular",
-      faqs: [
-        {
-          question: "Sosyal medya pazarlama hizmetlerinin maliyeti nedir?",
-          answer: "Sosyal medya pazarlama paketlerimiz ihtiyaçlarınıza, platformlara ve hedeflerinize göre özelleştirilir. Temel yönetimden kapsamlı tam hizmet çözümlerine kadar esnek fiyatlandırma sunuyoruz. Kişiselleştirilmiş teklif için bizimle iletişime geçin."
-        },
-        {
-          question: "Sosyal medya pazarlamasından sonuç almak ne kadar sürer?",
-          answer: "İlk ay içinde bazı iyileşmeler görülebilse de, sürdürülebilir büyüme genellikle 3-6 aylık tutarlı bir çalışma gerektirir. Hızlı çözümler yerine gerçek etkileşim ve uzun vadeli marka farkındalığı oluşturmaya odaklanıyoruz."
-        },
-        {
-          question: "İşletmem hangi sosyal medya platformlarında yer almalı?",
-          answer: "Doğru platformlar hedef kitlenize ve işletme türünüze bağlıdır. Özel hedefleriniz için en etkili platformları önermek amacıyla sektörünüzü ve müşteri demografinizi analiz ediyoruz."
-        },
-        {
-          question: "İçeriği siz mi üretiyorsunuz yoksa bizim mi sağlamamız gerekiyor?",
-          answer: "Grafikler, videolar, açıklamalar ve hashtag araştırması dahil olmak üzere tüm içerik üretimini biz üstleniyoruz. Marka sesinizi anlamak ve işletmenizi özgün bir şekilde temsil eden içerikler oluşturmak için sizinle birlikte çalışıyoruz."
         }
       ]
     },
@@ -1028,9 +939,12 @@ const ServiceExplainer = ({ locale, t: pageT }: { locale: string, t?: any }) => 
 }
 
 export default function SocialMediaClient({ t }: { t?: any }) {
+  const { locale } = useLanguage()
+
   return (
     <>
       <Hero t={t} />
+      <ServicePricingSection service="social-media-marketing" locale={locale === 'ar' ? 'ar' : 'en'} />
     </>
   )
 }
