@@ -282,7 +282,7 @@ function ShineBorder({
         } as React.CSSProperties
       }
       className={cn(
-        "relative grid h-full w-full place-items-center rounded-3xl bg-lavender p-3 text-black dark:bg-black dark:text-white",
+        "relative grid h-full w-full place-items-center rounded-3xl bg-lavender p-3 text-eerie dark:bg-eerie dark:text-white",
         className
       )}
     >

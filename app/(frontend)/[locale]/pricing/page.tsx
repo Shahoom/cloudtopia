@@ -427,7 +427,7 @@ export default async function PricingPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-[#f4f1f8] py-12 md:py-18">
+            <section className="bg-[#f4f1f8] py-12 md:py-20">
                 <div className="space-y-20">
                     {pricing.categories.map((category) => {
                         const tiers: PricingTier[] = category.packages.map((plan, index) => ({

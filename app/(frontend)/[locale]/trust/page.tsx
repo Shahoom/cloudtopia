@@ -412,7 +412,7 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-[#0a0a1a] px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
+            <section className="bg-eerie px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-3xl font-black tracking-tight md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>

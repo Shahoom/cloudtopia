@@ -28,12 +28,14 @@
   --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
   /* Logo keeps the brand's AgharaPro face */
   --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  --eerie-black: #1B1B23;
+  --black: #1B1B23;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   
   /* Shadcn CSS Variables */
   --background: 266 33% 96%;
-  --foreground: 222.2 84% 4.9%;
+  --foreground: 240 13% 12%;
   --primary: 199 89% 48%;
   --primary-foreground: 210 40% 98%;
   --secondary: 243 75% 59%;
@@ -45,7 +47,7 @@
   
   /* Card colors for shadcn components */
   --card: 266 33% 96%;
-  --card-foreground: 0 0% 3.9%;
+  --card-foreground: 240 13% 12%;
   --muted: 266 33% 94%;
   --muted-foreground: 0 0% 45.1%;
 }

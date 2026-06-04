@@ -220,7 +220,7 @@ const RainingLetters: React.FC<RainingLettersProps> = ({
     }, [])
 
     return (
-        <div className="relative w-full h-[100svh] bg-black overflow-hidden">
+        <div className="relative w-full h-[100svh] bg-eerie overflow-hidden">
             {/* Center content */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 w-full px-6 sm:px-8">
                 <div className="flex flex-col items-center gap-4 sm:gap-6">

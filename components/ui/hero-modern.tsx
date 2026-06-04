@@ -305,7 +305,7 @@ function HeroModern({
         () =>
             theme === "dark"
                 ? {
-                    surface: "bg-black text-white",
+                    surface: "bg-eerie text-white",
                     subtle: "text-white/60",
                     border: "border-white/12",
                     card: "bg-lavender/6",
@@ -451,7 +451,7 @@ function HeroModern({
                                     key={modeKey}
                                     type="button"
                                     onClick={() => setMode(modeKey)}
-                                    className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === modeKey ? "bg-lavender text-black dark:bg-lavender/90 dark:text-black" : `${palette.border} ${palette.accent}`
+                                    className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === modeKey ? "bg-lavender text-eerie dark:bg-lavender/90 dark:text-eerie" : `${palette.border} ${palette.accent}`
                                         }`}
                                 >
                                     {modeLabels?.[modeKey] || (modeKey.charAt(0).toUpperCase() + modeKey.slice(1))}

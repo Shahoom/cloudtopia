@@ -5,6 +5,7 @@ import InfiniteGallery from "@/components/ui/3d-gallery"
 import EcommerceServiceSection from "@/components/ui/ecommerce-service-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { ServicePricingSection } from "@/components/services/ServicePricingSection"
+import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const content = {
   en: {
@@ -200,6 +201,8 @@ export default function EcommerceSolutionsClient({ t: pageT }: { t?: any }) {
 
         {/* Service Explanation Section */}
         <EcommerceServiceSection isRTL={isRTL} locale={locale} t={p} />
+
+        <DetailedServicesSection mainService="ecommerce-solutions" locale={locale === 'ar' ? 'ar' : 'en'} />
 
         <ServicePricingSection service="ecommerce-solutions" locale={locale === 'ar' ? 'ar' : 'en'} />
       </div>

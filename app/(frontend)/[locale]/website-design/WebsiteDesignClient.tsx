@@ -10,6 +10,7 @@ import { ServiceExplanationSection } from "@/components/ui/service-explanation-s
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { localePath } from "@/lib/i18n/url"
 import { ServicePricingSection } from "@/components/services/ServicePricingSection"
+import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const exampleImages = [
   {
@@ -274,6 +275,8 @@ export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
 
       {/* Service Explanation Section */}
       <WebDesignServiceSection />
+
+      <DetailedServicesSection mainService="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
 
       <ServicePricingSection service="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
     </div>

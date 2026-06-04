@@ -416,7 +416,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
                                     className="object-cover opacity-84 saturate-[0.96]"
                                 />
                                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.78))]" aria-hidden="true" />
-                                <div className="absolute left-5 top-5 border border-white/35 bg-black/35 px-3 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+                                <div className="absolute left-5 top-5 border border-white/35 bg-eerie/35 px-3 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-white backdrop-blur-sm">
                                     {isArabic ? 'مشهد محلي' : 'Local Market'}
                                 </div>
                                 <div className="absolute bottom-0 left-0 right-0 p-5">

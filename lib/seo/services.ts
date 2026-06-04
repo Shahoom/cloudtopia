@@ -262,3 +262,50 @@ export function getServiceCategory(slug: string): ServiceCategory | null {
 export function localizedServiceValue(value: LocalizedText, locale: string): string {
     return value[(locale as LocaleKey) || 'en'] || value.en
 }
+
+const arabicPackageNames: Record<string, string> = {
+    'Basic Web Presence': 'حضور ويب أساسي',
+    'E-commerce Pro': 'متجر إلكتروني احترافي',
+    'Enterprise Digital Hub': 'مركز رقمي مؤسسي',
+    'MVP Launchpad': 'إطلاق MVP',
+    'Growth Accelerator': 'تسريع النمو',
+    'Enterprise Custom App': 'تطبيق مؤسسي مخصص',
+    'Core Business Automation': 'أتمتة أعمال أساسية',
+    'Integrated Enterprise': 'تكامل مؤسسي',
+    'Custom Ecosystem': 'منظومة مخصصة',
+    'Cloud Foundation': 'أساس سحابي',
+    'Optimized Cloud': 'سحابة محسّنة',
+    'Enterprise Cloud': 'سحابة مؤسسية',
+    'AI Starter': 'بداية الذكاء الاصطناعي',
+    'Intelligent Automation': 'أتمتة ذكية',
+    'Custom AI/ML': 'ذكاء اصطناعي وتعلم آلي مخصص',
+    'SEO Kickstart': 'انطلاقة SEO',
+    'Growth Engine': 'محرك نمو',
+    'Full-Stack Digital Marketing': 'تسويق رقمي متكامل',
+}
+
+const arabicFeatureSet = [
+    'اكتشاف وتحديد نطاق وعرض ثابت قبل بدء التنفيذ',
+    'بنية محتوى عربية وإنجليزية مع واجهات جاهزة لاتجاه RTL',
+    'تجربة متجاوبة على أجهزة سطح المكتب والجوال',
+    'دعم الإطلاق، تسليم التحليلات، وتوثيق واضح للفريق',
+]
+
+const arabicOutcomeSet = [
+    'رحلة شراء أوضح للعملاء',
+    'تقليل المتابعة اليدوية',
+    'ظهور أفضل في البحث الإقليمي',
+    'نظام قابل للصيانة تملكه شركتك',
+]
+
+export function localizedPackageName(packageName: string, locale: string): string {
+    return locale === 'ar' ? arabicPackageNames[packageName] || packageName : packageName
+}
+
+export function localizedServiceFeatures(service: ServiceDetail, locale: string): string[] {
+    return locale === 'ar' ? arabicFeatureSet : service.features
+}
+
+export function localizedServiceOutcomes(service: ServiceDetail, locale: string): string[] {
+    return locale === 'ar' ? arabicOutcomeSet : service.outcomes
+}

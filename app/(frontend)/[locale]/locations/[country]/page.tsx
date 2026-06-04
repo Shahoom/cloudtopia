@@ -344,7 +344,7 @@ export default async function LocationPage({ params }: PageProps) {
             </section>
 
             {/* Final CTA */}
-            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a] overflow-hidden" data-header-theme="dark">
+            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden" data-header-theme="dark">
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{ backgroundImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(14,165,233,0.18), transparent 60%)' }}

@@ -18,6 +18,7 @@ import { QrCode, Smartphone, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { ServicePricingSection } from "@/components/services/ServicePricingSection"
+import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 // All images combined for mobile carousel - mix of restaurants and digital menus
 const ALL_IMAGES = [
@@ -303,6 +304,8 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
 
       {/* Service Explanation Section - SEO Optimized */}
       <QRMenuServiceSection isRTL={isRTL} locale={locale} />
+
+      <DetailedServicesSection mainService="restaurant-qr-menu" locale={locale === 'ar' ? 'ar' : 'en'} />
 
       <ServicePricingSection service="restaurant-qr-menu" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>

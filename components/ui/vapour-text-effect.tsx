@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState, createElement, useMemo, useCallback
 
 export const Component = () => {
     return (
-        <div className='bg-black h-screen w-screen flex justify-center items-center'>
+        <div className='bg-eerie h-screen w-screen flex justify-center items-center'>
             <VaporizeTextCycle
                 texts={["21st.dev", "Is", "Cool"]}
                 font={{

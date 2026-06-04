@@ -198,7 +198,7 @@ const InteractiveCardGallery: React.FC<InteractiveCardGalleryProps> = ({
 
                                         {/* Badges Overlay */}
                                         <div className={cn("absolute top-3 sm:top-6 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between z-20", isRTL && "flex-row-reverse")}>
-                                            <div className="flex items-center gap-1.5 px-2.5 sm:px-4 py-1 sm:py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/20">
+                                            <div className="flex items-center gap-1.5 px-2.5 sm:px-4 py-1 sm:py-1.5 bg-eerie/60 backdrop-blur-md rounded-full border border-white/20">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                                                 <span className="text-[8px] sm:text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/90">
                                                     {card.status}
@@ -314,7 +314,7 @@ const InteractiveCardGallery: React.FC<InteractiveCardGalleryProps> = ({
                                 onClick={() => handleCardClick(index)}
                                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 ${index === activeIndex
                                     ? 'bg-[#050510] w-8 sm:w-12 shadow-[0_0_15px_rgba(0,0,0,0.2)]'
-                                    : 'bg-black/10 hover:bg-black/20 w-1.5 sm:w-2'
+                                    : 'bg-eerie/10 hover:bg-eerie/20 w-1.5 sm:w-2'
                                     }`}
                                 aria-label={`Go to slide ${index + 1}`}
                             />

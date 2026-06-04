@@ -54,6 +54,7 @@ const config: Config = {
         },
       },
       colors: {
+        eerie: '#1B1B23',
         // CloudTopia Brand Colors - Professional & Modern
         primary: {
           // Calm Blue/Teal - Cloud & Tech feeling
@@ -95,7 +96,7 @@ const config: Config = {
           700: '#404040',
           800: '#262626',
           900: '#171717',
-          950: '#0a0a0a',
+          950: '#1B1B23',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',
@@ -157,12 +158,12 @@ function addVariablesForColors({ addBase, theme }: any) {
     ":root": {
       ...newVars,
       "--white": "#ffffff",
-      "--black": "#000000",
+      "--black": "#1B1B23",
+      "--eerie-black": "#1B1B23",
       "--transparent": "transparent",
     },
   });
 }
 
 export default config
-
 

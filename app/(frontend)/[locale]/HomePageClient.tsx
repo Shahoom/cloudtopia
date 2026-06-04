@@ -16,8 +16,12 @@ import dynamic from 'next/dynamic'
 
 import CloudHero from '@/components/home/CloudHero'
 import ServicesGrid from '@/components/home/ServicesGrid'
+import AiDigitalServices from '@/components/home/AiDigitalServices'
 import IndustriesPreview from '@/components/home/IndustriesPreview'
 import EnterpriseProof from '@/components/home/EnterpriseProof'
+import SolutionFinder from '@/components/solution-finder/SolutionFinder'
+import EnterpriseGrowthCTA from '@/components/home/EnterpriseGrowthCTA'
+import WorkWithSection from '@/components/home/WorkWithSection'
 import WhyCloudTopia from '@/components/home/WhyCloudTopia'
 import HowWeWork from '@/components/home/HowWeWork'
 import FAQ from '@/components/home/FAQ'
@@ -146,11 +150,20 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             {/* 4. Services Grid */}
             <ServicesGrid />
 
+            {/* AI & Digital Systems Services */}
+            <AiDigitalServices />
+
             {/* 5. Industries */}
             <IndustriesPreview />
 
-            {/* 6. Enterprise Proof */}
-            <EnterpriseProof />
+            {/* 6. Solution Finder — replaces EnterpriseProof */}
+            <SolutionFinder />
+
+            {/* Premium Enterprise CTA Banner */}
+            <EnterpriseGrowthCTA />
+
+            {/* "We Work With" Business Types Section */}
+            <WorkWithSection />
 
             {/* 7. Why CloudTopia */}
             <WhyCloudTopia />
@@ -165,7 +178,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             <FAQ />
 
             {/* 10. Featured Projects */}
-            <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a]" data-header-theme="dark">
+            <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-eerie" data-header-theme="dark">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <FloatingCard>

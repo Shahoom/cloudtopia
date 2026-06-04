@@ -75,17 +75,18 @@ export default function EnterpriseProof() {
 
     return (
         <section
-            className="relative overflow-hidden bg-[#111827] px-4 py-24 text-white sm:px-6 lg:px-8"
-            data-header-theme="dark"
+            className="relative overflow-hidden bg-[#f4f1f8] px-4 py-24 text-eerie sm:px-6 lg:px-8"
+            data-header-theme="light"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
             <div
-                className="absolute inset-0 opacity-[0.08]"
+                className="absolute inset-0 opacity-[0.12]"
                 style={{
-                    backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(to right, #1B1B23 1px, transparent 1px), linear-gradient(to bottom, #1B1B23 1px, transparent 1px)',
                     backgroundSize: '64px 64px',
                 }}
             />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(14,165,233,0.18),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(99,102,241,0.18),transparent_34%)]" />
             <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
@@ -94,22 +95,22 @@ export default function EnterpriseProof() {
                     transition={{ duration: 0.55 }}
                     className="lg:sticky lg:top-28"
                 >
-                    <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-cyan-200">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-eerie/10 bg-white/80 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-primary-700 shadow-sm">
                         <Database className="h-3.5 w-3.5" />
                         {copy.eyebrow}
                     </span>
-                    <h2 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight md:text-6xl">
+                    <h2 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-eerie md:text-6xl">
                         {copy.title}
                     </h2>
-                    <p className="mt-6 max-w-2xl text-lg leading-8 text-white/68">
+                    <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-neutral-600">
                         {copy.intro}
                     </p>
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <Link href={localePath(locale, '/services')} className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-300 px-5 py-3 text-sm font-black text-neutral-950 transition hover:bg-cyan-200">
+                        <Link href={localePath(locale, '/services')} className="inline-flex items-center justify-center gap-2 rounded-xl bg-eerie px-5 py-3 text-sm font-black text-white shadow-lg shadow-eerie/15 transition hover:bg-primary-800">
                             {copy.primary}
                             <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                         </Link>
-                        <Link href={localePath(locale, '/pricing')} className="inline-flex items-center justify-center rounded-xl border border-white/15 px-5 py-3 text-sm font-black text-white transition hover:border-white/35 hover:bg-white/10">
+                        <Link href={localePath(locale, '/pricing')} className="inline-flex items-center justify-center rounded-xl border border-eerie/12 bg-white/72 px-5 py-3 text-sm font-black text-eerie transition hover:border-primary-300 hover:bg-white">
                             {copy.secondary}
                         </Link>
                     </div>
@@ -121,10 +122,10 @@ export default function EnterpriseProof() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.35 }}
                         transition={{ duration: 0.55, delay: 0.05 }}
-                        className="rounded-lg border border-white/12 bg-white/[0.06] p-6 shadow-2xl shadow-black/20 backdrop-blur"
+                        className="rounded-lg border border-eerie/10 bg-white/84 p-6 shadow-xl shadow-eerie/8 backdrop-blur"
                     >
-                        <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan-200">{copy.answerTitle}</p>
-                        <p className="mt-4 text-xl font-semibold leading-9 text-white/88">{copy.answer}</p>
+                        <p className="text-sm font-black uppercase tracking-[0.18em] text-primary-700">{copy.answerTitle}</p>
+                        <p className="mt-4 text-xl font-black leading-9 text-eerie">{copy.answer}</p>
                     </motion.article>
 
                     <div className="grid gap-4 md:grid-cols-3">
@@ -138,11 +139,11 @@ export default function EnterpriseProof() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, amount: 0.35 }}
                                     transition={{ duration: 0.5, delay: 0.08 * index }}
-                                    className="rounded-lg border border-white/12 bg-white/[0.045] p-5 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/[0.075]"
+                                    className="rounded-lg border border-eerie/10 bg-white/70 p-5 shadow-sm backdrop-blur transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary-300 hover:bg-white"
                                 >
-                                    <Icon className="h-6 w-6 text-cyan-200" />
-                                    <h3 className="mt-5 text-lg font-black text-white">{item.title}</h3>
-                                    <p className="mt-3 text-sm leading-7 text-white/62">{item.body}</p>
+                                    <Icon className="h-6 w-6 text-primary-700" />
+                                    <h3 className="mt-5 text-lg font-black text-eerie">{item.title}</h3>
+                                    <p className="mt-3 text-sm leading-7 text-neutral-600">{item.body}</p>
                                 </motion.article>
                             )
                         })}
@@ -153,11 +154,11 @@ export default function EnterpriseProof() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.35 }}
                         transition={{ duration: 0.5, delay: 0.18 }}
-                        className="grid gap-2 rounded-lg border border-white/12 bg-white/[0.04] p-5 sm:grid-cols-2"
+                        className="grid gap-2 rounded-lg border border-eerie/10 bg-white/72 p-5 shadow-sm backdrop-blur sm:grid-cols-2"
                     >
                         {proofPoints.map((point) => (
-                            <div key={point.en} className="flex items-center gap-2 text-sm font-bold text-white/76">
-                                <CheckCircle2 className="h-4 w-4 flex-none text-emerald-300" />
+                            <div key={point.en} className="flex items-center gap-2 text-sm font-black text-eerie/76">
+                                <CheckCircle2 className="h-4 w-4 flex-none text-primary-700" />
                                 {locale === 'ar' ? point.ar : point.en}
                             </div>
                         ))}

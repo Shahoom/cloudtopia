@@ -109,7 +109,7 @@ function DomainCard({ domain, index, isRTL }: { domain: any; index: number; isRT
                 <div
                     onClick={() => setIsExpanded(!isExpanded)}
                     className={cn(
-                        "relative h-full flex flex-col rounded-2xl border bg-[#0a0a1a]/60 backdrop-blur-xl p-6 sm:p-7 lg:p-8 cursor-pointer transition-all duration-500 hover:bg-[#0c0c22]/80 overflow-hidden z-10",
+                        "relative h-full flex flex-col rounded-2xl border bg-eerie/60 backdrop-blur-xl p-6 sm:p-7 lg:p-8 cursor-pointer transition-all duration-500 hover:bg-eerie/80 overflow-hidden z-10",
                         style.border,
                         isRTL ? "text-right" : "text-left"
                     )}

@@ -646,7 +646,7 @@ ${formData.message}`
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={`w-full py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-3 transition-all duration-500 shadow-2xl relative overflow-hidden group ${activeTab === 'email'
-                      ? 'bg-neutral-900 text-white hover:bg-black'
+                      ? 'bg-eerie text-white hover:bg-eerie/90'
                       : 'bg-green-600 text-white hover:bg-green-700 shadow-green-500/30'
                       }`}
                   >

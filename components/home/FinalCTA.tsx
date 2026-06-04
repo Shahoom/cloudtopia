@@ -21,7 +21,7 @@ export default function FinalCTA() {
 
     return (
         <section
-            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a] overflow-hidden"
+            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden"
             data-header-theme="dark"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
@@ -100,7 +100,7 @@ export default function FinalCTA() {
                     >
                         <Link
                             href={localePath(locale, '/contact')}
-                            className="group inline-flex items-center gap-2 px-7 md:px-8 py-4 rounded-full bg-white text-neutral-900 font-semibold hover:bg-cyan-100 transition-colors w-full sm:w-auto justify-center"
+                            className="group inline-flex items-center gap-2 px-7 md:px-8 py-4 rounded-full bg-white text-eerie font-semibold hover:bg-cyan-100 transition-colors w-full sm:w-auto justify-center"
                         >
                             {primaryCTA}
                             <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />

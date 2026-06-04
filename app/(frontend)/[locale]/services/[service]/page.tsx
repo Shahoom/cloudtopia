@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, HelpCircle, Layers, Pencil, Rocket, Settings2, ShieldCheck, Sparkles, Star } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
-import { getService, getServiceCategory, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
+import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 
 type PageProps = {
@@ -95,6 +95,55 @@ function serviceTierColor(index: number): PricingTier['color'] {
     return (['sky', 'amber', 'emerald'] as PricingTier['color'][])[index % 3]
 }
 
+const categoryProfiles: Record<string, { eyebrow: string; gradient: string; tint: string; accent: string; summary: { en: string; ar: string } }> = {
+    'digital-presence': {
+        eyebrow: 'Digital presence',
+        gradient: 'from-sky-500 via-cyan-400 to-indigo-400',
+        tint: 'bg-sky-50',
+        accent: 'text-sky-700',
+        summary: { en: 'Visibility, conversion, and multilingual content.', ar: 'ظهور وتحويل ومحتوى متعدد اللغات.' },
+    },
+    'interactive-web-applications': {
+        eyebrow: 'Interactive app',
+        gradient: 'from-indigo-500 via-violet-400 to-sky-400',
+        tint: 'bg-indigo-50',
+        accent: 'text-indigo-700',
+        summary: { en: 'Portals, dashboards, SaaS paths, and secure access.', ar: 'بوابات ولوحات ومنصات SaaS وصلاحيات آمنة.' },
+    },
+    'business-systems-development': {
+        eyebrow: 'Business system',
+        gradient: 'from-violet-500 via-purple-400 to-cyan-400',
+        tint: 'bg-violet-50',
+        accent: 'text-violet-700',
+        summary: { en: 'Operations, CRM, ERP, workflow, and data ownership.', ar: 'عمليات وCRM وERP وسير عمل وملكية بيانات.' },
+    },
+    'cloud-infrastructure': {
+        eyebrow: 'Cloud foundation',
+        gradient: 'from-cyan-500 via-blue-400 to-slate-400',
+        tint: 'bg-cyan-50',
+        accent: 'text-cyan-700',
+        summary: { en: 'Migration, hosting, backups, monitoring, and stability.', ar: 'ترحيل واستضافة ونسخ احتياطي ومراقبة واستقرار.' },
+    },
+    'ai-powered-solutions': {
+        eyebrow: 'AI workflow',
+        gradient: 'from-fuchsia-500 via-violet-400 to-indigo-400',
+        tint: 'bg-fuchsia-50',
+        accent: 'text-fuchsia-700',
+        summary: { en: 'Assistants, automation, knowledge, and reporting.', ar: 'مساعدون وأتمتة ومعرفة وتقارير.' },
+    },
+    'digital-growth-support': {
+        eyebrow: 'Growth support',
+        gradient: 'from-emerald-500 via-sky-400 to-violet-400',
+        tint: 'bg-emerald-50',
+        accent: 'text-emerald-700',
+        summary: { en: 'Campaign pages, SEO, content systems, and lead flow.', ar: 'صفحات حملات وSEO وأنظمة محتوى ومسارات عملاء.' },
+    },
+}
+
+function categoryProfile(slug: string) {
+    return categoryProfiles[slug] || categoryProfiles['digital-presence']
+}
+
 export function generateStaticParams() {
     return ['en', 'ar'].flatMap((locale) =>
         serviceDetailSlugs.map((service) => ({
@@ -139,6 +188,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     if (!service) notFound()
 
     const category = getServiceCategory(service.categorySlug)
+    const profile = categoryProfile(service.categorySlug)
     const L = pageLabels(locale)
     const isRTL = locale === 'ar'
     const serviceName = localizedServiceValue(service.name, locale)
@@ -149,17 +199,19 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const shortAnswer = isRTL
         ? `${serviceName} من CloudTopia هو مسار تنفيذ محدد النطاق للشركات التي تحتاج نتيجة قابلة للإطلاق، محتوى عربي وإنجليزي، ملكية كاملة، وتكاملات عملية دون حزمة مبالغ فيها.`
         : `${serviceName} from CloudTopia is a scoped delivery path for companies that need a launch-ready outcome, Arabic and English content, full ownership, and practical integrations without an oversized package.`
+    const featureList = localizedServiceFeatures(service, locale)
+    const outcomeList = localizedServiceOutcomes(service, locale)
     const serviceTiers: PricingTier[] = (category?.packageNames || []).map((packageName, index) => {
         const baseFeatures = [
-            ...service.features.slice(0, 4),
-            ...service.outcomes.slice(0, 2),
+            ...featureList.slice(0, 4),
+            ...outcomeList.slice(0, 2),
             isRTL ? 'استشارة مجانية قبل تحديد النطاق' : 'Free consultation before scope is finalized',
             isRTL ? 'معاينة ديمو مجانية مخصصة حسب طلب الشركة' : 'Free custom demo preview based on the company inquiry',
             isRTL ? 'تسليم الحسابات والتوثيق والملكية' : 'Account, documentation, and ownership handoff',
         ]
 
         return {
-            name: packageName,
+            name: localizedPackageName(packageName, locale),
             icon: serviceTierIcon(index),
             price: index === 2 ? (isRTL ? 'عرض مخصص' : 'Custom quote') : (isRTL ? 'سعر ثابت' : 'Fixed scope'),
             description: index === 0
@@ -198,7 +250,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         areaServed: ['Gulf region', 'Middle East', 'Global'],
         offers: category?.packageNames.map((packageName) => ({
             '@type': 'Offer',
-            name: packageName,
+                name: localizedPackageName(packageName, locale),
             availability: 'https://schema.org/InStock',
         })),
     }
@@ -214,22 +266,22 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     }
 
     return (
-        <main className="relative min-h-screen bg-lavender" dir={isRTL ? 'rtl' : 'ltr'}>
+        <main className="relative min-h-screen bg-[#f4f1f8]" dir={isRTL ? 'rtl' : 'ltr'}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-            <section className="relative overflow-hidden bg-[#f4f1f8] px-4 pb-20 pt-32 sm:px-6 lg:px-8 md:pb-28 md:pt-40" data-header-theme="light">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(125,211,252,0.36),transparent_30%),radial-gradient(circle_at_86%_10%,rgba(216,180,254,0.42),transparent_34%),radial-gradient(circle_at_55%_92%,rgba(187,247,208,0.34),transparent_34%)]" />
+            <section className="relative overflow-hidden bg-[#f4f1f8] px-4 pb-16 pt-32 sm:px-6 lg:px-8 md:pb-24 md:pt-40" data-header-theme="light">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(125,211,252,0.30),transparent_30%),radial-gradient(circle_at_86%_10%,rgba(216,180,254,0.34),transparent_34%),radial-gradient(circle_at_55%_92%,rgba(187,247,208,0.24),transparent_34%)]" />
                 <div className="relative max-w-6xl mx-auto">
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-neutral-200 shadow-sm text-sm font-semibold text-neutral-800 mb-6">
-                        <Settings2 className="w-3.5 h-3.5 text-primary-600" />
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/86 border border-eerie/10 shadow-sm text-sm font-black text-eerie mb-6">
+                        <Settings2 className={`w-3.5 h-3.5 ${profile.accent}`} />
                         {L.badge}
                     </span>
                     <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-end">
                         <div>
-                            <p className="text-sm font-bold uppercase tracking-wider text-primary-700 mb-4">{categoryName}</p>
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-900 leading-[1.05] mb-8">
+                            <p className={`text-sm font-black uppercase tracking-wider ${profile.accent} mb-4`}>{categoryName}</p>
+                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-eerie leading-[1.05] mb-8">
                                 {serviceName}
                             </h1>
                             <p className="text-lg md:text-xl text-neutral-600 leading-relaxed max-w-3xl">
@@ -237,44 +289,47 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                             </p>
                         </div>
 
-                        <div className="rounded-3xl bg-neutral-950 text-white p-7 border border-white/10 shadow-2xl">
+                        <div className="overflow-hidden rounded-lg border border-eerie/10 bg-white/88 p-2 shadow-2xl shadow-eerie/10 backdrop-blur">
+                          <div className={`rounded-md bg-gradient-to-br ${profile.gradient} p-6 text-white`}>
                             <div className="flex items-center gap-3 mb-5">
-                                <Rocket className="w-5 h-5 text-cyan-300" />
+                                <Rocket className="w-5 h-5 text-white" />
                                 <h2 className="text-xl font-bold">{L.packages}</h2>
                             </div>
+                            <p className="mb-5 text-sm font-semibold leading-7 text-white/82">{isRTL ? profile.summary.ar : profile.summary.en}</p>
                             <div className="grid gap-3">
                                 {(category?.packageNames || []).map((packageName) => (
                                     <div key={packageName} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/85">
-                                        {packageName}
+                                        {localizedPackageName(packageName, locale)}
                                     </div>
                                 ))}
                             </div>
-                            <Link href={localePath(locale, '/pricing')} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-neutral-950 transition-colors hover:bg-cyan-100">
+                            <Link href={localePath(locale, '/pricing')} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-black text-eerie transition-colors hover:bg-cyan-100">
                                 <CircleDollarSign className="h-4 w-4" />
                                 {L.pricing}
                             </Link>
+                          </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="relative px-4 py-16 sm:px-6 lg:px-8 md:py-20">
+            <section className="relative px-4 py-14 sm:px-6 lg:px-8 md:py-20">
                 <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-                    <div className="rounded-3xl border border-neutral-200 bg-white p-7 shadow-sm">
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-950 text-white">
+                    <div className="rounded-lg border border-eerie/10 bg-white p-7 shadow-sm">
+                        <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-lg ${profile.tint}`}>
                             <ShieldCheck className="h-5 w-5" />
                         </div>
-                        <p className="mb-3 text-sm font-black uppercase tracking-wider text-primary-700">{L.answerTitle}</p>
-                        <h2 className="text-2xl font-bold text-neutral-950 md:text-3xl">{serviceName}</h2>
+                        <p className={`mb-3 text-sm font-black uppercase tracking-wider ${profile.accent}`}>{L.answerTitle}</p>
+                        <h2 className="text-2xl font-black text-eerie md:text-3xl">{serviceName}</h2>
                         <p className="mt-4 text-base leading-relaxed text-neutral-600">{shortAnswer}</p>
                     </div>
 
-                    <div className="rounded-3xl border border-neutral-200 bg-white/75 p-7">
-                        <h2 className="mb-6 text-2xl font-bold text-neutral-950 md:text-3xl">{L.bestFor}</h2>
+                    <div className="rounded-lg border border-eerie/10 bg-white/75 p-7">
+                        <h2 className="mb-6 text-2xl font-black text-eerie md:text-3xl">{L.bestFor}</h2>
                         <div className="grid gap-3">
                             {L.bestForItems.map((item) => (
-                                <div key={item} className="flex gap-3 rounded-2xl border border-neutral-200 bg-white p-4">
-                                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-600" />
+                                <div key={item} className="flex gap-3 rounded-lg border border-neutral-200 bg-white p-4">
+                                    <CheckCircle2 className={`mt-0.5 h-5 w-5 shrink-0 ${profile.accent}`} />
                                     <p className="text-sm leading-relaxed text-neutral-700">{item}</p>
                                 </div>
                             ))}
@@ -289,7 +344,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         <CheckCircle2 className="w-8 h-8 text-primary-600 mb-5" />
                         <h2 className="text-2xl font-bold text-neutral-900 mb-5">{L.features}</h2>
                         <ul className="space-y-3">
-                            {service.features.map((feature) => (
+                        {featureList.map((feature) => (
                                 <li key={feature} className="text-neutral-700 leading-relaxed">{feature}</li>
                             ))}
                         </ul>
@@ -298,7 +353,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         <Layers className="w-8 h-8 text-secondary-600 mb-5" />
                         <h2 className="text-2xl font-bold text-neutral-900 mb-5">{L.outcomes}</h2>
                         <ul className="space-y-3">
-                            {service.outcomes.map((outcome) => (
+                        {outcomeList.map((outcome) => (
                                 <li key={outcome} className="text-neutral-700 leading-relaxed">{outcome}</li>
                             ))}
                         </ul>
@@ -414,7 +469,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             )}
 
-            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a] overflow-hidden" data-header-theme="dark">
+            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden" data-header-theme="dark">
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{ backgroundImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(14,165,233,0.18), transparent 60%)' }}

@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Building2, CheckCircle2, HelpCircle, Layers, MessageSquare, ShieldCheck, Sparkles, Workflow } from 'lucide-react'
+import { ArrowRight, CheckCircle2, HelpCircle, Layers, MessageSquare, ShieldCheck, Sparkles, Workflow } from 'lucide-react'
 import { getIndustry, industrySlugs, localizedValue } from '@/lib/seo/industries'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { getIndustryVisual } from '@/components/industry/industryVisuals'
 
 type PageProps = {
     params: Promise<{ locale: string; industry: string }>
@@ -89,6 +90,8 @@ export default async function IndustryPage({ params }: PageProps) {
     const isRTL = locale === 'ar'
     const L = pageLabels(locale)
     const name = localizedValue(industry.name, locale)
+    const visual = getIndustryVisual(industry.slug)
+    const IndustryIcon = visual.icon
 
     const faqSchema = {
         '@context': 'https://schema.org',
@@ -114,22 +117,24 @@ export default async function IndustryPage({ params }: PageProps) {
     }
 
     return (
-        <main className="relative min-h-screen bg-[#f7f3ea] text-neutral-950" dir={isRTL ? 'rtl' : 'ltr'}>
+        <main className="relative min-h-screen bg-[#f4f1f8] text-eerie" dir={isRTL ? 'rtl' : 'ltr'}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-            <section className="relative overflow-hidden border-b border-neutral-950 px-4 pb-20 pt-32 sm:px-6 lg:px-8 md:pb-28 md:pt-40" data-header-theme="light">
-                <div className="pointer-events-none absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'linear-gradient(#0a0a0a 1px, transparent 1px), linear-gradient(90deg, #0a0a0a 1px, transparent 1px)', backgroundSize: '44px 44px' }} />
+            <section className="relative overflow-hidden border-b border-eerie/10 px-4 pb-20 pt-32 sm:px-6 lg:px-8 md:pb-28 md:pt-40" data-header-theme="light">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'linear-gradient(#1B1B23 1px, transparent 1px), linear-gradient(90deg, #1B1B23 1px, transparent 1px)', backgroundSize: '44px 44px' }} />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(125,211,252,0.24),transparent_30%),radial-gradient(circle_at_86%_10%,rgba(216,180,254,0.28),transparent_34%)]" />
 
                 <div className="relative mx-auto max-w-7xl">
-                    <span className="mb-6 inline-flex items-center gap-2 border border-neutral-950 bg-white px-4 py-2 text-sm font-black text-neutral-900 shadow-[4px_4px_0_rgba(10,10,10,0.12)]">
-                        <Building2 className="h-3.5 w-3.5 text-sky-700" aria-hidden="true" />
+                    <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-eerie/10 bg-white/86 px-4 py-2 text-sm font-black text-eerie shadow-sm">
+                        <IndustryIcon className={`h-3.5 w-3.5 ${visual.accent}`} aria-hidden="true" />
                         {L.badge}
                     </span>
 
                     <div className="grid items-end gap-10 lg:grid-cols-[1.12fr_0.88fr]">
                         <div>
-                            <h1 className="mb-8 max-w-5xl text-4xl font-black leading-[1.04] text-neutral-950 text-balance md:text-6xl lg:text-7xl">
+                            <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-neutral-400">{localizedValue(visual.workflow, locale)}</p>
+                            <h1 className="mb-8 max-w-5xl text-4xl font-black leading-[1.04] text-eerie text-balance md:text-6xl lg:text-7xl">
                                 {localizedValue(industry.heroTitle, locale)}
                             </h1>
                             <p className="max-w-3xl text-lg leading-8 text-neutral-700 md:text-xl">
@@ -137,7 +142,7 @@ export default async function IndustryPage({ params }: PageProps) {
                             </p>
                         </div>
 
-                        <div className="border border-neutral-950 bg-neutral-950 p-6 text-white shadow-[10px_10px_0_rgba(14,165,233,0.24)]">
+                        <div className="rounded-lg border border-eerie/10 bg-eerie p-6 text-white shadow-[10px_10px_0_rgba(14,165,233,0.18)]">
                             <div className="mb-5 flex items-center justify-between gap-3 border-b border-white/15 pb-4">
                                 <div className="flex items-center gap-3">
                                     <Sparkles className="h-5 w-5 text-sky-300" aria-hidden="true" />
@@ -150,7 +155,7 @@ export default async function IndustryPage({ params }: PageProps) {
                                     <Link
                                         key={service.href}
                                         href={localePath(locale, service.href)}
-                                        className="group flex items-center justify-between gap-3 border border-white/15 bg-white/8 px-4 py-3 text-sm font-bold text-white/85 transition-colors duration-200 hover:bg-white hover:text-neutral-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+                                        className="group flex items-center justify-between gap-3 rounded-md border border-white/15 bg-white/8 px-4 py-3 text-sm font-bold text-white/85 transition-colors duration-200 hover:bg-white hover:text-eerie focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
                                     >
                                         {localizedValue(service.label, locale)}
                                         <ArrowRight className={`h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} aria-hidden="true" />
@@ -164,11 +169,11 @@ export default async function IndustryPage({ params }: PageProps) {
 
             <section className="relative px-4 py-16 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2">
-                    <div className="border border-neutral-950 bg-white p-8 shadow-[6px_6px_0_rgba(10,10,10,0.08)]">
-                        <div className="mb-5 flex h-12 w-12 items-center justify-center bg-neutral-950">
-                            <HelpCircle className="h-5 w-5 text-white" aria-hidden="true" />
+                    <div className="rounded-lg border border-eerie/10 bg-white p-8 shadow-sm">
+                        <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-lg ${visual.tint}`}>
+                            <HelpCircle className={`h-5 w-5 ${visual.accent}`} aria-hidden="true" />
                         </div>
-                        <h2 className="mb-6 text-2xl font-black text-neutral-950 md:text-3xl">{L.problems}</h2>
+                        <h2 className="mb-6 text-2xl font-black text-eerie md:text-3xl">{L.problems}</h2>
                         <div className="grid gap-4">
                             {industry.problems.map((problem) => (
                                 <div key={problem.en} className="flex gap-3 border-t border-neutral-200 pt-4">
@@ -179,11 +184,11 @@ export default async function IndustryPage({ params }: PageProps) {
                         </div>
                     </div>
 
-                    <div className="border border-neutral-950 bg-[#eef7ff] p-8">
-                        <div className="mb-5 flex h-12 w-12 items-center justify-center bg-white text-sky-700">
+                    <div className="rounded-lg border border-eerie/10 bg-white/72 p-8 backdrop-blur">
+                        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-white text-sky-700">
                             <ShieldCheck className="h-5 w-5" aria-hidden="true" />
                         </div>
-                        <h2 className="mb-6 text-2xl font-black text-neutral-950 md:text-3xl">{L.why}</h2>
+                        <h2 className="mb-6 text-2xl font-black text-eerie md:text-3xl">{L.why}</h2>
                         <div className="grid gap-4">
                             {industry.differentiators.map((item) => (
                                 <div key={item.en} className="flex gap-3 border-t border-sky-900/15 pt-4">
@@ -196,23 +201,23 @@ export default async function IndustryPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="relative border-y border-neutral-950 bg-white px-4 py-16 sm:px-6 lg:px-8 md:py-24">
+            <section className="relative border-y border-eerie/10 bg-white px-4 py-16 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-7xl">
                     <div className="mb-10 max-w-3xl">
-                        <div className="mb-5 flex h-12 w-12 items-center justify-center bg-neutral-950">
+                        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-eerie">
                             <Layers className="h-5 w-5 text-white" aria-hidden="true" />
                         </div>
-                        <h2 className="mb-4 text-3xl font-black text-neutral-950 md:text-4xl">{L.useCases}</h2>
+                        <h2 className="mb-4 text-3xl font-black text-eerie md:text-4xl">{L.useCases}</h2>
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-2">
                         {industry.useCases.map((useCase, index) => (
-                            <article key={useCase.title.en} className="border border-neutral-950 bg-[#f7f3ea] p-7">
+                            <article key={useCase.title.en} className="rounded-lg border border-eerie/10 bg-[#f4f1f8] p-7">
                                 <div className="mb-5 flex items-center justify-between gap-4">
                                     <Workflow className="h-5 w-5 text-sky-700" aria-hidden="true" />
                                     <span className="text-xs font-black text-neutral-400 tabular-nums">{String(index + 1).padStart(2, '0')}</span>
                                 </div>
-                                <h3 className="mb-3 text-xl font-black text-neutral-950">{localizedValue(useCase.title, locale)}</h3>
+                                <h3 className="mb-3 text-xl font-black text-eerie">{localizedValue(useCase.title, locale)}</h3>
                                 <p className="leading-8 text-neutral-600">{localizedValue(useCase.description, locale)}</p>
                             </article>
                         ))}
@@ -222,11 +227,11 @@ export default async function IndustryPage({ params }: PageProps) {
 
             <section className="relative px-4 py-16 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-4xl">
-                    <h2 className="mb-10 text-3xl font-black text-neutral-950 md:text-4xl">{L.faqs}</h2>
+                    <h2 className="mb-10 text-3xl font-black text-eerie md:text-4xl">{L.faqs}</h2>
                     <div className="space-y-4">
                         {industry.faqs.map((faq) => (
-                            <div key={faq.question.en} className="border border-neutral-950 bg-white p-6">
-                                <h3 className="mb-3 text-lg font-black text-neutral-950">{localizedValue(faq.question, locale)}</h3>
+                            <div key={faq.question.en} className="rounded-lg border border-eerie/10 bg-white p-6 shadow-sm">
+                                <h3 className="mb-3 text-lg font-black text-eerie">{localizedValue(faq.question, locale)}</h3>
                                 <p className="text-base leading-8 text-neutral-700">{localizedValue(faq.answer, locale)}</p>
                             </div>
                         ))}
@@ -234,7 +239,7 @@ export default async function IndustryPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="relative overflow-hidden bg-neutral-950 px-4 py-16 sm:px-6 lg:px-8 md:py-24" data-header-theme="dark">
+            <section className="relative overflow-hidden bg-eerie px-4 py-16 sm:px-6 lg:px-8 md:py-24" data-header-theme="dark">
                 <div className="relative mx-auto grid max-w-7xl gap-8 border border-white/15 bg-white/[0.04] p-7 md:grid-cols-[1fr_auto] md:items-center md:p-9">
                     <div>
                         <div className="mb-4 inline-flex items-center gap-2 text-sm font-black text-sky-300">
@@ -245,7 +250,7 @@ export default async function IndustryPage({ params }: PageProps) {
                     <p className="max-w-2xl text-lg leading-8 text-white/75">{L.readyDesc}</p>
                     </div>
                     <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-                        <Link href={localePath(locale, '/contact')} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-7 py-4 font-black text-neutral-950 transition-colors duration-200 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300">
+                        <Link href={localePath(locale, '/contact')} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-7 py-4 font-black text-eerie transition-colors duration-200 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300">
                             {L.start}
                             <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} aria-hidden="true" />
                         </Link>

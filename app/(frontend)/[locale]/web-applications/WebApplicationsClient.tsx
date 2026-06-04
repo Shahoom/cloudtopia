@@ -15,6 +15,7 @@ import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { SeoH1 } from '@/components/seo/SeoH1'
 const WebAppFeatures = dynamic(() => import('@/components/ui/features-8').then(mod => mod.WebAppFeatures), { ssr: false })
 const StickyFeatureSection = dynamic(() => import('@/components/ui/sticky-scroll-cards-section').then(mod => mod.StickyFeatureSection), { ssr: false })
+import DetailedServicesSection from '@/components/services/DetailedServicesSection'
 
 export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
@@ -205,6 +206,8 @@ export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
             <WebAppFeatures locale={locale} />
 
             <StickyFeatureSection locale={locale} />
+
+            <DetailedServicesSection mainService="web-applications" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             <ServicePricingSection service="web-applications" locale={locale === 'ar' ? 'ar' : 'en'} />
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -61,9 +62,9 @@ function MegaMenuPathCards({ locale, onClose }: { locale: string; onClose: () =>
             key={path.href}
             href={l(path.href)}
             onClick={onClose}
-            className="group grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 border border-neutral-950 bg-white px-3 py-3 text-neutral-950 transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#f5f7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+            className="group grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 border border-eerie bg-white px-3 py-3 text-eerie transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#f5f7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
           >
-            <span className="flex h-9 w-9 items-center justify-center bg-neutral-950 text-white">
+            <span className="flex h-9 w-9 items-center justify-center bg-eerie text-white">
               <Icon className="h-4 w-4" aria-hidden="true" />
             </span>
               <span className="min-w-0">
@@ -87,7 +88,7 @@ function MenuPanel({
 }) {
   return (
     <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3`}>
-      <div className="max-h-[calc(100vh-6rem)] overflow-y-auto border-2 border-slate-950 bg-[#fbfaf7] p-4 text-slate-950 shadow-[10px_10px_0px_rgba(15,23,42,0.18)]">
+      <div className="max-h-[calc(100vh-6rem)] overflow-y-auto border-2 border-eerie bg-[#f4f1f8] p-4 text-eerie shadow-[10px_10px_0px_rgba(27,27,35,0.16)]">
         {children}
       </div>
     </div>
@@ -112,27 +113,27 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
 
     return (
       <MenuPanel width="w-[920px]">
-        <div className="mb-4 grid gap-4 border-b-2 border-slate-950 pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div className="mb-4 grid gap-4 border-b-2 border-eerie pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
-            <p className="text-2xl font-black leading-none text-slate-950">{copy.title}</p>
+            <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
             <p className="mt-2 max-w-xl text-sm font-bold leading-6 text-slate-600">{copy.subtitle}</p>
           </div>
           <Link
             href={l('/services')}
             onClick={onClose}
-            className="inline-flex shrink-0 items-center gap-2 border-2 border-slate-950 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(14,165,233,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+            className="inline-flex shrink-0 items-center gap-2 border-2 border-eerie bg-eerie px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(14,165,233,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
           >
             {copy.viewAll}
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="grid gap-px bg-slate-950/15 md:grid-cols-3">
+        <div className="grid gap-px bg-eerie/15 md:grid-cols-3">
           {serviceCategories.map((category) => (
             <section key={category.slug} className="bg-white p-4 transition-colors duration-200 hover:bg-sky-50">
               <Link
                 href={l(`/services#${category.slug}`)}
                 onClick={onClose}
-                className="group flex items-center gap-2 text-sm font-black text-slate-950 hover:text-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                className="group flex items-center gap-2 text-sm font-black text-eerie hover:text-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
               >
                 <Layers className="h-4 w-4 text-sky-600" aria-hidden="true" />
                 <span className="line-clamp-1">{localizedServiceValue(category.name, locale)}</span>
@@ -172,21 +173,21 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
 
     return (
       <MenuPanel width="w-[820px]">
-        <div className="mb-4 grid gap-4 border-b-2 border-slate-950 pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div className="mb-4 grid gap-4 border-b-2 border-eerie pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
-            <p className="text-2xl font-black leading-none text-slate-950">{copy.title}</p>
+            <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
             <p className="mt-2 max-w-xl text-sm font-bold leading-6 text-slate-600">{copy.subtitle}</p>
           </div>
           <Link
             href={l('/industries')}
             onClick={onClose}
-            className="inline-flex shrink-0 items-center gap-2 border-2 border-slate-950 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(14,165,233,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+            className="inline-flex shrink-0 items-center gap-2 border-2 border-eerie bg-eerie px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(14,165,233,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
           >
             {copy.viewAll}
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="grid gap-px bg-slate-950/15 sm:grid-cols-2">
+        <div className="grid gap-px bg-eerie/15 sm:grid-cols-2">
           {industrySlugs.map((slug) => {
             const industry = industries[slug]
             return (
@@ -196,11 +197,11 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
                 onClick={onClose}
                 className="group flex min-w-0 items-start gap-3 bg-white p-4 transition-colors duration-200 hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-slate-950 bg-[#eef7ff] text-sky-800">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-eerie bg-[#eef7ff] text-sky-800">
                   <Building2 className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-sm font-black leading-tight text-slate-950">{localizedValue(industry.name, locale)}</span>
+                  <span className="block text-sm font-black leading-tight text-eerie">{localizedValue(industry.name, locale)}</span>
                   <span className="mt-1 block line-clamp-2 text-xs leading-relaxed text-slate-500">{localizedValue(industry.description, locale)}</span>
                 </span>
               </Link>
@@ -225,21 +226,21 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
 
   return (
     <MenuPanel width="w-[920px]">
-      <div className="mb-4 grid gap-4 border-b-2 border-slate-950 pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
+      <div className="mb-4 grid gap-4 border-b-2 border-eerie pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
-          <p className="text-2xl font-black leading-none text-slate-950">{copy.title}</p>
+          <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
           <p className="mt-2 max-w-xl text-sm font-bold leading-6 text-slate-600">{copy.subtitle}</p>
         </div>
         <Link
           href={l('/markets')}
           onClick={onClose}
-          className="inline-flex shrink-0 items-center gap-2 border-2 border-slate-950 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(16,185,129,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          className="inline-flex shrink-0 items-center gap-2 border-2 border-eerie bg-eerie px-4 py-2 text-sm font-black text-white shadow-[3px_3px_0px_rgba(16,185,129,0.35)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
         >
           {copy.viewAll}
           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
-      <div className="grid gap-px bg-slate-950/15 sm:grid-cols-3">
+      <div className="grid gap-px bg-eerie/15 sm:grid-cols-3">
         {countryLandingPages.map((location) => (
           <Link
             key={location.slug}
@@ -249,7 +250,7 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
             style={{ borderInlineStartColor: location.theme.primaryAccent, borderInlineStartWidth: 3 }}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="flex min-w-0 items-center gap-2 text-sm font-black text-slate-950">
+              <span className="flex min-w-0 items-center gap-2 text-sm font-black text-eerie">
                 <MapPin className="h-4 w-4 shrink-0 text-emerald-700" aria-hidden="true" />
                 <span className="truncate">{localizedLocationName(location.slug, locale)}</span>
               </span>
@@ -259,6 +260,134 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
         ))}
       </div>
     </MenuPanel>
+  )
+}
+
+function AnnouncementTicker({ locale }: { locale: string }) {
+  const [index, setIndex] = useState(0)
+  
+  const messages = locale === 'ar'
+    ? [
+        {
+          text: "احصل على تدقيق مجاني لموقعك الإلكتروني — ",
+          cta: "تواصل مع كلاود توبيا اليوم",
+          href: "/contact"
+        },
+        {
+          text: "مواقع، لوحات تحكم، أنظمة CRM، أتمتة، وحلول ذكاء اصطناعي للشركات النامية — ",
+          cta: "استكشف خدماتنا",
+          href: "/services"
+        },
+        {
+          text: "مشاريع حقيقية. عائد حقيقي — أكثر من 2000 مشروع يدفع نمو الأعمال في 50+ دولة — ",
+          cta: "استكشف الآن",
+          href: "/projects"
+        }
+      ]
+    : [
+        {
+          text: "Get a free website audit for your business — ",
+          cta: "Talk to CloudTopia today",
+          href: "/contact"
+        },
+        {
+          text: "Websites, dashboards, CRM systems, automation, and AI solutions for growing businesses — ",
+          cta: "Explore our services",
+          href: "/services"
+        },
+        {
+          text: "Real projects. Real ROI — 2,000+ deliveries driving business impact across 50+ Countries — ",
+          cta: "Explore Now",
+          href: "/projects"
+        }
+      ]
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % messages.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [messages.length])
+
+  return (
+    <div className="relative overflow-hidden h-8 w-full flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="flex items-center justify-center gap-2 text-[13px] sm:text-sm text-center w-full px-2 leading-relaxed"
+        >
+          <span className="text-sky-400 font-bold shrink-0">✦</span>
+          <span className="font-semibold text-white/90">
+            {messages[index].text}
+            <Link
+              href={localePath(locale, messages[index].href)}
+              className="text-sky-400 hover:text-sky-300 transition-colors font-bold underline decoration-sky-400/30 underline-offset-2 inline-flex items-center gap-0.5"
+            >
+              {messages[index].cta}
+              <ArrowUpRight className="h-3.5 w-3.5 inline-block shrink-0 align-middle" />
+            </Link>
+          </span>
+          <span className="text-sky-400 font-bold shrink-0">✦</span>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }) {
+  return (
+    <div className="bg-gradient-to-r from-[#0b0f19] via-[#111827] to-[#0b0f19] border-b border-white/[0.06] text-white/80 py-2 shadow-sm" dir={dir}>
+      <div className="container mx-auto flex items-center justify-between gap-3 px-4">
+        {/* Left Spacer to Center Ticker on Desktop */}
+        <div className="hidden sm:block w-32 shrink-0" />
+        
+        {/* Center: Ticker */}
+        <div className="flex-1 flex justify-center text-center max-w-2xl mx-auto">
+          <AnnouncementTicker locale={locale} />
+        </div>
+        
+        {/* Right Side: Quick Brand Logo Links */}
+        <div className="hidden sm:flex items-center gap-4.5 shrink-0 select-none md:w-32 justify-end">
+          {/* WhatsApp Logo */}
+          <a 
+            href="https://wa.me/96895886393?text=Hi%20CloudTopia,%20I'd%20like%20a%20free%20consultation." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex h-[48px] w-[72px] items-center justify-center transition-all duration-200 hover:scale-105 shrink-0"
+            aria-label="WhatsApp"
+          >
+            <Image 
+              src="/icons/WhatsApp-Logo.png" 
+              alt="WhatsApp" 
+              width={72} 
+              height={48}
+              priority
+              className="object-contain w-full h-full animate-pulse-slow"
+            />
+          </a>
+          
+          {/* Email Logo (Gmail) */}
+          <a 
+            href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia" 
+            className="flex h-[24px] w-[32px] items-center justify-center transition-all duration-200 hover:scale-110 shrink-0"
+            aria-label="Email"
+          >
+            <Image 
+              src="/icons/Gmail_icon.webp" 
+              alt="Gmail" 
+              width={32} 
+              height={24}
+              priority
+              className="object-contain w-full h-full"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -325,12 +454,13 @@ export default function Header() {
 
   const headerTone = isScrolled || mobileMenuOpen
     ? isDarkSection
-      ? 'border-white/10 bg-[#07111f]/92 text-white shadow-lg shadow-black/20 backdrop-blur-xl'
-      : 'border-slate-950/10 bg-[#fbfbf8]/94 text-slate-950 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl'
-    : 'border-transparent bg-transparent text-neutral-950'
+      ? 'border-white/10 bg-eerie/92 text-white shadow-lg shadow-eerie/20 backdrop-blur-xl'
+      : 'border-eerie/10 bg-[#f4f1f8]/94 text-eerie shadow-[0_10px_40px_rgba(27,27,35,0.08)] backdrop-blur-xl'
+    : 'border-transparent bg-transparent text-eerie'
 
   return (
     <header ref={headerRef} className={`sticky top-0 z-[9999] border-b transition-[background-color,border-color,box-shadow] duration-300 ${headerTone}`} dir={dir}>
+      <AnnouncementBar locale={locale} dir={dir} />
       <nav className="container">
         <div className={`flex items-center justify-between gap-4 transition-[height] duration-300 ${isScrolled ? 'h-16' : 'h-20'}`}>
           <Link
@@ -347,7 +477,7 @@ export default function Header() {
               className={`w-auto transition-[height,transform] duration-300 group-hover:scale-[1.03] ${isScrolled ? 'h-8 sm:h-9' : 'h-10 sm:h-11'}`}
             />
             <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
-              <span className={`font-logo text-xl font-black sm:text-2xl ${isDarkSection && (isScrolled || mobileMenuOpen) ? 'text-white' : 'text-neutral-950'}`}>
+              <span className={`font-logo text-xl font-black sm:text-2xl ${isDarkSection && (isScrolled || mobileMenuOpen) ? 'text-white' : 'text-eerie'}`}>
                 Cloud<span className="text-sky-600">Topia</span>
               </span>
               <span className={`mt-1 text-[9px] font-black uppercase tracking-[0.08em] sm:text-[10px] ${isDarkSection && (isScrolled || mobileMenuOpen) ? 'text-white/62' : 'text-neutral-600'}`}>
@@ -403,7 +533,7 @@ export default function Header() {
               aria-expanded={mobileMenuOpen}
               className={`flex h-11 w-11 items-center justify-center border-2 transition-[background-color,color,transform] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${isDarkSection && (isScrolled || mobileMenuOpen)
                 ? 'border-white/30 text-white hover:bg-white/12'
-                : 'border-slate-950 bg-white text-slate-950 shadow-[3px_3px_0px_rgba(15,23,42,0.18)] hover:-translate-y-0.5 hover:bg-sky-50'
+                : 'border-eerie bg-white text-eerie shadow-[3px_3px_0px_rgba(27,27,35,0.18)] hover:-translate-y-0.5 hover:bg-sky-50'
                 }`}
               onClick={() => setMobileMenuOpen((open) => !open)}
             >
@@ -414,13 +544,13 @@ export default function Header() {
 
         <div className={`xl:hidden transition-[max-height,opacity] duration-300 ${mobileMenuOpen ? 'max-h-[86vh] overflow-y-auto opacity-100' : 'max-h-0 overflow-hidden opacity-0'}`}>
           <div className="grid gap-5 border-t border-slate-950/10 py-5">
-            <div className="grid gap-px bg-slate-950/12">
+            <div className="grid gap-px bg-eerie/12">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between bg-white px-4 py-4 text-sm font-black text-slate-950 transition-colors duration-200 hover:bg-[#eef7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                  className="flex items-center justify-between bg-white px-4 py-4 text-sm font-black text-eerie transition-colors duration-200 hover:bg-[#eef7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                 >
                   {item.name}
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -428,7 +558,7 @@ export default function Header() {
               ))}
             </div>
 
-            <section className="border-2 border-slate-950 bg-[#fbfaf7] p-3 shadow-[5px_5px_0px_rgba(15,23,42,0.1)]">
+            <section className="border-2 border-eerie bg-[#f4f1f8] p-3 shadow-[5px_5px_0px_rgba(27,27,35,0.1)]">
               <p className="mb-2 px-1 text-xs font-black uppercase tracking-[0.16em] text-neutral-500">{servicesLabel}</p>
               <div className="grid gap-2 sm:grid-cols-2">
                 {serviceCategories.map((category) => (
@@ -447,7 +577,7 @@ export default function Header() {
             <Link
               href={l(cta.href || '/contact')}
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center justify-center gap-2 border-2 border-slate-950 bg-slate-950 px-5 py-3 text-sm font-black text-white shadow-[4px_4px_0px_rgba(14,165,233,0.35)] transition-colors duration-200 hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+              className="inline-flex items-center justify-center gap-2 border-2 border-eerie bg-eerie px-5 py-3 text-sm font-black text-white shadow-[4px_4px_0px_rgba(14,165,233,0.35)] transition-colors duration-200 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
             >
               {cta.label || t.nav.getStarted}
               <MessageSquare className="h-4 w-4" aria-hidden="true" />

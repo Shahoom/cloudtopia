@@ -789,11 +789,12 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
 
             {/* ─── HERO ─────────────────────────────────────────────── */}
             <section
-                className="relative flex min-h-[68vh] items-center justify-center overflow-hidden bg-[#f4f1f8]"
+                className="relative overflow-hidden bg-[#f4f1f8] px-4 pb-14 pt-28 sm:px-6 lg:px-8 md:pb-16 md:pt-32"
                 aria-label="Services hero"
             >
                 {/* Soft radial lavender glow — center */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,#dff3ff_0%,transparent_70%)] pointer-events-none" aria-hidden="true" />
+                <div className="absolute inset-0 opacity-30 [background-image:repeating-linear-gradient(100deg,#fff_0%,#fff_7%,transparent_10%,transparent_12%,#fff_16%),repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)] [background-position:50%_50%,50%_50%] [background-size:300%,_200%] blur-[4px] invert pointer-events-none [mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]" aria-hidden="true" />
 
                 {/* Decorative top edge */}
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-sky-300/50 to-transparent" aria-hidden="true" />
@@ -809,9 +810,9 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                 />
 
                 {/* Ambient amber orb — subtle */}
-                <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-amber-300/10 blur-[100px] pointer-events-none" aria-hidden="true" />
+                <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-sky-300/10 blur-[100px] pointer-events-none" aria-hidden="true" />
 
-                <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 py-14 text-center">
+                <div className="relative z-10 max-w-5xl mx-auto text-center">
                     <div className="flex flex-col items-center space-y-5">
 
                         {/* Badge */}
@@ -873,7 +874,7 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                         >
                             <a
                                 href="mailto:info@cloudtopia.net"
-                                className="group inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-slate-950 px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-sky-700 active:scale-95 sm:w-auto"
+                                className="group inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-eerie px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-sky-800 active:scale-95 sm:w-auto"
                                 aria-label={c.ctaButton}
                             >
                                 {c.ctaButton}
@@ -912,11 +913,11 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
             </section>
 
             {/* ─── SERVICES ─────────────────────────────────────────── */}
-            <div className="bg-[#f7f8f6]">
+            <div className="bg-[#f4f1f8]">
 
                 {/* Sticky category nav */}
                 <nav
-                    className="sticky top-0 z-40 border-b border-slate-200 bg-[#f7f8f6]/92 backdrop-blur-xl"
+                    className="sticky top-0 z-40 border-b border-slate-200 bg-[#f4f1f8]/92 backdrop-blur-xl"
                     aria-label="Service categories"
                 >
                     <div className="max-w-7xl mx-auto px-4 md:px-8">

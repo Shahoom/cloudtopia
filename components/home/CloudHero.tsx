@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 
@@ -49,16 +49,22 @@ export default function CloudHero() {
 
     const heroCopy = locale === 'ar'
         ? {
-            title: 'شركة برمجيات وسحابة تبني حلولاً رقمية واضحة',
+            title: 'نحوّل أفكارك الرقمية إلى أنظمة تعمل وتبيع وتتوسع',
             description:
-                'كلاود توبيا تطور مواقع شركات، متاجر إلكترونية، تطبيقات ويب وجوال، أنظمة CRM وERP، ترحيل سحابي، نقل بيانات، وأتمتة بالذكاء الاصطناعي للشركات التي تريد نتيجة قابلة للقياس.',
-            proof: ['استشارة مجانية', 'معاينة ديمو مجانية', 'نطاق وسعر واضحان'],
+                'كلاود توبيا تبني مواقع شركات، متاجر إلكترونية، تطبيقات، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات التي تريد نتيجة قابلة للقياس وتسليماً واضحاً.',
+            proof: ['استشارة مجانية', 'معاينة ديمو قبل التنفيذ', 'نطاق وسعر واضحان'],
+            chips: ['مواقع', 'متاجر', 'تطبيقات', 'CRM / ERP', 'سحابة', 'AI'],
+            panelTitle: 'خطة تنفيذ قبل الكود',
+            panelText: 'نبدأ بالاكتشاف، ثم نعرض الاتجاه والنطاق والتكلفة قبل الإنتاج.',
         }
         : {
-            title: 'Software and cloud solutions built with business clarity',
+            title: 'Digital products that work, sell, and scale with your business',
             description:
-                'CloudTopia builds company websites, e-commerce stores, web and mobile apps, CRM and ERP systems, cloud migration, data migration, and AI automation for businesses that need measurable results.',
-            proof: ['Free consultation', 'Free custom demo preview', 'Clear scope and pricing'],
+                'CloudTopia builds company websites, e-commerce stores, apps, CRM and ERP systems, cloud infrastructure, and AI automation for teams that need measurable outcomes and clean ownership.',
+            proof: ['Free consultation', 'Demo preview before build', 'Clear scope and pricing'],
+            chips: ['Websites', 'E-commerce', 'Apps', 'CRM / ERP', 'Cloud', 'AI'],
+            panelTitle: 'A build plan before code',
+            panelText: 'Discovery first, then direction, scope, and cost before production starts.',
         }
     const title = heroCopy.title
     const description = heroCopy.description
@@ -379,13 +385,13 @@ export default function CloudHero() {
 
                 {/* Content overlay */}
                 <div className="relative z-[11] w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-28 sm:pt-32 md:pt-36 pb-20 sm:pb-24 md:pb-28">
-                    <div className="grid gap-8 lg:grid-cols-[1.05fr_0.75fr] lg:items-end">
+                    <div className="grid gap-8 lg:grid-cols-[1.08fr_0.72fr] lg:items-end">
                         <div className={isRTL ? 'text-right' : 'text-left'}>
                             <motion.div
                                 initial={false}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                className="mb-6 inline-flex items-center gap-2 rounded-md bg-white/92 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0284c7] shadow-[0_6px_28px_rgba(2,132,199,0.25)] backdrop-blur-md"
+                                className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0284c7] shadow-[0_6px_28px_rgba(2,132,199,0.25)] backdrop-blur-md"
                             >
                                 <Sparkles className="h-3.5 w-3.5 text-[#0284c7]" aria-hidden="true" />
                                 <span>{tagline}</span>
@@ -395,9 +401,9 @@ export default function CloudHero() {
                                 initial={false}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.9, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                className="max-w-5xl font-bold tracking-tight leading-[1.05]"
+                                className="max-w-5xl font-black tracking-tight leading-[1.02]"
                                 style={{
-                                    fontSize: 'clamp(2.35rem, 6vw, 5.1rem)',
+                                    fontSize: 'clamp(2.55rem, 6.25vw, 5.35rem)',
                                     color: '#ffffff',
                                     textShadow:
                                         '0 2px 10px rgba(7,15,38,0.65), 0 5px 28px rgba(7,15,38,0.5), 0 0 56px rgba(7,15,38,0.36)',
@@ -411,11 +417,27 @@ export default function CloudHero() {
                                 initial={false}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                className="mt-6 max-w-3xl text-base font-semibold leading-8 text-slate-900 sm:text-lg md:text-xl"
+                                className="mt-6 max-w-3xl text-base font-bold leading-8 text-[#1B1B23] sm:text-lg md:text-xl"
                                 style={{ textShadow: '0 1px 2px rgba(255,255,255,0.72)' }}
                             >
                                 {description}
                             </motion.p>
+
+                            <motion.div
+                                initial={false}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.26 }}
+                                className="mt-6 flex max-w-3xl flex-wrap gap-2.5"
+                            >
+                                {heroCopy.chips.map((chip) => (
+                                    <span
+                                        key={chip}
+                                        className="inline-flex items-center rounded-full border border-white/70 bg-white/78 px-3.5 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-[#1B1B23] shadow-sm backdrop-blur-md"
+                                    >
+                                        {chip}
+                                    </span>
+                                ))}
+                            </motion.div>
 
                             <motion.div
                                 initial={false}
@@ -427,14 +449,14 @@ export default function CloudHero() {
                                     href={whatsappUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm font-bold text-[#0c1d3e] shadow-[0_12px_44px_rgba(0,0,0,0.28)] transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-cyan-50 hover:shadow-[0_18px_56px_rgba(0,0,0,0.36)] sm:text-base"
+                                    className="group inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm font-black text-[#1B1B23] shadow-[0_12px_44px_rgba(27,27,35,0.26)] transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-cyan-50 hover:shadow-[0_18px_56px_rgba(27,27,35,0.34)] sm:text-base"
                                 >
                                     {freeConsultation}
                                     <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} aria-hidden="true" />
                                 </a>
                                 <Link
                                     href={l('/services')}
-                                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/85 bg-[#0c1d3e]/34 px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_30px_rgba(0,0,0,0.24)] backdrop-blur-md transition-[background-color,border-color] duration-300 hover:border-white hover:bg-[#0c1d3e]/52 sm:text-base"
+                                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/85 bg-[#1B1B23]/42 px-6 py-3.5 text-sm font-black text-white shadow-[0_8px_30px_rgba(27,27,35,0.24)] backdrop-blur-md transition-[background-color,border-color] duration-300 hover:border-white hover:bg-[#1B1B23]/58 sm:text-base"
                                 >
                                     {viewServices}
                                 </Link>
@@ -445,14 +467,20 @@ export default function CloudHero() {
                             initial={{ opacity: 0, y: 22 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.22 }}
-                            className="grid gap-px bg-white/30 text-slate-950 shadow-2xl shadow-slate-950/16 backdrop-blur-md sm:grid-cols-3 lg:grid-cols-1"
+                            className="overflow-hidden rounded-2xl border border-white/50 bg-white/28 text-[#1B1B23] shadow-2xl shadow-eerie/16 backdrop-blur-xl"
                         >
-                            {heroCopy.proof.map((item, index) => (
-                                <div key={item} className="bg-white/82 p-5">
-                                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-700">{String(index + 1).padStart(2, '0')}</p>
-                                    <p className="mt-2 text-base font-black">{item}</p>
-                                </div>
-                            ))}
+                            <div className="border-b border-white/45 bg-white/86 p-5">
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-700">{heroCopy.panelTitle}</p>
+                                <p className="mt-2 text-base font-black leading-7">{heroCopy.panelText}</p>
+                            </div>
+                            <div className="grid gap-px bg-[#1B1B23]/10 sm:grid-cols-3 lg:grid-cols-1">
+                                {heroCopy.proof.map((item) => (
+                                    <div key={item} className="flex items-center gap-3 bg-white/82 p-4">
+                                        <CheckCircle2 className="h-4 w-4 flex-none text-sky-700" aria-hidden="true" />
+                                        <p className="text-sm font-black leading-6">{item}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </motion.div>
                     </div>
                 </div>

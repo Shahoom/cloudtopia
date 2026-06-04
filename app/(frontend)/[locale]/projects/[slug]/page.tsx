@@ -216,7 +216,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             </section>
 
             {/* Outcome */}
-            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a] overflow-hidden" data-header-theme="dark">
+            <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden" data-header-theme="dark">
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{

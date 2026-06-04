@@ -151,9 +151,9 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
     }
 
     return (
-        <div className="relative min-h-screen bg-[#0a0a1a] overflow-x-hidden" dir={dir}>
+        <div className="relative min-h-screen bg-eerie overflow-x-hidden" dir={dir}>
             {/* ━━━ Section 1: Hero with Sparkles ━━━ */}
-            <section className="relative min-h-[90vh] w-full bg-black flex flex-col items-center justify-center overflow-hidden" data-header-theme="dark">
+            <section className="relative min-h-[90vh] w-full bg-eerie flex flex-col items-center justify-center overflow-hidden" data-header-theme="dark">
                 <div className="w-full absolute inset-0 h-screen">
                     <SparklesCore
                         id="tsparticlesfullpage"
@@ -210,7 +210,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                         />
 
                         {/* Radial Gradient to prevent sharp edges */}
-                        <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+                        <div className="absolute inset-0 w-full h-full bg-eerie [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
                     </div>
 
                     <motion.p
@@ -415,7 +415,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                             viewport={{ once: true }}
                                             className="group relative rounded-lg border border-slate-200 bg-white/85 p-8 text-center shadow-sm backdrop-blur-sm transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-xl"
                                         >
-                                            <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-md border border-black/5 bg-gradient-to-br from-blue-500/10 to-purple-600/10 transition-transform group-hover:scale-105">
+                                            <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-md border border-eerie/5 bg-gradient-to-br from-blue-500/10 to-purple-600/10 transition-transform group-hover:scale-105">
                                                 <Icon className="w-10 h-10 text-blue-600 group-hover:text-cyan-600 transition-colors" />
                                             </div>
                                             <h4 className="text-2xl font-bold text-neutral-900 mb-4">
@@ -516,7 +516,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 transition={{ duration: 0.45, delay: index * 0.08 }}
                                                 viewport={{ once: true }}
-                                                className="rounded-lg border border-black/5 bg-white/80 p-6 shadow-sm backdrop-blur"
+                                                className="rounded-lg border border-eerie/5 bg-white/80 p-6 shadow-sm backdrop-blur"
                                             >
                                                 <div className={cn("mb-5 flex h-11 w-11 items-center justify-center rounded-md", accents[index % accents.length])}>
                                                     <Icon className="h-5 w-5" />
@@ -538,7 +538,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7 }}
                                 viewport={{ once: true }}
-                                className="mt-8 rounded-lg border border-black/5 bg-white/70 p-6 md:p-8 shadow-sm backdrop-blur"
+                                className="mt-8 rounded-lg border border-eerie/5 bg-white/70 p-6 md:p-8 shadow-sm backdrop-blur"
                             >
                                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                                     <div className="max-w-2xl">

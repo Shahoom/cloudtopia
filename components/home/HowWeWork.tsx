@@ -31,7 +31,7 @@ export default function HowWeWork() {
 
     return (
         <section
-            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-[#0a0a1a] overflow-hidden"
+            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden"
             data-header-theme="dark"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
@@ -46,7 +46,7 @@ export default function HowWeWork() {
                 className="z-0"
             />
 
-            <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#0a0a1a] via-transparent to-[#0a0a1a]" />
+            <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-eerie via-transparent to-eerie" />
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
@@ -110,7 +110,7 @@ export default function HowWeWork() {
                                             <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-white/10 to-white/[0.03] border border-white/15 backdrop-blur-sm flex items-center justify-center group-hover:border-white/30 transition-colors">
                                                 <Icon className="w-8 h-8 text-cyan-300" strokeWidth={1.5} />
                                             </div>
-                                            <div className="absolute -top-2 -right-2 w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-primary-500 text-[#0a0a1a] font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/40">
+                                            <div className="absolute -top-2 -right-2 w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-primary-500 text-eerie font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/40">
                                                 {step.number}
                                             </div>
                                         </div>

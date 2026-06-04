@@ -325,6 +325,38 @@ export const en = {
       emailLabel: 'Or email us directly',
       emailAddress: 'info@cloudtopia.net',
     },
+    enterpriseGrowthCTA: {
+      headline: 'Power Enterprise Growth with Intelligent Technology',
+      subheadline: 'Modernize your systems, adopt cloud and AI, and build digitally scalable ecosystems.',
+      cta: 'Contact with us',
+    },
+    workWith: {
+      title: 'We Work With',
+      description: 'Partnering with Businesses of All Sizes, Custom Technology Solutions Designed to Fit Your Unique Needs.',
+      cta: 'Contact with us',
+      cards: [
+        {
+          title: 'ServiceNow Solutions',
+          description: 'Our ServiceNow specialists facilitate enterprises in simplifying their workflows, automating their processes, and improving their IT service management. Besides, we provide the whole chain of services from implementation to integration so as to help organizations enhance the productivity, the operational efficiency, the experience delivery components both for their employees and customers, and lastly, the digital experience also.',
+        },
+        {
+          title: 'Salesforce Development',
+          description: 'Our team of experts specializes in building tailored Salesforce solutions that maximize the potential of CRM, marketing automation, and sales channels. We offer a complete suite of services including implementation, integration, and the development of personalized applications to enable businesses to increase customer engagement, deliver better customer experience, and ultimately, generate more revenue.',
+        },
+        {
+          title: 'Startup Technology Services',
+          description: 'We empower entrepreneurs to walk the path of digital transformation by developing their MVPs, creating prototypes, and delivering scalable digital solutions. Our professional service package comprises everything from strategy and development to deployment, so when the founders concentrate on managing their business growth, we take care of the technology.',
+        },
+        {
+          title: 'Blockchain Solutions',
+          description: 'We offers a variety of safe and suitable blockchain solutions including the development of smart contracts, cryptocurrencies, DeFi platforms, and NFT marketplaces. We assist companies in attaining a higher level of transparency, decentralization, and efficiency through their digital transactions and operations.',
+        },
+        {
+          title: 'Artificial Intelligence (AI)',
+          description: 'Our AI solutions revolutionize business processes through the use of predictive analytics, natural language processing, and intelligent automation. We develop personalized AI models that help businesses make better decisions, improve customer experiences, and open the door to the generation of new streams of revenue.',
+        },
+      ],
+    },
   },
 
   // Services Page

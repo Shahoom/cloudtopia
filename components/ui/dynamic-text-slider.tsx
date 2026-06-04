@@ -66,16 +66,16 @@ export function DynamicTextSlider({
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-lavender dark:bg-black text-white flex flex-col items-center justify-center text-center p-4 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="w-full min-h-screen bg-lavender dark:bg-eerie text-white flex flex-col items-center justify-center text-center p-4 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-5xl">
-        <h1 className="font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl">
+        <h1 className="font-bold tracking-tighter text-5xl text-eerie dark:text-white md:text-7xl">
           {title}
         </h1>
         
         {/* Hidden copy for width‑measurement. Font size must match the visible text in the slider. */}
         <span
           ref={measureRef}
-          className="absolute -left-[9999px] px-4 whitespace-nowrap font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl"
+          className="absolute -left-[9999px] px-4 whitespace-nowrap font-bold tracking-tighter text-5xl text-eerie dark:text-white md:text-7xl"
         >
           {sliderText}
         </span>
@@ -228,7 +228,7 @@ function ContentSlider({ width: initialWidth, height: propHeight, handleSize = 2
       })}
       {/* Text that gets clipped by the slider */}
       <div
-        className="flex z-10 items-center justify-center w-full h-full px-4 overflow-hidden pointer-events-none font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl"
+        className="flex z-10 items-center justify-center w-full h-full px-4 overflow-hidden pointer-events-none font-bold tracking-tighter text-5xl text-eerie dark:text-white md:text-7xl"
         style={{ clipPath: `inset(0 ${width - right}px 0 ${left}px round 1rem)` }}
       >
         {text}

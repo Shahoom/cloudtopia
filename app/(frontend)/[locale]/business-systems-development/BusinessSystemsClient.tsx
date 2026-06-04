@@ -12,6 +12,7 @@ const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then(mod 
 const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { SeoH1 } from '@/components/seo/SeoH1'
+import DetailedServicesSection from '@/components/services/DetailedServicesSection'
 
 export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
@@ -197,6 +198,8 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                 labelCustomSolutions={locale === 'ar' ? 'حلول مخصصة' : 'Custom Solutions'}
                 labelApproach={locale === 'ar' ? 'نهجنا' : 'Our Approach'}
             />
+
+            <DetailedServicesSection mainService="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             <ServicePricingSection service="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
 

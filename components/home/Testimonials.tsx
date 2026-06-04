@@ -3,6 +3,7 @@
 import { ArrowRight, Quote, ShieldCheck, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { cn } from '@/lib/utils'
+import { StaggerTestimonials } from '@/components/ui/stagger-testimonials'
 
 const testimonials = {
   en: [
@@ -125,57 +126,32 @@ export default function Testimonials() {
       proof: 'Free consultation + free custom demo preview before the project starts',
     }
 
+  const [featured, ...supporting] = items
+
   return (
-    <section className="relative overflow-hidden bg-[#18152a] px-4 py-16 text-white sm:px-6 lg:px-8 md:py-20" data-header-theme="dark" dir={isRTL ? 'rtl' : 'ltr'}>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(125,211,252,0.18),transparent_28%),radial-gradient(circle_at_82%_20%,rgba(216,180,254,0.2),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.06)_0_1px,transparent_1px_18px)]" />
+    <section className="relative overflow-hidden bg-[#f4f1f8] px-4 py-16 text-eerie sm:px-6 lg:px-8 md:py-24" data-header-theme="light" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(125,211,252,0.22),transparent_28%),radial-gradient(circle_at_82%_20%,rgba(216,180,254,0.28),transparent_30%),linear-gradient(135deg,rgba(27,27,35,0.035)_0_1px,transparent_1px_18px)]" />
       <div className="relative mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-cyan-100">
+            <span className="inline-flex items-center gap-2 rounded-full border border-eerie/10 bg-white/80 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-primary-700 shadow-sm">
               <ShieldCheck className="h-4 w-4" aria-hidden="true" />
               {copy.eyebrow}
             </span>
-            <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight md:text-5xl" style={{ textWrap: 'balance' }}>
+            <h2 className="mt-5 max-w-3xl text-3xl font-black leading-tight text-eerie md:text-5xl" style={{ textWrap: 'balance' }}>
               {copy.title}
             </h2>
           </div>
           <div>
-            <p className="text-base font-semibold leading-8 text-white/68 md:text-lg">{copy.body}</p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-black text-slate-950">
+            <p className="text-base font-semibold leading-8 text-neutral-600 md:text-lg">{copy.body}</p>
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-eerie/10 bg-white px-4 py-2 text-sm font-black text-eerie shadow-sm">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden="true" />
               {copy.proof}
             </p>
           </div>
         </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {items.slice(0, 3).map((item, index) => (
-            <article
-              key={item.id}
-              className={cn(
-                'group relative min-h-[21rem] overflow-hidden rounded-2xl border border-white/12 bg-white/[0.08] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-cyan-200/45 hover:bg-white/[0.12]',
-                index === 1 && 'md:-translate-y-4',
-              )}
-            >
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#f4f1f8] text-sm font-black text-slate-950">
-                  {item.name.split(/\s+/).slice(0, 2).map((part) => part[0]).join('')}
-                </span>
-                <Quote className="h-7 w-7 text-cyan-200" aria-hidden="true" />
-              </div>
-              <blockquote className="text-lg font-black leading-8 text-white">
-                “{item.quote}”
-              </blockquote>
-              <div className="absolute inset-x-6 bottom-6 border-t border-white/12 pt-5">
-                <p className="font-black text-white">{item.name}</p>
-                <p className="mt-1 line-clamp-1 text-sm font-semibold text-white/62">{item.role}</p>
-                <p className="mt-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-200">
-                  {item.service}
-                  <ArrowRight className={cn('h-3.5 w-3.5', isRTL && 'rotate-180')} aria-hidden="true" />
-                </p>
-              </div>
-            </article>
-          ))}
+        <div className="mt-12 relative z-30">
+          <StaggerTestimonials />
         </div>
       </div>
     </section>

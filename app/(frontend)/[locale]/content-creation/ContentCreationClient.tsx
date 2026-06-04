@@ -8,6 +8,7 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ContentBlock from "@/components/ui/content-block"
 import { ParticleTextEffect } from "@/components/ui/interactive-text-particle"
 import { ServicePricingSection } from "@/components/services/ServicePricingSection"
+import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const localContent = {
   en: {
@@ -104,6 +105,8 @@ export default function ContentCreationClient({ t: pageT }: { t?: any }) {
           fontFamily={locale === 'ar' ? 'Changa, sans-serif' : 'Verdana, sans-serif'}
         />
       </section>
+
+      <DetailedServicesSection mainService="content-creation" locale={locale === 'ar' ? 'ar' : 'en'} />
 
       <ServicePricingSection service="content-creation" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>
