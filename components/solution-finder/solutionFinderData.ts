@@ -392,6 +392,77 @@ export const SOLUTION_FINDER_STEPS: StepDefinition[] = [
   requirementsStep,
 ]
 
+const INDUSTRY_PROJECT_TYPE_IDS: Record<string, string[]> = {
+  'real-estate': ['business-website', 'landing-page', 'crm-system', 'web-application', 'mobile-app', 'ai-automation', 'not-sure'],
+  healthcare: ['business-website', 'web-application', 'crm-system', 'mobile-app', 'ai-automation', 'not-sure'],
+  restaurants: ['business-website', 'business-system', 'web-application', 'mobile-app', 'ai-automation', 'not-sure'],
+  ecommerce: ['business-website', 'web-application', 'business-system', 'mobile-app', 'ai-automation', 'digital-growth', 'not-sure'],
+  education: ['web-application', 'mobile-app', 'business-system', 'business-website', 'ai-automation', 'not-sure'],
+  logistics: ['web-application', 'business-system', 'mobile-app', 'crm-system', 'cloud-infrastructure', 'ai-automation', 'not-sure'],
+  'professional-services': ['business-website', 'landing-page', 'crm-system', 'web-application', 'ai-automation', 'digital-growth', 'not-sure'],
+  startup: ['landing-page', 'mobile-app', 'web-application', 'business-website', 'ai-automation', 'cloud-infrastructure', 'not-sure'],
+  other: ['business-website', 'web-application', 'mobile-app', 'crm-system', 'business-system', 'ai-automation', 'not-sure'],
+}
+
+const INDUSTRY_BUSINESS_GOAL_IDS: Record<string, string[]> = {
+  'real-estate': ['get-more-leads', 'manage-clients', 'look-professional', 'automate-work', 'add-ai', 'improve-performance'],
+  healthcare: ['manage-clients', 'get-more-leads', 'look-professional', 'automate-work', 'launch-product', 'add-ai', 'improve-performance'],
+  restaurants: ['sell-online', 'get-more-leads', 'organize-operations', 'automate-work', 'manage-clients', 'add-ai'],
+  ecommerce: ['sell-online', 'organize-operations', 'get-more-leads', 'automate-work', 'manage-clients', 'add-ai', 'improve-performance'],
+  education: ['launch-product', 'manage-clients', 'sell-online', 'automate-work', 'get-more-leads', 'add-ai', 'improve-performance'],
+  logistics: ['organize-operations', 'automate-work', 'manage-clients', 'improve-performance', 'add-ai', 'get-more-leads'],
+  'professional-services': ['get-more-leads', 'look-professional', 'manage-clients', 'automate-work', 'add-ai', 'improve-performance'],
+  startup: ['launch-product', 'get-more-leads', 'sell-online', 'add-ai', 'look-professional', 'improve-performance'],
+  other: ['get-more-leads', 'look-professional', 'sell-online', 'automate-work', 'manage-clients', 'launch-product', 'add-ai', 'organize-operations'],
+}
+
+const PROJECT_GOAL_OVERRIDES: Record<string, Record<string, string[]>> = {
+  healthcare: {
+    'mobile-app': ['manage-clients', 'launch-product', 'get-more-leads', 'automate-work', 'add-ai', 'improve-performance'],
+    'crm-system': ['manage-clients', 'automate-work', 'get-more-leads', 'add-ai', 'improve-performance'],
+    'business-website': ['look-professional', 'get-more-leads', 'manage-clients', 'add-ai'],
+  },
+  ecommerce: {
+    'business-system': ['organize-operations', 'automate-work', 'sell-online', 'manage-clients', 'improve-performance'],
+    'mobile-app': ['sell-online', 'launch-product', 'manage-clients', 'get-more-leads', 'add-ai'],
+  },
+  restaurants: {
+    'mobile-app': ['sell-online', 'manage-clients', 'launch-product', 'get-more-leads', 'add-ai'],
+    'business-system': ['organize-operations', 'automate-work', 'sell-online', 'manage-clients'],
+  },
+  logistics: {
+    'mobile-app': ['organize-operations', 'manage-clients', 'improve-performance', 'launch-product'],
+  },
+}
+
+function filterOptions(options: OptionItem[], ids: string[]) {
+  const byId = new Map(options.map((option) => [option.id, option]))
+  return ids.map((id) => byId.get(id)).filter((option): option is OptionItem => Boolean(option))
+}
+
+export function getProjectTypeOptionsForIndustry(industry?: string): OptionItem[] {
+  const ids = industry ? INDUSTRY_PROJECT_TYPE_IDS[industry] : undefined
+  return ids ? filterOptions(projectTypeStep.options || [], ids) : projectTypeStep.options || []
+}
+
+export function getBusinessGoalOptionsForIndustry(industry?: string, projectType?: string): OptionItem[] {
+  const overrideIds = industry && projectType ? PROJECT_GOAL_OVERRIDES[industry]?.[projectType] : undefined
+  const ids = overrideIds || (industry ? INDUSTRY_BUSINESS_GOAL_IDS[industry] : undefined)
+  return ids ? filterOptions(businessGoalStep.options || [], ids) : businessGoalStep.options || []
+}
+
+export function getOptionsForStep(stepId: string, answers: { industry?: string; projectType?: string }): OptionItem[] {
+  if (stepId === 'project-type') return getProjectTypeOptionsForIndustry(answers.industry)
+  if (stepId === 'business-goal') return getBusinessGoalOptionsForIndustry(answers.industry, answers.projectType)
+  const step = SOLUTION_FINDER_STEPS.find((item) => item.id === stepId)
+  return step?.options || []
+}
+
+export function isValidOptionForStep(stepId: string, optionId: string | undefined, answers: { industry?: string; projectType?: string }): boolean {
+  if (!optionId) return false
+  return getOptionsForStep(stepId, answers).some((option) => option.id === optionId)
+}
+
 // ─── Helper: get option label by locale ──────────────────────────────────────
 export function getOptionLabel(option: OptionItem, locale: 'en' | 'ar'): string {
   return option.label[locale]

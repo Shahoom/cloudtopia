@@ -40,7 +40,7 @@ export default function FAQ() {
 
     return (
         <section
-            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-lavender overflow-hidden"
+            className="relative py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-lavender overflow-hidden"
             data-header-theme="light"
             dir={isRTL ? 'rtl' : 'ltr'}
         >

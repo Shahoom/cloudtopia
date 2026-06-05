@@ -343,46 +343,64 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
     <div className="bg-gradient-to-r from-[#0b0f19] via-[#111827] to-[#0b0f19] border-b border-white/[0.06] text-white/80 py-2 shadow-sm" dir={dir}>
       <div className="container mx-auto flex items-center justify-between gap-3 px-4">
         {/* Left Spacer to Center Ticker on Desktop */}
-        <div className="hidden sm:block w-32 shrink-0" />
+        <div className="hidden sm:block flex-1 shrink-0" />
         
         {/* Center: Ticker */}
-        <div className="flex-1 flex justify-center text-center max-w-2xl mx-auto">
+        <div className="shrink-0 flex justify-center text-center max-w-2xl mx-auto">
           <AnnouncementTicker locale={locale} />
         </div>
         
         {/* Right Side: Quick Brand Logo Links */}
-        <div className="hidden sm:flex items-center gap-4.5 shrink-0 select-none md:w-32 justify-end">
-          {/* WhatsApp Logo */}
+        <div className="hidden sm:flex flex-1 items-center gap-2.5 shrink-0 select-none justify-end">
+          {/* Instagram Logo */}
           <a 
-            href="https://wa.me/96895886393?text=Hi%20CloudTopia,%20I'd%20like%20a%20free%20consultation." 
+            href="https://instagram.com/thecloudtopia" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="flex h-[48px] w-[72px] items-center justify-center transition-all duration-200 hover:scale-105 shrink-0"
-            aria-label="WhatsApp"
+            className="flex h-[22px] w-[22px] items-center justify-center transition-all duration-200 hover:scale-110 shrink-0"
+            aria-label="Instagram"
           >
             <Image 
-              src="/icons/WhatsApp-Logo.png" 
-              alt="WhatsApp" 
-              width={72} 
-              height={48}
+              src="/icons/Instagram_logo.png" 
+              alt="Instagram" 
+              width={22} 
+              height={22}
               priority
-              className="object-contain w-full h-full animate-pulse-slow"
+              className="object-contain w-full h-full drop-shadow-sm"
             />
           </a>
-          
+
           {/* Email Logo (Gmail) */}
           <a 
             href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia" 
-            className="flex h-[24px] w-[32px] items-center justify-center transition-all duration-200 hover:scale-110 shrink-0"
+            className="flex h-[18px] w-[24px] items-center justify-center transition-all duration-200 hover:scale-110 shrink-0"
             aria-label="Email"
           >
             <Image 
               src="/icons/Gmail_icon.webp" 
               alt="Gmail" 
-              width={32} 
-              height={24}
+              width={24} 
+              height={18}
               priority
-              className="object-contain w-full h-full"
+              className="object-contain w-full h-full drop-shadow-sm"
+            />
+          </a>
+
+          {/* WhatsApp Logo */}
+          <a 
+            href="https://wa.me/96895886393?text=Hi%20CloudTopia,%20I'd%20like%20a%20free%20consultation." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex h-[36px] w-[54px] items-center justify-center transition-all duration-200 hover:scale-105 shrink-0"
+            aria-label="WhatsApp"
+          >
+            <Image 
+              src="/icons/WhatsApp-Logo.png" 
+              alt="WhatsApp" 
+              width={54} 
+              height={36}
+              priority
+              className="object-contain w-full h-full animate-pulse-slow drop-shadow-sm"
             />
           </a>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
+import { AIChatbot } from '@/components/ai-chatbot'
 import '../globals.css'
 
 const cairo = Cairo({
@@ -46,6 +47,7 @@ export default async function CountryLandingRootLayout({
     <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <body className="min-h-screen antialiased font-['Changa',sans-serif]">
         {children}
+        <AIChatbot />
       </body>
     </html>
   )

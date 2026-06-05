@@ -116,6 +116,33 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
     route: '/services/website-design',
   },
 
+  // ── 3b. Healthcare Mobile App / Patient Portal ───────────────────────────
+  {
+    id: 'healthcare-mobile-app',
+    match: { industry: 'healthcare', projectType: 'mobile-app' },
+    priority: 98,
+    package: { en: 'Clinic Patient App Package', ar: 'باقة تطبيق المرضى للعيادات' },
+    packageSubtitle: { en: 'Bookings · Reminders · Patient Flow · Admin', ar: 'حجوزات · تذكيرات · رحلة المريض · إدارة' },
+    personalizedIntro: {
+      en: 'Because you selected Healthcare & Clinics with a mobile app, your recommendation should focus on appointment booking, patient communication, reminders, doctor or service profiles, and a secure admin flow for clinic staff.',
+      ar: 'بما أنك اخترت العيادات والرعاية الصحية مع تطبيق موبايل، يجب أن يركز الحل على حجز المواعيد، تواصل المرضى، التذكيرات، ملفات الأطباء أو الخدمات، ومسار إدارة آمن لفريق العيادة.',
+    },
+    recommendedServices: {
+      en: ['Patient Mobile App', 'Appointment Booking Flow', 'Clinic Admin Dashboard', 'Push Notifications', 'WhatsApp Follow-up', 'Patient Inquiry Management'],
+      ar: ['تطبيق موبايل للمرضى', 'مسار حجز المواعيد', 'لوحة إدارة العيادة', 'إشعارات فورية', 'متابعة واتساب', 'إدارة استفسارات المرضى'],
+    },
+    keyFeatures: {
+      en: ['Patient onboarding', 'Appointment booking and rescheduling', 'Doctor and service profiles', 'Reminder notifications', 'Inquiry and follow-up tracking', 'Clinic staff dashboard'],
+      ar: ['تسجيل المرضى', 'حجز وإعادة جدولة المواعيد', 'ملفات الأطباء والخدمات', 'إشعارات التذكير', 'تتبع الاستفسارات والمتابعة', 'لوحة لفريق العيادة'],
+    },
+    techStack: ['React Native / Flutter', 'Next.js', 'Payload CMS', 'PostgreSQL / Supabase', 'WhatsApp Business API'],
+    deliveryApproach: {
+      en: 'Start with booking, patient profiles, and clinic admin tools, then add reminders, automation, and reporting once the core flow is stable.',
+      ar: 'نبدأ بالحجوزات وملفات المرضى وأدوات إدارة العيادة، ثم نضيف التذكيرات والأتمتة والتقارير بعد استقرار المسار الأساسي.',
+    },
+    route: '/services/web-applications',
+  },
+
   // ── 4. Restaurant Digital Menu + Ordering ────────────────────────────────
   {
     id: 'restaurant-system',

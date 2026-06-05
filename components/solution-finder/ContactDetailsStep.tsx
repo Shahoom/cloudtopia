@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { User, Phone, Mail, Building2, Globe, FileText, MessageCircle, Mail as MailIcon, PhoneCall, Lock } from 'lucide-react'
+import { User, Phone, Mail, Building2, FileText, MessageCircle, Mail as MailIcon, PhoneCall } from 'lucide-react'
 import type { WizardAnswers } from './recommendationEngine'
 import type { SFTextShape } from './sfTranslations'
 
@@ -70,13 +70,6 @@ export default function ContactDetailsStep({ answers, onChange, onSubmit, isLoad
           value={answers.company || ''} placeholder={f.companyPlaceholder}
           onChange={(v) => onChange({ company: v })}
         />
-        <div className="sm:col-span-2">
-          <Field
-            id="sf-country" label={f.country} icon={<Globe className="w-4 h-4" />}
-            value={answers.country || ''} placeholder={f.countryPlaceholder}
-            onChange={(v) => onChange({ country: v })}
-          />
-        </div>
       </div>
 
       {/* Description */}

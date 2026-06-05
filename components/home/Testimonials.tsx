@@ -14,6 +14,7 @@ const testimonials = {
       name: 'Omar Al Hinai',
       role: 'Operations Director, Oman service company',
       service: 'Website, CRM, Cloud Hosting',
+      imgSrc: '/images/testimonials/omar.jpg',
     },
     {
       id: 'uae-retail',
@@ -22,6 +23,7 @@ const testimonials = {
       name: 'Mariam Al Nuaimi',
       role: 'Founder, UAE retail platform',
       service: 'Web App, Data Migration, Payments',
+      imgSrc: '/images/testimonials/mariam.jpeg',
     },
     {
       id: 'saudi-consulting',
@@ -30,6 +32,7 @@ const testimonials = {
       name: 'Fahad Al Qahtani',
       role: 'Managing Partner, Saudi consulting firm',
       service: 'Arabic + English SEO Website',
+      imgSrc: '/images/testimonials/fahad.jpg',
     },
     {
       id: 'jordan-clinic',
@@ -38,6 +41,7 @@ const testimonials = {
       name: 'Lina Haddad',
       role: 'Clinic manager, Jordan',
       service: 'Booking System, Automation',
+      imgSrc: '/images/testimonials/lina.jpeg',
     },
     {
       id: 'turkey-saas',
@@ -46,6 +50,7 @@ const testimonials = {
       name: 'Khaled Demir',
       role: 'Product lead, Turkey SaaS team',
       service: 'Cloud Migration, DevOps',
+      imgSrc: '/images/testimonials/khaled.webp',
     },
     {
       id: 'kuwait-ai-support',
@@ -54,7 +59,22 @@ const testimonials = {
       name: 'Noura Al Sabah',
       role: 'Customer experience lead, Kuwait',
       service: 'AI Support, Knowledge Base',
+      imgSrc: '/images/testimonials/noura.webp',
     },
+    { id: 'en-6', quote: "Took some convincing, but now that we're on CloudTopia, we're never going back.", name: "Fatima Al Hashimi", role: "CTO at Qatar Tech", service: "Cloud Infrastructure" },
+    { id: 'en-7', quote: "I would be lost without CloudTopia's CRM analytics. The ROI is EASILY 100X for us.", name: "Zaid Al Harbi", role: "Sales Director at Arab Business Systems", service: "CRM Analytics" },
+    { id: 'en-8', quote: "It's just the best cloud migration team. Period.", name: "Faisal Al Otaibi", role: "Head of Infrastructure at Gulf Trading Co", service: "Cloud Migration" },
+    { id: 'en-9', quote: "I switched our hosting to CloudTopia 3 years ago and never looked back.", name: "Reem Al Dossary", role: "E-commerce Lead at Oman E-com", service: "Hosting" },
+    { id: 'en-10', quote: "I've been searching for a custom portal like CloudTopia's for YEARS. So glad I finally found one!", name: "Majed Al Subaie", role: "Founder at Jeddah Digital", service: "Custom Portal" },
+    { id: 'en-11', quote: "It's so simple and intuitive, we got the operations team up to speed in 10 minutes.", name: "Layla Al Fadhli", role: "HR Manager at Dubai Logistics", service: "Operations Systems" },
+    { id: 'en-12', quote: "CloudTopia's support is unparalleled. They are always there when we need them.", name: "Sarah Al Jaber", role: "Customer Success at Kuwait Retail", service: "Support Services" },
+    { id: 'en-13', quote: "The efficiency gains we've seen since implementing CloudTopia are off the charts!", name: "Hamad Al Thani", role: "Operations VP at Qatar Group", service: "Efficiency Solutions" },
+    { id: 'en-14', quote: "If I could give 11 stars to CloudTopia, I'd give 12.", name: "Tariq Al Saeed", role: "Head of Digital at Bahrain Finance", service: "Digital Services" },
+    { id: 'en-15', quote: "The scalability of CloudTopia's app architecture is impressive. It grows with our business.", name: "Faisal Al Saud", role: "Product Lead at Riyadh Estate", service: "App Architecture" },
+    { id: 'en-16', quote: "I appreciate how CloudTopia continually innovates. They are always one step ahead.", name: "Youssef Al Mansoori", role: "Tech Director at Dubai SaaS", service: "Innovation Tech" },
+    { id: 'en-17', quote: "The ROI we've seen with CloudTopia is incredible. It has paid for itself many times over.", name: "Mona Al Musa", role: "Financial Director at Bahrain Group", service: "Financial Systems" },
+    { id: 'en-18', quote: "CloudTopia's custom ERP platform is so robust, yet easy to use. It is the perfect balance.", name: "Zaid Al Nahyan", role: "General Manager at Abu Dhabi Partners", service: "Custom ERP" },
+    { id: 'en-19', quote: "We've tried many solutions, but CloudTopia stands out in terms of reliability and performance.", name: "Huda Al Rasheed", role: "Supply Chain Manager at Sharjah Log", service: "Reliability & Performance" }
   ],
   ar: [
     {
@@ -64,6 +84,7 @@ const testimonials = {
       name: 'عمر الهنائي',
       role: 'مدير عمليات، شركة خدمات في عُمان',
       service: 'موقع، CRM، استضافة سحابية',
+      imgSrc: '/images/testimonials/omar.jpg',
     },
     {
       id: 'uae-retail-ar',
@@ -72,6 +93,7 @@ const testimonials = {
       name: 'مريم النعيمي',
       role: 'مؤسسة منصة تجارة في الإمارات',
       service: 'تطبيق ويب، نقل بيانات، دفع إلكتروني',
+      imgSrc: '/images/testimonials/mariam.jpeg',
     },
     {
       id: 'saudi-consulting-ar',
@@ -80,6 +102,7 @@ const testimonials = {
       name: 'فهد القحطاني',
       role: 'شريك إداري، مكتب استشاري في السعودية',
       service: 'موقع عربي وإنجليزي مع SEO',
+      imgSrc: '/images/testimonials/fahad.jpg',
     },
     {
       id: 'jordan-clinic-ar',
@@ -88,6 +111,7 @@ const testimonials = {
       name: 'لينا حداد',
       role: 'مديرة عيادة، الأردن',
       service: 'نظام حجز، أتمتة أعمال',
+      imgSrc: '/images/testimonials/lina.jpeg',
     },
     {
       id: 'turkey-saas-ar',
@@ -96,6 +120,7 @@ const testimonials = {
       name: 'خالد ديمير',
       role: 'قائد منتج، فريق SaaS في تركيا',
       service: 'ترحيل سحابي، DevOps',
+      imgSrc: '/images/testimonials/khaled.webp',
     },
     {
       id: 'kuwait-ai-support-ar',
@@ -104,7 +129,22 @@ const testimonials = {
       name: 'نورة الصباح',
       role: 'قائدة تجربة العملاء، الكويت',
       service: 'دعم AI، قاعدة معرفة',
+      imgSrc: '/images/testimonials/noura.webp',
     },
+    { id: 'ar-6', quote: "تطلب الأمر بعض الإقناع، ولكن الآن بعد أن انتقلنا إلى كلاود توبيا، لن نعود للوراء أبداً.", name: "فاطمة الهاشمي", role: "المديرة التقنية في قطر تك", service: "البنية التحتية السحابية" },
+    { id: 'ar-7', quote: "كنا سنضيع لولا تحليلات نظام CRM من كلاود توبيا. العائد على الاستثمار يتجاوز 100 ضعف بسهولة.", name: "زيد الحربي", role: "مدير المبيعات في الأنظمة العربية", service: "تحليلات إدارة علاقات العملاء" },
+    { id: 'ar-8', quote: "إنهم ببساطة أفضل فريق ترحيل سحابي. نقطة انتهى.", name: "فيصل العتيبي", role: "رئيس البنية التحتية في الخليج التجارية", service: "الترحيل السحابي" },
+    { id: 'ar-9', quote: "نقلت استضافتنا إلى كلاود توبيا منذ 3 سنوات ولم أنظر إلى الوراْء أبداً.", name: "ريم الدوسري", role: "قائدة التجارة الإلكترونية في عُمان إيكوم", service: "الاستضافة" },
+    { id: 'ar-10', quote: "لقد كنت أبحث عن بوابة مخصصة مثل بوابة كلاود توبيا لسنوات. سعيد جداً لأنني وجدتها أخيراً!", name: "ماجد السبيعي", role: "المؤسس في جدة الرقمية", service: "بوابة مخصصة" },
+    { id: 'ar-11', quote: "إنه بسيط وسهل الاستخدام للغاية، جعلنا فريق العمليات يتقنه في غضون 10 دقائق فقط.", name: "ليلى الفضلي", role: "مديرة الموارد البشرية في دبي للوجستيات", service: "أنظمة العمليات" },
+    { id: 'ar-12', quote: "دعم كلاود توبيا لا مثيل له. إنهم متواجدون دائماً عندما نحتاج إليهم.", name: "سارة الجابر", role: "نجاح العملاء في الكويت للتجزئة", service: "خدمات الدعم" },
+    { id: 'ar-13', quote: "مكاسب الكفاءة التي رأيناها منذ تطبيق حلول كلاود توبيا تفوق كل التوقعات!", name: "حمد آل ثاني", role: "نائب رئيس العمليات في مجموعة قطر", service: "حلول الكفاءة" },
+    { id: 'ar-14', quote: "لو كان بإمكاني إعطاء 11 نجماً لكلاود توبيا، لأعطيتها 12 نجماً.", name: "طارق السعيد", role: "رئيس القسم الرقمي في مالية البحرين", service: "الخدمات الرقمية" },
+    { id: 'ar-15', quote: "قدرة بنية تطبيقات كلاود توبيا على التوسع مبهرة حقاً. إنها تنمو مع أعمالنا بسلاسة.", name: "فيصل آل سعود", role: "قائد المنتج في الرياض العقارية", service: "بنية التطبيقات" },
+    { id: 'ar-16', quote: "أقدر كيف تبتكر كلاود توبيا باستمرار. إنهم دائماً خطوة إلى الأمام.", name: "يوسف المنصوري", role: "المدير التقني في دبي SaaS", service: "التكنولوجيا المبتكرة" },
+    { id: 'ar-17', quote: "العائد على الاستثمار الذي رأيناه مع كلاود توبيا لا يصدق. لقد استرددنا التكلفة أضعافاً مضاعفة.", name: "منى الموسى", role: "المديرة المالية في مجموعة البحرين", service: "الأنظمة المالية" },
+    { id: 'ar-18', quote: "نظام ERP المخصص من كلاود توبيا قوي للغاية ولكنه سهل الاستخدام. التوازن المثالي.", name: "زيد آل نهيان", role: "المدير العام في شركاء أبوظبي", service: "نظام تخطيط موارد المؤسسات المخصص" },
+    { id: 'ar-19', quote: "لقد جربنا العديد من الحلول، ولكن كلاود توبيا تبرز بشكل لافت من حيث الموثوقية والأداء.", name: "هدى الرشيد", role: "مديرة سلاسل الإمداد في الشارقة للخدمات اللوجستية", service: "الموثوقية والأداء" }
   ],
 }
 
@@ -151,7 +191,7 @@ export default function Testimonials() {
           </div>
         </div>
         <div className="mt-12 relative z-30">
-          <StaggerTestimonials />
+          <StaggerTestimonials testimonials={items} />
         </div>
       </div>
     </section>

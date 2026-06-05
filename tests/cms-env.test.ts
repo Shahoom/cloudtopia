@@ -14,9 +14,13 @@ test.afterEach(() => {
   process.env = { ...originalEnv }
 })
 
+function setNodeEnv(value: 'development' | 'production') {
+  Reflect.set(process.env, 'NODE_ENV', value)
+}
+
 test('uses a local Postgres database URL in development when DATABASE_URL is not set', () => {
   delete process.env.DATABASE_URL
-  process.env.NODE_ENV = 'development'
+  setNodeEnv('development')
 
   assert.equal(getDatabaseUrl(), 'postgres://127.0.0.1:5432/payload_db')
   assert.equal(isDatabaseConfigured(), true)
@@ -24,7 +28,7 @@ test('uses a local Postgres database URL in development when DATABASE_URL is not
 
 test('requires an explicit database URL in production', () => {
   delete process.env.DATABASE_URL
-  process.env.NODE_ENV = 'production'
+  setNodeEnv('production')
 
   assert.equal(getDatabaseUrl(), '')
   assert.equal(isDatabaseConfigured(), false)
@@ -32,12 +36,12 @@ test('requires an explicit database URL in production', () => {
 
 test('uses a development-only Payload secret locally but not in production', () => {
   delete process.env.PAYLOAD_SECRET
-  process.env.NODE_ENV = 'development'
+  setNodeEnv('development')
 
   assert.equal(getPayloadSecret(), 'dev-only-change-me-before-production')
   assert.equal(isPayloadConfigured(), true)
 
-  process.env.NODE_ENV = 'production'
+  setNodeEnv('production')
 
   assert.equal(getPayloadSecret(), '')
   assert.equal(isPayloadConfigured(), false)

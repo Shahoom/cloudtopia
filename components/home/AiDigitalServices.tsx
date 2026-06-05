@@ -97,7 +97,7 @@ const TABS_DATA: TabCategory[] = [
       en: 'Enhance customer engagement with intelligent, bilingual chatbots and voice assistants. Our solutions provide 24/7 support with seamless human hand-off and integrations across major messaging platforms.',
       ar: 'عزز تفاعل العملاء من خلال روبوتات محادثة ومساعدين صوتيين أذكياء ثنائيي اللغة. توفر حلولنا دعماً على مدار الساعة مع ميزة التحويل السلس للموظفين البشريين.'
     },
-    image: '/images/homepage/Chatbot & Conversational AI.jpg',
+    image: '/images/homepage/Chatbot & Conversational AI.webp',
     bullets: [
       { en: 'Bilingual Arabic and English customer support bots answering FAQs in real time.', ar: 'روبوتات دعم عملاء ثنائية اللغة (عربي/إنجليزي) للرد الفوري على الاستفسارات الشائعة.' },
       { en: 'Seamless human-handoff logic that routes complex queries to active customer service staff.', ar: 'منطق تسليم سلس يحول العملاء إلى موظفي الدعم البشريين عند الحاجة.' },

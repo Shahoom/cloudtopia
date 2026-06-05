@@ -4,6 +4,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
 import { buildConfig } from 'payload'
 import { Authors } from './collections/Authors.ts'
+import { AIChatLeads } from './collections/AIChatLeads.ts'
 import { BlogAIGenerationLogs } from './collections/BlogAIGenerationLogs.ts'
 import { BlogCategories } from './collections/BlogCategories.ts'
 import { BlogContentTemplates } from './collections/BlogContentTemplates.ts'
@@ -18,6 +19,7 @@ import { ServiceFAQs } from './collections/ServiceFAQs.ts'
 import { Pages } from './collections/Pages.ts'
 import { SiteDesign } from './collections/SiteDesign.ts'
 import { SiteContent } from './collections/SiteContent.ts'
+import { SolutionFinderLeads } from './collections/SolutionFinderLeads.ts'
 import { Users } from './collections/Users.ts'
 import { getDatabaseUrl, getPayloadSecret } from './lib/cms/env.ts'
 import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
@@ -65,6 +67,8 @@ export default buildConfig({
   },
   collections: [
     Users,
+    AIChatLeads,
+    SolutionFinderLeads,
     Media,
     Authors,
     BlogCategories,

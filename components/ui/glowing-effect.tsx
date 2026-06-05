@@ -31,6 +31,7 @@ const GlowingEffect = memo(
     disabled = true,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const rectRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
 
@@ -46,7 +47,11 @@ const GlowingEffect = memo(
           const element = containerRef.current;
           if (!element) return;
 
-          const { left, top, width, height } = element.getBoundingClientRect();
+          if (!rectRef.current) {
+            rectRef.current = element.getBoundingClientRect();
+          }
+          const rect = rectRef.current;
+
           const mouseX = e?.x ?? lastPosition.current.x;
           const mouseY = e?.y ?? lastPosition.current.y;
 
@@ -54,12 +59,12 @@ const GlowingEffect = memo(
             lastPosition.current = { x: mouseX, y: mouseY };
           }
 
-          const center = [left + width * 0.5, top + height * 0.5];
+          const center = [rect.left + rect.width * 0.5, rect.top + rect.height * 0.5];
           const distanceFromCenter = Math.hypot(
             mouseX - center[0],
             mouseY - center[1]
           );
-          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+          const inactiveRadius = 0.5 * Math.min(rect.width, rect.height) * inactiveZone;
 
           if (distanceFromCenter < inactiveRadius) {
             element.style.setProperty("--active", "0");
@@ -67,10 +72,10 @@ const GlowingEffect = memo(
           }
 
           const isActive =
-            mouseX > left - proximity &&
-            mouseX < left + width + proximity &&
-            mouseY > top - proximity &&
-            mouseY < top + height + proximity;
+            mouseX > rect.left - proximity &&
+            mouseX < rect.left + rect.width + proximity &&
+            mouseY > rect.top - proximity &&
+            mouseY < rect.top + rect.height + proximity;
 
           element.style.setProperty("--active", isActive ? "1" : "0");
 
@@ -101,10 +106,17 @@ const GlowingEffect = memo(
     useEffect(() => {
       if (disabled) return;
 
-      const handleScroll = () => handleMove();
+      const handleScroll = () => {
+        rectRef.current = null;
+        handleMove();
+      };
+      const handleResize = () => {
+        rectRef.current = null;
+      };
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
 
       window.addEventListener("scroll", handleScroll, { passive: true });
+      window.addEventListener("resize", handleResize, { passive: true });
       document.body.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
@@ -114,6 +126,7 @@ const GlowingEffect = memo(
           cancelAnimationFrame(animationFrameRef.current);
         }
         window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleResize);
         document.body.removeEventListener("pointermove", handlePointerMove);
       };
     }, [handleMove, disabled]);

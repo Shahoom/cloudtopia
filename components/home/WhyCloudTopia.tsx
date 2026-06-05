@@ -60,7 +60,7 @@ export default function WhyCloudTopia() {
 
     return (
         <section
-            className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-[#FAFAFA] overflow-hidden"
+            className="relative py-8 md:py-10 px-4 sm:px-6 lg:px-8 bg-[#FAFAFA] overflow-hidden"
             data-header-theme="light"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
@@ -76,13 +76,13 @@ export default function WhyCloudTopia() {
             />
 
             <div className="relative max-w-7xl mx-auto">
-                <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
+                <div className="max-w-2xl mb-6 md:mb-8 text-center mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 14 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="flex justify-center mb-6"
+                        className="flex justify-center mb-3"
                     >
                         <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#0284c7]/20 shadow-sm text-xs font-bold uppercase tracking-widest text-[#0284c7]">
                             {content.badge}
@@ -94,7 +94,7 @@ export default function WhyCloudTopia() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.05 }}
-                        className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-900 leading-[1.1] mb-5"
+                        className="text-2xl md:text-4xl lg:text-[2.6rem] font-bold tracking-tight text-neutral-900 leading-[1.1] mb-3"
                     >
                         {content.title}{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#6366f1] to-[#8b5cf6]">
@@ -107,13 +107,13 @@ export default function WhyCloudTopia() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-base md:text-lg text-neutral-600 leading-relaxed"
+                        className="text-sm md:text-base text-neutral-600 leading-relaxed"
                     >
                         {content.description}
                     </motion.p>
                 </div>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-3">
                     {(content.reasons as Reason[]).map((reason: any, i: number) => {
                         const iconSrc = REASON_ICONS[i % REASON_ICONS.length]
                         return (
@@ -140,22 +140,22 @@ export default function WhyCloudTopia() {
                                         inactiveZone={0.05}
                                         borderWidth={2}
                                     />
-                                    <div className="relative h-full rounded-[7px] bg-white p-6 md:p-7">
+                                    <div className="relative h-full rounded-[7px] bg-white p-3.5 md:p-4">
                                         <div className="relative flex flex-col h-full">
-                                            <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center p-2.5 mb-5">
+                                            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#0284c7]/10 to-[#6366f1]/10 border border-[#0284c7]/15 flex items-center justify-center p-1.5 mb-2.5">
                                                 <Image
                                                     src={iconSrc}
                                                     alt={reason.title}
-                                                    width={56}
-                                                    height={56}
+                                                    width={36}
+                                                    height={36}
                                                     quality={90}
                                                     className="w-full h-full object-contain"
                                                 />
                                             </div>
-                                            <h3 className="text-lg md:text-xl font-bold text-neutral-900 mb-2 leading-tight">
+                                            <h3 className="text-base md:text-[1.05rem] font-bold text-neutral-900 mb-1 leading-snug">
                                                 {reason.title}
                                             </h3>
-                                            <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
+                                            <p className="text-[0.8rem] md:text-sm text-neutral-500 leading-relaxed">
                                                 {reason.description}
                                             </p>
                                         </div>

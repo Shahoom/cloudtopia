@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
+import { AIChatbot } from '@/components/ai-chatbot'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -130,8 +131,11 @@ export default async function FrontendLayout({
         <link rel="preload" as="image" href="/images/homepage/clouds-b.webp" type="image/webp" />
         <link rel="preload" as="image" href="/images/homepage/clouds-c.webp" type="image/webp" />
         <link rel="manifest" href="/manifest.json" />
+      </head>
+      <body className="min-h-screen antialiased font-['Changa',sans-serif]" suppressHydrationWarning>
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -165,6 +169,7 @@ export default async function FrontendLayout({
         />
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -185,13 +190,12 @@ export default async function FrontendLayout({
             }),
           }}
         />
-      </head>
-      <body className="min-h-screen antialiased font-['Changa',sans-serif]">
         <div className="min-h-screen">
           <MetaPixelBoot />
           <PixelRouteChangeTracker />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             {children}
+            <AIChatbot />
           </ThemeProvider>
           <SpeedInsights />
         </div>

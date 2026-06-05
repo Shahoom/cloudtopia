@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, SkipForward, Sparkles, AlertCircle } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-import { SOLUTION_FINDER_STEPS } from './solutionFinderData'
+import { getOptionsForStep, isValidOptionForStep, SOLUTION_FINDER_STEPS } from './solutionFinderData'
 import type { WizardAnswers } from './recommendationEngine'
 import { generateRecommendation } from './recommendationEngine'
 import { SF_TEXT } from './sfTranslations'
+import type { AIRecommendationDetails } from '@/lib/solution-finder/types'
 
 import StepSidebar from './StepSidebar'
 import OptionCard from './OptionCard'
@@ -55,15 +56,32 @@ export default function SolutionFinder() {
   const [validationMsg, setValidationMsg] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
+  const [aiRecommendation, setAIRecommendation] = useState<AIRecommendationDetails | null>(null)
   const [submitError, setSubmitError] = useState('')
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward')
 
   const step = SOLUTION_FINDER_STEPS[currentStep]
   const recommendation = useMemo(() => generateRecommendation(answers, sfLocale), [answers, sfLocale])
+  const displayRecommendation = useMemo(() => ({ ...recommendation, aiRecommendation }), [recommendation, aiRecommendation])
 
   // ─── Answer helpers ─────────────────────────────────────────────────────────
   const updateAnswer = useCallback((updates: Partial<WizardAnswers>) => {
-    setAnswers((prev) => ({ ...prev, ...updates }))
+    setAnswers((prev) => {
+      const next = { ...prev, ...updates }
+
+      if (Object.prototype.hasOwnProperty.call(updates, 'industry')) {
+        delete next.projectType
+        delete next.businessGoal
+      }
+
+      if (Object.prototype.hasOwnProperty.call(updates, 'projectType')) {
+        if (!isValidOptionForStep('business-goal', next.businessGoal, next)) {
+          delete next.businessGoal
+        }
+      }
+
+      return next
+    })
     setValidationMsg('')
   }, [])
 
@@ -137,8 +155,18 @@ export default function SolutionFinder() {
       const payload = {
         ...answers,
         locale: sfLocale,
+        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         recommendedPackage: recommendation.packageTitle,
         recommendedRoute: recommendation.route,
+        baseRecommendation: {
+          packageTitle: recommendation.packageTitle,
+          personalizedIntro: recommendation.personalizedIntro,
+          recommendedServices: recommendation.recommendedServices,
+          keyFeatures: recommendation.keyFeatures,
+          deliveryApproach: recommendation.deliveryApproach,
+          estimatedTimeline: recommendation.estimatedTimeline,
+          budgetRange: recommendation.budgetRange,
+        },
         source: 'solution-finder',
         createdAt: new Date().toISOString(),
       }
@@ -153,6 +181,9 @@ export default function SolutionFinder() {
         const data = await res.json().catch(() => ({}))
         throw new Error(data?.error || 'Submission failed')
       }
+
+      const data = (await res.json().catch(() => ({}))) as { aiRecommendation?: AIRecommendationDetails }
+      setAIRecommendation(data.aiRecommendation ?? null)
 
       const newCompleted = new Set(completedSteps).add(currentStep)
       setCompletedSteps(newCompleted)
@@ -169,6 +200,7 @@ export default function SolutionFinder() {
     setAnswers({})
     setCompletedSteps(new Set())
     setIsComplete(false)
+    setAIRecommendation(null)
     setSubmitError('')
     setValidationMsg('')
     setDirection('forward')
@@ -192,7 +224,7 @@ export default function SolutionFinder() {
     if (isComplete) {
       return (
         <ResultScreen
-          recommendation={recommendation}
+          recommendation={displayRecommendation}
           answers={answers}
           onReset={handleReset}
           onEdit={handleEdit}
@@ -258,16 +290,24 @@ export default function SolutionFinder() {
     // Single-choice
     const answerKey = STEP_ANSWER_KEY[step.id]
     const selectedValue = answerKey ? (answers[answerKey] as string) : undefined
+    const options = getOptionsForStep(step.id, answers)
 
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2.5" dir={isRtl ? 'rtl' : 'ltr'}>
-        {step.options?.map((opt) => (
+        {options.map((opt) => (
           <OptionCard
             key={opt.id}
             option={opt}
             selected={selectedValue === opt.id}
             onSelect={(id) => {
               if (answerKey) updateAnswer({ [answerKey]: id })
+              if (currentStep < SOLUTION_FINDER_STEPS.length - 2) {
+                window.setTimeout(() => {
+                  setDirection('forward')
+                  setCompletedSteps((current) => new Set(current).add(currentStep))
+                  setCurrentStep((value) => Math.min(value + 1, SOLUTION_FINDER_STEPS.length - 1))
+                }, 180)
+              }
             }}
             locale={sfLocale}
             t={t}
@@ -503,7 +543,7 @@ export default function SolutionFinder() {
             className="w-full lg:w-[350px] flex-shrink-0 font-sans"
           >
             <RecommendationCard
-              recommendation={recommendation}
+              recommendation={displayRecommendation}
               answers={answers}
               isComplete={isComplete}
               locale={sfLocale}
@@ -521,4 +561,3 @@ export default function SolutionFinder() {
     </section>
   )
 }
-

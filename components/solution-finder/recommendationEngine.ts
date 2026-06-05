@@ -6,6 +6,7 @@
 
 import { RECOMMENDATION_TEMPLATES, type RecommendationTemplate } from './recommendationTemplates'
 import { lookupOptionLabel } from './solutionFinderData'
+import type { AIRecommendationDetails } from '@/lib/solution-finder/types'
 
 export type Locale = 'en' | 'ar'
 
@@ -39,6 +40,7 @@ export type Recommendation = {
   budgetAdvice: string
   route: string
   matchScore: number
+  aiRecommendation?: AIRecommendationDetails | null
 }
 
 // ─── Lookup tables ────────────────────────────────────────────────────────────
@@ -103,6 +105,10 @@ function scoreTemplate(template: RecommendationTemplate, answers: WizardAnswers)
   const industryMatch = matchesField(industry, answers.industry)
   const projectMatch  = matchesField(projectType, answers.projectType)
   const goalMatch     = matchesField(goal, answers.businessGoal)
+
+  if (industry && answers.industry && !industryMatch) score -= 140
+  if (projectType && answers.projectType && !projectMatch) score -= 50
+  if (goal && answers.businessGoal && !goalMatch) score -= 25
 
   // Perfect triple match
   if (industryMatch && projectMatch && goalMatch) score += 300

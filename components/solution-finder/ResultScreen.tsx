@@ -105,6 +105,29 @@ export default function ResultScreen({ recommendation, answers, onReset, onEdit,
         </motion.div>
       )}
 
+      {recommendation.aiRecommendation ? (
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.34 }}>
+          <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5">
+            {locale === 'ar' ? 'خطة AI المقترحة' : 'AI Suggested Roadmap'}
+          </p>
+          <div className="rounded-xl bg-indigo-50 border border-indigo-100 p-3 space-y-2">
+            <p className="text-xs sm:text-sm text-indigo-950 leading-relaxed font-semibold">
+              {recommendation.aiRecommendation.summary}
+            </p>
+            <div className="grid gap-1.5">
+              {recommendation.aiRecommendation.roadmap.slice(0, 3).map((step, index) => (
+                <div key={step} className="flex items-start gap-2 text-xs text-indigo-900">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-black text-white">
+                    {index + 1}
+                  </span>
+                  <span className="leading-relaxed">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      ) : null}
+
       {/* Services tags */}
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
         <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5">{r.servicesLabel}</p>

@@ -22,12 +22,15 @@ import EnterpriseProof from '@/components/home/EnterpriseProof'
 import SolutionFinder from '@/components/solution-finder/SolutionFinder'
 import EnterpriseGrowthCTA from '@/components/home/EnterpriseGrowthCTA'
 import WorkWithSection from '@/components/home/WorkWithSection'
+import TechnologyStackSection from '@/components/home/TechnologyStackSection'
 import WhyCloudTopia from '@/components/home/WhyCloudTopia'
 import HowWeWork from '@/components/home/HowWeWork'
 import FAQ from '@/components/home/FAQ'
 import FinalCTA from '@/components/home/FinalCTA'
 import InsightsTeaser from '@/components/home/InsightsTeaser'
 import Testimonials from '@/components/home/Testimonials'
+import OfficesSection from '@/components/home/OfficesSection'
+import { AuroraBackground } from '@/components/ui/aurora-background'
 
 const StarsCanvas = dynamic(
     () => import('@/components/ui/stars-canvas').then((mod) => mod.StarsCanvas),
@@ -88,7 +91,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                 image: string
                 metrics: { label: string; value: string }
                 link?: string
-            }>)?.filter((p) => p.featured).slice(0, 3) || [],
+            }>)?.filter((p) => p.featured).slice(0, 6) || [],
         [dict.projects?.projectCards]
     )
 
@@ -165,6 +168,9 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             {/* "We Work With" Business Types Section */}
             <WorkWithSection />
 
+            {/* Technology Stack – after "We Work With" */}
+            <TechnologyStackSection />
+
             {/* 7. Why CloudTopia */}
             <WhyCloudTopia />
 
@@ -178,94 +184,96 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             <FAQ />
 
             {/* 10. Featured Projects */}
-            <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-eerie" data-header-theme="dark">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+            <AuroraBackground className="py-8 md:py-10 px-4 sm:px-6 lg:px-8 min-h-0 w-full" data-header-theme="light">
+                <div className="max-w-[1400px] mx-auto w-full">
+                    <div className="text-center mb-10">
                         <FloatingCard>
-                            <motion.div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavender/20 border border-cyan-500/30 mb-8">
-                                <Code2 className="w-5 h-5 text-cyan-400" />
-                                <span className="text-cyan-300 font-medium">{t.home?.featuredProjects?.badge || 'Featured Projects'}</span>
+                            <motion.div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-primary-500/20 mb-8">
+                                <Code2 className="w-5 h-5 text-primary-600" />
+                                <span className="text-primary-800 font-medium">{t.home?.featuredProjects?.badge || 'Featured Projects'}</span>
                             </motion.div>
                         </FloatingCard>
 
                         <FloatingCard delay={0.1}>
-                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                            <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6">
                                 {t.home?.featuredProjects?.title || 'Our Recent'}{' '}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-400">
                                     {t.home?.featuredProjects?.titleHighlight || 'Success Stories'}
                                 </span>
                             </h2>
                         </FloatingCard>
 
                         <FloatingCard delay={0.2}>
-                            <p className="text-xl text-white/70 max-w-2xl mx-auto">
+                            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
                                 {t.home?.featuredProjects?.description}
                             </p>
                         </FloatingCard>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {featuredProjects.map((project: any, index: number) => (
                             <motion.div
                                 key={project.id}
-                                initial={{ opacity: 0, y: 40 }}
+                                initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.6, delay: index * 0.15 }}
-                                whileHover={{ y: -8 }}
-                                className="group relative bg-lavender/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10"
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ y: -6 }}
+                                className="group relative bg-white/60 backdrop-blur-md rounded-2xl border border-white/40 overflow-hidden hover:border-white/80 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 flex flex-col"
                             >
-                                <div className="relative h-52 overflow-hidden">
+                                <div className="relative h-48 overflow-hidden shrink-0">
                                     {project.image && (
                                         <Image
                                             src={project.image}
                                             alt={project.title}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 33vw"
-                                            className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                                         />
                                     )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                                     <div className="absolute top-4 left-4">
-                                        <span className="px-3 py-1.5 bg-lavender/90 backdrop-blur-sm text-xs font-bold text-neutral-800 rounded-full uppercase tracking-wide">
+                                        <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-xs font-bold text-primary-800 rounded-full uppercase tracking-wide">
                                             {project.type}
                                         </span>
                                     </div>
 
                                     <div className="absolute top-4 right-4">
-                                        <span className="px-3 py-1.5 bg-lavender/90 backdrop-blur-sm text-xs font-bold text-white rounded-full">
+                                        <span className="px-3 py-1.5 bg-primary-600 backdrop-blur-sm text-xs font-bold text-white rounded-full shadow-sm">
                                             {project.metrics.value}
                                         </span>
                                     </div>
                                 </div>
 
-                                <div className="p-6">
-                                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                                <div className="p-5 flex flex-col flex-1">
+                                    <h3 className="text-lg font-bold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
                                         {project.title}
                                     </h3>
-                                    <p className="text-white/70 text-sm mb-4 leading-relaxed line-clamp-2">
+                                    <p className="text-neutral-600 text-sm mb-4 leading-relaxed line-clamp-2">
                                         {project.solution}
                                     </p>
 
                                     <div className="flex flex-wrap gap-2 mb-5">
                                         {project.features.slice(0, 3).map((feature: string) => (
-                                            <span key={feature} className="px-3 py-1 rounded-full bg-lavender/10 text-white/70 text-xs font-medium">
+                                            <span key={feature} className="px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-medium">
                                                 {feature}
                                             </span>
                                         ))}
                                     </div>
 
-                                    {project.link && (
-                                        <a
-                                            href={project.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                                        >
-                                            {t.home?.featuredProjects?.visitProject || 'Visit Project'} <ExternalLink className="w-4 h-4" />
-                                        </a>
-                                    )}
+                                    <div className="mt-auto pt-4 border-t border-neutral-100">
+                                        {project.link && (
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors"
+                                            >
+                                                {t.home?.featuredProjects?.visitProject || 'Visit Project'} <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}
@@ -276,7 +284,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-lavender/10 backdrop-blur-sm text-white font-semibold rounded-2xl hover:bg-lavender/20 transition-colors border border-white/20 inline-flex items-center gap-2"
+                                className="px-8 py-4 bg-primary-600 text-white font-semibold rounded-2xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/20 inline-flex items-center gap-2"
                             >
                                 {t.home?.featuredProjects?.viewAll || 'View All Projects'}
                                 <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
@@ -284,12 +292,15 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                         </Link>
                     </FloatingCard>
                 </div>
-            </section>
+            </AuroraBackground>
 
             {/* 10. Insights */}
             <InsightsTeaser />
 
-            {/* 11. Final CTA */}
+            {/* 11. Offices */}
+            <OfficesSection />
+
+            {/* 12. Final CTA */}
             <FinalCTA />
         </Fragment>
     )

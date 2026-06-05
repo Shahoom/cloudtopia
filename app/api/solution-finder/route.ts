@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { generateAIRecommendationDetails } from '@/lib/solution-finder/aiRecommendation.ts'
+import { deriveSolutionFinderCountryHint, getHeaderCountryCode } from '@/lib/solution-finder/countryHint.ts'
+import { buildSolutionFinderLead, saveSolutionFinderLead } from '@/lib/solution-finder/leadService.ts'
+import type { SolutionFinderPayload } from '@/lib/solution-finder/types.ts'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/solution-finder
@@ -17,26 +21,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 
-type SolutionFinderPayload = {
-  name?: string
-  phone?: string
-  email?: string
-  company?: string
-  country?: string
-  industry?: string
-  projectType?: string
-  businessGoal?: string
-  budget?: string
-  timeline?: string
-  description?: string
-  contactMethod?: string
-  wantContact?: boolean
-  recommendedPackage?: string
-  recommendedRoute?: string
-  source?: string
-  createdAt?: string
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body: SolutionFinderPayload = await req.json()
@@ -50,12 +34,18 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Sanitize payload ──────────────────────────────────────────────────────
-    const lead = {
+    const inferredCountry = deriveSolutionFinderCountryHint({
+      explicitCountry: body.country,
+      headerCountryCode: getHeaderCountryCode(req.headers),
+      pageUrl: body.pageUrl,
+    })
+
+    const normalizedPayload: SolutionFinderPayload = {
       name: body.name?.trim() || 'Unknown',
       phone: body.phone?.trim() || '',
       email: body.email?.trim().toLowerCase() || '',
       company: body.company?.trim() || '',
-      country: body.country?.trim() || '',
+      country: inferredCountry,
       industry: body.industry || '',
       projectType: body.projectType || '',
       businessGoal: body.businessGoal || '',
@@ -66,13 +56,37 @@ export async function POST(req: NextRequest) {
       wantContact: body.wantContact ?? true,
       recommendedPackage: body.recommendedPackage || '',
       recommendedRoute: body.recommendedRoute || '',
+      baseRecommendation: body.baseRecommendation,
+      pageUrl: body.pageUrl || '',
+      locale: body.locale === 'ar' ? 'ar' : 'en',
       source: 'solution-finder',
       createdAt: body.createdAt || new Date().toISOString(),
+    }
+
+    const aiRecommendation = await generateAIRecommendationDetails({
+      locale: normalizedPayload.locale || 'en',
+      answers: normalizedPayload,
+      deterministicRecommendation: {
+        packageTitle: normalizedPayload.baseRecommendation?.packageTitle || normalizedPayload.recommendedPackage || 'CloudTopia Digital Solution',
+        personalizedIntro: normalizedPayload.baseRecommendation?.personalizedIntro || normalizedPayload.description || 'A tailored CloudTopia recommendation based on the submitted answers.',
+        recommendedServices: normalizedPayload.baseRecommendation?.recommendedServices || [],
+        keyFeatures: normalizedPayload.baseRecommendation?.keyFeatures || [],
+        deliveryApproach: normalizedPayload.baseRecommendation?.deliveryApproach || '',
+        estimatedTimeline: normalizedPayload.baseRecommendation?.estimatedTimeline || normalizedPayload.timeline || '',
+        budgetRange: normalizedPayload.baseRecommendation?.budgetRange || normalizedPayload.budget || '',
+      },
+    })
+
+    const crmLead = buildSolutionFinderLead(normalizedPayload, aiRecommendation)
+    const lead = {
+      ...crmLead,
       ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '',
       userAgent: req.headers.get('user-agent') || '',
     }
 
-    // ── 1. Log the lead (always works — replace with DB write) ────────────────
+    const saveResult = await saveSolutionFinderLead(crmLead)
+
+    // ── 1. Log the lead for local visibility ─────────────────────────────────
     console.log('[SolutionFinder] New lead received:', JSON.stringify(lead, null, 2))
 
     // ── 2. Optional: Send email notification to CloudTopia team ──────────────
@@ -101,18 +115,13 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── 4. TODO: Persist to database ─────────────────────────────────────────
-    // When CloudTopia's database is ready, insert here:
-    //
-    // await db.insert(solutionFinderLeads).values(lead)
-    //
-    // Or via Payload CMS:
-    // await payload.create({ collection: 'solution-finder-leads', data: lead })
-
     return NextResponse.json(
       {
         success: true,
         message: 'Your recommendation has been recorded. CloudTopia will be in touch shortly.',
+        saved: saveResult.saved,
+        destination: saveResult.destination,
+        aiRecommendation,
         lead: {
           name: lead.name,
           recommendedPackage: lead.recommendedPackage,

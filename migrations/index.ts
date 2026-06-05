@@ -7,6 +7,7 @@ import * as migration_20260522_020000_project_media_relation from './20260522_02
 import * as migration_20260522_030000_fix_payload_locked_document_rels from './20260522_030000_fix_payload_locked_document_rels';
 import * as migration_20260524_090000_add_blog_insights from './20260524_090000_add_blog_insights';
 import * as migration_20260524_120000_upgrade_blog_platform from './20260524_120000_upgrade_blog_platform';
+import * as migration_20260605_150500_add_crm_ai_leads from './20260605_150500_add_crm_ai_leads';
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260524_120000_upgrade_blog_platform.up,
     down: migration_20260524_120000_upgrade_blog_platform.down,
     name: '20260524_120000_upgrade_blog_platform'
+  },
+  {
+    up: migration_20260605_150500_add_crm_ai_leads.up,
+    down: migration_20260605_150500_add_crm_ai_leads.down,
+    name: '20260605_150500_add_crm_ai_leads'
   },
 ];

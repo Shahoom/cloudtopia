@@ -311,45 +311,65 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           height: 2
         }}
       />
-      <img
-        src={testimonial.imgSrc}
-        alt={`${testimonial.by.split(',')[0]}`}
-        className="mb-6 h-14 w-12 bg-muted object-cover object-top border border-neutral-200"
-        style={{
-          boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.1)"
-        }}
-      />
       <h3 className={cn(
-        "text-base sm:text-lg font-black leading-relaxed text-start line-clamp-4",
+        "text-base sm:text-lg font-black leading-relaxed text-start line-clamp-6 mt-4",
         isCenter ? "text-white" : "text-eerie"
       )}>
         "{testimonial.testimonial}"
       </h3>
       <div className={cn(
-        "absolute bottom-8 left-8 right-8 border-t pt-4 text-start",
+        "absolute bottom-8 left-8 right-8 border-t pt-4 text-start flex items-center gap-3",
         isCenter ? "border-white/20 text-white/90" : "border-neutral-200 text-neutral-600"
       )}>
-        <p className="text-sm font-black">
-          {testimonial.by.split(',')[0]}
-        </p>
-        <p className={cn("text-xs font-semibold mt-0.5", isCenter ? "text-sky-200" : "text-primary-700")}>
-          {testimonial.by.split(',').slice(1).join(',').trim()}
-        </p>
+        <img
+          src={testimonial.imgSrc || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"}
+          alt={`${testimonial.by.split(',')[0]}`}
+          className="h-11 w-11 shrink-0 rounded-full bg-muted object-cover object-top border border-neutral-200"
+        />
+        <div>
+          <p className="text-sm font-black">
+            {testimonial.by.split(',')[0]}
+          </p>
+          <p className={cn("text-xs font-semibold mt-0.5 line-clamp-2", isCenter ? "text-sky-200" : "text-primary-700")}>
+            {testimonial.by.split(',').slice(1).join(',').trim()}
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export const StaggerTestimonials: React.FC = () => {
+export interface TestimonialInput {
+  id: string;
+  quote: string;
+  name: string;
+  role: string;
+  service: string;
+  imgSrc?: string;
+}
+
+interface StaggerTestimonialsProps {
+  testimonials?: TestimonialInput[];
+}
+
+export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({ testimonials }) => {
   const { locale, dir } = useLanguage();
-  const rawTestimonials = locale === 'ar' ? testimonialsAr : testimonialsEn;
+  
+  const rawTestimonials = testimonials 
+    ? testimonials.map((t, idx) => ({
+        tempId: idx,
+        testimonial: t.quote,
+        by: `${t.name}, ${t.role}`,
+        imgSrc: t.imgSrc || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+      }))
+    : locale === 'ar' ? testimonialsAr : testimonialsEn;
   
   const [cardSize, setCardSize] = useState(365);
   const [testimonialsList, setTestimonialsList] = useState<StaggerTestimonial[]>(rawTestimonials);
 
   useEffect(() => {
     setTestimonialsList(rawTestimonials);
-  }, [locale, rawTestimonials]);
+  }, [locale, testimonials]);
 
   const handleMove = (steps: number) => {
     if (steps === 0) return;

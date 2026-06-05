@@ -317,7 +317,7 @@ const TABS_DATA: TabData[] = [
       en: 'Deploy, scale, migrate, and optimize database layers on secure global cloud provider setups.',
       ar: 'انشر، وتوسع، ورحّل، وحسّن قواعد البيانات على بنى تحتية سحابية عالمية محمية بالكامل.'
     },
-    image: '/images/homepage/cloud & infrastructure.jpeg',
+    image: '/images/homepage/cloud & infrastructure.webp',
     services: [
       {
         title: { en: 'Cloud Hosting Setup', ar: 'إعداد الاستضافات السحابية' },
@@ -376,7 +376,7 @@ const TABS_DATA: TabData[] = [
       en: 'Automate manual processes, draft data insights, and power support desks with intelligence models.',
       ar: 'أتمت العمليات اليدوية، واستخرج تحليلات البيانات، وادعم مكاتب المساعدة بنماذج الذكاء الاصطناعي.'
     },
-    image: '/images/homepage/ai automation.png',
+    image: '/images/homepage/ai automation.webp',
     services: [
       {
         title: { en: 'AI Chatbots & Assistants', ar: 'مساعدو وروبوتات المحادثة بالـ AI' },
