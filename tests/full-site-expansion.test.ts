@@ -22,6 +22,19 @@ const targetServiceSlugs = [
   'saas-mvp-development',
   'progressive-web-app-development',
   'mobile-app-development',
+  'ios-app-development',
+  'android-app-development',
+  'cross-platform-app-development',
+  'flutter-app-development',
+  'react-native-app-development',
+  'mvp-app-development',
+  'business-mobile-app-development',
+  'customer-app-development',
+  'booking-app-development',
+  'delivery-order-app-development',
+  'app-backend-api-development',
+  'app-store-launch-support',
+  'mobile-app-maintenance',
   'crm-development',
   'inventory-management-systems',
   'sales-management-systems',
@@ -66,7 +79,7 @@ test('full service taxonomy covers the requested service expansion', async () =>
   const { serviceDetailSlugs, serviceCategories, servicesBySlug } = await import('../lib/seo/services.ts')
 
   assert.deepEqual([...serviceDetailSlugs].sort(), [...targetServiceSlugs].sort())
-  assert.equal(serviceCategories.length, 6)
+  assert.equal(serviceCategories.length, 7)
 
   for (const slug of targetServiceSlugs) {
     const service = servicesBySlug[slug]
@@ -92,7 +105,6 @@ test('active site locale model is English and Arabic only', async () => {
   const proxySource = readFileSync(path.join(process.cwd(), 'proxy.ts'), 'utf8')
   const llmsSource = readFileSync(path.join(process.cwd(), 'public/llms.txt'), 'utf8')
   const ogImageSource = readFileSync(path.join(process.cwd(), 'lib/og/og-image.ts'), 'utf8')
-  const bentoPricingSource = readFileSync(path.join(process.cwd(), 'components/ui/bento-pricing.tsx'), 'utf8')
   const aboutClientSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/about/AboutPageClient.tsx'), 'utf8')
   const aboutLayoutSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/about/layout.tsx'), 'utf8')
   const processPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/process/page.tsx'), 'utf8')
@@ -107,7 +119,6 @@ test('active site locale model is English and Arabic only', async () => {
     proxySource,
     llmsSource,
     ogImageSource,
-    bentoPricingSource,
     aboutClientSource,
     aboutLayoutSource,
     processPageSource,
@@ -126,8 +137,9 @@ test('active site locale model is English and Arabic only', async () => {
   assert.doesNotMatch(llmsSource, /Turkish|Turkey|Turkiye|Türkiye|\/tr\//)
   assert.match(llmsSource, /Phase 2\/3 SEO landing pages/, 'llms.txt should expose expanded SEO landing pages to AI crawlers')
   assert.match(llmsSource, /\/industries\/healthcare/, 'llms.txt should include industry landing pages')
-  assert.match(llmsSource, /\/locations\/saudi-arabia/, 'llms.txt should include regional market pages')
-  assert.match(llmsSource, /\/services\/website-design-development/, 'llms.txt should include service detail pages')
+  assert.match(llmsSource, /https:\/\/cloudtopia\.net\/saudi-arabia/, 'llms.txt should include canonical regional market pages')
+  assert.match(llmsSource, /\/services\/business-website-development/, 'llms.txt should include service detail pages')
+  assert.match(llmsSource, /\/services\/ios-app-development/, 'llms.txt should include mobile app service detail pages')
   assert.doesNotMatch(ogImageSource, /services\/tr\.jpg|Turkish|Turkey|Turkiye|Türkiye/, 'OG image examples should not reference Turkish assets')
   assert.match(englishDictionarySource, /value: '6', label: 'Countries served'/, 'English dictionary should reflect the six active Gulf markets')
   assert.match(arabicDictionarySource, /value: '6', label: 'دول نخدمها'/, 'Arabic dictionary should reflect the six active Gulf markets')
@@ -139,6 +151,7 @@ test('service detail pages and sitemap are wired for expanded service routes', (
   const industryIndexPath = path.join(process.cwd(), 'app/(frontend)/[locale]/industries/page.tsx')
   const marketsIndexPath = path.join(process.cwd(), 'app/(country-landing)/[locale]/markets/page.tsx')
   const sitemapSource = readFileSync(path.join(process.cwd(), 'lib/sitemap-data.ts'), 'utf8')
+  const pagesCollectionSource = readFileSync(path.join(process.cwd(), 'collections/Pages.ts'), 'utf8')
 
   assert.equal(existsSync(serviceRoutePath), true, 'Dynamic service landing page route should exist')
   assert.equal(existsSync(industryIndexPath), true, 'Industry hub route should exist')
@@ -149,6 +162,10 @@ test('service detail pages and sitemap are wired for expanded service routes', (
   assert.match(serviceRouteSource, /\/pricing/, 'Service detail pages should link into pricing')
   assert.match(serviceRouteSource, /BreadcrumbList/, 'Service detail pages should emit breadcrumb schema')
   assert.match(serviceRouteSource, /answerTitle/, 'Service detail pages should include a direct answer block')
+  assert.match(serviceRouteSource, /problemCopy/, 'Service detail pages should include a problem section')
+  assert.match(serviceRouteSource, /solutionCopy/, 'Service detail pages should include a solution section')
+  assert.match(serviceRouteSource, /useCaseItems/, 'Service detail pages should include practical use cases')
+  assert.match(serviceRouteSource, /marketLinks/, 'Service detail pages should link to market pages')
   assert.match(serviceRouteSource, /bestForItems/, 'Service detail pages should include buyer-fit guidance')
   assert.match(serviceRouteSource, /deliverablesItems/, 'Service detail pages should include enterprise deliverables')
   assert.match(serviceRouteSource, /relatedServices/, 'Service detail pages should cross-link related services')
@@ -160,30 +177,73 @@ test('service detail pages and sitemap are wired for expanded service routes', (
   assert.match(sitemapSource, /\/services\/\$\{service\}/, 'Sitemap should generate localized service detail URLs')
   assert.match(sitemapSource, /path: '\/industries'/, 'Sitemap should include the industry hub')
   assert.match(sitemapSource, /path: '\/markets'/, 'Sitemap should include the markets hub')
+  assert.match(pagesCollectionSource, /programmaticLanding/, 'Payload pages should expose generated landing-page override fields')
+  assert.match(pagesCollectionSource, /Sub-Service Landing/, 'Payload should support sub-service landing templates')
+  assert.match(pagesCollectionSource, /Industry Landing/, 'Payload should support industry landing templates')
+  assert.match(pagesCollectionSource, /Market Landing/, 'Payload should support market landing templates')
 })
 
-test('header and footer expose expanded services industries and locations discovery', () => {
+test('header stays focused while footer exposes expanded services industries and markets', () => {
   const headerSource = readFileSync(path.join(process.cwd(), 'components/Header.tsx'), 'utf8')
   const footerSource = readFileSync(path.join(process.cwd(), 'components/Footer.tsx'), 'utf8')
 
   assert.match(headerSource, /MegaMenu/, 'Header should include mega-menu discovery')
   assert.match(headerSource, /serviceCategories/, 'Header should use service taxonomy')
   assert.match(headerSource, /industrySlugs/, 'Header should use industry taxonomy')
-  assert.match(headerSource, /countryLandingPages/, 'Header should use country landing taxonomy')
-  assert.match(headerSource, /Markets|الأسواق/, 'Header should expose regional market discovery')
-  assert.match(headerSource, /englishUrl|arabicUrl/, 'Header should link canonical market pages')
-  assert.match(headerSource, /enterprisePaths/, 'Header should guide buyers to pricing proof and intake paths')
-  assert.match(headerSource, /MegaMenuPathCards/, 'Header mega menus should include enterprise decision path cards')
-  assert.match(headerSource, /Trust center|مركز الثقة/, 'Header decision paths should expose the enterprise trust center')
-  assert.match(headerSource, /Delivery process|منهجية التنفيذ/, 'Header decision paths should expose the delivery process')
+  assert.match(headerSource, /projectsLabel/, 'Header should expose Projects as a top-level tab')
+  assert.match(headerSource, /pricingLabel/, 'Header should expose Pricing as a top-level tab')
+  assert.match(headerSource, /bg-eerie py-2 text-white/, 'Announcement bar should keep the original black treatment')
+  assert.doesNotMatch(headerSource, /countryLandingPages/, 'Header should not import country landing taxonomy')
+  assert.doesNotMatch(headerSource, /Markets|الأسواق|marketsLabel/, 'Header should not expose regional market discovery')
+  assert.doesNotMatch(headerSource, /menu: 'locations'|englishUrl|arabicUrl/, 'Header should not link market pages directly')
+  assert.doesNotMatch(headerSource, /enterprisePaths|MegaMenuPathCards/, 'Header mega menus should not include enterprise decision path cards')
+  assert.doesNotMatch(headerSource, /Clear packages before production|Discovery, design, build, handoff|Proof with challenge and solution|Ownership, security, clean handoff/, 'Header should not include removed path-card helper copy')
+  assert.doesNotMatch(headerSource, /Built by workflow/, 'Header should not include the unwanted workflow guide copy')
+  assert.doesNotMatch(headerSource, /Trust Center|مركز الثقة/, 'Header should keep the trust center out of desktop mega menus')
+  assert.doesNotMatch(headerSource, /Delivery process|منهجية التنفيذ/, 'Header should keep the process page out of desktop mega menus')
   assert.doesNotMatch(headerSource, /Start here|ابدأ من هنا/, 'Mobile menu should not include the removed Start here section')
   assert.match(footerSource, /serviceCategories/, 'Footer should expose expanded services')
   assert.match(footerSource, /industrySlugs/, 'Footer should expose industries')
   assert.match(footerSource, /countryLandingPages/, 'Footer should expose regional markets')
-  assert.match(headerSource, /\/pricing/, 'Header should expose transparent pricing')
+  assert.match(footerSource, /Markets We Serve|الأسواق التي نخدمها/, 'Footer should include a dedicated markets section')
+  assert.match(footerSource, /countryLandingPages\.map/, 'Footer should link all canonical market pages')
   assert.match(footerSource, /\/pricing/, 'Footer should expose transparent pricing')
   assert.match(footerSource, /\/process/, 'Footer should expose the delivery process')
   assert.match(footerSource, /\/trust/, 'Footer should expose the trust center')
+})
+
+test('metadata uses buyer-intent service package titles and Arabic brand spelling', async () => {
+  const { buildPageSEO } = await import('../lib/cms/page-structure.ts')
+  const { en } = await import('../lib/i18n/translations/en.ts')
+  const { ar } = await import('../lib/i18n/translations/ar.ts')
+  const localeLayoutSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/layout.tsx'), 'utf8')
+  const servicesPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/page.tsx'), 'utf8')
+  const websiteDesignPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/website-design/page.tsx'), 'utf8')
+  const ecommercePageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/ecommerce-solutions/page.tsx'), 'utf8')
+  const contentPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/content-creation/page.tsx'), 'utf8')
+
+  assert.equal(buildPageSEO('en', 'services', en).title, 'Service Packages')
+  assert.equal(buildPageSEO('ar', 'services', ar).title, 'باقات الخدمات')
+  assert.equal(buildPageSEO('en', 'website-design', en).title, 'Best Website Design & Development Company')
+  assert.equal(buildPageSEO('en', 'ecommerce-solutions', en).title, 'Best E-Commerce Solutions Company')
+  assert.equal(buildPageSEO('en', 'content-creation', en).title, 'Best Company for Professional Content Creation')
+  assert.match(buildPageSEO('ar', 'website-design', ar).title, /أفضل شركة/)
+  assert.match(servicesPageSource, /Service Packages/, 'Services route should use the service package tab title')
+  assert.match(websiteDesignPageSource, /Best Website Design & Development Company/, 'Dedicated website-design route should use the buyer-intent tab title')
+  assert.match(ecommercePageSource, /Best E-Commerce Solutions Company/, 'Dedicated ecommerce route should use the buyer-intent tab title')
+  assert.match(contentPageSource, /Best Company for Professional Content Creation/, 'Dedicated content route should use the buyer-intent tab title')
+  assert.match(localeLayoutSource, /template: `%s \| \$\{brandName\}`/, 'Localized layout should use a locale-aware title template')
+  assert.match(localeLayoutSource, /brandName = isArabic \? 'كلاود توبيا' : 'CloudTopia'/, 'Arabic browser tabs should use كلاود توبيا')
+})
+
+test('arabic footer uses translated brand copy instead of the English footer sentence', () => {
+  const arabicDictionarySource = readFileSync(path.join(process.cwd(), 'lib/i18n/translations/ar.ts'), 'utf8')
+  const footerSource = readFileSync(path.join(process.cwd(), 'components/Footer.tsx'), 'utf8')
+
+  assert.doesNotMatch(arabicDictionarySource, /Transforming businesses with cutting-edge digital and cloud solutions\. Your partner in digital excellence\./, 'Arabic dictionary should not carry the English footer sentence')
+  assert.match(arabicDictionarySource, /كلاود توبيا/, 'Arabic footer copy should spell the brand in Arabic')
+  assert.match(footerSource, /localizedFooterDescription/, 'Footer should protect Arabic footer copy from English CMS fallback text')
+  assert.match(footerSource, /localizedFooterCopyright/, 'Footer should protect Arabic copyright text from English CMS fallback text')
 })
 
 test('projects and contact surfaces support full expansion conversion flows', () => {
@@ -193,8 +253,8 @@ test('projects and contact surfaces support full expansion conversion flows', ()
   assert.match(projectsSource, /searchQuery/, 'Projects page should include searchable project filtering')
   assert.match(projectsSource, /projectSearchText/, 'Projects search should inspect project title, type, challenge, solution, and features')
   assert.match(projectsSource, /No projects found/, 'Projects page should handle empty search results')
-  assert.match(projectsSource, /Enterprise delivery evidence/, 'Projects page should add enterprise proof before the portfolio grid')
-  assert.match(projectsSource, /serviceCategories/, 'Projects proof should connect case studies to the expanded service taxonomy')
+  assert.doesNotMatch(projectsSource, /Enterprise delivery evidence/, 'Projects page should not render the removed enterprise proof section')
+  assert.doesNotMatch(projectsSource, /serviceCategories/, 'Projects page should not depend on service taxonomy proof content')
   assert.match(readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/projects/page.tsx'), 'utf8'), /CollectionPage/, 'Projects route should emit collection structured data')
   assert.match(contactSource, /serviceCategories/, 'Contact form should use the expanded service taxonomy')
   assert.match(contactSource, /localizedServiceValue/, 'Contact form service options should localize taxonomy labels')
@@ -265,6 +325,8 @@ test('process page explains delivery governance sign-off and handoff', () => {
   assert.equal(existsSync(processRoutePath), true, 'Localized process route should exist')
   assert.match(processSource, /Delivery process/, 'Process page should include English process positioning')
   assert.match(processSource, /منهجية التنفيذ/, 'Process page should include Arabic process positioning')
+  assert.match(processSource, /ProcessPlaybook/, 'Process page should render the homepage-inspired process playbook')
+  assert.match(processSource, /howWeWorkData/, 'Process page should reuse the homepage process model')
   assert.match(processSource, /Discovery & scope/, 'Process page should explain discovery and scope')
   assert.match(processSource, /Launch, handoff & support/, 'Process page should explain launch handoff and support')
   assert.match(processSource, /Client sign-off/, 'Process page should explain client sign-off points')
@@ -286,19 +348,41 @@ test('process page explains delivery governance sign-off and handoff', () => {
 test('pricing route turns the public pricing source into a conversion page', () => {
   const pricingRoutePath = path.join(process.cwd(), 'app/(frontend)/[locale]/pricing/page.tsx')
   const pricingSourcePath = path.join(process.cwd(), 'public/pricing.md')
+  const pricingArabicSourcePath = path.join(process.cwd(), 'public/pricing.ar.md')
   const sitemapSource = readFileSync(path.join(process.cwd(), 'lib/sitemap-data.ts'), 'utf8')
 
   assert.equal(existsSync(pricingSourcePath), true, 'Public pricing source should exist')
+  assert.equal(existsSync(pricingArabicSourcePath), true, 'Arabic public pricing source should exist')
   assert.equal(existsSync(pricingRoutePath), true, 'Localized pricing route should exist')
 
   const pricingRouteSource = readFileSync(pricingRoutePath, 'utf8')
+  const pricingMarkdownSource = readFileSync(pricingSourcePath, 'utf8')
+  const pricingArabicMarkdownSource = readFileSync(pricingArabicSourcePath, 'utf8')
   assert.match(pricingRouteSource, /pricing\.md/, 'Pricing page should use the public pricing source')
   assert.match(pricingRouteSource, /PricingCategory/, 'Pricing page should structure source sections into categories')
   assert.match(pricingRouteSource, /OfferCatalog/, 'Pricing page should emit structured offer catalog data')
   assert.match(pricingRouteSource, /Most Popular|Best Value/, 'Pricing page should highlight recommended packages')
-  assert.match(pricingRouteSource, /Payment: 50% upfront, 50% on delivery/, 'Pricing page should surface payment terms')
+  assert.doesNotMatch(pricingMarkdownSource, /^Last updated:|^Currency:/m, 'English public pricing source should not surface header metadata')
+  assert.doesNotMatch(pricingArabicMarkdownSource, /^Last updated:|^Currency:/m, 'Arabic public pricing source should not surface English header metadata labels')
+  assert.doesNotMatch(pricingRouteSource, /L\.updated|L\.currency|L\.paymentTerm/, 'Pricing hero should not render the removed metadata cards')
+  assert.match(pricingRouteSource, /categorySectionId/, 'Pricing page should link package selector cards to sections on the same page')
+  assert.match(pricingRouteSource, /#\$\{categorySectionId/, 'Pricing selector links should target package sections on the page itself')
+  assert.match(pricingRouteSource, /showFullFeaturesLabel/, 'Pricing package cards should provide an expandable full-features control')
   assert.match(pricingRouteSource, /decisionGuide/, 'Pricing page should include package decision guidance')
   assert.match(pricingRouteSource, /Which package path fits your project/, 'Pricing page should help buyers self-select a path')
   assert.match(pricingRouteSource, /FAQPage/, 'Pricing page should emit FAQ structured data for buyer objections')
   assert.match(sitemapSource, /path: '\/pricing'/, 'Sitemap should include the pricing page')
+})
+
+test('service and industry detail pages use tailored modern hero imagery', () => {
+  const serviceDetailSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/[service]/page.tsx'), 'utf8')
+  const industryDetailSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/industries/[industry]/page.tsx'), 'utf8')
+  const heroModernPath = path.join(process.cwd(), 'components/ui/hero-modern.tsx')
+
+  assert.equal(existsSync(heroModernPath), true, 'Shared modern hero component should exist under components/ui')
+  assert.match(serviceDetailSource, /HeroOrbitDeck/, 'Sub-service pages should use the modern hero component')
+  assert.match(serviceDetailSource, /heroImageForService/, 'Sub-service pages should select tailored service imagery')
+  assert.match(industryDetailSource, /HeroOrbitDeck/, 'Industry pages should use the modern hero component')
+  assert.match(industryDetailSource, /industryHeroImage/, 'Industry pages should select tailored industry imagery')
+  assert.match(readFileSync(heroModernPath, 'utf8'), /showcaseImage/, 'Modern hero should include a named visual image slot')
 })
