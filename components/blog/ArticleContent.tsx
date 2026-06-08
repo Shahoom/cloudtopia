@@ -1,8 +1,11 @@
 import type { BlogPost, BlogPostSummary } from '@/lib/blog/data'
 import type { TableOfContentsItem } from '@/lib/blog/utils'
+import { extractKeyTakeaways } from '@/lib/blog/utils'
 import { AuthorBox } from './AuthorBox'
 import { BlogCTA } from './BlogCTA'
 import { ContentBlockRenderer } from './ContentBlockRenderer'
+import { InquiryFormSidebar } from './insights/InquiryFormSidebar'
+import { KeyTakeawaysBox } from './insights/KeyTakeawaysBox'
 import { PreviousNextPosts } from './PreviousNextPosts'
 import { RichTextRenderer } from './RichTextRenderer'
 import { ShareButtons } from './ShareButtons'
@@ -21,7 +24,7 @@ function articleCTA(post: BlogPost, locale: string) {
   if (service.includes('ai')) {
     return {
       title: locale === 'ar' ? 'تريد استخدام الذكاء الاصطناعي في سير عمل عملك؟' : 'Want to use AI inside your business workflow?',
-      text: locale === 'ar' 
+      text: locale === 'ar'
         ? 'تصمم كلاود توبيا أنظمة عملية مدعومة بالذكاء الاصطناعي تساعد الفرق على تصنيف العملاء المحتملين، وأتمتة الدعم، وتلخيص العمليات، والتحرك بشكل أسرع.'
         : 'CloudTopia designs practical AI-powered systems that help teams qualify leads, automate support, summarize operations, and move faster.',
       primaryLabel: locale === 'ar' ? 'تحدث مع كلاود توبيا حول الذكاء الاصطناعي' : 'Talk AI with CloudTopia',
@@ -70,6 +73,7 @@ export function ArticleContent({
   next?: BlogPostSummary | null
 }) {
   const cta = articleCTA(post, locale)
+  const takeaways = extractKeyTakeaways(post.contentBlocks)
 
   return (
     <section className="bg-[#f8f7fb] px-4 py-14 sm:px-6 lg:px-8">
@@ -87,6 +91,12 @@ export function ArticleContent({
               )}
             </aside>
           )}
+          <KeyTakeawaysBox
+            title={takeaways.title}
+            summary={takeaways.summary}
+            items={takeaways.items}
+            locale={locale}
+          />
           <RichTextRenderer content={post.content} />
           <ContentBlockRenderer blocks={post.contentBlocks} relatedPostLookup={relatedPosts} locale={locale} />
           {post.showCTA && (
@@ -111,30 +121,7 @@ export function ArticleContent({
           <AuthorBox author={post.author} locale={locale} />
           <PreviousNextPosts previous={previous || null} next={next || null} locale={locale} />
         </article>
-        <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
-          <BlogCTA
-            locale={locale}
-            compact
-            title={cta.title}
-            text={cta.text}
-            primaryLabel={cta.primaryLabel}
-            primaryHref={post.ctaButtonUrl || '/contact'}
-            secondaryHref={post.secondaryCTAButtonUrl || '/services'}
-          />
-          {post.category && (
-            <div className="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-normal text-neutral-500">
-                {locale === 'ar' ? 'خدمة ذات صلة' : 'Related service'}
-              </p>
-              <h2 className="mt-3 text-xl font-black tracking-normal text-neutral-950">{post.category.name}</h2>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">
-                {locale === 'ar'
-                  ? 'اكتشف كيف تحول كلاود توبيا هذا الموضوع إلى مواقع ويب ومنصات وأنظمة أعمال عملية.'
-                  : 'Explore how CloudTopia turns this topic into practical websites, platforms, and business systems.'}
-              </p>
-            </div>
-          )}
-        </aside>
+        <InquiryFormSidebar locale={locale} />
       </div>
     </section>
   )
