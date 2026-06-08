@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ArticleContent } from '@/components/blog/ArticleContent'
 import { ArticleHero } from '@/components/blog/ArticleHero'
+import { FAQAccordion } from '@/components/blog/insights/FAQAccordion'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { extractFAQSchemaItems } from '@/lib/blog/intelligence'
@@ -146,6 +147,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         previous={previousNext.previous}
         next={previousNext.next}
       />
+      {faqItems.length > 0 && <FAQAccordion items={faqItems} locale={locale} />}
       <RelatedPosts posts={relatedPosts} locale={locale} />
     </div>
   )
