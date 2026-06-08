@@ -16,7 +16,7 @@ export async function buildInsightsRss(locale = 'en') {
   const items = posts
     .slice(0, 30)
     .map((post) => {
-      const url = canonicalUrl(locale, `/insights/${post.slug}`)
+      const url = canonicalUrl(locale, `/articles/${post.slug}`)
       return `<item>
   <title>${escapeXml(post.title)}</title>
   <link>${escapeXml(url)}</link>
@@ -31,8 +31,8 @@ export async function buildInsightsRss(locale = 'en') {
   return `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-  <title>CloudTopia Insights</title>
-  <link>${escapeXml(canonicalUrl(locale, '/insights'))}</link>
+  <title>CloudTopia Articles</title>
+  <link>${escapeXml(canonicalUrl(locale, '/articles'))}</link>
   <description>Ideas, guides, and strategies for websites, systems, AI, and cloud technology.</description>
   <language>${locale}</language>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>

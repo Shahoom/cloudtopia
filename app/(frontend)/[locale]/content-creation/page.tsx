@@ -11,7 +11,9 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/content-creation', 'content-creation')
+    const metadata = await getCMSMetadata(locale, '/content-creation', 'content-creation')
+    const title = locale === 'ar' ? 'أفضل شركة لصناعة المحتوى الاحترافي' : 'Best Company for Professional Content Creation'
+    return { ...metadata, title }
 }
 
 export default async function ContentCreationPage({

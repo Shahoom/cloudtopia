@@ -7,14 +7,14 @@ import { buildFAQSchema } from '@/lib/seo/service-faqs'
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
     return getCMSMetadata(locale, '/content-creation', 'content-creation')
-    // Titles trimmed for SERP fit; descriptions reflect new pricing ($149/mo).
+    // Titles trimmed for SERP fit; descriptions avoid stale package prices.
     const titles: Record<string, string> = {
         en: 'Bilingual Content Creation — Arabic + English',
         ar: 'إنشاء محتوى ثنائي اللغة — عربي وإنجليزي',
     }
     const descs: Record<string, string> = {
-        en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, SEO articles. Native-written, not machine translated. From $149/month.',
-        ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، مقالات SEO. مكتوب بأقلام أصيلة. من 149$/شهرياً.',
+        en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, and SEO articles. Native-written, not machine translated.',
+        ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، ومقالات SEO. مكتوب بأقلام أصيلة.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Content Creation — CloudTopia',
@@ -88,11 +88,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '499',
-                            highPrice: '2499',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

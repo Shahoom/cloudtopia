@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
     }
     const descs: Record<string, string> = {
-        en: 'Online stores with Gulf payment gateways (Mada, Apple Pay, STC Pay, Tabby, Tamara), ZATCA e-invoicing, bilingual checkout. From $599.',
-        ar: 'متاجر إلكترونية مع بوابات دفع خليجية (مدى، آبل باي، STC Pay، تابي، تمارا)، فوترة ZATCA، ودفع ثنائي. من 599$.',
+        en: 'Online stores with Gulf payment gateways, ZATCA e-invoicing, bilingual checkout, and clear package scope.',
+        ar: 'متاجر إلكترونية مع بوابات دفع خليجية، فوترة ZATCA، دفع ثنائي اللغة، ونطاق باقة واضح.',
     }
     const ogTitles: Record<string, string> = {
         en: 'E-Commerce — CloudTopia',
@@ -88,11 +88,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '1299',
-                            highPrice: '3999',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

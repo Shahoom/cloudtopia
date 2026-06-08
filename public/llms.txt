@@ -8,6 +8,7 @@
 - **E-Commerce Stores** — Full Gulf-ready stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA Phase 2 e-invoicing, and bilingual checkout. From $599 (starter) / $1,299 (growth) / custom (enterprise).
 - **Business Systems & Custom Software** — Custom CRM, inventory, POS, HR, booking, and ERP-style systems built around Gulf workflows. From $1,999 (essential) / $3,499 (advanced) / custom (enterprise).
 - **Web Applications** — Custom web apps, portals, dashboards, SaaS platforms on Next.js + React + PostgreSQL. From $999 (foundation) / $2,499 (professional) / custom (enterprise ERP).
+- **Mobile App Development** — iOS, Android, Flutter, React Native, MVP, customer, staff, booking, delivery/order, app backend/API, App Store launch, and maintenance services. From $2,999 (starter) / $7,999 (cross-platform) / custom (app ecosystem).
 - **QR Menu Systems** — Bilingual QR menus for cafés and restaurants with order-and-pay, Mada/Apple Pay, ZATCA receipts, kitchen printer integration. From $249 (essential) / $499 (smart) / $649 (full multi-branch).
 - **Social Media Marketing** — Strategy, content, ads, and community for Gulf brands. From $199/mo (starter) / $449/mo (growth) / $799/mo (scale).
 - **Content Creation** — SEO-optimized blogs, articles, and copy in Arabic + English. From $149/mo (basic) / $329/mo (professional) / $549/mo (agency).
@@ -35,15 +36,28 @@
 ## Service pages
 
 - https://cloudtopia.net/services
-- https://cloudtopia.net/services/website-design-development
-- https://cloudtopia.net/services/ecommerce-store-development
-- https://cloudtopia.net/services/custom-crm-development
+- https://cloudtopia.net/services/business-website-development
+- https://cloudtopia.net/services/ecommerce-website-development
+- https://cloudtopia.net/services/crm-development
 - https://cloudtopia.net/services/business-process-automation
-- https://cloudtopia.net/services/web-application-development
-- https://cloudtopia.net/services/payment-gateway-integration
-- https://cloudtopia.net/services/search-engine-optimization
+- https://cloudtopia.net/services/custom-web-application-development
+- https://cloudtopia.net/services/mobile-app-development
+- https://cloudtopia.net/services/ios-app-development
+- https://cloudtopia.net/services/android-app-development
+- https://cloudtopia.net/services/cross-platform-app-development
+- https://cloudtopia.net/services/flutter-app-development
+- https://cloudtopia.net/services/react-native-app-development
+- https://cloudtopia.net/services/mvp-app-development
+- https://cloudtopia.net/services/business-mobile-app-development
+- https://cloudtopia.net/services/customer-app-development
+- https://cloudtopia.net/services/booking-app-development
+- https://cloudtopia.net/services/delivery-order-app-development
+- https://cloudtopia.net/services/app-backend-api-development
+- https://cloudtopia.net/services/app-store-launch-support
+- https://cloudtopia.net/services/mobile-app-maintenance
+- https://cloudtopia.net/services/seo-optimization
 - https://cloudtopia.net/services/conversion-rate-optimization
-- https://cloudtopia.net/services/qr-menu-system
+- https://cloudtopia.net/services/restaurant-website-development
 - https://cloudtopia.net/website-design
 - https://cloudtopia.net/ecommerce-solutions
 - https://cloudtopia.net/business-systems-development
@@ -71,22 +85,27 @@ CloudTopia now publishes English and Arabic landing pages for service details, i
 - Real Estate: https://cloudtopia.net/industries/real-estate
 - Education: https://cloudtopia.net/industries/education
 - Travel & Hospitality: https://cloudtopia.net/industries/travel-hospitality
+- Restaurants: https://cloudtopia.net/industries/restaurants
+- Legal Firms: https://cloudtopia.net/industries/legal-firms
+- Construction: https://cloudtopia.net/industries/construction
+- Retail: https://cloudtopia.net/industries/retail
+- Professional Services: https://cloudtopia.net/industries/professional-services
 - Logistics & Supply Chain: https://cloudtopia.net/industries/logistics-supply-chain
 - Government & Public Sector: https://cloudtopia.net/industries/government-public-sector
 
 ### Regional market pages
 
-- Saudi Arabia: https://cloudtopia.net/locations/saudi-arabia
-- United Arab Emirates: https://cloudtopia.net/locations/uae
-- Qatar: https://cloudtopia.net/locations/qatar
-- Oman: https://cloudtopia.net/locations/oman
-- Kuwait: https://cloudtopia.net/locations/kuwait
-- Bahrain: https://cloudtopia.net/locations/bahrain
-- Iraq: https://cloudtopia.net/locations/iraq
-- Syria: https://cloudtopia.net/locations/syria
-- Jordan: https://cloudtopia.net/locations/jordan
-- Egypt: https://cloudtopia.net/locations/egypt
-- Lebanon: https://cloudtopia.net/locations/lebanon
+- Saudi Arabia: https://cloudtopia.net/saudi-arabia
+- United Arab Emirates: https://cloudtopia.net/united-arab-emirates
+- Qatar: https://cloudtopia.net/qatar
+- Oman: https://cloudtopia.net/oman
+- Kuwait: https://cloudtopia.net/kuwait
+- Bahrain: https://cloudtopia.net/bahrain
+- Iraq: https://cloudtopia.net/iraq
+- Syria: https://cloudtopia.net/syria
+- Jordan: https://cloudtopia.net/jordan
+- Egypt: https://cloudtopia.net/egypt
+- Lebanon: https://cloudtopia.net/lebanon
 
 ### Proof and conversion pages
 

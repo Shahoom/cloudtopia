@@ -33,7 +33,7 @@ export const BlogCategories: CollectionConfig = {
     group: 'Insights',
     useAsTitle: 'name',
     defaultColumns: ['name', 'locale', 'slug', 'featured', 'order'],
-    description: 'Editorial topics for CloudTopia Insights. Categories power filters, archive pages, and article badges.',
+    description: 'Editorial topics for CloudTopia Articles. Categories power filters, archive pages, and article badges.',
   },
   access: {
     read: () => true,
@@ -63,7 +63,7 @@ export const BlogCategories: CollectionConfig = {
                 { label: 'Arabic', value: 'ar' },
               ],
               admin: {
-                description: 'Use English for the main /insights route. Arabic powers localized archive pages.',
+                description: 'Use English for the main /articles route. Arabic powers localized archive pages.',
               },
             },
             {
@@ -77,7 +77,7 @@ export const BlogCategories: CollectionConfig = {
               required: true,
               unique: true,
               admin: {
-                description: 'Auto-generated from the name when empty. Used in /insights/category/[slug].',
+                description: 'Auto-generated from the name when empty. Used in /articles/category/[slug].',
               },
             },
             {
@@ -173,7 +173,7 @@ export const BlogCategories: CollectionConfig = {
               type: 'checkbox',
               defaultValue: false,
               admin: {
-                description: 'Featured categories appear in the Insights hub topic section.',
+                description: 'Featured categories appear in the Articles hub topic section.',
               },
             },
             {
@@ -181,7 +181,7 @@ export const BlogCategories: CollectionConfig = {
               type: 'checkbox',
               defaultValue: true,
               admin: {
-                description: 'Show this topic in Insights filters and topic navigation.',
+                description: 'Show this topic in Articles filters and topic navigation.',
               },
             },
             {

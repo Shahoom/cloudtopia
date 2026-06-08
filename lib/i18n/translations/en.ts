@@ -20,10 +20,10 @@ export const en = {
   // Homepage
   home: {
     hero: {
-      tags: ['Move Your Business to the Cloud', 'Transform Your Digital Presence', 'Scale with Cloud Solutions'],
-      title: 'Elevate Your Business',
-      titleHighlights: ['Internet', 'Cloud', 'Web'],
-      description: 'CloudTopia helps businesses move to the cloud — from building their online presence, to developing systems and interactive web applications, and innovating through technology.',
+      tags: ['CLOUDTOPIA — DIGITAL & CLOUD TECHNOLOGIES', 'Arabic Software Company', 'Cloud AI Systems'],
+      title: 'Software, cloud, and AI systems built for the Arab world.',
+      titleHighlights: ['Software', 'Cloud', 'AI systems'],
+      description: 'CloudTopia helps businesses in Saudi Arabia, UAE, the GCC, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.',
       exploreServices: 'Explore Services',
       freeConsultation: 'Free Consultation',
       getStarted: 'Get Started',
@@ -194,7 +194,7 @@ export const en = {
           title: 'Websites & Landing Pages',
           description: 'Fast, responsive, SEO-ready websites built around your brand and your customers. Multilingual, accessible, and made to convert.',
           link: '/website-design',
-          tag: 'From $399',
+          tag: 'Clear packages',
         },
         {
           iconImage: '/icons/services/E-commerce Solutions.png',
@@ -261,7 +261,7 @@ export const en = {
           number: '04',
           title: 'Launch & Support',
           duration: 'Ongoing',
-          description: 'We handle deployment, hosting, domain, SSL, and analytics. First 30 days of fixes are on us. Ongoing care plans start at $99/month.',
+          description: 'We handle deployment, hosting, domain, SSL, and analytics. First 30 days of fixes are on us, and ongoing care plans are scoped clearly before they begin.',
         },
       ],
     },
@@ -274,7 +274,7 @@ export const en = {
       items: [
         {
           question: 'How much does a project with CloudTopia cost?',
-          answer: 'Landing pages start at $299, full websites from $499, e-commerce stores from $599, and custom business systems from $1,999. Every tier is listed on our pricing page — no quotes or "call us to find out" required. We agree the scope and price up front, in writing.',
+          answer: 'Current starting prices and package details are listed on the pricing page. We agree the scope and price up front, in writing, before production starts.',
         },
         {
           question: 'Which languages do you build in?',
@@ -298,7 +298,7 @@ export const en = {
         },
         {
           question: 'What happens after launch if we need changes?',
-          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates are included in our monthly care plans (starting $79/month), and larger features are quoted per project. No surprise invoices — everything in writing before we start.',
+          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates are handled through a clear care plan or quoted per project. No surprise invoices — everything in writing before we start.',
         },
         {
           question: 'Can you integrate payment systems from different markets?',
@@ -348,8 +348,8 @@ export const en = {
           description: 'We empower entrepreneurs to walk the path of digital transformation by developing their MVPs, creating prototypes, and delivering scalable digital solutions. Our professional service package comprises everything from strategy and development to deployment, so when the founders concentrate on managing their business growth, we take care of the technology.',
         },
         {
-          title: 'Blockchain Solutions',
-          description: 'We offers a variety of safe and suitable blockchain solutions including the development of smart contracts, cryptocurrencies, DeFi platforms, and NFT marketplaces. We assist companies in attaining a higher level of transparency, decentralization, and efficiency through their digital transactions and operations.',
+          title: 'Cloud & Data Infrastructure',
+          description: 'We help businesses move critical operations into secure cloud environments with deployment pipelines, databases, backups, analytics, and monitoring. CloudTopia designs the technical foundation behind fast websites, internal systems, customer portals, and AI-ready workflows.',
         },
         {
           title: 'Artificial Intelligence (AI)',
@@ -702,7 +702,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We serve businesses across the GCC and the wider Middle East with full multilingual support (Arabic/English) and RTL capabilities, ensuring your message is clear to both local and international audiences.',
         },
-        pricingApproach: 'Starting from $999 for a 5-page website. Business sites from $2,499 (up to 15 pages + CMS). Custom premium builds from $4,999. Structured payment milestones on larger projects. Free consultation included.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'website-design',
         howItWorks: [
           { title: 'Goal Discovery', description: 'Deep dive into your business model, brand identity, and project objectives.' },
@@ -762,7 +762,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We support GCC merchants with local gateway integrations (Telr, PayTabs, HyperPay), multi-currency support, and dual-language interfaces with full RTL support.',
         },
-        pricingApproach: 'Starting from $2,499 for a basic online store. Full-featured stores from $4,999. Enterprise solutions with custom integrations from $9,999. Monthly maintenance plans from $199/mo. Free demo available.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'ecommerce-solutions',
         howItWorks: [
           { title: 'Store Architecture', description: 'Planning product categories, payment flows, and shipping logic for your specific market.' },
@@ -822,7 +822,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Serving the hospitality sector across the GCC and Middle East with full local POS integration compatibility and flexible payment solutions.',
         },
-        pricingApproach: 'Starter plan from $39/mo (1 location). Professional from $89/mo (up to 3 locations + analytics). Business from $179/mo (unlimited locations + POS integration). Save 17% with annual billing. 14-day free trial on all plans.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'restaurant-qr-menu',
         howItWorks: [
           { title: 'Menu Digitization', description: 'Transforming your physical menu into a high-conversion digital experience with professional photography.' },
@@ -882,7 +882,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We understand regional Middle Eastern trends and design bilingual content (Arabic/English) that engages various demographics across the GCC.',
         },
-        pricingApproach: 'Monthly retainers from $499 (2 platforms, 12 posts/mo). Growth package $999/mo (4 platforms, 24 posts + stories/reels). Full-service Premium from $1,999/mo (all platforms + paid ads management). Custom enterprise quotes available.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'social-media-management',
         howItWorks: [
           { title: 'Brand Audit', description: 'Analyzing your current social presence and competitor landscape in the Middle East.' },
@@ -942,7 +942,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We produce culturally and linguistically relevant content for the Arab audience and GCC, considering local nuances to ensure maximum impact.',
         },
-        pricingApproach: 'Monthly content packages from $299 (4 blog posts or 8 social assets). Standard from $599/mo (8 posts + graphics + video thumbnails). Premium from $1,199/mo (unlimited content + full editorial calendar management).',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'content-creation',
         howItWorks: [
           { title: 'Audience Persona', description: 'Defining the psychographics and goals of your ideal customer to ensure content hits home.' },
@@ -1002,7 +1002,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We target regional search engines with a full understanding of GCC search behavior, helping you stand out in local markets like Dubai, Riyadh, and Kuwait.',
         },
-        pricingApproach: 'SEO retainers from $599/mo (local SEO, 5 keywords). Growth plan $1,199/mo (regional SEO, 20 keywords + content). Full-service from $2,499/mo (enterprise SEO, unlimited keywords, link building). Minimum 3-month engagement.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'seo-optimization',
         howItWorks: [
           { title: 'On-Page Overhaul', description: 'Optimizing site structure, meta tags, and internal links for maximum search visibility.' },
@@ -1061,7 +1061,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'We design robust identities that respect local GCC tastes and international standards, ensuring your brand gains strong acceptance and reach in the region.',
         },
-        pricingApproach: 'Logo & identity from $499. Brand starter kit from $999 (logo + color palette + typography). Full brand guide from $2,499 (100+ page specifications, all assets). Corporate identity packages for enterprises from $4,999.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'visual-identity',
         howItWorks: [
           { title: 'Discovery Lab', description: 'Defining your brand values, mission, and unique position in the Middle Eastern market.' },
@@ -1124,7 +1124,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our custom CRM systems are deployed for sales teams and businesses across the GCC, Iraq, Syria, and throughout the Arab world. We build bilingual CRMs (Arabic/English), integrate with regional payment systems, and ensure compliance with local data protection regulations.',
         },
-        pricingApproach: 'Custom CRM from $3,999 (up to 5 users, core pipeline). Growing teams from $6,999 (15 users, automation + integrations). Enterprise from $12,999 (unlimited users, custom modules). Monthly SaaS plans from $149/mo. Free demo available.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'crm-system',
         howItWorks: [
           { title: 'Pipeline Design', description: 'Collaboratively defining your customer journey from initial lead to loyal client.' },
@@ -1185,7 +1185,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our inventory management systems serve retailers, wholesalers, and manufacturers across the GCC, Iraq, Syria, and the entire Middle East region. We support bilingual interfaces (Arabic/English), multi-currency pricing, and integration with regional accounting systems.',
         },
-        pricingApproach: 'Cloud plan from $199/mo (1 location, up to 1,000 SKUs). Multi-location from $399/mo (5 locations, unlimited SKUs). Self-hosted build from $4,999 one-time. Setup fee from $499. Volume discounts for 10+ locations.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'inventory-management',
         howItWorks: [
           { title: 'Inventory Audit', description: 'Synchronizing your physical stock levels with the digital system for baseline accuracy.' },
@@ -1246,7 +1246,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our POS systems are deployed in retail and hospitality businesses across the GCC, Iraq, Syria, and the Middle East. We support regional payment gateways, multi-currency transactions, VAT compliance, and bilingual receipts (Arabic/English).',
         },
-        pricingApproach: 'POS software from $99/mo per terminal. Hardware bundles from $799 (tablet + stand + receipt printer). Full setup (software + hardware) from $1,499 per terminal. Multi-terminal discounts available. Includes software updates and support.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'pos-system',
         howItWorks: [
           { title: 'POS Mapping', description: 'Developing a custom interface that matches your specific inventory and checkout speed needs.' },
@@ -1309,7 +1309,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our HR management systems serve companies across the GCC, Iraq, Syria, and the Arab world. We ensure compliance with regional labor laws (UAE WPS, Saudi GOSI, etc.), support bilingual interfaces, and integrate with local payroll requirements.',
         },
-        pricingApproach: 'From $8/employee/mo (basic HR + leave management). Full HR + payroll from $14/employee/mo. Performance + advanced analytics from $20/employee/mo. Minimum 10 employees. Free 30-day trial. Enterprise packages for 500+ employees.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'hr-management',
         howItWorks: [
           { title: 'Policy Setup', description: 'Configuring the system to match your companys specific leave, payroll, and labor law policies.' },
@@ -1372,7 +1372,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our booking systems serve service providers across the GCC, Iraq, Syria, and the Middle East. We support bilingual booking pages (Arabic/English), local payment methods, and integration with regional SMS providers for automated reminders.',
         },
-        pricingApproach: 'Starter from $49/mo (up to 3 staff, 200 bookings/mo). Growth from $99/mo (10 staff, 1,000 bookings + SMS reminders). Business from $199/mo (unlimited staff + bookings, custom domain). Free 14-day trial. No setup fee.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'booking-system',
         howItWorks: [
           { title: 'Schedule Setup', description: 'Defining your staff, services, and availability periods for a perfect booking flow.' },
@@ -1435,7 +1435,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our analytics dashboards serve businesses across the GCC, Iraq, Syria, and the Middle East. We integrate with regional systems, support multi-currency reporting, and provide bilingual interfaces (Arabic/English) for comprehensive business intelligence.',
         },
-        pricingApproach: 'Starter dashboard from $2,499 (up to 3 data sources, 5 users). Business BI from $4,999 (10 sources, unlimited users + automated reports). Enterprise custom from $9,999. Monthly cloud plan from $299/mo. Training included.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'analytics-dashboard',
         howItWorks: [
           { title: 'Data Audit', description: 'Identifying your various data silos and determining the best way to aggregate them into one view.' },
@@ -1500,7 +1500,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our customer portals serve businesses across the GCC, Iraq, Syria, and the Middle East. We build secure, bilingual portals (Arabic/English) with full RTL support, integrate with regional payment systems, and ensure data privacy compliance.',
         },
-        pricingApproach: 'Customer portals from $3,999 (core features, up to 500 users). Advanced portals with payment & document management from $6,999. Enterprise from $12,999. Monthly hosting from $149/mo. Free design consultation included.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'customer-portal',
         howItWorks: [
           { title: 'User Journey Mapping', description: 'Defining exactly what data and documents your customers need to access independently.' },
@@ -1563,7 +1563,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our admin dashboards serve businesses across the GCC, Iraq, Syria, and the Middle East. We build bilingual interfaces (Arabic/English with RTL), integrate with regional systems, and ensure secure, scalable management platforms.',
         },
-        pricingApproach: 'Admin dashboards from $4,999 (core management modules, up to 10 admin users). Full-featured from $8,999 (unlimited modules, role-based access, audit logs). Enterprise from $15,999. Monthly SaaS plan from $249/mo. Free discovery session.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'admin-dashboard',
         howItWorks: [
           { title: 'Process Audit', description: 'Identifying manual business tasks that can be digitized and centralized for better control.' },
@@ -1626,7 +1626,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our booking platforms serve hospitality and service businesses across the GCC, Iraq, Syria, and the Middle East. We integrate regional payment gateways, support multiple currencies, and provide bilingual booking experiences (Arabic/English).',
         },
-        pricingApproach: 'Booking platforms from $5,999 (single service type, payment integration). Multi-service platforms from $9,999 (hotels, tours, vehicles). Enterprise marketplace from $19,999. Revenue-share model available. Monthly hosting from $199/mo.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'booking-platform',
         howItWorks: [
           { title: 'Availability Logic', description: 'Designing complex scheduling rules, resource allocation, and buffer time management.' },
@@ -1689,7 +1689,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our chat systems serve businesses across the GCC, Iraq, Syria, and the Middle East. We build bilingual chat interfaces (Arabic/English with RTL), ensure low-latency messaging, and comply with regional data privacy regulations.',
         },
-        pricingApproach: 'Real-time chat systems from $4,999 (up to 100 concurrent users). Business plan from $7,999 (1,000 users, file sharing, message history). Enterprise from $14,999 (unlimited users + voice). Monthly infrastructure from $199/mo.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'real-time-chat',
         howItWorks: [
           { title: 'Protocol Strategy', description: 'Choosing the best real-time communication protocols (WebSockets) for your speed needs.' },
@@ -1752,7 +1752,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our payment integrations serve online businesses across the GCC, Iraq, Syria, and the Middle East. We integrate with regional payment gateways (Telr, PayTabs, etc.), support multiple currencies (AED, SAR, KWD, USD), and ensure compliance with local regulations.',
         },
-        pricingApproach: 'Single gateway integration from $999 (Stripe, PayTabs, Telr, etc.). Multi-gateway with full checkout from $2,499. Marketplace payment split + escrow from $4,999. Monthly support from $99/mo. Transaction fees per gateway provider.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'payment-integration',
         howItWorks: [
           { title: 'Gateway Selection', description: 'Analyzing the best regional gateways (Tap, Moyasar, etc.) for your specific business case.' },
@@ -1815,7 +1815,7 @@ export const en = {
           regions: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Iraq', 'Syria'],
           description: 'Our mobile-responsive apps serve users across the GCC, Iraq, Syria, and the Middle East. We optimize for regional mobile networks, support bilingual interfaces (Arabic/English with RTL), and ensure fast performance on all devices.',
         },
-        pricingApproach: 'Mobile-optimized web apps from $2,999. PWA with offline support from $4,999. Full cross-platform app (iOS + Android) from $7,999. Monthly hosting + updates from $149/mo. Enterprise custom builds on request.',
+        pricingApproach: 'Package scope is shown on this service page. Current starting prices and detailed package terms are kept on the pricing page so numbers stay accurate.',
         slug: 'mobile-responsive-apps',
         howItWorks: [
           { title: 'Mobile UI Lab', description: 'Designing high-conversion interfaces optimized for thumb-friendly navigation and gesture support.' },

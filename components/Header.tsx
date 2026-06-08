@@ -34,8 +34,10 @@ function MenuPanel({
 }) {
   return (
     <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3`}>
-      <div className="max-h-[calc(100vh-6rem)] overflow-y-auto rounded-lg border border-slate-200 bg-white/97 p-4 text-eerie shadow-[0_28px_80px_rgba(27,27,35,0.18)] backdrop-blur-xl">
-        {children}
+      <div className="relative flex flex-col max-h-[calc(100vh-6rem)] rounded-lg border border-slate-200 bg-white/97 shadow-[0_28px_80px_rgba(27,27,35,0.18)] backdrop-blur-xl overflow-hidden">
+        <div className="overflow-y-auto p-4 text-eerie">
+          {children}
+        </div>
       </div>
     </div>
   )
@@ -348,7 +350,7 @@ export default function Header() {
   }, [])
 
   const l = (path: string) => localePath(locale, path)
-  const insightsLabel = locale === 'ar' ? 'الرؤى' : 'Insights'
+  const insightsLabel = locale === 'ar' ? 'المقالات' : 'Articles'
   const servicesLabel = locale === 'ar' ? 'الخدمات' : t.nav.services
   const industriesLabel = locale === 'ar' ? 'القطاعات' : 'Industries'
   const projectsLabel = locale === 'ar' ? t.nav.projects : 'Projects'
@@ -361,7 +363,7 @@ export default function Header() {
     { name: projectsLabel, href: l('/projects'), icon: FolderKanban },
     { name: pricingLabel, href: l('/pricing'), icon: CircleDollarSign },
     { name: t.nav.about, href: l('/about'), icon: Info },
-    { name: insightsLabel, href: l('/insights'), icon: BookOpen },
+    { name: insightsLabel, href: l('/articles'), icon: BookOpen },
   ]
 
   const cta = (cmsNavigation?.cta as { label?: string; href?: string } | undefined) || {
@@ -394,19 +396,30 @@ export default function Header() {
             <Image
               src="/images/CloudTopia.svg"
               alt="CloudTopia"
-              width={150}
-              height={44}
+              width={56}
+              height={56}
               priority
-              className={`w-auto transition-[height,transform] duration-300 group-hover:scale-[1.03] ${isScrolled ? 'h-8 sm:h-9' : 'h-10 sm:h-11'}`}
+              className={`w-auto transition-[height,transform] duration-300 group-hover:scale-[1.03] ${isScrolled ? 'h-10 sm:h-11' : 'h-12 sm:h-14'}`}
             />
-            <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
-              <span className={`font-logo text-xl font-black sm:text-2xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
-                {locale === 'ar' ? 'كلاود توبيا' : <>Cloud<span className="text-sky-600">Topia</span></>}
+            {locale === 'ar' ? (
+              <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
+                <span className={`font-logo-ar text-2xl sm:text-3xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+                  كلاود<span className="text-sky-600">توبيا</span>
+                </span>
+                <span className={`mt-1 font-tagline-ar text-[11px] sm:text-[12px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
+                  تكنولوجيا رقمية وسحابية
+                </span>
               </span>
-              <span className={`mt-1 text-[9px] font-black uppercase tracking-[0.08em] sm:text-[10px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
-                Digital & Cloud Technologies
+            ) : (
+              <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
+                <span className={`font-logo text-xl font-black sm:text-2xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+                  <>Cloud<span className="text-sky-600">Topia</span></>
+                </span>
+                <span className={`mt-1 text-[9px] font-black uppercase tracking-[0.08em] sm:text-[10px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
+                  Digital & Cloud Technologies
+                </span>
               </span>
-            </span>
+            )}
           </Link>
 
           <div className="hidden xl:flex">

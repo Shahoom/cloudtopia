@@ -25,6 +25,7 @@ import {
     type CountryLandingPageData,
     type CountryLocale,
 } from '@/lib/seo/country-landing-pages'
+import { locations } from '@/lib/seo/locations'
 
 type Props = {
     country: CountryLandingPageData
@@ -130,6 +131,10 @@ const countryVisuals: Record<string, { pattern: string; marker: string }> = {
         pattern: 'bg-[linear-gradient(125deg,rgba(206,17,38,0.11),transparent_35%),radial-gradient(circle_at_82%_18%,rgba(0,122,61,0.09),transparent_28%),linear-gradient(180deg,rgba(30,23,18,0.07)_1px,transparent_1px)] bg-[size:auto,auto,50px_50px]',
         marker: 'Amman Delivery Desk',
     },
+    eg: {
+        pattern: 'bg-[linear-gradient(120deg,rgba(206,17,38,0.10),transparent_34%),radial-gradient(circle_at_82%_18%,rgba(192,147,43,0.12),transparent_28%),linear-gradient(90deg,rgba(29,23,18,0.07)_1px,transparent_1px)] bg-[size:auto,auto,50px_50px]',
+        marker: 'Cairo Growth Desk',
+    },
     lb: {
         pattern: 'bg-[radial-gradient(circle_at_18%_16%,rgba(0,122,61,0.12),transparent_30%),linear-gradient(90deg,rgba(206,17,38,0.08)_1px,transparent_1px)] bg-[size:auto,46px_46px]',
         marker: 'Beirut Digital Desk',
@@ -205,6 +210,9 @@ export default function CountryLandingPage({ country, locale }: Props) {
     const countryPhoto = country.theme.photo
     const countryPhotoAlt = isArabic ? countryPhoto.altArabic : countryPhoto.altEnglish
     const countryPhotoCaption = isArabic ? countryPhoto.captionArabic : countryPhoto.captionEnglish
+    const locationProfile = Object.values(locations).find((location) => location.countryCode.toLowerCase() === country.code || location.slug === country.slug)
+    const cityNames = locationProfile?.cities.slice(0, 7) || []
+    const paymentMethods = locationProfile?.paymentMethods.slice(0, 6) || []
     const visual = countryVisuals[country.code] || countryVisuals.sa
     const proofPoints = isArabic
         ? [
@@ -284,6 +292,28 @@ export default function CountryLandingPage({ country, locale }: Props) {
         serviceType: ['Website development', 'CRM', 'ERP', 'AI automation', 'Cloud migration', 'Data migration', 'Mobile app development'],
         url: schemaUrl,
     }
+    const professionalServiceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: `CloudTopia ${countryName}`,
+        description: content.seoDescription,
+        url: schemaUrl,
+        image: countryPhoto.src,
+        priceRange: '$$',
+        areaServed: { '@type': 'Country', name: countryName, identifier: country.code.toUpperCase() },
+        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        telephone: country.phone,
+        currenciesAccepted: [country.currency, 'USD'],
+        availableLanguage: isArabic ? ['Arabic', 'English'] : ['English', 'Arabic'],
+        knowsAbout: [
+            content.primaryKeyword,
+            ...content.secondaryKeywords.slice(0, 6),
+            'Arabic RTL web design',
+            'CRM development',
+            'ERP systems',
+            'AI automation',
+        ],
+    }
     const webPageSchema = {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
@@ -291,6 +321,15 @@ export default function CountryLandingPage({ country, locale }: Props) {
         description: content.seoDescription,
         url: schemaUrl,
         inLanguage: isArabic ? country.hreflangArabic : country.hreflangEnglish,
+    }
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/' },
+            { '@type': 'ListItem', position: 2, name: isArabic ? 'الأسواق' : 'Markets', item: `https://cloudtopia.net${marketsHref}` },
+            { '@type': 'ListItem', position: 3, name: countryName, item: schemaUrl },
+        ],
     }
 
     return (
@@ -311,7 +350,9 @@ export default function CountryLandingPage({ country, locale }: Props) {
             <JsonLd data={organizationSchema} />
             <JsonLd data={webPageSchema} />
             <JsonLd data={serviceSchema} />
+            <JsonLd data={professionalServiceSchema} />
             <JsonLd data={faqSchema} />
+            <JsonLd data={breadcrumbSchema} />
 
             <a href="#country-story" className={`sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-black ${linkBase}`}>
                 {isArabic ? 'تجاوز إلى المحتوى' : 'Skip to content'}
@@ -321,15 +362,26 @@ export default function CountryLandingPage({ country, locale }: Props) {
                 <div className="h-1 bg-[linear-gradient(90deg,var(--country-primary),var(--country-secondary),var(--country-dark))]" aria-hidden="true" />
                 <div className="mx-auto grid max-w-[1500px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2.5 sm:grid-cols-[auto_1fr_auto] sm:px-6 lg:px-8">
                     <Link href={homeHref} className={`flex min-w-0 items-center gap-2.5 ${linkBase}`} aria-label="CloudTopia">
-                        <Image src="/images/CloudTopia.svg" alt="" width={40} height={40} priority className="h-10 w-10 shrink-0" />
-                        <span className="flex min-w-0 flex-col leading-none" translate="no">
-                            <span className="font-logo text-[1.05rem] font-black text-neutral-950 sm:text-xl">
-                                Cloud<span className="text-sky-600">Topia</span>
+                        <Image src="/images/CloudTopia.svg" alt="" width={56} height={56} priority className="h-14 w-14 shrink-0" />
+                        {isArabic ? (
+                            <span className="flex min-w-0 flex-col leading-none" translate="no">
+                                <span className="font-logo-ar text-2xl font-black text-neutral-950 sm:text-3xl">
+                                    كلاود<span className="text-sky-600">توبيا</span>
+                                </span>
+                                <span className="mt-1 whitespace-nowrap font-tagline-ar text-[11px] tracking-[0.05em] text-neutral-600 sm:text-[12px]">
+                                    تكنولوجيا رقمية وسحابية
+                                </span>
                             </span>
-                            <span className="mt-1 whitespace-nowrap text-[0.46rem] font-black tracking-[0.06em] text-neutral-600 min-[390px]:text-[0.52rem] sm:text-[0.62rem]">
-                                Digital & Cloud Technologies
+                        ) : (
+                            <span className="flex min-w-0 flex-col leading-none" translate="no">
+                                <span className="font-logo text-[1.05rem] font-black text-neutral-950 sm:text-xl">
+                                    Cloud<span className="text-sky-600">Topia</span>
+                                </span>
+                                <span className="mt-1 whitespace-nowrap text-[0.46rem] font-black tracking-[0.06em] text-neutral-600 min-[390px]:text-[0.52rem] sm:text-[0.62rem]">
+                                    Digital & Cloud Technologies
+                                </span>
                             </span>
-                        </span>
+                        )}
                     </Link>
                     <nav className="mx-auto hidden items-center gap-1 border border-neutral-950 bg-white px-1 py-1 text-xs font-black lg:flex" aria-label={isArabic ? 'أقسام الصفحة' : 'Page sections'}>
                         {[
@@ -507,6 +559,34 @@ export default function CountryLandingPage({ country, locale }: Props) {
                                     </span>
                                 ))}
                             </div>
+                            {(cityNames.length > 0 || paymentMethods.length > 0) && (
+                                <div className="mt-6 grid gap-4 border-t border-neutral-200 pt-5 md:grid-cols-2">
+                                    {cityNames.length > 0 && (
+                                        <div>
+                                            <p className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-neutral-500">{isArabic ? 'مدن نخدمها' : 'Cities served'}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {cityNames.map((city) => (
+                                                    <span key={city} className="border border-neutral-300 bg-white px-3 py-1.5 text-xs font-black text-neutral-800">
+                                                        {city}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {paymentMethods.length > 0 && (
+                                        <div>
+                                            <p className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-neutral-500">{isArabic ? 'مدفوعات محلية' : 'Local payment context'}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {paymentMethods.map((method) => (
+                                                    <span key={method} className="border border-neutral-300 bg-white px-3 py-1.5 text-xs font-black text-neutral-800">
+                                                        {method}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -515,7 +595,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
             <section className="border-b border-neutral-950 px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-[1500px]">
                     <div className="mb-10 max-w-4xl">
-                        <Eyebrow>{isArabic ? 'نموذج CloudTopia' : 'CloudTopia Model'}</Eyebrow>
+                        <Eyebrow>{isArabic ? 'نموذج كلاود توبيا' : 'CloudTopia Model'}</Eyebrow>
                         <h2 className="text-3xl font-black leading-tight md:text-4xl xl:text-5xl [text-wrap:balance]">
                             {isArabic ? 'من الموقع إلى نظام العمل.' : 'From Website To Operating System.'}
                         </h2>
@@ -760,7 +840,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
             <section className="border-b border-neutral-950 bg-white px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-[1500px] gap-8 lg:grid-cols-[0.48fr_1fr]">
                     <h2 className="text-3xl font-black leading-tight md:text-4xl xl:text-5xl [text-wrap:balance]">
-                        {isArabic ? `لماذا CloudTopia؟` : `Why Choose CloudTopia For ${countryName}?`}
+                        {isArabic ? `لماذا كلاود توبيا؟` : `Why Choose CloudTopia For ${countryName}?`}
                     </h2>
                     <div>
                         <p className="border border-neutral-950 bg-[var(--country-surface)] p-6 text-lg font-semibold leading-9 text-neutral-700">{content.whyCloudTopia}</p>
@@ -803,7 +883,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
             <section className="px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-[1500px] gap-6 border border-neutral-950 bg-white p-7 text-neutral-950 shadow-[inset_0_10px_0_var(--country-primary)] md:grid-cols-[1fr_auto] md:items-center md:p-10">
                     <div>
-                        <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-neutral-500">CloudTopia · {countryName}</p>
+                        <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-neutral-500">{isArabic ? 'كلاود توبيا' : 'CloudTopia'} · {countryName}</p>
                         <h2 className="max-w-4xl text-3xl font-black leading-tight text-neutral-950 md:text-4xl xl:text-5xl [text-wrap:balance]">{content.finalCta}</h2>
                         <p className="mt-5 max-w-2xl text-lg font-semibold leading-8 text-neutral-700">
                             {isArabic ? 'تواصل معنا الآن لتحصل على استشارة مجانية ومعاينة ديمو مخصصة لاحتياج شركتك.' : 'Contact us now for a free consultation and a custom demo preview for your company need.'}
@@ -818,7 +898,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
 
             <footer className="border-t border-neutral-950 bg-white px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mx-auto flex max-w-[1500px] flex-col gap-4 text-sm font-black text-neutral-600 md:flex-row md:items-center md:justify-between">
-                    <p translate="no">CloudTopia · {countryName}</p>
+                    <p>{isArabic ? 'كلاود توبيا' : 'CloudTopia'} · {countryName}</p>
                     <div className="flex flex-wrap gap-4">
                         <Link className={`${linkBase} transition-colors duration-200 hover:text-neutral-950`} href={marketsHref}>
                             {isArabic ? 'الأسواق التي نخدمها' : 'Markets We Serve'}

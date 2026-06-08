@@ -54,14 +54,28 @@ export default function Footer() {
   const { t, dir, locale, navigation: cmsNavigation, settings } = useLanguage()
 
   const l = (path: string) => localePath(locale, path)
-  const insightsLabel = locale === 'ar' ? 'الرؤى' : 'Insights'
+  const insightsLabel = locale === 'ar' ? 'المقالات' : 'Articles'
   const pricingLabel = locale === 'ar' ? 'الأسعار' : 'Pricing'
   const processLabel = locale === 'ar' ? 'منهجية العمل' : 'Process'
   const trustLabel = locale === 'ar' ? 'مركز الثقة' : 'Trust Center'
+  const marketsLabel = locale === 'ar' ? 'الأسواق التي نخدمها' : 'Markets We Serve'
 
   const cmsFooter = cmsNavigation?.footer as
     | { description?: string; copyright?: string; columns?: Array<{ title: string; links: Array<{ label: string; href: string }> }> }
     | undefined
+  const localizedFooterDescription =
+    locale === 'ar' && cmsFooter?.description && /Transforming businesses|cutting-edge digital|digital excellence/i.test(cmsFooter.description)
+      ? t.footer.description
+      : cmsFooter?.description || t.footer.description
+  const localizedFooterCopyright =
+    locale === 'ar' && cmsFooter?.copyright && /CloudTopia|All rights reserved/i.test(cmsFooter.copyright)
+      ? t.footer.copyright
+      : cmsFooter?.copyright || t.footer.copyright
+  const brandText = locale === 'ar' ? 'كلاود توبيا' : (
+    <>
+      Cloud<span className="text-blue-600">Topia</span>
+    </>
+  )
 
   const footerLinks = {
     [t.footer.services]: [
@@ -75,12 +89,12 @@ export default function Footer() {
       name: localizedValue(industries[slug].name, locale),
       href: l(`/industries/${slug}`),
     })),
-    [locale === 'ar' ? 'الأسواق' : 'Markets']: [
+    [marketsLabel]: [
       {
-        name: locale === 'ar' ? 'الأسواق التي نخدمها' : 'Markets we serve',
+        name: locale === 'ar' ? 'كل الأسواق' : 'All markets',
         href: l('/markets'),
       },
-      ...countryLandingPages.slice(0, 5).map((country) => ({
+      ...countryLandingPages.map((country) => ({
         name: locale === 'ar' ? country.countryNameArabic : country.countryNameEnglish,
         href: locale === 'ar' ? country.arabicUrl : country.englishUrl,
       })),
@@ -91,7 +105,7 @@ export default function Footer() {
       { name: pricingLabel, href: l('/pricing') },
       { name: processLabel, href: l('/process') },
       { name: trustLabel, href: l('/trust') },
-      { name: insightsLabel, href: l('/insights') },
+      { name: insightsLabel, href: l('/articles') },
       { name: t.footer.links.ourLabs, href: l('/labs') },
       { name: t.footer.links.contactUs, href: l('/contact') },
     ],
@@ -148,31 +162,39 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-lavender text-neutral-600 border-t border-neutral-100" dir={dir}>
+    <footer className="border-t border-eerie/10 bg-lavender text-neutral-600" dir={dir}>
       <div className="container">
         {/* Main Footer Content */}
         <div className="py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-[1.35fr_0.9fr_0.95fr_1.75fr_1fr_0.8fr] lg:gap-10">
             {/* Brand Section */}
-            <div className="lg:col-span-2">
+            <div>
               <Link href={l('/')} className={`inline-flex items-center mb-4 ${dir === 'rtl' ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
                 <Image
                   src="/images/CloudTopia.svg"
                   alt="CloudTopia Logo"
-                  width={150}
-                  height={40}
+                  width={56}
+                  height={56}
                   priority
-                  className="h-10 w-auto"
+                  className="h-14 w-auto shrink-0"
                 />
-                <span className="text-2xl font-bold font-logo text-neutral-900">
-                  Cloud<span className="text-blue-600">Topia</span>
-                </span>
+                {locale === 'ar' ? (
+                  <span className="text-3xl font-logo-ar text-neutral-900">كلاود<span className="text-sky-600">توبيا</span></span>
+                ) : (
+                  <span className="text-2xl font-bold font-logo text-neutral-900">{brandText}</span>
+                )}
               </Link>
-              <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
-                {t.header?.tagline || 'Digital & Cloud Technologies'}
-              </p>
+              {locale === 'ar' ? (
+                <p className="mb-3 font-tagline-ar text-sm tracking-[0.05em] text-neutral-500">
+                  تكنولوجيا رقمية وسحابية
+                </p>
+              ) : (
+                <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
+                  {t.header?.tagline || 'Digital & Cloud Technologies'}
+                </p>
+              )}
               <p className="text-neutral-600 mb-6 max-w-sm font-medium">
-                {cmsFooter?.description || t.footer.description}
+                {localizedFooterDescription}
               </p>
               <div className={`flex ${dir === 'rtl' ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
                 {socialLinks.map((social) => (
@@ -190,23 +212,23 @@ export default function Footer() {
 
             {/* Links Sections */}
             {Object.entries(footerLinks).map(([category, links]) => (
-              <div key={category}>
-                <h3 className="text-neutral-900 font-semibold text-sm uppercase tracking-wider mb-4">
+              <nav key={category} aria-label={category}>
+                <h3 className="mb-4 text-sm font-black uppercase tracking-[0.14em] text-neutral-900">
                   {category}
                 </h3>
-                <ul className="space-y-3">
+                <ul className={category === marketsLabel ? 'grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-3 lg:grid-cols-2' : 'space-y-3'}>
                   {links.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="text-neutral-600 hover:text-blue-600 transition-colors duration-200 font-medium"
+                        className="font-semibold text-neutral-600 transition-colors duration-200 hover:text-sky-700"
                       >
                         {link.name}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </nav>
             ))}
           </div>
         </div>
@@ -215,7 +237,7 @@ export default function Footer() {
         <div className="border-t border-neutral-200 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-neutral-600 text-sm font-medium">
-              {(cmsFooter?.copyright || t.footer.copyright).replace('{year}', currentYear.toString())}
+              {localizedFooterCopyright.replace('{year}', currentYear.toString())}
             </p>
 
             <div className="flex items-center justify-center">

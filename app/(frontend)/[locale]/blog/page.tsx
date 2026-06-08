@@ -7,5 +7,5 @@ type PageProps = {
 
 export default async function BlogRedirectPage({ params }: PageProps) {
   const { locale = 'en' } = await params
-  redirect(localePath(locale, '/insights'))
+  redirect(localePath(locale, '/articles'))
 }

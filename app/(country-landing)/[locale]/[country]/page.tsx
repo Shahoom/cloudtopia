@@ -7,6 +7,7 @@ import {
     getCountryLandingPageByCode,
     type CountryLocale,
 } from '@/lib/seo/country-landing-pages'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
     params: Promise<{ locale: string; country: string }>
@@ -34,10 +35,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const canonical = `https://cloudtopia.net${locale === 'ar' ? country.arabicUrl : country.englishUrl}`
     const englishCanonical = `https://cloudtopia.net${country.englishUrl}`
     const arabicCanonical = `https://cloudtopia.net${country.arabicUrl}`
+    const images = ogImagesFor({ page: `markets/${country.slug}`, locale })
 
     return {
         title: content.seoTitle,
         description: content.seoDescription,
+        keywords: [content.primaryKeyword, ...content.secondaryKeywords, country.countryNameEnglish, country.countryNameArabic],
         alternates: {
             canonical,
             languages: {
@@ -53,11 +56,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             siteName: 'CloudTopia',
             locale: locale === 'ar' ? country.hreflangArabic.replace('-', '_') : country.hreflangEnglish.replace('-', '_'),
             type: 'website',
+            images,
         },
         twitter: {
             card: 'summary_large_image',
             title: content.seoTitle,
             description: content.seoDescription,
+            images: images.map((image) => image.url),
         },
     }
 }

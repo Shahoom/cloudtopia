@@ -7,14 +7,14 @@ import { buildFAQSchema } from '@/lib/seo/service-faqs'
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
     return getCMSMetadata(locale, '/business-systems-development', 'business-systems-development')
-    // Titles trimmed for SERP fit; descriptions reflect new pricing.
+    // Titles trimmed for SERP fit; descriptions avoid stale package prices.
     const titles: Record<string, string> = {
         en: 'Custom Business Systems & CRM Development',
         ar: 'تطوير أنظمة أعمال وCRM مخصصة',
     }
     const descs: Record<string, string> = {
-        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows. Bilingual Arabic + English. From $1,999.',
-        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج. ثنائية اللغة عربي + إنجليزي. من 1,999$.',
+        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows with bilingual handoff.',
+        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج مع تسليم ثنائي اللغة.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Business Systems — CloudTopia',
@@ -88,11 +88,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '3999',
-                            highPrice: '25000',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

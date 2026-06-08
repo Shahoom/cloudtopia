@@ -20,9 +20,11 @@ function mediaValue(value: unknown) {
 export function ContentBlockRenderer({
   blocks,
   relatedPostLookup = [],
+  locale = 'en',
 }: {
   blocks: unknown
   relatedPostLookup?: BlogPostSummary[]
+  locale?: string
 }) {
   const items = blocksArray(blocks)
   if (items.length === 0) return null
@@ -30,13 +32,13 @@ export function ContentBlockRenderer({
   return (
     <div className="mt-12 grid gap-8">
       {items.map((block, index) => (
-        <BlockView key={block.id || `${block.blockType}-${index}`} block={block} relatedPostLookup={relatedPostLookup} />
+        <BlockView key={block.id || `${block.blockType}-${index}`} block={block} relatedPostLookup={relatedPostLookup} locale={locale} />
       ))}
     </div>
   )
 }
 
-function BlockView({ block, relatedPostLookup }: { block: Record<string, any>; relatedPostLookup: BlogPostSummary[] }) {
+function BlockView({ block, relatedPostLookup, locale }: { block: Record<string, any>; relatedPostLookup: BlogPostSummary[]; locale: string }) {
   switch (block.blockType) {
     case 'calloutBlock':
       return (
@@ -169,10 +171,12 @@ function BlockView({ block, relatedPostLookup }: { block: Record<string, any>; r
     case 'relatedPostsManualBlock':
       return relatedPostLookup.length ? (
         <section className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
-          <h3 className="text-2xl font-black tracking-normal text-neutral-950">Related reading</h3>
+          <h3 className="text-2xl font-black tracking-normal text-neutral-950">
+            {locale === 'ar' ? 'مقالات ذات صلة' : 'Related reading'}
+          </h3>
           <div className="mt-5 grid gap-3">
             {relatedPostLookup.slice(0, 3).map((post) => (
-              <Link key={post.id} href={`/insights/${post.slug}`} className="font-black text-primary-700 hover:text-primary-900">
+              <Link key={post.id} href={`/articles/${post.slug}`} className="font-black text-primary-700 hover:text-primary-900">
                 {post.title}
               </Link>
             ))}

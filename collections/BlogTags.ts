@@ -71,7 +71,7 @@ export const BlogTags: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'Auto-generated from the name when empty. Used in /insights/tag/[slug].',
+        description: 'Auto-generated from the name when empty. Used in /articles/tag/[slug].',
       },
     },
     {

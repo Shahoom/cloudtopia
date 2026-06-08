@@ -615,7 +615,8 @@ async function getPublishedBlogPostsUncached(locale: string): Promise<BlogPostSu
       [locale],
     )
     return rows.map(normalizePostRow)
-  } catch {
+  } catch (error) {
+    console.error('getPublishedBlogPostsUncached Error:', error)
     return []
   }
 }
@@ -1068,20 +1069,20 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
     ])
 
     entries.push({
-      url: canonicalUrl(locale, '/insights'),
+      url: canonicalUrl(locale, '/articles'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,
-      alternates: { languages: buildHreflangMap('/insights') },
+      alternates: { languages: buildHreflangMap('/articles') },
     })
 
     posts.forEach((post) => {
       entries.push({
-        url: canonicalUrl(locale, `/insights/${post.slug}`),
+        url: canonicalUrl(locale, `/articles/${post.slug}`),
         lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
         changeFrequency: 'monthly',
         priority: post.pinned || post.featured ? 0.8 : 0.7,
-        alternates: { languages: buildHreflangMap(`/insights/${post.slug}`) },
+        alternates: { languages: buildHreflangMap(`/articles/${post.slug}`) },
         ...(post.coverImage?.url && {
           images: [post.coverImage.url.startsWith('http') ? post.coverImage.url : canonicalUrl('en', post.coverImage.url)],
         }),
@@ -1092,11 +1093,11 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       .filter((category) => category.postCount > 0)
       .forEach((category) => {
         entries.push({
-          url: canonicalUrl(locale, `/insights/category/${category.slug}`),
+          url: canonicalUrl(locale, `/articles/category/${category.slug}`),
           lastModified: new Date(),
           changeFrequency: 'weekly',
           priority: 0.65,
-          alternates: { languages: buildHreflangMap(`/insights/category/${category.slug}`) },
+          alternates: { languages: buildHreflangMap(`/articles/category/${category.slug}`) },
         })
       })
 
@@ -1104,21 +1105,21 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       .filter((tag) => tag.postCount > 0)
       .forEach((tag) => {
         entries.push({
-          url: canonicalUrl(locale, `/insights/tag/${tag.slug}`),
+          url: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
           lastModified: new Date(),
           changeFrequency: 'monthly',
           priority: 0.55,
-          alternates: { languages: buildHreflangMap(`/insights/tag/${tag.slug}`) },
+          alternates: { languages: buildHreflangMap(`/articles/tag/${tag.slug}`) },
         })
       })
 
     authors.forEach((author) => {
       entries.push({
-        url: canonicalUrl(locale, `/insights/author/${author.slug}`),
+        url: canonicalUrl(locale, `/articles/author/${author.slug}`),
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.5,
-        alternates: { languages: buildHreflangMap(`/insights/author/${author.slug}`) },
+        alternates: { languages: buildHreflangMap(`/articles/author/${author.slug}`) },
       })
     })
   }

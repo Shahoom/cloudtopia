@@ -16,8 +16,17 @@ const config: Config = {
         "aurora-transform": "aurora-transform 20s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
         "shine-pulse": "shine-pulse 14s infinite linear",
+        marquee: "marquee var(--duration, 30s) linear infinite",
+        "marquee-reverse": "marquee-reverse var(--duration, 30s) linear infinite",
       },
       keyframes: {
+        marquee: {
+          to: { transform: "translateX(-50%)" },
+        },
+        "marquee-reverse": {
+          from: { transform: "translateX(-50%)" },
+          to: { transform: "translateX(0)" },
+        },
         "shine-pulse": {
           "0%": { backgroundPosition: "0% 0%" },
           "50%": { backgroundPosition: "100% 100%" },
@@ -112,6 +121,8 @@ const config: Config = {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
         logo: ['var(--font-logo)', 'sans-serif'],
+        'logo-ar': ['var(--font-logo-ar)', 'sans-serif'],
+        'tagline-ar': ['var(--font-tagline-ar)', 'sans-serif'],
       },
       container: {
         center: true,
@@ -166,4 +177,3 @@ function addVariablesForColors({ addBase, theme }: any) {
 }
 
 export default config
-

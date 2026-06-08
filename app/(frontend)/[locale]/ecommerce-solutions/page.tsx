@@ -11,7 +11,9 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions')
+    const metadata = await getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions')
+    const title = locale === 'ar' ? 'أفضل شركة حلول متاجر إلكترونية' : 'Best E-Commerce Solutions Company'
+    return { ...metadata, title }
 }
 
 export default async function EcommerceSolutionsPage({

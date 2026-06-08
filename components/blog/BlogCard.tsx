@@ -13,7 +13,7 @@ function formatDate(value: string, locale: string) {
 }
 
 export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: string }) {
-  const href = localePath(locale, `/insights/${post.slug}`)
+  const href = localePath(locale, `/articles/${post.slug}`)
 
   return (
     <article className="group h-full overflow-hidden rounded-3xl border border-sky-100/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-500/70 hover:shadow-xl hover:shadow-sky-900/10">
@@ -46,7 +46,7 @@ export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: stri
             <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              {post.readingTime} min read
+              {locale === 'ar' ? `${post.readingTime} دقائق` : `${post.readingTime} min read`}
             </span>
             {post.author?.name && (
               <span className="inline-flex items-center gap-1 normal-case">
@@ -69,7 +69,7 @@ export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: stri
             </div>
           )}
           <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black text-primary-700">
-            Read insight
+            {locale === 'ar' ? 'اقرأ المقال' : 'Read article'}
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         </div>

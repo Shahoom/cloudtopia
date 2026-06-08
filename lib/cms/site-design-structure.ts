@@ -102,7 +102,7 @@ export function composeSiteDesignJSON(input: AnyRecord = {}, dictionary: AnyReco
     { label: navigationLabels.projects, href: '/projects' },
     { label: navigationLabels.labs, href: '/labs' },
     { label: navigationLabels.about, href: '/about' },
-    { label: navigationLabels.blog === 'Blog' ? 'Insights' : navigationLabels.blog, href: '/insights' },
+    { label: navigationLabels.blog === 'Blog' ? 'Articles' : navigationLabels.blog, href: '/articles' },
     { label: navigationLabels.contact, href: '/contact' },
   ]
 

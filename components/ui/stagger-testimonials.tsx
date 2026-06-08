@@ -322,7 +322,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         isCenter ? "border-white/20 text-white/90" : "border-neutral-200 text-neutral-600"
       )}>
         <img
-          src={testimonial.imgSrc || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"}
+          src={testimonial.imgSrc || "/images/testimonials/omar.jpg"}
           alt={`${testimonial.by.split(',')[0]}`}
           className="h-11 w-11 shrink-0 rounded-full bg-muted object-cover object-top border border-neutral-200"
         />
@@ -360,7 +360,7 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({ testim
         tempId: idx,
         testimonial: t.quote,
         by: `${t.name}, ${t.role}`,
-        imgSrc: t.imgSrc || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+        imgSrc: t.imgSrc || "/images/testimonials/omar.jpg"
       }))
     : locale === 'ar' ? testimonialsAr : testimonialsEn;
   

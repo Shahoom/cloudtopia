@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
-import { ArrowRight, CheckCircle2, CircleDollarSign, CreditCard, MessageCircle, Pencil, Rocket, Sparkles, Star } from 'lucide-react'
+import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Pencil, Sparkles, Star } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 
@@ -31,52 +31,49 @@ type PricingContent = {
     contact: string[]
 }
 
-const recommendedBadgeLabels = ['Most Popular', 'Best Value']
+const recommendedBadgeLabels = ['Most Popular', 'Best Value', 'الأكثر طلباً', 'الأفضل قيمة']
 
 const labels = {
     en: {
         eyebrow: 'Transparent pricing',
-        title: 'Fixed-scope packages with clear ownership from day one.',
-        description: 'Choose a website, e-commerce, custom software, cloud, AI automation, content, social, or QR menu package with a free consultation and a free custom demo preview before production.',
-        updated: 'Last updated',
-        currency: 'Currency',
-        delivery: 'Delivery',
+        title: 'Service packages sized for the work you actually need.',
+        description: 'Compare fixed-scope paths for websites, stores, systems, apps, cloud, AI, content, social, and QR menus. Every inquiry can start with a free consultation and demo preview.',
         popular: 'Recommended',
         notes: 'Commercial notes',
         contactTitle: 'Need a custom quote?',
         contactBody: 'Tell us the scope, market, integrations, and timeline. We will reply with the right package or a custom build estimate.',
         contactCta: 'Request a quote',
         servicesCta: 'Compare services',
-        paymentTerm: 'Payment: 50% upfront, 50% on delivery',
         cardCta: 'Scope this package',
         selectorEyebrow: 'Package selector',
         selectorTitle: 'Which package path fits your project?',
         selectorDescription: 'Use this as a quick buying guide before you compare every plan. The right path depends on whether you need a public presence, online sales, internal operations, or ongoing growth.',
         selectorCta: 'Explore path',
+        showFullFeaturesLabel: 'Show Full Features',
         decisionGuide: [
             {
                 title: 'Launch or rebuild a public website',
                 fit: 'Best for company sites, landing pages, service pages, and bilingual Arabic + English presence.',
                 path: 'Start with Website Design, then add SEO or content if acquisition matters from day one.',
-                href: '/services/website-design-development',
+                href: '/services/business-website-development',
             },
             {
                 title: 'Sell products or accept payments',
                 fit: 'Best for stores, checkout, subscriptions, payment gateways, catalogs, and regional commerce.',
                 path: 'Start with E-commerce or Payment Gateway Integration depending on whether the storefront already exists.',
-                href: '/services/ecommerce-store-development',
+                href: '/services/ecommerce-website-development',
             },
             {
                 title: 'Run operations with less manual work',
                 fit: 'Best for CRM, inventory, HR, booking, dashboards, portals, and custom business systems.',
                 path: 'Start with Custom CRM, Business Automation, or Admin Dashboard when the work happens behind the login.',
-                href: '/services/custom-crm-development',
+                href: '/services/crm-development',
             },
             {
                 title: 'Grow traffic, trust, and conversion',
                 fit: 'Best for SEO, conversion optimization, content, brand identity, and social media execution.',
                 path: 'Start with SEO, Content, CRO, or Brand Identity after the offer and conversion path are clear.',
-                href: '/services/search-engine-optimization',
+                href: '/services/seo-optimization',
             },
         ],
         faqTitle: 'Pricing questions buyers ask before booking',
@@ -97,47 +94,44 @@ const labels = {
     },
     ar: {
         eyebrow: 'أسعار واضحة',
-        title: 'باقات محددة النطاق مع ملكية واضحة من اليوم الأول.',
-        description: 'اختر باقة موقع، متجر، برمجيات مخصصة، سحابة، أتمتة AI، محتوى، تسويق، أو قائمة QR مع استشارة مجانية ومعاينة ديمو مجانية قبل التنفيذ.',
-        updated: 'آخر تحديث',
-        currency: 'العملة',
-        delivery: 'التسليم',
+        title: 'باقات خدمات بحجم العمل الذي تحتاجه فعلاً.',
+        description: 'قارن مسارات ثابتة للمواقع، المتاجر، الأنظمة، التطبيقات، السحابة، الذكاء الاصطناعي، المحتوى، السوشيال، وقوائم QR. يمكن أن يبدأ كل استفسار باستشارة مجانية ومعاينة ديمو.',
         popular: 'موصى به',
         notes: 'ملاحظات تجارية',
         contactTitle: 'تحتاج عرض سعر مخصص؟',
         contactBody: 'أخبرنا بالنطاق والسوق والتكاملات والجدول الزمني، وسنرسل لك الباقة المناسبة أو تقدير بناء مخصص.',
         contactCta: 'اطلب عرض سعر',
         servicesCta: 'قارن الخدمات',
-        paymentTerm: 'الدفع: 50% مقدماً و50% عند التسليم',
         cardCta: 'حدد نطاق هذه الباقة',
         selectorEyebrow: 'اختيار الباقة',
         selectorTitle: 'أي مسار يناسب مشروعك؟',
         selectorDescription: 'استخدم هذا الدليل السريع قبل مقارنة كل باقة. المسار الصحيح يعتمد على حاجتك: حضور عام، بيع إلكتروني، عمليات داخلية، أو نمو مستمر.',
         selectorCta: 'استكشف المسار',
+        showFullFeaturesLabel: 'عرض كل المميزات',
         decisionGuide: [
             {
                 title: 'إطلاق أو إعادة بناء موقع عام',
                 fit: 'مناسب لمواقع الشركات والصفحات التعريفية وصفحات الخدمات والحضور العربي + الإنجليزي.',
                 path: 'ابدأ بتصميم وتطوير المواقع، ثم أضف SEO أو المحتوى إذا كان جذب العملاء مهماً من اليوم الأول.',
-                href: '/services/website-design-development',
+                href: '/services/business-website-development',
             },
             {
                 title: 'بيع المنتجات أو قبول المدفوعات',
                 fit: 'مناسب للمتاجر والدفع والاشتراكات وبوابات الدفع والكتالوجات والتجارة الإقليمية.',
                 path: 'ابدأ بتطوير متجر إلكتروني أو تكامل بوابات الدفع حسب وجود المتجر الحالي.',
-                href: '/services/ecommerce-store-development',
+                href: '/services/ecommerce-website-development',
             },
             {
                 title: 'تشغيل العمليات بعمل يدوي أقل',
                 fit: 'مناسب لـ CRM والمخزون والموارد البشرية والحجوزات ولوحات التحكم وبوابات العملاء.',
                 path: 'ابدأ بـ CRM مخصص أو أتمتة الأعمال أو لوحة إدارة عندما يحدث العمل خلف تسجيل الدخول.',
-                href: '/services/custom-crm-development',
+                href: '/services/crm-development',
             },
             {
                 title: 'زيادة الزيارات والثقة والتحويل',
                 fit: 'مناسب لـ SEO وتحسين التحويل والمحتوى والهوية وإدارة الشبكات الاجتماعية.',
                 path: 'ابدأ بـ SEO أو المحتوى أو CRO أو الهوية بعد وضوح العرض ومسار التحويل.',
-                href: '/services/search-engine-optimization',
+                href: '/services/seo-optimization',
             },
         ],
         faqTitle: 'أسئلة التسعير التي يسألها المشترون قبل الحجز',
@@ -162,12 +156,13 @@ function pageLabels(locale: string) {
     return labels[(locale as keyof typeof labels) || 'en'] || labels.en
 }
 
-function readPricingSource() {
-    return readFileSync(path.join(process.cwd(), 'public/pricing.md'), 'utf8')
+function readPricingSource(locale: string) {
+    const sourceFile = locale === 'ar' ? 'pricing.ar.md' : 'pricing.md'
+    return readFileSync(path.join(process.cwd(), 'public', sourceFile), 'utf8')
 }
 
 function parsePackageHeading(heading: string): PricingPackage {
-    const [namePart, rawPricePart = 'Custom pricing'] = heading.split(/\s+\u2014\s+/)
+    const [namePart, rawPricePart = 'Custom quote'] = heading.split(/\s+\u2014\s+/)
     const badgeMatch = rawPricePart.match(/\u2b50\s*(.+)$/)
     const price = rawPricePart.replace(/\s*\u2b50\s*.+$/, '').trim()
 
@@ -256,24 +251,16 @@ function parsePricingMarkdown(source: string): PricingContent {
     return content
 }
 
-function expandedPlanFeatures(plan: PricingPackage, categoryTitle: string, locale: string) {
-    const additions = locale === 'ar'
-        ? [
-            'استشارة مجانية قبل تحديد النطاق',
-            'معاينة ديمو مجانية مخصصة حسب طلب الشركة',
-            'تسليم الحسابات والملكية بوضوح',
-            'ربط تحليلات ومؤشرات أداء أساسية',
-            categoryTitle.includes('Website') || categoryTitle.includes('المواقع') ? 'هيكلة SEO أولية للصفحات الأساسية' : 'توثيق عملي لما تم تسليمه',
-        ]
-        : [
-            'Free consultation before scope is finalized',
-            'Free custom demo preview based on the company inquiry',
-            'Clear account and ownership handoff',
-            'Analytics and basic performance tracking',
-            categoryTitle.includes('Website') ? 'Starter SEO structure for core pages' : 'Practical handoff documentation',
-        ]
+function expandedPlanFeatures(plan: PricingPackage, _categoryTitle: string, _locale: string) {
+    return plan.features
+}
 
-    return Array.from(new Set([...plan.features, ...additions])).slice(0, 11)
+function categorySectionId(categoryTitle: string) {
+    return categoryTitle
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9\u0600-\u06ff]+/g, '-')
+        .replace(/^-+|-+$/g, '')
 }
 
 function tierIcon(index: number) {
@@ -303,10 +290,28 @@ function categoryPricingDescription(categoryTitle: string, locale: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
+    const title = isArabic ? 'الأسعار' : 'Pricing'
+    const socialTitle = isArabic ? 'الأسعار | كلاود توبيا' : 'Pricing | CloudTopia'
+    const description = isArabic
+        ? 'أسعار كلاود توبيا للمواقع، المتاجر، أنظمة CRM وERP، تطبيقات الويب والجوال، السحابة، وأتمتة الذكاء الاصطناعي.'
+        : 'CloudTopia pricing for websites, e-commerce, CRM, ERP, web apps, mobile apps, cloud, and AI automation.'
 
     return {
-        title: 'Pricing | CloudTopia',
-        description: 'Transparent CloudTopia pricing for websites, e-commerce, CRM, custom systems, web applications, social media, content, and QR menu projects.',
+        title,
+        description,
+        openGraph: {
+            title: socialTitle,
+            description,
+            url: canonicalUrl(locale, '/pricing'),
+            siteName: 'CloudTopia',
+            type: 'website',
+        },
+        twitter: {
+            title: socialTitle,
+            description,
+            card: 'summary_large_image',
+        },
         alternates: {
             canonical: canonicalUrl(locale, '/pricing'),
             languages: {
@@ -322,7 +327,7 @@ export default async function PricingPage({ params }: PageProps) {
     const { locale = 'en' } = await params
     const L = pageLabels(locale)
     const isRTL = locale === 'ar'
-    const pricing = parsePricingMarkdown(readPricingSource())
+    const pricing = parsePricingMarkdown(readPricingSource(locale))
     const pricingSchema = {
         '@context': 'https://schema.org',
         '@type': 'OfferCatalog',
@@ -380,21 +385,6 @@ export default async function PricingPage({ params }: PageProps) {
                             {L.description}
                         </p>
                     </div>
-
-                    <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="border-2 border-slate-950 bg-white p-5 shadow-[4px_4px_0px_0px_#0f172a]">
-                            <p className="text-sm font-semibold uppercase tracking-wide text-neutral-500">{L.updated}</p>
-                            <p className="mt-2 text-2xl font-bold text-neutral-950">{pricing.lastUpdated}</p>
-                        </div>
-                        <div className="border-2 border-slate-950 bg-white p-5 shadow-[4px_4px_0px_0px_#0f172a]">
-                            <p className="text-sm font-semibold uppercase tracking-wide text-neutral-500">{L.currency}</p>
-                            <p className="mt-2 text-2xl font-bold text-neutral-950">{pricing.currency}</p>
-                        </div>
-                        <div className="border-2 border-slate-950 bg-neutral-950 p-5 text-white shadow-[4px_4px_0px_0px_rgba(14,165,233,0.45)] sm:col-span-2 lg:col-span-1">
-                            <p className="text-sm font-semibold uppercase tracking-wide text-white/60">Terms</p>
-                            <p className="mt-2 text-lg font-bold">{L.paymentTerm}</p>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -406,7 +396,10 @@ export default async function PricingPage({ params }: PageProps) {
                         <p className="mt-4 text-lg leading-relaxed text-neutral-600">{L.selectorDescription}</p>
                     </div>
                     <div className="grid gap-4 lg:grid-cols-4">
-                        {L.decisionGuide.map((item) => (
+                        {L.decisionGuide.map((item, index) => {
+                            const targetCategory = pricing.categories[Math.min(index, pricing.categories.length - 1)]
+                            const categorySectionIdValue = categorySectionId(targetCategory.title)
+                            return (
                             <article key={item.title} className="flex h-full flex-col border-2 border-slate-950 bg-white p-6 shadow-[5px_5px_0px_rgba(15,23,42,0.12)]">
                                 <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-full border-2 border-slate-950 bg-sky-100 text-sky-800">
                                     <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
@@ -415,14 +408,15 @@ export default async function PricingPage({ params }: PageProps) {
                                 <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.fit}</p>
                                 <p className="mt-4 text-sm leading-relaxed font-semibold text-neutral-800">{item.path}</p>
                                 <Link
-                                    href={localePath(locale, item.href)}
+                                    href={`#${categorySectionIdValue}`}
                                     className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black text-primary-700 hover:text-primary-900"
                                 >
                                     {L.selectorCta}
                                     <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                                 </Link>
                             </article>
-                        ))}
+                            )
+                        })}
                     </div>
                 </div>
             </section>
@@ -430,6 +424,7 @@ export default async function PricingPage({ params }: PageProps) {
             <section className="bg-[#f4f1f8] py-12 md:py-20">
                 <div className="space-y-20">
                     {pricing.categories.map((category) => {
+                        const categorySectionIdValue = categorySectionId(category.title)
                         const tiers: PricingTier[] = category.packages.map((plan, index) => ({
                             name: plan.name,
                             icon: tierIcon(index),
@@ -440,11 +435,13 @@ export default async function PricingPage({ params }: PageProps) {
                             color: tierColor(index),
                             href: localePath(locale, '/contact'),
                             ctaLabel: L.cardCta,
+                            showFullFeaturesLabel: L.showFullFeaturesLabel,
                         }))
 
                         return (
                             <CreativePricing
                                 key={category.title}
+                                id={categorySectionIdValue}
                                 tag={category.title}
                                 title={categoryPricingTitle(category.title, locale)}
                                 description={categoryPricingDescription(category.title, locale)}

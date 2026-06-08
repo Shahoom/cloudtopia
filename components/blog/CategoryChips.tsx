@@ -12,21 +12,21 @@ export function CategoryChips({
   activeSlug?: string
 }) {
   return (
-    <nav aria-label="Insights topics" className="flex flex-wrap justify-center gap-3">
+    <nav aria-label="Articles topics" className="flex flex-wrap justify-center gap-3">
       <Link
-        href={localePath(locale, '/insights')}
+        href={localePath(locale, '/articles')}
         className={`rounded-full border px-4 py-2 text-sm font-black transition ${
           !activeSlug
             ? 'border-neutral-950 bg-neutral-950 text-white'
             : 'border-white/80 bg-white text-neutral-700 hover:border-primary-300 hover:text-primary-700'
         }`}
       >
-        All topics
+        {locale === 'ar' ? 'جميع المواضيع' : 'All topics'}
       </Link>
       {categories.slice(0, 10).map((category) => (
         <Link
           key={category.id}
-          href={localePath(locale, `/insights/category/${category.slug}`)}
+          href={localePath(locale, `/articles/category/${category.slug}`)}
           className={`rounded-full border px-4 py-2 text-sm font-black transition ${
             activeSlug === category.slug
               ? 'border-primary-600 bg-primary-600 text-white'

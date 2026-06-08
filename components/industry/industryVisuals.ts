@@ -1,13 +1,17 @@
 import {
   Banknote,
+  Briefcase,
   Building2,
   GraduationCap,
+  Hammer,
   HeartPulse,
   Hotel,
   Landmark,
-  Plane,
+  Scale,
   ShoppingBag,
+  Store,
   Truck,
+  Utensils,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -65,6 +69,36 @@ export const industryVisuals: Record<string, IndustryVisualProfile> = {
     tint: 'bg-amber-50',
     workflow: { en: 'Guest experience', ar: 'تجربة الضيف' },
   },
+  restaurants: {
+    icon: Utensils,
+    accent: 'text-orange-700',
+    tint: 'bg-orange-50',
+    workflow: { en: 'Menu to order', ar: 'من القائمة إلى الطلب' },
+  },
+  'legal-firms': {
+    icon: Scale,
+    accent: 'text-slate-700',
+    tint: 'bg-slate-50',
+    workflow: { en: 'Inquiry to consultation', ar: 'من الاستفسار إلى الاستشارة' },
+  },
+  construction: {
+    icon: Hammer,
+    accent: 'text-stone-700',
+    tint: 'bg-stone-50',
+    workflow: { en: 'Tender to delivery', ar: 'من العطاء إلى التسليم' },
+  },
+  retail: {
+    icon: Store,
+    accent: 'text-fuchsia-700',
+    tint: 'bg-fuchsia-50',
+    workflow: { en: 'Branch to buyer', ar: 'من الفرع إلى العميل' },
+  },
+  'professional-services': {
+    icon: Briefcase,
+    accent: 'text-sky-700',
+    tint: 'bg-sky-50',
+    workflow: { en: 'Expertise to lead', ar: 'من الخبرة إلى العميل' },
+  },
   'logistics-supply-chain': {
     icon: Truck,
     accent: 'text-blue-700',
@@ -82,4 +116,3 @@ export const industryVisuals: Record<string, IndustryVisualProfile> = {
 export function getIndustryVisual(slug: string) {
   return industryVisuals[slug] || defaultIndustryVisual
 }
-

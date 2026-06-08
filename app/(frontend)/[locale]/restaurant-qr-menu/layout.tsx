@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         ar: 'أنظمة قائمة QR للمطاعم في الخليج',
     }
     const descs: Record<string, string> = {
-        en: 'Bilingual QR menus for Gulf restaurants and cafés. Arabic and English. Table ordering, payments, instant updates. From $249.',
-        ar: 'قوائم QR ثنائية اللغة لمطاعم ومقاهي الخليج. العربية والإنجليزية، طلب من الطاولة، مدفوعات، تحديثات فورية. تبدأ من 249$.',
+        en: 'Bilingual QR menus for Gulf restaurants and cafés with ordering, payments, instant updates, and clear package scope.',
+        ar: 'قوائم QR ثنائية اللغة لمطاعم ومقاهي الخليج مع الطلب والدفع والتحديث الفوري ونطاق باقة واضح.',
     }
     const ogTitles: Record<string, string> = {
         en: 'QR Menu Systems — CloudTopia',
@@ -87,11 +87,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '599',
-                            highPrice: '2499',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

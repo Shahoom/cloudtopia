@@ -1,22 +1,20 @@
 import type { Metadata } from 'next'
-import { getCMSMetadata } from '@/lib/cms/metadata'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/projects', 'projects')
     const titles: Record<string, string> = {
-        en: 'Our Projects — Real Work, Real Impact',
-        ar: 'مشاريعنا — أعمال حقيقية، تأثير حقيقي',
+        en: 'Projects',
+        ar: 'المشاريع',
     }
     const descs: Record<string, string> = {
         en: 'Explore our portfolio of websites, web applications, and digital solutions.',
         ar: 'استكشف محفظتنا من المواقع وتطبيقات الويب والحلول الرقمية.',
     }
     const ogTitles: Record<string, string> = {
-        en: 'Projects — CloudTopia',
-        ar: 'المشاريع — كلاود توبيا',
+        en: 'Projects | CloudTopia',
+        ar: 'المشاريع | كلاود توبيا',
     }
     const ogDescs: Record<string, string> = {
         en: 'Our portfolio of real-world digital projects and success stories.',

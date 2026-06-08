@@ -21,6 +21,7 @@ const expectedSlugs = [
   'turkey',
   'syria',
   'jordan',
+  'egypt',
   'lebanon',
 ]
 
@@ -63,6 +64,9 @@ test('country redirects collapse duplicate country and location URLs', () => {
   assert.equal(countryRedirects['/sa'], '/saudi-arabia')
   assert.equal(countryRedirects['/ar/ae'], '/ar/united-arab-emirates')
   assert.equal(countryRedirects['/ae'], '/united-arab-emirates')
+  assert.equal(countryRedirects['/ar/locations/egypt'], '/ar/egypt')
+  assert.equal(countryRedirects['/locations/egypt'], '/egypt')
+  assert.equal(countryRedirects['/eg'], '/egypt')
 })
 
 test('sitemap includes canonical country landing pages with regional hreflang and excludes old location duplicates', () => {

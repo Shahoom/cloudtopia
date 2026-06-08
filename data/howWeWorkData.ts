@@ -20,7 +20,7 @@ export const howWeWorkData = {
     },
     description: {
       en: "CloudTopia follows a structured delivery workflow for website development, app development, CRM systems, cloud solutions, and AI automation — with clear planning, measurable progress, quality reviews, and reliable launch support.",
-      ar: "تتبع CloudTopia منهجية تنفيذ واضحة ومتوافقة مع مبادئ CMMI لتطوير المواقع، التطبيقات، أنظمة CRM، الحلول السحابية، وأتمتة الذكاء الاصطناعي — مع تخطيط واضح، متابعة قابلة للقياس، مراجعات جودة، ودعم موثوق بعد الإطلاق."
+      ar: "تتبع كلاود توبيا منهجية تنفيذ واضحة ومتوافقة مع مبادئ CMMI لتطوير المواقع، التطبيقات، أنظمة CRM، الحلول السحابية، وأتمتة الذكاء الاصطناعي — مع تخطيط واضح، متابعة قابلة للقياس، مراجعات جودة، ودعم موثوق بعد الإطلاق."
     }
   },
   processTypes: [
@@ -173,7 +173,7 @@ export const howWeWorkData = {
     whatsappNumber: "+96895886393",
     whatsappMessage: {
       en: "Hello CloudTopia, I want to discuss my project and choose the best delivery process for it.",
-      ar: "مرحبًا CloudTopia، أريد مناقشة مشروعي واختيار أفضل منهجية تنفيذ مناسبة له."
+      ar: "مرحبًا كلاود توبيا، أريد مناقشة مشروعي واختيار أفضل منهجية تنفيذ مناسبة له."
     }
   }
 };

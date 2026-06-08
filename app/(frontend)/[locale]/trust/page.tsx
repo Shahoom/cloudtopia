@@ -27,6 +27,26 @@ const content = {
         secondaryCta: 'Compare pricing',
         directTitle: 'What can enterprise buyers verify before choosing CloudTopia?',
         directAnswer: 'Enterprise buyers can verify CloudTopia pricing, project proof, service scope, market readiness, account ownership expectations, and bilingual Arabic plus English delivery before booking a call. The goal is to make procurement, technical review, and stakeholder approval easier before production starts.',
+        approachTitle: 'A trust center built around evidence, not promises.',
+        approachIntro: 'CloudTopia makes the risky parts of a digital build inspectable before work starts. Buyers can see how ownership, access, launch quality, and support boundaries will be handled instead of relying on vague assurances.',
+        approach: [
+            {
+                title: 'Ownership ledger',
+                body: 'We identify who owns the domain, hosting, repository, CMS, analytics, payment gateways, source files, and operational accounts.',
+            },
+            {
+                title: 'Access protocol',
+                body: 'We prefer client-owned accounts, role-based invitations, environment separation, and documented handoff over shared personal logins.',
+            },
+            {
+                title: 'Launch evidence',
+                body: 'Launch readiness is checked through forms, redirects, metadata, responsive QA, tracking, content review, and structured-data basics.',
+            },
+            {
+                title: 'Support boundaries',
+                body: 'The post-launch window, care plan options, and change-request path are visible before production begins.',
+            },
+        ],
         pillarsTitle: 'Trust pillars',
         pillars: [
             {
@@ -114,6 +134,26 @@ const content = {
         secondaryCta: 'قارن الأسعار',
         directTitle: 'ما الذي يمكن للمشتري المؤسسي التحقق منه قبل اختيار كلاود توبيا؟',
         directAnswer: 'يمكن للمشترين المؤسسيين التحقق من أسعار كلاود توبيا، دليل المشاريع، نطاق الخدمات، جاهزية الأسواق، توقعات ملكية الحسابات، والتنفيذ العربي والإنجليزي قبل حجز مكالمة. الهدف هو تسهيل المشتريات والمراجعة التقنية وموافقة أصحاب القرار قبل بدء الإنتاج.',
+        approachTitle: 'مركز ثقة مبني على الأدلة، لا الوعود.',
+        approachIntro: 'تجعل كلاود توبيا الأجزاء عالية المخاطر في المشروع الرقمي قابلة للفحص قبل بدء العمل. يستطيع المشتري رؤية طريقة التعامل مع الملكية، الصلاحيات، جودة الإطلاق، وحدود الدعم بدلاً من الاكتفاء بطمأنة عامة.',
+        approach: [
+            {
+                title: 'سجل الملكية',
+                body: 'نحدد من يملك النطاق، الاستضافة، المستودع، CMS، التحليلات، بوابات الدفع، ملفات المصدر، والحسابات التشغيلية.',
+            },
+            {
+                title: 'بروتوكول الصلاحيات',
+                body: 'نفضل حسابات يملكها العميل، دعوات حسب الدور، فصل البيئات، وتسليم موثق بدلاً من مشاركة حسابات شخصية.',
+            },
+            {
+                title: 'دليل جاهزية الإطلاق',
+                body: 'تتم مراجعة النماذج، التحويلات، الميتا، التجاوب، التتبع، المحتوى، وأساسيات البيانات المنظمة قبل الإطلاق.',
+            },
+            {
+                title: 'حدود الدعم',
+                body: 'تظهر نافذة دعم ما بعد الإطلاق، خيارات خطة العناية، ومسار طلبات التغيير قبل بدء الإنتاج.',
+            },
+        ],
         pillarsTitle: 'ركائز الثقة',
         pillars: [
             {
@@ -202,7 +242,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const L = pageContent(locale)
 
     return {
-        title: `${L.metaTitle} | CloudTopia`,
+        title: L.metaTitle,
         description: L.metaDescription,
         alternates: {
             canonical: canonicalUrl(locale, '/trust'),
@@ -269,7 +309,7 @@ export default async function TrustPage({ params }: PageProps) {
     }
 
     return (
-        <main className="min-h-screen bg-lavender" dir={isRTL ? 'rtl' : 'ltr'}>
+        <main className="min-h-screen bg-white" dir={isRTL ? 'rtl' : 'ltr'}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
@@ -309,47 +349,50 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-white px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-6xl">
-                    <div className="mb-10 flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-md bg-neutral-950 text-white">
-                            <Layers className="h-5 w-5" />
+                    <div className="mb-10 grid gap-6 lg:grid-cols-[0.42fr_1fr] lg:items-end">
+                        <div>
+                            <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-sm font-black text-white">
+                                <ShieldCheck className="h-4 w-4 text-cyan-200" />
+                                {L.badge}
+                            </span>
+                            <h2 className="mt-6 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.approachTitle}</h2>
                         </div>
-                        <h2 className="text-3xl font-black tracking-tight text-neutral-950 md:text-4xl">{L.pillarsTitle}</h2>
+                        <p className="max-w-3xl border-s-4 border-cyan-500 bg-[#f4f1f8] px-5 py-4 text-base font-semibold leading-8 text-neutral-700">
+                            {L.approachIntro}
+                        </p>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        {L.pillars.map((pillar, index) => {
-                            const Icon = pillar.icon
-                            const accents = ['bg-cyan-50 text-cyan-700', 'bg-emerald-50 text-emerald-700', 'bg-amber-50 text-amber-700', 'bg-rose-50 text-rose-700']
-                            return (
-                                <article key={pillar.title} className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
-                                    <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-md ${accents[index % accents.length]}`}>
-                                        <Icon className="h-5 w-5" />
-                                    </div>
-                                    <h3 className="text-lg font-black text-neutral-950">{pillar.title}</h3>
-                                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">{pillar.description}</p>
-                                </article>
-                            )
-                        })}
+                    <div className="grid gap-px border border-neutral-200 bg-neutral-200 md:grid-cols-2 lg:grid-cols-4">
+                        {L.approach.map((item, index) => (
+                            <article key={item.title} className="min-h-72 bg-white p-6 transition-colors duration-200 hover:bg-[#f4f1f8]/40">
+                                <div className="mb-10 flex items-center justify-between gap-3">
+                                    <FileText className="h-5 w-5 text-cyan-700" />
+                                    <span className="font-mono text-xs font-black text-neutral-400">{String(index + 1).padStart(2, '0')}</span>
+                                </div>
+                                <h3 className="text-xl font-black text-neutral-950">{item.title}</h3>
+                                <p className="mt-4 text-sm font-semibold leading-7 text-neutral-600">{item.body}</p>
+                            </article>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            <section className="bg-white px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-neutral-50/60 border-y border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
                         <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-sm font-bold text-white">
                             <Building2 className="h-4 w-4 text-cyan-300" />
-                            {L.governanceTitle}
+                            {locale === 'ar' ? 'الحوكمة' : 'Governance'}
                         </span>
                         <h2 className="mt-6 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">
-                            {L.governanceTitle}
+                          {L.governanceTitle}
                         </h2>
                         <p className="mt-5 text-lg leading-relaxed text-neutral-600">{L.governanceIntro}</p>
                     </div>
                     <div className="grid gap-3">
                         {L.governance.map((item) => (
-                            <div key={item} className="flex gap-3 rounded-lg border border-neutral-200 bg-lavender p-4">
+                            <div key={item} className="flex gap-3 rounded-2xl border border-neutral-200/60 bg-white p-4 shadow-sm">
                                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-600" />
                                 <p className="text-sm font-semibold leading-relaxed text-neutral-700">{item}</p>
                             </div>
@@ -358,12 +401,12 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-white px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-6xl">
                     <h2 className="max-w-3xl text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.buyerTitle}</h2>
                     <div className="mt-10 grid gap-4 md:grid-cols-3">
                         {L.buyerCards.map((card) => (
-                            <article key={card.title} className="rounded-lg border border-neutral-200 bg-white p-7 shadow-sm">
+                            <article key={card.title} className="rounded-2xl border border-neutral-200/60 bg-neutral-50/50 p-7 shadow-sm">
                                 <h3 className="text-xl font-black text-neutral-950">{card.title}</h3>
                                 <p className="mt-4 text-sm leading-relaxed text-neutral-600">{card.body}</p>
                             </article>
@@ -372,23 +415,23 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-24" data-header-theme="dark">
+            <section className="bg-neutral-50/40 border-t border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-6xl">
                     <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
                         <div>
-                            <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">{L.verificationTitle}</p>
-                            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{L.verificationTitle}</h2>
+                            <p className="text-xs font-black uppercase tracking-[0.22em] text-primary-700">{L.verificationTitle}</p>
+                            <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.verificationTitle}</h2>
                         </div>
                     </div>
                     <div className="grid gap-4 md:grid-cols-5">
                         {L.verification.map((item) => (
-                            <Link key={item.href} href={localePath(locale, item.href)} className="group flex min-h-44 flex-col justify-between rounded-lg border border-white/10 bg-white/[0.05] p-5 transition hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-cyan-300/10">
+                            <Link key={item.href} href={localePath(locale, item.href)} className="group flex min-h-44 flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary-500 hover:shadow-lg hover:shadow-sky-950/5">
                                 <div>
-                                    <FileText className="h-5 w-5 text-cyan-300" />
-                                    <h3 className="mt-4 text-lg font-black">{item.label}</h3>
-                                    <p className="mt-2 text-xs leading-relaxed text-white/58">{item.body}</p>
+                                    <FileText className="h-5 w-5 text-primary-600" />
+                                    <h3 className="mt-4 text-lg font-black text-neutral-950">{item.label}</h3>
+                                    <p className="mt-2 text-xs leading-relaxed text-neutral-600">{item.body}</p>
                                 </div>
-                                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-cyan-200">
+                                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-primary-700">
                                     {item.label}
                                     <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                                 </span>
@@ -398,12 +441,12 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-white border-t border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-4xl">
                     <h2 className="text-3xl font-black tracking-tight text-neutral-950 md:text-4xl">{L.faqTitle}</h2>
                     <div className="mt-10 space-y-4">
                         {L.faqs.map((faq) => (
-                            <article key={faq.question} className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+                            <article key={faq.question} className="rounded-2xl border border-neutral-200/60 bg-neutral-50/30 p-6 shadow-sm">
                                 <h3 className="text-lg font-black text-neutral-950">{faq.question}</h3>
                                 <p className="mt-3 text-base leading-relaxed text-neutral-600">{faq.answer}</p>
                             </article>
@@ -412,7 +455,7 @@ export default async function TrustPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-eerie px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
+            <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-3xl font-black tracking-tight md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>

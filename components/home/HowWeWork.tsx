@@ -67,7 +67,7 @@ export default function HowWeWork() {
                         className="text-3xl md:text-5xl lg:text-5xl font-bold tracking-tight text-white leading-[1.2] mb-6"
                     >
                         <span className="hidden md:inline">{data.header.title[l]}</span>
-                        <span className="md:hidden">{'titleMobile' in data.header ? (data.header.titleMobile as any)[l] : data.header.title[l]}</span>
+                        <span className="md:hidden">{data.header.titleMobile[l]}</span>
                     </motion.h2>
 
                     <motion.p
@@ -83,15 +83,15 @@ export default function HowWeWork() {
 
                 {/* Tab Switcher */}
                 <div className="mb-10">
-                    <div className="flex justify-center overflow-x-auto pb-4 hide-scrollbar">
-                        <div className="inline-flex items-center p-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md">
+                    <div className="-mx-4 flex overflow-x-auto overscroll-x-contain scroll-px-4 px-4 pb-4 touch-pan-x hide-scrollbar sm:mx-0 sm:justify-center sm:px-0">
+                        <div className="inline-flex min-w-max items-center rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-md">
                             {data.processTypes.map((tab, idx) => {
                                 const isActive = activeTab === idx
                                 return (
                                     <button
                                         key={tab.id}
                                         onClick={() => setActiveTab(idx)}
-                                        className={`relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
+                                        className={`relative rounded-full px-4 py-2.5 text-xs font-semibold whitespace-nowrap transition-all duration-300 sm:px-6 sm:py-3 sm:text-sm ${
                                             isActive ? 'text-white' : 'text-white/60 hover:text-white/90'
                                         }`}
                                     >

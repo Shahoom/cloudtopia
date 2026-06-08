@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         ar: 'تطوير تطبيقات ويب مخصصة ومنصات SaaS',
     }
     const descs: Record<string, string> = {
-        en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React. Real-time features, bilingual Arabic + English UI. From $999.',
-        ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact. ميزات حية، واجهة عربي + إنجليزي. من 999$.',
+        en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React with real-time features and bilingual UI.',
+        ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact مع ميزات حية وواجهة ثنائية اللغة.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Web Applications — CloudTopia',
@@ -87,11 +87,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '5999',
-                            highPrice: '50000',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

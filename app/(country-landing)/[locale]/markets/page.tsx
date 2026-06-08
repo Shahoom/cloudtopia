@@ -8,6 +8,7 @@ import {
     countryWhatsappUrl,
     type CountryLocale,
 } from '@/lib/seo/country-landing-pages'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
     params: Promise<{ locale: string }>
@@ -24,15 +25,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!locale) return { title: 'Markets Not Found' }
 
     const isArabic = locale === 'ar'
-    const title = isArabic ? 'الأسواق التي نخدمها | CloudTopia' : 'Markets We Serve | CloudTopia'
+    const title = isArabic ? 'الأسواق التي نخدمها | كلاود توبيا' : 'Markets We Serve | CloudTopia'
     const description = isArabic
-        ? 'استكشف صفحات CloudTopia للأسواق العربية والخليجية مع روابط مباشرة للصفحات الرسمية حسب الدولة.'
+        ? 'استكشف صفحات كلاود توبيا للأسواق العربية والخليجية مع روابط مباشرة للصفحات الرسمية حسب الدولة.'
         : 'Explore CloudTopia country landing pages for Gulf and Arabic-speaking markets with canonical country URLs.'
     const canonical = isArabic ? 'https://cloudtopia.net/ar/markets' : 'https://cloudtopia.net/markets'
+    const images = ogImagesFor({ page: 'markets', locale })
 
     return {
         title,
         description,
+        keywords: isArabic
+            ? ['أسواق كلاود توبيا', 'شركة برمجيات في الخليج', 'تطوير مواقع عربي', 'CRM عربي']
+            : ['CloudTopia markets', 'software company in GCC', 'Arabic web development', 'CRM development GCC'],
+        openGraph: {
+            title,
+            description,
+            url: canonical,
+            siteName: 'CloudTopia',
+            type: 'website',
+            images,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: images.map((image) => image.url),
+        },
         alternates: {
             canonical,
             languages: {
@@ -52,7 +71,7 @@ export default async function MarketsPage({ params }: PageProps) {
     const isArabic = locale === 'ar'
     const dir = isArabic ? 'rtl' : 'ltr'
     const homeHref = isArabic ? '/ar' : '/'
-    const title = isArabic ? 'أسواق CloudTopia' : 'CloudTopia Markets'
+    const title = isArabic ? 'أسواق كلاود توبيا' : 'CloudTopia Markets'
     const intro = isArabic
         ? 'اختر الدولة المناسبة لصفحة خدمات مخصصة بالسعر المحلي، اللغة المناسبة، وروابط مباشرة للتواصل. هذه صفحات الأسواق النهائية فقط، بدون تكرار صفحات location القديمة.'
         : 'Choose the country page that matches your market, currency, language, and contact route. These are the final market pages, replacing duplicate location-style URLs.'
@@ -60,7 +79,7 @@ export default async function MarketsPage({ params }: PageProps) {
         ? ['روابط canonical نهائية', 'محتوى عربي وإنجليزي', 'عملة وسياق سوق محلي']
         : ['Final canonical URLs', 'Arabic and English content', 'Local currency and market context']
 
-    const schema = {
+    const itemListSchema = {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
         name: title,
@@ -71,18 +90,42 @@ export default async function MarketsPage({ params }: PageProps) {
             url: `https://cloudtopia.net${isArabic ? country.arabicUrl : country.englishUrl}`,
         })),
     }
+    const organizationSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'CloudTopia',
+        url: 'https://cloudtopia.net',
+        sameAs: ['https://instagram.com/thecloudtopia'],
+    }
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/' },
+            { '@type': 'ListItem', position: 2, name: title, item: isArabic ? 'https://cloudtopia.net/ar/markets' : 'https://cloudtopia.net/markets' },
+        ],
+    }
 
     return (
-        <main dir={dir} className="min-h-screen bg-[#f7f3ea] text-neutral-950">
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-            <header className="sticky top-0 z-50 border-b border-neutral-950 bg-[#f7f3ea]/92 backdrop-blur-xl">
+        <main dir={dir} className="min-h-screen bg-[#f4f1f8] text-neutral-950">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <header className="sticky top-0 z-50 border-b border-neutral-950 bg-[#f4f1f8]/92 backdrop-blur-xl">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
                     <Link href={homeHref} className="flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500" translate="no">
-                        <Image src="/images/CloudTopia.svg" alt="CloudTopia" width={34} height={34} className="h-8 w-8" />
-                        <span className="flex flex-col leading-none">
-                            <span className="font-logo text-xl font-black">Cloud<span className="text-sky-600">Topia</span></span>
-                            <span className="mt-1 text-[9px] font-black uppercase tracking-[0.08em] text-neutral-600">Digital & Cloud Technologies</span>
-                        </span>
+                        <Image src="/images/CloudTopia.svg" alt="CloudTopia" width={48} height={48} className="h-12 w-12 shrink-0" />
+                        {isArabic ? (
+                            <span className="flex flex-col leading-none">
+                                <span className="font-logo-ar text-2xl font-black">كلاود<span className="text-sky-600">توبيا</span></span>
+                                <span className="mt-1 font-tagline-ar text-[11px] tracking-[0.05em] text-neutral-600">تكنولوجيا رقمية وسحابية</span>
+                            </span>
+                        ) : (
+                            <span className="flex flex-col leading-none">
+                                <span className="font-logo text-xl font-black">Cloud<span className="text-sky-600">Topia</span></span>
+                                <span className="mt-1 text-[9px] font-black uppercase tracking-[0.08em] text-neutral-600">Digital & Cloud Technologies</span>
+                            </span>
+                        )}
                     </Link>
                     <Link href={homeHref} className="border border-neutral-950 bg-white px-4 py-2 text-sm font-black transition-colors duration-200 hover:bg-neutral-950 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500">
                         {isArabic ? 'العودة إلى الموقع الرئيسي' : 'Back to main site'}
@@ -160,7 +203,7 @@ export default async function MarketsPage({ params }: PageProps) {
                                         <p className="line-clamp-3 text-sm leading-7 text-neutral-600">{content.seoDescription}</p>
                                         <div className="flex flex-wrap gap-2">
                                             {content.secondaryKeywords.slice(0, 2).map((keyword) => (
-                                                <span key={keyword} className="border border-neutral-200 bg-[#f7f3ea] px-2.5 py-1 text-[11px] font-bold text-neutral-700">{keyword}</span>
+                                                <span key={keyword} className="border border-neutral-200 bg-[#f4f1f8] px-2.5 py-1 text-[11px] font-bold text-neutral-700">{keyword}</span>
                                             ))}
                                         </div>
                                     </div>

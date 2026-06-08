@@ -176,15 +176,15 @@ export default function TechnologyStackSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.05 }}
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          className="flex flex-col lg:flex-row gap-0 rounded-2xl overflow-hidden border border-white/[0.07]"
+          className="flex min-w-0 flex-col gap-0 overflow-hidden rounded-2xl border border-white/[0.07] lg:flex-row"
         >
 
           {/* ── Left: Vertical Tab List ──────────────────────────────────── */}
           <div
             role="tablist"
             aria-label={isRTL ? 'فئات التقنيات' : 'Technology categories'}
-            aria-orientation="vertical"
-            className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible lg:w-72 xl:w-80 shrink-0 bg-[#0d1017] border-b lg:border-b-0 lg:border-e border-white/[0.07] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            aria-orientation="horizontal"
+            className="flex w-full min-w-0 shrink-0 snap-x snap-mandatory flex-row overflow-x-auto overscroll-x-contain scroll-px-3 touch-pan-x gap-2 bg-[#0d1017] p-2 border-b border-white/[0.07] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:w-72 lg:flex-col lg:gap-0 lg:overflow-x-visible lg:border-b-0 lg:border-e lg:p-0 xl:w-80"
           >
             {SERVICE_CATEGORIES.map((cat: ServiceCategory, idx: number) => {
               const isActive = cat.id === activeId
@@ -201,7 +201,7 @@ export default function TechnologyStackSection() {
                   onClick={() => setActiveId(cat.id)}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
                   className={`
-                    relative flex items-center gap-3 px-6 py-5 text-base font-semibold
+                    relative flex snap-start items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold lg:rounded-none lg:px-6 lg:py-5 lg:text-base
                     text-start whitespace-nowrap lg:whitespace-normal
                     transition-all duration-200 shrink-0
                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0284c7] focus-visible:outline-offset-[-2px]
@@ -211,7 +211,7 @@ export default function TechnologyStackSection() {
                     }
                   `}
                 >
-                  <Icon className="w-5 h-5 shrink-0" />
+                  <Icon className="h-[18px] w-[18px] shrink-0 lg:h-5 lg:w-5" />
                   <span>{locale === 'ar' ? cat.label.ar : cat.label.en}</span>
 
                   {/* Right-edge active indicator (desktop only) */}

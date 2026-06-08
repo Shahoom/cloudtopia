@@ -154,6 +154,10 @@ const marketAngles: Record<string, { ar: string; en: string }> = {
         ar: 'في الأردن نركز على شركات الخدمات والاستشارات والتعليم والتجارة التي تحتاج موقعاً واضحاً ونظام CRM ولوحات متابعة للفريق.',
         en: 'For Jordan, we focus on services, consulting, education, and trade companies that need a clear website, CRM system, and team dashboards.',
     },
+    eg: {
+        ar: 'في مصر نركز على الشركات التي تحتاج حضوراً عربياً قوياً، محتوى واسع، متاجر قابلة للتوسع، وأنظمة متابعة تناسب حجم السوق.',
+        en: 'For Egypt, we focus on companies that need strong Arabic presence, high-volume content, scalable commerce, and follow-up systems for a large market.',
+    },
     lb: {
         ar: 'في لبنان نركز على المواقع السريعة، الرسائل الواضحة، المتاجر والخدمات، وربط تجربة العميل بين الموقع وواتساب والطلبات.',
         en: 'For Lebanon, we focus on fast websites, clear messaging, stores and services, and connecting the customer experience between the website, WhatsApp, and orders.',
@@ -189,8 +193,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في السعودية',
-            seoTitle: 'شركة برمجيات في السعودية | مواقع، CRM، ERP وذكاء اصطناعي | CloudTopia',
-            seoDescription: 'CloudTopia تقدم حلول برمجية للشركات في السعودية تشمل تصميم المواقع، تطبيقات الويب، أنظمة CRM وERP، الأتمتة والذكاء الاصطناعي للشركات الناشئة والمتوسطة.',
+            seoTitle: 'شركة برمجيات في السعودية | مواقع، CRM، ERP وذكاء اصطناعي | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تقدم حلول برمجية للشركات في السعودية تشمل تصميم المواقع، تطبيقات الويب، أنظمة CRM وERP، الأتمتة والذكاء الاصطناعي للشركات الناشئة والمتوسطة.',
             primaryKeyword: 'شركة برمجيات في السعودية',
             secondaryKeywords: ['شركة تطوير مواقع في السعودية', 'شركة CRM في السعودية', 'شركة ERP في السعودية', 'حلول ذكاء اصطناعي للشركات في السعودية'],
         },
@@ -230,7 +234,7 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في الإمارات',
-            seoTitle: 'شركة برمجيات في الإمارات | مواقع، CRM، ERP وحلول AI | CloudTopia',
+            seoTitle: 'شركة برمجيات في الإمارات | مواقع، CRM، ERP وحلول AI | كلاود توبيا',
             seoDescription: 'حلول برمجية للشركات في الإمارات: مواقع احترافية، تطبيقات ويب، CRM، ERP، أتمتة وذكاء اصطناعي بتصميم عصري وتجربة عالية الجودة.',
             primaryKeyword: 'شركة برمجيات في الإمارات',
             secondaryKeywords: ['شركة تطوير مواقع في الإمارات', 'شركة CRM في دبي', 'ERP للشركات في الإمارات', 'حلول AI للشركات في الإمارات'],
@@ -271,8 +275,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في عمان',
-            seoTitle: 'شركة برمجيات في عمان | مواقع، أنظمة CRM وERP | CloudTopia',
-            seoDescription: 'CloudTopia تساعد الشركات في عمان على بناء مواقع احترافية، أنظمة إدارة، CRM، ERP، حلول سحابية وأتمتة رقمية قابلة للتوسع.',
+            seoTitle: 'شركة برمجيات في عمان | مواقع، أنظمة CRM وERP | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تساعد الشركات في عمان على بناء مواقع احترافية، أنظمة إدارة، CRM، ERP، حلول سحابية وأتمتة رقمية قابلة للتوسع.',
             primaryKeyword: 'شركة برمجيات في عمان',
             secondaryKeywords: ['شركة تطوير مواقع في عمان', 'CRM في عمان', 'ERP في عمان', 'حلول سحابية للشركات في عمان'],
         },
@@ -312,7 +316,7 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في قطر',
-            seoTitle: 'شركة برمجيات في قطر | مواقع، CRM، ERP وأتمتة | CloudTopia',
+            seoTitle: 'شركة برمجيات في قطر | مواقع، CRM، ERP وأتمتة | كلاود توبيا',
             seoDescription: 'حلول برمجية وسحابية للشركات في قطر تشمل تطوير المواقع، تطبيقات الويب، CRM، ERP، الأتمتة والذكاء الاصطناعي.',
             primaryKeyword: 'شركة برمجيات في قطر',
             secondaryKeywords: ['شركة CRM في قطر', 'تطوير مواقع في قطر', 'ERP للشركات في قطر', 'أتمتة أعمال في قطر'],
@@ -353,8 +357,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في الكويت',
-            seoTitle: 'شركة برمجيات في الكويت | مواقع، CRM، ERP وذكاء اصطناعي | CloudTopia',
-            seoDescription: 'CloudTopia تقدم للشركات في الكويت حلول مواقع، أنظمة CRM وERP، تطبيقات ويب، أتمتة وذكاء اصطناعي لتطوير العمليات والمبيعات.',
+            seoTitle: 'شركة برمجيات في الكويت | مواقع، CRM، ERP وذكاء اصطناعي | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تقدم للشركات في الكويت حلول مواقع، أنظمة CRM وERP، تطبيقات ويب، أتمتة وذكاء اصطناعي لتطوير العمليات والمبيعات.',
             primaryKeyword: 'شركة برمجيات في الكويت',
             secondaryKeywords: ['تطوير مواقع في الكويت', 'CRM في الكويت', 'ERP في الكويت', 'ذكاء اصطناعي للشركات في الكويت'],
         },
@@ -394,7 +398,7 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في البحرين',
-            seoTitle: 'شركة برمجيات في البحرين | مواقع، CRM، ERP وحلول AI | CloudTopia',
+            seoTitle: 'شركة برمجيات في البحرين | مواقع، CRM، ERP وحلول AI | كلاود توبيا',
             seoDescription: 'حلول برمجية للشركات في البحرين تشمل المواقع الاحترافية، تطبيقات الويب، CRM، ERP، الأتمتة، والذكاء الاصطناعي.',
             primaryKeyword: 'شركة برمجيات في البحرين',
             secondaryKeywords: ['تطوير مواقع في البحرين', 'CRM في البحرين', 'ERP في البحرين', 'حلول AI في البحرين'],
@@ -435,8 +439,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في العراق',
-            seoTitle: 'شركة برمجيات في العراق | مواقع، CRM، ERP وأنظمة أعمال | CloudTopia',
-            seoDescription: 'CloudTopia تقدم حلول برمجية للشركات في العراق: تصميم مواقع، تطبيقات ويب، CRM، ERP، أنظمة إدارة، وأتمتة رقمية.',
+            seoTitle: 'شركة برمجيات في العراق | مواقع، CRM، ERP وأنظمة أعمال | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تقدم حلول برمجية للشركات في العراق: تصميم مواقع، تطبيقات ويب، CRM، ERP، أنظمة إدارة، وأتمتة رقمية.',
             primaryKeyword: 'شركة برمجيات في العراق',
             secondaryKeywords: ['تطوير مواقع في العراق', 'CRM في العراق', 'ERP في العراق', 'أنظمة أعمال في العراق'],
         },
@@ -476,7 +480,7 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في تركيا',
-            seoTitle: 'شركة برمجيات في تركيا | مواقع، CRM، ERP وحلول سحابية | CloudTopia',
+            seoTitle: 'شركة برمجيات في تركيا | مواقع، CRM، ERP وحلول سحابية | كلاود توبيا',
             seoDescription: 'حلول برمجية للشركات العربية والتركية في تركيا تشمل تصميم المواقع، تطبيقات الويب، CRM، ERP، الأتمتة والحلول السحابية.',
             primaryKeyword: 'شركة برمجيات في تركيا',
             secondaryKeywords: ['تطوير مواقع في تركيا', 'CRM في تركيا', 'ERP في تركيا', 'حلول سحابية في تركيا'],
@@ -517,8 +521,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في سوريا',
-            seoTitle: 'شركة برمجيات في سوريا | مواقع، CRM، ERP وأنظمة أعمال | CloudTopia',
-            seoDescription: 'CloudTopia تساعد الشركات السورية على بناء مواقع احترافية، أنظمة إدارة، CRM، ERP، وتطبيقات ويب قابلة للتوسع.',
+            seoTitle: 'شركة برمجيات في سوريا | مواقع، CRM، ERP وأنظمة أعمال | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تساعد الشركات السورية على بناء مواقع احترافية، أنظمة إدارة، CRM، ERP، وتطبيقات ويب قابلة للتوسع.',
             primaryKeyword: 'شركة برمجيات في سوريا',
             secondaryKeywords: ['تطوير مواقع في سوريا', 'CRM في سوريا', 'ERP في سوريا', 'أنظمة أعمال في سوريا'],
         },
@@ -558,7 +562,7 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في الأردن',
-            seoTitle: 'شركة برمجيات في الأردن | مواقع، CRM، ERP وحلول AI | CloudTopia',
+            seoTitle: 'شركة برمجيات في الأردن | مواقع، CRM، ERP وحلول AI | كلاود توبيا',
             seoDescription: 'حلول برمجية للشركات في الأردن تشمل المواقع الاحترافية، تطبيقات الويب، CRM، ERP، الأتمتة والذكاء الاصطناعي.',
             primaryKeyword: 'شركة برمجيات في الأردن',
             secondaryKeywords: ['تطوير مواقع في الأردن', 'CRM في الأردن', 'ERP في الأردن', 'حلول AI في الأردن'],
@@ -569,6 +573,47 @@ const seeds: Seed[] = [
             seoDescription: 'CloudTopia builds professional websites, web applications, CRM, ERP, automation, and AI solutions for companies in Jordan.',
             primaryKeyword: 'software company in Jordan',
             secondaryKeywords: ['web development Jordan', 'CRM Jordan', 'ERP Jordan', 'AI solutions Jordan'],
+        },
+    },
+    {
+        code: 'eg',
+        slug: 'egypt',
+        countryNameArabic: 'مصر',
+        countryNameEnglish: 'Egypt',
+        marketNameArabic: 'السوق المصري',
+        marketNameEnglish: 'Egypt market',
+        hreflangArabic: 'ar-EG',
+        hreflangEnglish: 'en-EG',
+        currency: 'EGP',
+        phoneGroup: 'turkey',
+        theme: {
+            primaryAccent: '#CE1126',
+            secondaryAccent: '#C0932B',
+            darkAccent: '#1D1712',
+            surface: '#F4F0EA',
+            softAccent: '#E5D7BE',
+            ink: '#1D1712',
+            photo: {
+                src: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Cairo_skyline_panorama.jpg',
+                altArabic: 'أفق مدينة القاهرة في مصر',
+                altEnglish: 'Cairo skyline in Egypt',
+                captionArabic: 'القاهرة وسوق عربي واسع يحتاج محتوى واضحاً وأنظمة قابلة للتوسع.',
+                captionEnglish: 'Cairo and a large Arabic market that needs clear content and scalable systems.',
+            },
+        },
+        arabic: {
+            h1: 'شركة برمجيات في مصر',
+            seoTitle: 'شركة برمجيات في مصر | مواقع، CRM، ERP وحلول AI | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تساعد الشركات في مصر على بناء مواقع احترافية، متاجر إلكترونية، CRM، ERP، تطبيقات ويب، أتمتة وحلول ذكاء اصطناعي.',
+            primaryKeyword: 'شركة برمجيات في مصر',
+            secondaryKeywords: ['تطوير مواقع في مصر', 'CRM في مصر', 'ERP في مصر', 'حلول AI في مصر'],
+        },
+        english: {
+            h1: 'Software and website development for companies in Egypt',
+            seoTitle: 'Software Company in Egypt | Websites, CRM, ERP and AI Solutions | CloudTopia',
+            seoDescription: 'CloudTopia helps Egypt businesses build professional websites, online stores, CRM, ERP, web applications, automation, and AI solutions.',
+            primaryKeyword: 'software company in Egypt',
+            secondaryKeywords: ['web development Egypt', 'CRM Egypt', 'ERP Egypt', 'AI solutions Egypt'],
         },
     },
     {
@@ -599,8 +644,8 @@ const seeds: Seed[] = [
         },
         arabic: {
             h1: 'شركة برمجيات في لبنان',
-            seoTitle: 'شركة برمجيات في لبنان | مواقع، CRM، ERP وحلول رقمية | CloudTopia',
-            seoDescription: 'CloudTopia تقدم للشركات في لبنان حلول مواقع، تطبيقات ويب، CRM، ERP، أتمتة، وحلول ذكاء اصطناعي لتطوير حضورها الرقمي.',
+            seoTitle: 'شركة برمجيات في لبنان | مواقع، CRM، ERP وحلول رقمية | كلاود توبيا',
+            seoDescription: 'كلاود توبيا تقدم للشركات في لبنان حلول مواقع، تطبيقات ويب، CRM، ERP، أتمتة، وحلول ذكاء اصطناعي لتطوير حضورها الرقمي.',
             primaryKeyword: 'شركة برمجيات في لبنان',
             secondaryKeywords: ['تطوير مواقع في لبنان', 'CRM في لبنان', 'ERP في لبنان', 'حلول رقمية في لبنان'],
         },
@@ -663,6 +708,7 @@ function createTestimonials(seed: Seed): CountryTestimonial[] {
         tr: ['كريم', 'نور', 'إياد'],
         sy: ['سامر', 'رنا', 'ليث'],
         jo: ['أحمد', 'لين', 'يزن'],
+        eg: ['محمد', 'ياسمين', 'عمر'],
         lb: ['جورج', 'نادين', 'رامي'],
     }
     const names = countryNames[seed.code] || ['كريم', 'نور', 'ليث']
@@ -707,7 +753,7 @@ function createFaqs(seed: Seed): Record<CountryLocale, CountryFAQ[]> {
             { question: `هل تقدمون SEO محلي في ${seed.countryNameArabic}؟`, answer: `نعم. نهيئ العناوين، المحتوى، البنية التقنية، الأسئلة الشائعة، والروابط الداخلية لاستهداف بحث الشركات في ${seed.countryNameArabic} دون حشو كلمات مفتاحية.` },
             { question: 'هل يمكن تنفيذ المشروع عن بُعد؟', answer: 'نعم. ننجز المشروع عن بُعد من خلال اجتماعات أونلاين، واتساب، وتسليمات مرحلية واضحة.' },
             { question: 'هل يمكن بناء نظام ERP أو إدارة مخزون؟', answer: 'نعم. ننفذ وحدات مخصصة للعمليات، المخزون، الطلبات، الفواتير، الصلاحيات، والتقارير حسب طريقة عمل شركتك.' },
-            { question: 'كيف أبدأ مع CloudTopia؟', answer: 'أرسل لنا فكرة المشروع عبر واتساب، وسنراجع الاحتياج ونقترح نطاقاً عملياً وخطوات تنفيذ مناسبة.' },
+            { question: 'كيف أبدأ مع كلاود توبيا؟', answer: 'أرسل لنا فكرة المشروع عبر واتساب، وسنراجع الاحتياج ونقترح نطاقاً عملياً وخطوات تنفيذ مناسبة.' },
         ],
         en: [
             { question: `Do you provide software services for companies in ${seed.countryNameEnglish}?`, answer: `Yes. CloudTopia serves companies in ${seed.countryNameEnglish} remotely through WhatsApp, online meetings, and clear phased delivery.` },
@@ -754,7 +800,7 @@ function buildContent(seed: Seed): Record<CountryLocale, CountryLandingContent> 
             heroSubtitle: `نطوّر مواقع احترافية، تطبيقات ويب، تطبيقات جوال، وأنظمة CRM وERP للشركات في ${seed.countryNameArabic}. نبدأ باستشارة مجانية ومعاينة ديمو مجانية مخصصة حسب استفسار شركتك قبل أي التزام.`,
             marketProblem: `عندما تبحث شركة في ${seed.countryNameArabic} عن شركة برمجيات أو شركة تطوير مواقع، فهي غالباً تحتاج إلى أكثر من تصميم موقع. تحتاج موقعاً سريعاً، نظاماً لإدارة العملاء، لوحة تحكم للطلبات، نقل بيانات، ترحيل سحابي، وربطاً عملياً بين المبيعات والتشغيل وخدمة العملاء. ${marketAngle.ar}`,
             solutionIntro: 'نبدأ من احتياجك الفعلي: موقع شركة، تطبيق ويب، تطبيق جوال، نظام عمل داخلي، CRM، ERP، متجر، ترحيل سحابي، نقل بيانات، خدمة عملاء ذكية، أو أتمتة بالذكاء الاصطناعي. ثم نحولها إلى نطاق واضح يمكن تنفيذه وقياسه.',
-            whyCloudTopia: `CloudTopia مناسبة للشركات التي تريد تنفيذ برمجي واضح دون تعقيد. نخدم ${seed.countryNameArabic} عن بُعد، ونقدم استشارة مجانية ومعاينة ديمو مجانية عندما يكون الاستفسار واضحاً. المهم هو جودة التنفيذ، وضوح التواصل، وتسليم قابل للاستخدام.`,
+            whyCloudTopia: `كلاود توبيا مناسبة للشركات التي تريد تنفيذ برمجي واضح دون تعقيد. نخدم ${seed.countryNameArabic} عن بُعد، ونقدم استشارة مجانية ومعاينة ديمو مجانية عندما يكون الاستفسار واضحاً. المهم هو جودة التنفيذ، وضوح التواصل، وتسليم قابل للاستخدام.`,
             finalCta: `تحتاج موقعاً أو نظاماً لشركتك في ${seed.countryNameArabic}؟`,
             primaryKeyword: seed.arabic.primaryKeyword,
             secondaryKeywords: arabicSecondaryKeywords,
@@ -808,7 +854,7 @@ export function getCountryLandingPageByCode(code: string): CountryLandingPageDat
 
 export function countryWhatsappUrl(country: CountryLandingPageData, locale: CountryLocale): string {
     const text = locale === 'ar'
-        ? `مرحباً CloudTopia، أريد استشارة مجانية ومعاينة ديمو مجانية لخدمات البرمجة وتطوير المواقع والأنظمة للشركات في ${country.countryNameArabic}.`
+        ? `مرحباً كلاود توبيا، أريد استشارة مجانية ومعاينة ديمو مجانية لخدمات البرمجة وتطوير المواقع والأنظمة للشركات في ${country.countryNameArabic}.`
         : `Hello CloudTopia, I want a free consultation and free demo preview for software, websites, and business systems for companies in ${country.countryNameEnglish}.`
     return `${country.whatsappUrl}?text=${encodeURIComponent(text)}`
 }

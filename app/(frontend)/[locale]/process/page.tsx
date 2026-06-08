@@ -16,6 +16,8 @@ import {
     ShieldCheck,
 } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { ProcessPlaybook } from '@/components/process/ProcessPlaybook'
+import { howWeWorkData } from '@/data/howWeWorkData'
 
 type PageProps = {
     params: Promise<{ locale: string }>
@@ -233,7 +235,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const L = pageContent(locale)
 
     return {
-        title: `${L.metaTitle} | CloudTopia`,
+        title: L.metaTitle,
         description: L.metaDescription,
         alternates: {
             canonical: canonicalUrl(locale, '/process'),
@@ -255,6 +257,7 @@ export default async function ProcessPage({ params }: PageProps) {
     const { locale = 'en' } = await params
     const L = pageContent(locale)
     const isRTL = locale === 'ar'
+    const processTypeIds = howWeWorkData.processTypes.map((type) => type.id)
 
     const webPageSchema = {
         '@context': 'https://schema.org',
@@ -315,7 +318,7 @@ export default async function ProcessPage({ params }: PageProps) {
     }
 
     return (
-        <main className="min-h-screen bg-lavender" dir={isRTL ? 'rtl' : 'ltr'}>
+        <main className="min-h-screen bg-white" dir={isRTL ? 'rtl' : 'ltr'}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -357,53 +360,9 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
-                <div className="mx-auto max-w-6xl">
-                    <div className="mb-10 max-w-3xl">
-                        <p className="text-xs font-black uppercase tracking-[0.22em] text-primary-700">{L.stepsTitle}</p>
-                        <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.stepsTitle}</h2>
-                        <p className="mt-5 text-lg leading-relaxed text-neutral-600">{L.stepsIntro}</p>
-                    </div>
-                    <div className="grid gap-5">
-                        {L.steps.map((step, index) => {
-                            const Icon = step.icon
-                            return (
-                                <article id={`step-${index + 1}`} key={step.title} className="grid gap-5 rounded-lg border border-neutral-200 bg-white p-6 shadow-sm md:grid-cols-[12rem_1fr] md:p-7">
-                                    <div className="flex items-start gap-4 md:block">
-                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-neutral-950 text-cyan-200">
-                                            <Icon className="h-5 w-5" />
-                                        </div>
-                                        <div className="md:mt-5">
-                                            <p className="text-sm font-black text-primary-700">{String(index + 1).padStart(2, '0')}</p>
-                                            <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-neutral-500">{step.timeframe}</p>
-                                            <p className="mt-3 inline-flex rounded-md bg-lavender px-3 py-1 text-xs font-black text-neutral-700">{step.output}</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-black tracking-tight text-neutral-950">{step.title}</h3>
-                                        <p className="mt-3 text-base leading-relaxed text-neutral-600">{step.summary}</p>
-                                        <div className="mt-5 grid gap-3 lg:grid-cols-[1fr_0.9fr]">
-                                            <div className="grid gap-2">
-                                                {step.activities.map((activity) => (
-                                                    <div key={activity} className="flex gap-2 rounded-md bg-lavender px-3 py-2">
-                                                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary-600" />
-                                                        <p className="text-sm font-semibold leading-relaxed text-neutral-700">{activity}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <div className="rounded-md border border-cyan-200 bg-cyan-50 p-4">
-                                                <p className="text-sm font-black text-cyan-900">{step.signoff}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            )
-                        })}
-                    </div>
-                </div>
-            </section>
+            <ProcessPlaybook locale={isRTL ? 'ar' : 'en'} featuredIds={processTypeIds} />
 
-            <section className="bg-white px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-neutral-50/60 border-y border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.88fr_1.12fr]">
                     <div>
                         <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-sm font-bold text-white">
@@ -417,8 +376,8 @@ export default async function ProcessPage({ params }: PageProps) {
                         {L.governance.map((item) => {
                             const Icon = item.icon
                             return (
-                                <article key={item.title} className="rounded-lg border border-neutral-200 bg-lavender p-5">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-white text-primary-700 shadow-sm">
+                                <article key={item.title} className="rounded-2xl border border-neutral-200/60 bg-white p-5 shadow-sm">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-neutral-50 text-primary-700 shadow-sm">
                                         <Icon className="h-5 w-5" />
                                     </div>
                                     <h3 className="mt-4 text-lg font-black text-neutral-950">{item.title}</h3>
@@ -430,7 +389,7 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-white px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                     <div>
                         <p className="text-xs font-black uppercase tracking-[0.22em] text-primary-700">{L.handoffTitle}</p>
@@ -439,7 +398,7 @@ export default async function ProcessPage({ params }: PageProps) {
                     </div>
                     <div className="grid gap-3">
                         {L.handoff.map((item) => (
-                            <div key={item} className="flex gap-3 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm">
+                            <div key={item} className="flex gap-3 rounded-2xl border border-neutral-200/60 bg-white p-4 shadow-sm">
                                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                                 <p className="text-sm font-semibold leading-relaxed text-neutral-700">{item}</p>
                             </div>
@@ -448,21 +407,21 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-24" data-header-theme="dark">
+            <section className="bg-neutral-50/40 border-t border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-6xl">
                     <div className="mb-10">
-                        <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">{L.verificationTitle}</p>
-                        <h2 className="mt-3 max-w-4xl text-3xl font-black tracking-tight md:text-5xl">{L.verificationTitle}</h2>
+                        <p className="text-xs font-black uppercase tracking-[0.22em] text-primary-700">{L.verificationTitle}</p>
+                        <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.verificationTitle}</h2>
                     </div>
                     <div className="grid gap-4 md:grid-cols-5">
                         {L.verification.map((item) => (
-                            <Link key={item.href} href={localePath(locale, item.href)} className="group flex min-h-44 flex-col justify-between rounded-lg border border-white/10 bg-white/[0.05] p-5 transition hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-cyan-300/10">
+                            <Link key={item.href} href={localePath(locale, item.href)} className="group flex min-h-44 flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary-500 hover:shadow-lg hover:shadow-sky-950/5">
                                 <div>
-                                    <FileText className="h-5 w-5 text-cyan-300" />
-                                    <h3 className="mt-4 text-lg font-black">{item.label}</h3>
-                                    <p className="mt-2 text-xs leading-relaxed text-white/58">{item.body}</p>
+                                    <FileText className="h-5 w-5 text-primary-600" />
+                                    <h3 className="mt-4 text-lg font-black text-neutral-950">{item.label}</h3>
+                                    <p className="mt-2 text-xs leading-relaxed text-neutral-600">{item.body}</p>
                                 </div>
-                                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-cyan-200">
+                                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-primary-700">
                                     {item.label}
                                     <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                                 </span>
@@ -472,12 +431,12 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+            <section className="bg-white border-t border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto max-w-4xl">
                     <h2 className="text-3xl font-black tracking-tight text-neutral-950 md:text-4xl">{L.faqTitle}</h2>
                     <div className="mt-10 space-y-4">
                         {L.faqs.map((faq) => (
-                            <article key={faq.question} className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+                            <article key={faq.question} className="rounded-2xl border border-neutral-200/60 bg-neutral-50/30 p-6 shadow-sm">
                                 <h3 className="text-lg font-black text-neutral-950">{faq.question}</h3>
                                 <p className="mt-3 text-base leading-relaxed text-neutral-600">{faq.answer}</p>
                             </article>
@@ -486,11 +445,11 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="bg-eerie px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
+            <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-3xl font-black tracking-tight md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>
-                    <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-eerie transition hover:bg-cyan-100">
+                    <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
                         {L.primaryCta}
                         <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                     </Link>

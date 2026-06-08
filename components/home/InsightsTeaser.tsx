@@ -66,7 +66,7 @@ export default function InsightsTeaser() {
                         transition={{ delay: 0.3 }}
                     >
                         <Link
-                            href={localePath(locale, '/insights')}
+                            href={localePath(locale, '/articles')}
                             className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 border border-white/20 px-6 py-3 font-semibold text-white transition-all hover:bg-white hover:text-neutral-900 group backdrop-blur-md"
                         >
                             {teaser.viewAll || 'Read all articles'}
@@ -127,7 +127,7 @@ export default function InsightsTeaser() {
                                 
                                 <div className="mt-auto">
                                     <Link 
-                                        href={localePath(locale, `/insights/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} 
+                                        href={localePath(locale, `/articles/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} 
                                         className="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
                                     >
                                         {teaser.readMore || 'Read article'}

@@ -11,7 +11,9 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing')
+    const metadata = await getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing')
+    const title = locale === 'ar' ? 'أفضل شركة تسويق عبر السوشيال ميديا' : 'Best Social Media Marketing Company'
+    return { ...metadata, title }
 }
 
 export default async function SocialMediaMarketingPage({

@@ -29,7 +29,6 @@ import FAQ from '@/components/home/FAQ'
 import FinalCTA from '@/components/home/FinalCTA'
 import InsightsTeaser from '@/components/home/InsightsTeaser'
 import Testimonials from '@/components/home/Testimonials'
-import OfficesSection from '@/components/home/OfficesSection'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 
 const StarsCanvas = dynamic(
@@ -101,7 +100,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             <CloudHero />
 
             {/* 3. Philosophy */}
-            <section className="relative py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden" data-header-theme="dark">
+            <section className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-20 lg:px-8" data-header-theme="dark">
                 <StarsCanvas
                     transparent={false}
                     maxStars={80}
@@ -116,24 +115,24 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                 <div className="absolute inset-0 z-[1] pointer-events-none">
                     <motion.div
                         style={{ y: backgroundY }}
-                        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-lavender/20 rounded-full blur-[120px]"
+                        className="absolute top-0 left-1/4 h-[360px] w-[360px] rounded-full bg-lavender/20 blur-[100px]"
                     />
                     <motion.div
                         style={{ y: backgroundY }}
-                        className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-lavender/20 rounded-full blur-[120px]"
+                        className="absolute bottom-0 right-1/4 h-[300px] w-[300px] rounded-full bg-lavender/20 blur-[100px]"
                     />
                 </div>
 
-                <div className="relative z-10 max-w-5xl mx-auto text-center">
+                <div className="relative z-10 mx-auto max-w-4xl text-center">
                     <FloatingCard>
-                        <motion.div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavender/20 border border-blue-500/30 mb-8">
-                            <Cloud className="w-5 h-5 text-blue-400" />
-                            <span className="text-blue-300 font-medium">{t.home?.philosophy?.badge}</span>
+                        <motion.div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-lavender/20 px-4 py-2">
+                            <Cloud className="h-4 w-4 text-blue-400" />
+                            <span className="text-sm font-medium text-blue-300">{t.home?.philosophy?.badge}</span>
                         </motion.div>
                     </FloatingCard>
 
                     <FloatingCard delay={0.1}>
-                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.1]">
+                        <h2 className="mb-5 text-3xl font-bold leading-[1.1] text-white md:text-4xl lg:text-5xl">
                             {(typeof t.home?.philosophy?.title === 'string' ? t.home?.philosophy?.title : 'What Does')}{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                                 {t.home?.philosophy?.highlight || '"The Cloud"'}
@@ -143,7 +142,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
                     </FloatingCard>
 
                     <FloatingCard delay={0.2}>
-                        <p className="text-xl text-white/75 leading-relaxed max-w-3xl mx-auto">
+                        <p className="mx-auto max-w-3xl text-base font-medium leading-7 text-white/75 md:text-lg md:leading-8">
                             {t.home?.philosophy?.description}
                         </p>
                     </FloatingCard>
@@ -296,9 +295,6 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
 
             {/* 10. Insights */}
             <InsightsTeaser />
-
-            {/* 11. Offices */}
-            <OfficesSection />
 
             {/* 12. Final CTA */}
             <FinalCTA />

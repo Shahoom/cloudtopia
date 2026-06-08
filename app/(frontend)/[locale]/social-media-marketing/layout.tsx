@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         ar: 'تسويق وسائل التواصل الاجتماعي بالعربية أولاً للخليج',
     }
     const descs: Record<string, string> = {
-        en: 'Arabic-first content and paid social for Saudi, UAE, Kuwait, and Gulf audiences. TikTok, Snapchat, Instagram, Meta. Management from $799/month.',
-        ar: 'محتوى عربي أولاً وإعلانات اجتماعية مدفوعة لجمهور السعودية والإمارات والكويت والخليج. تيك توك، سناب شات، إنستاجرام، ميتا. الإدارة من 799$/شهرياً.',
+        en: 'Arabic-first content and paid social for Saudi, UAE, Kuwait, and Gulf audiences across TikTok, Snapchat, Instagram, and Meta.',
+        ar: 'محتوى عربي أولاً وإعلانات اجتماعية مدفوعة لجمهور السعودية والإمارات والكويت والخليج عبر تيك توك وسناب شات وإنستاجرام وميتا.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Social Media Marketing — CloudTopia',
@@ -87,11 +87,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '799',
-                            highPrice: '4999',
-                            offerCount: '3',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

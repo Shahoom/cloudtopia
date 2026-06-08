@@ -154,8 +154,8 @@ export const BlogPosts: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'category', 'author', 'featured', 'publishedAt', 'seoScore', 'contentScore'],
     listSearchableFields: ['title', 'slug', 'excerpt', 'shortExcerpt', 'seo.focusKeyword'],
-    description: 'CloudTopia Insights editorial dashboard. Drafts stay private; published posts appear on /insights.',
-    preview: (doc) => `/insights/${doc?.slug || ''}?preview=1`,
+    description: 'CloudTopia Articles editorial dashboard. Drafts stay private; published posts appear on /articles.',
+    preview: (doc) => `/articles/${doc?.slug || ''}?preview=1`,
   },
   access: {
     read: publishedOrAdmin,
@@ -170,53 +170,21 @@ export const BlogPosts: CollectionConfig = {
   },
   fields: [
     {
+      name: 'aiGenerator',
+      type: 'ui',
+      admin: {
+        position: 'default',
+        components: {
+          Field: '@/components/payload/AIPostGenerator#AIPostGenerator',
+        },
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
           label: 'Overview',
           fields: [
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'locale',
-                  type: 'select',
-                  required: true,
-                  defaultValue: 'en',
-                  options: [
-                    { label: 'English', value: 'en' },
-                    { label: 'Arabic', value: 'ar' },
-                  ],
-                  admin: {
-                    width: '33%',
-                    description: 'English posts appear on /insights. Arabic uses prefixed locale routes.',
-                  },
-                },
-                {
-                  name: 'status',
-                  type: 'select',
-                  required: true,
-                  defaultValue: 'draft',
-                  options: statusOptions,
-                  admin: {
-                    width: '33%',
-                    description: 'Workflow: idea -> outline -> draft -> in review -> scheduled -> published.',
-                  },
-                },
-                {
-                  name: 'approvalStatus',
-                  type: 'select',
-                  defaultValue: 'not_required',
-                  options: [
-                    { label: 'Not Required', value: 'not_required' },
-                    { label: 'Waiting', value: 'waiting' },
-                    { label: 'Approved', value: 'approved' },
-                    { label: 'Rejected', value: 'rejected' },
-                  ],
-                  admin: { width: '33%' },
-                },
-              ],
-            },
             { name: 'title', type: 'text', required: true },
             {
               name: 'slug',
@@ -224,7 +192,7 @@ export const BlogPosts: CollectionConfig = {
               required: true,
               unique: true,
               admin: {
-                description: 'Auto-generated from the title when empty. Editable for SEO-safe URLs.',
+                description: 'Auto-generated from the title when empty.',
               },
             },
             { name: 'subtitle', type: 'text' },
@@ -232,16 +200,10 @@ export const BlogPosts: CollectionConfig = {
               name: 'excerpt',
               type: 'textarea',
               required: true,
-              admin: {
-                description: 'Main summary for cards, article hero, metadata fallbacks, and search results.',
-              },
             },
             {
               name: 'shortExcerpt',
               type: 'text',
-              admin: {
-                description: 'Very short card or featured-strip teaser.',
-              },
             },
             {
               type: 'row',
@@ -255,9 +217,14 @@ export const BlogPosts: CollectionConfig = {
             {
               type: 'row',
               fields: [
-                { name: 'publishedAt', type: 'date', admin: { width: '25%', date: { pickerAppearance: 'dayAndTime' } } },
-                { name: 'scheduledAt', type: 'date', admin: { width: '25%', date: { pickerAppearance: 'dayAndTime' } } },
-                { name: 'lastReviewedAt', type: 'date', admin: { width: '25%', date: { pickerAppearance: 'dayAndTime' } } },
+                { name: 'contentType', type: 'select', defaultValue: 'article', options: contentTypeOptions, admin: { width: '33%' } },
+                { name: 'targetAudience', type: 'select', options: targetAudienceOptions, admin: { width: '33%' } },
+                { name: 'serviceFocus', type: 'select', options: serviceFocusOptions, admin: { width: '33%' } },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
                 {
                   name: 'difficulty',
                   type: 'select',
@@ -267,25 +234,10 @@ export const BlogPosts: CollectionConfig = {
                     { label: 'Intermediate', value: 'intermediate' },
                     { label: 'Advanced', value: 'advanced' },
                   ],
-                  admin: { width: '25%' },
+                  admin: { width: '50%' },
                 },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
-                { name: 'contentType', type: 'select', defaultValue: 'article', options: contentTypeOptions, admin: { width: '33%' } },
-                { name: 'targetAudience', type: 'select', options: targetAudienceOptions, admin: { width: '33%' } },
-                { name: 'serviceFocus', type: 'select', options: serviceFocusOptions, admin: { width: '33%' } },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
                 { name: 'readingTime', type: 'number', defaultValue: 1, admin: { readOnly: true, width: '25%' } },
                 { name: 'wordCount', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '25%' } },
-                { name: 'contentScore', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '25%' } },
-                { name: 'seoScore', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '25%' } },
               ],
             },
           ],
@@ -298,9 +250,6 @@ export const BlogPosts: CollectionConfig = {
               type: 'richText',
               required: true,
               editor: richTextEditor,
-              admin: {
-                description: 'Use headings, lists, quotes, images, tables, and code blocks to structure the core article.',
-              },
             },
           ],
         },
@@ -311,34 +260,7 @@ export const BlogPosts: CollectionConfig = {
               name: 'contentBlocks',
               type: 'blocks',
               blocks: blogContentBlocks,
-              admin: {
-                description: 'Structured premium article sections rendered after the rich text body.',
-              },
             },
-          ],
-        },
-        {
-          label: 'Media',
-          fields: [
-            {
-              name: 'coverImage',
-              label: 'Featured / cover image',
-              type: 'upload',
-              relationTo: 'media',
-              required: true,
-              admin: {
-                description: 'Primary image used across cards, article hero, Open Graph fallbacks, and sitemap images.',
-              },
-            },
-            {
-              name: 'featuredImageAlt',
-              type: 'text',
-              admin: {
-                description: 'Accessible image alt text. Required by the content score.',
-              },
-            },
-            { name: 'socialImage', type: 'upload', relationTo: 'media' },
-            { name: 'leadMagnetFile', type: 'upload', relationTo: 'media' },
           ],
         },
         {
@@ -347,64 +269,35 @@ export const BlogPosts: CollectionConfig = {
             {
               name: 'seoPreview',
               type: 'ui',
-              admin: {
-                components: {
-                  Field: '@/components/payload/BlogSEOPreview#BlogSEOPreview',
-                },
-              },
+              admin: { components: { Field: '@/components/payload/BlogSEOPreview#BlogSEOPreview' } },
             },
             {
               name: 'seo',
               type: 'group',
               fields: [
-                { name: 'metaTitle', type: 'text', admin: { description: 'Recommended length: 45-60 characters.' } },
-                { name: 'metaDescription', type: 'textarea', admin: { description: 'Recommended length: 140-160 characters.' } },
+                { name: 'metaTitle', type: 'text' },
+                { name: 'metaDescription', type: 'textarea' },
                 { name: 'focusKeyword', type: 'text' },
-                { name: 'secondaryKeywords', type: 'text' },
-                { name: 'keywords', type: 'text' },
                 { name: 'canonicalUrl', type: 'text' },
-                { name: 'ogTitle', type: 'text' },
-                { name: 'ogDescription', type: 'textarea' },
                 { name: 'ogImage', type: 'upload', relationTo: 'media' },
-                { name: 'twitterTitle', type: 'text' },
-                { name: 'twitterDescription', type: 'textarea' },
-                { name: 'twitterImage', type: 'upload', relationTo: 'media' },
                 { name: 'noIndex', type: 'checkbox', defaultValue: false },
                 { name: 'noFollow', type: 'checkbox', defaultValue: false },
-                {
-                  name: 'structuredDataType',
-                  type: 'select',
-                  defaultValue: 'BlogPosting',
-                  options: ['BlogPosting', 'Article', 'TechArticle', 'HowTo', 'FAQPage'],
-                },
-                { name: 'faqSchema', type: 'checkbox', defaultValue: true },
-                { name: 'breadcrumbSchema', type: 'checkbox', defaultValue: true },
-                { name: 'articleSchema', type: 'checkbox', defaultValue: true },
-                { name: 'lastModifiedSchema', type: 'checkbox', defaultValue: true },
               ],
             },
           ],
         },
         {
-          label: 'AI Assistant',
+          label: 'AI & Performance',
           fields: [
             {
               name: 'aiAssistantPanel',
               type: 'ui',
-              admin: {
-                components: {
-                  Field: '@/components/payload/BlogAIAssistantPanel#BlogAIAssistantPanel',
-                },
-              },
+              admin: { components: { Field: '@/components/payload/BlogAIAssistantPanel#BlogAIAssistantPanel' } },
             },
             {
               name: 'contentScorePanel',
               type: 'ui',
-              admin: {
-                components: {
-                  Field: '@/components/payload/BlogContentScorePanel#BlogContentScorePanel',
-                },
-              },
+              admin: { components: { Field: '@/components/payload/BlogContentScorePanel#BlogContentScorePanel' } },
             },
             {
               type: 'row',
@@ -418,95 +311,9 @@ export const BlogPosts: CollectionConfig = {
             {
               type: 'row',
               fields: [
-                {
-                  name: 'searchIntent',
-                  type: 'select',
-                  options: ['informational', 'commercial', 'transactional', 'navigational'],
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'funnelStage',
-                  type: 'select',
-                  options: ['awareness', 'consideration', 'conversion', 'retention'],
-                  admin: { width: '50%' },
-                },
-              ],
-            },
-            {
-              name: 'internalLinksSuggestions',
-              type: 'array',
-              fields: [
-                { name: 'label', type: 'text' },
-                { name: 'url', type: 'text', required: true },
-                { name: 'reason', type: 'text' },
-              ],
-            },
-            {
-              name: 'externalSources',
-              type: 'array',
-              fields: [
-                { name: 'title', type: 'text' },
-                { name: 'url', type: 'text', required: true },
-              ],
-            },
-            {
-              name: 'references',
-              type: 'array',
-              fields: [
-                { name: 'label', type: 'text' },
-                { name: 'url', type: 'text' },
-                { name: 'note', type: 'text' },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
-                { name: 'factChecked', type: 'checkbox', defaultValue: false, admin: { width: '33%' } },
-                { name: 'factCheckedBy', type: 'relationship', relationTo: 'users', admin: { width: '33%' } },
-                { name: 'factCheckedAt', type: 'date', admin: { width: '33%', date: { pickerAppearance: 'dayAndTime' } } },
-              ],
-            },
-          ],
-        },
-        {
-          label: 'Editorial Workflow',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                { name: 'assignedTo', type: 'relationship', relationTo: 'users', admin: { width: '50%' } },
-                { name: 'reviewer', type: 'relationship', relationTo: 'users', admin: { width: '50%' } },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
-                { name: 'approvedBy', type: 'relationship', relationTo: 'users', admin: { width: '50%' } },
-                { name: 'approvedAt', type: 'date', admin: { width: '50%', date: { pickerAppearance: 'dayAndTime' } } },
-              ],
-            },
-            { name: 'editorNotes', type: 'textarea' },
-            { name: 'privateNotes', type: 'textarea' },
-            { name: 'revisionNotes', type: 'textarea' },
-          ],
-        },
-        {
-          label: 'Social Distribution',
-          fields: [
-            { name: 'linkedinPost', type: 'textarea' },
-            { name: 'instagramCaption', type: 'textarea' },
-            { name: 'xPost', type: 'textarea' },
-            { name: 'whatsappMessage', type: 'textarea' },
-            { name: 'emailNewsletterIntro', type: 'textarea' },
-            {
-              name: 'socialStatus',
-              type: 'select',
-              defaultValue: 'not_prepared',
-              options: [
-                { label: 'Not Prepared', value: 'not_prepared' },
-                { label: 'Prepared', value: 'prepared' },
-                { label: 'Scheduled', value: 'scheduled' },
-                { label: 'Published', value: 'published' },
+                { name: 'viewsCount', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '33%' } },
+                { name: 'uniqueViewsCount', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '33%' } },
+                { name: 'averageReadTime', type: 'number', admin: { readOnly: true, width: '33%' } },
               ],
             },
           ],
@@ -517,103 +324,97 @@ export const BlogPosts: CollectionConfig = {
             { name: 'showCTA', type: 'checkbox', defaultValue: true },
             { name: 'ctaTitle', type: 'text' },
             { name: 'ctaDescription', type: 'textarea' },
-            { name: 'ctaButtonText', type: 'text', defaultValue: 'Talk to CloudTopia' },
-            { name: 'ctaButtonUrl', type: 'text', defaultValue: '/contact' },
-            { name: 'secondaryCTAButtonText', type: 'text', defaultValue: 'View Services' },
-            { name: 'secondaryCTAButtonUrl', type: 'text', defaultValue: '/services' },
-            { name: 'leadMagnetTitle', type: 'text' },
             {
-              name: 'newsletterPlacement',
-              type: 'select',
-              defaultValue: 'end',
-              options: ['none', 'after_intro', 'middle', 'end', 'sidebar'],
-            },
-            {
-              name: 'primaryCTA',
-              type: 'select',
-              options: [
-                { label: 'Start Project', value: 'start_project' },
-                { label: 'Talk to CloudTopia', value: 'talk_to_cloudtopia' },
-                { label: 'View Services', value: 'view_services' },
-                { label: 'Book Consultation', value: 'book_consultation' },
+              type: 'row',
+              fields: [
+                { name: 'ctaButtonText', type: 'text', defaultValue: 'Talk to CloudTopia', admin: { width: '50%' } },
+                { name: 'ctaButtonUrl', type: 'text', defaultValue: '/contact', admin: { width: '50%' } },
               ],
             },
+            { name: 'leadMagnetFile', type: 'upload', relationTo: 'media' },
             serviceLinksField,
           ],
         },
         {
-          label: 'Analytics',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                { name: 'viewsCount', type: 'number', defaultValue: 0, admin: { width: '25%' } },
-                { name: 'uniqueViewsCount', type: 'number', defaultValue: 0, admin: { width: '25%' } },
-                { name: 'averageReadTime', type: 'number', admin: { width: '25%' } },
-                { name: 'conversionClicks', type: 'number', defaultValue: 0, admin: { width: '25%' } },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
-                { name: 'newsletterSignups', type: 'number', defaultValue: 0, admin: { width: '50%' } },
-                { name: 'lastViewedAt', type: 'date', admin: { width: '50%', date: { pickerAppearance: 'dayAndTime' } } },
-              ],
-            },
-          ],
-        },
-        {
-          label: 'Settings',
+          label: 'Relationships',
           fields: [
             {
               name: 'category',
               type: 'relationship',
               relationTo: 'blog-categories' as any,
               required: true,
-              admin: {
-                description: 'Primary topic for filters, badges, archive pages, and related-post matching.',
-              },
             },
             {
               name: 'tags',
               type: 'relationship',
               relationTo: 'blog-tags' as any,
               hasMany: true,
-              admin: {
-                description: 'Optional discovery tags. Keep them focused and reusable.',
-              },
-            },
-            {
-              name: 'author',
-              type: 'relationship',
-              relationTo: 'authors',
-              required: true,
-              admin: {
-                description: 'Primary byline author.',
-              },
-            },
-            { name: 'coAuthors', type: 'relationship', relationTo: 'authors', hasMany: true },
-            { name: 'series', type: 'relationship', relationTo: 'blog-series' as any },
-            {
-              name: 'tableOfContents',
-              type: 'checkbox',
-              defaultValue: true,
-              admin: {
-                description: 'Show a sticky article table of contents when headings exist.',
-              },
             },
             {
               name: 'relatedPosts',
               type: 'relationship',
               relationTo: 'blog-posts' as any,
               hasMany: true,
-              admin: {
-                description: 'Optional manual related posts. Otherwise the frontend uses same-category and same-tag articles.',
-              },
             },
+            { name: 'series', type: 'relationship', relationTo: 'blog-series' as any },
           ],
         },
       ],
+    },
+    // Sidebar fields
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'draft',
+      options: statusOptions,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'locale',
+      type: 'select',
+      required: true,
+      defaultValue: 'en',
+      options: [
+        { label: 'English', value: 'en' },
+        { label: 'Arabic', value: 'ar' },
+      ],
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'approvalStatus',
+      type: 'select',
+      defaultValue: 'not_required',
+      options: [
+        { label: 'Not Required', value: 'not_required' },
+        { label: 'Waiting', value: 'waiting' },
+        { label: 'Approved', value: 'approved' },
+        { label: 'Rejected', value: 'rejected' },
+      ],
+      admin: { position: 'sidebar' },
+    },
+    { name: 'publishedAt', type: 'date', admin: { position: 'sidebar', date: { pickerAppearance: 'dayAndTime' } } },
+    { name: 'scheduledAt', type: 'date', admin: { position: 'sidebar', date: { pickerAppearance: 'dayAndTime' } } },
+    {
+      name: 'author',
+      type: 'relationship',
+      relationTo: 'authors',
+      required: true,
+      admin: { position: 'sidebar' },
+    },
+    { name: 'coAuthors', type: 'relationship', relationTo: 'authors', hasMany: true, admin: { position: 'sidebar' } },
+    {
+      name: 'coverImage',
+      label: 'Featured / cover image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'featuredImageAlt',
+      type: 'text',
+      admin: { position: 'sidebar' },
     },
   ],
 }

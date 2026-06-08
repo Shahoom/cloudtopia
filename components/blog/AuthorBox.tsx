@@ -20,13 +20,13 @@ export function AuthorBox({ author, locale }: { author: BlogAuthor | null; local
           )}
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-normal text-primary-700">Written by</p>
+          <p className="text-xs font-black uppercase tracking-normal text-primary-700">{locale === 'ar' ? 'كُتب بواسطة' : 'Written by'}</p>
           <h2 className="mt-1 text-2xl font-black tracking-normal text-neutral-950">{author.name}</h2>
           {author.role && <p className="mt-1 text-sm font-bold text-neutral-500">{author.role}</p>}
           <p className="mt-3 text-base leading-7 text-neutral-600">{author.shortBio || author.bio}</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <Link href={localePath(locale, `/insights/author/${author.slug}`)} className="text-sm font-black text-primary-700 hover:text-primary-900">
-              View all posts
+            <Link href={localePath(locale, `/articles/author/${author.slug}`)} className="text-sm font-black text-primary-700 hover:text-primary-900">
+              {locale === 'ar' ? 'عرض جميع المقالات' : 'View all posts'}
             </Link>
             {author.linkedinUrl && (
               <a href={author.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on LinkedIn`} className="text-neutral-500 hover:text-primary-700">

@@ -11,7 +11,9 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/restaurant-qr-menu', 'restaurant-qr-menu')
+    const metadata = await getCMSMetadata(locale, '/restaurant-qr-menu', 'restaurant-qr-menu')
+    const title = locale === 'ar' ? 'أفضل شركة منيو QR للمطاعم' : 'Best Restaurant QR Menu Company'
+    return { ...metadata, title }
 }
 
 export default async function RestaurantQRMenuPage({

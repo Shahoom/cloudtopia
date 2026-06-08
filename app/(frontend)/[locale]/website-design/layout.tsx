@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         ar: 'تصميم وتطوير مواقع الويب في الخليج',
     }
     const descs: Record<string, string> = {
-        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct. From $299.',
-        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح. تبدأ من 299$.',
+        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct, and scoped clearly.',
+        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح، وبنطاق واضح.',
     }
     const ogTitles: Record<string, string> = {
         en: 'Website Design — CloudTopia',
@@ -87,11 +87,9 @@ export default async function ({ children, params }: { children: React.ReactNode
                             { '@type': 'Country', name: 'Oman' },
                         ],
                         offers: {
-                            '@type': 'AggregateOffer',
-                            priceCurrency: 'USD',
-                            lowPrice: '399',
-                            highPrice: '3999',
-                            offerCount: '4',
+                            '@type': 'Offer',
+                            availability: 'https://schema.org/InStock',
+                            url: canonicalUrl(locale, '/pricing'),
                         },
                     }),
                 }}

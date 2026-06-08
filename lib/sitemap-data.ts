@@ -16,7 +16,10 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     const pages = await getPublishedCMSPages()
     if (pages.length === 0) return buildSitemapEntries()
 
-    const entries = pages.filter((page: any) => !['blog', 'locations'].includes(page.slug)).map(pageToSitemapEntry)
+    const supportedLocales = new Set<string>(locales)
+    const entries = pages
+        .filter((page: any) => supportedLocales.has(page.locale) && !['blog', 'locations'].includes(page.slug))
+        .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
     const lastModified = new Date()
     const staticNonCmsRoutes: Array<{
@@ -124,7 +127,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/markets', priority: 0.86, changeFrequency: 'monthly' },
         { path: '/pricing', priority: 0.9, changeFrequency: 'weekly', ogPage: 'pricing' },
         { path: '/projects', priority: 0.8, changeFrequency: 'weekly', ogPage: 'projects' },
-        { path: '/insights', priority: 0.85, changeFrequency: 'weekly' },
+        { path: '/articles', priority: 0.85, changeFrequency: 'weekly' },
         { path: '/process', priority: 0.76, changeFrequency: 'monthly' },
         { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
         { path: '/about', priority: 0.7, changeFrequency: 'monthly', ogPage: 'about' },

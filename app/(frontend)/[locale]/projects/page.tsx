@@ -1,8 +1,8 @@
 import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
-import { canonicalUrl } from '@/lib/i18n/url'
+import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import ProjectsPageClient from './ProjectsPageClient'
-import { getCMSMetadata } from '@/lib/cms/metadata'
+import { ogImagesFor } from '@/lib/og/og-image'
 import type { Metadata } from 'next'
 
 type ProjectCardSummary = {
@@ -19,7 +19,35 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/projects', 'projects')
+    const isArabic = locale === 'ar'
+    const title = isArabic ? 'المشاريع' : 'Projects'
+    const socialTitle = isArabic ? 'المشاريع | كلاود توبيا' : 'Projects | CloudTopia'
+    const description = isArabic
+        ? 'مشاريع كلاود توبيا في المواقع، المتاجر، تطبيقات الويب، الأنظمة، وتجارب الذكاء الاصطناعي.'
+        : 'CloudTopia projects across websites, e-commerce, web apps, systems, and AI experiences.'
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title: socialTitle,
+            description,
+            url: canonicalUrl(locale, '/projects'),
+            siteName: 'CloudTopia',
+            type: 'website',
+            images: ogImagesFor({ page: 'projects', locale }),
+        },
+        twitter: {
+            title: socialTitle,
+            description,
+            card: 'summary_large_image',
+            images: ogImagesFor({ page: 'projects', locale }).map((image) => image.url),
+        },
+        alternates: {
+            canonical: canonicalUrl(locale, '/projects'),
+            languages: buildHreflangMap('/projects'),
+        },
+    }
 }
 
 /**

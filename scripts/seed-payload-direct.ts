@@ -3,6 +3,9 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Client } from 'pg'
 import sharp from 'sharp'
+import { generatedPostsEn, generatedPostsAr } from "../lib/blog/generated-posts.ts"
+import { generatedPostsEnBatch2, generatedPostsArBatch2 } from "../lib/blog/generated-posts-batch2.ts"
+import { generatedPostsEnBatch3, generatedPostsArBatch3 } from "../lib/blog/generated-posts-batch3.ts"
 import { authors } from '../lib/authors.ts'
 import { ar } from '../lib/i18n/translations/ar.ts'
 import { en } from '../lib/i18n/translations/en.ts'
@@ -310,16 +313,26 @@ export async function upsertBlogSeeds(client: Client) {
   const authorId = author.rows[0]?.id
   if (!authorId) return
 
-  for (const post of sampleBlogPosts) {
+  const allPosts = [
+    ...sampleBlogPosts.map(p => ({ locale: 'en', post: p })),
+    ...generatedPostsEn.map(p => ({ locale: 'en', post: p })),
+    ...generatedPostsAr.map(p => ({ locale: 'ar', post: p })),
+    ...generatedPostsEnBatch2.map(p => ({ locale: 'en', post: p })),
+    ...generatedPostsArBatch2.map(p => ({ locale: 'ar', post: p })),
+    ...generatedPostsEnBatch3.map(p => ({ locale: 'en', post: p })),
+    ...generatedPostsArBatch3.map(p => ({ locale: 'ar', post: p }))
+  ];
+
+  for (const { locale, post } of allPosts) {
     const slug = sampleSlug(post.title)
-    const categoryId = categories.get(post.category)
+    const categoryId = categories.get(post.category) || categories.get('Guides') // Fallback
     const media = await client.query<{ id: number }>(
       `select id from media where url = $1 limit 1`,
       [post.coverImage],
     )
     const coverImageId = media.rows[0]?.id || null
-    const content = createLexicalArticle(post)
-    const contentBlocks = createContentBlocks(post)
+    const content = createLexicalArticle(post as any)
+    const contentBlocks = createContentBlocks(post as any)
 
     const result = await client.query<{ id: number }>(
       `insert into blog_posts (
@@ -340,7 +353,7 @@ export async function upsertBlogSeeds(client: Client) {
         $21, $22, $23, 0, true,
         $24::enum_blog_posts_content_type, $25::enum_blog_posts_difficulty,
         $26::enum_blog_posts_target_audience, $27::enum_blog_posts_service_focus,
-        true, $28, $29, 'Start Your Project', '/contact',
+        true, $28, $29, $30, '/contact',
         now(), now()
        )
        on conflict (slug) do update set
@@ -380,42 +393,43 @@ export async function upsertBlogSeeds(client: Client) {
          updated_at = now()
        returning id`,
       [
-        'en',
+        locale,
         post.title,
         slug,
-        post.sections[0]?.heading || '',
+        (post as any).sections?.[0]?.heading || '',
         post.excerpt,
-        post.shortExcerpt || post.excerpt.slice(0, 120),
+        (post as any).shortExcerpt || post.excerpt.slice(0, 120),
         JSON.stringify(content),
         JSON.stringify(contentBlocks),
         coverImageId,
-        `${post.title} CloudTopia insight cover`,
+        `${post.title} cover`,
         categoryId || null,
         authorId,
-        `${post.title} | CloudTopia Insights`,
+        `${post.title} | CloudTopia`,
         post.excerpt,
-        post.tags[0] || post.category,
-        post.tags.join(', '),
-        Boolean(post.featured),
-        Boolean(post.pinned),
-        Boolean(post.editorPick),
-        Boolean(post.trending),
+        post.tags?.[0] || post.category,
+        post.tags?.join(', ') || '',
+        Boolean((post as any).featured),
+        Boolean((post as any).pinned),
+        Boolean((post as any).editorPick),
+        Boolean((post as any).trending),
         post.publishedAt,
         calculateReadingTime(content),
-        post.sections.flatMap((section) => [section.heading, section.body, ...(section.bullets || [])]).join(' ').split(/\s+/).filter(Boolean).length,
-        post.contentType || 'article',
-        post.difficulty || 'beginner',
-        post.targetAudience || 'small_businesses',
-        post.serviceFocus || 'websites',
-        `Need a ${post.category.toLowerCase()} solution built for growth?`,
-        'CloudTopia helps businesses turn digital ideas into scalable web solutions with clean design, reliable systems, and practical automation.',
+        ((post as any).sections || [])?.flatMap((section: any) => [section.heading, section.body, ...(section.bullets || [])]).join(' ').split(/\s+/).filter(Boolean).length || 500,
+        (post as any).contentType || 'article',
+        (post as any).difficulty || 'beginner',
+        (post as any).targetAudience || 'small_businesses',
+        (post as any).serviceFocus || 'websites',
+        locale === 'ar' ? 'هل تحتاج إلى بناء حلول تدعم نموك؟' : `Need a ${post.category?.toLowerCase() || 'solution'} built for growth?`,
+        locale === 'ar' ? 'تساعد كلاود توبيا الشركات في تحويل الأفكار إلى منصات ويب وأنظمة قوية.' : 'CloudTopia helps businesses turn digital ideas into scalable web solutions.',
+        locale === 'ar' ? 'ابدأ مشروعك' : 'Start Your Project',
       ],
     )
 
     const postId = result.rows[0].id
     await client.query(`delete from blog_posts_rels where parent_id = $1 and path in ('tags', 'relatedPosts')`, [postId])
 
-    for (const [index, tagName] of post.tags.entries()) {
+    for (const [index, tagName] of (post.tags || []).entries()) {
       const tagId = tags.get(tagName)
       if (!tagId) continue
       await client.query(

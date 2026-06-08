@@ -3,11 +3,13 @@ import type { Locale } from '../i18n/config.ts'
 export const cmsPageSlugs = [
   '/',
   'services',
+  'industries',
+  'markets',
   'projects',
   'labs',
   'about',
   'contact',
-  'blog',
+  'articles',
   'website-design',
   'ecommerce-solutions',
   'business-systems-development',
@@ -44,11 +46,13 @@ type Dictionary = Record<string, any>
 const templateBySlug: Record<string, string> = {
   '/': 'home',
   services: 'services',
+  industries: 'industry-landing',
+  markets: 'market-landing',
   projects: 'projects',
   labs: 'labs',
   about: 'about',
   contact: 'contact',
-  blog: 'blog-coming-soon',
+  articles: 'insights-landing',
   'website-design': 'service-detail',
   'ecommerce-solutions': 'service-detail',
   'business-systems-development': 'service-detail',
@@ -191,7 +195,47 @@ export function buildPageCTA(locale: Locale, slug: string, dictionary: Dictionar
 export function buildPageSEO(locale: Locale, slug: string, dictionary: Dictionary) {
   const normalized = normalizePageSlug(slug)
   const hero = buildPageHero(locale, normalized, dictionary)
-  const title = pageTitleFromDictionary(locale, normalized, dictionary)
+  const shortTitles: Record<Locale, Record<string, string>> = {
+    en: {
+      services: 'Service Packages',
+      industries: 'Industries',
+      markets: 'Markets',
+      projects: 'Projects',
+      labs: 'Labs',
+      about: 'About',
+      contact: 'Contact',
+      articles: 'Articles',
+      'website-design': 'Best Website Design & Development Company',
+      'ecommerce-solutions': 'Best E-Commerce Solutions Company',
+      'business-systems-development': 'Best Business Systems Development Company',
+      'restaurant-qr-menu': 'Best Restaurant QR Menu Company',
+      'content-creation': 'Best Company for Professional Content Creation',
+      'social-media-marketing': 'Best Social Media Marketing Company',
+      'web-applications': 'Best Web Applications Development Company',
+      privacy: 'Privacy',
+      terms: 'Terms',
+    },
+    ar: {
+      services: 'باقات الخدمات',
+      industries: 'القطاعات',
+      markets: 'الأسواق',
+      projects: 'المشاريع',
+      labs: 'المختبر',
+      about: 'من نحن',
+      contact: 'تواصل معنا',
+      articles: 'المقالات',
+      'website-design': 'أفضل شركة تصميم وتطوير مواقع',
+      'ecommerce-solutions': 'أفضل شركة حلول متاجر إلكترونية',
+      'business-systems-development': 'أفضل شركة تطوير أنظمة أعمال',
+      'restaurant-qr-menu': 'أفضل شركة منيو QR للمطاعم',
+      'content-creation': 'أفضل شركة لصناعة المحتوى الاحترافي',
+      'social-media-marketing': 'أفضل شركة تسويق عبر السوشيال ميديا',
+      'web-applications': 'أفضل شركة تطوير تطبيقات ويب',
+      privacy: 'الخصوصية',
+      terms: 'الشروط',
+    },
+  }
+  const title = shortTitles[locale]?.[normalized] || pageTitleFromDictionary(locale, normalized, dictionary)
   const description =
     hero.description ||
     dictionary.footer?.description ||
@@ -218,7 +262,7 @@ export function buildNavigation(locale: Locale, dictionary: Dictionary) {
       { label: nav.projects || 'Projects', href: '/projects' },
       { label: nav.labs || 'Labs', href: '/labs' },
       { label: nav.about || 'About', href: '/about' },
-      { label: nav.blog === 'Blog' ? 'Insights' : nav.blog || 'Insights', href: '/insights' },
+      { label: nav.blog === 'Blog' ? 'Articles' : nav.blog || 'Articles', href: '/articles' },
       ...(showContact ? [{ label: nav.contact || 'Contact', href: '/contact' }] : []),
     ],
     cta: { label: nav.getStarted || 'Get Started', href: '/contact' },
@@ -239,7 +283,7 @@ export function buildNavigation(locale: Locale, dictionary: Dictionary) {
           links: [
             { label: footer.links?.aboutUs || 'About', href: '/about' },
             { label: footer.links?.projects || 'Projects', href: '/projects' },
-            { label: footer.links?.blog === 'Blog' ? 'Insights' : footer.links?.blog || 'Insights', href: '/insights' },
+            { label: footer.links?.blog === 'Blog' ? 'Articles' : footer.links?.blog || 'Articles', href: '/articles' },
             { label: footer.links?.ourLabs || 'Labs', href: '/labs' },
             { label: footer.links?.contactUs || 'Contact', href: '/contact' },
           ],

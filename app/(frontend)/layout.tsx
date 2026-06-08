@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s | CloudTopia',
   },
   description:
-    'CloudTopia is a Gulf-first digital agency building bilingual Arabic + English websites, e-commerce stores with Mada and Apple Pay, and custom business systems. Fixed pricing from $299.',
+    'CloudTopia builds SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for businesses in Arabic and English.',
   keywords: [
     'Gulf digital agency',
     'Saudi Arabia website design',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     url: 'https://cloudtopia.net',
     title: 'CloudTopia - Digital & Cloud Technologies',
     description:
-      'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+      'SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for Arabic and English business growth.',
     siteName: 'CloudTopia',
     images: ogImagesFor({ page: 'home', locale: 'en' }),
   },
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CloudTopia - Digital & Cloud Technologies',
     description:
-      'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+      'SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for Arabic and English business growth.',
     creator: '@thecloudtopia',
     site: '@thecloudtopia',
     images: ogImagesFor({ page: 'home', locale: 'en' }).map((i) => i.url),
@@ -109,6 +109,13 @@ export default async function FrontendLayout({
   const requestHeaders = await headers()
   const locale = requestHeaders.get('x-locale') ?? 'en'
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
+  const isArabic = locale === 'ar'
+  const organizationDescription = isArabic
+    ? 'كلاود توبيا شركة تقنيات رقمية وسحابية تطور مواقع محسنة لمحركات البحث، متاجر إلكترونية، تطبيقات ويب، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
+    : 'CloudTopia is a digital and cloud technology company building SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for businesses across the Gulf and Middle East.'
+  const websiteDescription = isArabic
+    ? 'خدمات تطوير مواقع، متاجر إلكترونية، تطبيقات ويب، أنظمة أعمال CRM وERP، حلول سحابية، وأتمتة ذكاء اصطناعي باللغة العربية والإنجليزية.'
+    : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
@@ -128,8 +135,6 @@ export default async function FrontendLayout({
           crossOrigin="anonymous"
         />
         <link rel="preload" as="image" href="/images/homepage/clouds.webp" type="image/webp" fetchPriority="high" />
-        <link rel="preload" as="image" href="/images/homepage/clouds-b.webp" type="image/webp" />
-        <link rel="preload" as="image" href="/images/homepage/clouds-c.webp" type="image/webp" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="min-h-screen antialiased font-['Changa',sans-serif]" suppressHydrationWarning>
@@ -144,8 +149,7 @@ export default async function FrontendLayout({
               url: 'https://cloudtopia.net',
               logo: 'https://cloudtopia.net/images/CloudTopia.svg',
               image: 'https://cloudtopia.net/images/og-image.jpg',
-              description:
-                'CloudTopia builds websites, custom business systems, e-commerce stores, and web applications. Expert digital agency for growing businesses.',
+              description: organizationDescription,
               foundingDate: '2024',
               areaServed: [
                 { '@type': 'Country', name: 'Saudi Arabia' },
@@ -176,10 +180,9 @@ export default async function FrontendLayout({
               '@type': 'WebSite',
               '@id': 'https://cloudtopia.net/#website',
               name: 'CloudTopia',
-              alternateName: ['CloudTopia Digital Agency'],
+              alternateName: ['CloudTopia Digital Agency', 'كلاود توبيا'],
               url: 'https://cloudtopia.net',
-              description:
-                'Digital & Cloud Technologies - Website design, business systems, e-commerce, and custom web applications for growing businesses.',
+              description: websiteDescription,
               inLanguage: ['en-US', 'ar-SA'],
               publisher: {
                 '@type': 'Organization',

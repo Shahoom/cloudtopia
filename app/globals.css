@@ -7,6 +7,24 @@
   font-display: swap;
 }
 
+/* Talasem - Arabic logo */
+@font-face {
+  font-family: 'Talasem';
+  src: url('/fonts/Talasem.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Madani Arabic - Arabic Tagline */
+@font-face {
+  font-family: 'MadaniArabic';
+  src: url('/fonts/Madani\ Arabic\ Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Changa Font - Variable Weight (body) */
 @font-face {
   font-family: 'Changa';
@@ -28,8 +46,12 @@
   --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
   /* Logo keeps the brand's AgharaPro face */
   --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  --font-logo-ar: 'Talasem', sans-serif;
+  --font-tagline-ar: 'MadaniArabic', sans-serif;
   --eerie-black: #1B1B23;
   --black: #1B1B23;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
   font-size: 112.5%;
   /* 18px base instead of 16px - makes everything ~12% larger */
   
@@ -50,6 +72,11 @@
   --card-foreground: 240 13% 12%;
   --muted: 266 33% 94%;
   --muted-foreground: 0 0% 45.1%;
+}
+
+.dark {
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
 }
 
 /* RTL Support */

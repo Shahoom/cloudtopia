@@ -46,6 +46,7 @@ const autoLocalizePage: CollectionAfterChangeHook = async ({ doc, req }) => {
     cta: doc.cta || {},
     seo: doc.seo || {},
     sections: doc.sections || {},
+    programmaticLanding: doc.programmaticLanding || {},
   }
 
   await Promise.all(
@@ -62,6 +63,7 @@ const autoLocalizePage: CollectionAfterChangeHook = async ({ doc, req }) => {
         cta: translated.cta || doc.cta || {},
         seo: translated.seo || doc.seo || {},
         sections: translated.sections || doc.sections || {},
+        programmaticLanding: translated.programmaticLanding || doc.programmaticLanding || {},
         design: doc.design || {},
         editorNotes: doc.editorNotes || '',
       }
@@ -162,12 +164,15 @@ export const Pages: CollectionConfig = {
         { label: 'Home', value: 'home' },
         { label: 'Services Overview', value: 'services' },
         { label: 'Service Detail', value: 'service-detail' },
+        { label: 'Sub-Service Landing', value: 'sub-service-landing' },
+        { label: 'Industry Landing', value: 'industry-landing' },
+        { label: 'Market Landing', value: 'market-landing' },
         { label: 'Projects', value: 'projects' },
         { label: 'About', value: 'about' },
         { label: 'Contact', value: 'contact' },
         { label: 'Labs', value: 'labs' },
         { label: 'Legal', value: 'legal' },
-        { label: 'Blog Coming Soon', value: 'blog-coming-soon' },
+        { label: 'Insights Landing', value: 'insights-landing' },
         { label: 'Content', value: 'content' },
       ],
       admin: {
@@ -243,6 +248,115 @@ export const Pages: CollectionConfig = {
       admin: {
         description: 'Structured section payload for this route. This must contain real section data, never placeholder instructions.',
       },
+    },
+    {
+      name: 'programmaticLanding',
+      type: 'group',
+      admin: {
+        description: 'Optional editorial overrides for generated market, industry, and sub-service pages. Static SEO data remains the fallback when these fields are empty.',
+      },
+      fields: [
+        {
+          name: 'family',
+          type: 'select',
+          options: [
+            { label: 'Sub-Service', value: 'sub-service' },
+            { label: 'Industry', value: 'industry' },
+            { label: 'Market / Country', value: 'market' },
+          ],
+          admin: {
+            description: 'Which generated page family this override belongs to.',
+          },
+        },
+        {
+          name: 'targetSlug',
+          type: 'text',
+          admin: {
+            description: 'The service, industry, or country slug, for example "crm-development", "real-estate", or "saudi-arabia".',
+          },
+        },
+        {
+          name: 'seoTitle',
+          type: 'text',
+          admin: {
+            description: 'Optional SEO title override for the generated page.',
+          },
+        },
+        {
+          name: 'metaDescription',
+          type: 'textarea',
+          admin: {
+            description: 'Optional meta description override. Keep it natural and conversion-focused.',
+          },
+        },
+        {
+          name: 'h1',
+          type: 'text',
+          admin: {
+            description: 'Optional visible H1 override.',
+          },
+        },
+        {
+          name: 'introCopy',
+          type: 'textarea',
+          admin: {
+            description: 'Optional intro or hero subtitle copy.',
+          },
+        },
+        {
+          name: 'primaryKeyword',
+          type: 'text',
+          admin: {
+            description: 'Primary search phrase for the page.',
+          },
+        },
+        {
+          name: 'secondaryKeywords',
+          type: 'array',
+          fields: [{ name: 'keyword', type: 'text', required: true }],
+        },
+        {
+          name: 'internalLinks',
+          type: 'array',
+          fields: [
+            { name: 'label', type: 'text', required: true },
+            { name: 'href', type: 'text', required: true },
+            {
+              name: 'type',
+              type: 'select',
+              options: [
+                { label: 'Service', value: 'service' },
+                { label: 'Industry', value: 'industry' },
+                { label: 'Market', value: 'market' },
+                { label: 'Pricing', value: 'pricing' },
+                { label: 'Contact', value: 'contact' },
+                { label: 'Proof', value: 'proof' },
+              ],
+            },
+          ],
+          admin: {
+            description: 'Curated links shown or used by the page for SEO and buyer navigation.',
+          },
+        },
+        {
+          name: 'faqs',
+          type: 'array',
+          fields: [
+            { name: 'question', type: 'text', required: true },
+            { name: 'answer', type: 'textarea', required: true },
+          ],
+          admin: {
+            description: 'Optional FAQ override for FAQ schema and visible page content.',
+          },
+        },
+        {
+          name: 'schemaNotes',
+          type: 'textarea',
+          admin: {
+            description: 'Internal notes for schema requirements, such as BreadcrumbList, FAQPage, Service, or ProfessionalService.',
+          },
+        },
+      ],
     },
     {
       name: 'design',

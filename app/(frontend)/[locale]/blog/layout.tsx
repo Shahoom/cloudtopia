@@ -5,11 +5,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale = 'en' } = await params
 
   return {
-    title: 'CloudTopia Insights',
-    description: 'CloudTopia blog has moved to CloudTopia Insights.',
+    title: 'CloudTopia Articles',
+    description: 'CloudTopia blog has moved to CloudTopia Articles.',
     alternates: {
-      canonical: canonicalUrl(locale, '/insights'),
-      languages: buildHreflangMap('/insights'),
+      canonical: canonicalUrl(locale, '/articles'),
+      languages: buildHreflangMap('/articles'),
     },
     robots: {
       index: false,

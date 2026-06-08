@@ -25,6 +25,11 @@ const targetIndustrySlugs = [
   'real-estate',
   'education',
   'travel-hospitality',
+  'restaurants',
+  'legal-firms',
+  'construction',
+  'retail',
+  'professional-services',
   'logistics-supply-chain',
   'government-public-sector',
 ]
@@ -95,7 +100,11 @@ test('phase 2 and 3 landing page templates surface the expanded SEO content', ()
   assert.match(industryIndexSource, /serviceLinks/, 'Industry hub cards should expose relevant services')
   assert.match(industryPageSource, /getIndustry/, 'Industry route should read from industry SEO data')
   assert.match(industryPageSource, /serviceLinks/, 'Industry route should render related service links')
+  assert.match(industryPageSource, /BreadcrumbList/, 'Industry route should emit breadcrumb schema')
+  assert.match(industryPageSource, /marketLinks/, 'Industry route should cross-link relevant market pages')
+  assert.match(industryPageSource, /industryFeatures/, 'Industry route should render SEO-focused feature sections')
   assert.match(marketsIndexSource, /ItemList/, 'Markets hub should emit ItemList schema')
+  assert.match(marketsIndexSource, /BreadcrumbList/, 'Markets hub should emit breadcrumb schema')
   assert.match(marketsIndexSource, /countryLandingPages/, 'Markets hub should render country landing data')
   assert.match(countryPageSource, /getCountryLandingPage/, 'Country route should read from country landing data')
   assert.match(countryPageSource, /hreflangEnglish/, 'Country route should emit regional hreflang alternates')

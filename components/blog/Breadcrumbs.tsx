@@ -12,11 +12,11 @@ export function Breadcrumbs({
   return (
     <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap items-center gap-2 text-sm font-bold text-neutral-500">
       <Link href={localePath(locale, '/')} className="hover:text-primary-700">
-        Home
+        {locale === 'ar' ? 'الرئيسية' : 'Home'}
       </Link>
       <ChevronRight className="h-4 w-4" />
-      <Link href={localePath(locale, '/insights')} className="hover:text-primary-700">
-        Insights
+      <Link href={localePath(locale, '/articles')} className="hover:text-primary-700">
+        {locale === 'ar' ? 'المقالات' : 'Articles'}
       </Link>
       {items.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-2">

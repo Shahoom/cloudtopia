@@ -21,7 +21,7 @@ export function FeaturedBlogCard({
   locale: string
   large?: boolean
 }) {
-  const href = localePath(locale, `/insights/${post.slug}`)
+  const href = localePath(locale, `/articles/${post.slug}`)
 
   return (
     <article
@@ -53,7 +53,7 @@ export function FeaturedBlogCard({
             {post.pinned && (
               <span className="inline-flex items-center gap-1 rounded-full bg-neutral-950 px-3 py-1 text-xs font-black uppercase tracking-normal text-white">
                 <Pin className="h-3 w-3" />
-                Pinned
+                {locale === 'ar' ? 'مهم' : 'Pinned'}
               </span>
             )}
             {post.contentType && (
@@ -67,7 +67,7 @@ export function FeaturedBlogCard({
               <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5" />
-                {post.readingTime} min read
+                {locale === 'ar' ? `${post.readingTime} دقائق` : `${post.readingTime} min read`}
               </span>
               {post.author?.name && (
                 <span className="inline-flex items-center gap-1">
@@ -83,7 +83,7 @@ export function FeaturedBlogCard({
               {post.shortExcerpt || post.excerpt}
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-sky-200">
-              Read more
+              {locale === 'ar' ? 'اقرأ المزيد' : 'Read more'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </span>
           </div>

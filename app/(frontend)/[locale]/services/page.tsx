@@ -11,7 +11,9 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/services', 'services')
+    const metadata = await getCMSMetadata(locale, '/services', 'services')
+    const title = locale === 'ar' ? 'باقات الخدمات' : 'Service Packages'
+    return { ...metadata, title }
 }
 
 export default async function ServicesPage({
@@ -34,6 +36,11 @@ export default async function ServicesPage({
         { path: '/content-creation', key: 'Content Creation' },
         { path: '/social-media-marketing', key: 'Social Media Marketing' },
         { path: '/web-applications', key: 'Web Applications' },
+        { path: '/services/mobile-app-development', key: 'Mobile App Development' },
+        { path: '/services/ios-app-development', key: 'iOS App Development' },
+        { path: '/services/android-app-development', key: 'Android App Development' },
+        { path: '/services/cross-platform-app-development', key: 'Cross-Platform App Development' },
+        { path: '/services/app-backend-api-development', key: 'App Backend & API Development' },
     ]
 
     return (

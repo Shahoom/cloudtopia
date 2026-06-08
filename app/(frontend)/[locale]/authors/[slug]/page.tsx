@@ -64,8 +64,8 @@ export default async function AuthorPage({ params }: PageProps) {
     const bio = author.bio[lang] || author.bio.en
 
     const labels = {
-        en: { backToBlog: 'CloudTopia Insights', noPosts: 'Published author articles appear in the Insights hub.', knowsAbout: 'Topics' },
-        ar: { backToBlog: 'رؤى كلاود توبيا', noPosts: 'تظهر مقالات الكاتب المنشورة في مركز الرؤى.', knowsAbout: 'المواضيع' },
+        en: { backToBlog: 'CloudTopia Articles', noPosts: 'Published author articles appear in the Articles hub.', knowsAbout: 'Topics' },
+        ar: { backToBlog: 'مقالات كلاود توبيا', noPosts: 'تظهر مقالات الكاتب المنشورة في مركز المقالات.', knowsAbout: 'المواضيع' },
     }[lang]
 
     const personSchema = {
@@ -91,7 +91,7 @@ export default async function AuthorPage({ params }: PageProps) {
         '@type': 'BreadcrumbList',
         itemListElement: [
             { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : 'Home', item: canonicalUrl(locale, '/') },
-            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'الرؤى' : 'Insights', item: canonicalUrl(locale, '/insights') },
+            { '@type': 'ListItem', position: 2, name: lang === 'ar' ? 'المقالات' : 'Articles', item: canonicalUrl(locale, '/articles') },
             { '@type': 'ListItem', position: 3, name: author.name, item: canonicalUrl(locale, `/authors/${author.slug}`) },
         ],
     }
@@ -172,7 +172,7 @@ export default async function AuthorPage({ params }: PageProps) {
 
                     <div className="mt-12">
                         <Link
-                            href={localePath(locale, '/insights')}
+                            href={localePath(locale, '/articles')}
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neutral-300 hover:border-neutral-900 text-neutral-900 font-semibold text-sm transition-colors"
                         >
                             {labels.backToBlog}

@@ -82,7 +82,7 @@ export const Authors: CollectionConfig = {
               required: true,
               unique: true,
               admin: {
-                description: 'Auto-generated from the name when empty. Used in /insights/author/[slug].',
+                description: 'Auto-generated from the name when empty. Used in /articles/author/[slug].',
               },
             },
             {

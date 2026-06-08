@@ -7,5 +7,5 @@ type PageProps = {
 
 export default async function OldBlogPostRedirect({ params }: PageProps) {
   const { locale, slug } = await params
-  redirect(localePath((locale || 'en') as 'en' | 'ar', `/insights/${slug}`))
+  redirect(localePath((locale || 'en') as 'en' | 'ar', `/articles/${slug}`))
 }

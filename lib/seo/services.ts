@@ -39,6 +39,13 @@ const categoryCopy: Record<string, { name: LocalizedText; description: Localized
             'بوابات ولوحات وMVP SaaS وأدوات حجز وتجارب تطبيقات جاهزة للجوال.'),
         packageNames: ['MVP Launchpad', 'Growth Accelerator', 'Enterprise Custom App'],
     },
+    'mobile-app-development': {
+        name: t('Mobile App Development', 'تطوير تطبيقات الجوال'),
+        description: t(
+            'iOS, Android, cross-platform, PWA, customer, staff, booking, delivery, and app-backend services for mobile-first businesses.',
+            'تطبيقات iOS وAndroid ومتعددة المنصات وPWA وتطبيقات عملاء وموظفين وحجز وتوصيل وخلفيات API للشركات التي تعمل من الجوال.'),
+        packageNames: ['Mobile App Starter', 'Cross-Platform Launch', 'App Ecosystem'],
+    },
     'business-systems-development': {
         name: t('Business Systems Development', 'تطوير أنظمة الأعمال'),
         description: t(
@@ -91,6 +98,21 @@ const serviceGroups: Record<string, Array<[string, string]>> = {
         ['saas-mvp-development', 'SaaS MVP Development'],
         ['progressive-web-app-development', 'Progressive Web App Development'],
         ['mobile-app-development', 'Mobile App Development'],
+    ],
+    'mobile-app-development': [
+        ['ios-app-development', 'iOS App Development'],
+        ['android-app-development', 'Android App Development'],
+        ['cross-platform-app-development', 'Cross-Platform App Development'],
+        ['flutter-app-development', 'Flutter App Development'],
+        ['react-native-app-development', 'React Native App Development'],
+        ['mvp-app-development', 'MVP App Development'],
+        ['business-mobile-app-development', 'Business Mobile App Development'],
+        ['customer-app-development', 'Customer App Development'],
+        ['booking-app-development', 'Booking App Development'],
+        ['delivery-order-app-development', 'Delivery & Order App Development'],
+        ['app-backend-api-development', 'App Backend & API Development'],
+        ['app-store-launch-support', 'App Store Launch Support'],
+        ['mobile-app-maintenance', 'Mobile App Maintenance'],
     ],
     'business-systems-development': [
         ['crm-development', 'CRM Development'],
@@ -159,6 +181,19 @@ const arabicServiceNames: Record<string, string> = {
     'saas-mvp-development': 'تطوير MVP لمنصات SaaS',
     'progressive-web-app-development': 'تطوير تطبيقات ويب تقدمية',
     'mobile-app-development': 'تطوير تطبيقات الجوال',
+    'ios-app-development': 'تطوير تطبيقات iOS',
+    'android-app-development': 'تطوير تطبيقات أندرويد',
+    'cross-platform-app-development': 'تطوير تطبيقات متعددة المنصات',
+    'flutter-app-development': 'تطوير تطبيقات Flutter',
+    'react-native-app-development': 'تطوير تطبيقات React Native',
+    'mvp-app-development': 'تطوير تطبيقات MVP',
+    'business-mobile-app-development': 'تطوير تطبيقات الأعمال للجوال',
+    'customer-app-development': 'تطوير تطبيقات العملاء',
+    'booking-app-development': 'تطوير تطبيقات الحجز',
+    'delivery-order-app-development': 'تطوير تطبيقات الطلبات والتوصيل',
+    'app-backend-api-development': 'تطوير خلفيات وواجهات API للتطبيقات',
+    'app-store-launch-support': 'دعم إطلاق التطبيقات في المتاجر',
+    'mobile-app-maintenance': 'صيانة تطبيقات الجوال',
     'crm-development': 'تطوير أنظمة CRM',
     'inventory-management-systems': 'أنظمة إدارة المخزون',
     'sales-management-systems': 'أنظمة إدارة المبيعات',
@@ -202,38 +237,108 @@ const arabicServiceNames: Record<string, string> = {
 function makeService(categorySlug: string, slug: string, englishName: string): ServiceDetail {
     const category = categoryCopy[categorySlug]
     const arabicName = arabicServiceNames[slug] || englishName
+    const isMobileAppService = categorySlug === 'mobile-app-development'
+
+    const defaultFeatures = isMobileAppService
+        ? [
+            'Product discovery, app flow, and technical scope before build',
+            'Arabic and English mobile UX with RTL-ready screens',
+            'Secure authentication, API connection, and cloud-ready backend',
+            'App store, analytics, documentation, and launch handoff',
+        ]
+        : [
+            'Discovery, scope, and fixed proposal before build',
+            'Arabic and English content structure with RTL-ready interfaces',
+            'Responsive user experience across desktop and mobile',
+            'Launch support, analytics handoff, and documentation',
+        ]
+
+    const defaultOutcomes = isMobileAppService
+        ? [
+            'A clearer mobile product path',
+            'Better customer or staff adoption',
+            'Connected app, dashboard, and data flow',
+            'A maintainable mobile system your team owns',
+        ]
+        : [
+            'Clearer buyer journey',
+            'Less manual follow-up',
+            'Better regional search visibility',
+            'A maintainable system your team owns',
+        ]
+
+    const defaultTechnologies = isMobileAppService
+        ? ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Next.js', 'PostgreSQL', 'Firebase', 'Vercel']
+        : ['Next.js', 'React', 'Payload CMS', 'PostgreSQL', 'Cloudflare', 'Vercel']
+
     return {
         slug,
         categorySlug,
         name: t(englishName, arabicName),
         description: t(
-            `${englishName} from CloudTopia gives growing teams a structured, multilingual, ownership-first solution with clear scope, practical delivery, and long-term support.`,
-            `خدمة ${arabicName} من كلاود توبيا تمنح الفرق النامية حلاً منظماً متعدد اللغات مع ملكية واضحة ونطاق محدد ودعم طويل الأمد.`),
-        features: [
-            'Discovery, scope, and fixed proposal before build',
-            'Arabic and English content structure with RTL-ready interfaces',
-            'Responsive user experience across desktop and mobile',
-            'Launch support, analytics handoff, and documentation',
-        ],
-        outcomes: [
-            'Clearer buyer journey',
-            'Less manual follow-up',
-            'Better regional search visibility',
-            'A maintainable system your team owns',
-        ],
-        technologies: ['Next.js', 'React', 'Payload CMS', 'PostgreSQL', 'Cloudflare', 'Vercel'],
+            isMobileAppService
+                ? `${englishName} from CloudTopia gives companies a premium mobile product path with app UX, backend architecture, Arabic-first experience, integrations, launch support, and long-term ownership.`
+                : `${englishName} from CloudTopia gives growing teams a structured, multilingual, ownership-first solution with clear scope, practical delivery, and long-term support.`,
+            isMobileAppService
+                ? `خدمة ${arabicName} من كلاود توبيا تمنح الشركات مسار تطبيق جوال احترافي يشمل تجربة المستخدم، بنية الخلفية، دعم العربية، التكاملات، الإطلاق، وملكية طويلة الأمد.`
+                : `خدمة ${arabicName} من كلاود توبيا تمنح الفرق النامية حلاً منظماً متعدد اللغات مع ملكية واضحة ونطاق محدد ودعم طويل الأمد.`),
+        features: defaultFeatures,
+        outcomes: defaultOutcomes,
+        technologies: defaultTechnologies,
         faqs: [
             {
                 question: t(`How does ${englishName} start?`, `كيف تبدأ خدمة ${arabicName}؟`),
                 answer: t(
-                    `We start with discovery, define scope and priorities, then give you a written fixed proposal before production work begins.`,
-                    'نبدأ بالاكتشاف، نحدد النطاق والأولويات، ثم نقدم عرضاً مكتوباً ثابتاً قبل بدء التنفيذ.'),
+                    isMobileAppService
+                        ? 'We start with the app idea, target users, screens, backend needs, integrations, and launch path, then provide a written scope before production begins.'
+                        : 'We start with discovery, define scope and priorities, then give you a written fixed proposal before production work begins.',
+                    isMobileAppService
+                        ? 'نبدأ بفكرة التطبيق، المستخدمين المستهدفين، الشاشات، احتياجات الخلفية، التكاملات، ومسار الإطلاق، ثم نقدم نطاقاً مكتوباً قبل التنفيذ.'
+                        : 'نبدأ بالاكتشاف، نحدد النطاق والأولويات، ثم نقدم عرضاً مكتوباً ثابتاً قبل بدء التنفيذ.'),
+            },
+            {
+                question: t(`What business problem does ${englishName} solve?`, `ما المشكلة التجارية التي تحلها خدمة ${arabicName}؟`),
+                answer: t(
+                    isMobileAppService
+                        ? `${englishName} helps teams move a mobile idea into a usable product with clear screens, connected data, secure access, and a launch path that does not depend on scattered tools.`
+                        : `${englishName} helps teams replace unclear digital journeys, manual follow-up, disconnected tools, or weak conversion paths with a structured solution your company can operate.`,
+                    isMobileAppService
+                        ? `تساعد خدمة ${arabicName} الفرق على تحويل فكرة التطبيق إلى منتج قابل للاستخدام عبر شاشات واضحة وبيانات مترابطة وصلاحيات آمنة ومسار إطلاق منظم.`
+                        : `تساعد خدمة ${arabicName} الفرق على استبدال الرحلات الرقمية غير الواضحة والمتابعة اليدوية والأدوات المتفرقة بحل منظم يمكن للشركة تشغيله.`),
             },
             {
                 question: t(`Can ${englishName} be combined with other services?`, `هل يمكن دمج ${arabicName} مع خدمات أخرى؟`),
                 answer: t(
                     `Yes. ${category.name.en} services are modular, so we can combine this with related services without forcing a bloated package.`,
                     `نعم. خدمات ${category.name.ar} معيارية، لذلك يمكن دمج هذه الخدمة مع خدمات مرتبطة دون فرض حزمة ضخمة.`),
+            },
+            {
+                question: t(`Can ${englishName} support Arabic and English?`, `هل تدعم خدمة ${arabicName} العربية والإنجليزية؟`),
+                answer: t(
+                    'Yes. CloudTopia plans Arabic and English content, RTL-ready interfaces, localized labels, and clear handoff notes so both languages work as first-class experiences.',
+                    'نعم. تخطط كلاود توبيا للمحتوى العربي والإنجليزي، وواجهات جاهزة لاتجاه RTL، وتسميات محلية، وملاحظات تسليم واضحة حتى تعمل اللغتان كتجربة أساسية.'),
+            },
+            {
+                question: t(`Which technologies can power ${englishName}?`, `ما التقنيات التي يمكن استخدامها في ${arabicName}؟`),
+                answer: t(
+                    `Technology depends on the scope, but common choices include ${defaultTechnologies.slice(0, 5).join(', ')} with integrations for CMS, CRM, analytics, cloud hosting, or APIs when needed.`,
+                    `تعتمد التقنية على النطاق، لكن الخيارات الشائعة تشمل ${defaultTechnologies.slice(0, 5).join('، ')} مع تكاملات CMS أو CRM أو التحليلات أو الاستضافة السحابية أو API عند الحاجة.`),
+            },
+            {
+                question: t(`How long does ${englishName} take?`, `كم تستغرق خدمة ${arabicName}؟`),
+                answer: t(
+                    isMobileAppService
+                        ? 'Focused app MVPs can start in a few weeks, while larger mobile ecosystems with backend, dashboard, payments, or approvals need a phased plan after discovery.'
+                        : 'Small focused scopes can launch in a few weeks, while larger systems, integrations, or multilingual content plans are scheduled in phases after discovery.',
+                    isMobileAppService
+                        ? 'يمكن أن تبدأ تطبيقات MVP المركزة خلال أسابيع قليلة، أما منظومات الجوال الأكبر مع خلفية ولوحة دفع أو موافقات فتحتاج خطة مرحلية بعد الاكتشاف.'
+                        : 'يمكن إطلاق النطاقات الصغيرة خلال أسابيع قليلة، أما الأنظمة الأكبر أو التكاملات أو المحتوى متعدد اللغات فتُجدول على مراحل بعد الاكتشاف.'),
+            },
+            {
+                question: t(`What do we own after ${englishName} is delivered?`, `ماذا نملك بعد تسليم خدمة ${arabicName}؟`),
+                answer: t(
+                    'You receive the agreed production assets, accounts, documentation, access handoff, and operating notes so your team is not locked into unclear ownership.',
+                    'تحصلون على أصول الإنتاج المتفق عليها، الحسابات، التوثيق، تسليم الصلاحيات، وملاحظات التشغيل حتى لا يبقى الفريق عالقاً في ملكية غير واضحة.'),
             },
         ],
     }
@@ -270,6 +375,9 @@ const arabicPackageNames: Record<string, string> = {
     'MVP Launchpad': 'إطلاق MVP',
     'Growth Accelerator': 'تسريع النمو',
     'Enterprise Custom App': 'تطبيق مؤسسي مخصص',
+    'Mobile App Starter': 'بداية تطبيق جوال',
+    'Cross-Platform Launch': 'إطلاق متعدد المنصات',
+    'App Ecosystem': 'منظومة تطبيقات',
     'Core Business Automation': 'أتمتة أعمال أساسية',
     'Integrated Enterprise': 'تكامل مؤسسي',
     'Custom Ecosystem': 'منظومة مخصصة',
