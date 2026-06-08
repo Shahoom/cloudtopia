@@ -127,3 +127,19 @@ export function toIsoDate(value: unknown): string {
   if (typeof value === 'string' && value) return value
   return new Date().toISOString()
 }
+
+export function extractKeyTakeaways(contentBlocks: unknown): { title?: string; summary?: string; items: string[] } {
+  if (!Array.isArray(contentBlocks)) return { items: [] }
+  const first = contentBlocks.find(
+    (block): block is Record<string, unknown> =>
+      Boolean(block) &&
+      typeof block === 'object' &&
+      (String((block as Record<string, unknown>).blockType) === 'calloutBlock' ||
+        String((block as Record<string, unknown>).blockType) === 'callout'),
+  )
+  if (!first) return { items: [] }
+  const content = typeof first.content === 'string' ? first.content : ''
+  const title = typeof first.title === 'string' ? first.title : undefined
+  const raw = content.split(/(?:\.\s+|\n)+/).filter(Boolean).slice(0, 5)
+  return { title, items: raw }
+}
