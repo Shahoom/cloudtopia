@@ -8,7 +8,7 @@ function padNum(n: number) {
   return String(n).padStart(2, '0')
 }
 
-export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
+export function TableOfContents({ items, locale = 'en' }: { items: TableOfContentsItem[]; locale?: string }) {
   const [active, setActive] = useState(items[0]?.id || '')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [expandedH2s, setExpandedH2s] = useState<Set<string>>(() => {
@@ -91,7 +91,7 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
   const nav = (
     <nav aria-label="Table of contents" className="select-none">
       <p className="mb-3 text-[11px] font-black uppercase tracking-[1px] text-neutral-400">
-        Table of Contents
+        {locale === 'ar' ? 'فهرس المحتويات' : 'Table of Contents'}
       </p>
       <ol className="space-y-0.5">
         {groups.map(({ item, index, children }) => {
@@ -108,7 +108,7 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
                       ? 'border-l-[3px] border-primary-600 bg-primary-50 text-primary-700'
                       : 'text-neutral-400'
                   }`}
-                  aria-label={isExpanded ? 'Collapse section' : 'Expand section'}
+                  aria-label={isExpanded ? (locale === 'ar' ? 'طي القسم' : 'Collapse section') : (locale === 'ar' ? 'توسيع القسم' : 'Expand section')}
                 >
                   {padNum(index)}
                 </button>
@@ -126,7 +126,7 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
                     type="button"
                     onClick={() => toggleH2(item.id)}
                     className="mt-1.5 shrink-0 text-neutral-300 transition hover:text-neutral-500"
-                    aria-label="Toggle subsections"
+                    aria-label={locale === 'ar' ? 'تبديل الأقسام الفرعية' : 'Toggle subsections'}
                   >
                     <ChevronDown
                       className={`h-3.5 w-3.5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
@@ -161,7 +161,7 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
       </ol>
       <div className="mt-5 space-y-1.5">
         <p className="text-[11px] font-bold text-neutral-400">
-          {scrollPct}% read · {total} sections
+          {locale === 'ar' ? `${scrollPct}% مقروء · ${total} أقسام` : `${scrollPct}% read · ${total} sections`}
         </p>
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100">
           <div
@@ -184,7 +184,7 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
           onClick={() => setMobileOpen((v) => !v)}
           className="flex w-full items-center justify-between gap-3 text-left text-sm font-black uppercase tracking-normal text-neutral-700"
         >
-          In this article
+          {locale === 'ar' ? 'في هذا المقال' : 'In this article'}
           <ChevronDown className={`h-4 w-4 transition ${mobileOpen ? 'rotate-180' : ''}`} />
         </button>
         {mobileOpen && <div className="mt-4">{nav}</div>}

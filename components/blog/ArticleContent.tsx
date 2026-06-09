@@ -78,7 +78,7 @@ export function ArticleContent({
   return (
     <section className="bg-[#f8f7fb] px-4 py-14 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[240px_minmax(0,760px)_280px]">
-        <TableOfContents items={toc} />
+        <TableOfContents items={toc} locale={locale} />
         <article className="min-w-0 rounded-3xl border border-sky-100 bg-white p-6 shadow-sm md:p-10">
           {post.series && (
             <aside className="mb-10 rounded-2xl border border-primary-200 bg-primary-50/70 p-5">
