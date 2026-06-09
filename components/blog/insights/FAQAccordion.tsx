@@ -18,8 +18,16 @@ export function FAQAccordion({ items, locale }: { items: FAQItem[]; locale: stri
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-6">
         <h2 className="text-[28px] font-black text-neutral-900">
-          Frequently Asked{' '}
-          <span className="text-primary-600">Questions</span>
+          {locale === 'ar' ? (
+            <>
+              الأسئلة <span className="text-primary-600">الشائعة</span>
+            </>
+          ) : (
+            <>
+              Frequently Asked{' '}
+              <span className="text-primary-600">Questions</span>
+            </>
+          )}
         </h2>
         <p className="mt-2 text-sm text-neutral-500">
           {locale === 'ar'

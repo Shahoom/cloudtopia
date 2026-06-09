@@ -17,7 +17,7 @@ export function KeyTakeawaysBox({
   return (
     <aside className="mb-8 rounded-xl border-l-4 border-neutral-900 bg-neutral-100 px-6 py-5">
       <h3 className="mb-2 text-[17px] font-black text-neutral-900">
-        {title || 'Key Takeaways:'}
+        {title || (locale === 'ar' ? 'النقاط الرئيسية:' : 'Key Takeaways:')}
       </h3>
       {summary && (
         <p className="mb-3 text-sm leading-relaxed text-neutral-700">{summary}</p>
@@ -34,7 +34,7 @@ export function KeyTakeawaysBox({
         href={localePath(locale, '/contact')}
         className="mt-5 inline-flex h-9 items-center rounded-lg bg-primary-600 px-4 text-sm font-black text-white transition hover:bg-primary-700"
       >
-        Book a Free Strategy Call
+        {locale === 'ar' ? 'احجز مكالمة استراتيجية مجانية' : 'Book a Free Strategy Call'}
       </Link>
     </aside>
   )
