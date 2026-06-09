@@ -8,10 +8,12 @@ export function LoadMoreButton({
   currentPage,
   totalPages,
   href,
+  locale = 'en',
 }: {
   currentPage: number
   totalPages: number
   href: string
+  locale?: string
 }) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -35,10 +37,10 @@ export function LoadMoreButton({
         {isPending ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Loading…
+            {locale === 'ar' ? 'جارٍ التحميل...' : 'Loading…'}
           </>
         ) : (
-          'Load More'
+          locale === 'ar' ? 'تحميل المزيد' : 'Load More'
         )}
       </button>
     </div>

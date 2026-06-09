@@ -70,7 +70,7 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
     <div className="min-h-screen bg-[#f4f1f8]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
 
-      <AnnouncementStrip />
+      <AnnouncementStrip locale={locale} />
 
       <div className="bg-white">
         <CategoryNavBar
@@ -115,6 +115,7 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
               </div>
             )}
             <LoadMoreButton
+              locale={locale}
               currentPage={data.pagination.page}
               totalPages={data.pagination.totalPages}
               href={localePath(
