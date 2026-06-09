@@ -286,11 +286,34 @@ export default function ContactClient({ t: pageT }: { t?: any }) {
 
   const formRef = useRef<HTMLDivElement>(null)
 
+  /** Fire-and-forget: save inquiry to Payload CMS in the background */
+  const saveInquiry = (tab: 'email' | 'whatsapp') => {
+    if (!formData.message && !formData.interest) return
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:     formData.name     || undefined,
+        email:    formData.email    || undefined,
+        phone:    formData.phone    || undefined,
+        company:  formData.company  || undefined,
+        service:  formData.interest || undefined,
+        budget:   formData.budget   || undefined,
+        timeline: formData.timeline || undefined,
+        message:  formData.message  || undefined,
+        source:   'contact-form',
+        locale,
+        pageUrl:  window.location.href,
+      }),
+    }).catch(() => { /* non-fatal */ })
+  }
+
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    saveInquiry('whatsapp')
     const message = `${t.contact.form.waMessage}
-      
+
 ${t.contact.form.name}: ${formData.name || 'N/A'}
 ${t.contact.form.email}: ${formData.email || 'N/A'}
 ${t.contact.form.company}: ${formData.company || 'N/A'}
@@ -310,6 +333,7 @@ ${t.contact.form.message}: ${formData.message || 'N/A'}`
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    saveInquiry('email')
     const subject = `${t.contact.form.emailSubject} ${formData.name}`
     const body = `${t.contact.form.name}: ${formData.name}
 ${t.contact.form.email}: ${formData.email}

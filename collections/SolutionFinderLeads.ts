@@ -12,7 +12,8 @@ export const SolutionFinderLeads: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    create: adminOnly,
+    // Public creation is allowed — the API route validates data before saving.
+    create: () => true,
     update: adminOnly,
     delete: adminOnly,
   },

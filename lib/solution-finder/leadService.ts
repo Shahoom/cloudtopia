@@ -71,6 +71,7 @@ export async function saveSolutionFinderLead(lead: SolutionFinderLead): Promise<
     const saved = await payload.create({
       collection: 'solution-finder-leads' as never,
       data: lead as never,
+      overrideAccess: true,
     })
 
     return {

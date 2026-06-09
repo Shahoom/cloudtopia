@@ -36,6 +36,7 @@ export async function saveAIChatLead(lead: AILeadInput): Promise<LeadSaveResult>
     const saved = await payload.create({
       collection: 'ai-chat-leads' as never,
       data: lead as never,
+      overrideAccess: true,
     })
 
     return {

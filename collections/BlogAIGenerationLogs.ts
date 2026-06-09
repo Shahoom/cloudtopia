@@ -7,7 +7,7 @@ export const BlogAIGenerationLogs: CollectionConfig = {
   admin: {
     group: 'Insights',
     useAsTitle: 'promptType',
-    defaultColumns: ['promptType', 'sourcePost', 'userEmail', 'createdAt'],
+    defaultColumns: ['promptType', 'userEmail', 'status', 'createdAt'],
     description: 'Audit log for AI writing assistant requests. Outputs are stored as previews only.',
   },
   access: {
@@ -45,5 +45,13 @@ export const BlogAIGenerationLogs: CollectionConfig = {
     { name: 'outputPreview', type: 'textarea' },
     { name: 'status', type: 'select', defaultValue: 'success', options: ['success', 'error'] },
     { name: 'errorMessage', type: 'textarea' },
+    {
+      name: 'createdAt',
+      type: 'date',
+      defaultValue: () => new Date().toISOString(),
+      admin: {
+        date: { pickerAppearance: 'dayAndTime' },
+      },
+    },
   ],
 }

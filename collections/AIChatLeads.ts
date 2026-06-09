@@ -7,12 +7,13 @@ export const AIChatLeads: CollectionConfig = {
   admin: {
     group: 'CRM',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'phone', 'country', 'serviceNeeded', 'budgetRange', 'createdAt'],
+    defaultColumns: ['name', 'phone', 'country', 'serviceNeeded', 'budgetRange', 'status', 'createdAt'],
     description: 'Qualified sales/support inquiries captured by the CloudTopia AI chatbot.',
   },
   access: {
     read: adminOnly,
-    create: adminOnly,
+    // Public creation is allowed — the API route validates data before saving.
+    create: () => true,
     update: adminOnly,
     delete: adminOnly,
   },
@@ -36,6 +37,26 @@ export const AIChatLeads: CollectionConfig = {
         { label: 'English', value: 'en' },
         { label: 'Unknown', value: 'unknown' },
       ],
+    },
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'new',
+      options: [
+        { label: 'New', value: 'new' },
+        { label: 'Contacted', value: 'contacted' },
+        { label: 'Qualified', value: 'qualified' },
+        { label: 'Won', value: 'won' },
+        { label: 'Lost', value: 'lost' },
+      ],
+    },
+    {
+      name: 'notes',
+      type: 'textarea',
+      admin: {
+        description: 'Internal CRM notes — visible only in the admin panel.',
+      },
     },
     {
       name: 'source',

@@ -6,6 +6,7 @@ import { buildConfig } from 'payload'
 import { Authors } from './collections/Authors.ts'
 import { AIChatLeads } from './collections/AIChatLeads.ts'
 import { BlogAIGenerationLogs } from './collections/BlogAIGenerationLogs.ts'
+import { ContactInquiries } from './collections/ContactInquiries.ts'
 import { BlogCategories } from './collections/BlogCategories.ts'
 import { BlogContentTemplates } from './collections/BlogContentTemplates.ts'
 import { BlogPosts } from './collections/BlogPosts.ts'
@@ -69,6 +70,7 @@ export default buildConfig({
     Users,
     AIChatLeads,
     SolutionFinderLeads,
+    ContactInquiries,
     Media,
     Authors,
     BlogCategories,
