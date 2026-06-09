@@ -1,6 +1,7 @@
 import Link from 'next/link'
+import { localePath } from '@/lib/i18n/url'
 
-const messages = [
+const messagesEn = [
   'Cloud Migration Strategy 2026 — New Guide Available',
   'Kubernetes vs Docker Swarm: Complete Comparison',
   'How Much Does Cloud Infrastructure Cost in 2026?',
@@ -9,7 +10,17 @@ const messages = [
   'Cloud Security for Enterprise Applications',
 ]
 
-export function AnnouncementStrip() {
+const messagesAr = [
+  'استراتيجية الترحيل السحابي 2026 — دليل جديد',
+  'Kubernetes مقابل Docker Swarm: مقارنة شاملة',
+  'كم تكلف البنية التحتية السحابية في 2026؟',
+  'بناء تطبيقات Serverless مع AWS Lambda — دليل مجاني',
+  'أفضل ممارسات المعمارية متعددة السحب',
+  'أمن السحابة لتطبيقات المؤسسات',
+]
+
+export function AnnouncementStrip({ locale }: { locale: string }) {
+  const messages = locale === 'ar' ? messagesAr : messagesEn
   const text = messages.join('  ·  ')
 
   return (
@@ -30,10 +41,10 @@ export function AnnouncementStrip() {
         <span className="px-4 text-xs font-bold tracking-wide text-white/85">{text}</span>
       </div>
       <Link
-        href="/articles"
+        href={localePath(locale, '/articles')}
         className="absolute right-4 top-1/2 -translate-y-1/2 shrink-0 text-xs font-black text-primary-400 hover:text-primary-300 transition z-10"
       >
-        Explore Now →
+        {locale === 'ar' ? '← اكتشف الآن' : 'Explore Now →'}
       </Link>
     </div>
   )
