@@ -13,7 +13,7 @@ export function SidebarCategoryTags({
 }) {
   return (
     <aside className="sticky top-[100px] rounded-xl border border-neutral-200 bg-white p-5 shadow-sm">
-      <h2 className="mb-4 text-[18px] font-bold text-neutral-900">Categories</h2>
+      <h2 className="mb-4 text-[18px] font-bold text-neutral-900">{locale === 'ar' ? 'الفئات' : 'Categories'}</h2>
       <div className="flex flex-wrap gap-2">
         {categories
           .filter((c) => c.showInNavigation)
