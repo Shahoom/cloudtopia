@@ -1,6 +1,5 @@
 'use client'
 
-import { useRef } from "react"
 import Link from "next/link"
 import { LayoutGroup, motion } from "framer-motion"
 import { TextRotate } from "@/components/ui/text-rotate"
@@ -9,7 +8,6 @@ import { ScrollHeroSection } from "@/components/ui/scroll-hero-section"
 import { ServiceExplanationSection } from "@/components/ui/service-explanation-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { localePath } from "@/lib/i18n/url"
-import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const exampleImages = [
@@ -257,16 +255,6 @@ export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
 
   return (
     <div className="relative w-full overflow-hidden bg-lavender text-neutral-900">
-      {/* Light Mode Layout Fixes */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          header.sticky.top-0 { background: rgba(255,255,255,0.7) !important; backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(0,0,0,0.05) !important; }
-          header span, header a { color: #0f172a !important; }
-          .scroll-hero-header { background: transparent !important; border: none !important; }
-          .scroll-hero-header span, .scroll-hero-header a { color: inherit !important; }
-        `
-      }} />
-
       {/* Hero Section */}
       <WebDesignHero t={t} />
 
@@ -277,8 +265,6 @@ export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
       <WebDesignServiceSection />
 
       <DetailedServicesSection mainService="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
-
-      <ServicePricingSection service="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
     </div>
   )
 }

@@ -7,7 +7,6 @@ import { MagicText } from "@/components/ui/magic-text"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ContentBlock from "@/components/ui/content-block"
 import { ParticleTextEffect } from "@/components/ui/interactive-text-particle"
-import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const localContent = {
@@ -107,8 +106,6 @@ export default function ContentCreationClient({ t: pageT }: { t?: any }) {
       </section>
 
       <DetailedServicesSection mainService="content-creation" locale={locale === 'ar' ? 'ar' : 'en'} />
-
-      <ServicePricingSection service="content-creation" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>
   )
 }

@@ -1,11 +1,14 @@
 'use client'
 
+import dynamic from "next/dynamic"
 import ContainerScroll from "@/components/ui/container-scroll"
-import InfiniteGallery from "@/components/ui/3d-gallery"
 import EcommerceServiceSection from "@/components/ui/ecommerce-service-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
-import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
+
+// three.js-backed 3D gallery — client-only after hydration so the heavy WebGL
+// bundle stays out of the initial page payload.
+const InfiniteGallery = dynamic(() => import("@/components/ui/3d-gallery"), { ssr: false })
 
 const content = {
   en: {
@@ -203,8 +206,6 @@ export default function EcommerceSolutionsClient({ t: pageT }: { t?: any }) {
         <EcommerceServiceSection isRTL={isRTL} locale={locale} t={p} />
 
         <DetailedServicesSection mainService="ecommerce-solutions" locale={locale === 'ar' ? 'ar' : 'en'} />
-
-        <ServicePricingSection service="ecommerce-solutions" locale={locale === 'ar' ? 'ar' : 'en'} />
       </div>
     </main>
   )

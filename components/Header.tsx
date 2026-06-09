@@ -34,7 +34,12 @@ function MenuPanel({
 }) {
   return (
     <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3`}>
-      <div className="relative flex flex-col max-h-[calc(100vh-6rem)] rounded-lg border border-slate-200 bg-white/97 shadow-[0_28px_80px_rgba(27,27,35,0.18)] backdrop-blur-xl overflow-hidden">
+      {/* Solid (non-glass) surface on purpose: a backdrop-filter here would break
+          because the sticky header becomes a backdrop-filter ancestor once
+          scrolled (nested backdrop-filters are unreliable across browsers and
+          flicker while scrolling). A solid white card + layered shadow reads as
+          premium and renders correctly in every scroll state. */}
+      <div className="relative flex flex-col max-h-[calc(100vh-6rem)] rounded-lg border border-slate-200 bg-white shadow-[0_28px_80px_rgba(27,27,35,0.18)] overflow-hidden">
         <div className="overflow-y-auto p-4 text-eerie">
           {children}
         </div>
@@ -320,11 +325,28 @@ export default function Header() {
   const { t, dir, locale, navigation: cmsNavigation } = useLanguage()
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+      // Close any open mega menu when the page scrolls so an open panel never
+      // lingers (and never re-renders its glass while the background moves).
+      // Scrolling *inside* the panel uses its own overflow container and does
+      // not fire window scroll, so this won't fight in-panel scrolling.
+      setActiveMegaMenu((current) => (current ? null : current))
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Close the mega menu on Escape for keyboard users.
+  useEffect(() => {
+    if (!activeMegaMenu) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveMegaMenu(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [activeMegaMenu])
 
   useEffect(() => {
     const darkSections = document.querySelectorAll('[data-header-theme="dark"]')
@@ -350,7 +372,7 @@ export default function Header() {
   }, [])
 
   const l = (path: string) => localePath(locale, path)
-  const insightsLabel = locale === 'ar' ? 'المقالات' : 'Articles'
+  const articlesLabel = locale === 'ar' ? 'المقالات' : 'Articles'
   const servicesLabel = locale === 'ar' ? 'الخدمات' : t.nav.services
   const industriesLabel = locale === 'ar' ? 'القطاعات' : 'Industries'
   const projectsLabel = locale === 'ar' ? t.nav.projects : 'Projects'
@@ -363,7 +385,7 @@ export default function Header() {
     { name: projectsLabel, href: l('/projects'), icon: FolderKanban },
     { name: pricingLabel, href: l('/pricing'), icon: CircleDollarSign },
     { name: t.nav.about, href: l('/about'), icon: Info },
-    { name: insightsLabel, href: l('/articles'), icon: BookOpen },
+    { name: articlesLabel, href: l('/articles'), icon: BookOpen },
   ]
 
   const cta = (cmsNavigation?.cta as { label?: string; href?: string } | undefined) || {
@@ -432,8 +454,8 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      onMouseEnter={() => setActiveMegaMenu(menu)}
-                      onFocus={() => setActiveMegaMenu(menu)}
+                      onMouseEnter={() => { if (menu !== null) setActiveMegaMenu(menu) }}
+                      onFocus={() => { if (menu !== null) setActiveMegaMenu(menu) }}
                       className={`group relative inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-black transition-[background-color,color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${headerIsDark
                         ? 'text-white/82 hover:bg-white/10 hover:text-white'
                         : 'text-slate-700 hover:bg-sky-50 hover:text-slate-950'

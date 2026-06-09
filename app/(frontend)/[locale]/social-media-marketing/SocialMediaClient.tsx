@@ -15,7 +15,6 @@ import {
 import { GlowingEffect } from "@/components/ui/glowing-effect"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
-import { ServicePricingSection } from "@/components/services/ServicePricingSection"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const RevealWaveImage = dynamic(
@@ -946,7 +945,6 @@ export default function SocialMediaClient({ t }: { t?: any }) {
     <>
       <Hero t={t} />
       <DetailedServicesSection mainService="social-media-marketing" locale={locale === 'ar' ? 'ar' : 'en'} />
-      <ServicePricingSection service="social-media-marketing" locale={locale === 'ar' ? 'ar' : 'en'} />
     </>
   )
 }

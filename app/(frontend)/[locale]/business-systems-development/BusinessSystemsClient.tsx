@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'
-import { ServicePricingSection } from '@/components/services/ServicePricingSection'
 
 const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then(mod => mod.HeroParallax), { ssr: false })
 const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then(mod => mod.HeroModern), { ssr: false })
@@ -200,8 +199,6 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
             />
 
             <DetailedServicesSection mainService="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
-
-            <ServicePricingSection service="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             {/* Final CTA Section */}
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">

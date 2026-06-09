@@ -7,7 +7,6 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import { ArrowRight, Rocket } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { ServicePricingSection } from '@/components/services/ServicePricingSection'
 
 const DotGlobeHero = dynamic(() => import('@/components/ui/globe-hero').then(mod => mod.DotGlobeHero), { ssr: false })
 const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
@@ -208,8 +207,6 @@ export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
             <StickyFeatureSection locale={locale} />
 
             <DetailedServicesSection mainService="web-applications" locale={locale === 'ar' ? 'ar' : 'en'} />
-
-            <ServicePricingSection service="web-applications" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-20">
