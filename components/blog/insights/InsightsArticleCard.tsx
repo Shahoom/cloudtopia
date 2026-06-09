@@ -4,8 +4,8 @@ import { Calendar, Eye } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
+function formatDate(value: string, locale: string) {
+  return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-SA' : 'en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
 }
 
 export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; locale: string }) {
@@ -41,7 +41,7 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
           <div className="mt-4 flex items-center justify-between text-[12px] font-bold text-neutral-400">
             <span className="inline-flex items-center gap-1">
               <Calendar className="h-3 w-3" />
-              {formatDate(post.publishedAt)}
+              {formatDate(post.publishedAt, locale)}
             </span>
             <span className="inline-flex items-center gap-1">
               <Eye className="h-3 w-3" />
