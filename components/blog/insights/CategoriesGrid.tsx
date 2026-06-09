@@ -30,7 +30,7 @@ export function CategoriesGrid({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h2 className="mb-6 font-heading text-[32px] italic text-primary-600">Categories</h2>
+      <h2 className="mb-6 font-heading text-[32px] italic text-primary-600">{locale === 'ar' ? 'الفئات' : 'Categories'}</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {visible.map((cat, index) => (
           <Link
