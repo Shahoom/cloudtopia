@@ -69,7 +69,11 @@ export function ArticleHero({ post, locale }: { post: BlogPost; locale: string }
                 {locale === 'ar' ? 'وقت القراءة' : 'Reading time'}
               </p>
               <p className="text-[13px] font-bold text-neutral-900">
-                {locale === 'ar' ? `${post.readingTime} دقائق` : `${post.readingTime} min read`}
+                {locale === 'ar'
+                  ? post.readingTime === 1
+                    ? 'دقيقة واحدة'
+                    : `${post.readingTime} دقائق`
+                  : `${post.readingTime} min read`}
               </p>
             </div>
           </div>
@@ -79,7 +83,7 @@ export function ArticleHero({ post, locale }: { post: BlogPost; locale: string }
               <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                 {locale === 'ar' ? 'المشاهدات' : 'Views'}
               </p>
-              <p className="text-[13px] font-bold text-neutral-900">{post.viewsCount.toLocaleString()}</p>
+              <p className="text-[13px] font-bold text-neutral-900">{post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 px-5 py-3">

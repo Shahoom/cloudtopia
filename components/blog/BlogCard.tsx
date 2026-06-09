@@ -46,7 +46,9 @@ export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: stri
             <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              {locale === 'ar' ? `${post.readingTime} دقائق` : `${post.readingTime} min read`}
+              {locale === 'ar'
+                ? post.readingTime === 1 ? 'دقيقة واحدة' : `${post.readingTime} دقائق`
+                : `${post.readingTime} min read`}
             </span>
             {post.author?.name && (
               <span className="inline-flex items-center gap-1 normal-case">

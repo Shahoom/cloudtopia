@@ -5,9 +5,10 @@ import { Mail } from 'lucide-react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-export function NewsletterBox() {
+export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
   const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState('')
+  const ar = locale === 'ar'
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -19,7 +20,7 @@ export function NewsletterBox() {
 
     if (!email.includes('@')) {
       setStatus('error')
-      setMessage('Enter a valid email address.')
+      setMessage(ar ? 'أدخل عنوان بريد إلكتروني صحيح.' : 'Enter a valid email address.')
       return
     }
 
@@ -35,15 +36,17 @@ export function NewsletterBox() {
       const body = await response.json()
 
       if (!response.ok) {
-        throw new Error(body?.error || 'Could not subscribe.')
+        throw new Error(body?.error || (ar ? 'تعذّر الاشتراك.' : 'Could not subscribe.'))
       }
 
       form.reset()
       setStatus('success')
-      setMessage('You are subscribed. We will send only useful digital growth notes.')
+      setMessage(ar
+        ? 'تم اشتراكك بنجاح. سنرسل لك فقط رسائل مفيدة عن النمو الرقمي.'
+        : 'You are subscribed. We will send only useful digital growth notes.')
     } catch (error) {
       setStatus('error')
-      setMessage(error instanceof Error ? error.message : 'Could not subscribe right now.')
+      setMessage(error instanceof Error ? error.message : (ar ? 'تعذّر الاشتراك الآن.' : 'Could not subscribe right now.'))
     }
   }
 
@@ -56,25 +59,29 @@ export function NewsletterBox() {
             <Mail className="h-5 w-5" />
           </span>
           <h2 className="text-3xl font-black leading-tight tracking-normal text-neutral-950">
-            Get digital growth insights in your inbox
+            {ar
+              ? 'احصل على رؤى النمو الرقمي في صندوق الوارد'
+              : 'Get digital growth insights in your inbox'}
           </h2>
           <p className="mt-3 text-base leading-7 text-neutral-600">
-            Receive practical insights about websites, automation, CRM, AI, and scalable digital systems.
+            {ar
+              ? 'استقبل رؤى عملية حول مواقع الويب، الأتمتة، CRM، الذكاء الاصطناعي، والأنظمة الرقمية القابلة للتوسع.'
+              : 'Receive practical insights about websites, automation, CRM, AI, and scalable digital systems.'}
           </p>
         </div>
         <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-[1fr_1.2fr] lg:grid-cols-[1fr_1.15fr_auto]">
           <label className="sr-only" htmlFor="newsletter-name">
-            Name
+            {ar ? 'الاسم' : 'Name'}
           </label>
           <input
             id="newsletter-name"
             name="name"
             type="text"
-            placeholder="Name"
+            placeholder={ar ? 'الاسم' : 'Name'}
             className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15"
           />
           <label className="sr-only" htmlFor="newsletter-email">
-            Email address
+            {ar ? 'البريد الإلكتروني' : 'Email address'}
           </label>
           <input
             id="newsletter-email"
@@ -85,26 +92,28 @@ export function NewsletterBox() {
             className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15"
           />
           <label className="sr-only" htmlFor="newsletter-interest">
-            Interest
+            {ar ? 'الاهتمام' : 'Interest'}
           </label>
           <select
             id="newsletter-interest"
             name="interest"
             className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15 sm:col-span-2 lg:col-span-1"
           >
-            <option value="">Choose interest</option>
-            <option value="Web Development">Web Development</option>
-            <option value="Business Systems">Business Systems</option>
-            <option value="AI Solutions">AI Solutions</option>
-            <option value="Automation">Automation</option>
-            <option value="CRM & ERP">CRM & ERP</option>
+            <option value="">{ar ? 'اختر اهتمامك' : 'Choose interest'}</option>
+            <option value="Web Development">{ar ? 'تطوير الويب' : 'Web Development'}</option>
+            <option value="Business Systems">{ar ? 'أنظمة الأعمال' : 'Business Systems'}</option>
+            <option value="AI Solutions">{ar ? 'حلول الذكاء الاصطناعي' : 'AI Solutions'}</option>
+            <option value="Automation">{ar ? 'الأتمتة' : 'Automation'}</option>
+            <option value="CRM & ERP">{ar ? 'CRM & ERP' : 'CRM & ERP'}</option>
           </select>
           <button
             type="submit"
             disabled={status === 'loading'}
             className="h-12 rounded-xl bg-primary-600 px-5 text-sm font-black text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 lg:col-span-1"
           >
-            {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+            {status === 'loading'
+              ? (ar ? 'جارٍ الاشتراك...' : 'Subscribing...')
+              : (ar ? 'اشترك' : 'Subscribe')}
           </button>
           {message && (
             <p
@@ -117,7 +126,7 @@ export function NewsletterBox() {
             </p>
           )}
           <p className="text-xs font-bold text-neutral-500 sm:col-span-2 lg:col-span-3">
-            No spam. Only useful digital growth insights.
+            {ar ? 'بدون بريد مزعج. رؤى نمو رقمي مفيدة فقط.' : 'No spam. Only useful digital growth insights.'}
           </p>
         </form>
       </div>

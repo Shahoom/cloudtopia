@@ -76,6 +76,7 @@ export default async function ArticleSearchPage({ params, searchParams }: PagePr
           contentType={query.contentType}
           service={query.service}
           sort={query.sort}
+          locale={locale}
         />
         <div className="mt-10">
           <BlogGrid
@@ -99,7 +100,7 @@ export default async function ArticleSearchPage({ params, searchParams }: PagePr
           />
         </div>
         <div className="mt-16">
-          <NewsletterBox />
+          <NewsletterBox locale={locale} />
         </div>
       </div>
     </div>

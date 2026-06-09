@@ -99,7 +99,7 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
         <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
           <div>
             <h2 className="mb-6 text-2xl font-black text-neutral-950">
-              {search ? `Results for "${search}"` : locale === 'ar' ? 'أحدث المقالات' : 'Latest Articles'}
+              {search ? (locale === 'ar' ? `نتائج "${search}"` : `Results for "${search}"`) : locale === 'ar' ? 'أحدث المقالات' : 'Latest Articles'}
             </h2>
             {gridPosts.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-sky-200 bg-white/70 p-10 text-center">

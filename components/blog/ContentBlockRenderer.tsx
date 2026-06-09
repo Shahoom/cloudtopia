@@ -105,8 +105,8 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
     case 'prosConsBlock':
       return (
         <section className="grid gap-5 md:grid-cols-2">
-          <ListPanel title="Pros" items={block.pros} positive />
-          <ListPanel title="Cons" items={block.cons} />
+          <ListPanel title={locale === 'ar' ? 'المزايا' : 'Pros'} items={block.pros} positive />
+          <ListPanel title={locale === 'ar' ? 'العيوب' : 'Cons'} items={block.cons} />
         </section>
       )
     case 'stepProcessBlock':

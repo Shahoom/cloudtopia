@@ -116,7 +116,7 @@ export function ArticleContent({
             <p className="mb-4 text-sm font-black uppercase tracking-normal text-neutral-500">
               {locale === 'ar' ? 'شارك هذا المقال' : 'Share this article'}
             </p>
-            <ShareButtons url={canonical} title={post.title} />
+            <ShareButtons url={canonical} title={post.title} locale={locale} />
           </div>
           <AuthorBox author={post.author} locale={locale} />
           <PreviousNextPosts previous={previous || null} next={next || null} locale={locale} />

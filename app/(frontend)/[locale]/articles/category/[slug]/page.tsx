@@ -83,7 +83,7 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
           locale={locale}
         />
         <div className="mt-16">
-          <NewsletterBox />
+          <NewsletterBox locale={locale} />
         </div>
       </div>
     </div>

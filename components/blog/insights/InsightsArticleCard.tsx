@@ -45,7 +45,7 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
             </span>
             <span className="inline-flex items-center gap-1">
               <Eye className="h-3 w-3" />
-              {post.viewsCount.toLocaleString()}
+              {post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}
             </span>
           </div>
         </div>

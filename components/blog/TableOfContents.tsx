@@ -139,7 +139,7 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
                   className="overflow-hidden transition-all duration-300"
                   style={{ maxHeight: isExpanded ? `${children.length * 36}px` : '0px' }}
                 >
-                  <ol className="ml-8 mt-0.5 space-y-0.5 border-l border-neutral-200 pl-3">
+                  <ol className="ms-8 mt-0.5 space-y-0.5 border-s border-neutral-200 ps-3">
                     {children.map(({ item: child }) => (
                       <li key={child.id}>
                         <a

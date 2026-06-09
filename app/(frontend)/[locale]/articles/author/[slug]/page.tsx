@@ -102,7 +102,7 @@ export default async function ArticleAuthorPage({ params }: PageProps) {
         </div>
         <BlogGrid posts={posts} locale={locale} emptyTitle={locale === 'ar' ? 'لا توجد مقالات بعد' : 'No articles yet'} emptyText={locale === 'ar' ? 'ستظهر مقالات الكاتب هنا بمجرد نشرها.' : 'Published author articles will appear here.'} />
         <div className="mt-16">
-          <NewsletterBox />
+          <NewsletterBox locale={locale} />
         </div>
       </div>
     </div>
