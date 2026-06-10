@@ -4,10 +4,16 @@ import { getPayloadClient, isPayloadConfigured } from '@/lib/cms/payload'
 
 export const runtime = 'nodejs'
 
-// Ensure we have an API key, otherwise this will throw at runtime if not handled
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-})
+// Lazy-init: the OpenAI SDK throws at construction when no API key is set,
+// and a module-scope client would crash `next build` (page-data collection
+// imports this module) on hosts where OPENAI_API_KEY is not configured.
+let openaiClient: OpenAI | null = null
+function getOpenAI() {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return openaiClient
+}
 
 function preview(value: unknown, limit = 1400) {
   const text = typeof value === 'string' ? value : JSON.stringify(value)
@@ -83,7 +89,7 @@ Raw Text:
 ${text}
 `
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAI().chat.completions.create({
       model,
       messages: [{ role: 'user', content: prompt }],
       response_format: { type: 'json_object' },
