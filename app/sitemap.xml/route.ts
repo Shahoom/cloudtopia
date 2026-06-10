@@ -70,7 +70,14 @@ export async function GET() {
             if (Array.isArray(e.images)) {
                 images = e.images
                     .filter((u): u is string => typeof u === 'string' && u.length > 0)
-                    .map((u) => `\n    <image:image>\n      <image:loc>${escape(u)}</image:loc>\n    </image:image>`)
+                    .map((u) => {
+                        // <image:loc> must be an absolute URL. CMS-page OG images
+                        // arrive as relative `/og/...` paths, which Google rejects.
+                        const abs = /^https?:\/\//.test(u)
+                            ? u
+                            : `${BASE_URL}${u.startsWith('/') ? '' : '/'}${u}`
+                        return `\n    <image:image>\n      <image:loc>${escape(abs)}</image:loc>\n    </image:image>`
+                    })
                     .join('')
             }
 

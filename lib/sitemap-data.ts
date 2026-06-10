@@ -17,10 +17,31 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
 
     const supportedLocales = new Set<string>(locales)
     const entries = pages
-        .filter((page: any) => supportedLocales.has(page.locale) && !['blog', 'locations'].includes(page.slug))
+        // `labs` is a stale CMS Pages row with no matching route — it 404s, so
+        // keep it out of the sitemap alongside the other non-page slugs.
+        .filter((page: any) => supportedLocales.has(page.locale) && !['blog', 'locations', 'labs'].includes(page.slug))
         .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
-    const lastModified = new Date()
+    // Stable, content-derived lastmod. This was `new Date()` per request, which
+    // stamped every data-driven URL with the fetch time on each crawl and taught
+    // Google to distrust the freshness signal. Prefer each section's source-data
+    // file mtime (deploy-stable); fall back to the newest CMS page date so the
+    // value is always real and never request-varying.
+    const cmsLatest = entries.reduce((m: Date, e) => {
+        const d = e.lastModified ? new Date(e.lastModified) : null
+        return d && !isNaN(d.getTime()) && d > m ? d : m
+    }, new Date(0))
+    const mtimeOf = (rel: string): Date => {
+        try {
+            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), rel)
+            if (fs.existsSync(p)) return fs.statSync(p).mtime
+        } catch { /* ignore */ }
+        return cmsLatest
+    }
+    const lastModified = cmsLatest
+    const servicesMtime = mtimeOf('lib/seo/services.ts')
+    const industriesMtime = mtimeOf('lib/seo/industries.ts')
+    const countriesMtime = mtimeOf('lib/seo/country-landing-pages.ts')
     // Core static + bespoke service-landing routes that must always be present in
     // the sitemap, regardless of whether a matching CMS Pages row exists. Each is
     // dedup-guarded below so it never duplicates an entry already produced from CMS
@@ -82,7 +103,6 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
 
     entries.push(...(await getBlogSitemapEntries()))
 
-    const dynamicMtime = new Date()
     countryLandingPages.forEach((country) => {
         const languages = {
             [country.hreflangEnglish]: `${BASE_URL}${country.englishUrl}`,
@@ -91,14 +111,14 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         }
         entries.push({
             url: `${BASE_URL}${country.englishUrl}`,
-            lastModified: dynamicMtime,
+            lastModified: countriesMtime,
             changeFrequency: 'monthly',
             priority: 0.88,
             alternates: { languages },
         })
         entries.push({
             url: `${BASE_URL}${country.arabicUrl}`,
-            lastModified: dynamicMtime,
+            lastModified: countriesMtime,
             changeFrequency: 'monthly',
             priority: 0.88,
             alternates: { languages },
@@ -110,7 +130,7 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         locales.forEach((loc) => {
             entries.push({
                 url: canonicalUrl(loc, `/industries/${industry}`),
-                lastModified: dynamicMtime,
+                lastModified: industriesMtime,
                 changeFrequency: 'monthly',
                 priority: 0.78,
                 alternates: { languages },
@@ -123,7 +143,7 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         locales.forEach((loc) => {
             entries.push({
                 url: canonicalUrl(loc, `/services/${service}`),
-                lastModified: dynamicMtime,
+                lastModified: servicesMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,
                 alternates: { languages },

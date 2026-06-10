@@ -1068,9 +1068,18 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       getBlogAuthors(locale),
     ])
 
+    // Stable lastmod for the listing + taxonomy: the newest post date in this
+    // locale, not `new Date()` (which churned the timestamp on every crawl and
+    // made Google distrust the freshness signal).
+    const newest = posts.reduce((m, p) => {
+      const d = p.updatedAt ? new Date(p.updatedAt) : (p.publishedAt ? new Date(p.publishedAt) : null)
+      return d && !isNaN(d.getTime()) && d > m ? d : m
+    }, new Date(0))
+    const freshness = newest.getTime() > 0 ? newest : new Date()
+
     entries.push({
       url: canonicalUrl(locale, '/articles'),
-      lastModified: new Date(),
+      lastModified: freshness,
       changeFrequency: 'weekly',
       priority: 0.85,
       alternates: { languages: buildHreflangMap('/articles') },
@@ -1092,31 +1101,36 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
     categories
       .filter((category) => category.postCount > 0)
       .forEach((category) => {
+        const taxPath = `/articles/category/${category.slug}`
         entries.push({
-          url: canonicalUrl(locale, `/articles/category/${category.slug}`),
-          lastModified: new Date(),
+          url: canonicalUrl(locale, taxPath),
+          lastModified: freshness,
           changeFrequency: 'weekly',
           priority: 0.65,
-          alternates: { languages: buildHreflangMap(`/articles/category/${category.slug}`) },
+          // Arabic article taxonomy pages don't exist yet, so a buildHreflangMap
+          // `ar` alternate would point at a 404. Emit self + x-default only.
+          alternates: { languages: { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl('en', taxPath) } },
         })
       })
 
     tags
       .filter((tag) => tag.postCount > 0)
       .forEach((tag) => {
+        const taxPath = `/articles/tag/${tag.slug}`
         entries.push({
-          url: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
-          lastModified: new Date(),
+          url: canonicalUrl(locale, taxPath),
+          lastModified: freshness,
           changeFrequency: 'monthly',
           priority: 0.55,
-          alternates: { languages: buildHreflangMap(`/articles/tag/${tag.slug}`) },
+          // Self + x-default only — no Arabic tag pages exist to alternate to.
+          alternates: { languages: { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl('en', taxPath) } },
         })
       })
 
     authors.forEach((author) => {
       entries.push({
         url: canonicalUrl(locale, `/articles/author/${author.slug}`),
-        lastModified: new Date(),
+        lastModified: freshness,
         changeFrequency: 'monthly',
         priority: 0.5,
         alternates: { languages: buildHreflangMap(`/articles/author/${author.slug}`) },
