@@ -1,0 +1,129 @@
+#!/usr/bin/env node
+/**
+ * Production build runner for Vercel.
+ *
+ * Phases:
+ *   1. Apply Payload migrations against the DIRECT (non-pooling) connection.
+ *   2. Run `next build`.
+ *
+ * Every phase reports progress into the `deploy_diag` table in Postgres so a
+ * failed build can be diagnosed even when the host's build logs are
+ * unavailable. Reporting is best-effort — diagnostics never fail the build.
+ */
+import { spawn } from 'node:child_process'
+import pkg from 'pg'
+
+const { Pool } = pkg
+
+function normalizeUrl(url) {
+  if (!url) return ''
+  try {
+    const parsed = new URL(url)
+    const sslmode = parsed.searchParams.get('sslmode')
+    if (sslmode && sslmode !== 'disable') parsed.searchParams.delete('sslmode')
+    return parsed.toString()
+  } catch {
+    return url
+  }
+}
+
+const directUrl = normalizeUrl(
+  process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
+)
+
+let pool = null
+if (directUrl) {
+  pool = new Pool({
+    connectionString: directUrl,
+    max: 1,
+    connectionTimeoutMillis: 15_000,
+    ssl: /localhost|127\.0\.0\.1/.test(directUrl) ? undefined : { rejectUnauthorized: false },
+  })
+}
+
+async function report(phase, detail) {
+  if (!pool) return
+  try {
+    await pool.query(
+      'CREATE TABLE IF NOT EXISTS public.deploy_diag (id serial PRIMARY KEY, ts timestamptz DEFAULT now(), phase text, detail jsonb)',
+    )
+    await pool.query('INSERT INTO public.deploy_diag (phase, detail) VALUES ($1, $2)', [
+      phase,
+      JSON.stringify(detail ?? {}),
+    ])
+  } catch (err) {
+    console.warn(`[deploy-diag] could not report "${phase}": ${err.message}`)
+  }
+}
+
+function envInfo(name) {
+  const value = process.env[name] || ''
+  let host = ''
+  try {
+    host = value ? new URL(value).hostname : ''
+  } catch {
+    host = '(unparseable)'
+  }
+  return { present: Boolean(value), length: value.length, host }
+}
+
+function runStep(label, command, args, env) {
+  return new Promise((resolve) => {
+    const child = spawn(command, args, { env, shell: false })
+    let tail = ''
+    const keep = (chunk) => {
+      process.stdout.write(chunk)
+      tail = (tail + chunk.toString()).slice(-8000)
+    }
+    child.stdout.on('data', keep)
+    child.stderr.on('data', keep)
+    const heartbeat = setInterval(() => {
+      report(`${label}-progress`, { tail: tail.slice(-2000) })
+    }, 30_000)
+    child.on('close', (code, signal) => {
+      clearInterval(heartbeat)
+      resolve({ code: code ?? 1, signal, tail })
+    })
+    child.on('error', (err) => {
+      clearInterval(heartbeat)
+      resolve({ code: 1, signal: null, tail: `${tail}\nspawn error: ${err.message}` })
+    })
+  })
+}
+
+const startDetail = {
+  node: process.version,
+  database_url: envInfo('DATABASE_URL'),
+  postgres_url: envInfo('POSTGRES_URL'),
+  postgres_url_non_pooling: envInfo('POSTGRES_URL_NON_POOLING'),
+  payload_secret: { present: Boolean(process.env.PAYLOAD_SECRET) },
+  supabase_jwt_secret: { present: Boolean(process.env.SUPABASE_JWT_SECRET) },
+  vercel_env: process.env.VERCEL_ENV || '',
+}
+
+await report('start', startDetail)
+console.log('[deploy-diag] start', JSON.stringify(startDetail))
+
+// Phase 1 — migrations against the direct connection.
+const migrateEnv = { ...process.env, DATABASE_URL: directUrl }
+const migrate = await runStep('migrate', 'npx', ['payload', '--use-swc', 'migrate'], migrateEnv)
+await report(migrate.code === 0 ? 'migrate-done' : 'migrate-failed', {
+  code: migrate.code,
+  signal: migrate.signal,
+  tail: migrate.tail.slice(-4000),
+})
+if (migrate.code !== 0) {
+  await pool?.end()
+  process.exit(migrate.code)
+}
+
+// Phase 2 — next build (runtime fallback chain decides its own DB URL).
+const build = await runStep('next-build', 'npx', ['next', 'build'], process.env)
+await report(build.code === 0 ? 'build-done' : 'build-failed', {
+  code: build.code,
+  signal: build.signal,
+  tail: build.tail.slice(-6000),
+})
+
+await pool?.end()
+process.exit(build.code)
