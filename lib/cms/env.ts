@@ -77,6 +77,12 @@ export function databaseRequiresSsl() {
 export function getPayloadSecret() {
   const configured = clean(process.env.PAYLOAD_SECRET)
   if (configured) return configured
+  // The Vercel ↔ Supabase marketplace integration injects SUPABASE_JWT_SECRET —
+  // a strong, project-stable secret. Falling back to it lets production boot
+  // with zero manual secret wiring. Setting PAYLOAD_SECRET explicitly still
+  // wins (note: changing the effective secret invalidates /admin sessions).
+  const integrationSecret = clean(process.env.SUPABASE_JWT_SECRET)
+  if (integrationSecret) return integrationSecret
   return isProduction() ? '' : LOCAL_PAYLOAD_SECRET
 }
 
