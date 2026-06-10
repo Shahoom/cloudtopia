@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { ORGANIZATION_ID, buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
@@ -400,9 +401,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         })),
     }
 
+    // SD-5: same @id as the root Organization so Google merges this sales
+    // contactPoint into the single Organization node instead of redefining a
+    // disconnected one.
     const organizationSchema = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
+        '@id': ORGANIZATION_ID,
         name: 'CloudTopia',
         url: 'https://cloudtopia.net',
         sameAs: ['https://instagram.com/thecloudtopia'],
@@ -420,9 +425,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         name: serviceName,
         description: localizedServiceValue(service.description, locale),
         serviceType: categoryName,
-        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        provider: buildOrganizationRef(),
         url: canonicalUrl(locale, `/services/${service.slug}`),
         areaServed: marketLinks.map((country) => ({ '@type': 'Country', name: locale === 'ar' ? country.countryNameArabic : country.countryNameEnglish })),
+        // SD-4: package tiers have no per-package price number in the source data,
+        // so each Offer carries name + availability only. A bare/undefined price
+        // is never emitted (which would be invalid). Real prices live on /pricing.
         offers: (category?.packageNames || []).map((packageName) => ({
             '@type': 'Offer',
             name: localizedPackageName(packageName, locale),

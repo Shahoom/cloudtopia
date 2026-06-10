@@ -19,7 +19,10 @@ export const SolutionFinderLeads: CollectionConfig = {
   },
   fields: [
     { name: 'name', type: 'text', required: true },
-    { name: 'phone', type: 'text', required: true },
+    // Phone is NOT required: the API route accepts email-OR-phone and
+    // normalizes a missing phone to ''. Requiring it here would block
+    // email-only leads from persisting.
+    { name: 'phone', type: 'text', required: false },
     { name: 'email', type: 'email' },
     { name: 'company', type: 'text' },
     { name: 'country', type: 'text' },

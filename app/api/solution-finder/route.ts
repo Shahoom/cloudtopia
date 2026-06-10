@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 import { generateAIRecommendationDetails } from '@/lib/solution-finder/aiRecommendation.ts'
 import { deriveSolutionFinderCountryHint, getHeaderCountryCode } from '@/lib/solution-finder/countryHint.ts'
 import { buildSolutionFinderLead, saveSolutionFinderLead } from '@/lib/solution-finder/leadService.ts'
@@ -22,6 +23,11 @@ import type { SolutionFinderPayload } from '@/lib/solution-finder/types.ts'
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
+  const rate = aiChatRateLimiter.check(`solution-finder:${getRateLimitKey(req)}`)
+  if (!rate.allowed) {
+    return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+  }
+
   try {
     const body: SolutionFinderPayload = await req.json()
 
@@ -115,6 +121,21 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // The lead's recommendation is only durably captured if persistence
+    // succeeded. Never claim success when saveResult.saved is false — otherwise
+    // the wizard shows a success screen for a lead that was actually lost.
+    if (!saveResult.saved) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'We could not save your request right now. Please try again or contact us directly.',
+          saved: false,
+          destination: saveResult.destination,
+        },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json(
       {
         success: true,
@@ -136,6 +157,14 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+function getRateLimitKey(request: NextRequest) {
+  const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+  const realIp = request.headers.get('x-real-ip')?.trim()
+  const session = request.headers.get('x-ai-chat-session')?.trim()
+
+  return session || forwardedFor || realIp || 'anonymous'
 }
 
 // ─── Email helper (stub — wire up Resend / SendGrid / Nodemailer) ─────────────

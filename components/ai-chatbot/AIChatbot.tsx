@@ -4,16 +4,25 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { AIChatbotButton } from './AIChatbotButton'
 import { AIChatbotWindow } from './AIChatbotWindow'
-import type { ChatMessage } from './AIChatMessage'
+import type { ChatChip, ChatMessage } from './AIChatMessage'
+import { getEntryChips, getFlowNode, getWelcomeText, matchFlow, type FlowResult } from '@/lib/ai-chatbot/flows/index.ts'
+import { buildWhatsappHandoff } from '@/lib/ai-chatbot/whatsapp.ts'
+import type { ConversationTurn } from '@/lib/ai-chatbot/types.ts'
 import styles from './AIChatbot.module.css'
 
 const sessionKey = 'cloudtopia-ai-chat-session'
+// Rotating id for the CURRENT conversation. Distinct from sessionKey (a stable
+// per-visitor id used only for rate limiting): this rotates after each session
+// ends so a returning visitor's new conversation becomes a NEW CMS row instead
+// of overwriting the previous transcript.
+const conversationKey = 'cloudtopia-ai-chat-conversation-id'
 const proactiveKey = 'cloudtopia-ai-chat-proactive-at'
 
-const welcome = {
-  ar: 'أهلًا 👋 أنا مساعد CloudTopia الذكي. أخبرني عن مشروعك وسأساعدك بتحديد الخدمة المناسبة.',
-  en: 'Hi 👋 I’m CloudTopia’s AI assistant. Tell me about your project and I’ll help you choose the right service.',
-}
+// Flows answer the common questions with zero API. The OpenAI fallback only runs
+// for free-typed questions no flow matches — and can be switched off entirely with
+// NEXT_PUBLIC_AI_CHAT_FALLBACK=false, making the bot 100% flow-driven.
+const aiFallbackEnabled = process.env.NEXT_PUBLIC_AI_CHAT_FALLBACK !== 'false'
+const INACTIVITY_MS = 3 * 60 * 1000
 
 const fallback = {
   ar: 'حدث خطأ مؤقت. يمكنك التواصل معنا مباشرة عبر واتساب وسنساعدك.',
@@ -30,6 +39,11 @@ const proactive = {
   en: 'Hi, I noticed you’re exploring CloudTopia. Need help choosing the right website, web app, CRM, or AI solution for your business?',
 }
 
+const guidedMenu = {
+  ar: 'لم ألتقط ذلك تمامًا، لكن يمكنني مساعدتك في أحد هذه المواضيع، أو توصيلك بفريقنا مباشرة:',
+  en: 'I didn’t quite catch that, but I can help with one of these — or connect you with our team directly:',
+}
+
 export function AIChatbot() {
   const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
@@ -39,9 +53,20 @@ export function AIChatbot() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showLeadForm, setShowLeadForm] = useState(false)
+  const [leadCaptured, setLeadCaptured] = useState(false)
   const [latestWhatsappUrl, setLatestWhatsappUrl] = useState<string | null>(null)
   const [attention, setAttention] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
+
+  // Refs mirror state so window/unload event handlers always flush the latest
+  // transcript rather than a stale closure.
+  const messagesRef = useRef<ChatMessage[]>([])
+  const localeRef = useRef<'ar' | 'en'>('en')
+  const leadCapturedRef = useRef(false)
+  const lastSigRef = useRef('')
+  const inactivityRef = useRef<number | null>(null)
+  // Set after a session-end flush so the next user turn starts a fresh conversation id.
+  const pendingRotateRef = useRef(false)
 
   const shouldHide = useMemo(() => {
     if (!mounted) return false
@@ -55,6 +80,16 @@ export function AIChatbot() {
     ensureSessionId()
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+  useEffect(() => {
+    localeRef.current = locale
+  }, [locale])
+  useEffect(() => {
+    leadCapturedRef.current = leadCaptured
+  }, [leadCaptured])
 
   useEffect(() => {
     if (!mounted) return
@@ -103,6 +138,29 @@ export function AIChatbot() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
 
+  // Flush the transcript to the CMS at session end: when the tab is hidden or
+  // closed (via sendBeacon so it survives unload) and after a long idle gap.
+  useEffect(() => {
+    if (!mounted || shouldHide) return
+
+    function onVisibility() {
+      if (document.visibilityState === 'hidden') flushConversation({ status: 'completed', useBeacon: true })
+    }
+    function onPageHide() {
+      flushConversation({ status: 'completed', useBeacon: true })
+    }
+
+    document.addEventListener('visibilitychange', onVisibility)
+    window.addEventListener('pagehide', onPageHide)
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('pagehide', onPageHide)
+      if (inactivityRef.current) window.clearTimeout(inactivityRef.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, shouldHide])
+
   useEffect(() => {
     if (!mounted || shouldHide) return
     if (!shouldShowProactivePrompt()) return
@@ -115,7 +173,7 @@ export function AIChatbot() {
       setAttention(false)
       setMessages((current) => {
         if (current.some((message) => message.content === proactive[nextLocale])) return current
-        return [...current, createMessage('assistant', proactive[nextLocale])].slice(-20)
+        return [...current, createMessage('assistant', proactive[nextLocale], { source: 'system', options: getEntryChips(nextLocale) })].slice(-20)
       })
       localStorage.setItem(proactiveKey, new Date().toISOString())
     }, 60_000)
@@ -128,22 +186,152 @@ export function AIChatbot() {
 
   if (!mounted || shouldHide) return null
 
+  function bumpInactivity() {
+    if (inactivityRef.current) window.clearTimeout(inactivityRef.current)
+    inactivityRef.current = window.setTimeout(() => {
+      flushConversation({ status: 'completed' })
+    }, INACTIVITY_MS)
+  }
+
+  function buildConversationBody(status: 'active' | 'completed', leadOverride?: boolean) {
+    const msgs = messagesRef.current
+    const turns: ConversationTurn[] = msgs.map((m) => ({
+      role: m.role,
+      content: m.content,
+      source: m.source ?? (m.role === 'user' ? 'user' : 'flow'),
+      at: m.createdAt,
+    }))
+
+    return {
+      sessionId: ensureConversationId(),
+      language: localeRef.current,
+      pageUrl: window.location.href,
+      country: null,
+      startedAt: msgs[0]?.createdAt ?? null,
+      endedAt: new Date().toISOString(),
+      messages: turns,
+      leadCaptured: leadOverride ?? leadCapturedRef.current,
+      status,
+      source: 'ai_chatbot',
+    }
+  }
+
+  function flushConversation({
+    status,
+    useBeacon = false,
+    leadCaptured: leadOverride,
+  }: {
+    status: 'active' | 'completed'
+    useBeacon?: boolean
+    leadCaptured?: boolean
+  }) {
+    if (typeof window === 'undefined') return
+    const msgs = messagesRef.current
+    if (!msgs.some((m) => m.role === 'user')) return // nothing real to log yet
+
+    const body = buildConversationBody(status, leadOverride)
+    const payload = JSON.stringify(body)
+    const signature = `${status}:${body.messages.length}:${msgs[msgs.length - 1]?.id ?? ''}:${body.leadCaptured}`
+    // Always allow the final "completed" save through; dedupe interim saves.
+    if (status !== 'completed' && signature === lastSigRef.current) return
+    lastSigRef.current = signature
+
+    try {
+      if (useBeacon && typeof navigator !== 'undefined' && navigator.sendBeacon) {
+        navigator.sendBeacon('/api/ai-chat/conversation', new Blob([payload], { type: 'application/json' }))
+      } else {
+        void fetch('/api/ai-chat/conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-ai-chat-session': ensureSessionId() },
+          body: payload,
+          keepalive: true,
+        }).catch(() => {})
+      }
+    } catch {
+      // Logging must never break the chat experience.
+    }
+
+    // After a session-end save, the next message should open a new conversation.
+    if (status === 'completed') pendingRotateRef.current = true
+  }
+
+  function maybeRotateConversation() {
+    if (!pendingRotateRef.current) return
+    rotateConversationId()
+    pendingRotateRef.current = false
+    lastSigRef.current = ''
+  }
+
+  function applyFlowResult(flow: FlowResult, summaryText: string) {
+    let whatsappUrl: string | undefined
+    if (flow.action === 'whatsapp') {
+      const handoff = buildWhatsappHandoff({
+        language: locale,
+        country: null,
+        businessType: null,
+        serviceNeeded: null,
+        budgetRange: null,
+        timeline: null,
+        summary: summaryText || ' ',
+        pageUrl: window.location.href,
+      })
+      whatsappUrl = handoff.url
+      setLatestWhatsappUrl(handoff.url)
+    }
+    if (flow.action === 'lead-form') setShowLeadForm(true)
+
+    setMessages((current) => [
+      ...current,
+      createMessage('assistant', flow.answer, { source: 'flow', options: flow.chips, whatsappUrl }),
+    ])
+  }
+
+  function pushGuidedMenu() {
+    const handoff = buildWhatsappHandoff({
+      language: locale,
+      country: null,
+      businessType: null,
+      serviceNeeded: null,
+      budgetRange: null,
+      timeline: null,
+      summary: ' ',
+      pageUrl: window.location.href,
+    })
+    setLatestWhatsappUrl(handoff.url)
+    const chips: ChatChip[] = [...getEntryChips(locale), { id: 'whatsapp', label: locale === 'ar' ? 'واتساب' : 'WhatsApp' }]
+    setMessages((current) => [
+      ...current,
+      createMessage('assistant', guidedMenu[locale], { source: 'system', options: chips, whatsappUrl: handoff.url }),
+    ])
+  }
+
   async function submitMessage(content: string) {
     const trimmed = content.trim()
     if (!trimmed || loading) return
 
-    const userMessage = createMessage('user', trimmed)
-    const nextMessages = [...messages, userMessage]
-    setMessages(nextMessages)
+    maybeRotateConversation()
+    const userMessage = createMessage('user', trimmed, { source: 'user' })
+    const next = [...messages, userMessage]
+    setMessages(next)
     setInput('')
-    setLoading(true)
     setAttention(false)
     localStorage.setItem(proactiveKey, new Date().toISOString())
+    bumpInactivity()
 
-    if (/استشارة|consultation|contact|تواصل/i.test(trimmed)) {
-      setShowLeadForm(true)
+    // 1) Try the deterministic flow engine — instant, no API.
+    const flow = matchFlow(trimmed, locale)
+    if (flow) {
+      applyFlowResult(flow, trimmed)
+      return
     }
 
+    // 2) No flow matched. Either use the AI fallback or a graceful guided menu.
+    if (!aiFallbackEnabled) {
+      pushGuidedMenu()
+      return
+    }
+
+    setLoading(true)
     try {
       const response = await fetch('/api/ai-chat', {
         method: 'POST',
@@ -152,29 +340,49 @@ export function AIChatbot() {
           'x-ai-chat-session': ensureSessionId(),
         },
         body: JSON.stringify({
-          messages: nextMessages.map(({ role, content }) => ({ role, content })),
+          messages: next.map(({ role, content }) => ({ role, content })),
           pageUrl: window.location.href,
           locale,
         }),
       })
       const data = (await response.json().catch(() => ({}))) as {
         reply?: string
-        lead?: {
-          confidence?: number
-          whatsappUrl?: string | null
-          isPotentialLead?: boolean
-        }
+        lead?: { confidence?: number; whatsappUrl?: string | null; isPotentialLead?: boolean }
       }
       const whatsappUrl = data.lead?.whatsappUrl ?? null
 
       if (whatsappUrl) setLatestWhatsappUrl(whatsappUrl)
       if ((data.lead?.confidence ?? 0) >= 0.65 || data.lead?.isPotentialLead) setShowLeadForm(true)
 
-      setMessages((current) => [...current, createMessage('assistant', data.reply || fallback[locale], whatsappUrl || undefined)])
+      setMessages((current) => [
+        ...current,
+        createMessage('assistant', data.reply || fallback[locale], {
+          source: 'ai',
+          whatsappUrl: whatsappUrl || undefined,
+          options: getEntryChips(locale),
+        }),
+      ])
     } catch {
-      setMessages((current) => [...current, createMessage('assistant', fallback[locale])])
+      setMessages((current) => [...current, createMessage('assistant', fallback[locale], { source: 'system' })])
     } finally {
       setLoading(false)
+    }
+  }
+
+  function handleChip(chip: ChatChip) {
+    if (loading) return
+
+    maybeRotateConversation()
+    const userMessage = createMessage('user', chip.label, { source: 'user' })
+    setMessages((current) => [...current, userMessage])
+    setAttention(false)
+    bumpInactivity()
+
+    const flow = getFlowNode(chip.id, locale)
+    if (flow) {
+      applyFlowResult(flow, chip.label)
+    } else {
+      void submitMessage(chip.label)
     }
   }
 
@@ -184,16 +392,30 @@ export function AIChatbot() {
   }
 
   function clearChat() {
-    const reset = [createMessage('assistant', welcome[locale])]
+    const reset = [welcomeMessage(locale)]
     setMessages(reset)
     setLatestWhatsappUrl(null)
     setShowLeadForm(false)
+    setLeadCaptured(false)
+    rotateConversationId()
+    pendingRotateRef.current = false
+    lastSigRef.current = ''
     localStorage.setItem(storageKeyForLocale(locale), JSON.stringify(reset))
+  }
+
+  function handleClose() {
+    setOpen(false)
+    flushConversation({ status: 'active' })
   }
 
   function handleLeadSubmitted(whatsappUrl: string | null) {
     if (whatsappUrl) setLatestWhatsappUrl(whatsappUrl)
-    setMessages((current) => [...current, createMessage('assistant', submitted[locale], whatsappUrl || undefined)])
+    setLeadCaptured(true)
+    setMessages((current) => [
+      ...current,
+      createMessage('assistant', submitted[locale], { source: 'system', whatsappUrl: whatsappUrl || undefined }),
+    ])
+    flushConversation({ status: 'active', leadCaptured: true })
   }
 
   return (
@@ -209,9 +431,9 @@ export function AIChatbot() {
           inputRef={inputRef}
           onInputChange={setInput}
           onSubmit={handleSubmit}
-          onQuickAction={(value) => void submitMessage(value)}
+          onChip={handleChip}
           onClear={clearChat}
-          onClose={() => setOpen(false)}
+          onClose={handleClose}
           onLeadSubmitted={handleLeadSubmitted}
         />
       ) : null}
@@ -235,6 +457,10 @@ function detectPageLocale(): 'ar' | 'en' {
   return 'en'
 }
 
+function welcomeMessage(locale: 'ar' | 'en'): ChatMessage {
+  return createMessage('assistant', getWelcomeText(locale), { source: 'system', options: getEntryChips(locale) })
+}
+
 function readStoredMessages(locale: 'ar' | 'en') {
   try {
     const stored = JSON.parse(localStorage.getItem(storageKeyForLocale(locale)) || '[]') as ChatMessage[]
@@ -243,7 +469,7 @@ function readStoredMessages(locale: 'ar' | 'en') {
     localStorage.removeItem(storageKeyForLocale(locale))
   }
 
-  return [createMessage('assistant', welcome[locale])]
+  return [welcomeMessage(locale)]
 }
 
 function storageKeyForLocale(locale: 'ar' | 'en') {
@@ -262,20 +488,44 @@ function shouldShowProactivePrompt() {
   }
 }
 
-function createMessage(role: ChatMessage['role'], content: string, whatsappUrl?: string): ChatMessage {
+type CreateMessageOptions = {
+  whatsappUrl?: string
+  options?: ChatChip[]
+  source?: ChatMessage['source']
+}
+
+function createMessage(role: ChatMessage['role'], content: string, opts: CreateMessageOptions = {}): ChatMessage {
   return {
     id: typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
     role,
     content,
     createdAt: new Date().toISOString(),
-    whatsappUrl,
+    whatsappUrl: opts.whatsappUrl,
+    options: opts.options,
+    source: opts.source,
   }
 }
 
 function ensureSessionId() {
   const existing = localStorage.getItem(sessionKey)
   if (existing) return existing
-  const created = typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`
+  const created = newId()
   localStorage.setItem(sessionKey, created)
   return created
+}
+
+function ensureConversationId() {
+  const existing = localStorage.getItem(conversationKey)
+  if (existing) return existing
+  return rotateConversationId()
+}
+
+function rotateConversationId() {
+  const created = newId()
+  localStorage.setItem(conversationKey, created)
+  return created
+}
+
+function newId() {
+  return typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`
 }

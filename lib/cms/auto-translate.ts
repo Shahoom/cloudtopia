@@ -82,41 +82,45 @@ async function translateStrings(entries: Array<{ path: string; text: string }>, 
   })
 
   try {
-    const fs = require('node:fs')
-    const path = require('node:path')
-    const logDir = '/Users/shahm/Desktop/CloudTopia V2/scratch'
-    if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true })
-    const logPath = path.join(logDir, 'translate-debug.log')
-    const logMessage = (msg: string, data?: any) => {
-      const timestamp = new Date().toISOString()
-      fs.appendFileSync(logPath, `[${timestamp}] [auto-translate] ${msg} ${data ? JSON.stringify(data) : ''}\n`, 'utf8')
-    }
-
-    logMessage('translateStrings input payload', { targetLocale, userPayload })
+    debugLog('translateStrings input payload', { targetLocale, userPayload })
 
     const outputText = openaiKey
       ? await callOpenAI(openaiKey, systemPrompt, userPayload)
       : await callGemini(geminiKey!, systemPrompt, userPayload)
 
-    logMessage('translateStrings raw response from API', { outputText })
+    debugLog('translateStrings raw response from API', { outputText })
 
     if (!outputText) {
-      logMessage('translateStrings error: outputText is empty')
+      debugLog('translateStrings error: outputText is empty')
       return null
     }
     const parsed = JSON.parse(outputText) as any
-    logMessage('translateStrings parsed response', { parsed })
+    debugLog('translateStrings parsed response', { parsed })
     const strings = parsed?.strings || parsed
     return strings && typeof strings === 'object' ? strings : null
   } catch (error: any) {
     console.warn('[auto-translate] Translation failed.', error)
-    try {
-      const fs = require('node:fs')
-      const path = require('node:path')
-      const logPath = path.join('/Users/shahm/Desktop/CloudTopia V2/scratch', 'translate-debug.log')
-      fs.appendFileSync(logPath, `[${new Date().toISOString()}] [auto-translate] Error: ${error?.message || String(error)}\n`, 'utf8')
-    } catch {}
+    debugLog('Error', { message: error?.message || String(error) })
     return null
+  }
+}
+
+// Debug logging writes to a temp-dir file ONLY in development. In production
+// (e.g. Vercel's read-only filesystem) it is a no-op, so it can never throw an
+// EROFS error that would silently abort the translation flow.
+function debugLog(msg: string, data?: unknown) {
+  if (process.env.NODE_ENV !== 'development') return
+  try {
+    const fs = require('node:fs')
+    const path = require('node:path')
+    const os = require('node:os')
+    const logDir = path.join(os.tmpdir(), 'cloudtopia-auto-translate')
+    if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true })
+    const logPath = path.join(logDir, 'translate-debug.log')
+    const timestamp = new Date().toISOString()
+    fs.appendFileSync(logPath, `[${timestamp}] [auto-translate] ${msg} ${data ? JSON.stringify(data) : ''}\n`, 'utf8')
+  } catch {
+    // Never let debug logging break translation.
   }
 }
 
@@ -165,11 +169,7 @@ async function callOpenAI(apiKey: string, systemPrompt: string, userContent: str
     if (!response.ok) {
       const errText = await response.text().catch(() => '')
       console.warn(`[auto-translate] OpenAI Chat Completions failed: ${response.status}`, errText)
-      try {
-        const fs = require('node:fs')
-        const logPath = '/Users/shahm/Desktop/CloudTopia V2/scratch/translate-debug.log'
-        fs.appendFileSync(logPath, `[${new Date().toISOString()}] [auto-translate] OpenAI HTTP ${response.status} failed: ${errText}\n`, 'utf8')
-      } catch {}
+      debugLog(`OpenAI HTTP ${response.status} failed`, { errText })
       return null
     }
 
@@ -177,11 +177,7 @@ async function callOpenAI(apiKey: string, systemPrompt: string, userContent: str
     return json?.choices?.[0]?.message?.content?.trim() || null
   } catch (error: any) {
     console.warn('[auto-translate] OpenAI request failed.', error)
-    try {
-      const fs = require('node:fs')
-      const logPath = '/Users/shahm/Desktop/CloudTopia V2/scratch/translate-debug.log'
-      fs.appendFileSync(logPath, `[${new Date().toISOString()}] [auto-translate] OpenAI request threw exception: ${error?.message || String(error)}\n`, 'utf8')
-    } catch {}
+    debugLog('OpenAI request threw exception', { message: error?.message || String(error) })
     return null
   }
 }

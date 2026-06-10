@@ -25,10 +25,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!locale) return { title: 'Markets Not Found' }
 
     const isArabic = locale === 'ar'
-    const title = isArabic ? 'الأسواق التي نخدمها | كلاود توبيا' : 'Markets We Serve | CloudTopia'
+    const title = isArabic ? 'أفضل شركة برمجيات في العالم العربي | كلاود توبيا' : 'Best Software Company in the Arab World | CloudTopia'
     const description = isArabic
-        ? 'استكشف صفحات كلاود توبيا للأسواق العربية والخليجية مع روابط مباشرة للصفحات الرسمية حسب الدولة.'
-        : 'Explore CloudTopia country landing pages for Gulf and Arabic-speaking markets with canonical country URLs.'
+        ? 'كلاود توبيا شركة برمجيات رائدة في العالم العربي. نبني مواقع ومتاجر إلكترونية وأنظمة CRM وERP وتطبيقات وحلول ذكاء اصطناعي للشركات في الخليج ومصر وبلاد الشام، بخبرة محلية ودعم بالعربية والإنجليزية.'
+        : 'CloudTopia is a leading software company across the Arab world. We build websites, online stores, CRM, ERP, web apps, and AI solutions for businesses in the Gulf, Egypt, and the Levant — with local expertise and Arabic + English support.'
     const canonical = isArabic ? 'https://cloudtopia.net/ar/markets' : 'https://cloudtopia.net/markets'
     const images = ogImagesFor({ page: 'markets', locale })
 
@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title,
         description,
         keywords: isArabic
-            ? ['أسواق كلاود توبيا', 'شركة برمجيات في الخليج', 'تطوير مواقع عربي', 'CRM عربي']
-            : ['CloudTopia markets', 'software company in GCC', 'Arabic web development', 'CRM development GCC'],
+            ? ['أفضل شركة برمجيات في العالم العربي', 'شركة برمجيات في الخليج', 'تطوير مواقع عربي', 'CRM عربي']
+            : ['best software company in the Arab world', 'software company in GCC', 'Arabic web development', 'CRM development GCC'],
         openGraph: {
             title,
             description,
@@ -73,11 +73,11 @@ export default async function MarketsPage({ params }: PageProps) {
     const homeHref = isArabic ? '/ar' : '/'
     const title = isArabic ? 'أسواق كلاود توبيا' : 'CloudTopia Markets'
     const intro = isArabic
-        ? 'اختر الدولة المناسبة لصفحة خدمات مخصصة بالسعر المحلي، اللغة المناسبة، وروابط مباشرة للتواصل. هذه صفحات الأسواق النهائية فقط، بدون تكرار صفحات location القديمة.'
-        : 'Choose the country page that matches your market, currency, language, and contact route. These are the final market pages, replacing duplicate location-style URLs.'
+        ? 'اختر دولتك لتصل إلى صفحة خدمات مبنية على سعرك المحلي، لغتك، وطريقة تواصل مباشرة مع فريقنا. شريك برمجي واحد، مهيّأ لكل سوق عربي على حدة.'
+        : 'Choose your country to reach a services page built around your local pricing, language, and a direct line to our team. One software partner, tuned to each Arab market.'
     const proofItems = isArabic
-        ? ['روابط canonical نهائية', 'محتوى عربي وإنجليزي', 'عملة وسياق سوق محلي']
-        : ['Final canonical URLs', 'Arabic and English content', 'Local currency and market context']
+        ? ['أسعار محلية بعملتك', 'فريق يفهم سوقك المحلي', 'تواصل مباشر وسريع عبر واتساب']
+        : ['Local pricing in your currency', 'A team that knows your market', 'Fast, direct WhatsApp contact']
 
     const itemListSchema = {
         '@context': 'https://schema.org',
@@ -166,10 +166,10 @@ export default async function MarketsPage({ params }: PageProps) {
                                 <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                                 {isArabic ? 'اختر السوق' : 'Pick a Market'}
                             </div>
-                            <h2 className="text-3xl font-black text-neutral-950 md:text-4xl">{isArabic ? 'كل دولة لها صفحة نهائية واحدة.' : 'One final page for each country.'}</h2>
+                            <h2 className="text-3xl font-black text-neutral-950 md:text-4xl">{isArabic ? 'لكل دولة صفحتها المخصّصة' : 'A dedicated page for every market'}</h2>
                         </div>
                         <p className="max-w-xl text-sm leading-7 text-neutral-600">
-                            {isArabic ? 'كل بطاقة تقود إلى النسخة الرسمية فقط: العربية داخل /ar، والإنجليزية في الجذر بدون /en.' : 'Every card links only to the canonical page: Arabic under /ar, English at root without /en.'}
+                            {isArabic ? 'اختر دولتك لترى الخدمات والأسعار وطريقة التواصل المناسبة لسوقك، بالعملة واللغة التي تعمل بها.' : 'Pick your country to see the services, pricing, and contact options that fit your market — in the currency and language you work in.'}
                         </p>
                     </div>
                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

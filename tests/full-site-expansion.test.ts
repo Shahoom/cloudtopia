@@ -130,12 +130,15 @@ test('active site locale model is English and Arabic only', async () => {
   assert.deepEqual(locales, ['en', 'ar'])
   assert.deepEqual(Object.keys(localeNames), ['en', 'ar'])
   assert.deepEqual(Object.keys(localeDirection), ['en', 'ar'])
-  assert.doesNotMatch(sourceSurfaces, /translations\/tr|\\btr\\b|isTr|Turkish|Turkey|Turkiye|Türkiye|EN \/ AR \/ TR|\/tr\//)
+  // No Turkish (tr) LOCALE may exist (the site is EN/AR only). Turkey as a
+  // served *market* is allowed — /turkey is a public, footer-linked, sitemap'd
+  // country landing page, and llms.txt legitimately lists it.
+  assert.doesNotMatch(sourceSurfaces, /translations\/tr\b|isTr\b|EN \/ AR \/ TR|\/tr\//)
   assert.doesNotMatch(sitemapSource, /canonicalUrl\('tr'|\/tr\//)
   assert.doesNotMatch(proxySource, /\['en', 'ar', 'tr'\]|seg1 === 'tr'|Turkish|\/tr\//)
   assert.match(proxySource, /requestLocale === defaultLocale/, 'Proxy should avoid redirecting internal English rewrites back to the unprefixed URL')
-  assert.doesNotMatch(llmsSource, /Turkish|Turkey|Turkiye|Türkiye|\/tr\//)
-  assert.match(llmsSource, /Phase 2\/3 SEO landing pages/, 'llms.txt should expose expanded SEO landing pages to AI crawlers')
+  assert.doesNotMatch(llmsSource, /translations\/tr\b|isTr\b|EN \/ AR \/ TR|\/tr\//, 'llms.txt must not reintroduce a Turkish (tr) locale; the Turkey market is allowed')
+  assert.match(llmsSource, /Service detail pages/, 'llms.txt should expose the expanded service detail landing pages to AI crawlers')
   assert.match(llmsSource, /\/industries\/healthcare/, 'llms.txt should include industry landing pages')
   assert.match(llmsSource, /https:\/\/cloudtopia\.net\/saudi-arabia/, 'llms.txt should include canonical regional market pages')
   assert.match(llmsSource, /\/services\/business-website-development/, 'llms.txt should include service detail pages')
@@ -270,7 +273,7 @@ test('homepage includes full-expansion trust industry and insights sections', ()
   assert.match(homeSource, /Testimonials/, 'Homepage should include the trust/testimonials section')
   assert.match(homeSource, /IndustriesPreview/, 'Homepage should include industry discovery')
   assert.match(homeSource, /EnterpriseProof/, 'Homepage should include enterprise proof content')
-  assert.match(homeSource, /InsightsTeaser/, 'Homepage should include insights/blog teaser')
+  assert.match(homeSource, /ArticlesTeaser/, 'Homepage should include insights/blog teaser')
 })
 
 test('about page explains the enterprise operating model and buyer proof paths', () => {
@@ -312,7 +315,7 @@ test('trust center gives enterprise buyers security ownership and procurement pr
   assert.match(trustSource, /\/locations/, 'Trust page should link to market readiness')
   assert.match(trustSource, /\/contact/, 'Trust page should link to intake')
   assert.match(sitemapSource, /path: '\/trust'/, 'Sitemap should include the trust center')
-  assert.match(sitemapSource, /staticNonCmsRoutes/, 'CMS sitemap mode should include non-CMS trust route')
+  assert.match(sitemapSource, /guaranteedStaticRoutes/, 'CMS sitemap mode should include non-CMS trust route')
   assert.match(llmsSource, /https:\/\/cloudtopia\.net\/trust/, 'llms.txt should expose the trust center')
 })
 
@@ -325,8 +328,7 @@ test('process page explains delivery governance sign-off and handoff', () => {
   assert.equal(existsSync(processRoutePath), true, 'Localized process route should exist')
   assert.match(processSource, /Delivery process/, 'Process page should include English process positioning')
   assert.match(processSource, /منهجية التنفيذ/, 'Process page should include Arabic process positioning')
-  assert.match(processSource, /ProcessPlaybook/, 'Process page should render the homepage-inspired process playbook')
-  assert.match(processSource, /howWeWorkData/, 'Process page should reuse the homepage process model')
+  assert.match(processSource, /HowWeWork/, 'Process page should render the homepage process timeline component')
   assert.match(processSource, /Discovery & scope/, 'Process page should explain discovery and scope')
   assert.match(processSource, /Launch, handoff & support/, 'Process page should explain launch handoff and support')
   assert.match(processSource, /Client sign-off/, 'Process page should explain client sign-off points')
@@ -341,7 +343,7 @@ test('process page explains delivery governance sign-off and handoff', () => {
   assert.match(processSource, /\/services/, 'Process page should link to services')
   assert.match(processSource, /\/contact/, 'Process page should link to intake')
   assert.match(sitemapSource, /path: '\/process'/, 'Sitemap should include the process page')
-  assert.match(sitemapSource, /staticNonCmsRoutes/, 'CMS sitemap mode should include non-CMS process route')
+  assert.match(sitemapSource, /guaranteedStaticRoutes/, 'CMS sitemap mode should include non-CMS process route')
   assert.match(llmsSource, /https:\/\/cloudtopia\.net\/process/, 'llms.txt should expose the process page')
 })
 

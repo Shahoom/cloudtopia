@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { permanentRedirect } from 'next/navigation'
 import { localePath } from '@/lib/i18n/url'
 
 type PageProps = {
@@ -7,5 +7,5 @@ type PageProps = {
 
 export default async function OldBlogPostRedirect({ params }: PageProps) {
   const { locale, slug } = await params
-  redirect(localePath((locale || 'en') as 'en' | 'ar', `/articles/${slug}`))
+  permanentRedirect(localePath((locale || 'en') as 'en' | 'ar', `/articles/${slug}`))
 }

@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getAllAuthorSlugs } from '@/lib/authors'
 import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
 import { serviceDetailSlugs } from '@/lib/seo/services'
@@ -22,17 +21,38 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
     const lastModified = new Date()
-    const staticNonCmsRoutes: Array<{
+    // Core static + bespoke service-landing routes that must always be present in
+    // the sitemap, regardless of whether a matching CMS Pages row exists. Each is
+    // dedup-guarded below so it never duplicates an entry already produced from CMS
+    // pages, the article feed, or the data-driven loops further down.
+    // (`/articles` is intentionally omitted — getBlogSitemapEntries() emits it.)
+    const guaranteedStaticRoutes: Array<{
         path: string
         priority: number
         changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
     }> = [
+        { path: '/', priority: 1.0, changeFrequency: 'weekly' },
+        { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
+        { path: '/industries', priority: 0.86, changeFrequency: 'monthly' },
+        { path: '/markets', priority: 0.86, changeFrequency: 'monthly' },
+        { path: '/pricing', priority: 0.9, changeFrequency: 'weekly' },
+        { path: '/projects', priority: 0.8, changeFrequency: 'weekly' },
         { path: '/process', priority: 0.76, changeFrequency: 'monthly' },
         { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
-        { path: '/markets', priority: 0.86, changeFrequency: 'monthly' },
+        { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
+        { path: '/contact', priority: 0.7, changeFrequency: 'yearly' },
+        { path: '/website-design', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/ecommerce-solutions', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/business-systems-development', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/restaurant-qr-menu', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/content-creation', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/social-media-marketing', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/web-applications', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
     ]
 
-    staticNonCmsRoutes.forEach((route) => {
+    guaranteedStaticRoutes.forEach((route) => {
         const languages = buildHreflangMap(route.path)
         locales.forEach((loc) => {
             const url = canonicalUrl(loc, route.path)
@@ -132,7 +152,6 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
         { path: '/about', priority: 0.7, changeFrequency: 'monthly', ogPage: 'about' },
         { path: '/contact', priority: 0.7, changeFrequency: 'yearly', ogPage: 'contact' },
-        { path: '/labs', priority: 0.7, changeFrequency: 'monthly', ogPage: 'labs' },
         { path: '/website-design', priority: 0.8, changeFrequency: 'monthly', ogPage: 'website-design' },
         { path: '/ecommerce-solutions', priority: 0.8, changeFrequency: 'monthly', ogPage: 'ecommerce-solutions' },
         { path: '/business-systems-development', priority: 0.8, changeFrequency: 'monthly', ogPage: 'business-systems-development' },
@@ -150,7 +169,6 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         '/services': 'lib/i18n/translations/en.ts',
         '/pricing': 'lib/i18n/translations/en.ts',
         '/projects': 'lib/i18n/translations/en.ts',
-        '/labs': 'lib/i18n/translations/en.ts',
         '/website-design': 'lib/i18n/translations/en.ts',
         '/ecommerce-solutions': 'lib/i18n/translations/en.ts',
         '/business-systems-development': 'lib/i18n/translations/en.ts',
@@ -209,20 +227,6 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
                 priority: route.priority,
                 alternates: { languages },
                 ...(images && { images }),
-            })
-        })
-    })
-
-    const authorTemplateMtime = getLastModified('/authors/[slug]')
-    getAllAuthorSlugs().forEach((authorSlug) => {
-        const languages = buildHreflangMap(`/authors/${authorSlug}`)
-        locales.forEach((loc) => {
-            sitemapEntries.push({
-                url: canonicalUrl(loc, `/authors/${authorSlug}`),
-                lastModified: authorTemplateMtime,
-                changeFrequency: 'monthly',
-                priority: 0.6,
-                alternates: { languages },
             })
         })
     })

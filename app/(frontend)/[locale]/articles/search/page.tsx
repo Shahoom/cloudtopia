@@ -6,6 +6,8 @@ import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
 import { getBlogIndexData } from '@/lib/blog/data'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 
 type PageProps = {
   params: Promise<{ locale: string }>
@@ -48,8 +50,32 @@ export default async function ArticleSearchPage({ params, searchParams }: PagePr
     sort: query.sort || 'latest',
   })
 
+  // SD-7: SearchResultsPage + BreadcrumbList (the page itself stays noindex).
+  const searchUrl = canonicalUrl(locale, '/articles/search')
+  const searchSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SearchResultsPage',
+    '@id': `${searchUrl}#searchresultspage`,
+    name: search
+      ? locale === 'ar'
+        ? `نتائج البحث عن "${search}"`
+        : `Results for "${search}"`
+      : locale === 'ar'
+        ? 'البحث في مقالات CloudTopia'
+        : 'Search CloudTopia Articles',
+    url: searchUrl,
+    inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
+    isPartOf: { '@type': 'Blog', '@id': `${canonicalUrl(locale, '/articles')}#blog` },
+  }
+  const breadcrumbSchema = buildBreadcrumbSchema(locale, [
+    { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
+    { name: locale === 'ar' ? 'المقالات' : 'Articles', path: '/articles' },
+    { name: locale === 'ar' ? 'البحث' : 'Search', path: '/articles/search' },
+  ])
+
   return (
     <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+      <JsonLd schema={[searchSchema, breadcrumbSchema]} />
       <div className="mx-auto max-w-7xl">
         <Breadcrumbs locale={locale} items={[{ label: locale === 'ar' ? 'البحث' : 'Search' }]} />
         <header className="mb-8 rounded-3xl border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">

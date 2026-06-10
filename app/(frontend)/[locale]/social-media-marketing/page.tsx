@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import SocialMediaClient from './SocialMediaClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { socialMediaSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing')
+    const metadata = await getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing', {
+        title: socialMediaSeoFallback.titles[locale] || socialMediaSeoFallback.titles.en,
+        description: socialMediaSeoFallback.descriptions[locale] || socialMediaSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة تسويق عبر السوشيال ميديا' : 'Best Social Media Marketing Company'
     return { ...metadata, title }
 }

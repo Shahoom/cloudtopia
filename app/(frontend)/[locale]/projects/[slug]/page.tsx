@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
 import { getProjectById, getAllProjects } from '@/lib/projects'
+import { getProject } from '@/lib/cms/content'
 import { getOgImage } from '@/lib/og/og-image'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 
@@ -61,7 +62,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProjectDetailPage({ params }: PageProps) {
     const { locale = 'en', slug } = await params
-    const project = await getProjectById(slug, locale)
+    // SD-9: use getProject (CMSProject) so the real created_at/updated_at
+    // timestamps are typed and available for the Article schema dates.
+    const project = await getProject(locale, slug)
     if (!project) notFound()
 
     const isRTL = locale === 'ar'
@@ -74,6 +77,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     }
     const L = labels[locale as 'en' | 'ar'] || labels.en
 
+    // SD-9: derive stable dates from the project's real timestamps instead of
+    // a fresh new Date() on every render (which made dateModified jump every
+    // request). createdAt is the publish date; updatedAt the modified date.
+    const datePublished = project.createdAt || project.updatedAt || '2025-06-01T00:00:00.000Z'
+    const dateModified = project.updatedAt || datePublished
+
     const caseStudySchema = {
         '@context': 'https://schema.org',
         '@type': 'Article',
@@ -81,14 +90,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         headline: project.title,
         description: project.solution,
         image: getOgImage({ page: `projects/${slug}`, locale, override: project.image || undefined })!.url,
-        datePublished: '2025-06-01',
-        dateModified: new Date().toISOString().split('T')[0],
-        author: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        datePublished,
+        dateModified,
+        author: { '@type': 'Organization', '@id': 'https://cloudtopia.net/#organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
         publisher: {
             '@type': 'Organization',
+            '@id': 'https://cloudtopia.net/#organization',
             name: 'CloudTopia',
             url: 'https://cloudtopia.net',
-            logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/logo.svg' },
+            // SD-1: /logo.svg does not exist — use the verified asset.
+            logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/CloudTopia.svg' },
         },
         mainEntityOfPage: canonicalUrl(locale, `/projects/${project.id}`),
         about: project.type,

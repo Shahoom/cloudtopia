@@ -87,3 +87,9 @@ next-env.d.ts
 *.tmp
 *.bak
 *.swp
+
+# ---- Scratch / stray build artifacts (never commit) ----
+/cloudtopia/
+/scratch/
+/blog-posts/
+.vercel

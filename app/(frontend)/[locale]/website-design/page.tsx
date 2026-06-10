@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import WebsiteDesignClient from './WebsiteDesignClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { websiteDesignSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/website-design', 'website-design')
+    const metadata = await getCMSMetadata(locale, '/website-design', 'website-design', {
+        title: websiteDesignSeoFallback.titles[locale] || websiteDesignSeoFallback.titles.en,
+        description: websiteDesignSeoFallback.descriptions[locale] || websiteDesignSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة تصميم وتطوير مواقع' : 'Best Website Design & Development Company'
     return { ...metadata, title }
 }

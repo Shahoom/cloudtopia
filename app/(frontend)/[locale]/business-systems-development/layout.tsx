@@ -1,51 +1,26 @@
 import type { Metadata } from 'next'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
+
+export const businessSystemsSeoFallback = {
+    titles: {
+        en: 'Custom Business Systems & CRM Development',
+        ar: 'تطوير أنظمة أعمال وCRM مخصصة',
+    } as Record<string, string>,
+    descriptions: {
+        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows with bilingual handoff.',
+        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج مع تسليم ثنائي اللغة.',
+    } as Record<string, string>,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/business-systems-development', 'business-systems-development')
-    // Titles trimmed for SERP fit; descriptions avoid stale package prices.
-    const titles: Record<string, string> = {
-        en: 'Custom Business Systems & CRM Development',
-        ar: 'تطوير أنظمة أعمال وCRM مخصصة',
-    }
-    const descs: Record<string, string> = {
-        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows with bilingual handoff.',
-        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج مع تسليم ثنائي اللغة.',
-    }
-    const ogTitles: Record<string, string> = {
-        en: 'Business Systems — CloudTopia',
-        ar: 'أنظمة الأعمال — كلاود توبيا',
-    }
-    const ogDescs: Record<string, string> = {
-        en: 'Custom CRM, POS, inventory, and HR systems for your business.',
-        ar: 'أنظمة CRM وPOS وإدارة المخزون وHR مخصصة لعملك.',
-    }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
-    const title = titles[locale] || titles.en
-    const desc = descs[locale] || descs.en
-    const ogTitle = ogTitles[locale] || ogTitles.en
-    const ogDesc = ogDescs[locale] || ogDescs.en
-
-    return {
-        title,
-        description: desc,
-        openGraph: {
-            title: ogTitle,
-            description: ogDesc,
-            url: canonicalUrl(locale, '/business-systems-development'),
-            locale: ogLocales[locale] || 'en_US',
-            images: ogImagesFor({ page: 'business-systems-development', locale }),
-        },
-        twitter: { title: ogTitle, description: ogDesc },
-        alternates: {
-            canonical: canonicalUrl(locale, '/business-systems-development'),
-            languages: buildHreflangMap('/business-systems-development'),
-        },
-    }
+    return getCMSMetadata(locale, '/business-systems-development', 'business-systems-development', {
+        title: businessSystemsSeoFallback.titles[locale] || businessSystemsSeoFallback.titles.en,
+        description: businessSystemsSeoFallback.descriptions[locale] || businessSystemsSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
@@ -54,53 +29,22 @@ export default async function ({ children, params }: { children: React.ReactNode
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
-                            { '@type': 'ListItem', position: 3, name: 'Business Systems Development', item: canonicalUrl(locale, '/business-systems-development') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'Service',
+            <JsonLd
+                schema={[
+                    buildBreadcrumbSchema(locale, [
+                        { name: 'Home', path: '/' },
+                        { name: 'Services', path: '/services' },
+                        { name: 'Business Systems Development', path: '/business-systems-development' },
+                    ]),
+                    buildServiceSchema(locale, {
                         name: 'Custom Business Systems Development',
                         description: 'Custom CRM, inventory, POS, HR, and booking systems built around Gulf business workflows.',
-                        url: canonicalUrl(locale, '/business-systems-development'),
-                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+                        path: '/business-systems-development',
                         serviceType: 'Business Software Development',
-                        areaServed: [
-                            { '@type': 'Country', name: 'Saudi Arabia' },
-                            { '@type': 'Country', name: 'United Arab Emirates' },
-                            { '@type': 'Country', name: 'Kuwait' },
-                            { '@type': 'Country', name: 'Qatar' },
-                            { '@type': 'Country', name: 'Bahrain' },
-                            { '@type': 'Country', name: 'Oman' },
-                        ],
-                        offers: {
-                            '@type': 'Offer',
-                            availability: 'https://schema.org/InStock',
-                            url: canonicalUrl(locale, '/pricing'),
-                        },
                     }),
-                }}
+                    faqSchema,
+                ]}
             />
-            {faqSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-                />
-            )}
             {children}
         </>
     )

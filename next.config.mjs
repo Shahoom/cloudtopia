@@ -6,7 +6,6 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
-  transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
 
   async headers() {
     return [
@@ -55,6 +54,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'upload.wikimedia.org',
         pathname: '/**',
+      },
+      // Supabase Storage (S3-compatible) — Payload Media uploads in production.
+      // Covers public object URLs like
+      // https://<project-ref>.supabase.co/storage/v1/object/public/<bucket>/<file>
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
       },
     ],
   },

@@ -14,6 +14,17 @@ function getHeadingId(title: string, counts: Map<string, number>) {
   return count === 0 ? base : `${base}-${count + 1}`
 }
 
+// Only allow safe link schemes. A stored 'javascript:...' (or 'data:', 'vbscript:'
+// etc.) URL must never become a clickable script link. Permit http(s), mailto,
+// tel, and relative URLs ('/' or '#'); fall back to '#' for anything else.
+function safeUrl(raw: string): string {
+  const url = raw.trim()
+  if (!url) return '#'
+  if (/^(https?:\/\/|mailto:|tel:)/i.test(url)) return url
+  if (/^[/#]/.test(url)) return url
+  return '#'
+}
+
 function renderText(node: LexicalNode, key: string) {
   let content: React.ReactNode = node.text || ''
   const format = Number(node.format || 0)
@@ -39,9 +50,16 @@ function mediaFromUpload(node: LexicalNode) {
   }
 }
 
-function renderNode(node: LexicalNode, index: number, headingCounts: Map<string, number>): React.ReactNode {
+function renderNode(
+  node: LexicalNode,
+  index: number,
+  headingCounts: Map<string, number>,
+  h4Counts: Map<string, number>,
+): React.ReactNode {
   const key = `${node.type || 'node'}-${index}`
-  const children = (node.children || []).map((child, childIndex) => renderNode(child, childIndex, headingCounts))
+  const children = (node.children || []).map((child, childIndex) =>
+    renderNode(child, childIndex, headingCounts, h4Counts),
+  )
 
   switch (node.type) {
     case 'root':
@@ -58,8 +76,11 @@ function renderNode(node: LexicalNode, index: number, headingCounts: Map<string,
       )
     case 'heading': {
       const title = textFromNode(node).trim()
-      const id = getHeadingId(title, headingCounts)
       const tag = node.tag === 'h3' || node.tag === 'h4' ? node.tag : 'h2'
+      // Keep the h2/h3 dedup counter identical to buildTableOfContents() in
+      // lib/blog/utils.ts so every TOC anchor resolves. h4 (not in the TOC)
+      // uses a separate counter and never perturbs the shared h2/h3 numbering.
+      const id = tag === 'h4' ? getHeadingId(title, h4Counts) : getHeadingId(title, headingCounts)
       const className =
         tag === 'h2'
           ? 'mb-5 mt-14 scroll-mt-28 text-3xl font-black leading-tight tracking-normal text-neutral-950 md:text-4xl'
@@ -107,7 +128,7 @@ function renderNode(node: LexicalNode, index: number, headingCounts: Map<string,
       return <li key={key}>{children}</li>
     case 'link': {
       const fields = typeof node.fields === 'object' && node.fields ? (node.fields as any) : {}
-      const url = String(fields.url || node.url || '#')
+      const url = safeUrl(String(fields.url || node.url || '#'))
       const isExternal = /^https?:\/\//.test(url)
       if (isExternal) {
         return (
@@ -161,8 +182,9 @@ function renderNode(node: LexicalNode, index: number, headingCounts: Map<string,
 
 export function RichTextRenderer({ content }: { content: unknown }) {
   const headingCounts = new Map<string, number>()
+  const h4Counts = new Map<string, number>()
   const root = content && typeof content === 'object' && 'root' in content ? (content as any).root : content
   const nodes = root && typeof root === 'object' && Array.isArray((root as LexicalNode).children) ? (root as LexicalNode).children || [] : []
 
-  return <div className="blog-article-prose">{nodes.map((node, index) => renderNode(node, index, headingCounts))}</div>
+  return <div className="blog-article-prose">{nodes.map((node, index) => renderNode(node, index, headingCounts, h4Counts))}</div>
 }

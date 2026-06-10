@@ -64,6 +64,12 @@ export async function POST(request: NextRequest) {
     createdAt: new Date().toISOString(),
   }
 
+  // Track whether the inquiry was captured anywhere durable. If neither the
+  // CMS write nor the email notification succeeds, we MUST return an error so
+  // the form (e.g. InquiryFormSidebar, which keys its success screen on res.ok)
+  // never shows "success" for a lead that was actually lost.
+  let captured = false
+
   // ── Save to Payload CMS ────────────────────────────────────────────────────
   if (isPayloadConfigured()) {
     try {
@@ -73,11 +79,12 @@ export async function POST(request: NextRequest) {
         data: data as never,
         overrideAccess: true,
       })
+      captured = true
     } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('[contact] Payload save failed', err)
-      }
-      // Non-fatal — fall through so the user still gets a success response
+      // Log unconditionally (not dev-only) so a missing table or schema drift
+      // surfaces in logs; the `captured` guard below turns it into a real error
+      // response so it can never masquerade as a silent 201 success.
+      console.error('[contact] Payload save failed', err)
     }
   }
 
@@ -87,7 +94,7 @@ export async function POST(request: NextRequest) {
 
   if (notifyEmail && resendKey) {
     try {
-      await fetch('https://api.resend.com/emails', {
+      const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${resendKey}`,
@@ -114,11 +121,21 @@ export async function POST(request: NextRequest) {
 <p style="margin-top:24px;font-size:12px;color:#999">Submitted from ${pageUrl || 'cloudtopia.co'}</p>`,
         }),
       })
+      if (emailRes.ok) captured = true
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
         console.error('[contact] Email notification failed', err)
       }
     }
+  }
+
+  if (!captured) {
+    // Nothing durable captured the lead — surface a real error so the client
+    // never shows a false success and the visitor can retry / reach us directly.
+    return NextResponse.json(
+      { error: 'We could not save your inquiry right now. Please try again or contact us directly.' },
+      { status: 503 },
+    )
   }
 
   return NextResponse.json({ ok: true }, { status: 201 })

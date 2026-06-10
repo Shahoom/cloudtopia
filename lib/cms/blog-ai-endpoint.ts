@@ -129,7 +129,13 @@ async function callOpenAI(action: BlogAIAction, input: Record<string, unknown>, 
     throw new Error(payload?.error?.message || 'OpenAI request failed.')
   }
 
-  return payload.output_text || payload.output?.[0]?.content?.[0]?.text || JSON.stringify(payload)
+  const text = payload?.output_text || payload?.output?.[0]?.content?.[0]?.text
+  if (typeof text !== 'string' || !text.trim()) {
+    // Never dump the raw OpenAI envelope into the editor as a "success".
+    throw new Error('OpenAI returned no usable text output.')
+  }
+
+  return text
 }
 
 async function logAIRequest(req: PayloadRequest, data: Record<string, unknown>) {

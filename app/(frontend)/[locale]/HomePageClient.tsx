@@ -27,7 +27,7 @@ import WhyCloudTopia from '@/components/home/WhyCloudTopia'
 import HowWeWork from '@/components/home/HowWeWork'
 import FAQ from '@/components/home/FAQ'
 import FinalCTA from '@/components/home/FinalCTA'
-import InsightsTeaser from '@/components/home/InsightsTeaser'
+import ArticlesTeaser, { type TeaserPost } from '@/components/home/ArticlesTeaser'
 import Testimonials from '@/components/home/Testimonials'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 
@@ -67,7 +67,7 @@ function FloatingCard({
     )
 }
 
-export default function HomePageClient({ serverDictionary }: { serverDictionary?: any }) {
+export default function HomePageClient({ serverDictionary, articlePosts }: { serverDictionary?: any; articlePosts?: TeaserPost[] }) {
     const { locale, t } = useLanguage()
     // Prefer server-fetched dictionary (from getPageBundle) when available,
     // falling back to context for backward compatibility.
@@ -294,7 +294,7 @@ export default function HomePageClient({ serverDictionary }: { serverDictionary?
             </AuroraBackground>
 
             {/* 10. Insights */}
-            <InsightsTeaser />
+            <ArticlesTeaser posts={articlePosts} />
 
             {/* 12. Final CTA */}
             <FinalCTA />

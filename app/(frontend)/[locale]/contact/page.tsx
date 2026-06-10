@@ -1,8 +1,10 @@
 import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
+import { ORGANIZATION_ID } from '@/lib/seo/schema'
 import ContactClient from './ContactClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { contactSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +13,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/contact', 'contact')
+    return getCMSMetadata(locale, '/contact', 'contact', {
+        title: contactSeoFallback.titles[locale] || contactSeoFallback.titles.en,
+        description: contactSeoFallback.descriptions[locale] || contactSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ContactPage({
@@ -40,6 +45,7 @@ export default async function ContactPage({
                 url: canonicalUrl(locale, '/contact'),
                 mainEntity: {
                     '@type': 'Organization',
+                    '@id': ORGANIZATION_ID,
                     name: 'CloudTopia',
                     url: 'https://cloudtopia.net',
                     email: 'info@cloudtopia.net',

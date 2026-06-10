@@ -30,7 +30,7 @@ const problems = [
   {
     title: 'I want to use AI in my business',
     text: 'Turn support, intake, reporting, and knowledge workflows into practical AI systems.',
-    href: '/labs',
+    href: '/web-applications',
     icon: Bot,
   },
 ]

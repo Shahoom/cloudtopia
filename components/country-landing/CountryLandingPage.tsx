@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react'
 import {
     ArrowRight,
     Bot,
+    Briefcase,
     Building2,
     Check,
     CircleDollarSign,
@@ -12,12 +13,23 @@ import {
     ExternalLink,
     Factory,
     Globe2,
+    GraduationCap,
+    HardHat,
+    HeartPulse,
+    Landmark,
     LayoutDashboard,
     MessageCircle,
+    Plane,
+    Scale,
     Search,
     ShieldCheck,
+    ShoppingCart,
     Sparkles,
+    Store,
+    Truck,
+    UtensilsCrossed,
     Workflow,
+    type LucideIcon,
 } from 'lucide-react'
 import {
     countryLandingPages,
@@ -25,6 +37,7 @@ import {
     type CountryLandingPageData,
     type CountryLocale,
 } from '@/lib/seo/country-landing-pages'
+import { industries as canonicalIndustries, localizedValue } from '@/lib/seo/industries'
 import { locations } from '@/lib/seo/locations'
 
 type Props = {
@@ -60,16 +73,31 @@ const advancedServices = [
     { slug: 'backup-and-security', icon: ShieldCheck, ar: ['صلاحيات وحماية بيانات', 'مستويات دخول، سجلات نشاط، نسخ احتياطي، وطرق استخدام تناسب الفرق.'], en: ['Permissions and data controls', 'Access levels, activity logs, backups, and usage patterns for teams.'] },
 ]
 
-const industries = [
-    { icon: Building2, ar: ['العقارات والمقاولات', 'مواقع مشاريع، نماذج استفسار، CRM للمتابعات، ولوحات لحركة العملاء.'], en: ['Real estate & contracting', 'Project websites, inquiry forms, CRM follow-up, and lead dashboards.'] },
-    { icon: ShieldCheck, ar: ['العيادات والمراكز الطبية', 'حجز، صفحات خدمات، إدارة استفسارات، ومحتوى يشرح الثقة بوضوح.'], en: ['Clinics & medical centers', 'Bookings, service pages, inquiry management, and trust-building content.'] },
-    { icon: Sparkles, ar: ['المطاعم والكافيهات', 'قوائم رقمية، طلبات، عروض، وربط سريع مع واتساب.'], en: ['Restaurants & cafes', 'Digital menus, orders, promotions, and fast WhatsApp contact.'] },
-    { icon: Workflow, ar: ['شركات الاستيراد والتصدير', 'كتالوجات، طلبات عروض، مخزون، وفواتير حسب دورة العمل.'], en: ['Import & export companies', 'Catalogs, quote requests, inventory, and invoicing workflows.'] },
-    { icon: Code2, ar: ['مكاتب المحاماة والاستشارات', 'مواقع خدمات، نماذج تأهيل، ومتابعة فرص بطريقة منظمة.'], en: ['Legal & consulting firms', 'Service websites, qualification forms, and organized opportunity tracking.'] },
-    { icon: CircleDollarSign, ar: ['المتاجر الإلكترونية', 'واجهات بيع، دفع، محتوى منتجات، وتحليلات قابلة للتطوير.'], en: ['E-commerce stores', 'Sales interfaces, payments, product content, and scalable analytics.'] },
-    { icon: Cloud, ar: ['الشركات الناشئة', 'MVP، صفحات إطلاق، لوحات أولية، وربط أدوات النمو.'], en: ['Startups', 'MVPs, launch pages, early dashboards, and growth tool integrations.'] },
-    { icon: Factory, ar: ['شركات الخدمات واللوجستيات', 'إدارة طلبات، تتبع، تقارير، ولوحات تشغيل للفرق.'], en: ['Services & logistics companies', 'Order management, tracking, reports, and operating dashboards.'] },
-]
+// Icons mapped to the canonical industry slugs in lib/seo/industries.ts. The
+// industry cards below are derived from that single source so every card links
+// to a real /industries/<slug> page (PSEO-3 internal-linking fix).
+const industryIcons: Record<string, LucideIcon> = {
+    healthcare: HeartPulse,
+    fintech: Landmark,
+    'ecommerce-retail': ShoppingCart,
+    'real-estate': Building2,
+    education: GraduationCap,
+    'travel-hospitality': Plane,
+    restaurants: UtensilsCrossed,
+    'legal-firms': Scale,
+    construction: HardHat,
+    retail: Store,
+    'professional-services': Briefcase,
+    'logistics-supply-chain': Truck,
+    'government-public-sector': Landmark,
+}
+
+const industryCards = Object.values(canonicalIndustries).map((industry) => ({
+    slug: industry.slug,
+    icon: industryIcons[industry.slug] || Factory,
+    name: industry.name,
+    description: industry.description,
+}))
 
 const useCases = {
     ar: ['موقع شركة تعريفي احترافي', 'نظام CRM للمبيعات والمتابعات', 'لوحة تحكم لإدارة الطلبات', 'نظام مخزون وفواتير', 'منصة حجز واستفسارات', 'نظام محتوى ومدونة SEO'],
@@ -283,13 +311,18 @@ export default function CountryLandingPage({ country, locale }: Props) {
             availableLanguage: isArabic ? ['Arabic', 'English'] : ['English', 'Arabic'],
         },
     }
+    // Generic service-type terms are translated on Arabic pages; CRM/ERP/AI stay
+    // as recognised global proper-noun acronyms in both locales.
+    const serviceType = isArabic
+        ? ['تطوير المواقع', 'CRM', 'ERP', 'أتمتة بالذكاء الاصطناعي', 'الترحيل السحابي', 'نقل البيانات', 'تطوير تطبيقات الجوال']
+        : ['Website development', 'CRM', 'ERP', 'AI automation', 'Cloud migration', 'Data migration', 'Mobile app development']
     const serviceSchema = {
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: content.primaryKeyword,
-        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        provider: { '@type': 'Organization', '@id': 'https://cloudtopia.net/#organization' },
         areaServed: { '@type': 'Country', name: countryName },
-        serviceType: ['Website development', 'CRM', 'ERP', 'AI automation', 'Cloud migration', 'Data migration', 'Mobile app development'],
+        serviceType,
         url: schemaUrl,
     }
     const professionalServiceSchema = {
@@ -301,17 +334,16 @@ export default function CountryLandingPage({ country, locale }: Props) {
         image: countryPhoto.src,
         priceRange: '$$',
         areaServed: { '@type': 'Country', name: countryName, identifier: country.code.toUpperCase() },
-        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        provider: { '@type': 'Organization', '@id': 'https://cloudtopia.net/#organization' },
         telephone: country.phone,
         currenciesAccepted: [country.currency, 'USD'],
         availableLanguage: isArabic ? ['Arabic', 'English'] : ['English', 'Arabic'],
         knowsAbout: [
             content.primaryKeyword,
             ...content.secondaryKeywords.slice(0, 6),
-            'Arabic RTL web design',
-            'CRM development',
-            'ERP systems',
-            'AI automation',
+            ...(isArabic
+                ? ['تصميم مواقع عربية بنظام RTL', 'تطوير أنظمة CRM', 'أنظمة ERP', 'أتمتة بالذكاء الاصطناعي']
+                : ['Arabic RTL web design', 'CRM development', 'ERP systems', 'AI automation']),
         ],
     }
     const webPageSchema = {
@@ -416,6 +448,17 @@ export default function CountryLandingPage({ country, locale }: Props) {
 
             <section id="country-story" className="relative min-h-[calc(100vh-64px)] border-b border-neutral-950">
                 <div className={`absolute inset-0 ${visual.pattern}`} aria-hidden="true" />
+                {/* Country-specific colour wash: each market's hero is tinted by its own
+                    flag/identity palette so the markets no longer all look identical.
+                    Degrades to no wash on browsers without color-mix (safe). */}
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background:
+                            'radial-gradient(120% 80% at 8% 0%, color-mix(in srgb, var(--country-primary) 20%, transparent), transparent 46%), radial-gradient(110% 70% at 100% 4%, color-mix(in srgb, var(--country-secondary) 16%, transparent), transparent 44%)',
+                    }}
+                    aria-hidden="true"
+                />
                 <div className="relative mx-auto grid max-w-[1500px] gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:py-16">
                     <div className="flex flex-col justify-between lg:min-h-[72vh]">
                         <div>
@@ -609,7 +652,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
                                 <article key={copy[0]} className="min-h-64 border-b border-neutral-950 p-6 transition-colors duration-200 hover:bg-[var(--country-surface)] lg:border-b-0 lg:border-e last:border-b-0 lg:last:border-e-0">
                                     <div className="flex items-center justify-between">
                                         <Icon className="h-7 w-7 text-[var(--country-primary)]" aria-hidden="true" />
-                                        <span className="font-mono text-xs font-black text-neutral-400">{String(index + 1).padStart(2, '0')}</span>
+                                        <span className="font-mono text-xs font-black text-[var(--country-primary)]">{String(index + 1).padStart(2, '0')}</span>
                                     </div>
                                     <h3 className="mt-10 text-2xl font-black leading-tight">{copy[0]}</h3>
                                     <p className="mt-4 text-sm font-semibold leading-7 text-neutral-600">{copy[1]}</p>
@@ -644,7 +687,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
                                 <article key={copy[0]} className="group min-h-64 bg-[var(--country-surface)] p-5 transition-[background-color,box-shadow,transform] duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-[8px_8px_0_rgba(11,13,18,0.14)]">
                                     <div className="mb-12 flex items-start justify-between gap-4">
                                         <Icon className="h-6 w-6 text-[var(--country-primary)]" aria-hidden="true" />
-                                        <span className="font-mono text-xs font-black text-neutral-500">{String(index + 1).padStart(2, '0')}</span>
+                                        <span className="font-mono text-xs font-black text-[var(--country-primary)]">{String(index + 1).padStart(2, '0')}</span>
                                     </div>
                                     <h3 className="text-xl font-black leading-tight text-neutral-950">{title}</h3>
                                     <p className="mt-4 text-sm font-semibold leading-7 text-neutral-600">{copy[1]}</p>
@@ -710,17 +753,26 @@ export default function CountryLandingPage({ country, locale }: Props) {
                             </h2>
                         </div>
                         <div className="grid gap-px bg-neutral-950 md:grid-cols-2">
-                            {industries.map((industry) => {
+                            {industryCards.map((industry) => {
                                 const Icon = industry.icon
-                                const copy = industry[locale]
+                                const name = localizedValue(industry.name, locale)
+                                const description = localizedValue(industry.description, locale)
                                 return (
-                                    <article key={copy[0]} className="bg-white p-5 transition-colors duration-200 hover:bg-[var(--country-surface)]">
+                                    <Link
+                                        key={industry.slug}
+                                        href={landingPath(locale, `/industries/${industry.slug}`)}
+                                        className={`group flex flex-col bg-white p-5 transition-colors duration-200 hover:bg-[var(--country-surface)] ${linkBase}`}
+                                    >
                                         <div className="mb-5 flex items-center gap-3">
                                             <Icon className="h-5 w-5 text-[var(--country-primary)]" aria-hidden="true" />
-                                            <h3 className="font-black">{copy[0]}</h3>
+                                            <h3 className="font-black group-hover:text-[var(--country-primary)]">{name}</h3>
                                         </div>
-                                        <p className="text-sm font-semibold leading-7 text-neutral-600">{copy[1]}</p>
-                                    </article>
+                                        <p className="text-sm font-semibold leading-7 text-neutral-600">{description}</p>
+                                        <span className="mt-4 inline-flex items-center gap-2 text-xs font-black text-[var(--country-primary)]">
+                                            {isArabic ? 'حلول القطاع' : 'Industry solutions'}
+                                            <ArrowRight className={`h-3.5 w-3.5 ${arrowClass}`} aria-hidden="true" />
+                                        </span>
+                                    </Link>
                                 )
                             })}
                         </div>
@@ -742,7 +794,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
                     <div className="grid gap-4 md:grid-cols-2">
                         {useCases[locale].map((item, index) => (
                             <div key={item} className="border border-neutral-950 bg-white p-5 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(11,13,18,0.12)]">
-                                <p className="font-mono text-xs font-black text-neutral-400">{String(index + 1).padStart(2, '0')}</p>
+                                <p className="font-mono text-xs font-black text-[var(--country-primary)]">{String(index + 1).padStart(2, '0')}</p>
                                 <p className="mt-8 text-xl font-black leading-tight">{item}</p>
                             </div>
                         ))}
@@ -786,7 +838,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
                     <div className="grid gap-5 lg:grid-cols-3">
                         {country.pricingPackages.map((pack, index) => (
                             <article key={pack.key} className="flex min-h-[520px] flex-col border border-neutral-950 bg-white p-6 shadow-[8px_8px_0_rgba(11,13,18,0.16)] transition-transform duration-200 hover:-translate-y-1">
-                                <p className="font-mono text-xs font-black text-neutral-400">{String(index + 1).padStart(2, '0')}</p>
+                                <p className="font-mono text-xs font-black text-[var(--country-primary)]">{String(index + 1).padStart(2, '0')}</p>
                                 <h3 className="mt-8 text-3xl font-black leading-tight">{pack.title[locale]}</h3>
                                 <p className="mt-4 text-sm font-semibold leading-7 text-neutral-600">{pack.description[locale]}</p>
                                 <p className="mt-6 border border-neutral-950 bg-[var(--country-soft)] p-4 text-sm font-black text-neutral-950">{pack.priceNote[locale]}</p>

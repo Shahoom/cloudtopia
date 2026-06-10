@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import EcommerceSolutionsClient from './EcommerceSolutionsClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { ecommerceSolutionsSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions')
+    const metadata = await getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions', {
+        title: ecommerceSolutionsSeoFallback.titles[locale] || ecommerceSolutionsSeoFallback.titles.en,
+        description: ecommerceSolutionsSeoFallback.descriptions[locale] || ecommerceSolutionsSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة حلول متاجر إلكترونية' : 'Best E-Commerce Solutions Company'
     return { ...metadata, title }
 }

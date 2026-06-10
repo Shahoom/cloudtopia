@@ -1,5 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionConfig } from 'payload'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
+import { adminOnly } from './blogAccess.ts'
 
 const revalidateSiteContent: CollectionAfterChangeHook = async ({ doc }) => {
   await revalidateCmsTags(['cms-dictionary', 'cms-pages'])
@@ -9,6 +10,12 @@ const revalidateSiteContent: CollectionAfterChangeHook = async ({ doc }) => {
 export const SiteContent: CollectionConfig = {
   slug: 'site-content',
   lockDocuments: false,
+  access: {
+    read: () => true,
+    create: adminOnly,
+    update: adminOnly,
+    delete: adminOnly,
+  },
   admin: {
     group: 'Content',
     useAsTitle: 'locale',

@@ -5,7 +5,7 @@ import Card from '@/components/ui/Card'
 import { FileText } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-export default function TermsClient({ t: pageT }: { t?: any }) {
+export default function TermsClient({ t: pageT, lastUpdatedDate }: { t?: any; lastUpdatedDate?: string }) {
   const { t: contextT, locale } = useLanguage()
   const t = pageT || contextT
   const terms = t.terms
@@ -37,7 +37,7 @@ export default function TermsClient({ t: pageT }: { t?: any }) {
             )}
           </h1>
           <p className="text-lg text-neutral-600 mb-4">
-            {terms.lastUpdated} {new Date().toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {terms.lastUpdated}{lastUpdatedDate ? ` ${lastUpdatedDate}` : ''}
           </p>
           <p className="text-neutral-600">
             {terms.description}

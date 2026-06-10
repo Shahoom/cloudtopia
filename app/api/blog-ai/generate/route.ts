@@ -1,22 +1,69 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { getPayloadClient, isPayloadConfigured } from '@/lib/cms/payload'
+
+export const runtime = 'nodejs'
 
 // Ensure we have an API key, otherwise this will throw at runtime if not handled
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
 })
 
+function preview(value: unknown, limit = 1400) {
+  const text = typeof value === 'string' ? value : JSON.stringify(value)
+  return (text || '').slice(0, limit)
+}
+
 export async function POST(req: Request) {
   if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json({ error: 'OpenAI API key is not configured.' }, { status: 500 })
   }
 
+  // ── Auth gate ──────────────────────────────────────────────────────────────
+  // This endpoint spends OpenAI credits, so it must never be callable
+  // anonymously. Require a logged-in Payload user (admin session cookie).
+  if (!isPayloadConfigured()) {
+    return NextResponse.json({ error: 'Service is not configured.' }, { status: 503 })
+  }
+
+  const payload = await getPayloadClient()
+  const { user } = await payload.auth({ headers: req.headers })
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 })
+  }
+
+  const provider = process.env.AI_PROVIDER || 'openai'
+  const model = 'gpt-4o'
+
+  const logGeneration = async (data: Record<string, unknown>) => {
+    try {
+      await payload.create({
+        collection: 'blog-ai-generation-logs',
+        data: {
+          // The fixed promptType enum has no "generate full post" value; outline
+          // is the closest match for a complete production-ready draft.
+          promptType: 'outline',
+          user: (user as { id: number }).id,
+          userEmail: (user as { email?: string }).email,
+          provider,
+          model,
+          ...data,
+        } as never,
+        overrideAccess: true,
+      })
+    } catch {
+      // Logging should never break the editor flow.
+    }
+  }
+
+  let inputText = ''
   try {
     const { text } = await req.json()
 
     if (!text || typeof text !== 'string') {
       return NextResponse.json({ error: 'Invalid input text.' }, { status: 400 })
     }
+    inputText = text
 
     const prompt = `
 You are an expert technical content writer and SEO specialist for CloudTopia, a premium digital agency.
@@ -37,7 +84,7 @@ ${text}
 `
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model,
       messages: [{ role: 'user', content: prompt }],
       response_format: { type: 'json_object' },
       temperature: 0.7,
@@ -82,9 +129,21 @@ ${text}
     jsonResult.content = lexicalContent
     delete jsonResult.content_paragraphs
 
+    await logGeneration({
+      inputPreview: preview(inputText),
+      outputPreview: preview(jsonResult.title || jsonResult),
+      status: 'success',
+    })
+
     return NextResponse.json({ result: jsonResult })
   } catch (error: any) {
     console.error('AI Generation Error:', error)
+    await logGeneration({
+      inputPreview: preview(inputText),
+      outputPreview: '',
+      status: 'error',
+      errorMessage: error?.message || 'Internal Server Error',
+    })
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 })
   }
 }

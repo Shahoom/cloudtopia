@@ -20,7 +20,12 @@ export const BlogContentTemplates: CollectionConfig = {
     group: 'Insights',
     useAsTitle: 'name',
     defaultColumns: ['name', 'contentType', 'targetAudience', 'updatedAt'],
-    description: 'Reusable article templates for CloudTopia editorial planning.',
+    // NOT YET WIRED: no consumer reads these templates (not the AI generator,
+    // not the editorial dashboard). Hidden from nav to avoid wasted editor
+    // effort. The table/migration is intentionally kept for future wiring.
+    hidden: true,
+    description:
+      'NOT YET WIRED — these templates are not read by the AI generator or dashboard yet. Hidden until wired.',
   },
   access: {
     read: adminOnly,

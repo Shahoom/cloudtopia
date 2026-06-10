@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 import type { MetadataRoute } from 'next'
 import { unstable_cache } from 'next/cache'
 import type { Locale } from '../i18n/config.ts'
@@ -45,6 +46,9 @@ export type CMSProject = {
   image: string
   metrics: { label: string; value: string }
   link?: string
+  /** ISO timestamps from the projects row, when available (SD-9 dateModified). */
+  createdAt?: string
+  updatedAt?: string
 }
 
 export function getStaticDictionary(locale: Locale) {
@@ -210,13 +214,14 @@ export const getProjects = unstable_cache(getProjectsUncached, ['cms-projects'],
   tags: ['cms-projects'],
 })
 
-export async function getProject(locale: string, id: string): Promise<CMSProject | null> {
+const getProjectUncached = async (locale: string, id: string): Promise<CMSProject | null> => {
   if (isDatabaseConfigured()) {
     try {
       const rows = await queryDatabase<any>(
         `select
           p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
           p.problem, p.solution, coalesce(pm.url, p.image) as image, p.metrics_label, p.metrics_value, p.link,
+          p.created_at, p.updated_at,
           coalesce(
             jsonb_agg(f.feature order by f._order) filter (where f.feature is not null),
             '[]'::jsonb
@@ -226,7 +231,7 @@ export async function getProject(locale: string, id: string): Promise<CMSProject
          left join media pm on pm.id = p.image_media_id
          where p.locale = $1 and (p.id = $2 or p.cms_key = $3)
          group by p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
-           p.problem, p.solution, p.image, pm.url, p.metrics_label, p.metrics_value, p.link
+           p.problem, p.solution, p.image, pm.url, p.metrics_label, p.metrics_value, p.link, p.created_at, p.updated_at
          limit 1`,
         [locale, id, `${locale}:${id}`],
       )
@@ -238,6 +243,10 @@ export async function getProject(locale: string, id: string): Promise<CMSProject
 
   return getStaticProjects(locale).find((project) => project.id === id) || null
 }
+
+// Per-request memoized so generateMetadata and the page body (and any other
+// double-callers in the same render) share one DB query instead of two.
+export const getProject = cache(getProjectUncached)
 
 async function getCMSServiceFAQsUncached(serviceSlug: string, locale: string) {
   if (!isDatabaseConfigured()) return null
@@ -340,15 +349,26 @@ export const getPublishedCMSPages = unstable_cache(getPublishedCMSPagesUncached,
   tags: ['cms-pages'],
 })
 
+/**
+ * Maps a published CMS page row to a sitemap entry.
+ *
+ * SEO-3: redirect-only / duplicate slugs (currently `blog` and `locations`,
+ * with `articles`/`insights`/`markets` reserved for future CMS pages) are
+ * filtered OUT by the caller (lib/sitemap-data.ts) BEFORE this runs, so they
+ * never reach here. Keep that exclusion list in sync if new redirect slugs are
+ * added.
+ */
 export function pageToSitemapEntry(page: any): MetadataRoute.Sitemap[number] {
   const slug = normalizePageSlug(page.slug)
   const path = slug === '/' ? '/' : `/${slug}`
   const seo = page.seo || {}
+  // SEO-5: the `blog` slug is excluded upstream, so the old
+  // `slug === 'blog' ? 0.4 : 0.8` branch was unreachable — simplified to root/non-root.
   return {
     url: canonicalUrl(page.locale, path),
     lastModified: page.updatedAt ? new Date(page.updatedAt) : new Date(),
     changeFrequency: slug === '/' ? 'weekly' : 'monthly',
-    priority: slug === '/' ? 1 : slug === 'blog' ? 0.4 : 0.8,
+    priority: slug === '/' ? 1 : 0.8,
     alternates: {
       languages: {
         en: canonicalUrl('en', path),
@@ -407,7 +427,24 @@ function normalizeProject(project: any): CMSProject | null {
       value: project.metrics?.value || project.metrics_value || '',
     },
     link: project.link || undefined,
+    ...(normalizeTimestamp(project.createdAt ?? project.created_at)
+      ? { createdAt: normalizeTimestamp(project.createdAt ?? project.created_at) }
+      : {}),
+    ...(normalizeTimestamp(project.updatedAt ?? project.updated_at)
+      ? { updatedAt: normalizeTimestamp(project.updatedAt ?? project.updated_at) }
+      : {}),
   }
+}
+
+/** Normalizes a DB timestamp (Date or string) to an ISO string, or undefined. */
+function normalizeTimestamp(value: unknown): string | undefined {
+  if (!value) return undefined
+  if (value instanceof Date) return value.toISOString()
+  if (typeof value === 'string') {
+    const parsed = new Date(value)
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
+  }
+  return undefined
 }
 
 function getStaticProjects(locale: string): CMSProject[] {

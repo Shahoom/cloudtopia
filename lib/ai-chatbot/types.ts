@@ -50,3 +50,29 @@ export type WhatsappContact = {
   number: string | null
   region: WhatsappRegion
 }
+
+// How a single transcript turn was produced. `flow` = answered locally by the
+// deterministic flow engine (no API), `ai` = OpenAI fallback, `user` = visitor,
+// `system` = proactive/welcome/system message.
+export type ChatTurnSource = 'user' | 'flow' | 'ai' | 'system'
+
+export type ConversationTurn = {
+  role: AIChatRole
+  content: string
+  source: ChatTurnSource
+  at?: string | null
+}
+
+// Payload sent to /api/ai-chat/conversation to persist a full transcript.
+export type ConversationInput = {
+  sessionId: string
+  language: ChatLocale
+  pageUrl: string | null
+  country: string | null
+  startedAt: string | null
+  endedAt: string | null
+  messages: ConversationTurn[]
+  leadCaptured: boolean
+  status: 'active' | 'completed'
+  source: string
+}

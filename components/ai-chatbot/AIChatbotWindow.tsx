@@ -1,16 +1,15 @@
 'use client'
 
 import { FormEvent, RefObject } from 'react'
-import { Loader2, Send, Trash2, X } from 'lucide-react'
-import { AIChatMessage, type ChatMessage } from './AIChatMessage'
-import { AIChatQuickActions } from './AIChatQuickActions'
+import { Send, Trash2, X } from 'lucide-react'
+import { AIChatMessage, type ChatChip, type ChatMessage } from './AIChatMessage'
 import { AILeadForm } from './AILeadForm'
 import styles from './AIChatbot.module.css'
 
 const copy = {
   ar: {
     title: 'CloudTopia AI',
-    subtitle: 'مبيعات ودعم',
+    subtitle: 'مبيعات ودعم · متصل',
     placeholder: 'اكتب رسالتك هنا...',
     clear: 'مسح المحادثة',
     close: 'إغلاق المحادثة',
@@ -19,7 +18,7 @@ const copy = {
   },
   en: {
     title: 'CloudTopia AI',
-    subtitle: 'Sales & support',
+    subtitle: 'Sales & support · online',
     placeholder: 'Type your message...',
     clear: 'Clear chat',
     close: 'Close chat',
@@ -38,7 +37,7 @@ export function AIChatbotWindow({
   inputRef,
   onInputChange,
   onSubmit,
-  onQuickAction,
+  onChip,
   onClear,
   onClose,
   onLeadSubmitted,
@@ -52,7 +51,7 @@ export function AIChatbotWindow({
   inputRef: RefObject<HTMLInputElement | null>
   onInputChange: (value: string) => void
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
-  onQuickAction: (value: string) => void
+  onChip: (chip: ChatChip) => void
   onClear: () => void
   onClose: () => void
   onLeadSubmitted: (whatsappUrl: string | null) => void
@@ -63,13 +62,23 @@ export function AIChatbotWindow({
     .slice(-2)
     .map((message) => message.content)
     .join('\n')
+  const lastIndex = messages.length - 1
 
   return (
     <section className={styles.window} dir={locale === 'ar' ? 'rtl' : 'ltr'} aria-label={L.title}>
+      <div className={styles.glow} aria-hidden="true" />
+
       <header className={styles.header}>
-        <div>
-          <p className={styles.kicker}>{L.subtitle}</p>
-          <h2>{L.title}</h2>
+        <div className={styles.identity}>
+          <span className={styles.avatar} aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/CloudTopia.svg" alt="" className={styles.avatarImg} />
+            <span className={styles.statusDot} />
+          </span>
+          <div>
+            <h2>{L.title}</h2>
+            <p className={styles.kicker}>{L.subtitle}</p>
+          </div>
         </div>
         <div className={styles.headerActions}>
           <button type="button" aria-label={L.clear} onClick={onClear}>
@@ -82,19 +91,28 @@ export function AIChatbotWindow({
       </header>
 
       <div className={styles.messages} aria-live="polite">
-        {messages.map((message) => (
-          <AIChatMessage key={message.id} message={message} locale={locale} whatsappLabel={L.whatsapp} />
+        {messages.map((message, index) => (
+          <AIChatMessage
+            key={message.id}
+            message={message}
+            locale={locale}
+            whatsappLabel={L.whatsapp}
+            interactive={!loading && index === lastIndex && message.role === 'assistant'}
+            onChip={onChip}
+          />
         ))}
         {loading ? (
           <div className={`${styles.messageRow} ${styles.assistantRow}`}>
             <div className={`${styles.messageBubble} ${styles.assistantBubble} ${styles.loadingBubble}`}>
-              <Loader2 size={16} className={styles.spinner} aria-hidden="true" />
+              <span className={styles.typingDots} aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
             </div>
           </div>
         ) : null}
       </div>
-
-      <AIChatQuickActions locale={locale} disabled={loading} onSelect={onQuickAction} />
 
       {latestWhatsappUrl ? (
         <a className={styles.whatsappCta} href={latestWhatsappUrl} target="_blank" rel="noreferrer">
@@ -103,7 +121,12 @@ export function AIChatbotWindow({
       ) : null}
 
       {showLeadForm ? (
-        <AILeadForm locale={locale} pageUrl={typeof window === 'undefined' ? null : window.location.href} latestSummary={latestSummary} onSubmitted={onLeadSubmitted} />
+        <AILeadForm
+          locale={locale}
+          pageUrl={typeof window === 'undefined' ? null : window.location.href}
+          latestSummary={latestSummary}
+          onSubmitted={onLeadSubmitted}
+        />
       ) : null}
 
       <form className={styles.inputBar} onSubmit={onSubmit}>

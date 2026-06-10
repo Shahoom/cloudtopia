@@ -6,12 +6,14 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
+Disallow: /admin
 
 Sitemap: https://cloudtopia.net/sitemap.xml
 
 # AI agent context files
 # llms.txt: https://cloudtopia.net/llms.txt
 # Pricing (machine-readable): https://cloudtopia.net/pricing.md
+# Pricing (Arabic): https://cloudtopia.net/pricing.ar.md
 
 # ── Search Engines ─────────────────────────────────────────────
 # Note: Googlebot ignores Crawl-delay; setting it in the User-agent: *
@@ -38,26 +40,57 @@ User-agent: YandexBot
 Allow: /
 
 # ── AI Search & Citation Engines (index + cite — allowed) ──────
-# OpenAI — ChatGPT search & browsing
+# These bots surface CloudTopia in AI answers and can cite the site,
+# so they are explicitly allowed. They are pointed at the canonical
+# machine-readable context file: https://cloudtopia.net/llms.txt
+
+# OpenAI — ChatGPT search, browsing & answer engine
 User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-# Anthropic — Claude
+# Anthropic — Claude search, citation & user-initiated fetch
 User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: anthropic-ai
 Allow: /
 
-# Perplexity
+# Perplexity — index + user-initiated answer fetch
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
 Allow: /
 
 # Google Gemini & AI Overviews
 User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence / Apple AI training & search
+User-agent: Applebot-Extended
+Allow: /
+
+# Amazon (Alexa / answer products)
+User-agent: Amazonbot
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
 Allow: /
 
 # Microsoft Copilot (uses Bingbot already listed above)
@@ -67,11 +100,9 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-# Meta AI
-User-agent: FacebookBot
-Allow: /
-
 # ── Training-only scrapers (no citation value — blocked) ────────
+# CCBot (Common Crawl) feeds model training datasets without driving
+# citations or referral traffic, so it stays blocked.
 User-agent: CCBot
 Disallow: /
 

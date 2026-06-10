@@ -6,6 +6,7 @@ import type {
 } from 'payload'
 import { shouldRunAutoTranslate, translatePayload } from '../lib/cms/auto-translate.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
+import { adminOnly } from './blogAccess.ts'
 
 const normalizeProjectBeforeValidate: CollectionBeforeValidateHook = async ({ data, req }) => {
   const next = { ...(data || {}) } as Record<string, any>
@@ -155,6 +156,12 @@ function slugify(value: string) {
 export const Projects: CollectionConfig = {
   slug: 'projects',
   lockDocuments: false,
+  access: {
+    read: () => true,
+    create: adminOnly,
+    update: adminOnly,
+    delete: adminOnly,
+  },
   admin: {
     group: 'Content',
     useAsTitle: 'title',

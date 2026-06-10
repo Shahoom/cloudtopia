@@ -1,6 +1,6 @@
 # CloudTopia V2
 
-CloudTopia is a multilingual agency website and local CMS built with Next.js, Payload CMS, PostgreSQL, TypeScript, and Tailwind CSS. Supabase has been removed from the app source; content now comes from Payload tables in a local or production Postgres database, with static dictionaries as a safe public-site fallback.
+CloudTopia is a multilingual agency website and CMS built with Next.js, Payload CMS, PostgreSQL, TypeScript, and Tailwind CSS. Content comes from Payload tables in a local or production Postgres database, with static dictionaries as a safe public-site fallback. Production runs on **Supabase Postgres + Supabase Storage**; local development uses a plain local Postgres.
 
 ## Stack
 
@@ -8,9 +8,19 @@ CloudTopia is a multilingual agency website and local CMS built with Next.js, Pa
 | --- | --- |
 | Website | Next.js 16 App Router, React 19, TypeScript |
 | CMS | Payload CMS 3, custom admin dashboard |
-| Database | PostgreSQL through `@payloadcms/db-postgres` and `pg` |
+| Database | PostgreSQL through `@payloadcms/db-postgres` and `pg` (Supabase in production) |
+| Media storage | Supabase Storage (S3-compatible) via `@payloadcms/storage-s3`; local disk in dev |
 | Styling | Tailwind CSS, custom Payload admin CSS |
 | Content | Payload pages, projects, media, FAQs, site design, site dictionaries |
+
+## Supabase Topology (production)
+
+Supabase exposes two endpoints — use the right one per task:
+
+- **Runtime (app + `/admin`)** → transaction pooler on **port 6543** (PgBouncer). Append `?pgbouncer=true&sslmode=require` to `DATABASE_URL`.
+- **Migrate / seed** → direct connection on **port 5432**. Append `?sslmode=require`.
+
+The pg pools attach `ssl: { rejectUnauthorized: false }` automatically for any non-localhost `DATABASE_URL`. Media uploads go to a Supabase Storage bucket when the `S3_*` env vars are set (see `.env.example`); otherwise Media falls back to local disk. Full steps are in [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## Local Development
 
@@ -58,9 +68,10 @@ Open the public site at `http://localhost:3000` and the CMS at `http://localhost
 | `npm run start` | Start the production build |
 | `npm run lint` | Run ESLint |
 | `npm run test:smoke` | Run local integration smoke tests |
-| `npm run payload:migrate` | Apply Payload migrations to Postgres |
+| `npm run payload:migrate` | Apply Payload migrations to Postgres (use the direct 5432 URL) |
 | `npm run payload:migrate:status` | Check which migrations have run |
-| `npm run seed:payload` | Seed local Payload tables from existing site content |
+| `npm run seed:payload:local-api` | Seed via Payload Local API (schema-safe, admin-editable — preferred) |
+| `npm run seed:payload` | Raw-SQL seeder (emergency fallback only — can drift from schema) |
 | `npm run payload:types` | Regenerate Payload type definitions |
 
 ## Data Flow

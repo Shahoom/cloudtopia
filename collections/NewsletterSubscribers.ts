@@ -12,7 +12,7 @@ export const NewsletterSubscribers: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    create: adminOnly,
+    create: () => true,   // public endpoint — the newsletter API route validates the data
     update: adminOnly,
     delete: adminOnly,
   },

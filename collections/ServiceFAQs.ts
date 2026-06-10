@@ -1,6 +1,7 @@
 import type { CollectionAfterChangeHook, CollectionConfig } from 'payload'
 import { isAutoTranslationConfigured, translatePayload } from '../lib/cms/auto-translate.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
+import { adminOnly } from './blogAccess.ts'
 
 const autoLocalizeFAQs: CollectionAfterChangeHook = async ({ doc, req }) => {
   await revalidateCmsTags(['cms-service-faqs'])
@@ -32,6 +33,12 @@ const autoLocalizeFAQs: CollectionAfterChangeHook = async ({ doc, req }) => {
 export const ServiceFAQs: CollectionConfig = {
   slug: 'service-faqs',
   lockDocuments: false,
+  access: {
+    read: () => true,
+    create: adminOnly,
+    update: adminOnly,
+    delete: adminOnly,
+  },
   admin: {
     group: 'Content',
     useAsTitle: 'serviceSlug',

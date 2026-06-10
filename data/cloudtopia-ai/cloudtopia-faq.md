@@ -26,7 +26,7 @@ Yes. CloudTopia can add WhatsApp buttons, structured WhatsApp lead messages, and
 
 ## Do you provide AI automation?
 
-Yes. CloudTopia Labs works on AI assistants, AI chatbots, automation workflows, and smart internal tools.
+Yes. Under AI-Powered Solutions, CloudTopia builds AI assistants, AI chatbots, automation workflows, machine learning, NLP, and smart internal tools.
 
 ## Can I manage website content myself?
 

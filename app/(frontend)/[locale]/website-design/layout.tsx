@@ -1,50 +1,26 @@
 import type { Metadata } from 'next'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
+
+export const websiteDesignSeoFallback = {
+    titles: {
+        en: 'Website Design & Development in the Gulf',
+        ar: 'تصميم وتطوير مواقع الويب في الخليج',
+    } as Record<string, string>,
+    descriptions: {
+        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct, and scoped clearly.',
+        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح، وبنطاق واضح.',
+    } as Record<string, string>,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/website-design', 'website-design')
-    const titles: Record<string, string> = {
-        en: 'Website Design & Development in the Gulf',
-        ar: 'تصميم وتطوير مواقع الويب في الخليج',
-    }
-    const descs: Record<string, string> = {
-        en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct, and scoped clearly.',
-        ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح، وبنطاق واضح.',
-    }
-    const ogTitles: Record<string, string> = {
-        en: 'Website Design — CloudTopia',
-        ar: 'تصميم المواقع — كلاود توبيا',
-    }
-    const ogDescs: Record<string, string> = {
-        en: 'Custom responsive websites with modern UI/UX design.',
-        ar: 'مواقع ويب مخصصة متجاوبة بتصميم UI/UX حديث.',
-    }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
-    const title = titles[locale] || titles.en
-    const desc = descs[locale] || descs.en
-    const ogTitle = ogTitles[locale] || ogTitles.en
-    const ogDesc = ogDescs[locale] || ogDescs.en
-
-    return {
-        title,
-        description: desc,
-        openGraph: {
-            title: ogTitle,
-            description: ogDesc,
-            url: canonicalUrl(locale, '/website-design'),
-            locale: ogLocales[locale] || 'en_US',
-            images: ogImagesFor({ page: 'website-design', locale }),
-        },
-        twitter: { title: ogTitle, description: ogDesc },
-        alternates: {
-            canonical: canonicalUrl(locale, '/website-design'),
-            languages: buildHreflangMap('/website-design'),
-        },
-    }
+    return getCMSMetadata(locale, '/website-design', 'website-design', {
+        title: websiteDesignSeoFallback.titles[locale] || websiteDesignSeoFallback.titles.en,
+        description: websiteDesignSeoFallback.descriptions[locale] || websiteDesignSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
@@ -53,53 +29,22 @@ export default async function ({ children, params }: { children: React.ReactNode
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
-                            { '@type': 'ListItem', position: 3, name: 'Website Design', item: canonicalUrl(locale, '/website-design') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'Service',
+            <JsonLd
+                schema={[
+                    buildBreadcrumbSchema(locale, [
+                        { name: 'Home', path: '/' },
+                        { name: 'Services', path: '/services' },
+                        { name: 'Website Design', path: '/website-design' },
+                    ]),
+                    buildServiceSchema(locale, {
                         name: 'Website Design & Development',
                         description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
-                        url: canonicalUrl(locale, '/website-design'),
-                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+                        path: '/website-design',
                         serviceType: 'Web Design',
-                        areaServed: [
-                            { '@type': 'Country', name: 'Saudi Arabia' },
-                            { '@type': 'Country', name: 'United Arab Emirates' },
-                            { '@type': 'Country', name: 'Kuwait' },
-                            { '@type': 'Country', name: 'Qatar' },
-                            { '@type': 'Country', name: 'Bahrain' },
-                            { '@type': 'Country', name: 'Oman' },
-                        ],
-                        offers: {
-                            '@type': 'Offer',
-                            availability: 'https://schema.org/InStock',
-                            url: canonicalUrl(locale, '/pricing'),
-                        },
                     }),
-                }}
+                    faqSchema,
+                ]}
             />
-            {faqSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-                />
-            )}
             {children}
         </>
     )

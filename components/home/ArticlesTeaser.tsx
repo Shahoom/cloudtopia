@@ -6,14 +6,48 @@ import Image from 'next/image'
 import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
+import { slugify } from '@/lib/blog/utils'
 import { sampleBlogPosts } from '@/lib/blog/sample-content'
 
-export default function InsightsTeaser() {
+// Normalized shape the teaser renders. Real CMS posts (from
+// getBlogIndexData(locale) / getPublishedBlogPosts(locale)) can be passed
+// via the `posts` prop; when omitted we fall back to the static samples.
+export type TeaserPost = {
+    title: string
+    slug?: string
+    excerpt?: string
+    shortExcerpt?: string
+    category?: string
+    coverImage?: string
+    contentType?: string
+    readingMinutes?: number
+}
+
+// Localized labels for the generic content-type chip.
+const CONTENT_TYPE_LABELS: Record<string, { en: string; ar: string }> = {
+    guide: { en: 'guide', ar: 'دليل' },
+    comparison: { en: 'comparison', ar: 'مقارنة' },
+    article: { en: 'article', ar: 'مقال' },
+    tutorial: { en: 'tutorial', ar: 'شرح تطبيقي' },
+    'case-study': { en: 'case study', ar: 'دراسة حالة' },
+    news: { en: 'news', ar: 'أخبار' },
+}
+
+function localizedContentType(value: string | undefined, locale: string): string {
+    const key = (value || 'article').toLowerCase()
+    const entry = CONTENT_TYPE_LABELS[key]
+    if (entry) return locale === 'ar' ? entry.ar : entry.en
+    return value || (locale === 'ar' ? 'مقال' : 'article')
+}
+
+export default function ArticlesTeaser({ posts: incomingPosts }: { posts?: TeaserPost[] } = {}) {
     const { locale, t } = useLanguage()
     const isRTL = locale === 'ar'
+    const source: TeaserPost[] = incomingPosts && incomingPosts.length > 0 ? incomingPosts : sampleBlogPosts
     // Show 3 featured or latest posts
-    const posts = sampleBlogPosts.slice(0, 3)
+    const posts = source.slice(0, 3)
     const teaser = t.home?.blogTeaser || {}
+    const readTimeLabel = teaser.readTime || (locale === 'ar' ? 'د قراءة' : 'min read')
 
     return (
         <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950 overflow-hidden" data-header-theme="dark" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -58,7 +92,7 @@ export default function InsightsTeaser() {
                             {teaser.description || 'Practical writing on cloud systems, AI tools, and digital transformation.'}
                         </motion.p>
                     </div>
-                    
+
                     <motion.div
                         initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -76,9 +110,15 @@ export default function InsightsTeaser() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6">
-                    {posts.map((post, index) => (
+                    {posts.map((post, index) => {
+                        // Use the post's real slug when available; otherwise derive it
+                        // with the same slugify() the /articles routes use, so links
+                        // never diverge (the old inline regex 404'd for long titles).
+                        const slug = post.slug || slugify(post.title)
+                        const readMinutes = post.readingMinutes && post.readingMinutes > 0 ? post.readingMinutes : 5
+                        return (
                         <motion.article
-                            key={post.title}
+                            key={slug || post.title}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
@@ -96,38 +136,40 @@ export default function InsightsTeaser() {
                                 ) : (
                                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20" />
                                 )}
-                                
-                                <div className="absolute top-4 left-4 flex gap-2 z-10">
-                                    <span className="rounded-full bg-neutral-950/80 backdrop-blur-md border border-white/10 px-3 py-1 text-xs font-bold text-white shadow-sm">
-                                        {post.category}
-                                    </span>
-                                </div>
+
+                                {post.category && (
+                                    <div className="absolute top-4 left-4 flex gap-2 z-10">
+                                        <span className="rounded-full bg-neutral-950/80 backdrop-blur-md border border-white/10 px-3 py-1 text-xs font-bold text-white shadow-sm">
+                                            {post.category}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
-                            
+
                             <div className="flex flex-col flex-1 p-6">
                                 <div className="flex items-center gap-3 text-xs font-medium text-neutral-400 mb-3">
                                     <span className="flex items-center gap-1.5">
                                         <Clock className="w-3.5 h-3.5" />
-                                        5 min read
+                                        {readMinutes} {readTimeLabel}
                                     </span>
                                     <span className="w-1 h-1 rounded-full bg-neutral-600" />
                                     <span className="flex items-center gap-1.5 text-cyan-400">
                                         <Tag className="w-3.5 h-3.5" />
-                                        {post.contentType || 'guide'}
+                                        {localizedContentType(post.contentType, locale)}
                                     </span>
                                 </div>
-                                
+
                                 <h3 className="text-xl font-bold leading-snug text-white mb-3 group-hover:text-cyan-300 transition-colors">
                                     {post.title}
                                 </h3>
-                                
+
                                 <p className="text-sm leading-relaxed text-neutral-400 mb-6 flex-1 line-clamp-3">
                                     {post.shortExcerpt || post.excerpt}
                                 </p>
-                                
+
                                 <div className="mt-auto">
-                                    <Link 
-                                        href={localePath(locale, `/articles/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`)} 
+                                    <Link
+                                        href={localePath(locale, `/articles/${slug}`)}
                                         className="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
                                     >
                                         {teaser.readMore || 'Read article'}
@@ -136,7 +178,8 @@ export default function InsightsTeaser() {
                                 </div>
                             </div>
                         </motion.article>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
         </section>

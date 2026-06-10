@@ -4,7 +4,24 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Pencil, Sparkles, Star } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { buildOrganizationRef } from '@/lib/seo/schema'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
+
+/**
+ * Extracts the lowest "$NNN" amount from a pricing label such as
+ * "Starts with: $299 without CMS / $349 with CMS" → 299. Returns null when no
+ * numeric price is present (e.g. "Custom quote"), so callers can omit the
+ * priceSpecification entirely rather than emitting a bare/undefined price (SD-4).
+ */
+function extractMinPrice(priceLabel: string): number | null {
+    const matches = priceLabel.match(/\$\s*([\d,]+(?:\.\d+)?)/g)
+    if (!matches || matches.length === 0) return null
+    const numbers = matches
+        .map((m) => Number(m.replace(/[^0-9.]/g, '')))
+        .filter((n) => Number.isFinite(n) && n > 0)
+    if (numbers.length === 0) return null
+    return Math.min(...numbers)
+}
 
 type PageProps = {
     params: Promise<{ locale: string }>
@@ -333,23 +350,32 @@ export default async function PricingPage({ params }: PageProps) {
         '@type': 'OfferCatalog',
         name: 'CloudTopia Service Pricing',
         url: canonicalUrl(locale, '/pricing'),
-        provider: {
-            '@type': 'Organization',
-            name: 'CloudTopia',
-            url: 'https://cloudtopia.net',
-        },
+        provider: buildOrganizationRef(),
         itemListElement: pricing.categories.map((category) => ({
             '@type': 'OfferCatalog',
             name: category.title,
-            itemListElement: category.packages.map((plan) => ({
-                '@type': 'Offer',
-                name: `${category.title} - ${plan.name}`,
-                description: plan.features.join('; '),
-                priceCurrency: 'USD',
-                price: plan.price.includes('$') ? plan.price.replace(/[^0-9.]/g, '') : undefined,
-                availability: 'https://schema.org/InStock',
-                url: canonicalUrl(locale, '/pricing'),
-            })),
+            itemListElement: category.packages.map((plan) => {
+                // SD-4: prices are "Starts with: $NNN" / "from" tiers, so the
+                // first $-amount is a minPrice. Only emit a PriceSpecification
+                // when a real number is present — never a bare or undefined price.
+                const minPrice = extractMinPrice(plan.price)
+                return {
+                    '@type': 'Offer',
+                    name: `${category.title} - ${plan.name}`,
+                    description: plan.features.join('; '),
+                    availability: 'https://schema.org/InStock',
+                    url: canonicalUrl(locale, '/pricing'),
+                    ...(minPrice !== null
+                        ? {
+                              priceSpecification: {
+                                  '@type': 'PriceSpecification',
+                                  priceCurrency: 'USD',
+                                  minPrice,
+                              },
+                          }
+                        : {}),
+                }
+            }),
         })),
     }
     const pricingFaqSchema = {

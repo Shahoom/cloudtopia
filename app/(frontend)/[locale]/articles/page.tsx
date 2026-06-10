@@ -52,18 +52,48 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
     : data.posts.slice(1, 4)
   const gridPosts = data.latestPosts
 
+  // SD-6: build a deduplicated blogPost ItemList from the rendered posts so the
+  // Blog node lists the actual articles on the page.
+  const listedPosts = Array.from(
+    new Map(
+      [featuredPost, ...sidebarPosts, ...gridPosts]
+        .filter((post): post is NonNullable<typeof post> => Boolean(post))
+        .map((post) => [post.id, post]),
+    ).values(),
+  )
+
   const blogSchema = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
+    '@id': `${canonicalUrl(locale, '/articles')}#blog`,
     name: locale === 'ar' ? 'مقالات كلاود توبيا' : 'CloudTopia Articles',
-    description: 'Practical cloud computing guides, infrastructure insights, and DevOps strategies.',
+    // I18N-1: localized description (was hardcoded English on /ar).
+    description:
+      locale === 'ar'
+        ? 'أدلة عملية في الحوسبة السحابية ورؤى البنية التحتية واستراتيجيات DevOps.'
+        : 'Practical cloud computing guides, infrastructure insights, and DevOps strategies.',
     url: canonicalUrl(locale, '/articles'),
+    inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://cloudtopia.net/#organization',
       name: 'CloudTopia',
       url: 'https://cloudtopia.net',
       logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/CloudTopia.svg' },
     },
+    ...(listedPosts.length > 0
+      ? {
+          blogPost: listedPosts.map((post) => ({
+            '@type': 'BlogPosting',
+            '@id': `${canonicalUrl(locale, `/articles/${post.slug}`)}#article`,
+            headline: post.title,
+            ...(post.excerpt ? { description: post.excerpt } : {}),
+            url: canonicalUrl(locale, `/articles/${post.slug}`),
+            datePublished: post.publishedAt,
+            dateModified: post.updatedAt,
+          })),
+        }
+      : {}),
   }
 
   return (

@@ -1,6 +1,6 @@
 import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
-import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { BASE_URL, buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import ProjectsPageClient from './ProjectsPageClient'
 import { ogImagesFor } from '@/lib/og/og-image'
 import type { Metadata } from 'next'
@@ -11,6 +11,14 @@ type ProjectCardSummary = {
     type: string
     problem: string
     solution: string
+    image?: string
+}
+
+/** Resolves a project image to an absolute URL for ImageObject schema (SD-9). */
+function absoluteImageUrl(image?: string): string | undefined {
+    if (!image) return undefined
+    if (image.startsWith('http')) return image
+    return `${BASE_URL}${image.startsWith('/') ? '' : '/'}${image}`
 }
 
 export async function generateMetadata({
@@ -76,12 +84,20 @@ export default async function ProjectsPage({
     const itemListSchema = {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        itemListElement: projects.map((p, i) => ({
-            '@type': 'ListItem',
-            position: i + 1,
-            url: canonicalUrl(locale, `/projects/${p.id}`),
-            name: p.title,
-        })),
+        itemListElement: projects.map((p, i) => {
+            const imageUrl = absoluteImageUrl(p.image)
+            return {
+                '@type': 'ListItem',
+                position: i + 1,
+                url: canonicalUrl(locale, `/projects/${p.id}`),
+                name: p.title,
+                // SD-9: attach an ImageObject for each case study card when an
+                // image is available.
+                ...(imageUrl
+                    ? { image: { '@type': 'ImageObject', url: imageUrl, contentUrl: imageUrl } }
+                    : {}),
+            }
+        }),
     }
     const projectsCollectionSchema = {
         '@context': 'https://schema.org',
@@ -94,6 +110,7 @@ export default async function ProjectsPage({
         mainEntity: itemListSchema,
         publisher: {
             '@type': 'Organization',
+            '@id': 'https://cloudtopia.net/#organization',
             name: 'CloudTopia',
             url: 'https://cloudtopia.net',
         },

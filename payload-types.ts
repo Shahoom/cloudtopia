@@ -68,6 +68,9 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    'ai-chat-leads': AiChatLead;
+    'solution-finder-leads': SolutionFinderLead;
+    'contact-inquiries': ContactInquiry;
     media: Media;
     authors: Author;
     'blog-categories': BlogCategory;
@@ -90,6 +93,9 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    'ai-chat-leads': AiChatLeadsSelect<false> | AiChatLeadsSelect<true>;
+    'solution-finder-leads': SolutionFinderLeadsSelect<false> | SolutionFinderLeadsSelect<true>;
+    'contact-inquiries': ContactInquiriesSelect<false> | ContactInquiriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
@@ -170,6 +176,124 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Qualified sales/support inquiries captured by the CloudTopia AI chatbot.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-chat-leads".
+ */
+export interface AiChatLead {
+  id: number;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  country?: string | null;
+  businessType?: string | null;
+  serviceNeeded?: string | null;
+  budgetRange?: string | null;
+  timeline?: string | null;
+  message: string;
+  pageUrl?: string | null;
+  language?: ('ar' | 'en' | 'unknown') | null;
+  status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
+  /**
+   * Internal CRM notes — visible only in the admin panel.
+   */
+  notes?: string | null;
+  /**
+   * Lead source for CRM segmentation.
+   */
+  source?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * Qualified project inquiries captured by the AI-powered recommendation flow.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solution-finder-leads".
+ */
+export interface SolutionFinderLead {
+  id: number;
+  name: string;
+  phone: string;
+  email?: string | null;
+  company?: string | null;
+  country?: string | null;
+  industry?: string | null;
+  projectType?: string | null;
+  businessGoal?: string | null;
+  budget?: string | null;
+  timeline?: string | null;
+  description?: string | null;
+  contactMethod?: string | null;
+  wantContact?: boolean | null;
+  recommendedPackage?: string | null;
+  recommendedRoute?: string | null;
+  /**
+   * Readable summary of selected recommendation answers for CRM review.
+   */
+  selectedAnswerSummary?: string | null;
+  aiSource?: ('openai' | 'fallback') | null;
+  aiSummary?: string | null;
+  aiCountryAdvice?: string | null;
+  aiBudgetAdvice?: string | null;
+  aiWhatsappOpening?: string | null;
+  aiRoadmap?:
+    | {
+        step: string;
+        id?: string | null;
+      }[]
+    | null;
+  aiNextQuestions?:
+    | {
+        question: string;
+        id?: string | null;
+      }[]
+    | null;
+  locale?: ('en' | 'ar') | null;
+  status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
+  /**
+   * Lead source for CRM segmentation.
+   */
+  source?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * Inquiries submitted through the contact form and article sidebar consultation widget.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-inquiries".
+ */
+export interface ContactInquiry {
+  id: number;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  company?: string | null;
+  country?: string | null;
+  /**
+   * Service or area of interest selected by the visitor.
+   */
+  service?: string | null;
+  budget?: string | null;
+  timeline?: string | null;
+  message: string;
+  /**
+   * Which widget or page captured this inquiry.
+   */
+  source?: ('contact-form' | 'article-sidebar' | 'pricing-page' | 'other') | null;
+  locale?: ('en' | 'ar') | null;
+  pageUrl?: string | null;
+  status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
+  /**
+   * Internal CRM notes — visible only in the admin panel.
+   */
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -198,7 +322,7 @@ export interface Media {
 export interface Author {
   id: number;
   /**
-   * Auto-generated from the name when empty. Used in /insights/author/[slug].
+   * Auto-generated from the name when empty. Used in /articles/author/[slug].
    */
   slug: string;
   name: string;
@@ -251,7 +375,7 @@ export interface Author {
   createdAt: string;
 }
 /**
- * Editorial topics for CloudTopia Insights. Categories power filters, archive pages, and article badges.
+ * Editorial topics for CloudTopia Articles. Categories power filters, archive pages, and article badges.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-categories".
@@ -259,12 +383,12 @@ export interface Author {
 export interface BlogCategory {
   id: number;
   /**
-   * Use English for the main /insights route. Arabic power localized archive pages.
+   * Use English for the main /articles route. Arabic powers localized archive pages.
    */
   locale: 'en' | 'ar';
   name: string;
   /**
-   * Auto-generated from the name when empty. Used in /insights/category/[slug].
+   * Auto-generated from the name when empty. Used in /articles/category/[slug].
    */
   slug: string;
   /**
@@ -309,11 +433,11 @@ export interface BlogCategory {
    */
   order?: number | null;
   /**
-   * Featured categories appear in the Insights hub topic section.
+   * Featured categories appear in the Articles hub topic section.
    */
   featured?: boolean | null;
   /**
-   * Show this topic in Insights filters and topic navigation.
+   * Show this topic in Articles filters and topic navigation.
    */
   showInNavigation?: boolean | null;
   categoryCTA?: {
@@ -346,7 +470,7 @@ export interface BlogTag {
   locale: 'en' | 'ar';
   name: string;
   /**
-   * Auto-generated from the name when empty. Used in /insights/tag/[slug].
+   * Auto-generated from the name when empty. Used in /articles/tag/[slug].
    */
   slug: string;
   /**
@@ -391,44 +515,25 @@ export interface BlogSery {
   createdAt: string;
 }
 /**
- * CloudTopia Insights editorial dashboard. Drafts stay private; published posts appear on /insights.
+ * CloudTopia Articles editorial dashboard. Drafts stay private; published posts appear on /articles.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-posts".
  */
 export interface BlogPost {
   id: number;
-  /**
-   * English posts appear on /insights. Arabic use prefixed locale routes.
-   */
-  locale: 'en' | 'ar';
-  /**
-   * Workflow: idea -> outline -> draft -> in review -> scheduled -> published.
-   */
-  status: 'idea' | 'outline' | 'draft' | 'in_review' | 'scheduled' | 'published' | 'archived';
-  approvalStatus?: ('not_required' | 'waiting' | 'approved' | 'rejected') | null;
   title: string;
   /**
-   * Auto-generated from the title when empty. Editable for SEO-safe URLs.
+   * Auto-generated from the title when empty.
    */
   slug: string;
   subtitle?: string | null;
-  /**
-   * Main summary for cards, article hero, metadata fallbacks, and search results.
-   */
   excerpt: string;
-  /**
-   * Very short card or featured-strip teaser.
-   */
   shortExcerpt?: string | null;
   featured?: boolean | null;
   pinned?: boolean | null;
   editorPick?: boolean | null;
   trending?: boolean | null;
-  publishedAt?: string | null;
-  scheduledAt?: string | null;
-  lastReviewedAt?: string | null;
-  difficulty?: ('beginner' | 'intermediate' | 'advanced') | null;
   contentType?:
     | ('guide' | 'article' | 'case_study' | 'checklist' | 'comparison' | 'tutorial' | 'opinion' | 'news')
     | null;
@@ -458,13 +563,9 @@ export interface BlogPost {
         | 'business_systems'
       )
     | null;
+  difficulty?: ('beginner' | 'intermediate' | 'advanced') | null;
   readingTime?: number | null;
   wordCount?: number | null;
-  contentScore?: number | null;
-  seoScore?: number | null;
-  /**
-   * Use headings, lists, quotes, images, tables, and code blocks to structure the core article.
-   */
   content: {
     root: {
       type: string;
@@ -480,9 +581,6 @@ export interface BlogPost {
     };
     [k: string]: unknown;
   };
-  /**
-   * Structured premium article sections rendered after the rich text body.
-   */
   contentBlocks?:
     | (
         | {
@@ -615,98 +713,28 @@ export interface BlogPost {
           }
       )[]
     | null;
-  /**
-   * Primary image used across cards, article hero, Open Graph fallbacks, and sitemap images.
-   */
-  coverImage: number | Media;
-  /**
-   * Accessible image alt text. Required by the content score.
-   */
-  featuredImageAlt?: string | null;
-  socialImage?: (number | null) | Media;
-  leadMagnetFile?: (number | null) | Media;
   seo?: {
-    /**
-     * Recommended length: 45-60 characters.
-     */
     metaTitle?: string | null;
-    /**
-     * Recommended length: 140-160 characters.
-     */
     metaDescription?: string | null;
     focusKeyword?: string | null;
-    secondaryKeywords?: string | null;
-    keywords?: string | null;
     canonicalUrl?: string | null;
-    ogTitle?: string | null;
-    ogDescription?: string | null;
     ogImage?: (number | null) | Media;
-    twitterTitle?: string | null;
-    twitterDescription?: string | null;
-    twitterImage?: (number | null) | Media;
     noIndex?: boolean | null;
     noFollow?: boolean | null;
-    structuredDataType?: ('BlogPosting' | 'Article' | 'TechArticle' | 'HowTo' | 'FAQPage') | null;
-    faqSchema?: boolean | null;
-    breadcrumbSchema?: boolean | null;
-    articleSchema?: boolean | null;
-    lastModifiedSchema?: boolean | null;
   };
   aiGenerated?: boolean | null;
   aiAssisted?: boolean | null;
   readabilityScore?: number | null;
   estimatedRankingDifficulty?: number | null;
-  searchIntent?: ('informational' | 'commercial' | 'transactional' | 'navigational') | null;
-  funnelStage?: ('awareness' | 'consideration' | 'conversion' | 'retention') | null;
-  internalLinksSuggestions?:
-    | {
-        label?: string | null;
-        url: string;
-        reason?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  externalSources?:
-    | {
-        title?: string | null;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  references?:
-    | {
-        label?: string | null;
-        url?: string | null;
-        note?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  factChecked?: boolean | null;
-  factCheckedBy?: (number | null) | User;
-  factCheckedAt?: string | null;
-  assignedTo?: (number | null) | User;
-  reviewer?: (number | null) | User;
-  approvedBy?: (number | null) | User;
-  approvedAt?: string | null;
-  editorNotes?: string | null;
-  privateNotes?: string | null;
-  revisionNotes?: string | null;
-  linkedinPost?: string | null;
-  instagramCaption?: string | null;
-  xPost?: string | null;
-  whatsappMessage?: string | null;
-  emailNewsletterIntro?: string | null;
-  socialStatus?: ('not_prepared' | 'prepared' | 'scheduled' | 'published') | null;
+  viewsCount?: number | null;
+  uniqueViewsCount?: number | null;
+  averageReadTime?: number | null;
   showCTA?: boolean | null;
   ctaTitle?: string | null;
   ctaDescription?: string | null;
   ctaButtonText?: string | null;
   ctaButtonUrl?: string | null;
-  secondaryCTAButtonText?: string | null;
-  secondaryCTAButtonUrl?: string | null;
-  leadMagnetTitle?: string | null;
-  newsletterPlacement?: ('none' | 'after_intro' | 'middle' | 'end' | 'sidebar') | null;
-  primaryCTA?: ('start_project' | 'talk_to_cloudtopia' | 'view_services' | 'book_consultation') | null;
+  leadMagnetFile?: (number | null) | Media;
   relatedServices?:
     | {
         label: string;
@@ -714,34 +742,19 @@ export interface BlogPost {
         id?: string | null;
       }[]
     | null;
-  viewsCount?: number | null;
-  uniqueViewsCount?: number | null;
-  averageReadTime?: number | null;
-  conversionClicks?: number | null;
-  newsletterSignups?: number | null;
-  lastViewedAt?: string | null;
-  /**
-   * Primary topic for filters, badges, archive pages, and related-post matching.
-   */
   category: number | BlogCategory;
-  /**
-   * Optional discovery tags. Keep them focused and reusable.
-   */
   tags?: (number | BlogTag)[] | null;
-  /**
-   * Primary byline author.
-   */
+  relatedPosts?: (number | BlogPost)[] | null;
+  series?: (number | null) | BlogSery;
+  status: 'idea' | 'outline' | 'draft' | 'in_review' | 'scheduled' | 'published' | 'archived';
+  locale: 'en' | 'ar';
+  approvalStatus?: ('not_required' | 'waiting' | 'approved' | 'rejected') | null;
+  publishedAt?: string | null;
+  scheduledAt?: string | null;
   author: number | Author;
   coAuthors?: (number | Author)[] | null;
-  series?: (number | null) | BlogSery;
-  /**
-   * Show a sticky article table of contents when headings exist.
-   */
-  tableOfContents?: boolean | null;
-  /**
-   * Optional manual related posts. Otherwise the frontend uses same-category and same-tag articles.
-   */
-  relatedPosts?: (number | BlogPost)[] | null;
+  coverImage: number | Media;
+  featuredImageAlt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -798,8 +811,8 @@ export interface BlogAiGenerationLog {
   outputPreview?: string | null;
   status?: ('success' | 'error') | null;
   errorMessage?: string | null;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
 }
 /**
  * Reusable article templates for CloudTopia editorial planning.
@@ -997,12 +1010,15 @@ export interface Page {
     | 'home'
     | 'services'
     | 'service-detail'
+    | 'sub-service-landing'
+    | 'industry-landing'
+    | 'market-landing'
     | 'projects'
     | 'about'
     | 'contact'
     | 'labs'
     | 'legal'
-    | 'blog-coming-soon'
+    | 'insights-landing'
     | 'content';
   /**
    * Preview path generated from locale and slug.
@@ -1055,6 +1071,70 @@ export interface Page {
     | number
     | boolean
     | null;
+  /**
+   * Optional editorial overrides for generated market, industry, and sub-service pages. Static SEO data remains the fallback when these fields are empty.
+   */
+  programmaticLanding?: {
+    /**
+     * Which generated page family this override belongs to.
+     */
+    family?: ('sub-service' | 'industry' | 'market') | null;
+    /**
+     * The service, industry, or country slug, for example "crm-development", "real-estate", or "saudi-arabia".
+     */
+    targetSlug?: string | null;
+    /**
+     * Optional SEO title override for the generated page.
+     */
+    seoTitle?: string | null;
+    /**
+     * Optional meta description override. Keep it natural and conversion-focused.
+     */
+    metaDescription?: string | null;
+    /**
+     * Optional visible H1 override.
+     */
+    h1?: string | null;
+    /**
+     * Optional intro or hero subtitle copy.
+     */
+    introCopy?: string | null;
+    /**
+     * Primary search phrase for the page.
+     */
+    primaryKeyword?: string | null;
+    secondaryKeywords?:
+      | {
+          keyword: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Curated links shown or used by the page for SEO and buyer navigation.
+     */
+    internalLinks?:
+      | {
+          label: string;
+          href: string;
+          type?: ('service' | 'industry' | 'market' | 'pricing' | 'contact' | 'proof') | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional FAQ override for FAQ schema and visible page content.
+     */
+    faqs?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Internal notes for schema requirements, such as BreadcrumbList, FAQPage, Service, or ProfessionalService.
+     */
+    schemaNotes?: string | null;
+  };
   /**
    * Per-page layout and visual overrides.
    */
@@ -1141,7 +1221,7 @@ export interface SiteDesign {
   };
   contact: {
     email: string;
-    phone: string;
+    phone?: string | null;
     whatsapp: string;
   };
   social?: {
@@ -1262,6 +1342,94 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-chat-leads_select".
+ */
+export interface AiChatLeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  country?: T;
+  businessType?: T;
+  serviceNeeded?: T;
+  budgetRange?: T;
+  timeline?: T;
+  message?: T;
+  pageUrl?: T;
+  language?: T;
+  status?: T;
+  notes?: T;
+  source?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solution-finder-leads_select".
+ */
+export interface SolutionFinderLeadsSelect<T extends boolean = true> {
+  name?: T;
+  phone?: T;
+  email?: T;
+  company?: T;
+  country?: T;
+  industry?: T;
+  projectType?: T;
+  businessGoal?: T;
+  budget?: T;
+  timeline?: T;
+  description?: T;
+  contactMethod?: T;
+  wantContact?: T;
+  recommendedPackage?: T;
+  recommendedRoute?: T;
+  selectedAnswerSummary?: T;
+  aiSource?: T;
+  aiSummary?: T;
+  aiCountryAdvice?: T;
+  aiBudgetAdvice?: T;
+  aiWhatsappOpening?: T;
+  aiRoadmap?:
+    | T
+    | {
+        step?: T;
+        id?: T;
+      };
+  aiNextQuestions?:
+    | T
+    | {
+        question?: T;
+        id?: T;
+      };
+  locale?: T;
+  status?: T;
+  source?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-inquiries_select".
+ */
+export interface ContactInquiriesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  company?: T;
+  country?: T;
+  service?: T;
+  budget?: T;
+  timeline?: T;
+  message?: T;
+  source?: T;
+  locale?: T;
+  pageUrl?: T;
+  status?: T;
+  notes?: T;
+  createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1428,9 +1596,6 @@ export interface BlogSeriesSelect<T extends boolean = true> {
  * via the `definition` "blog-posts_select".
  */
 export interface BlogPostsSelect<T extends boolean = true> {
-  locale?: T;
-  status?: T;
-  approvalStatus?: T;
   title?: T;
   slug?: T;
   subtitle?: T;
@@ -1440,17 +1605,12 @@ export interface BlogPostsSelect<T extends boolean = true> {
   pinned?: T;
   editorPick?: T;
   trending?: T;
-  publishedAt?: T;
-  scheduledAt?: T;
-  lastReviewedAt?: T;
-  difficulty?: T;
   contentType?: T;
   targetAudience?: T;
   serviceFocus?: T;
+  difficulty?: T;
   readingTime?: T;
   wordCount?: T;
-  contentScore?: T;
-  seoScore?: T;
   content?: T;
   contentBlocks?:
     | T
@@ -1593,88 +1753,30 @@ export interface BlogPostsSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
-  coverImage?: T;
-  featuredImageAlt?: T;
-  socialImage?: T;
-  leadMagnetFile?: T;
   seo?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
         focusKeyword?: T;
-        secondaryKeywords?: T;
-        keywords?: T;
         canonicalUrl?: T;
-        ogTitle?: T;
-        ogDescription?: T;
         ogImage?: T;
-        twitterTitle?: T;
-        twitterDescription?: T;
-        twitterImage?: T;
         noIndex?: T;
         noFollow?: T;
-        structuredDataType?: T;
-        faqSchema?: T;
-        breadcrumbSchema?: T;
-        articleSchema?: T;
-        lastModifiedSchema?: T;
       };
   aiGenerated?: T;
   aiAssisted?: T;
   readabilityScore?: T;
   estimatedRankingDifficulty?: T;
-  searchIntent?: T;
-  funnelStage?: T;
-  internalLinksSuggestions?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        reason?: T;
-        id?: T;
-      };
-  externalSources?:
-    | T
-    | {
-        title?: T;
-        url?: T;
-        id?: T;
-      };
-  references?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        note?: T;
-        id?: T;
-      };
-  factChecked?: T;
-  factCheckedBy?: T;
-  factCheckedAt?: T;
-  assignedTo?: T;
-  reviewer?: T;
-  approvedBy?: T;
-  approvedAt?: T;
-  editorNotes?: T;
-  privateNotes?: T;
-  revisionNotes?: T;
-  linkedinPost?: T;
-  instagramCaption?: T;
-  xPost?: T;
-  whatsappMessage?: T;
-  emailNewsletterIntro?: T;
-  socialStatus?: T;
+  viewsCount?: T;
+  uniqueViewsCount?: T;
+  averageReadTime?: T;
   showCTA?: T;
   ctaTitle?: T;
   ctaDescription?: T;
   ctaButtonText?: T;
   ctaButtonUrl?: T;
-  secondaryCTAButtonText?: T;
-  secondaryCTAButtonUrl?: T;
-  leadMagnetTitle?: T;
-  newsletterPlacement?: T;
-  primaryCTA?: T;
+  leadMagnetFile?: T;
   relatedServices?:
     | T
     | {
@@ -1682,19 +1784,19 @@ export interface BlogPostsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  viewsCount?: T;
-  uniqueViewsCount?: T;
-  averageReadTime?: T;
-  conversionClicks?: T;
-  newsletterSignups?: T;
-  lastViewedAt?: T;
   category?: T;
   tags?: T;
+  relatedPosts?: T;
+  series?: T;
+  status?: T;
+  locale?: T;
+  approvalStatus?: T;
+  publishedAt?: T;
+  scheduledAt?: T;
   author?: T;
   coAuthors?: T;
-  series?: T;
-  tableOfContents?: T;
-  relatedPosts?: T;
+  coverImage?: T;
+  featuredImageAlt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1727,8 +1829,8 @@ export interface BlogAiGenerationLogsSelect<T extends boolean = true> {
   outputPreview?: T;
   status?: T;
   errorMessage?: T;
-  updatedAt?: T;
   createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1890,6 +1992,39 @@ export interface PagesSelect<T extends boolean = true> {
       };
   seo?: T;
   sections?: T;
+  programmaticLanding?:
+    | T
+    | {
+        family?: T;
+        targetSlug?: T;
+        seoTitle?: T;
+        metaDescription?: T;
+        h1?: T;
+        introCopy?: T;
+        primaryKeyword?: T;
+        secondaryKeywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+        internalLinks?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              type?: T;
+              id?: T;
+            };
+        faqs?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+        schemaNotes?: T;
+      };
   design?: T;
   editorNotes?: T;
   updatedAt?: T;

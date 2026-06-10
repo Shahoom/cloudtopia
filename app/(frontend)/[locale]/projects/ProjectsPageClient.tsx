@@ -27,7 +27,6 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
 const Particles = dynamic(() => import('@/components/ui/particles').then(mod => mod.Particles), { ssr: false })
-const SparklesCore = dynamic(() => import('@/components/ui/sparkles').then(mod => mod.SparklesCore), { ssr: false })
 const VaporizeTextCycle = dynamic(() => import('@/components/ui/vapour-text-effect'), { ssr: false })
 const TechCursor = dynamic(() => import('@/components/ui/tech-cursor'), { ssr: false })
 import { Tag } from '@/components/ui/vapour-text-effect'
@@ -552,9 +551,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
   const featuredParallax1 = useTransform(smoothProgress, [0.1, 0.5], [0, -100])
   const featuredParallax2 = useTransform(smoothProgress, [0.1, 0.5], [0, -80])
   const featuredParallax3 = useTransform(smoothProgress, [0.2, 0.6], [0, -60])
-  const footerParallax = useTransform(smoothProgress, [0.5, 0.8], [100, -100])
   const gradientParallax = useTransform(smoothProgress, [0.3, 0.6], [50, -50])
-  const orbScaleParallax = useTransform(smoothProgress, [0.5, 0.7], [0.8, 1.2])
 
   const openProjectModal = (project: Project) => {
     setSelectedProject(project)
@@ -956,88 +953,6 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
           )}
         </div>
       </section>
-
-      {/* LABS SECTION - Cinematic reveal */}
-      <section className="py-32 bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 relative overflow-hidden">
-        {/* Animated background with parallax */}
-        <motion.div
-          style={{ y: useParallax ? footerParallax : 0 }}
-          className="absolute inset-0"
-        >
-          <SparklesCore
-            id="labs-sparkles"
-            background="transparent"
-            minSize={0.4}
-            maxSize={1.2}
-            particleDensity={isMobile ? 5 : 30}
-            className="w-full h-full"
-            particleColor="#ffffff"
-            speed={0.5}
-          />
-        </motion.div>
-
-        {/* Gradient orbs */}
-        <motion.div
-          style={{ scale: orbScaleParallax }}
-          className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-lavender/20 rounded-full blur-[150px]"
-        />
-
-        <div className="container max-w-4xl mx-auto px-4 text-center relative z-10">
-          <div className="overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.25, 0.1, 0, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 bg-lavender/10 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-full mb-8"
-            >
-              <Beaker className="w-5 h-5 text-purple-300" />
-              <span className="font-semibold text-white">{t.projects.labsSection.badge}</span>
-            </motion.div>
-          </div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.1, 0, 1] }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl md:text-6xl font-bold text-white mb-6"
-          >
-            {t.projects.labsSection.title}{' '}
-            <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-              {t.projects.labsSection.titleHighlight}
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.1, 0, 1] }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-xl text-white/70 mb-10 max-w-2xl mx-auto"
-          >
-            {t.projects.labsSection.description}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0, 1] }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <MagneticButton
-              onClick={() => router.push(localePath(locale, '/labs'))}
-              className="group px-8 py-4 bg-lavender text-purple-900 font-bold rounded-2xl shadow-2xl hover:shadow-white/25 transition-all"
-            >
-              <span className="flex items-center gap-2">
-                {t.projects.labsSection.cta}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </MagneticButton>
-          </motion.div>
-        </div>
-      </section>
-
 
       {/* Project Details Modal */}
       <ProjectModal

@@ -1,5 +1,13 @@
+import { notFound } from 'next/navigation'
 import { getPublishedBlogPosts } from './data'
 import { canonicalUrl } from '@/lib/i18n/url'
+
+const SUPPORTED_LOCALES = ['en', 'ar'] as const
+type SupportedLocale = (typeof SUPPORTED_LOCALES)[number]
+
+function isSupportedLocale(value: string): value is SupportedLocale {
+  return (SUPPORTED_LOCALES as readonly string[]).includes(value)
+}
 
 function escapeXml(value: string) {
   return value
@@ -11,6 +19,14 @@ function escapeXml(value: string) {
 }
 
 export async function buildInsightsRss(locale = 'en') {
+  // Guard the enum-typed locale column: an unexpected value (e.g. 'feed.xml')
+  // would hit `where p.locale = $1` against a Postgres enum and throw a
+  // (swallowed) error, serving an empty feed. Reject anything that is not a
+  // real locale with a 404 instead of leaking an empty/erroring feed.
+  if (!isSupportedLocale(locale)) {
+    notFound()
+  }
+
   const posts = await getPublishedBlogPosts(locale)
 
   const items = posts

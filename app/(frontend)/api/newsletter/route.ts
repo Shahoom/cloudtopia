@@ -1,10 +1,12 @@
 import { NextRequest } from 'next/server'
-import { isDatabaseConfigured, queryDatabase } from '@/lib/cms/db'
+import { getPayloadClient, isPayloadConfigured } from '@/lib/cms/payload'
+
+export const runtime = 'nodejs'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
-  if (!isDatabaseConfigured()) {
+  if (!isPayloadConfigured()) {
     return Response.json({ error: 'Newsletter storage is not configured.' }, { status: 503 })
   }
 
@@ -38,48 +40,71 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    await queryDatabase(
-      `insert into newsletter_subscribers (
-        email, name, source, consent, locale, utm_source, utm_campaign,
-        subscribed_at, status, updated_at, created_at
-       )
-       values ($1, $2, $3, $4, $5, $6, $7, now(), 'active', now(), now())
-       on conflict (email) do update set
-         name = coalesce(nullif(excluded.name, ''), newsletter_subscribers.name),
-         source = excluded.source,
-         consent = excluded.consent,
-         locale = excluded.locale,
-         utm_source = coalesce(nullif(excluded.utm_source, ''), newsletter_subscribers.utm_source),
-         utm_campaign = coalesce(nullif(excluded.utm_campaign, ''), newsletter_subscribers.utm_campaign),
-         status = 'active',
-         subscribed_at = coalesce(newsletter_subscribers.subscribed_at, now()),
-         updated_at = now()`,
-      [email, name || null, source, consent, locale, utmSource || null, utmCampaign || null],
-    )
+    const payload = await getPayloadClient()
 
-    if (interest) {
-      const subscriber = await queryDatabase<{ id: number }>(
-        `select id from newsletter_subscribers where email = $1 limit 1`,
-        [email],
-      )
-      const parentId = subscriber[0]?.id
-      if (parentId) {
-        await queryDatabase(
-          `insert into newsletter_subscribers_interests (_order, _parent_id, id, interest)
-           values (
-            coalesce((select max(_order) + 1 from newsletter_subscribers_interests where _parent_id = $1), 0),
-            $1,
-            $2,
-            $3
-           )
-           on conflict (id) do nothing`,
-          [parentId, `${parentId}:${interest.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, interest],
-        )
-      }
+    // Upsert by email: subscribers carry a unique email constraint, so we look
+    // up an existing record first and update it, otherwise create a new one.
+    // Routing through Payload keeps interests array ids Payload-managed instead
+    // of hand-built `${parentId}:${slug}` strings that drift across migrations.
+    const existing = await payload.find({
+      collection: 'newsletter-subscribers',
+      where: { email: { equals: email } },
+      limit: 1,
+      depth: 0,
+      overrideAccess: true,
+    })
+
+    const current = existing.docs[0]
+
+    if (current) {
+      // Merge the new interest with any already stored, de-duplicated.
+      const existingInterests = Array.isArray(current.interests)
+        ? current.interests
+            .map((i) => (typeof i === 'object' && i ? String(i.interest || '') : ''))
+            .filter(Boolean)
+        : []
+      const mergedInterests = interest && !existingInterests.includes(interest)
+        ? [...existingInterests, interest]
+        : existingInterests
+
+      await payload.update({
+        collection: 'newsletter-subscribers',
+        id: current.id,
+        data: {
+          name: name || current.name || undefined,
+          source,
+          consent,
+          locale: locale as 'en' | 'ar',
+          utmSource: utmSource || current.utmSource || undefined,
+          utmCampaign: utmCampaign || current.utmCampaign || undefined,
+          status: 'active',
+          interests: mergedInterests.map((value) => ({ interest: value })),
+        },
+        overrideAccess: true,
+      })
+    } else {
+      await payload.create({
+        collection: 'newsletter-subscribers',
+        data: {
+          email,
+          name: name || undefined,
+          source,
+          consent,
+          locale: locale as 'en' | 'ar',
+          utmSource: utmSource || undefined,
+          utmCampaign: utmCampaign || undefined,
+          status: 'active',
+          interests: interest ? [{ interest }] : [],
+          subscribedAt: new Date().toISOString(),
+        },
+        overrideAccess: true,
+      })
     }
 
     return Response.json({ ok: true })
-  } catch {
+  } catch (err) {
+    // Log unconditionally so a missing table / schema drift cannot silently fail.
+    console.error('[newsletter] Payload save failed', err)
     return Response.json({ error: 'Could not save your subscription right now.' }, { status: 500 })
   }
 }

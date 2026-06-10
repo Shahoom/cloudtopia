@@ -25,18 +25,9 @@ export default function FAQ() {
 
     if (items.length === 0) return null
 
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: items.map((item) => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer,
-            },
-        })),
-    }
+    // NOTE: the FAQPage JSON-LD is intentionally emitted by the server home
+    // page (app/(frontend)/[locale]/page.tsx) so it is always present in the
+    // SSR HTML even if this client section is lazy-mounted (SD-LOW / SD-7).
 
     return (
         <section
@@ -44,11 +35,6 @@ export default function FAQ() {
             data-header-theme="light"
             dir={isRTL ? 'rtl' : 'ltr'}
         >
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-            />
-
             <div className="pointer-events-none absolute top-0 right-0 w-[420px] h-[420px] bg-secondary-200/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
             <div className="pointer-events-none absolute bottom-0 left-0 w-[380px] h-[380px] bg-primary-200/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3" />
 

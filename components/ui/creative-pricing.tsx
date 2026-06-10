@@ -99,9 +99,9 @@ export function CreativePricing({
                   <h3 className="pe-24 text-2xl font-black leading-tight text-slate-950">{tier.name}</h3>
                   <p className="mt-3 min-h-16 text-sm font-semibold leading-6 text-slate-600">{tier.description}</p>
 
-                  <div className="my-6 rounded-md border border-slate-950/12 bg-[#f4f1f8] px-4 py-4">
-                    <p className="text-3xl font-black tracking-normal text-slate-950 md:text-4xl">{price.amount}</p>
-                    {price.label && <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-slate-500">{price.label}</p>}
+                  <div className="my-6 rounded-md border border-slate-950/12 bg-[#f4f1f8] px-4 py-4 text-start">
+                    {price.label && <p className="mb-1.5 text-xs font-black uppercase tracking-[0.18em] text-slate-500">{price.label}</p>}
+                    <p dir="auto" className="text-3xl font-black tracking-normal text-slate-950 md:text-4xl">{price.amount}</p>
                   </div>
 
                   <ul className="grid gap-3">

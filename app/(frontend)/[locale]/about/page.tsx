@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import AboutPageClient from './AboutPageClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { aboutSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/about', 'about')
+    return getCMSMetadata(locale, '/about', 'about', {
+        title: aboutSeoFallback.titles[locale] || aboutSeoFallback.titles.en,
+        description: aboutSeoFallback.descriptions[locale] || aboutSeoFallback.descriptions.en,
+    })
 }
 
 export default async function AboutPage({

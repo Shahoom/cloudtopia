@@ -8,7 +8,12 @@ export const BlogRedirects: CollectionConfig = {
     group: 'Insights',
     useAsTitle: 'fromPath',
     defaultColumns: ['fromPath', 'toPath', 'statusCode', 'active', 'updatedAt'],
-    description: 'Managed legacy blog redirects for old URLs and campaign links.',
+    // NOT YET WIRED: no middleware or next.config redirects loader reads these
+    // rows, so editor-created redirects are not applied. Hidden from nav to
+    // avoid wasted editor effort. The table/migration is intentionally kept.
+    hidden: true,
+    description:
+      'NOT YET WIRED — redirects entered here are not applied by the app yet (no middleware reads blog_redirects). Hidden until wired.',
   },
   access: {
     read: adminOnly,

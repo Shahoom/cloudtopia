@@ -2,6 +2,7 @@ import type { CollectionAfterChangeHook, CollectionConfig } from 'payload'
 import { shouldRunAutoTranslate, translatePayload } from '../lib/cms/auto-translate.ts'
 import { publicPathForSlug, syncDictionaryWithPage, templateForSlug } from '../lib/cms/page-structure.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
+import { adminOnly } from './blogAccess.ts'
 
 const syncPageToSiteContent: CollectionAfterChangeHook = async ({ doc, req }) => {
   if (!doc?.locale) return doc
@@ -110,6 +111,12 @@ const autoLocalizePage: CollectionAfterChangeHook = async ({ doc, req }) => {
 export const Pages: CollectionConfig = {
   slug: 'pages',
   lockDocuments: false,
+  access: {
+    read: () => true,
+    create: adminOnly,
+    update: adminOnly,
+    delete: adminOnly,
+  },
   admin: {
     group: 'Content',
     useAsTitle: 'title',
@@ -253,7 +260,12 @@ export const Pages: CollectionConfig = {
       name: 'programmaticLanding',
       type: 'group',
       admin: {
-        description: 'Optional editorial overrides for generated market, industry, and sub-service pages. Static SEO data remains the fallback when these fields are empty.',
+        // NOT YET CONSUMED: the industry and market routes still render from the
+        // static lib/seo defaults and do not read these overrides yet. Hidden so
+        // editors don't fill fields that have no visible effect. The fields and
+        // their columns are intentionally kept for when the routes are wired.
+        hidden: true,
+        description: 'NOT YET CONSUMED — overrides entered here are not yet read by the generated market/industry/sub-service routes (static lib/seo data is still used). Hidden until wired.',
       },
       fields: [
         {

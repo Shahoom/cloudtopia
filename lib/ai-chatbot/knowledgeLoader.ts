@@ -5,6 +5,7 @@ const knowledgeDir = path.join(process.cwd(), 'data', 'cloudtopia-ai')
 
 export const knowledgeFiles = {
   company: 'cloudtopia-company.md',
+  identity: 'cloudtopia-identity.md',
   services: 'cloudtopia-services.md',
   pricing: 'cloudtopia-pricing-rules.md',
   faq: 'cloudtopia-faq.md',

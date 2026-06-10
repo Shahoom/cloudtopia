@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
-import { AIChatbot } from '@/components/ai-chatbot'
+import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import '../globals.css'
 
 const cairo = Cairo({

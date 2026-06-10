@@ -2,6 +2,7 @@ import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
 import PrivacyClient from './PrivacyClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { privacySeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -10,7 +11,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/privacy', 'privacy')
+    return getCMSMetadata(locale, '/privacy', 'privacy', {
+        title: privacySeoFallback.titles[locale] || privacySeoFallback.titles.en,
+        description: privacySeoFallback.descriptions[locale] || privacySeoFallback.descriptions.en,
+    })
 }
 
 export default async function PrivacyPage({
@@ -27,13 +31,21 @@ export default async function PrivacyPage({
     const title = p?.title || 'Privacy Policy'
     const desc = p?.description ?? ''
 
+    // Compute the "Last updated" date string once on the server so SSR and CSR
+    // render the same markup (no hydration mismatch). Do NOT construct the
+    // current date during client render.
+    const lastUpdatedDate = new Date().toLocaleDateString(
+        locale === 'ar' ? 'ar-EG' : 'en-US',
+        { year: 'numeric', month: 'long', day: 'numeric' },
+    )
+
     return (
         <>
             <div className="sr-only" aria-hidden="false">
                 <h1>{title}</h1>
                 {desc && <p>{desc}</p>}
             </div>
-            <PrivacyClient t={t} />
+            <PrivacyClient t={t} lastUpdatedDate={lastUpdatedDate} />
         </>
     )
 }

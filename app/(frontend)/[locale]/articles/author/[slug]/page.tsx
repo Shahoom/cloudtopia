@@ -7,6 +7,8 @@ import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
 import { getAuthorBlogPosts, getBlogAuthor } from '@/lib/blog/data'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema, buildOrganizationRef } from '@/lib/seo/schema'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -51,8 +53,45 @@ export default async function ArticleAuthorPage({ params }: PageProps) {
 
   const posts = await getAuthorBlogPosts(locale, slug)
 
+  // SD-2: Person + ProfilePage schema on the CANONICAL author route. The
+  // BlogPosting author.@id in articles/[slug] references this exact #person @id.
+  const profileUrl = canonicalUrl(locale, `/articles/author/${author.slug}`)
+  const personId = `${profileUrl}#person`
+  const description = author.bio || author.shortBio || undefined
+  const image = absoluteUrl(author.image?.url)
+  const sameAs = Array.from(
+    new Set([...(author.sameAs ?? []), author.linkedinUrl, author.xUrl].filter((u): u is string => Boolean(u))),
+  )
+  const personSchema = {
+    '@type': 'Person',
+    '@id': personId,
+    name: author.name,
+    url: profileUrl,
+    ...(author.role ? { jobTitle: author.role } : {}),
+    ...(description ? { description } : {}),
+    ...(image ? { image } : {}),
+    ...(author.expertise.length > 0 ? { knowsAbout: author.expertise } : {}),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+    worksFor: buildOrganizationRef(),
+  }
+  const profilePageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${profileUrl}#profilepage`,
+    url: profileUrl,
+    name: author.name,
+    inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
+    mainEntity: personSchema,
+  }
+  const breadcrumbSchema = buildBreadcrumbSchema(locale, [
+    { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
+    { name: locale === 'ar' ? 'المقالات' : 'Articles', path: '/articles' },
+    { name: author.name, path: `/articles/author/${author.slug}` },
+  ])
+
   return (
     <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+      <JsonLd schema={[profilePageSchema, breadcrumbSchema]} />
       <div className="mx-auto max-w-7xl">
         <Breadcrumbs locale={locale} items={[{ label: author.name }]} />
         <header className="mb-10 rounded-[2rem] border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">

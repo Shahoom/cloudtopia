@@ -1,13 +1,11 @@
-import { buildInsightsRss } from '@/lib/blog/rss'
+import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
-  return new Response(await buildInsightsRss('en'), {
-    headers: {
-      'Content-Type': 'application/rss+xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-    },
-  })
+// The insights blog was renamed to Articles. This legacy feed now permanently
+// redirects to the canonical English Articles feed so subscribers and crawlers
+// follow the content to its new home.
+export function GET(request: Request) {
+  return NextResponse.redirect(new URL('/articles/rss.xml', request.url), 308)
 }

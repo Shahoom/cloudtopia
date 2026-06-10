@@ -309,42 +309,78 @@ export default async function TrustPage({ params }: PageProps) {
     }
 
     return (
-        <main className="min-h-screen bg-white" dir={isRTL ? 'rtl' : 'ltr'}>
+        <main className="min-h-screen bg-[#f4f1f8]" dir={isRTL ? 'rtl' : 'ltr'}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
             <section className="relative overflow-hidden bg-neutral-950 px-4 pb-20 pt-32 text-white sm:px-6 lg:px-8 md:pb-28 md:pt-40" data-header-theme="dark">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-300 via-emerald-300 to-amber-200" />
-                <div className="pointer-events-none absolute left-1/2 top-0 h-[520px] w-[760px] -translate-x-1/2 rounded-full bg-cyan-400/15 blur-[140px]" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-sky-300 to-sky-600" />
+                <div className="pointer-events-none absolute left-1/2 top-0 h-[520px] w-[760px] -translate-x-1/2 rounded-full bg-sky-500/15 blur-[140px]" />
+                <div className="pointer-events-none absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(to right,#fff 1px,transparent 1px),linear-gradient(to bottom,#fff 1px,transparent 1px)', backgroundSize: '64px 64px' }} aria-hidden="true" />
                 <div className="relative mx-auto max-w-6xl">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-sm font-bold text-cyan-100 backdrop-blur">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-sm font-bold text-sky-100 backdrop-blur">
                         <ShieldCheck className="h-4 w-4" />
                         {L.badge}
                     </span>
                     <div className="mt-8 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
                         <div>
-                            <h1 className="text-4xl font-black leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+                            <h1 className="text-4xl font-black leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
                                 {L.title}
                             </h1>
                             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/70 md:text-xl">
                                 {L.description}
                             </p>
+                            <div className="mt-7 flex flex-wrap gap-2.5">
+                                {L.pillars.map((pillar) => (
+                                    <span key={pillar.title} className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-xs font-bold text-white/80 backdrop-blur">
+                                        <CheckCircle2 className="h-3.5 w-3.5 text-sky-300" aria-hidden="true" />
+                                        {pillar.title}
+                                    </span>
+                                ))}
+                            </div>
                             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                                <Link href={localePath(locale, '/contact')} className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
+                                <Link href={localePath(locale, '/contact')} className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-black text-neutral-950 transition hover:bg-sky-100">
                                     {L.primaryCta}
                                     <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                                 </Link>
-                                <Link href={localePath(locale, '/pricing')} className="inline-flex items-center justify-center rounded-md border border-white/20 px-6 py-4 text-sm font-black text-white transition hover:border-cyan-200 hover:bg-white/10">
+                                <Link href={localePath(locale, '/pricing')} className="inline-flex items-center justify-center rounded-md border border-white/20 px-6 py-4 text-sm font-black text-white transition hover:border-sky-200 hover:bg-white/10">
                                     {L.secondaryCta}
                                 </Link>
                             </div>
                         </div>
 
                         <div className="rounded-lg border border-white/10 bg-white/[0.06] p-6 shadow-2xl backdrop-blur">
-                            <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">{L.directTitle}</p>
+                            <p className="text-xs font-black uppercase tracking-[0.22em] text-sky-200">{L.directTitle}</p>
                             <p className="mt-4 text-base leading-relaxed text-white/72">{L.directAnswer}</p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="bg-[#f4f1f8] px-4 py-20 sm:px-6 lg:px-8 md:py-24">
+                <div className="mx-auto max-w-6xl">
+                    <div className="mb-10 max-w-3xl">
+                        <p className="text-xs font-black uppercase tracking-[0.22em] text-sky-700">{L.pillarsTitle}</p>
+                        <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.pillarsTitle}</h2>
+                    </div>
+                    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                        {L.pillars.map((pillar) => {
+                            const Icon = pillar.icon
+                            return (
+                                <article
+                                    key={pillar.title}
+                                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_42px_rgba(27,27,35,0.06)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(2,132,199,0.12)]"
+                                >
+                                    <div className="pointer-events-none absolute -end-8 -top-8 h-24 w-24 rounded-full bg-sky-500/[0.06] blur-2xl transition-colors duration-300 group-hover:bg-sky-500/[0.12]" aria-hidden="true" />
+                                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 text-sky-700 ring-1 ring-sky-100">
+                                        <Icon className="h-6 w-6" aria-hidden="true" />
+                                    </div>
+                                    <h3 className="text-lg font-black leading-tight text-neutral-950">{pillar.title}</h3>
+                                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">{pillar.description}</p>
+                                </article>
+                            )
+                        })}
                     </div>
                 </div>
             </section>
@@ -354,12 +390,12 @@ export default async function TrustPage({ params }: PageProps) {
                     <div className="mb-10 grid gap-6 lg:grid-cols-[0.42fr_1fr] lg:items-end">
                         <div>
                             <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-sm font-black text-white">
-                                <ShieldCheck className="h-4 w-4 text-cyan-200" />
+                                <ShieldCheck className="h-4 w-4 text-sky-200" />
                                 {L.badge}
                             </span>
                             <h2 className="mt-6 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">{L.approachTitle}</h2>
                         </div>
-                        <p className="max-w-3xl border-s-4 border-cyan-500 bg-[#f4f1f8] px-5 py-4 text-base font-semibold leading-8 text-neutral-700">
+                        <p className="max-w-3xl border-s-4 border-sky-500 bg-[#f4f1f8] px-5 py-4 text-base font-semibold leading-8 text-neutral-700">
                             {L.approachIntro}
                         </p>
                     </div>
@@ -367,7 +403,7 @@ export default async function TrustPage({ params }: PageProps) {
                         {L.approach.map((item, index) => (
                             <article key={item.title} className="min-h-72 bg-white p-6 transition-colors duration-200 hover:bg-[#f4f1f8]/40">
                                 <div className="mb-10 flex items-center justify-between gap-3">
-                                    <FileText className="h-5 w-5 text-cyan-700" />
+                                    <FileText className="h-5 w-5 text-sky-700" />
                                     <span className="font-mono text-xs font-black text-neutral-400">{String(index + 1).padStart(2, '0')}</span>
                                 </div>
                                 <h3 className="text-xl font-black text-neutral-950">{item.title}</h3>
@@ -382,7 +418,7 @@ export default async function TrustPage({ params }: PageProps) {
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
                         <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-sm font-bold text-white">
-                            <Building2 className="h-4 w-4 text-cyan-300" />
+                            <Building2 className="h-4 w-4 text-sky-300" />
                             {locale === 'ar' ? 'الحوكمة' : 'Governance'}
                         </span>
                         <h2 className="mt-6 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">
@@ -457,9 +493,9 @@ export default async function TrustPage({ params }: PageProps) {
 
             <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
                 <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-3xl font-black tracking-tight md:text-5xl">{L.finalTitle}</h2>
+                    <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>
-                    <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
+                    <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-sky-100">
                         {L.primaryCta}
                         <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                     </Link>

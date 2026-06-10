@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
-import { SparklesCore } from '@/components/ui/sparkles'
+import dynamic from 'next/dynamic'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { cn } from '@/lib/utils'
@@ -25,6 +25,10 @@ import {
     Building2,
 } from 'lucide-react'
 import Link from 'next/link'
+
+// tsparticles-backed sparkles — client-only after hydration so the particle
+// engine bundle stays out of the initial page payload.
+const SparklesCore = dynamic(() => import('@/components/ui/sparkles').then((m) => m.SparklesCore), { ssr: false })
 
 
 function SectionHeading({ badge, title, highlight, description, variant = 'dark' }: { badge?: string; title: string; highlight?: string; description: string; variant?: 'dark' | 'light' }) {

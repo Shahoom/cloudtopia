@@ -1,54 +1,26 @@
 import type { Metadata } from 'next'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
+import { canonicalUrl } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/seo/schema'
+
+export const aboutSeoFallback = {
+    titles: {
+        en: 'About CloudTopia — Gulf-First Digital Agency',
+        ar: 'عن كلاود توبيا — وكالة رقمية خليجية أولاً',
+    } as Record<string, string>,
+    descriptions: {
+        en: 'Gulf-first digital agency building websites, e-commerce, and custom business systems in Arabic and English. Riyadh · Dubai · Remote.',
+        ar: 'وكالة رقمية خليجية تبني مواقع ومتاجر وأنظمة أعمال بالعربية والإنجليزية. الرياض · دبي · عن بُعد.',
+    } as Record<string, string>,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/about', 'about')
-    const titles: Record<string, string> = {
-        en: 'About CloudTopia — Gulf-First Digital Agency',
-        ar: 'عن كلاود توبيا — وكالة رقمية خليجية أولاً',
-    }
-    const descs: Record<string, string> = {
-        en: 'Gulf-first digital agency building websites, e-commerce, and custom business systems in Arabic and English. Riyadh · Dubai · Remote.',
-        ar: 'وكالة رقمية خليجية تبني مواقع ومتاجر وأنظمة أعمال بالعربية والإنجليزية. الرياض · دبي · عن بُعد.',
-    }
-    const ogTitles: Record<string, string> = {
-        en: 'About CloudTopia',
-        ar: 'عن كلاود توبيا',
-    }
-    const ogDescs: Record<string, string> = {
-        en: 'Gulf-first digital agency building bilingual websites, e-commerce, and business systems.',
-        ar: 'وكالة رقمية خليجية أولاً تبني مواقع ومتاجر وأنظمة أعمال ثنائية اللغة.',
-    }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
-    const title = titles[locale] || titles.en
-    const desc = descs[locale] || descs.en
-    const ogTitle = ogTitles[locale] || ogTitles.en
-    const ogDesc = ogDescs[locale] || ogDescs.en
-
-    return {
-        title,
-        description: desc,
-        openGraph: {
-            title: ogTitle,
-            description: ogDesc,
-            url: canonicalUrl(locale, '/about'),
-            locale: ogLocales[locale] || 'en_US',
-            images: ogImagesFor({ page: 'about', locale }),
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: ogTitle,
-            description: ogDesc,
-            images: ogImagesFor({ page: 'about', locale }).map((i) => i.url),
-        },
-        alternates: {
-            canonical: canonicalUrl(locale, '/about'),
-            languages: buildHreflangMap('/about'),
-        },
-    }
+    return getCMSMetadata(locale, '/about', 'about', {
+        title: aboutSeoFallback.titles[locale] || aboutSeoFallback.titles.en,
+        description: aboutSeoFallback.descriptions[locale] || aboutSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
@@ -56,23 +28,13 @@ export default async function ({ children, params }: { children: React.ReactNode
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: 'About', item: canonicalUrl(locale, '/about') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+            <JsonLd
+                schema={[
+                    buildBreadcrumbSchema(locale, [
+                        { name: 'Home', path: '/' },
+                        { name: 'About', path: '/about' },
+                    ]),
+                    {
                         '@context': 'https://schema.org',
                         '@type': 'AboutPage',
                         name: 'About CloudTopia',
@@ -118,10 +80,15 @@ export default async function ({ children, params }: { children: React.ReactNode
                         ],
                         mainEntity: {
                             '@type': 'Organization',
+                            // SD-5: same @id as the root Organization node so this
+                            // richer about-page definition merges into the single
+                            // canonical entity instead of duplicating it.
+                            '@id': 'https://cloudtopia.net/#organization',
                             name: 'CloudTopia',
                             alternateName: ['كلاود توبيا', 'CloudTopia Digital', 'CloudTopia Technologies'],
                             url: 'https://cloudtopia.net',
-                            logo: 'https://cloudtopia.net/logo.svg',
+                            // SD-1: /logo.svg does not exist — use the verified asset.
+                            logo: 'https://cloudtopia.net/images/CloudTopia.svg',
                             slogan: 'Bilingual digital delivery with fixed scope, transparent pricing, and owned handoff.',
                             description: 'Gulf-first digital agency specializing in bilingual websites, e-commerce, custom business systems, and web applications.',
                             foundingDate: '2024',
@@ -189,8 +156,8 @@ export default async function ({ children, params }: { children: React.ReactNode
                                 areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
                             },
                         },
-                    }),
-                }}
+                    },
+                ]}
             />
             {children}
         </>

@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import RestaurantQRMenuClient from './RestaurantQRMenuClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { restaurantQrMenuSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/restaurant-qr-menu', 'restaurant-qr-menu')
+    const metadata = await getCMSMetadata(locale, '/restaurant-qr-menu', 'restaurant-qr-menu', {
+        title: restaurantQrMenuSeoFallback.titles[locale] || restaurantQrMenuSeoFallback.titles.en,
+        description: restaurantQrMenuSeoFallback.descriptions[locale] || restaurantQrMenuSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة منيو QR للمطاعم' : 'Best Restaurant QR Menu Company'
     return { ...metadata, title }
 }

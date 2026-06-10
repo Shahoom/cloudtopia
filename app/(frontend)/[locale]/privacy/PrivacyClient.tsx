@@ -5,7 +5,7 @@ import Card from '@/components/ui/Card'
 import { Shield } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-export default function PrivacyClient({ t: pageT }: { t?: any }) {
+export default function PrivacyClient({ t: pageT, lastUpdatedDate }: { t?: any; lastUpdatedDate?: string }) {
   const { t: contextT, locale } = useLanguage()
   const t = pageT || contextT
   const p = t.privacy
@@ -37,7 +37,7 @@ export default function PrivacyClient({ t: pageT }: { t?: any }) {
             )}
           </h1>
           <p className="text-lg text-neutral-600 mb-4">
-            {p.lastUpdated} {new Date().toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {p.lastUpdated}{lastUpdatedDate ? ` ${lastUpdatedDate}` : ''}
           </p>
           <p className="text-neutral-600">
             {p.description}

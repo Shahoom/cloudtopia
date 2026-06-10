@@ -16,8 +16,7 @@ import {
     ShieldCheck,
 } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
-import { ProcessPlaybook } from '@/components/process/ProcessPlaybook'
-import { howWeWorkData } from '@/data/howWeWorkData'
+import HowWeWork from '@/components/home/HowWeWork'
 
 type PageProps = {
     params: Promise<{ locale: string }>
@@ -257,7 +256,6 @@ export default async function ProcessPage({ params }: PageProps) {
     const { locale = 'en' } = await params
     const L = pageContent(locale)
     const isRTL = locale === 'ar'
-    const processTypeIds = howWeWorkData.processTypes.map((type) => type.id)
 
     const webPageSchema = {
         '@context': 'https://schema.org',
@@ -335,7 +333,7 @@ export default async function ProcessPage({ params }: PageProps) {
                     </span>
                     <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
                         <div>
-                            <h1 className="text-4xl font-black leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+                            <h1 className="text-4xl font-black leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
                                 {L.title}
                             </h1>
                             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/70 md:text-xl">
@@ -360,7 +358,9 @@ export default async function ProcessPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <ProcessPlaybook locale={isRTL ? 'ar' : 'en'} featuredIds={processTypeIds} />
+            {/* Same interactive process timeline used in the homepage "How we work"
+                section, for a consistent staged/CMMI-style delivery view. */}
+            <HowWeWork />
 
             <section className="bg-neutral-50/60 border-y border-neutral-200/80 px-4 py-20 sm:px-6 lg:px-8 md:py-24">
                 <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.88fr_1.12fr]">
@@ -447,7 +447,7 @@ export default async function ProcessPage({ params }: PageProps) {
 
             <section className="bg-neutral-950 px-4 py-20 text-white sm:px-6 lg:px-8 md:py-28" data-header-theme="dark">
                 <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-3xl font-black tracking-tight md:text-5xl">{L.finalTitle}</h2>
+                    <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>
                     <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
                         {L.primaryCta}

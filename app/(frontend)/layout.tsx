@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
-import { AIChatbot } from '@/components/ai-chatbot'
+import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -145,10 +145,17 @@ export default async function FrontendLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
+              // Stable @id — the single canonical Organization node every other
+              // page references via buildOrganizationRef() (SD-5).
+              '@id': 'https://cloudtopia.net/#organization',
               name: 'CloudTopia',
               url: 'https://cloudtopia.net',
               logo: 'https://cloudtopia.net/images/CloudTopia.svg',
-              image: 'https://cloudtopia.net/images/og-image.jpg',
+              // NOTE: a raster og-image.jpg (PNG/JPG is preferred by Google for
+              // logo/knowledge-panel eligibility) does not yet exist under
+              // public/. Pointing at the verified CloudTopia.svg until a real
+              // raster public/images/og-image.jpg is added (SD-1).
+              image: 'https://cloudtopia.net/images/CloudTopia.svg',
               description: organizationDescription,
               foundingDate: '2024',
               areaServed: [
@@ -189,6 +196,14 @@ export default async function FrontendLayout({
                 '@id': 'https://cloudtopia.net/#organization',
                 name: 'CloudTopia',
                 url: 'https://cloudtopia.net',
+              },
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://cloudtopia.net/articles/search?q={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
               },
             }),
           }}

@@ -17,8 +17,12 @@ const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow'
  * $CRON_SECRET` when CRON_SECRET is set in the project env.
  */
 export async function GET(req: Request) {
+    // Fail CLOSED: if CRON_SECRET is unset OR the Authorization header does not
+    // match, reject. Never allow this endpoint to be triggered by anyone simply
+    // because the secret happens to be unconfigured.
+    const secret = process.env.CRON_SECRET
     const auth = req.headers.get('authorization')
-    if (process.env.CRON_SECRET && auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    if (!secret || auth !== `Bearer ${secret}`) {
         return Response.json({ error: 'unauthorized' }, { status: 401 })
     }
 

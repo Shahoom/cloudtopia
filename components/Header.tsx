@@ -278,10 +278,10 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
           </a>
 
           {/* Email Logo (Gmail) */}
-          <a 
-            href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia" 
+          <a
+            href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia"
             className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/95 transition-transform duration-200 hover:scale-110"
-            aria-label="Email"
+            aria-label={locale === 'ar' ? 'البريد الإلكتروني' : 'Email'}
           >
             <Image 
               src="/icons/gmail.svg" 
@@ -487,7 +487,7 @@ export default function Header() {
             <LanguageSwitcher isDark={headerIsDark} />
             <button
               type="button"
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={mobileMenuOpen ? (locale === 'ar' ? 'إغلاق القائمة' : 'Close menu') : (locale === 'ar' ? 'فتح القائمة' : 'Open menu')}
               aria-expanded={mobileMenuOpen}
               className={`flex h-11 w-11 items-center justify-center rounded-md border transition-[background-color,color,transform] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${headerIsDark
                 ? 'border-white/30 text-white hover:bg-white/12'

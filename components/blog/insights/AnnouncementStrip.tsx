@@ -20,11 +20,12 @@ const messagesAr = [
 ]
 
 export function AnnouncementStrip({ locale }: { locale: string }) {
-  const messages = locale === 'ar' ? messagesAr : messagesEn
+  const isArabic = locale === 'ar'
+  const messages = isArabic ? messagesAr : messagesEn
   const text = messages.join('  ·  ')
 
   return (
-    <div className="relative flex h-10 w-full overflow-hidden bg-neutral-950 text-white">
+    <div dir={isArabic ? 'rtl' : 'ltr'} className="relative flex h-10 w-full overflow-hidden bg-neutral-950 text-white">
       <div
         className="animate-marquee flex shrink-0 items-center whitespace-nowrap"
         style={{ '--duration': '38s' } as React.CSSProperties}
@@ -42,9 +43,10 @@ export function AnnouncementStrip({ locale }: { locale: string }) {
       </div>
       <Link
         href={localePath(locale, '/articles')}
-        className="absolute right-4 top-1/2 -translate-y-1/2 shrink-0 text-xs font-black text-primary-400 hover:text-primary-300 transition z-10"
+        className="absolute end-4 top-1/2 -translate-y-1/2 z-10 inline-flex shrink-0 items-center gap-1 text-xs font-black text-primary-400 transition hover:text-primary-300"
       >
-        {locale === 'ar' ? '← اكتشف الآن' : 'Explore Now →'}
+        {isArabic ? 'اكتشف الآن' : 'Explore Now'}
+        <span aria-hidden="true" className="inline-block rtl:rotate-180">→</span>
       </Link>
     </div>
   )

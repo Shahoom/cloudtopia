@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import { X } from 'lucide-react'
 import styles from './AIChatbot.module.css'
 
 export function AIChatbotButton({
@@ -20,8 +20,16 @@ export function AIChatbotButton({
       aria-expanded={open}
       onClick={onClick}
     >
-      <MessageCircle size={22} aria-hidden="true" />
-      <span>{locale === 'ar' ? 'اسأل CloudTopia' : 'Ask CloudTopia'}</span>
+      <span className={styles.buttonAura} aria-hidden="true" />
+      <span className={`${styles.buttonIcon} ${open ? styles.buttonIconOpen : ''}`} aria-hidden="true">
+        {open ? (
+          <X size={20} />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src="/images/CloudTopia.svg" alt="" className={styles.buttonLogo} />
+        )}
+      </span>
+      {!open ? <span className={styles.buttonLabel}>{locale === 'ar' ? 'اسأل CloudTopia' : 'Ask CloudTopia'}</span> : null}
     </button>
   )
 }

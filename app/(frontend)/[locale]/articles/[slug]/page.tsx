@@ -73,6 +73,11 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   const image = absoluteUrl(post.seo.ogImage?.url || post.coverImage?.url)
   const faqItems = post.seo.faqSchema ? extractFAQSchemaItems(post.contentBlocks) : []
 
+  // SD-2: a real Person author references the #person @id on the canonical
+  // /articles/author/<slug> route; the editorial team stays an Organization.
+  const authorProfileUrl = post.author?.slug ? canonicalUrl(locale, `/articles/author/${post.author.slug}`) : undefined
+  const isPersonAuthor = Boolean(post.author?.slug) && post.author?.slug !== 'editorial-team'
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': post.seo.structuredDataType || 'BlogPosting',
@@ -80,15 +85,26 @@ export default async function ArticleDetailPage({ params }: PageProps) {
     headline: post.title,
     description: post.excerpt,
     image,
+    inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
+    ...(post.wordCount > 0 ? { wordCount: post.wordCount } : {}),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
-    author: {
-      '@type': post.author?.slug === 'editorial-team' ? 'Organization' : 'Person',
-      name: post.author?.name || 'CloudTopia',
-      url: post.author?.slug ? canonicalUrl(locale, `/articles/author/${post.author.slug}`) : canonicalUrl(locale, '/'),
-    },
+    author: isPersonAuthor
+      ? {
+          '@type': 'Person',
+          '@id': `${authorProfileUrl}#person`,
+          name: post.author!.name,
+          url: authorProfileUrl,
+        }
+      : {
+          '@type': 'Organization',
+          '@id': 'https://cloudtopia.net/#organization',
+          name: post.author?.name || 'CloudTopia',
+          url: authorProfileUrl || canonicalUrl(locale, '/'),
+        },
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://cloudtopia.net/#organization',
       name: 'CloudTopia',
       url: 'https://cloudtopia.net',
       logo: {

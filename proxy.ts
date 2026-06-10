@@ -21,16 +21,87 @@ const defaultLocale: Locale = 'en'
  *     as a soft canonical-confusion signal.
  */
 
+/**
+ * Path prefixes that are framework internals, the API, the CMS admin, or
+ * static upload/asset directories. These never participate in locale routing.
+ */
+const STATIC_PREFIXES = [
+    '/_next',
+    '/_vercel',
+    '/api',
+    '/admin',
+    '/uploads',
+    '/images',
+    '/icons',
+    '/logos',
+    '/og',
+    '/fonts',
+] as const
+
+/**
+ * Exact top-level paths that resolve to a real app route OR a public/ file but
+ * carry an extension that ALSO belongs to a locale-prefixed app route. These
+ * must pass straight through (NOT be locale-rewritten) and so are allow-listed
+ * by exact match rather than by extension.
+ *
+ * NOTE: `.xml` is deliberately kept OUT of STATIC_EXTENSIONS because it is
+ * ambiguous — `/sitemap.xml` is a top-level app route (must pass through),
+ * while `/articles/rss.xml` is a `[locale]` app route (MUST be locale-
+ * rewritten). Listing `/sitemap.xml` here lets it through while `rss.xml`
+ * still flows into the locale logic below.
+ */
+const STATIC_EXACT_PATHS = new Set<string>([
+    '/sitemap.xml',
+    '/favicon.ico',
+    '/favicon.svg',
+    '/icon.svg',
+    '/manifest.json',
+    '/robots.txt',
+    '/llms.txt',
+    '/sitemap.xsl',
+])
+
+/**
+ * Real static-asset extensions served from public/. EXCLUDES `.xml` (see
+ * STATIC_EXACT_PATHS) so that app-route feeds under `[locale]` are not
+ * mistaken for static files. A path ending in one of these is always a static
+ * asset and never an app route, so it is safe to short-circuit.
+ */
+const STATIC_EXTENSIONS = [
+    '.ico',
+    '.svg',
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.gif',
+    '.webp',
+    '.avif',
+    '.ttf',
+    '.woff',
+    '.woff2',
+    '.txt',
+    '.md',
+    '.json',
+    '.xsl',
+    '.css',
+    '.js',
+    '.map',
+    '.webmanifest',
+] as const
+
+function hasStaticExtension(pathname: string): boolean {
+    const lower = pathname.toLowerCase()
+    return STATIC_EXTENSIONS.some((ext) => lower.endsWith(ext))
+}
+
 function isStaticPath(pathname: string): boolean {
-    return (
-        pathname.startsWith('/_next') ||
-        pathname.startsWith('/api') ||
-        pathname.startsWith('/admin') ||
-        pathname.startsWith('/uploads') ||
-        pathname.startsWith('/images') ||
-        pathname.startsWith('/_vercel') ||
-        pathname.includes('.')
-    )
+    if (STATIC_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
+        return true
+    }
+    if (STATIC_EXACT_PATHS.has(pathname)) {
+        return true
+    }
+    return hasStaticExtension(pathname)
 }
 
 export function proxy(request: NextRequest) {

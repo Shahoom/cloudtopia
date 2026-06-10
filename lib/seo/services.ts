@@ -392,6 +392,7 @@ const arabicPackageNames: Record<string, string> = {
     'Full-Stack Digital Marketing': 'تسويق رقمي متكامل',
 }
 
+// Generic Arabic fallback set (used only if a category has no specific copy).
 const arabicFeatureSet = [
     'اكتشاف وتحديد نطاق وعرض ثابت قبل بدء التنفيذ',
     'بنية محتوى عربية وإنجليزية مع واجهات جاهزة لاتجاه RTL',
@@ -406,14 +407,110 @@ const arabicOutcomeSet = [
     'نظام قابل للصيانة تملكه شركتك',
 ]
 
+// Per-category Arabic feature bullets. Previously every Arabic service page reused
+// one identical array across all 138 pages (near-duplicate content). Each category
+// now has differentiated bullets to reduce duplicate-content risk while keeping the
+// same data shape (string[] of bullets). English copy is left untouched.
+const arabicFeatureSetsByCategory: Record<string, string[]> = {
+    'digital-presence': [
+        'اكتشاف وتحديد نطاق وعرض سعر ثابت قبل بدء التصميم',
+        'تصميم واجهة عربية وإنجليزية بنظام RTL وهوية متسقة',
+        'صفحات سريعة ومتجاوبة محسّنة لمحركات البحث',
+        'تسليم لوحة تحكم المحتوى مع تدريب وتوثيق للفريق',
+    ],
+    'interactive-web-applications': [
+        'تحليل تدفقات المستخدم وبناء نموذج أولي قبل التطوير',
+        'لوحات تحكم وأدوات تفاعلية بصلاحيات وأدوار واضحة',
+        'ربط بقواعد البيانات وواجهات API بشكل آمن',
+        'اختبار ونشر سحابي مع توثيق وتسليم الصلاحيات',
+    ],
+    'mobile-app-development': [
+        'اكتشاف فكرة التطبيق وتدفق الشاشات والنطاق التقني قبل البناء',
+        'تجربة جوال عربية وإنجليزية بشاشات جاهزة لاتجاه RTL',
+        'مصادقة آمنة وربط API وخلفية جاهزة للسحابة',
+        'نشر على المتاجر وتحليلات وتوثيق وتسليم الإطلاق',
+    ],
+    'business-systems-development': [
+        'تحليل سير العمل والعمليات قبل تصميم النظام',
+        'وحدات CRM وERP ومخزون مبنية حول أدوار الفريق',
+        'تكاملات وأتمتة تربط الأنظمة والإشعارات والتقارير',
+        'صلاحيات وسجلات نشاط ونسخ احتياطي وتدريب للفريق',
+    ],
+    'cloud-infrastructure': [
+        'مراجعة البنية الحالية وتخطيط الترحيل قبل التنفيذ',
+        'إعداد استضافة ونشر وقواعد بيانات قابلة للتوسع',
+        'مراقبة أداء ونسخ احتياطي وإجراءات أمان واستعادة',
+        'توثيق البنية وتسليم الوصول وملاحظات التشغيل',
+    ],
+    'ai-powered-solutions': [
+        'تحديد حالات الاستخدام ومصادر البيانات قبل البناء',
+        'مساعدون وأتمتة وروبوتات محادثة بالعربية والإنجليزية',
+        'ربط بالأنظمة والمحتوى مع ضوابط دقة ومراجعة بشرية',
+        'تدريب الفريق وتوثيق ومتابعة أداء بعد الإطلاق',
+    ],
+    'digital-growth-support': [
+        'مراجعة الوضع الحالي وأهداف النمو قبل بدء العمل',
+        'بنية محتوى وصفحات هبوط محسّنة للبحث والتحويل',
+        'تتبع وتحليلات وتقارير أداء واضحة للحملات',
+        'أتمتة بريد وتوليد عملاء محتملين وتحسين مستمر',
+    ],
+}
+
+const arabicOutcomeSetsByCategory: Record<string, string[]> = {
+    'digital-presence': [
+        'حضور رقمي موثوق يعكس مصداقية العلامة',
+        'رحلة زائر أوضح تحوّل الزيارات إلى استفسارات',
+        'ظهور أفضل في البحث المحلي والإقليمي',
+        'موقع يسهل على فريقك تحديثه وامتلاكه',
+    ],
+    'interactive-web-applications': [
+        'أتمتة المهام المتكررة وتقليل العمل اليدوي',
+        'رؤية أوضح للبيانات عبر لوحات تفاعلية',
+        'تجربة استخدام مبنية حول طريقة عمل الفريق',
+        'نظام قابل للتوسع تملكه شركتك بالكامل',
+    ],
+    'mobile-app-development': [
+        'مسار تطبيق جوال أوضح من الفكرة إلى الإطلاق',
+        'تبنٍّ أفضل من العملاء أو الموظفين',
+        'تطبيق ولوحة وبيانات مترابطة في تدفق واحد',
+        'نظام جوال قابل للصيانة تملكه شركتك',
+    ],
+    'business-systems-development': [
+        'عمليات أكثر تنظيماً وأقل اعتماداً على الجداول اليدوية',
+        'رؤية موحّدة للمبيعات والطلبات والمخزون',
+        'قرارات أسرع بالاعتماد على تقارير دقيقة',
+        'نظام أعمال قابل للتوسع تملكه شركتك',
+    ],
+    'cloud-infrastructure': [
+        'بنية سحابية أكثر استقراراً وأماناً',
+        'أداء أسرع وتوفّر أعلى للخدمة',
+        'تكاليف تشغيل أوضح وقابلة للتحكم',
+        'بيئة قابلة للتوسع مع نمو الأعمال',
+    ],
+    'ai-powered-solutions': [
+        'توفير وقت الفريق عبر أتمتة ذكية',
+        'ردود أسرع وأكثر اتساقاً للعملاء',
+        'استخلاص رؤى أوضح من بياناتك',
+        'حلول ذكاء اصطناعي عملية تملكها شركتك',
+    ],
+    'digital-growth-support': [
+        'زيادة عدد العملاء المحتملين المؤهلين',
+        'تحسين معدلات التحويل من الزيارات',
+        'ظهور أقوى في البحث والقنوات الرقمية',
+        'نمو رقمي قابل للقياس والتطوير',
+    ],
+}
+
 export function localizedPackageName(packageName: string, locale: string): string {
     return locale === 'ar' ? arabicPackageNames[packageName] || packageName : packageName
 }
 
 export function localizedServiceFeatures(service: ServiceDetail, locale: string): string[] {
-    return locale === 'ar' ? arabicFeatureSet : service.features
+    if (locale !== 'ar') return service.features
+    return arabicFeatureSetsByCategory[service.categorySlug] || arabicFeatureSet
 }
 
 export function localizedServiceOutcomes(service: ServiceDetail, locale: string): string[] {
-    return locale === 'ar' ? arabicOutcomeSet : service.outcomes
+    if (locale !== 'ar') return service.outcomes
+    return arabicOutcomeSetsByCategory[service.categorySlug] || arabicOutcomeSet
 }

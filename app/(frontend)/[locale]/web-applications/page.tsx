@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import WebApplicationsClient from './WebApplicationsClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { webApplicationsSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/web-applications', 'web-applications')
+    const metadata = await getCMSMetadata(locale, '/web-applications', 'web-applications', {
+        title: webApplicationsSeoFallback.titles[locale] || webApplicationsSeoFallback.titles.en,
+        description: webApplicationsSeoFallback.descriptions[locale] || webApplicationsSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة تطوير تطبيقات ويب' : 'Best Web Applications Development Company'
     return { ...metadata, title }
 }

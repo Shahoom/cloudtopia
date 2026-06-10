@@ -1,49 +1,25 @@
 import type { Metadata } from 'next'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/seo/schema'
+
+export const contactSeoFallback = {
+    titles: {
+        en: 'Contact CloudTopia — Get in Touch',
+        ar: 'تواصل مع كلاود توبيا',
+    } as Record<string, string>,
+    descriptions: {
+        en: 'Contact us for a free consultation. We respond within 24 hours.',
+        ar: 'تواصل معنا للحصول على استشارة مجانية. نرد خلال 24 ساعة.',
+    } as Record<string, string>,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/contact', 'contact')
-    const titles: Record<string, string> = {
-        en: 'Contact CloudTopia — Get in Touch',
-        ar: 'تواصل مع كلاود توبيا',
-    }
-    const descs: Record<string, string> = {
-        en: 'Contact us for a free consultation. We respond within 24 hours.',
-        ar: 'تواصل معنا للحصول على استشارة مجانية. نرد خلال 24 ساعة.',
-    }
-    const ogTitles: Record<string, string> = {
-        en: 'Contact — CloudTopia',
-        ar: 'التواصل — كلاود توبيا',
-    }
-    const ogDescs: Record<string, string> = {
-        en: 'Get in touch for a free consultation.',
-        ar: 'تواصل معنا للحصول على استشارة مجانية.',
-    }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
-    const title = titles[locale] || titles.en
-    const desc = descs[locale] || descs.en
-    const ogTitle = ogTitles[locale] || ogTitles.en
-    const ogDesc = ogDescs[locale] || ogDescs.en
-
-    return {
-        title,
-        description: desc,
-        openGraph: {
-            title: ogTitle,
-            description: ogDesc,
-            url: canonicalUrl(locale, '/contact'),
-            locale: ogLocales[locale] || 'en_US',
-            images: ogImagesFor({ page: 'contact', locale }),
-        },
-        twitter: { title: ogTitle, description: ogDesc },
-        alternates: {
-            canonical: canonicalUrl(locale, '/contact'),
-            languages: buildHreflangMap('/contact'),
-        },
-    }
+    return getCMSMetadata(locale, '/contact', 'contact', {
+        title: contactSeoFallback.titles[locale] || contactSeoFallback.titles.en,
+        description: contactSeoFallback.descriptions[locale] || contactSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ContactLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
@@ -56,38 +32,19 @@ export default async function ContactLayout({ children, params }: { children: Re
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: names.home, item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: names.contact, item: canonicalUrl(locale, '/contact') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'ContactPage',
-                        name: 'Contact CloudTopia',
-                        description: 'Get in touch with CloudTopia for a free consultation.',
-                        url: canonicalUrl(locale, '/contact'),
-                        inLanguage: locale === 'ar' ? 'ar' : 'en',
-                        mainEntity: {
-                            '@type': 'Organization',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
-                            email: 'info@cloudtopia.net',
-                            telephone: '',
-                        },
-                    }),
-                }}
+            {/*
+              SD-3: only the BreadcrumbList lives here. The single ContactPage
+              entity (with its richer @graph + FAQPage) is emitted by
+              contact/page.tsx so the same URL never renders two conflicting
+              ContactPage nodes.
+            */}
+            <JsonLd
+                schema={[
+                    buildBreadcrumbSchema(locale, [
+                        { name: names.home, path: '/' },
+                        { name: names.contact, path: '/contact' },
+                    ]),
+                ]}
             />
             {children}
         </>

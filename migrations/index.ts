@@ -8,6 +8,10 @@ import * as migration_20260522_030000_fix_payload_locked_document_rels from './2
 import * as migration_20260524_090000_add_blog_insights from './20260524_090000_add_blog_insights';
 import * as migration_20260524_120000_upgrade_blog_platform from './20260524_120000_upgrade_blog_platform';
 import * as migration_20260605_150500_add_crm_ai_leads from './20260605_150500_add_crm_ai_leads';
+import * as migration_20260609_120000_add_contact_inquiries from './20260609_120000_add_contact_inquiries';
+import * as migration_20260609_120500_add_ai_chat_leads_status_notes from './20260609_120500_add_ai_chat_leads_status_notes';
+import * as migration_20260609_140000_add_ai_chat_conversations from './20260609_140000_add_ai_chat_conversations';
+import * as migration_20260609_150000_fix_solution_finder_leads from './20260609_150000_fix_solution_finder_leads';
 
 export const migrations = [
   {
@@ -59,5 +63,25 @@ export const migrations = [
     up: migration_20260605_150500_add_crm_ai_leads.up,
     down: migration_20260605_150500_add_crm_ai_leads.down,
     name: '20260605_150500_add_crm_ai_leads'
+  },
+  {
+    up: migration_20260609_120000_add_contact_inquiries.up,
+    down: migration_20260609_120000_add_contact_inquiries.down,
+    name: '20260609_120000_add_contact_inquiries'
+  },
+  {
+    up: migration_20260609_120500_add_ai_chat_leads_status_notes.up,
+    down: migration_20260609_120500_add_ai_chat_leads_status_notes.down,
+    name: '20260609_120500_add_ai_chat_leads_status_notes'
+  },
+  {
+    up: migration_20260609_140000_add_ai_chat_conversations.up,
+    down: migration_20260609_140000_add_ai_chat_conversations.down,
+    name: '20260609_140000_add_ai_chat_conversations'
+  },
+  {
+    up: migration_20260609_150000_fix_solution_finder_leads.up,
+    down: migration_20260609_150000_fix_solution_finder_leads.down,
+    name: '20260609_150000_fix_solution_finder_leads'
   },
 ];

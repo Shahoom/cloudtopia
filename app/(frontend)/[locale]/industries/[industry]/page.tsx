@@ -4,10 +4,14 @@ import Link from 'next/link'
 import { ArrowRight, CheckCircle2, HelpCircle, Layers, MessageSquare, ShieldCheck, Sparkles, Workflow } from 'lucide-react'
 import { getIndustry, industrySlugs, localizedValue } from '@/lib/seo/industries'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import type { Locale } from '@/lib/i18n/config'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { getIndustryVisual } from '@/components/industry/industryVisuals'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
+import { getCMSPage } from '@/lib/cms/content'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema, buildFaqSchema, buildServiceSchema } from '@/lib/seo/schema'
 
 type PageProps = {
     params: Promise<{ locale: string; industry: string }>
@@ -131,16 +135,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!industry) return { title: 'Industry Not Found' }
 
     const name = localizedValue(industry.name, locale)
-    const title = locale === 'ar'
+    // Optional CMS override via a Pages row with slug "industries/<slug>" (the
+    // seo JSON column is real/migration-backed). Falls back to static copy when
+    // no published row exists — getCMSPage already returns null on any DB error.
+    const cmsPage = await getCMSPage(locale as Locale, `industries/${industry.slug}`)
+    const cmsSeo = (cmsPage?.seo || {}) as Record<string, any>
+    const title = (cmsSeo.title as string) || (locale === 'ar'
         ? `حلول ${name} الرقمية`
-        : `${name} Digital Solutions`
+        : `${name} Digital Solutions`)
     const socialTitle = `${title} | ${locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'}`
-    const description = localizedValue(industry.description, locale)
+    const description = (cmsSeo.description as string) || localizedValue(industry.description, locale)
     const images = ogImagesFor({ page: `industries/${industry.slug}`, locale })
 
     return {
         title,
         description,
+        robots: cmsSeo.noindex ? { index: false, follow: false } : undefined,
         keywords: [
             `${name} CRM`,
             `${name} website development`,
@@ -217,18 +227,10 @@ export default async function IndustryPage({ params }: PageProps) {
         { label: L.process, value: String(processItems.length).padStart(2, '0') },
     ]
 
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: industry.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: localizedValue(faq.question, locale),
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: localizedValue(faq.answer, locale),
-            },
-        })),
-    }
+    const faqItems = industry.faqs.map((faq) => ({
+        question: localizedValue(faq.question, locale),
+        answer: localizedValue(faq.answer, locale),
+    }))
 
     const serviceSchema = {
         '@context': 'https://schema.org',
@@ -258,23 +260,21 @@ export default async function IndustryPage({ params }: PageProps) {
         inLanguage: isRTL ? 'ar' : 'en',
     }
 
-    const breadcrumbSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-            { '@type': 'ListItem', position: 2, name: 'Industries', item: canonicalUrl(locale, '/industries') },
-            { '@type': 'ListItem', position: 3, name, item: canonicalUrl(locale, `/industries/${industry.slug}`) },
-        ],
-    }
-
     return (
         <main className="relative min-h-screen bg-[#f4f1f8] text-eerie" dir={isRTL ? 'rtl' : 'ltr'}>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <JsonLd
+                schema={[
+                    organizationSchema,
+                    webPageSchema,
+                    serviceSchema,
+                    buildFaqSchema(faqItems),
+                    buildBreadcrumbSchema(locale, [
+                        { name: 'Home', path: '/' },
+                        { name: 'Industries', path: '/industries' },
+                        { name, path: `/industries/${industry.slug}` },
+                    ]),
+                ]}
+            />
 
             <HeroOrbitDeck
                 eyebrow={`${L.badge} / ${localizedValue(visual.workflow, locale)}`}

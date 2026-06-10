@@ -14,7 +14,10 @@ const caseStudyKeywords = ['case', 'example', 'portfolio', 'مشروع', 'مثا
 
 export async function retrieveKnowledge({ latestMessage, pageUrl }: RetrieveKnowledgeInput) {
   const haystack = `${latestMessage} ${pageUrl ?? ''}`.toLowerCase()
-  const keys = new Set<Parameters<typeof loadKnowledgeFiles>[0][number]>(['company', 'services', 'contacts'])
+  // company, identity, services and contacts are always loaded — identity carries
+  // the founder (Mohamad Shahm), the Türkiye + Oman hubs, and the company vision,
+  // which the assistant should be able to answer about at any point.
+  const keys = new Set<Parameters<typeof loadKnowledgeFiles>[0][number]>(['company', 'identity', 'services', 'contacts'])
 
   if (matchesAny(haystack, pricingKeywords)) keys.add('pricing')
   if (matchesAny(haystack, leadKeywords) || matchesAny(haystack, pricingKeywords)) keys.add('leadQualification')

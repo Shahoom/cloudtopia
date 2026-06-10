@@ -1,51 +1,26 @@
 import type { Metadata } from 'next'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ogImagesFor } from '@/lib/og/og-image'
-import { canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
+
+export const ecommerceSolutionsSeoFallback = {
+    titles: {
+        en: 'Gulf E-Commerce — Mada, Apple Pay, Tabby, Tamara',
+        ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
+    } as Record<string, string>,
+    descriptions: {
+        en: 'Online stores with Gulf payment gateways, ZATCA e-invoicing, bilingual checkout, and clear package scope.',
+        ar: 'متاجر إلكترونية مع بوابات دفع خليجية، فوترة ZATCA، دفع ثنائي اللغة، ونطاق باقة واضح.',
+    } as Record<string, string>,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions')
-    // Titles trimmed to fit Google's ~60-char SERP display.
-    const titles: Record<string, string> = {
-        en: 'Gulf E-Commerce — Mada, Apple Pay, Tabby, Tamara',
-        ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
-    }
-    const descs: Record<string, string> = {
-        en: 'Online stores with Gulf payment gateways, ZATCA e-invoicing, bilingual checkout, and clear package scope.',
-        ar: 'متاجر إلكترونية مع بوابات دفع خليجية، فوترة ZATCA، دفع ثنائي اللغة، ونطاق باقة واضح.',
-    }
-    const ogTitles: Record<string, string> = {
-        en: 'E-Commerce — CloudTopia',
-        ar: 'التجارة الإلكترونية — كلاود توبيا',
-    }
-    const ogDescs: Record<string, string> = {
-        en: 'Enterprise-grade e-commerce solutions for Gulf businesses.',
-        ar: 'حلول تجارة إلكترونية على مستوى المؤسسات لأعمال الخليج.',
-    }
-    const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
-    const title = titles[locale] || titles.en
-    const desc = descs[locale] || descs.en
-    const ogTitle = ogTitles[locale] || ogTitles.en
-    const ogDesc = ogDescs[locale] || ogDescs.en
-
-    return {
-        title,
-        description: desc,
-        openGraph: {
-            title: ogTitle,
-            description: ogDesc,
-            url: canonicalUrl(locale, '/ecommerce-solutions'),
-            locale: ogLocales[locale] || 'en_US',
-            images: ogImagesFor({ page: 'ecommerce-solutions', locale }),
-        },
-        twitter: { title: ogTitle, description: ogDesc },
-        alternates: {
-            canonical: canonicalUrl(locale, '/ecommerce-solutions'),
-            languages: buildHreflangMap('/ecommerce-solutions'),
-        },
-    }
+    return getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions', {
+        title: ecommerceSolutionsSeoFallback.titles[locale] || ecommerceSolutionsSeoFallback.titles.en,
+        description: ecommerceSolutionsSeoFallback.descriptions[locale] || ecommerceSolutionsSeoFallback.descriptions.en,
+    })
 }
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
@@ -54,53 +29,22 @@ export default async function ({ children, params }: { children: React.ReactNode
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
-                            { '@type': 'ListItem', position: 3, name: 'E-Commerce Solutions', item: canonicalUrl(locale, '/ecommerce-solutions') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'Service',
+            <JsonLd
+                schema={[
+                    buildBreadcrumbSchema(locale, [
+                        { name: 'Home', path: '/' },
+                        { name: 'Services', path: '/services' },
+                        { name: 'E-Commerce Solutions', path: '/ecommerce-solutions' },
+                    ]),
+                    buildServiceSchema(locale, {
                         name: 'E-Commerce Solutions & Online Stores',
                         description: 'Full e-commerce stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA e-invoicing, and Arabic + English checkout.',
-                        url: canonicalUrl(locale, '/ecommerce-solutions'),
-                        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+                        path: '/ecommerce-solutions',
                         serviceType: 'E-Commerce Development',
-                        areaServed: [
-                            { '@type': 'Country', name: 'Saudi Arabia' },
-                            { '@type': 'Country', name: 'United Arab Emirates' },
-                            { '@type': 'Country', name: 'Kuwait' },
-                            { '@type': 'Country', name: 'Qatar' },
-                            { '@type': 'Country', name: 'Bahrain' },
-                            { '@type': 'Country', name: 'Oman' },
-                        ],
-                        offers: {
-                            '@type': 'Offer',
-                            availability: 'https://schema.org/InStock',
-                            url: canonicalUrl(locale, '/pricing'),
-                        },
                     }),
-                }}
+                    faqSchema,
+                ]}
             />
-            {faqSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-                />
-            )}
             {children}
         </>
     )

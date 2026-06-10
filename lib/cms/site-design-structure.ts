@@ -100,7 +100,6 @@ export function composeSiteDesignJSON(input: AnyRecord = {}, dictionary: AnyReco
     { label: navigationLabels.home, href: '/' },
     { label: navigationLabels.services, href: '/services' },
     { label: navigationLabels.projects, href: '/projects' },
-    { label: navigationLabels.labs, href: '/labs' },
     { label: navigationLabels.about, href: '/about' },
     { label: navigationLabels.blog === 'Blog' ? 'Articles' : navigationLabels.blog, href: '/articles' },
     { label: navigationLabels.contact, href: '/contact' },

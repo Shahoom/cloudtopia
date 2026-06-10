@@ -29,7 +29,7 @@ There is no legitimate way to rank #1 for competitive Gulf-tech terms in less th
 - Multilingual SEO with native-script slugs (en/ar/tr)
 - BCP-47 inLanguage codes (en-US, ar-SA, tr-TR)
 - Canonical IDs linking translation siblings
-- RSS feed at /[locale]/blog/feed.xml
+- RSS feed at /articles/rss.xml (and /ar/articles/rss.xml)
 - IndexNow API endpoint for instant Bing/Yandex indexing
 - robots meta with `max-image-preview: large` + `max-snippet: -1`
 - XSL stylesheet for human-readable sitemap viewing
@@ -126,7 +126,7 @@ These are direct ranking factors. Hit:
 
 Verify monthly:
 ```
-https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcloudtopia.net%2Fen%2Fblog
+https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcloudtopia.net%2Farticles
 ```
 
 If LCP slips, the most common culprits on this site are:
@@ -141,7 +141,7 @@ After publishing or updating a post:
 ```bash
 curl -X POST https://cloudtopia.net/api/indexnow \
   -H "Content-Type: application/json" \
-  -d '{"urls":["https://cloudtopia.net/en/blog/your-new-post"]}'
+  -d '{"urls":["https://cloudtopia.net/articles/your-new-post"]}'
 ```
 
 Bing + Yandex pick this up in minutes (vs days of waiting for crawlers). For Google, the only equivalent is the Indexing API which officially only supports JobPosting and BroadcastEvent, but in practice works for blog posts too — wire it up later if Google indexing is slow.

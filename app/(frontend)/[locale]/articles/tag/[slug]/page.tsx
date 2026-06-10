@@ -6,6 +6,8 @@ import { BlogSearch } from '@/components/blog/BlogSearch'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { getBlogIndexData, getBlogTags } from '@/lib/blog/data'
 import { buildHreflangMap, canonicalUrl, localePath } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -50,8 +52,43 @@ export default async function ArticleTagPage({ params, searchParams }: PageProps
   const page = Number(query.page || 1)
   const data = await getBlogIndexData({ locale, page, search, tag: slug })
 
+  // SD-7: CollectionPage + BreadcrumbList + ItemList of the listed articles.
+  const tagUrl = canonicalUrl(locale, `/articles/tag/${tag.slug}`)
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${tagUrl}#collectionpage`,
+    name: locale === 'ar' ? `وسم ${tag.name}` : `${tag.name} Articles`,
+    description:
+      locale === 'ar'
+        ? `مقالات CloudTopia الموسومة بـ ${tag.name}.`
+        : `CloudTopia articles tagged with ${tag.name}.`,
+    url: tagUrl,
+    inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
+    isPartOf: { '@type': 'Blog', '@id': `${canonicalUrl(locale, '/articles')}#blog` },
+    ...(data.latestPosts.length > 0
+      ? {
+          mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: data.latestPosts.map((post, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: canonicalUrl(locale, `/articles/${post.slug}`),
+              name: post.title,
+            })),
+          },
+        }
+      : {}),
+  }
+  const breadcrumbSchema = buildBreadcrumbSchema(locale, [
+    { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
+    { name: locale === 'ar' ? 'المقالات' : 'Articles', path: '/articles' },
+    { name: tag.name, path: `/articles/tag/${tag.slug}` },
+  ])
+
   return (
     <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+      <JsonLd schema={[collectionSchema, breadcrumbSchema]} />
       <div className="mx-auto max-w-7xl">
         <Breadcrumbs locale={locale} items={[{ label: tag.name }]} />
         <header className="mb-10 rounded-3xl border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">

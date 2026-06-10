@@ -1,6 +1,11 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { getPublishedBlogPosts } from '@/lib/blog/data'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { buildOrganizationRef, buildFaqSchema, type FaqItem } from '@/lib/seo/schema'
+import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
+import type { TeaserPost } from '@/components/home/ArticlesTeaser'
 import HomePageClient from './HomePageClient'
 
 type ProjectCardSummary = {
@@ -48,8 +53,68 @@ export default async function HomePage({
         (p) => p.featured,
     )
 
+    // DL-4: drive the homepage articles teaser from real, locale-filtered CMS
+    // posts (was static English sample content — broke the Arabic homepage and
+    // risked 404s from re-slugified titles). Falls back to samples if the DB is
+    // empty/unreachable (getPublishedBlogPosts already returns [] in that case).
+    const latestPosts = await getPublishedBlogPosts(locale)
+    const articlePosts: TeaserPost[] = latestPosts.slice(0, 3).map((post) => ({
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        shortExcerpt: post.shortExcerpt,
+        category: post.category?.name,
+        coverImage: post.coverImage?.url,
+        contentType: post.contentType,
+        readingMinutes: post.readingTime,
+    }))
+
+    // SD-7: CollectionPage for the home route, a top-level Service whose
+    // OfferCatalog enumerates the seven service categories, and the home
+    // FAQPage (moved here from the client FAQ section so it is always in SSR).
+    const homeUrl = canonicalUrl(locale, '/')
+    const homeCollectionSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': `${homeUrl}#webpage`,
+        url: homeUrl,
+        name: locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia',
+        description: heroDesc,
+        inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
+        isPartOf: { '@type': 'WebSite', '@id': 'https://cloudtopia.net/#website' },
+        about: buildOrganizationRef(),
+    }
+    const serviceCatalogSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': `${homeUrl}#service`,
+        name: locale === 'ar' ? 'خدمات كلاود توبيا الرقمية والسحابية' : 'CloudTopia Digital & Cloud Services',
+        provider: buildOrganizationRef(),
+        url: canonicalUrl(locale, '/services'),
+        areaServed: [
+            { '@type': 'Country', name: 'Saudi Arabia' },
+            { '@type': 'Country', name: 'United Arab Emirates' },
+            { '@type': 'Country', name: 'Kuwait' },
+            { '@type': 'Country', name: 'Qatar' },
+            { '@type': 'Country', name: 'Bahrain' },
+            { '@type': 'Country', name: 'Oman' },
+        ],
+        hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: locale === 'ar' ? 'فئات خدمات كلاود توبيا' : 'CloudTopia Service Categories',
+            itemListElement: serviceCategories.map((category) => ({
+                '@type': 'OfferCatalog',
+                name: localizedServiceValue(category.name, locale),
+                description: localizedServiceValue(category.description, locale),
+            })),
+        },
+    }
+    const homeFaqItems = (t.home?.faq?.items as FaqItem[] | undefined) || []
+    const homeFaqSchema = buildFaqSchema(homeFaqItems)
+
     return (
         <>
+            <JsonLd schema={[homeCollectionSchema, serviceCatalogSchema, homeFaqSchema]} />
             <div className="sr-only" aria-hidden="false">
                 {heroDesc && <p>{heroDesc}</p>}
                 {featured.length > 0 && (
@@ -62,7 +127,7 @@ export default async function HomePage({
                     </ul>
                 )}
             </div>
-            <HomePageClient serverDictionary={homepageDictionary} />
+            <HomePageClient serverDictionary={homepageDictionary} articlePosts={articlePosts} />
         </>
     )
 }

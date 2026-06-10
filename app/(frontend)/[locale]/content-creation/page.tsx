@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import ContentCreationClient from './ContentCreationClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { contentCreationSeoFallback } from './layout'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -11,7 +12,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/content-creation', 'content-creation')
+    const metadata = await getCMSMetadata(locale, '/content-creation', 'content-creation', {
+        title: contentCreationSeoFallback.titles[locale] || contentCreationSeoFallback.titles.en,
+        description: contentCreationSeoFallback.descriptions[locale] || contentCreationSeoFallback.descriptions.en,
+    })
     const title = locale === 'ar' ? 'أفضل شركة لصناعة المحتوى الاحترافي' : 'Best Company for Professional Content Creation'
     return { ...metadata, title }
 }

@@ -1931,13 +1931,6 @@ export const en = {
           description: 'Build advanced solutions. Real-time web apps, client portals, dashboards, and SaaS-style applications with sophisticated functionality and data-driven features.',
           link: '/services#web-applications',
           linkText: 'View Services'
-        },
-        {
-          id: 4,
-          title: 'CloudTopia Labs (Innovation)',
-          description: 'Our R&D division exploring AI, automation, and emerging tech. Not a main service offering, but our commitment to innovation and pushing boundaries.',
-          link: '/labs',
-          linkText: 'Explore Labs'
         }
       ]
     },
@@ -2277,7 +2270,6 @@ export const en = {
       description: 'Learn about our services before reaching out',
       links: [
         { label: 'View Services', icon: '🎯', href: '/services' },
-        { label: 'Explore Labs', icon: '🔬', href: '/labs' },
         { label: 'About CloudTopia', icon: '👥', href: '/about' },
       ]
     },

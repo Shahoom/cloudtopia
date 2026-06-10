@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "DATABASE_URL=\"${POSTGRES_URL_NON_POOLING:-$DATABASE_URL}\" payload --use-swc migrate && next build",
     "start": "next start",
     "lint": "eslint .",
     "test:smoke": "node --test tests/content-reset.test.mjs && node --test --import tsx tests/cms-env.test.ts && node --test --import tsx tests/blog-utils.test.ts && node --test --import tsx tests/blog-intelligence.test.ts tests/blog-search.test.ts tests/seo-expansion.test.ts tests/full-site-expansion.test.ts tests/country-landing-pages.test.ts",
@@ -22,6 +23,7 @@
     "@payloadcms/db-postgres": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/storage-s3": "3.84.1",
     "@payloadcms/ui": "^3.84.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-three/drei": "^10.7.7",
