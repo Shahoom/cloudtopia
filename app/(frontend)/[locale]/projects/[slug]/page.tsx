@@ -12,10 +12,6 @@ type PageProps = {
     params: Promise<{ locale: string; slug: string }>
 }
 
-export async function generateStaticParams() {
-    return []
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', slug } = await params
     const project = await getProjectById(slug, locale)
