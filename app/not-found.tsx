@@ -2,7 +2,10 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: '404 — Page Not Found | CloudTopia',
+    // `absolute` bypasses the locale layout's `%s | <brand>` template so the
+    // brand isn't doubled (e.g. "… | CloudTopia | كلاود توبيا") when a 404 is
+    // rendered inside a localized route.
+    title: { absolute: '404 — Page Not Found | CloudTopia' },
     description: 'The page you are looking for does not exist.',
     robots: { index: false, follow: false },
 }

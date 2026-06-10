@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
-import { ORGANIZATION_ID, buildOrganizationRef } from '@/lib/seo/schema'
+import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
@@ -401,24 +401,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         })),
     }
 
-    // SD-5: same @id as the root Organization so Google merges this sales
-    // contactPoint into the single Organization node instead of redefining a
-    // disconnected one.
-    const organizationSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        '@id': ORGANIZATION_ID,
-        name: 'CloudTopia',
-        url: 'https://cloudtopia.net',
-        sameAs: ['https://instagram.com/thecloudtopia'],
-        contactPoint: {
-            '@type': 'ContactPoint',
-            contactType: 'sales',
-            telephone: '+968 9588 6393',
-            availableLanguage: ['English', 'Arabic'],
-        },
-    }
-
+    // The canonical #organization node (with both customer-service and sales
+    // contactPoints) is emitted once by the root (frontend) layout on every
+    // page, so this page only references it via provider/buildOrganizationRef()
+    // below — re-defining a second Organization node here produced a conflicting
+    // duplicate of the same @id.
     const serviceSchema = {
         '@context': 'https://schema.org',
         '@type': 'Service',
@@ -460,7 +447,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
     return (
         <main className="relative min-h-screen bg-[#f4f1f8]" dir={isRTL ? 'rtl' : 'ltr'}>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />

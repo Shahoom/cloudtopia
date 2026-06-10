@@ -1104,12 +1104,15 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                             <p className="text-base md:text-lg font-medium text-slate-400 tracking-wide">
                                 {heroPreTitle}
                             </p>
-                            <h1
+                            {/* h2 (not h1): the page's single h1 is the SEO hero
+                                in services/page.tsx ("Services to Move…"). Two h1s
+                                hurt SEO/a11y; classes unchanged → identical look. */}
+                            <h2
                                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.04] text-slate-900"
                                 style={{ textWrap: 'balance' } as React.CSSProperties}
                             >
                                 {heroTitle}
-                            </h1>
+                            </h2>
                         </motion.div>
 
                         {/* Gold rule */}

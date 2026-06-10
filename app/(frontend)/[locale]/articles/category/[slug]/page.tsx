@@ -6,7 +6,7 @@ import { BlogSearch } from '@/components/blog/BlogSearch'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
 import { getBlogCategories, getBlogIndexData } from '@/lib/blog/data'
-import { buildHreflangMap, canonicalUrl, localePath } from '@/lib/i18n/url'
+import { buildSelfHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 
@@ -21,7 +21,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const category = categories.find((item) => item.slug === slug)
   if (!category) return { title: 'Category Not Found' }
 
-  const title = category.seo?.metaTitle || `${category.name} | CloudTopia ${locale === 'ar' ? 'المقالات' : 'Articles'}`
+  // No hardcoded brand in the fallback — the layout's `%s | CloudTopia`
+  // template adds it once; stripBrandSuffix guards a CMS metaTitle that already
+  // includes the brand. (Was producing "… | CloudTopia Articles | CloudTopia".)
+  const title = stripBrandSuffix(category.seo?.metaTitle || `${category.name} ${locale === 'ar' ? 'المقالات' : 'Articles'}`)
   const description = category.seo?.metaDescription || category.description
 
   return {
@@ -36,7 +39,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     alternates: {
       canonical: category.seo?.canonicalUrl || canonicalUrl(locale, `/articles/category/${category.slug}`),
-      languages: buildHreflangMap(`/articles/category/${category.slug}`),
+      // Self + x-default only — Arabic article taxonomy pages don't exist, so an
+      // `ar` alternate would 404.
+      languages: buildSelfHreflangMap(locale, `/articles/category/${category.slug}`),
     },
   }
 }

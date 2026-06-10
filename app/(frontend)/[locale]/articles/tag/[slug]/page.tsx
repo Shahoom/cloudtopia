@@ -5,7 +5,7 @@ import { BlogPagination } from '@/components/blog/BlogPagination'
 import { BlogSearch } from '@/components/blog/BlogSearch'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { getBlogIndexData, getBlogTags } from '@/lib/blog/data'
-import { buildHreflangMap, canonicalUrl, localePath } from '@/lib/i18n/url'
+import { buildSelfHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 
@@ -20,8 +20,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tag = tags.find((item) => item.slug === slug)
   if (!tag) return { title: 'Tag Not Found' }
 
-  const title = locale === 'ar' ? `وسم ${tag.name} | المقالات` : `${tag.name} Articles | CloudTopia`
-  const description = locale === 'ar' 
+  // No hardcoded brand — the layout template adds "| CloudTopia" once (the EN
+  // fallback used to bake it in, doubling the suffix).
+  const title = stripBrandSuffix(locale === 'ar' ? `وسم ${tag.name} | المقالات` : `${tag.name} Articles`)
+  const description = locale === 'ar'
     ? `مقالات CloudTopia الموسومة بـ ${tag.name}.`
     : `CloudTopia articles tagged with ${tag.name}.`
 
@@ -36,7 +38,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     alternates: {
       canonical: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
-      languages: buildHreflangMap(`/articles/tag/${tag.slug}`),
+      // Self + x-default only — no Arabic tag pages exist to alternate to.
+      languages: buildSelfHreflangMap(locale, `/articles/tag/${tag.slug}`),
     },
   }
 }

@@ -300,16 +300,31 @@ export default function CountryLandingPage({ country, locale }: Props) {
     const organizationSchema = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
+        // Country-landing pages are their own route group and do NOT inherit the
+        // root layout's Organization, so this IS the canonical #organization node
+        // here. Give it the stable @id + full identity (matching the root node)
+        // so the Service/ProfessionalService provider refs resolve to one
+        // consistent node — it previously had no @id, leaving those refs dangling.
+        '@id': 'https://cloudtopia.net/#organization',
         name: 'CloudTopia',
         url: 'https://cloudtopia.net',
-        sameAs: ['https://instagram.com/thecloudtopia'],
-        contactPoint: {
-            '@type': 'ContactPoint',
-            telephone: country.phone,
-            contactType: 'sales',
-            areaServed: countryName,
-            availableLanguage: isArabic ? ['Arabic', 'English'] : ['English', 'Arabic'],
-        },
+        logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+        sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
+        contactPoint: [
+            {
+                '@type': 'ContactPoint',
+                contactType: 'customer service',
+                email: 'info@cloudtopia.net',
+                availableLanguage: ['English', 'Arabic'],
+            },
+            {
+                '@type': 'ContactPoint',
+                contactType: 'sales',
+                telephone: country.phone,
+                areaServed: countryName,
+                availableLanguage: isArabic ? ['Arabic', 'English'] : ['English', 'Arabic'],
+            },
+        ],
     }
     // Generic service-type terms are translated on Arabic pages; CRM/ERP/AI stay
     // as recognised global proper-noun acronyms in both locales.

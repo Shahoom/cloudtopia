@@ -7,7 +7,7 @@ import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { extractFAQSchemaItems } from '@/lib/blog/intelligence'
 import { getArticleToc, getBlogPost, getPreviousNextPosts, getRelatedBlogPosts } from '@/lib/blog/data'
-import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { buildHreflangMap, canonicalUrl, stripBrandSuffix } from '@/lib/i18n/url'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -26,13 +26,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) return { title: locale === 'ar' ? 'المقال غير موجود' : 'Article Not Found' }
 
   const title = post.seo.metaTitle || post.title
+  // CMS seo_meta_title already ends with "| CloudTopia"; the [locale]/layout
+  // `%s | <brand>` template would then add a second suffix. Strip it for the
+  // document <title> ONLY — og:title/twitter:title keep `title` with their
+  // single (correct) brand, so social cards are unchanged.
+  const documentTitle = stripBrandSuffix(title)
   const description = post.seo.metaDescription || post.excerpt
   const canonical = post.seo.canonicalUrl || canonicalUrl(locale, `/articles/${post.slug}`)
   const ogImage = absoluteUrl(post.seo.ogImage?.url || post.coverImage?.url)
   const twitterImage = absoluteUrl(post.seo.twitterImage?.url || post.seo.ogImage?.url || post.coverImage?.url)
 
   return {
-    title,
+    title: documentTitle,
     description,
     keywords: post.seo.keywords,
     robots: post.seo.noIndex || post.seo.noFollow ? { index: !post.seo.noIndex, follow: !post.seo.noFollow } : undefined,

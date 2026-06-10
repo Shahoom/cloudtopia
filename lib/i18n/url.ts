@@ -29,6 +29,30 @@ export function buildHreflangMap(pathSuffix: string): Record<string, string> {
 }
 
 /**
+ * Like buildHreflangMap but advertises ONLY the current locale + x-default.
+ * Use for pages that exist in a single locale (e.g. the EN-only article
+ * category/tag taxonomy) so we never emit an `ar` alternate that 404s.
+ */
+export function buildSelfHreflangMap(locale: string, pathSuffix: string): Record<string, string> {
+    const path = pathSuffix === '' ? '/' : pathSuffix
+    return {
+        [locale]: canonicalUrl(locale, path),
+        'x-default': canonicalUrl('en', path),
+    }
+}
+
+/**
+ * Remove a trailing brand suffix (" | CloudTopia" / " | كلاود توبيا") from a
+ * title value so the root layout's `%s | <brand>` template adds exactly one.
+ * CMS metaTitles and some page fallbacks already include the brand, which is
+ * what doubled it to "… | CloudTopia | CloudTopia".
+ */
+export function stripBrandSuffix(title: string): string {
+    const stripped = title.replace(/\s*\|\s*(CloudTopia|كلاود توبيا)\s*$/u, '').trim()
+    return stripped || title
+}
+
+/**
  * Drop the leading `/<locale>` segment if present. `/ar/projects` → `/projects`,
  * `/projects` → `/projects`, `/ar` → `/`. Used by LanguageContext.setLocale to
  * compute the locale-agnostic path before re-prefixing with the new locale.
