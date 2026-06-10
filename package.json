@@ -53,6 +53,7 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@swc-node/register": "^1.11.1",
     "@types/node": "^20.0.0",
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.15",

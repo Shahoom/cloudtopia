@@ -18,7 +18,7 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
-              alt={post.coverImage.alt || post.title}
+              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
               fill
               loading="lazy"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

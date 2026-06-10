@@ -45,7 +45,7 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
         <aside className="rounded-3xl border border-sky-100 bg-sky-50 p-6">
           <div className="mb-3 flex items-center gap-3 text-primary-700">
             <Lightbulb className="h-5 w-5" />
-            <strong className="text-sm font-black uppercase tracking-normal">{block.title || 'CloudTopia note'}</strong>
+            <strong className="text-sm font-black uppercase tracking-normal">{block.title || (locale === 'ar' ? 'ملاحظة CloudTopia' : 'CloudTopia note')}</strong>
           </div>
           <p className="text-base leading-8 text-neutral-700">{block.content}</p>
         </aside>
@@ -61,7 +61,7 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
               href={block.buttonUrl}
               className="mt-6 inline-flex h-12 items-center gap-2 rounded-xl bg-white px-5 text-sm font-black text-neutral-950 transition hover:bg-sky-100"
             >
-              {block.buttonText || 'Talk to CloudTopia'}
+              {block.buttonText || (locale === 'ar' ? 'تحدث إلى CloudTopia' : 'Talk to CloudTopia')}
               <ArrowRight className="h-4 w-4" />
             </Link>
           )}
@@ -82,10 +82,10 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
             <table className="min-w-full text-left text-sm">
               <thead className="bg-[#f4f1f8] text-neutral-950">
                 <tr>
-                  <th className="px-4 py-3 font-black">Feature</th>
-                  <th className="px-4 py-3 font-black">Option A</th>
-                  <th className="px-4 py-3 font-black">Option B</th>
-                  <th className="px-4 py-3 font-black">Winner</th>
+                  <th className="px-4 py-3 font-black">{block.featureLabel || (locale === 'ar' ? 'الميزة' : 'Feature')}</th>
+                  <th className="px-4 py-3 font-black">{block.optionALabel || (locale === 'ar' ? 'الخيار الأول' : 'Option A')}</th>
+                  <th className="px-4 py-3 font-black">{block.optionBLabel || (locale === 'ar' ? 'الخيار الثاني' : 'Option B')}</th>
+                  <th className="px-4 py-3 font-black">{locale === 'ar' ? 'الأفضل' : 'Winner'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,7 +164,7 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
           <h3 className="text-2xl font-black tracking-normal text-neutral-950">{block.title}</h3>
           <p className="mt-3 text-base leading-7 text-neutral-600">{block.description}</p>
           <Link href="#newsletter" className="mt-6 inline-flex h-12 items-center rounded-xl bg-primary-600 px-5 text-sm font-black text-white">
-            {block.buttonText || 'Get the resource'}
+            {block.buttonText || (locale === 'ar' ? 'احصل على المورد' : 'Get the resource')}
           </Link>
         </aside>
       )

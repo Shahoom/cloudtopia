@@ -27,7 +27,16 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale = 'en' } = await params
-  return getCMSMetadata(locale, '/articles', 'articles')
+  return getCMSMetadata(locale, '/articles', 'articles', {
+    title:
+      locale === 'ar'
+        ? 'مقالات كلاود توبيا | أدلة الويب والأنظمة والذكاء الاصطناعي'
+        : 'CloudTopia Articles | Web, Systems & AI Guides',
+    description:
+      locale === 'ar'
+        ? 'رؤى وأدلة عملية من كلاود توبيا حول تصميم المواقع، التجارة الإلكترونية، الأنظمة المخصصة، الأتمتة، والذكاء الاصطناعي للشركات.'
+        : 'Practical insights and guides from CloudTopia on web design, e-commerce, custom systems, automation, and AI for growing businesses.',
+  })
 }
 
 export default async function ArticlesPage({ params, searchParams }: PageProps) {
@@ -50,7 +59,11 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
   const sidebarPosts = data.featuredPosts.length > 1
     ? data.featuredPosts.slice(1, 4)
     : data.posts.slice(1, 4)
-  const gridPosts = data.latestPosts
+  // Don't repeat the hero/sidebar articles in the grid below.
+  const heroIds = new Set(
+    [featuredPost, ...sidebarPosts].filter(Boolean).map((p) => (p as { id: number | string }).id),
+  )
+  const gridPosts = data.latestPosts.filter((post) => !heroIds.has(post.id))
 
   // SD-6: build a deduplicated blogPost ItemList from the rendered posts so the
   // Blog node lists the actual articles on the page.
@@ -96,11 +109,32 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
       : {}),
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: locale === 'ar' ? 'الرئيسية' : 'Home', item: canonicalUrl(locale, '/') },
+      { '@type': 'ListItem', position: 2, name: locale === 'ar' ? 'المقالات' : 'Articles', item: canonicalUrl(locale, '/articles') },
+    ],
+  }
+
+  const pageTitle = locale === 'ar' ? 'مقالات كلاود توبيا' : 'CloudTopia Articles'
+  const pageTagline =
+    locale === 'ar'
+      ? 'رؤى وأدلة عملية حول الويب والأنظمة والذكاء الاصطناعي للشركات النامية.'
+      : 'Practical insights and guides on web, systems, and AI for growing businesses.'
+
+  const announcementItems = listedPosts.slice(0, 6).map((post) => ({
+    title: post.title,
+    href: localePath(locale, `/articles/${post.slug}`),
+  }))
+
   return (
     <div className="min-h-screen bg-[#f4f1f8]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <AnnouncementStrip locale={locale} />
+      <AnnouncementStrip locale={locale} items={announcementItems} />
 
       <div className="bg-white">
         <CategoryNavBar
@@ -110,6 +144,11 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
           search={search}
         />
       </div>
+
+      <header className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl">{pageTitle}</h1>
+        <p className="mt-2 max-w-2xl text-base text-neutral-600">{pageTagline}</p>
+      </header>
 
       {featuredPost && (
         <HeroFeaturedSection

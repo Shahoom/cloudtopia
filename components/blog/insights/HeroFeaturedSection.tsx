@@ -58,7 +58,7 @@ function FeaturedPost({ post, locale }: { post: BlogPostSummary; locale: string 
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
-              alt={post.coverImage.alt || post.title}
+              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 58vw"
@@ -98,7 +98,7 @@ function SidebarPost({ post, locale }: { post: BlogPostSummary; locale: string }
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
-              alt={post.coverImage.alt || post.title}
+              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
               fill
               sizes="180px"
               className="object-cover transition-transform duration-500 group-hover:scale-105"

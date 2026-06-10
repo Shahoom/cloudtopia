@@ -12,6 +12,7 @@ import * as migration_20260609_120000_add_contact_inquiries from './20260609_120
 import * as migration_20260609_120500_add_ai_chat_leads_status_notes from './20260609_120500_add_ai_chat_leads_status_notes';
 import * as migration_20260609_140000_add_ai_chat_conversations from './20260609_140000_add_ai_chat_conversations';
 import * as migration_20260609_150000_fix_solution_finder_leads from './20260609_150000_fix_solution_finder_leads';
+import * as migration_20260610_090000_blog_slug_locale_unique from './20260610_090000_blog_slug_locale_unique';
 
 export const migrations = [
   {
@@ -83,5 +84,10 @@ export const migrations = [
     up: migration_20260609_150000_fix_solution_finder_leads.up,
     down: migration_20260609_150000_fix_solution_finder_leads.down,
     name: '20260609_150000_fix_solution_finder_leads'
+  },
+  {
+    up: migration_20260610_090000_blog_slug_locale_unique.up,
+    down: migration_20260610_090000_blog_slug_locale_unique.down,
+    name: '20260610_090000_blog_slug_locale_unique'
   },
 ];

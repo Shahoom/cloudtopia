@@ -14,13 +14,13 @@ export function Breadcrumbs({
       <Link href={localePath(locale, '/')} className="hover:text-primary-700">
         {locale === 'ar' ? 'الرئيسية' : 'Home'}
       </Link>
-      <ChevronRight className="h-4 w-4" />
+      <ChevronRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
       <Link href={localePath(locale, '/articles')} className="hover:text-primary-700">
         {locale === 'ar' ? 'المقالات' : 'Articles'}
       </Link>
       {items.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-2">
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
           {item.href ? (
             <Link href={item.href} className="hover:text-primary-700">
               {item.label}

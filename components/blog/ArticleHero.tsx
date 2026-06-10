@@ -102,7 +102,7 @@ export function ArticleHero({ post, locale }: { post: BlogPost; locale: string }
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
-              alt={post.coverImage.alt || post.title}
+              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 900px"

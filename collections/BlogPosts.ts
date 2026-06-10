@@ -145,6 +145,10 @@ const serviceLinksField: Field = {
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
   lockDocuments: false,
+  // An article's translations share one slug across locales (the article-page
+  // hreflang map is built from a single slug for both en and ar). So slug is
+  // unique per-locale, not globally — enforced by this composite index.
+  indexes: [{ fields: ['slug', 'locale'], unique: true }],
   versions: {
     drafts: true,
     maxPerDoc: 25,
@@ -190,9 +194,10 @@ export const BlogPosts: CollectionConfig = {
               name: 'slug',
               type: 'text',
               required: true,
-              unique: true,
+              // Not globally unique: translations of one article share a slug
+              // across locales (see the composite (slug, locale) index above).
               admin: {
-                description: 'Auto-generated from the title when empty.',
+                description: 'Auto-generated from the title when empty. Translations of the same article share this slug across locales.',
               },
             },
             { name: 'subtitle', type: 'text' },

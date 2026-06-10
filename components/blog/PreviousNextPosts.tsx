@@ -22,7 +22,7 @@ export function PreviousNextPosts({
           className="group rounded-3xl border border-sky-100 bg-white p-5 shadow-sm transition hover:border-primary-500 hover:shadow-lg"
         >
           <span className="inline-flex items-center gap-2 text-sm font-black text-neutral-500">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 rtl:-scale-x-100" />
             {locale === 'ar' ? 'السابق' : 'Previous'}
           </span>
           <strong className="mt-2 block text-lg font-black leading-tight text-neutral-950 group-hover:text-primary-700">
@@ -39,7 +39,7 @@ export function PreviousNextPosts({
         >
           <span className="inline-flex items-center gap-2 text-sm font-black text-neutral-500">
             {locale === 'ar' ? 'التالي' : 'Next'}
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
           </span>
           <strong className="mt-2 block text-lg font-black leading-tight text-neutral-950 group-hover:text-primary-700">
             {next.title}

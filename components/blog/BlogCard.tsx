@@ -22,7 +22,7 @@ export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: stri
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
-              alt={post.coverImage.alt || post.title}
+              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -72,7 +72,7 @@ export function BlogCard({ post, locale }: { post: BlogPostSummary; locale: stri
           )}
           <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black text-primary-700">
             {locale === 'ar' ? 'اقرأ المقال' : 'Read article'}
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
           </span>
         </div>
       </Link>

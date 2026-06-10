@@ -91,7 +91,9 @@
 [dir="rtl"] h4,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
-  font-family: var(--font-poppins);
+  /* Arabic headings must use the Arabic face (Cairo). Poppins is Latin-only and
+     was silently falling back to a default system Arabic font. */
+  font-family: var(--font-arabic);
   line-height: 1.6;
 }
 
