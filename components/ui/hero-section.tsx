@@ -45,17 +45,21 @@ const techStackIcons = [
     { label: "Kotlin", src: "/icons/homepage/kotlin.svg" },
 ];
 
-function WordLine({ text, start = 0 }: { text: string; start?: number }) {
+function WordLine({ text, start = 0, stagger = 70 }: { text: string; start?: number; stagger?: number }) {
+    const words = text.split(" ");
     return (
         <>
-            {text.split(" ").map((word, index) => (
+            {words.map((word, index) => (
                 <span
                     key={`${word}-${index}`}
                     className="word inline-block"
-                    data-delay={String(start + index * 95)}
+                    // CSS-driven entrance: the animation runs from page load via
+                    // this server-rendered inline delay, so the LCP headline paints
+                    // without waiting on hydration (was JS-gated \u2192 6s LCP on mobile).
+                    style={{ animationDelay: `${start + index * stagger}ms` }}
                 >
                     {word}
-                    {index < text.split(" ").length - 1 ? "\u00a0" : ""}
+                    {index < words.length - 1 ? "\u00a0" : ""}
                 </span>
             ))}
         </>
@@ -66,6 +70,7 @@ function TechIconCard({ label, src }: { label: string; src: string }) {
     return (
         <span
             className="group mx-4 inline-flex h-12 w-[6.8rem] shrink-0 items-center justify-center opacity-72 transition duration-300 hover:-translate-y-0.5 hover:opacity-100 sm:mx-7 sm:h-[3.75rem] sm:w-[8.4rem]"
+            role="img"
             aria-label={label}
             title={label}
         >
@@ -125,26 +130,22 @@ export function Component() {
         if (!root) return;
         const rootEl = root;
 
+        // The word/float entrances are pure CSS now, so JS only powers the
+        // optional pointer flourishes — skip them entirely under reduced motion
+        // (and on touch devices that never emit mousemove).
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const words = Array.from(rootEl.querySelectorAll<HTMLElement>(".word"));
-        const floatingElements = Array.from(rootEl.querySelectorAll<HTMLElement>(".floating-element"));
-        const timeouts: ReturnType<typeof setTimeout>[] = [];
+        if (reducedMotion) return;
 
-        words.forEach((word) => {
-            const delay = reducedMotion ? 0 : parseInt(word.getAttribute("data-delay") || "0", 10);
-            timeouts.push(
-                setTimeout(() => {
-                    word.style.animation = reducedMotion ? "none" : "word-appear 0.82s ease-out forwards";
-                    word.style.opacity = "1";
-                    word.style.transform = "translateY(0) scale(1)";
-                    word.style.filter = "blur(0)";
-                }, delay)
-            );
-        });
+        // Cache the section rect and refresh it on scroll/resize instead of
+        // measuring on every mousemove — reading getBoundingClientRect mid-move
+        // forces a synchronous reflow on each event.
+        let rect = rootEl.getBoundingClientRect();
+        const updateRect = () => {
+            rect = rootEl.getBoundingClientRect();
+        };
 
         function onMouseMove(e: MouseEvent) {
-            if (!gradient || reducedMotion) return;
-            const rect = rootEl.getBoundingClientRect();
+            if (!gradient) return;
             const half = gradient.offsetWidth / 2;
             gradient.style.left = `${e.clientX - rect.left - half}px`;
             gradient.style.top = `${e.clientY - rect.top - half}px`;
@@ -156,9 +157,7 @@ export function Component() {
         }
 
         function onClick(e: MouseEvent) {
-            if (reducedMotion) return;
             const ripple = document.createElement("div");
-            const rect = rootEl.getBoundingClientRect();
             ripple.className = "ct-hero-ripple";
             ripple.style.left = `${e.clientX - rect.left}px`;
             ripple.style.top = `${e.clientY - rect.top}px`;
@@ -166,32 +165,20 @@ export function Component() {
             setTimeout(() => ripple.remove(), 900);
         }
 
-        let scrolled = false;
-        function onScroll() {
-            if (scrolled || reducedMotion) return;
-            scrolled = true;
-            floatingElements.forEach((el, index) => {
-                timeouts.push(
-                    setTimeout(() => {
-                        el.style.animationPlayState = "running";
-                    }, index * 180)
-                );
-            });
-        }
-
         rootEl.addEventListener("mousemove", onMouseMove);
         rootEl.addEventListener("mouseleave", onMouseLeave);
         rootEl.addEventListener("click", onClick);
-        window.addEventListener("scroll", onScroll);
+        window.addEventListener("scroll", updateRect, { passive: true });
+        window.addEventListener("resize", updateRect);
 
         return () => {
-            timeouts.forEach(clearTimeout);
             rootEl.removeEventListener("mousemove", onMouseMove);
             rootEl.removeEventListener("mouseleave", onMouseLeave);
             rootEl.removeEventListener("click", onClick);
-            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("scroll", updateRect);
+            window.removeEventListener("resize", updateRect);
         };
-    }, [copy]);
+    }, []);
 
     return (
         <section
@@ -211,11 +198,15 @@ export function Component() {
         >
             <style jsx global>{`
                 .cloudtopia-hero .word {
+                    display: inline-block;
                     opacity: 0;
-                    transform: translateY(30px) scale(0.86);
-                    filter: blur(10px);
+                    /* Entrance is now driven purely by CSS (delay set inline per
+                       word). animation-fill-mode "both" holds the hidden 0% state
+                       until the delay elapses, then settles on the visible 100%
+                       state — no JavaScript required, so the headline paints on
+                       first load instead of after hydration. */
+                    animation: word-appear 0.82s ease-out both;
                     transition: text-shadow 260ms ease;
-                    will-change: transform, opacity, filter;
                 }
 
                 .cloudtopia-hero .word:hover {
@@ -292,7 +283,6 @@ export function Component() {
                     background: rgba(2, 132, 199, 0.36);
                     box-shadow: 0 0 30px rgba(2, 132, 199, 0.16);
                     animation: float 12s ease-in-out infinite;
-                    animation-play-state: paused;
                 }
 
                 .cloudtopia-hero .cloud-veil {
@@ -444,7 +434,7 @@ export function Component() {
 
             <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center gap-4 px-5 pb-12 pt-7 sm:gap-5 sm:px-8 sm:pb-14 sm:pt-10 lg:gap-6 lg:px-10 lg:pb-16 lg:pt-12">
                 <div className="text-center">
-                    <p className="font-mono text-xs font-black uppercase leading-5 tracking-[0.2em] text-[#0284c7] sm:text-sm md:text-[0.92rem]">
+                    <p className="font-mono text-xs font-black uppercase leading-5 tracking-[0.2em] text-[#0369a1] sm:text-sm md:text-[0.92rem]">
                         <WordLine text={copy.eyebrow} />
                     </p>
                     <div className="mx-auto mt-4 h-px w-20 bg-gradient-to-r from-transparent via-[#0284c7]/45 to-transparent" />
@@ -455,11 +445,11 @@ export function Component() {
                         id="cloudtopia-home-hero-title"
                         className="mx-auto max-w-6xl text-balance text-[1.8rem] font-black leading-[1.08] tracking-tight text-[#0f172a] sm:text-5xl lg:text-6xl xl:text-[4.85rem]"
                     >
-                        <WordLine text={copy.headline} start={420} />
+                        <WordLine text={copy.headline} start={60} stagger={55} />
                     </h1>
 
-                    <p className="mx-auto max-w-5xl text-balance text-base font-extrabold leading-7 text-[#0284c7] sm:text-xl lg:text-2xl lg:leading-9">
-                        <WordLine text={copy.subline} start={1500} />
+                    <p className="mx-auto max-w-5xl text-balance text-base font-extrabold leading-7 text-[#0369a1] sm:text-xl lg:text-2xl lg:leading-9">
+                        <WordLine text={copy.subline} start={380} stagger={26} />
                     </p>
 
                     <p className="mx-auto max-w-4xl text-pretty text-sm font-bold leading-7 text-[#475569] sm:text-base sm:leading-8">

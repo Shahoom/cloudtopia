@@ -658,7 +658,7 @@ export default function ServicesGrid() {
                   alt={locale === 'ar' ? activeTabData.label.ar : activeTabData.label.en}
                   fill
                   sizes="(max-width: 1024px) 100vw, 1000px"
-                  quality={100}
+                  quality={90}
                   priority
                   className="object-cover transition-transform duration-700 hover:scale-103"
                 />
@@ -752,9 +752,12 @@ function ServiceCard({ title, description, link, Icon, locale, learnMoreText }: 
 
         {/* Service Details */}
         <div className="min-w-0 flex-1">
-          <h4 className="text-base sm:text-lg font-black text-neutral-900 mb-1.5 group-hover:text-blue-600 transition-colors duration-300">
+          {/* h3 (not h4): these service cards render before the active-tab
+              category label in the DOM, so an h4 here produced an h2->h4 skip.
+              Explicit text-base/lg classes keep the visual size unchanged. */}
+          <h3 className="text-base sm:text-lg font-black text-neutral-900 mb-1.5 group-hover:text-blue-600 transition-colors duration-300">
             {title}
-          </h4>
+          </h3>
           <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed line-clamp-2 mb-2.5">
             {description}
           </p>

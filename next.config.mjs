@@ -35,6 +35,22 @@ const nextConfig = {
           },
         ],
       },
+      // Static brand assets are content-addressed by name and effectively
+      // immutable — give them a one-year cache so repeat visits and the
+      // directly-fetched hero background don't re-download (Lighthouse:
+      // "use efficient cache lifetimes").
+      {
+        source: '/fonts/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
+        source: '/icons/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
+        source: '/images/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' }],
+      },
     ]
   },
 
@@ -43,7 +59,10 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75, 90],
-    minimumCacheTTL: 60,
+    // 60s forced the optimizer to re-encode the same images constantly and is
+    // what Lighthouse flags as "inefficient cache lifetimes". Brand imagery is
+    // effectively immutable, so cache optimized outputs for 31 days.
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       {
         protocol: 'https',

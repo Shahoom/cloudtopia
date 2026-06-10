@@ -128,7 +128,7 @@ function IndustryVisual({ industry, locale, direction }: { industry: HomeIndustr
                 sizes="(max-width: 1024px) 84vw, 480px"
                 className={`${desktopObjectFit} object-center`}
                 priority={industry.id === 'finance'}
-                quality={100}
+                quality={90}
               />
               <div className="absolute inset-0 rounded-[0.85rem] bg-[linear-gradient(108deg,rgba(255,255,255,0.14),transparent_34%),radial-gradient(circle_at_86%_12%,rgba(255,255,255,0.14),transparent_22%)]" />
               <motion.div
@@ -180,7 +180,7 @@ function IndustryVisual({ industry, locale, direction }: { industry: HomeIndustr
               sizes="(max-width: 640px) 210px, 230px"
               className={`${mobileObjectFit} object-center`}
               priority={industry.id === 'finance'}
-              quality={100}
+              quality={90}
             />
             <div className="absolute inset-0 rounded-[1.85rem] bg-[linear-gradient(115deg,rgba(255,255,255,0.20),transparent_25%),linear-gradient(180deg,transparent_70%,rgba(2,6,23,0.32))]" />
             <div className="absolute bottom-3 left-1/2 z-30 h-1 w-16 -translate-x-1/2 rounded-full bg-white/40" />

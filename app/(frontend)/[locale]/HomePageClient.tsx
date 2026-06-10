@@ -15,21 +15,27 @@ import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'
 
 import CloudHero from '@/components/home/CloudHero'
-import ServicesGrid from '@/components/home/ServicesGrid'
-import AiDigitalServices from '@/components/home/AiDigitalServices'
-import IndustriesPreview from '@/components/home/IndustriesPreview'
-import EnterpriseProof from '@/components/home/EnterpriseProof'
-import SolutionFinder from '@/components/solution-finder/SolutionFinder'
-import EnterpriseGrowthCTA from '@/components/home/EnterpriseGrowthCTA'
-import WorkWithSection from '@/components/home/WorkWithSection'
-import TechnologyStackSection from '@/components/home/TechnologyStackSection'
-import WhyCloudTopia from '@/components/home/WhyCloudTopia'
-import HowWeWork from '@/components/home/HowWeWork'
-import FAQ from '@/components/home/FAQ'
-import FinalCTA from '@/components/home/FinalCTA'
-import ArticlesTeaser, { type TeaserPost } from '@/components/home/ArticlesTeaser'
-import Testimonials from '@/components/home/Testimonials'
 import { AuroraBackground } from '@/components/ui/aurora-background'
+import { type TeaserPost } from '@/components/home/ArticlesTeaser'
+
+// Everything below the hero is code-split. ssr stays on (next/dynamic default)
+// so every section's markup is still server-rendered for SEO and CLS stays at
+// zero — the win is that the initial homepage chunk is small and the browser
+// parses the rest as several short tasks instead of one long blocking one
+// (addresses "reduce unused JavaScript" + "avoid long main-thread tasks").
+const ServicesGrid = dynamic(() => import('@/components/home/ServicesGrid'))
+const AiDigitalServices = dynamic(() => import('@/components/home/AiDigitalServices'))
+const IndustriesPreview = dynamic(() => import('@/components/home/IndustriesPreview'))
+const SolutionFinder = dynamic(() => import('@/components/solution-finder/SolutionFinder'))
+const EnterpriseGrowthCTA = dynamic(() => import('@/components/home/EnterpriseGrowthCTA'))
+const WorkWithSection = dynamic(() => import('@/components/home/WorkWithSection'))
+const TechnologyStackSection = dynamic(() => import('@/components/home/TechnologyStackSection'))
+const WhyCloudTopia = dynamic(() => import('@/components/home/WhyCloudTopia'))
+const HowWeWork = dynamic(() => import('@/components/home/HowWeWork'))
+const FAQ = dynamic(() => import('@/components/home/FAQ'))
+const FinalCTA = dynamic(() => import('@/components/home/FinalCTA'))
+const ArticlesTeaser = dynamic(() => import('@/components/home/ArticlesTeaser'))
+const Testimonials = dynamic(() => import('@/components/home/Testimonials'))
 
 const StarsCanvas = dynamic(
     () => import('@/components/ui/stars-canvas').then((mod) => mod.StarsCanvas),

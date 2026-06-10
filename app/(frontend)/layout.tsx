@@ -11,7 +11,10 @@ import '../globals.css'
 const cairo = Cairo({
   subsets: ['latin', 'arabic'],
   variable: '--font-cairo',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  // Headings only ever use 600/700/800/900 (+400 baseline); dropping the unused
+  // 300/500 cuts four Cairo font files (two weights × two subsets) from the
+  // critical download path.
+  weight: ['400', '600', '700', '800', '900'],
   display: 'swap',
 })
 
@@ -120,20 +123,10 @@ export default async function FrontendLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <head>
-        <link
-          rel="preload"
-          href="/fonts/Changa-VariableFont_wght.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/AgharaProRegular.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
+        {/* Only the LCP hero background is preloaded. The self-hosted TTF body/
+            logo faces use font-display:swap, so preheating them at high priority
+            here just stole bandwidth from the LCP image and render-critical CSS
+            on mobile — they now load lazily and swap in without blocking paint. */}
         <link rel="preload" as="image" href="/images/homepage/clouds.webp" type="image/webp" fetchPriority="high" />
         <link rel="manifest" href="/manifest.json" />
       </head>
