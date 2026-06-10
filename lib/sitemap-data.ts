@@ -22,26 +22,21 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         .filter((page: any) => supportedLocales.has(page.locale) && !['blog', 'locations', 'labs'].includes(page.slug))
         .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
-    // Stable, content-derived lastmod. This was `new Date()` per request, which
-    // stamped every data-driven URL with the fetch time on each crawl and taught
-    // Google to distrust the freshness signal. Prefer each section's source-data
-    // file mtime (deploy-stable); fall back to the newest CMS page date so the
-    // value is always real and never request-varying.
+    // Stable, recent lastmod for the code-defined data-driven pages. This was
+    // `new Date()` per request, which stamped every URL with the fetch time on
+    // each crawl and taught Google to distrust the freshness signal. File mtimes
+    // are no good either — Vercel's traced source files report a fixed 2018
+    // mtime — so use the newest CMS content date: real, recent, and only moves
+    // when content actually changes.
     const cmsLatest = entries.reduce((m: Date, e) => {
         const d = e.lastModified ? new Date(e.lastModified) : null
         return d && !isNaN(d.getTime()) && d > m ? d : m
     }, new Date(0))
-    const mtimeOf = (rel: string): Date => {
-        try {
-            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), rel)
-            if (fs.existsSync(p)) return fs.statSync(p).mtime
-        } catch { /* ignore */ }
-        return cmsLatest
-    }
-    const lastModified = cmsLatest
-    const servicesMtime = mtimeOf('lib/seo/services.ts')
-    const industriesMtime = mtimeOf('lib/seo/industries.ts')
-    const countriesMtime = mtimeOf('lib/seo/country-landing-pages.ts')
+    const stableLastmod = cmsLatest.getTime() > 0 ? cmsLatest : new Date()
+    const lastModified = stableLastmod
+    const servicesMtime = stableLastmod
+    const industriesMtime = stableLastmod
+    const countriesMtime = stableLastmod
     // Core static + bespoke service-landing routes that must always be present in
     // the sitemap, regardless of whether a matching CMS Pages row exists. Each is
     // dedup-guarded below so it never duplicates an entry already produced from CMS
