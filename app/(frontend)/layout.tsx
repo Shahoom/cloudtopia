@@ -6,6 +6,7 @@ import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLaz
 import { ThemeProvider } from '@/components/theme-provider'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 import '../globals.css'
 
 const cairo = Cairo({
@@ -177,6 +178,15 @@ export default async function FrontendLayout({
               ],
               sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
               knowsLanguage: ['en', 'ar'],
+              // Connect the company entity to the real founder Person, reusing the
+              // exact #person @id minted on the /articles/author/mohamad-shahm
+              // profile route so Google reconciles author == founder == one person.
+              founder: {
+                '@type': 'Person',
+                '@id': 'https://cloudtopia.net/articles/author/mohamad-shahm#person',
+                name: 'Mohamad Shahm',
+                url: 'https://cloudtopia.net/articles/author/mohamad-shahm',
+              },
             }),
           }}
         />
@@ -218,6 +228,7 @@ export default async function FrontendLayout({
             <AIChatbot />
           </ThemeProvider>
           <SpeedInsights />
+          <Analytics />
         </div>
       </body>
     </html>

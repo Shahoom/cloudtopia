@@ -122,7 +122,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Restaurant Menu Websites', ar: 'مواقع المطاعم والطلب' },
         description: { en: 'Interactive digital menus with instant checkout, WhatsApp ordering, and branch selectors.', ar: 'قوائم طعام تفاعلية ثنائية اللغة مع طلب مباشر عبر الويب وسير عمل واتساب.' },
-        link: '/website-design',
+        link: '/restaurant-qr-menu',
         iconName: 'Utensils'
       },
       {

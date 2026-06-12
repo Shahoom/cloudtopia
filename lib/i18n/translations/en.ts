@@ -274,7 +274,7 @@ export const en = {
       items: [
         {
           question: 'How much does a project with CloudTopia cost?',
-          answer: 'Current starting prices and package details are listed on the pricing page. We agree the scope and price up front, in writing, before production starts.',
+          answer: 'Projects start at $150 for a landing page, $299 for a starter website, and $999 for a professional bilingual website (our most popular tier); e-commerce stores start at $499 and custom business systems at $999. We agree the full scope and final price up front, in writing, before production starts. Full package details are on the pricing page.',
         },
         {
           question: 'Which languages do you build in?',

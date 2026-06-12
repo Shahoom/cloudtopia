@@ -1,10 +1,19 @@
 import type { Metadata } from 'next'
-import { buildHreflangMap, canonicalUrl } from '../i18n/url.ts'
+import { buildHreflangMap, canonicalUrl, stripBrandSuffix } from '../i18n/url.ts'
 import { ogImagesFor } from '../og/og-image.ts'
 import { getPageBundle } from './content.ts'
 import { normalizePageSlug } from './page-structure.ts'
 
 const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
+const ogAlternateLocales: Record<string, string> = { en: 'ar_SA', ar: 'en_US' }
+
+// Locale-aware brand line used ONLY as the ultimate title fallback. Returned via
+// `title.absolute` so the root layout's `%s | CloudTopia` template does NOT append
+// a second brand (which produced "CloudTopia | CloudTopia" on title-less pages).
+const brandTitles: Record<string, string> = {
+  en: 'CloudTopia — Digital & Cloud Technologies',
+  ar: 'كلاود توبيا — تقنيات رقمية وسحابية',
+}
 
 const defaultDescriptions: Record<string, string> = {
   en: 'CloudTopia builds websites, e-commerce stores, custom systems, and web applications.',
@@ -32,7 +41,14 @@ export async function getCMSMetadata(
   const path = normalized === '/' ? '/' : `/${normalized}`
   const bundle = await getPageBundle(locale as any, normalized)
   const seo = (bundle.seo || {}) as Record<string, any>
-  const title = String(seo.title || bundle.page?.title || fallback?.title || 'CloudTopia')
+  // Strip any existing " | CloudTopia" so the layout template adds exactly one
+  // brand; when no title source exists, fall back to the localized brand line via
+  // `title.absolute` instead of the bare "CloudTopia" (which double-branded).
+  const rawTitle = seo.title || bundle.page?.title || fallback?.title
+  const cleanTitle = rawTitle ? stripBrandSuffix(String(rawTitle)) : ''
+  const brandLine = brandTitles[locale] || brandTitles.en
+  const metadataTitle: Metadata['title'] = cleanTitle ? cleanTitle : { absolute: brandLine }
+  const ogTitle = cleanTitle || brandLine
   const description = String(
     seo.description ||
       fallback?.description ||
@@ -43,18 +59,19 @@ export async function getCMSMetadata(
   const imagePage = ogPage || (normalized === '/' ? 'home' : normalized)
 
   return {
-    title,
+    title: metadataTitle,
     description,
     robots: seo.noindex ? { index: false, follow: false } : undefined,
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url: canonicalUrl(locale, path),
       locale: ogLocales[locale] || ogLocales.en,
+      alternateLocale: ogAlternateLocales[locale] || ogAlternateLocales.en,
       images: ogImagesFor({ page: imagePage, locale }),
     },
     twitter: {
-      title,
+      title: ogTitle,
       description,
       images: ogImagesFor({ page: imagePage, locale }).map((image) => image.url),
     },

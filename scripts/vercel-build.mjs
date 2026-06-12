@@ -117,6 +117,21 @@ if (migrate.code !== 0) {
   process.exit(migrate.code)
 }
 
+// Phase 1.5 — regenerate the machine-readable llms.txt Articles/Services blocks
+// from the live DB so the file AI engines read never drifts from published
+// posts. Runs BEFORE `next build` so the refreshed public/llms.txt is copied
+// into the static output. Best-effort: a stale llms.txt must never fail a
+// deploy, so a non-zero exit is reported but not propagated.
+const llms = await runStep('llms', 'npx', ['tsx', 'scripts/generate-llms.ts'], process.env)
+await report(llms.code === 0 ? 'llms-done' : 'llms-failed', {
+  code: llms.code,
+  signal: llms.signal,
+  tail: llms.tail.slice(-2000),
+})
+if (llms.code !== 0) {
+  console.warn(`[deploy-diag] llms.txt regeneration failed (code ${llms.code}); continuing with the committed file.`)
+}
+
 // Phase 2 — next build (runtime fallback chain decides its own DB URL).
 const build = await runStep('next-build', 'npx', ['next', 'build'], process.env)
 await report(build.code === 0 ? 'build-done' : 'build-failed', {

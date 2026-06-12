@@ -44,13 +44,15 @@ export async function buildInsightsRss(locale = 'en') {
     })
     .join('\n')
 
+  const feedUrl = canonicalUrl(locale, '/articles/rss.xml')
   return `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>CloudTopia Articles</title>
   <link>${escapeXml(canonicalUrl(locale, '/articles'))}</link>
+  <atom:link href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml" />
   <description>Ideas, guides, and strategies for websites, systems, AI, and cloud technology.</description>
-  <language>${locale}</language>
+  <language>${locale === 'ar' ? 'ar-sa' : 'en-us'}</language>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${items}
 </channel>

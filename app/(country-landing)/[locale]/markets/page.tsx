@@ -90,12 +90,45 @@ export default async function MarketsPage({ params }: PageProps) {
             url: `https://cloudtopia.net${isArabic ? country.arabicUrl : country.englishUrl}`,
         })),
     }
+    // The (country-landing) route group does not inherit the root layout's
+    // canonical #organization node, so /markets must emit the FULL node itself
+    // (sharing the @id) rather than a thin, disconnected duplicate.
     const organizationSchema = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
+        '@id': 'https://cloudtopia.net/#organization',
         name: 'CloudTopia',
         url: 'https://cloudtopia.net',
-        sameAs: ['https://instagram.com/thecloudtopia'],
+        logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+        description: isArabic
+            ? 'كلاود توبيا شركة تقنيات رقمية وسحابية تبني مواقع ومتاجر إلكترونية وتطبيقات ويب وأنظمة أعمال للشركات في الخليج والشرق الأوسط.'
+            : 'CloudTopia is a digital and cloud technology company building websites, e-commerce stores, web apps, and business systems for companies across the Gulf and Middle East.',
+        foundingDate: '2024',
+        areaServed: [
+            { '@type': 'Country', name: 'Saudi Arabia' },
+            { '@type': 'Country', name: 'United Arab Emirates' },
+            { '@type': 'Country', name: 'Kuwait' },
+            { '@type': 'Country', name: 'Qatar' },
+            { '@type': 'Country', name: 'Bahrain' },
+            { '@type': 'Country', name: 'Oman' },
+        ],
+        contactPoint: [
+            {
+                '@type': 'ContactPoint',
+                contactType: 'customer service',
+                email: 'info@cloudtopia.net',
+                availableLanguage: ['English', 'Arabic'],
+                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
+            },
+        ],
+        sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
+        knowsLanguage: ['en', 'ar'],
+        founder: {
+            '@type': 'Person',
+            '@id': 'https://cloudtopia.net/articles/author/mohamad-shahm#person',
+            name: 'Mohamad Shahm',
+            url: 'https://cloudtopia.net/articles/author/mohamad-shahm',
+        },
     }
     const breadcrumbSchema = {
         '@context': 'https://schema.org',

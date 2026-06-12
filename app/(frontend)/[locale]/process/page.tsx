@@ -264,20 +264,15 @@ export default async function ProcessPage({ params }: PageProps) {
         description: L.metaDescription,
         url: canonicalUrl(locale, '/process'),
         inLanguage: locale === 'ar' ? 'ar' : 'en',
-        isPartOf: { '@type': 'WebSite', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        isPartOf: { '@type': 'WebSite', '@id': 'https://cloudtopia.net/#website' },
         about: {
             '@type': 'Service',
             name: 'CloudTopia digital project delivery process',
             provider: {
                 '@type': 'Organization',
+                '@id': 'https://cloudtopia.net/#organization',
                 name: 'CloudTopia',
                 url: 'https://cloudtopia.net',
-                contactPoint: {
-                    '@type': 'ContactPoint',
-                    contactType: 'project intake',
-                    email: 'info@cloudtopia.net',
-                    availableLanguage: ['English', 'Arabic'],
-                },
             },
         },
     }

@@ -10,6 +10,9 @@ Disallow: /admin
 
 Sitemap: https://cloudtopia.net/sitemap.xml
 
+# RSS feed (also linked via <link rel="alternate" type="application/rss+xml"> in <head>)
+# https://cloudtopia.net/articles/rss.xml  ·  https://cloudtopia.net/ar/articles/rss.xml
+
 # AI agent context files
 # llms.txt: https://cloudtopia.net/llms.txt
 # Pricing (machine-readable): https://cloudtopia.net/pricing.md

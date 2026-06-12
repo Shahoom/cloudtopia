@@ -27,7 +27,7 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale = 'en' } = await params
-  return getCMSMetadata(locale, '/articles', 'articles', {
+  const meta = await getCMSMetadata(locale, '/articles', 'articles', {
     title:
       locale === 'ar'
         ? 'مقالات كلاود توبيا | أدلة الويب والأنظمة والذكاء الاصطناعي'
@@ -37,6 +37,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? 'رؤى وأدلة عملية من كلاود توبيا حول تصميم المواقع، التجارة الإلكترونية، الأنظمة المخصصة، الأتمتة، والذكاء الاصطناعي للشركات.'
         : 'Practical insights and guides from CloudTopia on web design, e-commerce, custom systems, automation, and AI for growing businesses.',
   })
+  // Make the RSS feed discoverable from the articles index (rel=alternate).
+  return {
+    ...meta,
+    alternates: {
+      ...meta.alternates,
+      types: {
+        'application/rss+xml': [{ url: canonicalUrl(locale, '/articles/rss.xml'), title: 'CloudTopia Articles' }],
+      },
+    },
+  }
 }
 
 export default async function ArticlesPage({ params, searchParams }: PageProps) {
@@ -80,11 +90,13 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
     '@type': 'Blog',
     '@id': `${canonicalUrl(locale, '/articles')}#blog`,
     name: locale === 'ar' ? 'مقالات كلاود توبيا' : 'CloudTopia Articles',
-    // I18N-1: localized description (was hardcoded English on /ar).
+    // Describe the blog's ACTUAL topical focus (matches generateMetadata) — the
+    // previous "cloud computing / DevOps" copy advertised services CloudTopia
+    // doesn't offer and contradicted the page's own meta description.
     description:
       locale === 'ar'
-        ? 'أدلة عملية في الحوسبة السحابية ورؤى البنية التحتية واستراتيجيات DevOps.'
-        : 'Practical cloud computing guides, infrastructure insights, and DevOps strategies.',
+        ? 'أدلة عملية حول تصميم المواقع، التجارة الإلكترونية، أنظمة الأعمال المخصصة، تطبيقات الويب، والأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
+        : 'Practical guides on web design, e-commerce, custom business systems, web applications, and AI automation for businesses across the Gulf and Middle East.',
     url: canonicalUrl(locale, '/articles'),
     inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
     publisher: {

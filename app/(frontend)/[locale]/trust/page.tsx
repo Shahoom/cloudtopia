@@ -272,17 +272,12 @@ export default async function TrustPage({ params }: PageProps) {
         description: L.metaDescription,
         url: canonicalUrl(locale, '/trust'),
         inLanguage: locale === 'ar' ? 'ar' : 'en',
-        isPartOf: { '@type': 'WebSite', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        isPartOf: { '@type': 'WebSite', '@id': 'https://cloudtopia.net/#website' },
         about: {
             '@type': 'Organization',
+            '@id': 'https://cloudtopia.net/#organization',
             name: 'CloudTopia',
             url: 'https://cloudtopia.net',
-            contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'project intake',
-                email: 'info@cloudtopia.net',
-                availableLanguage: ['English', 'Arabic'],
-            },
         },
     }
 

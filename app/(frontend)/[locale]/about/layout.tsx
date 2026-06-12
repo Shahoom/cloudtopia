@@ -43,8 +43,7 @@ export default async function ({ children, params }: { children: React.ReactNode
                         inLanguage: locale === 'ar' ? 'ar' : 'en',
                         isPartOf: {
                             '@type': 'WebSite',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
+                            '@id': 'https://cloudtopia.net/#website',
                         },
                         hasPart: [
                             {
@@ -70,7 +69,7 @@ export default async function ({ children, params }: { children: React.ReactNode
                             {
                                 '@type': 'CollectionPage',
                                 name: 'Regional market pages',
-                                url: canonicalUrl(locale, '/locations'),
+                                url: canonicalUrl(locale, '/markets'),
                             },
                             {
                                 '@type': 'ContactPage',
@@ -143,18 +142,15 @@ export default async function ({ children, params }: { children: React.ReactNode
                                     url: canonicalUrl(locale, '/services/seo-optimization'),
                                 },
                             ],
-                            sameAs: [
-                                'https://www.linkedin.com/company/cloudtopia',
-                                'https://twitter.com/cloudtopia',
-                                'https://www.instagram.com/cloudtopia',
-                            ],
-                            contactPoint: {
-                                '@type': 'ContactPoint',
-                                contactType: 'customer service',
-                                email: 'hello@cloudtopia.net',
-                                availableLanguage: ['English', 'Arabic'],
-                                areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
-                            },
+                            // SD-5: `sameAs` and `contactPoint` are intentionally NOT
+                            // redefined here. This node shares the canonical
+                            // #organization @id, so the authoritative social profiles
+                            // (x.com/thecloudtopia, instagram.com/thecloudtopia,
+                            // github.com/Shahoom) and the info@cloudtopia.net contact
+                            // live ONLY on the root node in app/(frontend)/layout.tsx.
+                            // Repeating them here with different handles/email made the
+                            // merged entity self-contradict. Keep only additive,
+                            // non-conflicting enrichment (knowsAbout/makesOffer/etc).
                         },
                     },
                 ]}

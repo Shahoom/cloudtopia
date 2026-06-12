@@ -227,14 +227,9 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
             "description": t.pitchDescription,
             "provider": {
               "@type": "Organization",
+              "@id": "https://cloudtopia.net/#organization",
               "name": "CloudTopia",
-              "url": "https://cloudtopia.net",
-              "logo": "https://cloudtopia.net/images/CloudTopia.svg",
-              "sameAs": [
-                "https://x.com/thecloudtopia",
-                "https://instagram.com/thecloudtopia",
-                "https://github.com/Shahoom"
-              ]
+              "url": "https://cloudtopia.net"
             },
             "areaServed": [
               { "@type": "Country", "name": "Saudi Arabia" },

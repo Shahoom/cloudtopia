@@ -62,6 +62,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical,
       languages: buildHreflangMap(`/articles/${post.slug}`),
+      types: {
+        'application/rss+xml': [{ url: canonicalUrl(locale, '/articles/rss.xml'), title: 'CloudTopia Articles' }],
+      },
     },
   }
 }
@@ -75,7 +78,13 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   const canonical = post.seo.canonicalUrl || canonicalUrl(locale, `/articles/${post.slug}`)
   const relatedPosts = await getRelatedBlogPosts(post)
   const previousNext = await getPreviousNextPosts(post)
-  const image = absoluteUrl(post.seo.ogImage?.url || post.coverImage?.url)
+  // Article/BlogPosting schema REQUIRES an image. When a post has neither an
+  // OG nor a cover image, absoluteUrl() returns undefined and the post ships
+  // with no image (silently ineligible for rich results). Fall back to a
+  // guaranteed, absolute raster brand asset so `image` is never undefined.
+  const image =
+    absoluteUrl(post.seo.ogImage?.url || post.coverImage?.url) ||
+    'https://cloudtopia.net/images/homepage/clouds.webp'
   const faqItems = post.seo.faqSchema ? extractFAQSchemaItems(post.contentBlocks) : []
 
   // SD-2: a real Person author references the #person @id on the canonical
@@ -91,7 +100,10 @@ export default async function ArticleDetailPage({ params }: PageProps) {
     description: post.excerpt,
     image,
     inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
-    ...(post.wordCount > 0 ? { wordCount: post.wordCount } : {}),
+    // Only advertise wordCount once an article has real depth. Emitting
+    // wordCount:75 on a post titled "Ultimate Guide" hands crawlers and answer
+    // engines an unambiguous thin-content flag — worse than omitting it.
+    ...(post.wordCount >= 600 ? { wordCount: post.wordCount } : {}),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: isPersonAuthor

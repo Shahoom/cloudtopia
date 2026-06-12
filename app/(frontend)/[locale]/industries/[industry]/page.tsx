@@ -11,7 +11,7 @@ import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { getCMSPage } from '@/lib/cms/content'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { buildBreadcrumbSchema, buildFaqSchema, buildServiceSchema } from '@/lib/seo/schema'
+import { buildBreadcrumbSchema, buildFaqSchema, buildServiceSchema, buildOrganizationRef } from '@/lib/seo/schema'
 
 type PageProps = {
     params: Promise<{ locale: string; industry: string }>
@@ -237,18 +237,10 @@ export default async function IndustryPage({ params }: PageProps) {
         '@type': 'Service',
         name: `${name} Digital Solutions`,
         description: localizedValue(industry.description, locale),
-        provider: { '@type': 'Organization', name: 'CloudTopia', url: 'https://cloudtopia.net' },
+        provider: buildOrganizationRef(),
         areaServed: marketLinks.map((country) => ({ '@type': 'Country', name: locale === 'ar' ? country.countryNameArabic : country.countryNameEnglish })),
         serviceType: industry.serviceLinks.map((service) => localizedValue(service.label, locale)),
         url: canonicalUrl(locale, `/industries/${industry.slug}`),
-    }
-
-    const organizationSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'CloudTopia',
-        url: 'https://cloudtopia.net',
-        sameAs: ['https://instagram.com/thecloudtopia'],
     }
 
     const webPageSchema = {
@@ -264,7 +256,6 @@ export default async function IndustryPage({ params }: PageProps) {
         <main className="relative min-h-screen bg-[#f4f1f8] text-eerie" dir={isRTL ? 'rtl' : 'ltr'}>
             <JsonLd
                 schema={[
-                    organizationSchema,
                     webPageSchema,
                     serviceSchema,
                     buildFaqSchema(faqItems),
