@@ -100,7 +100,7 @@ export const serviceFAQs: Record<string, ServiceFAQs> = {
     'email-marketing-automation': baseFAQs,
 }
 
-async function getServiceFAQs(serviceSlug: string, locale: string): Promise<FAQ[] | undefined> {
+export async function getServiceFAQs(serviceSlug: string, locale: string): Promise<FAQ[] | undefined> {
     const normalizedLocale = locale === 'ar' ? 'ar' : 'en'
     const fallback = serviceFAQs[serviceSlug]?.[normalizedLocale] || baseFAQs[normalizedLocale]
     const { getCMSServiceFAQs } = await import('../cms/content')

@@ -2,6 +2,7 @@ import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import ContentCreationClient from './ContentCreationClient'
+import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
 import { contentCreationSeoFallback } from './layout'
 import type { Metadata } from 'next'
@@ -44,6 +45,7 @@ export default async function ContentCreationPage({
                 </p>
             </div>
             <ContentCreationClient t={t} />
+            <ServiceFAQSection slug="content-creation" locale={locale} />
         </>
     )
 }

@@ -8,6 +8,7 @@ import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
+import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 
 type PageProps = {
@@ -451,6 +452,16 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+
+            <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+                <PageBreadcrumbs
+                    locale={locale}
+                    items={[
+                        { label: isRTL ? 'الخدمات' : 'Services', href: localePath(locale, '/services') },
+                        { label: serviceName },
+                    ]}
+                />
+            </div>
 
             <HeroOrbitDeck
                 eyebrow={`${L.badge} / ${categoryName}`}

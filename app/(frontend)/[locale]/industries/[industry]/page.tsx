@@ -11,6 +11,7 @@ import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { getCMSPage } from '@/lib/cms/content'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { buildBreadcrumbSchema, buildFaqSchema, buildServiceSchema, buildOrganizationRef } from '@/lib/seo/schema'
 
 type PageProps = {
@@ -266,6 +267,16 @@ export default async function IndustryPage({ params }: PageProps) {
                     ]),
                 ]}
             />
+
+            <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+                <PageBreadcrumbs
+                    locale={locale}
+                    items={[
+                        { label: isRTL ? 'القطاعات' : 'Industries', href: localePath(locale, '/industries') },
+                        { label: name },
+                    ]}
+                />
+            </div>
 
             <HeroOrbitDeck
                 eyebrow={`${L.badge} / ${localizedValue(visual.workflow, locale)}`}

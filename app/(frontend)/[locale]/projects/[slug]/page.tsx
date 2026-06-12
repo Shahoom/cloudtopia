@@ -2,11 +2,12 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
+import { ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
 import { getProjectById, getAllProjects } from '@/lib/projects'
 import { getProject } from '@/lib/cms/content'
 import { getOgImage } from '@/lib/og/og-image'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 
 type PageProps = {
     params: Promise<{ locale: string; slug: string }>
@@ -124,13 +125,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 <div className="pointer-events-none absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-secondary-200/30 rounded-full blur-[120px]" />
 
                 <div className="relative max-w-5xl mx-auto">
-                    <Link
-                        href={localePath(locale, '/projects')}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors mb-8"
-                    >
-                        <ArrowLeft className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-                        {L.backToProjects}
-                    </Link>
+                    <PageBreadcrumbs
+                        locale={locale}
+                        className="mb-8"
+                        items={[
+                            { label: isRTL ? 'المشاريع' : 'Projects', href: localePath(locale, '/projects') },
+                            { label: project.title },
+                        ]}
+                    />
 
                     <div className="flex flex-wrap items-center gap-3 mb-6">
                         <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-xs font-bold uppercase tracking-widest text-neutral-700 shadow-sm">

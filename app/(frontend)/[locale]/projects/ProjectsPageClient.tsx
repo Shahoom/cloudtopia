@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import {
@@ -277,7 +278,7 @@ const ProjectModal = ({
 }
 
 // Floating Card with 3D Effect
-const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor, t, isActive, onClick }: any) => {
+const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor, t, isActive, onClick, locale }: any) => {
   const cardRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(cardRef, { once: true, margin: "-100px" })
 
@@ -448,13 +449,14 @@ const FloatingProjectCard = ({ project, index, getCategoryIcon, getCategoryColor
 
           {/* View button */}
           <div className="flex items-center justify-between">
-            <motion.div
-              animate={{ opacity: isHovered ? 1 : 0.7, x: isHovered ? 5 : 0 }}
-              className="flex items-center gap-2 text-sm font-semibold text-primary-600"
+            <Link
+              href={localePath(locale, `/projects/${project.id}`)}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              className="flex items-center gap-2 text-sm font-semibold text-primary-600 transition-all hover:gap-3"
             >
               <span>{t.projects.card.viewDetails}</span>
               <ArrowRight className="w-4 h-4" />
-            </motion.div>
+            </Link>
 
             {/* Live link for real projects */}
             {project.link && (
@@ -818,6 +820,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
                 t={t}
                 isActive={hoveredProject === project.id}
                 onClick={() => openProjectModal(project)}
+                locale={locale}
               />
             ))}
           </div>
@@ -940,6 +943,14 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
                       <span className="text-xs text-neutral-500">{project.metrics.label}</span>
                       <span className="text-lg font-bold text-emerald-600">{project.metrics.value}</span>
                     </div>
+                    <Link
+                      href={localePath(locale, `/projects/${project.id}`)}
+                      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-all hover:gap-2.5"
+                    >
+                      {t.projects.card?.viewDetails || (locale === 'ar' ? 'عرض دراسة الحالة' : 'View case study')}
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </motion.div>
               ))}

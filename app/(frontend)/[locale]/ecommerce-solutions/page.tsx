@@ -2,6 +2,7 @@ import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import EcommerceSolutionsClient from './EcommerceSolutionsClient'
+import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
 import { ecommerceSolutionsSeoFallback } from './layout'
 import type { Metadata } from 'next'
@@ -44,6 +45,7 @@ export default async function EcommerceSolutionsPage({
                 </p>
             </div>
             <EcommerceSolutionsClient t={t} />
+            <ServiceFAQSection slug="ecommerce-solutions" locale={locale} />
         </>
     )
 }

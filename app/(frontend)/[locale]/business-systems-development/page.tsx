@@ -2,6 +2,7 @@ import { getPageBundle } from '@/lib/cms/content'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import BusinessSystemsClient from './BusinessSystemsClient'
+import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
 import { businessSystemsSeoFallback } from './layout'
 import type { Metadata } from 'next'
@@ -44,6 +45,7 @@ export default async function BusinessSystemsDevelopmentPage({
                 </p>
             </div>
             <BusinessSystemsClient t={t} />
+            <ServiceFAQSection slug="business-systems-development" locale={locale} />
         </>
     )
 }
