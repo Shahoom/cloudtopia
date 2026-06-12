@@ -5,15 +5,7 @@ import type {
   CollectionConfig,
   Field,
 } from 'payload'
-import {
-  EXPERIMENTAL_TableFeature,
-  BlocksFeature,
-  CodeBlock,
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  UploadFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { blogRichTextEditor } from '../lib/cms/blog-rich-text.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
 import { calculateReadingTime, extractLexicalPlainText, slugify } from '../lib/blog/utils.ts'
 import { calculateBlogContentScores } from '../lib/blog/intelligence.ts'
@@ -117,22 +109,6 @@ const revalidateAfterDelete: CollectionAfterDeleteHook = async ({ doc }) => {
   return doc
 }
 
-const richTextEditor = lexicalEditor({
-  features: ({ defaultFeatures }) => [
-    ...defaultFeatures,
-    FixedToolbarFeature(),
-    InlineToolbarFeature(),
-    UploadFeature({
-      enabledCollections: ['media'],
-      maxDepth: 1,
-    }),
-    BlocksFeature({
-      blocks: [CodeBlock()],
-    }),
-    EXPERIMENTAL_TableFeature(),
-  ],
-})
-
 const serviceLinksField: Field = {
   name: 'relatedServices',
   type: 'array',
@@ -184,12 +160,12 @@ export const BlogPosts: CollectionConfig = {
       },
     },
     {
-      name: 'aiGenerator',
+      name: 'importStructure',
       type: 'ui',
       admin: {
         position: 'default',
         components: {
-          Field: '@/components/payload/AIPostGenerator#AIPostGenerator',
+          Field: '@/components/payload/BlogImportStructure#BlogImportStructure',
         },
       },
     },
@@ -274,7 +250,7 @@ export const BlogPosts: CollectionConfig = {
               name: 'content',
               type: 'richText',
               required: true,
-              editor: richTextEditor,
+              editor: blogRichTextEditor,
             },
           ],
         },
