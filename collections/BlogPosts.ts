@@ -174,12 +174,32 @@ export const BlogPosts: CollectionConfig = {
   },
   fields: [
     {
+      name: 'languageToggle',
+      type: 'ui',
+      admin: {
+        position: 'default',
+        components: {
+          Field: '@/components/payload/BlogLanguageToggle#BlogLanguageToggle',
+        },
+      },
+    },
+    {
       name: 'aiGenerator',
       type: 'ui',
       admin: {
         position: 'default',
         components: {
           Field: '@/components/payload/AIPostGenerator#AIPostGenerator',
+        },
+      },
+    },
+    {
+      name: 'optimizeSeo',
+      type: 'ui',
+      admin: {
+        position: 'default',
+        components: {
+          Field: '@/components/payload/BlogOptimizeButton#BlogOptimizeButton',
         },
       },
     },
@@ -384,7 +404,10 @@ export const BlogPosts: CollectionConfig = {
         { label: 'English', value: 'en' },
         { label: 'Arabic', value: 'ar' },
       ],
-      admin: { position: 'sidebar' },
+      // Read-only: the language is set on creation and switched via the
+      // EN ⇄ AR toggle at the top of the editor. Editing it by hand could
+      // collide with the paired sibling and violate the (slug, locale) index.
+      admin: { position: 'sidebar', readOnly: true, description: 'Set by the language toggle at the top of the editor.' },
     },
     {
       name: 'approvalStatus',

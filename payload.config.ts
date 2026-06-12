@@ -27,6 +27,7 @@ import { Users } from './collections/Users.ts'
 import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
 import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
 import { handleTranslateEndpoint } from './lib/cms/translate-endpoint.ts'
+import { handleBlogPairEndpoint } from './lib/cms/blog-pair-endpoint.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -131,6 +132,11 @@ export default buildConfig({
       path: '/blog-ai',
       method: 'post',
       handler: handleBlogAIEndpoint,
+    },
+    {
+      path: '/blog-pair',
+      method: 'post',
+      handler: handleBlogPairEndpoint,
     },
   ],
   db: postgresAdapter({

@@ -14,6 +14,7 @@ type BlogAIAction =
   | 'cta'
   | 'analyze'
   | 'translate'
+  | 'optimize'
 
 type BlogAIRequestBody = {
   action?: BlogAIAction
@@ -34,6 +35,7 @@ const allowedActions = new Set<BlogAIAction>([
   'cta',
   'analyze',
   'translate',
+  'optimize',
 ])
 
 function preview(value: unknown, limit = 1400) {
@@ -88,6 +90,8 @@ function actionPrompt(action: BlogAIAction, input: Record<string, unknown>, post
       'Analyze content readiness.',
     translate:
       'Translate or localize the selected section according to the requested language. Preserve meaning and technical terminology.',
+    optimize:
+      'Produce an SEO optimization package as strict JSON (handled separately).',
   }
 
   return [
@@ -136,6 +140,56 @@ async function callOpenAI(action: BlogAIAction, input: Record<string, unknown>, 
   }
 
   return text
+}
+
+function parseJsonLoose(text: unknown): any {
+  if (typeof text !== 'string') throw new Error('AI returned no usable output.')
+  let s = text.trim()
+  // Strip markdown code fences if the model added them despite instructions.
+  s = s.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
+  // Fall back to the outermost {...} if there is surrounding prose.
+  if (s[0] !== '{') {
+    const start = s.indexOf('{')
+    const end = s.lastIndexOf('}')
+    if (start >= 0 && end > start) s = s.slice(start, end + 1)
+  }
+  return JSON.parse(s)
+}
+
+/**
+ * One-click SEO optimization. Works on the CURRENT editor content (passed via
+ * `input`, so it runs even before the post is saved). Returns a strict JSON
+ * package the client writes straight into the fields. Does NOT rewrite prose.
+ */
+async function runOptimize(input: Record<string, unknown>) {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured.')
+  const model = process.env.AI_MODEL || 'gpt-4o-mini'
+  const language = input.locale === 'ar' ? 'Arabic' : 'English'
+
+  const prompt = [
+    'You are CloudTopia editorial SEO AI inside a secure Payload CMS admin tool.',
+    'CloudTopia builds websites, web apps, dashboards, CRM/ERP systems, automation, and AI-powered business solutions.',
+    `Write every output value in ${language}.`,
+    'Produce an SEO optimization package for the article below.',
+    'Return ONLY minified JSON — no markdown, no code fences, no commentary — with EXACTLY these keys:',
+    '{"metaTitle":string,"metaDescription":string,"focusKeyword":string,"secondaryKeywords":string[],"excerpt":string,"shortExcerpt":string,"slugSuggestion":string,"internalLinks":[{"anchor":string,"target":string}],"warnings":string[]}',
+    'Rules: metaTitle <= 60 characters; metaDescription <= 155 characters; shortExcerpt <= 120 characters; excerpt 1-2 sentences. slugSuggestion is lowercase kebab-case ASCII (transliterate Arabic). internalLinks: 2-4 relevant CloudTopia internal links (targets like /services, /contact, /articles, /about) with natural anchor text. warnings: short notes such as missing image alt text, no H2 subheadings, or thin content — empty array if none.',
+    `Article title: ${String(input.title || '').slice(0, 200)}`,
+    `Current excerpt: ${String(input.excerpt || '').slice(0, 400)}`,
+    `Existing focus keyword (optional): ${String(input.focusKeyword || '')}`,
+    `Article body (plain text):\n${String(input.contentPlain || '').slice(0, 6000)}`,
+  ].join('\n\n')
+
+  const response = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ model, input: prompt, temperature: 0.4 }),
+  })
+  const payload = await response.json()
+  if (!response.ok) throw new Error(payload?.error?.message || 'OpenAI request failed.')
+  const text = payload?.output_text || payload?.output?.[0]?.content?.[0]?.text
+  return parseJsonLoose(text)
 }
 
 async function logAIRequest(req: PayloadRequest, data: Record<string, unknown>) {
@@ -223,6 +277,22 @@ export async function handleBlogAIEndpoint(req: PayloadRequest): Promise<Respons
         status: 'success',
       })
 
+      return Response.json({ result })
+    }
+
+    if (action === 'optimize') {
+      const result = await runOptimize(input)
+      await logAIRequest(req, {
+        promptType: action,
+        sourcePost: post?.id,
+        user: (user as any).id,
+        userEmail: (user as any).email,
+        provider,
+        model,
+        inputPreview: preview(input),
+        outputPreview: preview(result),
+        status: 'success',
+      })
       return Response.json({ result })
     }
 
