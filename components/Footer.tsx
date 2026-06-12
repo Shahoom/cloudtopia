@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Script from 'next/script'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
-import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
+import { serviceCategories, localizedServiceValue, categoryFrontDoor } from '@/lib/seo/services'
 import { industries, industrySlugs, localizedValue } from '@/lib/seo/industries'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 
@@ -81,7 +81,7 @@ export default function Footer() {
     [t.footer.services]: [
       ...serviceCategories.map((category) => ({
         name: localizedServiceValue(category.name, locale),
-        href: l(`/services#${category.slug}`),
+        href: l(categoryFrontDoor(category.slug)),
       })),
       { name: t.footer.links.allServices, href: l('/services') },
     ],

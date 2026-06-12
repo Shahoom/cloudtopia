@@ -20,7 +20,7 @@ import {
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
+import { serviceCategories, localizedServiceValue, categoryFrontDoor } from '@/lib/seo/services'
 import { industries, industrySlugs, localizedValue } from '@/lib/seo/industries'
 
 type MegaMenuType = 'services' | 'industries'
@@ -84,7 +84,7 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
           {serviceCategories.map((category) => (
             <section key={category.slug} className="rounded-lg border border-slate-200 bg-[#f8fbff] p-3 transition-colors duration-200 hover:border-sky-200 hover:bg-sky-50">
               <Link
-                href={l(`/services#${category.slug}`)}
+                href={l(categoryFrontDoor(category.slug))}
                 onClick={onClose}
                 className="group flex items-center gap-2 text-sm font-black text-eerie hover:text-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
               >
@@ -522,7 +522,7 @@ export default function Header() {
                 {serviceCategories.map((category) => (
                   <Link
                     key={category.slug}
-                    href={l(`/services#${category.slug}`)}
+                    href={l(categoryFrontDoor(category.slug))}
                     onClick={() => setMobileMenuOpen(false)}
                     className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-800 transition-colors duration-200 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                   >

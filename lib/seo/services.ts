@@ -356,6 +356,34 @@ export const servicesBySlug: Record<string, ServiceDetail> = Object.fromEntries(
 
 export const serviceDetailSlugs = Object.keys(servicesBySlug)
 
+/**
+ * Maps a /services catalog category to its richer, buyer-facing STANDALONE page
+ * (the canonical "front door" for that intent). The standalone pages match how
+ * people actually search and are the conversion-optimized landing pages, so the
+ * header mega-menu, footer, homepage grid, and breadcrumbs should all point a
+ * category at the SAME standalone URL — concentrating internal-link equity on
+ * one page per intent (sitelink consolidation) instead of splitting it across
+ * /services#anchor and the standalone.
+ *
+ * Categories with no standalone equivalent (cloud-infrastructure,
+ * ai-powered-solutions) fall back to the /services hub anchor via
+ * categoryFrontDoor() below. Note interactive-web-applications and
+ * mobile-app-development deliberately share /web-applications (no mobile
+ * standalone exists), which is fine — both reinforce the same canonical URL.
+ */
+export const categoryStandaloneRoutes: Record<string, string> = {
+    'digital-presence': '/website-design',
+    'interactive-web-applications': '/web-applications',
+    'mobile-app-development': '/web-applications',
+    'business-systems-development': '/business-systems-development',
+    'digital-growth-support': '/social-media-marketing',
+}
+
+/** Canonical front-door URL for a category: its standalone page, else the hub anchor. */
+export function categoryFrontDoor(categorySlug: string): string {
+    return categoryStandaloneRoutes[categorySlug] || `/services#${categorySlug}`
+}
+
 export function getService(slug: string): ServiceDetail | null {
     return servicesBySlug[slug] || null
 }
