@@ -4,6 +4,7 @@ import type { MetadataRoute } from 'next'
 import { isDatabaseConfigured, queryDatabase } from '@/lib/cms/db'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import { buildTableOfContents, normalizeMediaUrl } from './utils'
+import { localizeCategoryName } from './taxonomy-i18n'
 import { filterAndSortBlogPosts, type BlogSearchSort } from './search'
 
 const CMS_REVALIDATE_SECONDS = 60
@@ -397,7 +398,9 @@ function normalizePostRow(row: BlogRow): BlogPostSummary {
       ? {
           id: numberValue(row.category_id),
           locale: String(row.category_locale || row.locale || 'en'),
-          name: row.category_name,
+          // Categories are English-only and joined by id; show the Arabic name
+          // on Arabic posts (the article-card pill + detail hero pill).
+          name: localizeCategoryName(row.category_slug, row.category_name, String(row.locale || 'en')),
           slug: row.category_slug,
           description: row.category_description || '',
           shortDescription: row.category_short_description || '',
@@ -775,7 +778,11 @@ async function getBlogCategoriesUncached(locale: string): Promise<BlogCategory[]
        left join media og on og.id = c.seo_og_image_id
        left join blog_categories_related_services crs on crs._parent_id = c.id
        left join blog_posts p on p.category_id = c.id and p.status = 'published' and p.locale::text = $1
-       where c.locale::text = $1
+       -- Source the canonical (English) category set for every locale — there
+       -- are no Arabic category rows, so filtering by $1 returned 0 on /ar and
+       -- left the nav/grid empty. Names are localized in code (taxonomy-i18n).
+       -- The post-count join above still filters by the requested locale.
+       where c.locale::text = 'en'
        group by c.id, image.id, og.id
        order by c."order" asc, c.name asc`,
       [locale],
@@ -784,7 +791,7 @@ async function getBlogCategoriesUncached(locale: string): Promise<BlogCategory[]
     return rows.map((row) => ({
       id: numberValue(row.id),
       locale: row.locale,
-      name: row.name,
+      name: localizeCategoryName(row.slug, row.name, locale),
       slug: row.slug,
       description: row.description || '',
       shortDescription: row.short_description || '',
