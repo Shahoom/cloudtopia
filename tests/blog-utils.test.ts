@@ -52,8 +52,12 @@ test('calculateReadingTime returns at least one minute', () => {
   assert.equal(calculateReadingTime(Array.from({ length: 430 }, (_, index) => `word${index}`).join(' ')), 2)
 })
 
-test('normalizeMediaUrl rewrites Payload API media URLs for public rendering', () => {
-  assert.equal(normalizeMediaUrl('/api/media/file/cloud cover.avif'), '/uploads/cloud%20cover.avif')
+test('normalizeMediaUrl serves S3/Payload media as-is and only encodes legacy raw paths', () => {
+  // No longer rewrites the Payload media route to /uploads — the file lives in
+  // S3 and is streamed by that route; /uploads would 404.
+  assert.equal(normalizeMediaUrl('/api/media/file/cloud cover.avif'), '/api/media/file/cloud%20cover.avif')
+  // Already percent-encoded URLs (as stored by S3 uploads) pass through untouched.
+  assert.equal(normalizeMediaUrl('/api/media/file/Jun%2013%2C%202026.png'), '/api/media/file/Jun%2013%2C%202026.png')
   assert.equal(normalizeMediaUrl('/uploads/already-public.avif'), '/uploads/already-public.avif')
   assert.equal(normalizeMediaUrl(null), '')
 })

@@ -61,15 +61,21 @@ export function calculateReadingTime(content: unknown, wordsPerMinute = 220) {
 export function normalizeMediaUrl(url: string | null | undefined): string {
   if (!url) return ''
 
-  const apiPrefix = '/api/media/file/'
-  const normalized = url.startsWith(apiPrefix)
-    ? `/uploads/${decodeURIComponent(url.slice(apiPrefix.length))}`
-    : url
-
+  // Media uploaded through Payload is stored in object storage (Supabase S3)
+  // and served via the `/api/media/file/...` route, which streams from the
+  // bucket. Do NOT rewrite that to `/uploads/...` — the file is not on local
+  // disk (Vercel's FS is read-only at runtime), so that path 404s and images
+  // silently break. Legacy assets already use `/uploads`, `/og`, or `/icons`
+  // and pass through untouched.
+  //
+  // Return already-encoded URLs as-is (S3 URLs are stored percent-encoded) to
+  // avoid double-encoding; encode only legacy values that still contain raw
+  // spaces or other unsafe characters.
+  if (/%[0-9a-fA-F]{2}/.test(url)) return url
   try {
-    return encodeURI(normalized)
+    return encodeURI(url)
   } catch {
-    return normalized
+    return url
   }
 }
 

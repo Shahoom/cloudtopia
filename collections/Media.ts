@@ -21,13 +21,12 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Content',
     useAsTitle: 'alt',
-    components: {
-      views: {
-        list: {
-          Component: '@/components/payload/FastCollectionLists#FastMediaListView',
-        },
-      },
-    },
+    // NOTE: do NOT override the list view with a custom component here. Media is
+    // an upload/relationship target (article coverImage, seo.ogImage, etc.), and
+    // the "Choose from existing" drawer reuses this collection's List view to
+    // SELECT an item. A custom static list renders rows you can't pick, so the
+    // picker shows a list but selection does nothing. The default list is
+    // interactive and selectable in drawers.
   },
   fields: [
     {
