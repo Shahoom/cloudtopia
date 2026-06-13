@@ -94,7 +94,7 @@ export default buildConfig({
           Component: '@/components/payload/AuthViews#CloudTopiaCreateFirstUserView',
         },
         dashboard: {
-          Component: '@/components/payload/EditorialDashboard#EditorialDashboard',
+          Component: '@/components/payload/CommandCenter#CommandCenter',
         },
         login: {
           Component: '@/components/payload/AuthViews#CloudTopiaLoginView',
