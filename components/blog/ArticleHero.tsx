@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Calendar, Clock, Eye, Layers, User } from 'lucide-react'
 import type { BlogPost } from '@/lib/blog/data'
+import { localizeContentType } from '@/lib/blog/taxonomy-i18n'
 import { Breadcrumbs } from './Breadcrumbs'
 
 function formatDate(value: string, locale: string) {
@@ -38,7 +39,7 @@ export function ArticleHero({ post, locale }: { post: BlogPost; locale: string }
             {post.contentType && (
               <span className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-sm">
                 <Layers className="h-3.5 w-3.5" />
-                {post.contentType.replace(/_/g, ' ')}
+                {localizeContentType(post.contentType, locale)}
               </span>
             )}
           </div>

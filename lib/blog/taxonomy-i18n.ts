@@ -65,3 +65,29 @@ export function localizeTagName(
   if (locale === 'ar' && slug && TAG_NAME_AR[slug]) return TAG_NAME_AR[slug]
   return original
 }
+
+/**
+ * Arabic labels for the fixed `contentType` enum, shown as the badge on article
+ * heroes/cards. The raw enum values (guide, article, case_study…) rendered in
+ * English on Arabic articles.
+ */
+const CONTENT_TYPE_AR: Record<string, string> = {
+  guide: 'دليل',
+  article: 'مقالة',
+  case_study: 'دراسة حالة',
+  checklist: 'قائمة تحقق',
+  comparison: 'مقارنة',
+  tutorial: 'شرح تعليمي',
+  opinion: 'رأي',
+  news: 'أخبار',
+}
+
+/** Localized content-type badge label; EN falls back to the de-underscored value. */
+export function localizeContentType(
+  value: string | null | undefined,
+  locale: string | null | undefined,
+): string {
+  const v = (value || '').toString()
+  if (locale === 'ar' && CONTENT_TYPE_AR[v]) return CONTENT_TYPE_AR[v]
+  return v.replace(/_/g, ' ')
+}

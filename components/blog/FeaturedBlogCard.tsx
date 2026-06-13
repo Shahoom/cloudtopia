@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock, Pin, User } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog/data'
+import { localizeContentType } from '@/lib/blog/taxonomy-i18n'
 import { localePath } from '@/lib/i18n/url'
 
 function formatDate(value: string, locale: string) {
@@ -58,7 +59,7 @@ export function FeaturedBlogCard({
             )}
             {post.contentType && (
               <span className="rounded-full bg-sky-600 px-3 py-1 text-xs font-black uppercase tracking-normal text-white">
-                {post.contentType.replace(/_/g, ' ')}
+                {localizeContentType(post.contentType, locale)}
               </span>
             )}
           </div>
