@@ -47,6 +47,7 @@ import { CloudTopiaCreateFirstUserView as CloudTopiaCreateFirstUserView_e0b55275
 import { EditorialDashboard as EditorialDashboard_c7df803db736af4f456d3338d07cad3e } from '@/components/payload/EditorialDashboard'
 import { CloudTopiaLoginView as CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef639d4 } from '@/components/payload/AuthViews'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { S3ClientUploadHandler as S3ClientUploadHandler_storage_s3 } from '@payloadcms/storage-s3/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -98,5 +99,6 @@ export const importMap = {
   "@/components/payload/AuthViews#CloudTopiaCreateFirstUserView": CloudTopiaCreateFirstUserView_e0b55275f3ddf4e3d487dc379ef639d4,
   "@/components/payload/EditorialDashboard#EditorialDashboard": EditorialDashboard_c7df803db736af4f456d3338d07cad3e,
   "@/components/payload/AuthViews#CloudTopiaLoginView": CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef639d4,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_storage_s3
 }

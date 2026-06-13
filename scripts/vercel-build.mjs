@@ -132,6 +132,33 @@ if (llms.code !== 0) {
   console.warn(`[deploy-diag] llms.txt regeneration failed (code ${llms.code}); continuing with the committed file.`)
 }
 
+// Phase 1.6 — guarantee the s3Storage client component is in the admin importMap.
+// `payload generate:importmap` can't run in this repo (the config's top-level
+// await breaks the CLI's require loader), and regenerating importMap.js locally
+// WITHOUT the S3_* env vars set silently drops `S3ClientUploadHandler` — which
+// crashes production /admin (getFromImportMap → white screen) once s3Storage is
+// active. Re-inject it here, idempotently, so a stale committed importMap can
+// never white-screen the admin again.
+try {
+  const { readFileSync, writeFileSync } = await import('node:fs')
+  const mapPath = 'app/(payload)/admin/importMap.js'
+  const handlerKey = '@payloadcms/storage-s3/client#S3ClientUploadHandler'
+  let src = readFileSync(mapPath, 'utf8')
+  if (!src.includes(handlerKey)) {
+    src = src
+      .replace(
+        "/** @type import('payload').ImportMap */",
+        "import { S3ClientUploadHandler as S3ClientUploadHandler_storage_s3 } from '@payloadcms/storage-s3/client'\n\n/** @type import('payload').ImportMap */",
+      )
+      .replace(/\n}\s*$/, `,\n  "${handlerKey}": S3ClientUploadHandler_storage_s3\n}\n`)
+    writeFileSync(mapPath, src)
+    console.log('[deploy-diag] injected S3ClientUploadHandler into importMap.js')
+    await report('importmap-patched', {})
+  }
+} catch (err) {
+  console.warn(`[deploy-diag] importMap S3 patch skipped: ${err.message}`)
+}
+
 // Phase 2 — next build (runtime fallback chain decides its own DB URL).
 const build = await runStep('next-build', 'npx', ['next', 'build'], process.env)
 await report(build.code === 0 ? 'build-done' : 'build-failed', {
