@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils'
 export interface PricingTier {
   name: string
   icon: ReactNode
-  price: string
+  /** Optional — pricing pages now lead with "Request a quote" instead of figures. */
+  price?: string
   description: string
   features: string[]
   popular?: boolean
@@ -23,16 +24,6 @@ const colorClasses = {
   rose: 'bg-rose-300 text-rose-950',
   violet: 'bg-violet-300 text-violet-950',
   slate: 'bg-slate-900 text-white',
-}
-
-function splitPriceLabel(price: string, isRTL: boolean) {
-  const marker = isRTL ? 'تبدأ من:' : 'Starts with:'
-  if (!price.includes(marker)) return { amount: price, label: '' }
-
-  return {
-    amount: price.replace(marker, '').trim(),
-    label: marker,
-  }
 }
 
 export function CreativePricing({
@@ -77,7 +68,6 @@ export function CreativePricing({
             const cta = tier.ctaLabel || (isRTL ? 'ابدأ الآن' : 'Get Started')
             const featuredFeatures = tier.features.slice(0, 3)
             const remainingFeatures = tier.features.slice(3)
-            const price = splitPriceLabel(tier.price, isRTL)
             const showFullFeaturesLabel = tier.showFullFeaturesLabel || (isRTL ? 'عرض كل المميزات' : 'Show Full Features')
             return (
               <article
@@ -99,9 +89,16 @@ export function CreativePricing({
                   <h3 className="pe-24 text-2xl font-black leading-tight text-slate-950">{tier.name}</h3>
                   <p className="mt-3 min-h-16 text-sm font-semibold leading-6 text-slate-600">{tier.description}</p>
 
-                  <div className="my-6 rounded-md border border-slate-950/12 bg-[#f4f1f8] px-4 py-4 text-start">
-                    {price.label && <p className="mb-1.5 text-xs font-black uppercase tracking-[0.18em] text-slate-500">{price.label}</p>}
-                    <p dir="auto" className="text-3xl font-black tracking-normal text-slate-950 md:text-4xl">{price.amount}</p>
+                  <div className="my-6 flex items-center gap-3 rounded-md border border-slate-950/12 bg-[#f4f1f8] px-4 py-3.5 text-start">
+                    <span className={cn('flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-slate-950/15', accent)}>
+                      <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                    </span>
+                    <span className="text-sm font-black leading-tight text-slate-950">
+                      {isRTL ? 'سعر مخصص حسب النطاق' : 'Custom-scoped quote'}
+                      <span className="mt-0.5 block text-xs font-bold text-slate-500">
+                        {isRTL ? 'استشارة وديمو مجاني قبل البدء' : 'Free consultation + demo before you commit'}
+                      </span>
+                    </span>
                   </div>
 
                   <ul className="grid gap-3">

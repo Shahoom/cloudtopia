@@ -7,22 +7,6 @@ import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { buildOrganizationRef } from '@/lib/seo/schema'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 
-/**
- * Extracts the lowest "$NNN" amount from a pricing label such as
- * "Starts with: $299 without CMS / $349 with CMS" → 299. Returns null when no
- * numeric price is present (e.g. "Custom quote"), so callers can omit the
- * priceSpecification entirely rather than emitting a bare/undefined price (SD-4).
- */
-function extractMinPrice(priceLabel: string): number | null {
-    const matches = priceLabel.match(/\$\s*([\d,]+(?:\.\d+)?)/g)
-    if (!matches || matches.length === 0) return null
-    const numbers = matches
-        .map((m) => Number(m.replace(/[^0-9.]/g, '')))
-        .filter((n) => Number.isFinite(n) && n > 0)
-    if (numbers.length === 0) return null
-    return Math.min(...numbers)
-}
-
 type PageProps = {
     params: Promise<{ locale: string }>
 }
@@ -52,16 +36,16 @@ const recommendedBadgeLabels = ['Most Popular', 'Best Value', 'الأكثر طل
 
 const labels = {
     en: {
-        eyebrow: 'Transparent pricing',
+        eyebrow: 'Packages & scope',
         title: 'Service packages sized for the work you actually need.',
-        description: 'Compare fixed-scope paths for websites, stores, systems, apps, cloud, AI, content, social, and QR menus. Every inquiry can start with a free consultation and demo preview.',
+        description: 'Compare fixed-scope paths for websites, stores, systems, apps, cloud, AI, content, social, and QR menus. Every package is quoted to your exact scope — and every inquiry starts with a free consultation and demo preview.',
         popular: 'Recommended',
         notes: 'Commercial notes',
         contactTitle: 'Need a custom quote?',
         contactBody: 'Tell us the scope, market, integrations, and timeline. We will reply with the right package or a custom build estimate.',
         contactCta: 'Request a quote',
         servicesCta: 'Compare services',
-        cardCta: 'Scope this package',
+        cardCta: 'Request a quote',
         selectorEyebrow: 'Package selector',
         selectorTitle: 'Which package path fits your project?',
         selectorDescription: 'Use this as a quick buying guide before you compare every plan. The right path depends on whether you need a public presence, online sales, internal operations, or ongoing growth.',
@@ -110,16 +94,16 @@ const labels = {
         ],
     },
     ar: {
-        eyebrow: 'أسعار واضحة',
+        eyebrow: 'الباقات والنطاق',
         title: 'باقات خدمات بحجم العمل الذي تحتاجه فعلاً.',
-        description: 'قارن مسارات ثابتة للمواقع، المتاجر، الأنظمة، التطبيقات، السحابة، الذكاء الاصطناعي، المحتوى، السوشيال، وقوائم QR. يمكن أن يبدأ كل استفسار باستشارة مجانية ومعاينة ديمو.',
+        description: 'قارن مسارات ثابتة للمواقع، المتاجر، الأنظمة، التطبيقات، السحابة، الذكاء الاصطناعي، المحتوى، السوشيال، وقوائم QR. كل باقة تُسعّر حسب نطاقك بالضبط، ويبدأ كل استفسار باستشارة مجانية ومعاينة ديمو.',
         popular: 'موصى به',
         notes: 'ملاحظات تجارية',
         contactTitle: 'تحتاج عرض سعر مخصص؟',
         contactBody: 'أخبرنا بالنطاق والسوق والتكاملات والجدول الزمني، وسنرسل لك الباقة المناسبة أو تقدير بناء مخصص.',
         contactCta: 'اطلب عرض سعر',
         servicesCta: 'قارن الخدمات',
-        cardCta: 'حدد نطاق هذه الباقة',
+        cardCta: 'اطلب عرض سعر',
         selectorEyebrow: 'اختيار الباقة',
         selectorTitle: 'أي مسار يناسب مشروعك؟',
         selectorDescription: 'استخدم هذا الدليل السريع قبل مقارنة كل باقة. المسار الصحيح يعتمد على حاجتك: حضور عام، بيع إلكتروني، عمليات داخلية، أو نمو مستمر.',
@@ -355,25 +339,15 @@ export default async function PricingPage({ params }: PageProps) {
             '@type': 'OfferCatalog',
             name: category.title,
             itemListElement: category.packages.map((plan) => {
-                // SD-4: prices are "Starts with: $NNN" / "from" tiers, so the
-                // first $-amount is a minPrice. Only emit a PriceSpecification
-                // when a real number is present — never a bare or undefined price.
-                const minPrice = extractMinPrice(plan.price)
+                // Pricing is now quote-based: the page no longer displays figures,
+                // so we intentionally omit priceSpecification — Google requires any
+                // schema price to be visible on the page (SD-4).
                 return {
                     '@type': 'Offer',
                     name: `${category.title} - ${plan.name}`,
                     description: plan.features.join('; '),
                     availability: 'https://schema.org/InStock',
                     url: canonicalUrl(locale, '/pricing'),
-                    ...(minPrice !== null
-                        ? {
-                              priceSpecification: {
-                                  '@type': 'PriceSpecification',
-                                  priceCurrency: 'USD',
-                                  minPrice,
-                              },
-                          }
-                        : {}),
                 }
             }),
         })),
@@ -454,7 +428,6 @@ export default async function PricingPage({ params }: PageProps) {
                         const tiers: PricingTier[] = category.packages.map((plan, index) => ({
                             name: plan.name,
                             icon: tierIcon(index),
-                            price: plan.price,
                             description: plan.badge ? `${plan.badge} · ${category.title}` : category.title,
                             features: expandedPlanFeatures(plan, category.title, locale),
                             popular: Boolean(plan.badge && recommendedBadgeLabels.includes(plan.badge)),

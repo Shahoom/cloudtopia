@@ -16,6 +16,7 @@
     "payload:migrate:create": "payload --use-swc migrate:create",
     "payload:migrate:status": "payload --use-swc migrate:status",
     "seed:payload": "node --import tsx scripts/seed-payload-direct.ts",
+    "sync:dictionary": "node --import tsx scripts/sync-dictionary.ts",
     "seed:payload:local-api": "payload --use-swc run scripts/seed-payload.ts",
     "seed:blog": "node --import tsx scripts/seed-blog-insights.ts"
   },

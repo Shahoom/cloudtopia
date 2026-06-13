@@ -274,35 +274,43 @@ export const en = {
       items: [
         {
           question: 'How much does a project with CloudTopia cost?',
-          answer: 'Projects start at $150 for a landing page, $299 for a starter website, and $999 for a professional bilingual website (our most popular tier); e-commerce stores start at $499 and custom business systems at $999. We agree the full scope and final price up front, in writing, before production starts. Full package details are on the pricing page.',
+          answer: 'Every project is quoted to its exact scope, so there is no one-size price. We start with a free consultation, then agree the full scope and a fixed written proposal before any work begins — no surprises later. You can browse what each package includes — websites, stores, systems, apps, cloud, AI, content, and social — on the pricing page, then request a quote for your specifics.',
+        },
+        {
+          question: 'What does CloudTopia actually build?',
+          answer: 'Seven core areas: business websites and digital presence; web and mobile applications; custom business systems (CRM, ERP, inventory, HR, booking); cloud and infrastructure; AI automation and chatbots; digital growth (SEO, paid ads, CRO); and content and social media. Most clients combine a few — we scope them as one connected build, not separate projects.',
         },
         {
           question: 'Which languages do you build in?',
-          answer: 'English, Arabic as first-class defaults — real bilingual craftsmanship with full RTL support for Arabic, proper typography, and culturally appropriate design. Other languages are available on request.',
+          answer: 'English and Arabic as first-class defaults — real bilingual craftsmanship with full RTL support, proper Arabic typography, and culturally appropriate design, not a translation bolted on at the end. Other languages are available on request.',
         },
         {
           question: 'How long does a typical project take?',
-          answer: 'Landing pages: 1–2 weeks. Business websites: 3–5 weeks. E-commerce stores: 4–8 weeks. Custom systems and web applications: 6–16 weeks depending on scope. Discovery is always the first 3–5 days, and the final timeline is confirmed before you sign.',
+          answer: 'Landing pages: 1–2 weeks. Business websites: 3–5 weeks. E-commerce stores: 4–8 weeks. Custom systems, web apps, and mobile apps: 6–16 weeks depending on scope. Discovery is always the first 3–5 days, and the final timeline is confirmed in writing before you sign.',
         },
         {
           question: 'Do you work with clients internationally?',
-          answer: 'Yes. We work with clients globally — fully remote, async-friendly, and comfortable across most time zones. Our process is the same whether you\'re around the corner or halfway around the world.',
+          answer: 'Yes. We have delivered 2,000+ projects for clients across 50+ countries — fully remote, async-friendly, and comfortable across most time zones. The process is the same whether you are next door or on another continent.',
         },
         {
           question: 'Do you handle hosting, domain, SSL, and email?',
-          answer: 'Yes — end to end. Domain registration, hosting, SSL, email, Google Search Console, and analytics are all set up at launch. You get login credentials to everything — it\'s all yours.',
+          answer: 'Yes — end to end. Domain registration, managed hosting, SSL, business email, Google Search Console, and analytics are all set up at launch, and you get the login credentials to every account. It is all yours.',
         },
         {
           question: 'Do we own the code, design, and data?',
-          answer: 'You own 100% of what we build. Code, design files, copy, accounts, and domain — all yours, handed over at launch. No licensing traps, no vendor lock-in, no hidden "we keep the source code" clause.',
+          answer: 'You own 100% of what we build. Code, design files, copy, accounts, and domain — all handed over at launch. No licensing traps, no vendor lock-in, no hidden "we keep the source code" clause.',
         },
         {
           question: 'What happens after launch if we need changes?',
-          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates are handled through a clear care plan or quoted per project. No surprise invoices — everything in writing before we start.',
+          answer: 'The first 30 days of bug fixes and small adjustments are free. After that, ongoing updates run through a clear care plan or are quoted per request — everything agreed in writing first, with no surprise invoices.',
         },
         {
-          question: 'Can you integrate payment systems from different markets?',
-          answer: 'Yes. We work with global rails (Stripe, PayPal, Apple Pay, Google Pay) and regional gateways on request. We handle contracts, compliance paperwork, tax setup, and bilingual invoices.',
+          question: 'Can you integrate payments, CRMs, and tools we already use?',
+          answer: 'Yes. We connect global rails (Stripe, PayPal, Apple Pay, Google Pay) and regional gateways on request, plus CRMs, ERPs, accounting tools, WhatsApp, and custom APIs. We handle the integration, testing, compliance paperwork, and bilingual invoices.',
+        },
+        {
+          question: 'How do we get started?',
+          answer: 'Send a few lines about what you need through the contact page or WhatsApp. You will hear from a real person within one business day with clear next steps — and we can usually show a quick demo preview before you commit. No pressure, no sales pitch.',
         },
       ],
     },

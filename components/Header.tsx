@@ -11,10 +11,13 @@ import {
   ChevronDown,
   CircleDollarSign,
   FolderKanban,
+  Home,
   Info,
   Layers,
+  Mail,
   Menu,
   MessageSquare,
+  Phone,
   X,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -501,45 +504,84 @@ export default function Header() {
         </div>
 
         <div className={`xl:hidden transition-[max-height,opacity] duration-300 ${mobileMenuOpen ? 'max-h-[86vh] overflow-y-auto opacity-100' : 'max-h-0 overflow-hidden opacity-0'}`}>
-          <div className="grid gap-5 border-t border-slate-950/10 py-5">
-            <div className="grid gap-2 rounded-lg border border-slate-200 bg-white/70 p-2 shadow-sm">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between rounded-lg bg-white px-4 py-4 text-sm font-black text-eerie transition-colors duration-200 hover:bg-[#eef7ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
-                >
-                  {item.name}
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
+          <div className="my-4 overflow-hidden rounded-2xl border border-slate-200 bg-white text-eerie shadow-[0_20px_60px_rgba(27,27,35,0.16)]">
+            {/* Primary navigation */}
+            <nav className="grid p-2">
+              {navigation.map((item, index) => {
+                const MobileIcon = item.icon
+                  || ('menu' in item && item.menu === 'services' ? Layers : 'menu' in item && item.menu === 'industries' ? Building2 : Home)
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`group flex items-center gap-3 rounded-xl px-3 py-3.5 text-[15px] font-bold text-eerie transition-colors duration-200 hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${index !== 0 ? 'border-t border-slate-100' : ''}`}
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f1f7ff] text-sky-700 transition-colors duration-200 group-hover:bg-sky-600 group-hover:text-white">
+                      <MobileIcon className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                    <span className="flex-1">{item.name}</span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400 transition-colors group-hover:text-sky-700" aria-hidden="true" />
+                  </Link>
+                )
+              })}
+            </nav>
 
-            <section className="rounded-lg border border-slate-200 bg-[#f4f1f8] p-3 shadow-sm">
-              <p className="mb-2 px-1 text-xs font-black uppercase tracking-[0.16em] text-neutral-500">{servicesLabel}</p>
-              <div className="grid gap-2 sm:grid-cols-2">
+            {/* Services quick grid */}
+            <section className="border-t border-slate-100 bg-[#f8fbff] p-3">
+              <p className="mb-2.5 px-1 text-[11px] font-black uppercase tracking-[0.16em] text-neutral-500">{servicesLabel}</p>
+              <div className="grid grid-cols-2 gap-2">
                 {serviceCategories.map((category) => (
                   <Link
                     key={category.slug}
                     href={l(categoryFrontDoor(category.slug))}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-800 transition-colors duration-200 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                    className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-[13px] font-bold leading-tight text-neutral-800 transition-colors duration-200 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                   >
-                    {localizedServiceValue(category.name, locale)}
+                    <Layers className="h-3.5 w-3.5 shrink-0 text-sky-600" aria-hidden="true" />
+                    <span className="line-clamp-2">{localizedServiceValue(category.name, locale)}</span>
                   </Link>
                 ))}
               </div>
             </section>
 
-            <Link
-              href={l(cta.href || '/contact')}
-              onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-eerie px-5 py-3 text-sm font-black !text-white shadow-sm transition-colors duration-200 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
-            >
-              {ctaLabel}
-              <MessageSquare className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            {/* Contact + CTA */}
+            <div className="border-t border-slate-100 p-3">
+              <div className="grid grid-cols-3 gap-2">
+                <a
+                  href="https://wa.me/96895886393?text=Hi%20CloudTopia,%20I'd%20like%20a%20free%20consultation."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2 py-3 text-[12px] font-bold text-neutral-700 transition-colors duration-200 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                >
+                  <MessageSquare className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                  {locale === 'ar' ? 'واتساب' : 'WhatsApp'}
+                </a>
+                <a
+                  href="tel:+96895886393"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2 py-3 text-[12px] font-bold text-neutral-700 transition-colors duration-200 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-800"
+                >
+                  <Phone className="h-4 w-4 text-sky-600" aria-hidden="true" />
+                  {locale === 'ar' ? 'اتصال' : 'Call'}
+                </a>
+                <a
+                  href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2 py-3 text-[12px] font-bold text-neutral-700 transition-colors duration-200 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-800"
+                >
+                  <Mail className="h-4 w-4 text-violet-600" aria-hidden="true" />
+                  {locale === 'ar' ? 'البريد' : 'Email'}
+                </a>
+              </div>
+
+              <Link
+                href={l(cta.href || '/contact')}
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-eerie px-5 py-3.5 text-sm font-black !text-white shadow-sm transition-colors duration-200 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+              >
+                {ctaLabel}
+                <MessageSquare className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </nav>

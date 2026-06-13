@@ -38,9 +38,9 @@ export default function FAQ() {
             <div className="pointer-events-none absolute top-0 right-0 w-[420px] h-[420px] bg-secondary-200/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
             <div className="pointer-events-none absolute bottom-0 left-0 w-[380px] h-[380px] bg-primary-200/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3" />
 
-            <div className="relative max-w-6xl mx-auto">
-                <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-                    <div className="lg:col-span-2">
+            <div className="relative max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+                    <div className="lg:col-span-4 lg:sticky lg:top-28">
                         <motion.div
                             initial={{ opacity: 0, y: 14 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -94,10 +94,39 @@ export default function FAQ() {
                                 {t.home?.faq?.contactCTA || (locale === 'ar' ? 'لا تجد سؤالك؟ راسلنا' : "Don't see your question? Email us")}
                             </Link>
                         </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 14 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="mt-8 hidden lg:grid grid-cols-3 gap-2.5"
+                        >
+                            {(locale === 'ar'
+                                ? [
+                                    { value: '+2000', label: 'مشروع مُسلَّم' },
+                                    { value: '+50', label: 'دولة' },
+                                    { value: '24 ساعة', label: 'وقت الرد' },
+                                ]
+                                : [
+                                    { value: '2,000+', label: 'Projects shipped' },
+                                    { value: '50+', label: 'Countries' },
+                                    { value: '1 day', label: 'Reply time' },
+                                ]
+                            ).map((stat) => (
+                                <div
+                                    key={stat.label}
+                                    className="rounded-2xl border border-neutral-200 bg-white/70 px-3 py-4 text-center"
+                                >
+                                    <div className="text-lg font-bold text-neutral-900">{stat.value}</div>
+                                    <div className="mt-1 text-[11px] font-medium leading-tight text-neutral-500">{stat.label}</div>
+                                </div>
+                            ))}
+                        </motion.div>
                     </div>
 
-                    <div className="lg:col-span-3">
-                        <div className="space-y-3">
+                    <div className="lg:col-span-8">
+                        <div className="space-y-3.5">
                             {items.map((item, i) => {
                                 const isOpen = openIndex === i
                                 return (

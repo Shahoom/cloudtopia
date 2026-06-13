@@ -92,13 +92,13 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Landing Pages', ar: 'صفحات الهبوط الإعلانية' },
         description: { en: 'High-converting landing pages tailored for specific marketing campaigns and leads.', ar: 'صفحات هبوط عالية التحويل مصممة ومخصصة لحملات الإعلانات المدفوعة.' },
-        link: '/website-design',
+        link: '/services/landing-page-design',
         iconName: 'AppWindow'
       },
       {
         title: { en: 'Corporate Web Portals', ar: 'بوابات الويب المؤسسية' },
         description: { en: 'Secure, integrated hubs for corporate communication, client relations, and data.', ar: 'بوابات ويب متكاملة ومحمية لإدارة الاتصال المؤسسي وعلاقات الشركاء والعملاء.' },
-        link: '/website-design',
+        link: '/services/corporate-website-design',
         iconName: 'Layers'
       },
       {
@@ -110,13 +110,13 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Portfolio Websites', ar: 'مواقع معارض الأعمال' },
         description: { en: 'Interactive galleries and showcases for developers, designers, agencies, and artists.', ar: 'معارض أعمال تفاعلية ومبتكرة للمطورين العقاريين والوكالات والمصممين.' },
-        link: '/website-design',
+        link: '/services/portfolio-websites',
         iconName: 'Monitor'
       },
       {
         title: { en: 'Real Estate Web Development', ar: 'مواقع التطوير العقاري' },
         description: { en: 'Property listing pages with advanced search filters, interactive maps, and lead captures.', ar: 'تطوير مواقع عقارية مع فلاتر بحث متقدمة، خرائط تفاعلية، وقنوات تواصل.' },
-        link: '/website-design',
+        link: '/services/real-estate-website-development',
         iconName: 'Home'
       },
       {
@@ -128,7 +128,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Website Modernization', ar: 'إعادة تصميم وتحديث المواقع' },
         description: { en: 'Transform slow, outdated legacy websites into fast, modern responsive web experiences.', ar: 'تحديث المواقع القديمة بسرعات فائقة وتجربة مستخدم عصرية مع حفظ الأرشفة.' },
-        link: '/website-design',
+        link: '/services/website-redesign',
         iconName: 'RefreshCw'
       }
     ]
@@ -145,37 +145,37 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Mobile App Development', ar: 'تطوير تطبيقات الجوال' },
         description: { en: 'Premium custom mobile apps built for outstanding performance and user engagement.', ar: 'تطوير تطبيقات جوال مخصصة ومصممة للأداء المتميز وتفاعل المستخدمين.' },
-        link: '/web-applications',
+        link: '/services/mobile-app-development',
         iconName: 'Smartphone'
       },
       {
         title: { en: 'iOS App Development', ar: 'تطوير تطبيقات iOS' },
         description: { en: 'Native Swift apps optimized for Apple devices, adhering strictly to App Store specs.', ar: 'تطبيقات Swift أصلية ومحسنة لأجهزة آبل ومتوافقة تماماً مع شروط المتجر.' },
-        link: '/web-applications',
+        link: '/services/ios-app-development',
         iconName: 'Laptop'
       },
       {
         title: { en: 'Android App Development', ar: 'تطوير تطبيقات أندرويد' },
         description: { en: 'Native Kotlin apps optimized for diverse Android devices and Google Play compliance.', ar: 'تطبيقات Kotlin أصلية ومحسنة لأجهزة أندرويد المتنوعة ومتوافقة مع جوجل بلاي.' },
-        link: '/web-applications',
+        link: '/services/android-app-development',
         iconName: 'Code2'
       },
       {
         title: { en: 'Cross-Platform App Development', ar: 'تطوير تطبيقات عابرة للمنصات' },
         description: { en: 'Single codebase apps with Flutter or React Native, saving time without losing native feel.', ar: 'تطبيقات بقاعدة كود موحدة باستخدام Flutter أو React Native لتوفير الوقت والمال.' },
-        link: '/web-applications',
+        link: '/services/cross-platform-app-development',
         iconName: 'Layers'
       },
       {
         title: { en: 'MVP App Development', ar: 'تطوير تطبيقات الـ MVP' },
         description: { en: 'Rapid prototype builds focusing on core value to test markets and secure funding.', ar: 'بناء نموذج MVP سريع يركز على الميزات الأساسية لاختبار السوق وجذب المستثمرين.' },
-        link: '/web-applications',
+        link: '/services/mvp-app-development',
         iconName: 'Zap'
       },
       {
         title: { en: 'Business App Development', ar: 'تطوير تطبيقات الأعمال' },
         description: { en: 'Internal mobile utilities for inventory tracking, field operations, and corporate communications.', ar: 'تطبيقات أعمال داخلية لتتبع المخازن، العمليات الميدانية، والاتصال المؤسسي.' },
-        link: '/web-applications',
+        link: '/services/business-mobile-app-development',
         iconName: 'Briefcase'
       },
       {
@@ -187,7 +187,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'App Maintenance & Updates', ar: 'صيانة وتحديثات التطبيقات' },
         description: { en: 'Version updates, security patches, OS upgrades, and feature enhancements.', ar: 'تحديثات الإصدارات، الترقيعات الأمنية، دعم أنظمة التشغيل الجديدة، وإضافة ميزات.' },
-        link: '/web-applications',
+        link: '/services/mobile-app-maintenance',
         iconName: 'Wrench'
       }
     ]
@@ -204,43 +204,43 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Custom Web Applications', ar: 'تطبيقات الويب المخصصة' },
         description: { en: 'Interactive web applications built with Next.js, React, and robust API endpoints.', ar: 'تطوير تطبيقات ويب تفاعلية وقابلة للتوسع باستخدام Next.js و React وقواعد بيانات قوية.' },
-        link: '/web-applications',
+        link: '/services/custom-web-application-development',
         iconName: 'Laptop'
       },
       {
         title: { en: 'Client Portals', ar: 'بوابات العملاء الآمنة' },
         description: { en: 'Secure user hubs for custom billing, file sharing, ticket tracking, and direct chat.', ar: 'بوابات عملاء آمنة للفواتير ومشاركة الملفات وتتبع التذاكر والمحادثات المباشرة.' },
-        link: '/web-applications',
+        link: '/services/client-portals',
         iconName: 'Users'
       },
       {
         title: { en: 'Admin Dashboards', ar: 'لوحات التحكم والإدارة' },
         description: { en: 'Custom panels showing real-time metrics, user management, and operational controls.', ar: 'لوحات إدارة مخصصة تعرض مقاييس فورية، وإدارة المستخدمين، والتحكم التشغيلي.' },
-        link: '/web-applications',
+        link: '/services/admin-dashboards',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Booking Platforms', ar: 'منصات الحجز والجدولة' },
         description: { en: 'Bespoke appointment scheduling, calendar syncs, and deposit collection engines.', ar: 'منصات حجز مواعيد مخصصة، مزامنة التقويم، وأنظمة تحصيل الدفعات المقدمة.' },
-        link: '/web-applications',
+        link: '/services/booking-platforms',
         iconName: 'Calendar'
       },
       {
         title: { en: 'SaaS MVP Development', ar: 'تطوير الـ MVP لمنصات SaaS' },
         description: { en: 'Multitenant cloud software prototypes built quickly to test product-market fit.', ar: 'تطوير برمجيات سحابية متعددة المستأجرين (SaaS MVP) لاختبار ملاءمة المنتج للسوق.' },
-        link: '/web-applications',
+        link: '/services/saas-mvp-development',
         iconName: 'Rocket'
       },
       {
         title: { en: 'Progressive Web Apps (PWA)', ar: 'تطبيقات الويب التقدمية (PWA)' },
         description: { en: 'Web apps with mobile app behaviors: offline support, installable icons, and speed.', ar: 'تطوير تطبيقات ويب تقدمية بميزات الجوال: العمل دون اتصال والسرعة الفائقة.' },
-        link: '/web-applications',
+        link: '/services/progressive-web-app-development',
         iconName: 'Smartphone'
       },
       {
         title: { en: 'Internal Business Tools', ar: 'أدوات الأعمال الداخلية' },
         description: { en: 'Tailored databases, asset managers, and custom digital forms for staff operations.', ar: 'قواعد بيانات وأدوات إدارة أصول ونماذج رقمية مخصصة لتنظيم العمل الداخلي للموظفين.' },
-        link: '/web-applications',
+        link: '/services/internal-business-tools',
         iconName: 'Database'
       },
       {
@@ -263,37 +263,37 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'CRM Systems', ar: 'أنظمة إدارة العملاء (CRM)' },
         description: { en: 'Sales pipelining, contact managers, automatic follow-ups, and customer histories.', ar: 'أنظمة مبيعات، عملاء، ومتابعات تلقائية مصممة لتسريع صفقاتك.' },
-        link: '/business-systems-development',
+        link: '/services/crm-development',
         iconName: 'Users'
       },
       {
         title: { en: 'Inventory Management', ar: 'أنظمة إدارة المخازن' },
         description: { en: 'Real-time stock tracking, purchase orders, reorder alerts, and supplier databases.', ar: 'أنظمة تتبع المخزون اللحظي، أوامر الشراء، تنبيهات إعادة الطلب، وقواعد بيانات الموردين.' },
-        link: '/business-systems-development',
+        link: '/services/inventory-management-systems',
         iconName: 'Layers'
       },
       {
         title: { en: 'Sales Management Systems', ar: 'أنظمة إدارة المبيعات' },
         description: { en: 'Lead scoring, team quotas, performance dashboards, and automated sales reporting.', ar: 'أنظمة إدارة المبيعات وتصنيف العملاء المحتملين ولوحات الأداء والتقارير التلقائية.' },
-        link: '/business-systems-development',
+        link: '/services/sales-management-systems',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Order Management Systems', ar: 'أنظمة إدارة الطلبات' },
         description: { en: 'Invoice generators, payment status tracking, and dispatching automation pipelines.', ar: 'أنظمة إدارة الطلبات وإصدار الفواتير وتتبع حالة الدفع وأتمتة الشحن والتسليم.' },
-        link: '/business-systems-development',
+        link: '/services/order-management-systems',
         iconName: 'Database'
       },
       {
         title: { en: 'HR & Payroll Systems', ar: 'أنظمة الموارد البشرية والرواتب' },
         description: { en: 'Employee records, attendance tracking, leave management, and localized payroll engines.', ar: 'أنظمة إدارة الموارد البشرية والرواتب، الحضور والانصراف، وإدارة الإجازات المخصصة.' },
-        link: '/business-systems-development',
+        link: '/services/hr-management-systems',
         iconName: 'Users'
       },
       {
         title: { en: 'Accounting Integration', ar: 'ربط الأنظمة المحاسبية' },
         description: { en: 'Connect billing with QuickBooks, Xero, or regional ERPs for seamless finance.', ar: 'ربط الفواتير مع QuickBooks أو Xero أو أنظمة المحاسبة الإقليمية لإدارة مالية سلسة.' },
-        link: '/business-systems-development',
+        link: '/services/accounting-system-integration',
         iconName: 'DollarSign'
       },
       {
@@ -305,7 +305,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Supply Chain Platforms', ar: 'أنظمة سلاسل الإمداد والخدمات' },
         description: { en: 'Track vendor shipments, logistics updates, warehouse routing, and lead times.', ar: 'أنظمة إدارة سلاسل الإمداد لتتبع شحنات الموردين، التحديثات اللوجستية، وتوجيه المستودعات.' },
-        link: '/business-systems-development',
+        link: '/services/supply-chain-management-systems',
         iconName: 'Database'
       }
     ]
@@ -322,7 +322,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Cloud Hosting Setup', ar: 'إعداد الاستضافات السحابية' },
         description: { en: 'AWS, GCP, Vercel, and Cloudflare deployments tailored for security and uptime.', ar: 'إعداد استضافة سحابية على AWS أو GCP أو Vercel أو Cloudflare للأمان والاستقرار.' },
-        link: '/services/cloud-migration',
+        link: '/services/cloud-hosting-setup',
         iconName: 'Server'
       },
       {
@@ -334,37 +334,37 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Server Deployment & Config', ar: 'تهيئة وإدارة الخوادم' },
         description: { en: 'Configuration of Linux servers, Nginx setups, SSL, and resource monitors.', ar: 'نشر وإدارة الخوادم وإعدادات Linux و Nginx وشهادات SSL ومراقبة الموارد.' },
-        link: '/services/cloud-migration',
+        link: '/services/server-deployment',
         iconName: 'Settings'
       },
       {
         title: { en: 'DevOps & CI/CD Automation', ar: 'أتمتة DevOps و CI/CD' },
         description: { en: 'Build, test, and deploy code automatically to remove manual server updates.', ar: 'أتمتة DevOps ومسارات CI/CD لبناء واختبار ونشر الكود تلقائياً دون تدخل يدوي.' },
-        link: '/services/cloud-migration',
+        link: '/services/devops-support',
         iconName: 'Workflow'
       },
       {
         title: { en: 'Database Optimization', ar: 'إعداد وتحسين قواعد البيانات' },
         description: { en: 'PostgreSQL, MySQL, and Redis setups with indexing, clustering, and tuning.', ar: 'إعداد وتحسين قواعد بيانات PostgreSQL و MySQL و Redis مع الفهرسة والنسخ المتماثل.' },
-        link: '/services/cloud-migration',
+        link: '/services/database-setup',
         iconName: 'Database'
       },
       {
         title: { en: 'Cloud Security & Backups', ar: 'الأمان والنسخ الاحتياطي السحابي' },
         description: { en: 'Automated daily backups, DDoS protection, firewall configurations, and logs.', ar: 'حلول أمان سحابية، نسخ احتياطي يومي تلقائي، حماية DDoS، وإعداد جدران الحماية.' },
-        link: '/services/cloud-migration',
+        link: '/services/backup-and-security',
         iconName: 'Shield'
       },
       {
         title: { en: 'Scalable Cloud Architecture', ar: 'بنية سحابية قابلة للتوسع' },
         description: { en: 'Auto-scaling server setups built to handle high load without manual scaling.', ar: 'بنية سحابية قابلة للتوسع التلقائي للتعامل مع الأحمال الكبيرة دون تدخل يدوي.' },
-        link: '/services/cloud-migration',
+        link: '/services/scalable-cloud-architecture',
         iconName: 'Layers'
       },
       {
         title: { en: 'Cloud Cost Optimization', ar: 'تحسين تكاليف السحابة' },
         description: { en: 'Audit cloud setups to remove unused items and reduce bills by up to 50%.', ar: 'تحسين تكاليف السحابة وتدقيق الخوادم لإزالة الموارد غير المستخدمة وتقليل الفواتير.' },
-        link: '/services/cloud-migration',
+        link: '/services/cloud-cost-optimization',
         iconName: 'DollarSign'
       }
     ]
@@ -381,49 +381,49 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'AI Chatbots & Assistants', ar: 'مساعدو وروبوتات المحادثة بالـ AI' },
         description: { en: 'Bilingual agents integrated on WhatsApp or websites to handle FAQs and bookings.', ar: 'مساعدون وروبوتات محادثة بالذكاء الاصطناعي للرد على الاستفسارات وأتمتة العمليات.' },
-        link: '/services/ai-automation',
+        link: '/services/ai-chatbots',
         iconName: 'MessageSquare'
       },
       {
         title: { en: 'Business Process Automation', ar: 'أتمتة العمليات بالذكاء الاصطناعي' },
         description: { en: 'Automate data entry, invoice parsing, and email routing using custom AI logic.', ar: 'أتمتة العمليات الإدارية، إدخال البيانات، قراءة الفواتير، وتوجيه البريد بالذكاء الاصطناعي.' },
-        link: '/services/ai-automation',
+        link: '/services/business-process-automation',
         iconName: 'Workflow'
       },
       {
         title: { en: 'AI Content Generation', ar: 'أنظمة توليد المحتوى بالـ AI' },
         description: { en: 'Custom LLM integrations to draft product descriptions, corporate templates, or ads.', ar: 'أنظمة توليد محتوى بالذكاء الاصطناعي لصياغة أوصاف المنتجات والقوالب المؤسسية.' },
-        link: '/services/ai-automation',
+        link: '/services/ai-content-systems',
         iconName: 'PenTool'
       },
       {
         title: { en: 'Intelligent Document Processing', ar: 'المعالجة الذكية للمستندات' },
         description: { en: 'Extract text, categorize files, and index internal corporate files for search.', ar: 'معالجة المستندات واستخراج النصوص وتصنيف الملفات وفهرسة الوثائق الداخلية للبحث.' },
-        link: '/services/ai-automation',
+        link: '/services/natural-language-processing-solutions',
         iconName: 'Layers'
       },
       {
         title: { en: 'AI-Powered Support Desk', ar: 'دعم عملاء مدعوم بالـ AI' },
         description: { en: 'Self-improving support bots that resolve up to 70% of common customer tickets.', ar: 'دعم عملاء ذكي وروبوتات دعم ذاتية التحسين لحل أكثر من 70% من التذاكر الشائعة.' },
-        link: '/services/ai-automation',
+        link: '/services/ai-powered-customer-support',
         iconName: 'Brain'
       },
       {
         title: { en: 'AI Sales Assistants', ar: 'مساعدو المبيعات بالـ AI' },
         description: { en: 'Draft follow-up emails, qualify incoming leads, and summarize client calls.', ar: 'مساعدو مبيعات بالذكاء الاصطناعي لكتابة رسائل المتابعة وتصنيف العملاء وتلخيص المكالمات.' },
-        link: '/services/ai-automation',
+        link: '/services/ai-crm-assistants',
         iconName: 'Users'
       },
       {
         title: { en: 'AI Reporting & Analytics', ar: 'تقارير وتحليلات بالـ AI' },
         description: { en: 'Translate complex business figures into clear, written prose explanations automatically.', ar: 'لوحات تقارير وتحليلات ذكية تحول الأرقام المعقدة إلى تفسيرات مكتوبة واضحة تلقائياً.' },
-        link: '/services/ai-automation',
+        link: '/services/ai-reporting-dashboards',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Custom Machine Learning', ar: 'حلول التعلم الآلي المخصصة' },
         description: { en: 'Custom models built for predictive analytics, demand planning, and anomaly detection.', ar: 'تطوير نماذج تعلم آلي مخصصة للتحليلات التنبؤية، تخطيط الطلب، وتحديد المعاملات الشاذة.' },
-        link: '/services/ai-automation',
+        link: '/services/machine-learning-model-development',
         iconName: 'Code2'
       }
     ]
@@ -440,19 +440,19 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Search Engine Optimization', ar: 'تحسين محركات البحث (SEO)' },
         description: { en: 'Technical audits, keyword planning, content writing, and local business indexing.', ar: 'تحسين محركات البحث (SEO)، تدقيق تقني، كلمات مفتاحية، وصياغة محتوى متوافق.' },
-        link: '/website-design',
+        link: '/services/seo-optimization',
         iconName: 'Search'
       },
       {
         title: { en: 'Conversion Rate Optimization', ar: 'تحسين معدلات التحويل (CRO)' },
         description: { en: 'Analyze heatmaps, simplify checkouts, rewrite copy, and double lead conversion.', ar: 'تحسين معدل التحويل (CRO)، تحليل الخرائط الحرارية، وتبسيط خطوات الدفع والطلبات.' },
-        link: '/website-design',
+        link: '/services/conversion-rate-optimization',
         iconName: 'TrendingUp'
       },
       {
         title: { en: 'Paid Ad Campaign Pages', ar: 'إعلانات مدفوعة وصفحات هبوط' },
         description: { en: 'Google Search, Meta, and LinkedIn campaign management paired with high-converting pages.', ar: 'إدارة إعلانات جوجل وفيسبوك ولينكد إن مع صفحات هبوط سريعة الاستجابة وعالية التحويل.' },
-        link: '/website-design',
+        link: '/services/paid-ads-landing-pages',
         iconName: 'AppWindow'
       },
       {
@@ -464,25 +464,25 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Email Automation Flows', ar: 'أتمتة مسارات البريد الإلكتروني' },
         description: { en: 'Lead nurturing, custom onboarding sequences, and weekly newsletter workflows.', ar: 'أتمتة التسويق بالبريد الإلكتروني، مسارات المتابعة للعملاء، ونشرات بريدية أسبوعية.' },
-        link: '/website-design',
+        link: '/services/email-marketing-automation',
         iconName: 'Mail'
       },
       {
         title: { en: 'Lead Generation Engines', ar: 'أنظمة جذب العملاء المحتملين' },
         description: { en: 'Design calculators, audit tools, and gated content setups to capture business leads.', ar: 'أنظمة توليد عملاء محتملين تشمل حاسبات رقمية وأدوات تدقيق لجمع بيانات العملاء.' },
-        link: '/website-design',
+        link: '/services/lead-generation-systems',
         iconName: 'Users'
       },
       {
         title: { en: 'Analytics & GA4 Tracking', ar: 'التحليلات وتتبع GA4' },
         description: { en: 'Google Analytics 4 setup, GTM containers, custom conversion events, and reports.', ar: 'إعداد تحليلات جوجل (GA4)، مدير العلامات (GTM)، وتتبع أحداث التحويل المخصصة.' },
-        link: '/website-design',
+        link: '/services/conversion-rate-optimization',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Brand Identity Systems', ar: 'تصميم وبناء الهوية البصرية' },
         description: { en: 'Premium custom logos, brand guidelines, presentation decks, and web visuals.', ar: 'تصميم الهوية البصرية، شعارات مخصصة، أدلة هوية، وعروض تقديمية وعناصر بصرية.' },
-        link: '/website-design',
+        link: '/services/brand-identity',
         iconName: 'PenTool'
       }
     ]
