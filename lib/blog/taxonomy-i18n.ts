@@ -39,3 +39,29 @@ export function localizeCategoryName(
   if (locale === 'ar' && slug && CATEGORY_NAME_AR[slug]) return CATEGORY_NAME_AR[slug]
   return original
 }
+
+/**
+ * Arabic display names for the blog tag vocabulary, keyed by slug. Tags are
+ * English-only rows too (and a post joins them by id via blog_posts_rels), so
+ * they render in English on Arabic article cards / tag pages without this.
+ */
+const TAG_NAME_AR: Record<string, string> = {
+  'ai-automation': 'أتمتة الذكاء الاصطناعي',
+  'conversion': 'تحسين التحويل',
+  'crm': 'إدارة علاقات العملاء (CRM)',
+  'custom-software': 'برمجيات مخصصة',
+  'dashboards': 'لوحات المعلومات',
+  'digital-transformation': 'التحول الرقمي',
+  'small-business': 'الشركات الصغيرة',
+  'website-strategy': 'استراتيجية المواقع',
+}
+
+export function localizeTagName(
+  slug: string | null | undefined,
+  fallback: string | null | undefined,
+  locale: string | null | undefined,
+): string {
+  const original = fallback || ''
+  if (locale === 'ar' && slug && TAG_NAME_AR[slug]) return TAG_NAME_AR[slug]
+  return original
+}

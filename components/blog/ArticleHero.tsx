@@ -77,15 +77,17 @@ export function ArticleHero({ post, locale }: { post: BlogPost; locale: string }
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 px-5 py-3">
-            <Eye className="h-5 w-5 shrink-0 text-primary-600" />
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-                {locale === 'ar' ? 'المشاهدات' : 'Views'}
-              </p>
-              <p className="text-[13px] font-bold text-neutral-900">{post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}</p>
+          {post.viewsCount > 0 && (
+            <div className="flex items-center gap-3 px-5 py-3">
+              <Eye className="h-5 w-5 shrink-0 text-primary-600" />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+                  {locale === 'ar' ? 'المشاهدات' : 'Views'}
+                </p>
+                <p className="text-[13px] font-bold text-neutral-900">{post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}</p>
+              </div>
             </div>
-          </div>
+          )}
           <div className="flex items-center gap-3 px-5 py-3">
             <User className="h-5 w-5 shrink-0 text-primary-600" />
             <div>

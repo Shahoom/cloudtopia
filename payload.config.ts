@@ -29,6 +29,7 @@ import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
 import { handleTranslateEndpoint } from './lib/cms/translate-endpoint.ts'
 import { handleBlogPairEndpoint } from './lib/cms/blog-pair-endpoint.ts'
 import { handleBlogImportEndpoint } from './lib/cms/blog-import-endpoint.ts'
+import { handleBlogViewEndpoint } from './lib/cms/blog-view-endpoint.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -143,6 +144,11 @@ export default buildConfig({
       path: '/blog-import',
       method: 'post',
       handler: handleBlogImportEndpoint,
+    },
+    {
+      path: '/blog-view',
+      method: 'post',
+      handler: handleBlogViewEndpoint,
     },
   ],
   db: postgresAdapter({

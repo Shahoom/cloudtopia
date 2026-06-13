@@ -1,6 +1,7 @@
 import type { BlogPost, BlogPostSummary } from '@/lib/blog/data'
 import type { TableOfContentsItem } from '@/lib/blog/utils'
 import { extractKeyTakeaways } from '@/lib/blog/utils'
+import { ArticleViewBeacon } from './ArticleViewBeacon'
 import { AuthorBox } from './AuthorBox'
 import { BlogCTA } from './BlogCTA'
 import { ContentBlockRenderer } from './ContentBlockRenderer'
@@ -74,9 +75,26 @@ export function ArticleContent({
 }) {
   const cta = articleCTA(post, locale)
   const takeaways = extractKeyTakeaways(post.contentBlocks)
+  // The first callout block is promoted into the KeyTakeawaysBox below; drop it
+  // from the block stream so the takeaways don't render twice (and so its
+  // English "Key takeaways" title never appears on Arabic articles).
+  const streamBlocks =
+    takeaways.items.length > 0 && Array.isArray(post.contentBlocks)
+      ? (() => {
+          let removed = false
+          return (post.contentBlocks as any[]).filter((b) => {
+            if (!removed && b && (b.blockType === 'calloutBlock' || b.blockType === 'callout')) {
+              removed = true
+              return false
+            }
+            return true
+          })
+        })()
+      : post.contentBlocks
 
   return (
     <section className="bg-[#f8f7fb] px-4 py-14 sm:px-6 lg:px-8">
+      <ArticleViewBeacon postId={post.id} />
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[240px_minmax(0,760px)_280px]">
         <TableOfContents items={toc} locale={locale} />
         <article className="min-w-0 rounded-3xl border border-sky-100 bg-white p-6 shadow-sm md:p-10">
@@ -92,13 +110,12 @@ export function ArticleContent({
             </aside>
           )}
           <KeyTakeawaysBox
-            title={takeaways.title}
             summary={takeaways.summary}
             items={takeaways.items}
             locale={locale}
           />
           <RichTextRenderer content={post.content} />
-          <ContentBlockRenderer blocks={post.contentBlocks} relatedPostLookup={relatedPosts} locale={locale} />
+          <ContentBlockRenderer blocks={streamBlocks} relatedPostLookup={relatedPosts} locale={locale} />
           {post.showCTA && (
             <div className="mt-12">
               <BlogCTA

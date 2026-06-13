@@ -43,10 +43,12 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
               <Calendar className="h-3 w-3" />
               {formatDate(post.publishedAt, locale)}
             </span>
-            <span className="inline-flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              {post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}
-            </span>
+            {post.viewsCount > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <Eye className="h-3 w-3" />
+                {post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}
+              </span>
+            )}
           </div>
         </div>
       </Link>

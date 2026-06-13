@@ -39,11 +39,13 @@ function MetaRow({
         <Calendar className="h-3.5 w-3.5" />
         <time dateTime={publishedAt}>{formatDate(publishedAt, locale)}</time>
       </span>
-      <span className="flex items-center gap-1">
-        <Eye className="h-3.5 w-3.5" />
-        {viewsCount.toLocaleString(locale === 'ar' ? 'ar-SA' : 'en')}{' '}
-        {locale === 'ar' ? 'مشاهدة' : 'views'}
-      </span>
+      {viewsCount > 0 && (
+        <span className="flex items-center gap-1">
+          <Eye className="h-3.5 w-3.5" />
+          {viewsCount.toLocaleString(locale === 'ar' ? 'ar-SA' : 'en')}{' '}
+          {locale === 'ar' ? 'مشاهدة' : 'views'}
+        </span>
+      )}
     </div>
   )
 }

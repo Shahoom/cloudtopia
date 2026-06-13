@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next'
 import { isDatabaseConfigured, queryDatabase } from '@/lib/cms/db'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import { buildTableOfContents, normalizeMediaUrl } from './utils'
-import { localizeCategoryName } from './taxonomy-i18n'
+import { localizeCategoryName, localizeTagName } from './taxonomy-i18n'
 import { filterAndSortBlogPosts, type BlogSearchSort } from './search'
 
 const CMS_REVALIDATE_SECONDS = 60
@@ -309,14 +309,16 @@ function mediaFromRow(prefix: string, row: Record<string, unknown>): BlogMedia |
   }
 }
 
-function normalizeTags(tags: unknown): BlogTag[] {
+function normalizeTags(tags: unknown, postLocale: string): BlogTag[] {
   if (!Array.isArray(tags)) return []
 
   return tags
     .map((tag: any) => ({
       id: numberValue(tag.id),
       locale: String(tag.locale || 'en'),
-      name: String(tag.name || ''),
+      // Tags are English-only rows joined by id; show the Arabic name on
+      // Arabic posts (the article-card tag chips).
+      name: localizeTagName(String(tag.slug || ''), String(tag.name || ''), postLocale),
       slug: String(tag.slug || ''),
       description: String(tag.description || ''),
       color: String(tag.color || '#0284c7'),
@@ -462,7 +464,7 @@ function normalizePostRow(row: BlogRow): BlogPostSummary {
     coverImage: mediaFromRow('cover', row as Record<string, unknown>),
     featuredImageAlt: row.featured_image_alt || '',
     category,
-    tags: normalizeTags(row.tags),
+    tags: normalizeTags(row.tags, String(row.locale || 'en')),
     author,
     series,
     featured: Boolean(row.featured),
@@ -840,7 +842,9 @@ async function getBlogTagsUncached(locale: string): Promise<BlogTag[]> {
        from blog_tags t
        left join blog_posts_rels rel on rel.blog_tags_id = t.id and rel.path = 'tags'
        left join blog_posts p on p.id = rel.parent_id and p.status = 'published' and p.locale::text = $1
-       where t.locale::text = $1
+       -- Canonical (English) tag set for every locale; names are localized in
+       -- code (taxonomy-i18n). Post counts still filter by the requested locale.
+       where t.locale::text = 'en'
        group by t.id
        order by post_count desc, t.name asc`,
       [locale],
@@ -849,7 +853,7 @@ async function getBlogTagsUncached(locale: string): Promise<BlogTag[]> {
     return rows.map((row) => ({
       id: numberValue(row.id),
       locale: row.locale,
-      name: row.name,
+      name: localizeTagName(row.slug, row.name, locale),
       slug: row.slug,
       description: row.description || '',
       color: row.color || '#0284c7',
