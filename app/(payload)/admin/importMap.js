@@ -49,6 +49,7 @@ import { CloudTopiaLoginView as CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef6
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { S3ClientUploadHandler as S3ClientUploadHandler_storage_s3 } from '@payloadcms/storage-s3/client'
 import { CommandCenter as CommandCenter_cloudtopia01 } from '@/components/payload/CommandCenter'
+import { ArticlesWorkspaceView as ArticlesWorkspaceView_cloudtopia02 } from '@/components/payload/ArticlesWorkspaceView'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -102,5 +103,6 @@ export const importMap = {
   "@/components/payload/AuthViews#CloudTopiaLoginView": CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef639d4,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_storage_s3,
-  "@/components/payload/CommandCenter#CommandCenter": CommandCenter_cloudtopia01
+  "@/components/payload/CommandCenter#CommandCenter": CommandCenter_cloudtopia01,
+  "@/components/payload/ArticlesWorkspaceView#ArticlesWorkspaceView": ArticlesWorkspaceView_cloudtopia02
 }

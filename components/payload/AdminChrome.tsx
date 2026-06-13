@@ -31,7 +31,7 @@ const navGroups: NavGroup[] = [
   {
     title: 'Content',
     items: [
-      { href: '/admin/collections/blog-posts', label: 'Articles', icon: Newspaper },
+      { href: '/admin/articles', label: 'Articles', icon: Newspaper },
       { href: '/admin/collections/pages', label: 'Pages', icon: FileText },
       { href: '/admin/collections/authors', label: 'Authors', icon: Users },
       { href: '/admin/collections/blog-categories', label: 'Categories', icon: Tags },
