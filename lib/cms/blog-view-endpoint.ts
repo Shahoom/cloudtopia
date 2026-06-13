@@ -1,17 +1,18 @@
 import type { PayloadRequest } from 'payload'
-import { isDatabaseConfigured, queryDatabase } from './db.ts'
 
 /**
  * POST /api/blog-view  { id }
  *
  * Lightweight, public view counter for articles. Increments
- * `blog_posts.views_count` with a direct SQL UPDATE — NOT through payload.update
- * — so it doesn't fire the afterChange revalidation hook (which would thrash the
- * cms-blog cache on every page view). The displayed count is read via the cached
- * data layer, so it refreshes within CMS_REVALIDATE_SECONDS (60s).
+ * `blog_posts.views_count` with a direct SQL UPDATE via Payload's OWN pg pool
+ * (`req.payload.db.pool`) — NOT through payload.update (which would fire the
+ * afterChange revalidation hook and thrash the cms-blog cache on every view),
+ * and NOT through lib/cms/db.ts (that module is `server-only`, which throws when
+ * payload.config is loaded by the plain-Node migrate step at build time).
  *
- * The browser beacon (ArticleViewBeacon) dedups per session, so this is roughly
- * one increment per visitor per article. Best-effort: never throws to the page.
+ * The displayed count comes from the cached data layer, so it refreshes within
+ * CMS_REVALIDATE_SECONDS (60s). The browser beacon dedups per session.
+ * Best-effort: never throws to the page.
  */
 export async function handleBlogViewEndpoint(req: PayloadRequest): Promise<Response> {
   let rawId: unknown
@@ -30,10 +31,12 @@ export async function handleBlogViewEndpoint(req: PayloadRequest): Promise<Respo
   if (!Number.isInteger(id) || id <= 0) {
     return Response.json({ error: 'Invalid post id.' }, { status: 400 })
   }
-  if (!isDatabaseConfigured()) return Response.json({ ok: false })
 
   try {
-    await queryDatabase('update blog_posts set views_count = coalesce(views_count, 0) + 1 where id = $1', [id])
+    const pool = (req.payload.db as { pool?: { query: (sql: string, params: unknown[]) => Promise<unknown> } }).pool
+    if (pool?.query) {
+      await pool.query('update blog_posts set views_count = coalesce(views_count, 0) + 1 where id = $1', [id])
+    }
   } catch {
     // View tracking must never break the article page.
   }
