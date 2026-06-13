@@ -20,32 +20,45 @@ const autoLocalizeAuthor: CollectionAfterChangeHook = async ({ doc, req }) => {
 
   const roleEn = doc?.role?.en
   const bioEn = doc?.bio?.en
-  if (!roleEn && !bioEn) return doc
 
-  const source = {
-    ...(roleEn ? { role: roleEn } : {}),
-    ...(bioEn ? { bio: bioEn } : {}),
+  // Only AUTO-FILL the Arabic side when it is EMPTY. Previously this re-translated
+  // role/bio on EVERY save and overwrote the Arabic fields — so editing the
+  // Arabic bio (or re-saving after a translation already existed) silently
+  // reverted the change, which read as "the bio won't save". When nothing needs
+  // filling we skip the OpenAI call entirely, keeping saves fast and reliable.
+  // Use the "Translate to Arabic" button to deliberately refresh a translation.
+  const needRole = Boolean(roleEn) && !doc?.role?.ar
+  const needBio = Boolean(bioEn) && !doc?.bio?.ar
+  if (!needRole && !needBio) return doc
+
+  // Best-effort: auto-translation must NEVER block or fail the author save.
+  try {
+    const source = {
+      ...(needRole ? { role: roleEn } : {}),
+      ...(needBio ? { bio: bioEn } : {}),
+    }
+    const ar = await translatePayload(source, 'ar')
+
+    await req.payload.update({
+      collection: 'authors',
+      id: doc.id,
+      data: {
+        role: {
+          en: roleEn || '',
+          ar: needRole ? (ar as any).role || doc?.role?.ar || '' : doc?.role?.ar || '',
+        },
+        bio: {
+          en: bioEn || '',
+          ar: needBio ? (ar as any).bio || doc?.bio?.ar || '' : doc?.bio?.ar || '',
+        },
+      },
+      overrideAccess: true,
+      req,
+      context: { skipAutoTranslate: true },
+    } as any)
+  } catch (err) {
+    console.warn('[authors] auto-translate skipped (save still succeeded):', (err as Error)?.message)
   }
-
-  const ar = await translatePayload(source, 'ar')
-
-  await req.payload.update({
-    collection: 'authors',
-    id: doc.id,
-    data: {
-      role: {
-        en: roleEn || '',
-        ar: (ar as any).role || doc?.role?.ar || '',
-      },
-      bio: {
-        en: bioEn || '',
-        ar: (ar as any).bio || doc?.bio?.ar || '',
-      },
-    },
-    overrideAccess: true,
-    req,
-    context: { skipAutoTranslate: true },
-  } as any)
 
   return doc
 }
