@@ -22,6 +22,7 @@ import { ServiceFAQs } from './collections/ServiceFAQs.ts'
 import { Pages } from './collections/Pages.ts'
 import { SiteDesign } from './collections/SiteDesign.ts'
 import { SiteContent } from './collections/SiteContent.ts'
+import { SeoOverrides } from './collections/SeoOverrides.ts'
 import { SolutionFinderLeads } from './collections/SolutionFinderLeads.ts'
 import { Users } from './collections/Users.ts'
 import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
@@ -130,6 +131,7 @@ export default buildConfig({
     SiteContent,
     Pages,
     SiteDesign,
+    SeoOverrides,
   ],
   endpoints: [
     {
