@@ -251,6 +251,8 @@ export function generateStaticParams() {
     )
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', service: serviceSlug } = await params
     const service = getService(serviceSlug)
@@ -267,7 +269,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const socialTitle = `${title} | ${locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'}`
     const images = ogImagesFor({ page: `services/${service.slug}`, locale })
 
-    return {
+    const meta: Metadata = {
         title,
         description,
         keywords: [name, categoryName, 'CloudTopia', 'Arabic website development', 'CRM', 'ERP', 'AI automation'],
@@ -294,6 +296,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             },
         },
     }
+
+    return applySeoOverride(meta, locale, `services/${service.slug}`)
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
