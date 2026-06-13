@@ -194,6 +194,16 @@ function buildBlocks(meta: any): any[] {
   return blocks
 }
 
+// Detect the DOMINANT script so a few foreign example words (e.g. an English
+// article about Arabic websites that quotes Arabic) don't flip the whole post.
+// Returns 'ar' only when Arabic letters actually outnumber Latin letters — the
+// old `/[؀-ۿ]/.test()` returned 'ar' on a single Arabic character.
+function detectLocale(text: string): 'en' | 'ar' {
+  const arabic = (text.match(/[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/g) || []).length
+  const latin = (text.match(/[A-Za-z]/g) || []).length
+  return arabic > latin ? 'ar' : 'en'
+}
+
 export async function handleBlogImportEndpoint(req: PayloadRequest): Promise<Response> {
   const { user } = await req.payload.auth({ headers: req.headers })
   if (!user) return Response.json({ error: 'Unauthorized.' }, { status: 401 })
@@ -208,7 +218,6 @@ export async function handleBlogImportEndpoint(req: PayloadRequest): Promise<Res
 
   try {
     const { body, fm } = parseFrontmatter(text.slice(0, 60000))
-    const language = /[؀-ۿ]/.test(body) ? 'Arabic' : 'English'
 
     // 1) Structure → Markdown (verbatim) → 2) Lexical content.
     const markdown = stripCodeFence(await callOpenAI(`${STRUCTURE_PROMPT}\n\n--- RAW TEXT ---\n${body}`, 0.15))
@@ -222,15 +231,27 @@ export async function handleBlogImportEndpoint(req: PayloadRequest): Promise<Res
       return acc
     })(content?.root).join(' ').replace(/\s+/g, ' ').trim()
 
-    // 3) Taxonomy + metadata + blocks.
-    const [cats, tags, authors] = await Promise.all([
+    // 3) Taxonomy + (when editing) the existing doc, in parallel.
+    const [cats, tags, authors, existing] = await Promise.all([
       req.payload.find({ collection: 'blog-categories' as any, limit: 100, depth: 0, overrideAccess: true, req }),
       req.payload.find({ collection: 'blog-tags' as any, limit: 200, depth: 0, overrideAccess: true, req }),
       req.payload.find({ collection: 'authors' as any, limit: 50, depth: 0, overrideAccess: true, req }),
+      id
+        ? req.payload.findByID({ collection: 'blog-posts' as any, id, depth: 0, draft: true, overrideAccess: true, req }).catch(() => null)
+        : Promise.resolve(null),
     ])
     const catByName = new Map<string, any>(cats.docs.map((c: any) => [titleField(c).toLowerCase(), c.id]))
     const tagByName = new Map<string, any>(tags.docs.map((t: any) => [titleField(t).toLowerCase(), t.id]))
     const authorByName = new Map<string, any>(authors.docs.map((a: any) => [titleField(a).toLowerCase(), a.id]))
+
+    // Language: when editing an existing doc, HONOR its locale (the EN⇄AR toggle
+    // already chose it). For a new doc, detect from the dominant script of the
+    // content. This is the single source of truth for both the post's `locale`
+    // field AND the language the AI writes the metadata in — so they can't drift.
+    const existingLocale = (existing as any)?.locale
+    const localeToUse: 'en' | 'ar' =
+      existingLocale === 'ar' || existingLocale === 'en' ? existingLocale : detectLocale(`${plain} ${body}`)
+    const language = localeToUse === 'ar' ? 'Arabic' : 'English'
 
     const meta = parseJsonLoose(
       await callOpenAI(
@@ -278,6 +299,7 @@ export async function handleBlogImportEndpoint(req: PayloadRequest): Promise<Res
         metaDescription: (meta.metaDescription || '').toString().trim() || undefined,
         focusKeyword: (meta.focusKeyword || '').toString().trim() || undefined,
       },
+      locale: localeToUse,
       status: 'draft',
     }
     // Drop undefined so Payload defaults apply.
@@ -286,9 +308,9 @@ export async function handleBlogImportEndpoint(req: PayloadRequest): Promise<Res
     let docId = id
     let created = false
     if (id) {
-      const existing = await req.payload.findByID({ collection: 'blog-posts' as any, id, depth: 0, draft: true, overrideAccess: true, req }).catch(() => null)
-      // Preserve an author that's already set; never touch the cover image here.
-      if (!existing?.author && (aiAuthorId ?? fallbackAuthorId)) data.author = aiAuthorId ?? fallbackAuthorId
+      // `existing` was already fetched above. Preserve an author that's already
+      // set; never touch the cover image here.
+      if (!(existing as any)?.author && (aiAuthorId ?? fallbackAuthorId)) data.author = aiAuthorId ?? fallbackAuthorId
       await req.payload.update({ collection: 'blog-posts' as any, id, data, draft: true, overrideAccess: true, req, context: { skipAutoTranslate: true } })
     } else {
       if (aiAuthorId ?? fallbackAuthorId) data.author = aiAuthorId ?? fallbackAuthorId
