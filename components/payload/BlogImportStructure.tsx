@@ -1,16 +1,21 @@
 'use client'
 
-import { useForm } from '@payloadcms/ui'
+import { useDocumentInfo } from '@payloadcms/ui'
+import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
 
 /**
  * "Import & Structure" — paste text or upload a .md/.mdx file. The AI re-arranges
- * it (headings, lists, comparison tables) WITHOUT rewriting the words, converts
- * it to rich-text, and fills every field (title, slug, excerpt, SEO, category,
- * tags, reading time). Nothing saves until you press Payload Save.
+ * it (headings, lists, comparison tables) WITHOUT rewriting the words, then the
+ * server builds a fully-populated DRAFT: rich-text content, blocks (FAQ, key
+ * takeaways, comparison, pros/cons, stats), SEO, category, tags, author, type,
+ * reading time. You review the draft, add a cover image, and publish.
  */
 export function BlogImportStructure() {
-  const { dispatchFields } = useForm()
+  const router = useRouter()
+  const { id: rawId } = useDocumentInfo()
+  const id = rawId ? String(rawId) : undefined
+
   const [text, setText] = useState('')
   const [fileName, setFileName] = useState('')
   const [loading, setLoading] = useState(false)
@@ -43,41 +48,30 @@ export function BlogImportStructure() {
         method: 'POST',
         credentials: 'include',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ text, fileName }),
+        body: JSON.stringify({ text, id }),
       })
       const payload = await res.json()
       if (!res.ok) throw new Error(payload?.error || 'Import failed.')
-      const r = payload.result
 
-      const done: string[] = []
-      const set = (path: string, value: unknown, label: string) => {
-        if (value == null || value === '' || (Array.isArray(value) && value.length === 0)) return
-        dispatchFields({ type: 'UPDATE', path, value })
-        done.push(label)
-      }
-      set('content', r.content, 'Structured content')
-      set('title', r.title, 'Title')
-      set('slug', r.slug, 'Slug')
-      set('excerpt', r.excerpt, 'Excerpt')
-      set('shortExcerpt', r.shortExcerpt, 'Short excerpt')
-      set('seo.metaTitle', r.metaTitle, 'Meta title')
-      set('seo.metaDescription', r.metaDescription, 'Meta description')
-      set('seo.focusKeyword', r.focusKeyword, 'Focus keyword')
-      set('category', r.categoryId, 'Category')
-      set('tags', r.tagIds, 'Tags')
-      set('readingTime', r.readingTime, 'Reading time')
+      setSummary([
+        `Filled: ${(payload.filled || []).join(', ')}.`,
+        ...(payload.warnings || []).map((w: string) => `⚠ ${w}`),
+        payload.created ? 'Opening the new draft…' : 'Reloading with the imported content…',
+      ])
 
-      const lines = [`Filled: ${done.join(', ')}.`]
-      if (r.secondaryKeywords?.length) lines.push(`Secondary keywords: ${r.secondaryKeywords.join(' · ')}`)
-      if (r.warnings?.length) lines.push(...r.warnings.map((w: string) => `⚠ ${w}`))
-      lines.push('Review everything, then press Save. Your wording was kept verbatim — only structure was added.')
-      setSummary(lines)
+      // Reliable server-side persist already happened; just open/refresh.
+      setTimeout(() => {
+        if (payload.created && payload.id) {
+          router.push(`/admin/collections/blog-posts/${payload.id}`)
+        } else {
+          router.refresh()
+        }
+      }, 900)
     } catch (err: any) {
       setError(err?.message || 'Import failed.')
-    } finally {
       setLoading(false)
     }
-  }, [text, fileName, dispatchFields])
+  }, [text, id, router])
 
   return (
     <div className="ctimp">
@@ -89,7 +83,8 @@ export function BlogImportStructure() {
           <p className="ctimp__copy">
             Paste your article or upload a <code>.md</code>/<code>.mdx</code> file. The AI adds headings, lists, and a
             comparison table where your content calls for it — <strong>without rewriting your words</strong> — then
-            fills the title, slug, excerpt, SEO, category, tags, and reading time.
+            builds a complete draft: content, blocks (FAQ, key takeaways…), SEO, category, tags, author, and reading
+            time. You add a cover image and publish.
           </p>
         </div>
       </div>
@@ -106,13 +101,7 @@ export function BlogImportStructure() {
         <button type="button" className="ctimp__file" onClick={() => fileRef.current?.click()} disabled={loading}>
           📄 Choose .md / .mdx
         </button>
-        <input
-          ref={fileRef}
-          type="file"
-          accept=".md,.mdx,text/markdown,text/plain"
-          onChange={onFile}
-          style={{ display: 'none' }}
-        />
+        <input ref={fileRef} type="file" accept=".md,.mdx,text/markdown,text/plain" onChange={onFile} style={{ display: 'none' }} />
         {fileName ? <span className="ctimp__fname">{fileName}</span> : null}
         <span className="ctimp__spacer" />
         <button type="button" className="ctimp__go" onClick={run} disabled={loading || !text.trim()}>

@@ -26,6 +26,14 @@ function buildCounterpartData(doc: any, otherLocale: 'en' | 'ar') {
     locale: otherLocale,
     slug: doc.slug, // the shared pairing key
     status: 'draft',
+    // title/excerpt/content are NOT NULL in the DB; draft mode skips Payload's
+    // required-field validation but not the column constraints. Seed empty
+    // values so the blank counterpart inserts — the author writes the text.
+    title: '',
+    excerpt: '',
+    content: {
+      root: { type: 'root', format: '', indent: 0, version: 1, direction: 'ltr', children: [{ type: 'paragraph', format: '', indent: 0, version: 1, direction: 'ltr', children: [] }] },
+    },
     // structural selects
     contentType: doc.contentType,
     targetAudience: doc.targetAudience,
