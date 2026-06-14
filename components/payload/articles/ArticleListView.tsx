@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { CSSProperties } from 'react'
-import { Check, ExternalLink, Eye, Languages, Pencil, Settings2, Sparkles, X } from 'lucide-react'
+import { Check, ExternalLink, Eye, Image as ImageIcon, Languages, Pencil, Settings2, Sparkles, X } from 'lucide-react'
 import type { ArticleRow, Category, Status } from './types.ts'
 import { STATUS_DOT, STATUS_LABELS, STATUS_ORDER } from './types.ts'
 import { optimizeArticle, pairArticle, updateArticle } from './api.ts'
@@ -22,6 +22,14 @@ function seoTone(score: number): CSSProperties {
   if (score >= 80) return { background: 'rgba(22,163,74,0.14)', color: '#16a34a' }
   if (score >= 60) return { background: 'rgba(217,119,6,0.16)', color: '#d97706' }
   return { background: 'rgba(220,38,38,0.14)', color: '#dc2626' }
+}
+
+// Cover thumbnail with graceful fallback — broken/absent images (e.g. local env
+// without S3 media credentials) show a placeholder icon instead of a broken img.
+function Thumb({ src }: { src: string | null }) {
+  const [err, setErr] = useState(false)
+  if (!src || err) return <ImageIcon size={18} color="var(--theme-elevation-400)" />
+  return <img src={src} alt="" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 6 }} />
 }
 
 export function ArticleListView({ rows, categories, selected, onToggleSelect, onRefresh, onToast }: Props) {
@@ -147,7 +155,7 @@ export function ArticleListView({ rows, categories, selected, onToggleSelect, on
               <div style={{ display: 'flex', gap: 12 }}>
                 <input type="checkbox" checked={selected.has(row.id)} onChange={() => onToggleSelect(row.id)} aria-label={`Select ${row.title}`} style={{ marginTop: 4, cursor: 'pointer' }} />
                 <div style={thumb()}>
-                  {row.coverThumb ? <img src={row.coverThumb} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 6 }} /> : <Eye size={18} color="var(--theme-elevation-400)" />}
+                  <Thumb src={row.coverThumb} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>

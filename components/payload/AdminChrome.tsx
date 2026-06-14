@@ -9,6 +9,7 @@ import {
   HelpCircle,
   Image,
   Inbox,
+  Library,
   LayoutDashboard,
   LogOut,
   Mail,
@@ -30,13 +31,19 @@ const navGroups: NavGroup[] = [
     items: [{ href: '/admin', label: 'Dashboard', icon: LayoutDashboard }],
   },
   {
-    title: 'Content',
+    title: 'Blog',
     items: [
       { href: '/admin/articles', label: 'Articles', icon: Newspaper },
-      { href: '/admin/collections/pages', label: 'Pages', icon: FileText },
       { href: '/admin/collections/authors', label: 'Authors', icon: Users },
       { href: '/admin/collections/blog-categories', label: 'Categories', icon: Tags },
       { href: '/admin/collections/blog-tags', label: 'Tags', icon: Tags },
+      { href: '/admin/collections/blog-series', label: 'Series', icon: Library },
+    ],
+  },
+  {
+    title: 'Content',
+    items: [
+      { href: '/admin/collections/pages', label: 'Pages', icon: FileText },
       { href: '/admin/collections/projects', label: 'Projects', icon: FolderKanban },
       { href: '/admin/collections/service-faqs', label: 'Service FAQs', icon: HelpCircle },
       { href: '/admin/collections/media', label: 'Media', icon: Image },
