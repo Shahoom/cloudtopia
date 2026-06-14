@@ -554,6 +554,18 @@
   }
 }
 
+@keyframes slideUp {
+  from {
+    opacity: 0.5;
+    transform: translateY(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ---------- Dark mode ---------- */
 :global(html.dark) .window {
   background: linear-gradient(170deg, rgba(15, 23, 42, 0.84), rgba(2, 20, 40, 0.82));
@@ -623,15 +635,51 @@
 @media (max-width: 520px) {
   .root,
   .rootRtl {
-    right: 0.7rem;
-    bottom: 0.7rem;
-    left: 0.7rem;
-    align-items: stretch;
+    right: 1rem;
+    left: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    align-items: flex-end;
   }
 
+  .rootRtl {
+    right: auto;
+    left: 1rem;
+    align-items: flex-start;
+  }
+
+  /* Open chat is a full-screen sheet, so it must clear the site's sticky
+     header (z-9999). Elevated only while open (root contains a .window),
+     so the closed launcher still sits below the mobile-nav drawer. */
+  .root:has(.window),
+  .rootRtl:has(.window) {
+    z-index: 10000;
+  }
+
+  /* On phones the open chat becomes a full-screen sheet instead of a cramped
+     floating card, so there's room to actually read the conversation. */
   .window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
     width: 100%;
-    max-height: calc(100vh - 5.6rem);
+    height: 100vh; /* fallback for browsers without dvh */
+    height: 100dvh; /* tracks the visible viewport: input never hides behind the URL bar */
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* Opaque at full-screen — the frosted-glass look let the page bleed through. */
+    background: linear-gradient(180deg, #ffffff 0%, #eaf4ff 100%);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    animation: slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* The header ✕ closes the chat on mobile, so the open-state launcher is hidden. */
+  .floatingButtonOpen {
+    display: none;
   }
 
   .floatingButton {
@@ -642,8 +690,48 @@
     align-self: flex-start;
   }
 
+  /* Respect the notch / status bar at the top and the home indicator at the bottom. */
+  .header {
+    padding-top: max(1rem, calc(env(safe-area-inset-top, 0px) + 0.55rem));
+    border-radius: 0;
+    background: linear-gradient(120deg, #e8f5fe, #f5fbff);
+  }
+
+  .inputBar {
+    padding-bottom: max(0.9rem, calc(env(safe-area-inset-bottom, 0px) + 0.55rem));
+  }
+
+  /* Let the message list shrink properly (e.g. in landscape) so it scrolls
+     instead of pushing the input bar off-screen. */
+  .messages {
+    min-height: 0;
+  }
+
+  /* 16px fields stop iOS from auto-zooming the page when an input is focused. */
+  .inputBar input,
+  .formGrid input,
+  .formGrid textarea,
+  .formGrid select {
+    font-size: 16px;
+  }
+
+  /* Comfortable header touch targets (≥ 40px). */
+  .headerActions button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   .formGrid {
     grid-template-columns: 1fr;
+  }
+
+  /* Opaque dark-mode sheet (these come after the base dark rules so they win). */
+  :global(html.dark) .window {
+    background: linear-gradient(180deg, #0f1b2e 0%, #07101f 100%);
+  }
+
+  :global(html.dark) .header {
+    background: linear-gradient(120deg, #0e1a2d, #0a1422);
   }
 }
 
