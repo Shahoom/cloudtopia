@@ -50,6 +50,7 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 import { S3ClientUploadHandler as S3ClientUploadHandler_storage_s3 } from '@payloadcms/storage-s3/client'
 import { CommandCenter as CommandCenter_cloudtopia01 } from '@/components/payload/CommandCenter'
 import { ArticlesWorkspaceView as ArticlesWorkspaceView_cloudtopia02 } from '@/components/payload/ArticlesWorkspaceView'
+import { SeoControlCenterView as SeoControlCenterView_cloudtopia03 } from '@/components/payload/SeoControlCenterView'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -104,5 +105,6 @@ export const importMap = {
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_storage_s3,
   "@/components/payload/CommandCenter#CommandCenter": CommandCenter_cloudtopia01,
-  "@/components/payload/ArticlesWorkspaceView#ArticlesWorkspaceView": ArticlesWorkspaceView_cloudtopia02
+  "@/components/payload/ArticlesWorkspaceView#ArticlesWorkspaceView": ArticlesWorkspaceView_cloudtopia02,
+  "@/components/payload/SeoControlCenterView#SeoControlCenterView": SeoControlCenterView_cloudtopia03
 }

@@ -33,6 +33,7 @@ import { handleBlogImportEndpoint } from './lib/cms/blog-import-endpoint.ts'
 import { handleBlogViewEndpoint } from './lib/cms/blog-view-endpoint.ts'
 import { handleArticlesBulkEndpoint } from './lib/cms/admin/articles-bulk-endpoint.ts'
 import { handleArticleOptimizeEndpoint } from './lib/cms/admin/article-optimize-endpoint.ts'
+import { handleRouteManifestEndpoint } from './lib/cms/admin/route-manifest-endpoint.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -104,6 +105,11 @@ export default buildConfig({
           path: '/articles',
           exact: true,
         },
+        seoCenter: {
+          Component: '@/components/payload/SeoControlCenterView#SeoControlCenterView',
+          path: '/seo',
+          exact: true,
+        },
         login: {
           Component: '@/components/payload/AuthViews#CloudTopiaLoginView',
         },
@@ -168,6 +174,11 @@ export default buildConfig({
       path: '/admin/article-optimize',
       method: 'post',
       handler: handleArticleOptimizeEndpoint,
+    },
+    {
+      path: '/admin/route-manifest',
+      method: 'post',
+      handler: handleRouteManifestEndpoint,
     },
   ],
   db: postgresAdapter({

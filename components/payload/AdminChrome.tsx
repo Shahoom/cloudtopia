@@ -13,6 +13,7 @@ import {
   LogOut,
   Mail,
   Newspaper,
+  Search,
   Send,
   Tags,
   Users,
@@ -60,6 +61,7 @@ const navGroups: NavGroup[] = [
   {
     title: 'Settings',
     items: [
+      { href: '/admin/seo', label: 'SEO control center', icon: Search },
       { href: '/admin/collections/site-content', label: 'Locales / dictionary', icon: Globe2 },
       { href: '/admin/collections/site-design', label: 'Design', icon: Brush },
       { href: '/admin/collections/users', label: 'Users', icon: Users },
