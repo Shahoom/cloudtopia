@@ -42,11 +42,13 @@ function pageLabels(locale: string) {
     return labels[(locale as keyof typeof labels) || 'en'] || labels.en
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en' } = await params
     const L = pageLabels(locale)
 
-    return {
+    const meta: Metadata = {
         title: `${L.title} | CloudTopia`,
         description: L.description,
         alternates: {
@@ -58,6 +60,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             },
         },
     }
+
+    return applySeoOverride(meta, locale, 'industries')
 }
 
 export default async function IndustriesPage({ params }: PageProps) {

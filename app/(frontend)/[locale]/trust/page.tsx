@@ -237,11 +237,13 @@ function pageContent(locale: string) {
     return content[(locale as keyof typeof content) || 'en'] || content.en
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en' } = await params
     const L = pageContent(locale)
 
-    return {
+    const meta: Metadata = {
         title: L.metaTitle,
         description: L.metaDescription,
         alternates: {
@@ -258,6 +260,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: canonicalUrl(locale, '/trust'),
         },
     }
+
+    return applySeoOverride(meta, locale, 'trust')
 }
 
 export default async function TrustPage({ params }: PageProps) {

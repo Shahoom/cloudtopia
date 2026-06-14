@@ -10,7 +10,7 @@ import type { PayloadRequest } from 'payload'
 // (Individual articles have their own SEO in the Articles workspace; redirect-only
 // routes like /locations/[country] are excluded.)
 const CORE_PATHS = [
-  '/', 'services', 'industries', 'markets', 'pricing', 'projects', 'articles',
+  '/', 'services', 'industries', 'pricing', 'projects', 'articles',
   'process', 'trust', 'about', 'contact', 'website-design', 'ecommerce-solutions',
   'business-systems-development', 'restaurant-qr-menu', 'content-creation',
   'social-media-marketing', 'web-applications', 'privacy', 'terms',
@@ -27,11 +27,36 @@ function labelFor(path: string): string {
   return last.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-function titleStr(m: any): string {
-  const t = m?.title
-  if (typeof t === 'string') return t
-  if (t && typeof t === 'object' && 'absolute' in t) return String(t.absolute || '')
-  return ''
+// Core routes are read by fetching the live rendered page — the only reliable
+// source, since routes compute <title> in different ways (getCMSMetadata +
+// per-route fallbacks, static metadata, etc.).
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://cloudtopia.net').replace(/\/$/, '')
+
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&#x27;|&#39;|&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#x2F;|&#47;/g, '/')
+}
+
+async function fetchLiveTitle(loc: Loc, path: string): Promise<Meta> {
+  const seg = path === '/' ? '' : path
+  const url = (loc === 'en' ? `${SITE}/${seg}` : `${SITE}/${loc}/${seg}`).replace(/\/+$/, '') || SITE
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
+    const html = await res.text()
+    const rawT = (html.match(/<title>([^<]*)<\/title>/i)?.[1] || '').trim()
+    const rawD = (html.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i)?.[1] || '').trim()
+    return {
+      title: decodeEntities(rawT).replace(/\s*\|\s*CloudTopia\s*$/i, '').trim(),
+      description: decodeEntities(rawD),
+    }
+  } catch {
+    return { title: '', description: '' }
+  }
 }
 
 export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<Response> {
@@ -39,8 +64,7 @@ export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<
   if (!user) return Response.json({ error: 'Unauthorized.' }, { status: 401 })
 
   // Lazy imports — keep these out of payload.config's plain-Node module graph.
-  const [{ getCMSMetadata }, industries, services] = await Promise.all([
-    import('../metadata.ts'),
+  const [industries, services] = await Promise.all([
     import('../../seo/industries.ts'),
     import('../../seo/services.ts'),
   ])
@@ -65,8 +89,7 @@ export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<
     await Promise.all(
       LOCALES.map(async (loc) => {
         try {
-          const m = await getCMSMetadata(loc, path)
-          out[loc] = { title: titleStr(m), description: typeof m.description === 'string' ? m.description : '' }
+          out[loc] = await fetchLiveTitle(loc, path)
         } catch {
           out[loc] = { title: '', description: '' }
         }

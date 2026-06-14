@@ -289,6 +289,8 @@ function categoryPricingDescription(categoryTitle: string, locale: string) {
     return `Each ${categoryTitle} package includes a written scope, clear deliverables, and a free demo preview before production starts.`
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en' } = await params
     const isArabic = locale === 'ar'
@@ -298,7 +300,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? 'أسعار كلاود توبيا للمواقع، المتاجر، أنظمة CRM وERP، تطبيقات الويب والجوال، السحابة، وأتمتة الذكاء الاصطناعي.'
         : 'CloudTopia pricing for websites, e-commerce, CRM, ERP, web apps, mobile apps, cloud, and AI automation.'
 
-    return {
+    const meta: Metadata = {
         title,
         description,
         openGraph: {
@@ -322,6 +324,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             },
         },
     }
+
+    return applySeoOverride(meta, locale, 'pricing')
 }
 
 export default async function PricingPage({ params }: PageProps) {

@@ -21,6 +21,8 @@ function absoluteImageUrl(image?: string): string | undefined {
     return `${BASE_URL}${image.startsWith('/') ? '' : '/'}${image}`
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({
     params,
 }: {
@@ -34,7 +36,7 @@ export async function generateMetadata({
         ? 'مشاريع كلاود توبيا في المواقع، المتاجر، تطبيقات الويب، الأنظمة، وتجارب الذكاء الاصطناعي.'
         : 'CloudTopia projects across websites, e-commerce, web apps, systems, and AI experiences.'
 
-    return {
+    const meta: Metadata = {
         title,
         description,
         openGraph: {
@@ -56,6 +58,8 @@ export async function generateMetadata({
             languages: buildHreflangMap('/projects'),
         },
     }
+
+    return applySeoOverride(meta, locale, 'projects')
 }
 
 /**
