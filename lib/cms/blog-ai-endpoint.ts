@@ -161,7 +161,7 @@ function parseJsonLoose(text: unknown): any {
  * `input`, so it runs even before the post is saved). Returns a strict JSON
  * package the client writes straight into the fields. Does NOT rewrite prose.
  */
-async function runOptimize(input: Record<string, unknown>) {
+export async function runOptimize(input: Record<string, unknown>) {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) throw new Error('OPENAI_API_KEY is not configured.')
   const model = process.env.AI_MODEL || 'gpt-4o-mini'

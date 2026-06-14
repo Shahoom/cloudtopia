@@ -1,4 +1,3 @@
-import { FastMediaListView as FastMediaListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0 } from '@/components/payload/FastCollectionLists'
 import { TranslateButton as TranslateButton_98200ed16afdded928321b7535fddfaf } from '@/components/payload/TranslateButton'
 import { BlogLanguageToggle as BlogLanguageToggle_0898fe66d0eaac5c0e2f6202598128e9 } from '@/components/payload/BlogLanguageToggle'
 import { BlogImportStructure as BlogImportStructure_eb566116241e078234ae0bd22d0d529c } from '@/components/payload/BlogImportStructure'
@@ -44,14 +43,14 @@ import { CloudTopiaAdminNav as CloudTopiaAdminNav_571965f0f42445db79b9bfab12c648
 import { CloudTopiaIcon as CloudTopiaIcon_571965f0f42445db79b9bfab12c648d3 } from '@/components/payload/AdminChrome'
 import { CloudTopiaLogo as CloudTopiaLogo_571965f0f42445db79b9bfab12c648d3 } from '@/components/payload/AdminChrome'
 import { CloudTopiaCreateFirstUserView as CloudTopiaCreateFirstUserView_e0b55275f3ddf4e3d487dc379ef639d4 } from '@/components/payload/AuthViews'
-import { EditorialDashboard as EditorialDashboard_c7df803db736af4f456d3338d07cad3e } from '@/components/payload/EditorialDashboard'
+import { CommandCenter as CommandCenter_525eeb9915ad59cb8aa45e9242d5a04d } from '@/components/payload/CommandCenter'
+import { ArticlesWorkspaceView as ArticlesWorkspaceView_2f335db82f09c6d93321588773da971f } from '@/components/payload/ArticlesWorkspaceView'
+import { SeoControlCenterView as SeoControlCenterView_fcd94b5115be11100e204e1e7a905a33 } from '@/components/payload/SeoControlCenterView'
 import { CloudTopiaLoginView as CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef639d4 } from '@/components/payload/AuthViews'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
-import { S3ClientUploadHandler as S3ClientUploadHandler_storage_s3 } from '@payloadcms/storage-s3/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
-  "@/components/payload/FastCollectionLists#FastMediaListView": FastMediaListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0,
   "@/components/payload/TranslateButton#TranslateButton": TranslateButton_98200ed16afdded928321b7535fddfaf,
   "@/components/payload/BlogLanguageToggle#BlogLanguageToggle": BlogLanguageToggle_0898fe66d0eaac5c0e2f6202598128e9,
   "@/components/payload/BlogImportStructure#BlogImportStructure": BlogImportStructure_eb566116241e078234ae0bd22d0d529c,
@@ -97,8 +96,9 @@ export const importMap = {
   "@/components/payload/AdminChrome#CloudTopiaIcon": CloudTopiaIcon_571965f0f42445db79b9bfab12c648d3,
   "@/components/payload/AdminChrome#CloudTopiaLogo": CloudTopiaLogo_571965f0f42445db79b9bfab12c648d3,
   "@/components/payload/AuthViews#CloudTopiaCreateFirstUserView": CloudTopiaCreateFirstUserView_e0b55275f3ddf4e3d487dc379ef639d4,
-  "@/components/payload/EditorialDashboard#EditorialDashboard": EditorialDashboard_c7df803db736af4f456d3338d07cad3e,
+  "@/components/payload/CommandCenter#CommandCenter": CommandCenter_525eeb9915ad59cb8aa45e9242d5a04d,
+  "@/components/payload/ArticlesWorkspaceView#ArticlesWorkspaceView": ArticlesWorkspaceView_2f335db82f09c6d93321588773da971f,
+  "@/components/payload/SeoControlCenterView#SeoControlCenterView": SeoControlCenterView_fcd94b5115be11100e204e1e7a905a33,
   "@/components/payload/AuthViews#CloudTopiaLoginView": CloudTopiaLoginView_e0b55275f3ddf4e3d487dc379ef639d4,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_storage_s3
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

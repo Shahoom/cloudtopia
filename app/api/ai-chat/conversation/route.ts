@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 import { normalizeChatLocale } from '@/lib/ai-chatbot/locale.ts'
 import { saveConversation } from '@/lib/ai-chatbot/conversationService.ts'
+import { getClientIp } from '@/lib/cms/client-ip.ts'
 import type { ChatTurnSource, ConversationInput, ConversationTurn } from '@/lib/ai-chatbot/types.ts'
 
 export const runtime = 'nodejs'
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
   if (!parsed) {
     return NextResponse.json({ saved: false, error: 'Invalid conversation.' }, { status: 400 })
   }
+  parsed.ipAddress = getClientIp(request.headers)
 
   const result = await saveConversation(parsed)
   return NextResponse.json(result, { status: result.saved ? 200 : 202 })

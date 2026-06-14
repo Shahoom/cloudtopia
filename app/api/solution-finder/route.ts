@@ -3,6 +3,7 @@ import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 import { generateAIRecommendationDetails } from '@/lib/solution-finder/aiRecommendation.ts'
 import { deriveSolutionFinderCountryHint, getHeaderCountryCode } from '@/lib/solution-finder/countryHint.ts'
 import { buildSolutionFinderLead, saveSolutionFinderLead } from '@/lib/solution-finder/leadService.ts'
+import { getClientIp } from '@/lib/cms/client-ip.ts'
 import type { SolutionFinderPayload } from '@/lib/solution-finder/types.ts'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -84,9 +85,9 @@ export async function POST(req: NextRequest) {
     })
 
     const crmLead = buildSolutionFinderLead(normalizedPayload, aiRecommendation)
+    crmLead.ipAddress = getClientIp(req.headers)
     const lead = {
       ...crmLead,
-      ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '',
       userAgent: req.headers.get('user-agent') || '',
     }
 

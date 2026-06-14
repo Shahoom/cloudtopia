@@ -130,6 +130,8 @@ export function generateStaticParams() {
     )
 }
 
+import { applySeoOverride } from '@/lib/cms/route-seo'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', industry: industrySlug } = await params
     const industry = getIndustry(industrySlug)
@@ -148,7 +150,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const description = (cmsSeo.description as string) || localizedValue(industry.description, locale)
     const images = ogImagesFor({ page: `industries/${industry.slug}`, locale })
 
-    return {
+    const meta: Metadata = {
         title,
         description,
         robots: cmsSeo.noindex ? { index: false, follow: false } : undefined,
@@ -182,6 +184,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             },
         },
     }
+
+    return applySeoOverride(meta, locale, `industries/${industry.slug}`)
 }
 
 export default async function IndustryPage({ params }: PageProps) {

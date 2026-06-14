@@ -22,6 +22,7 @@ import { ServiceFAQs } from './collections/ServiceFAQs.ts'
 import { Pages } from './collections/Pages.ts'
 import { SiteDesign } from './collections/SiteDesign.ts'
 import { SiteContent } from './collections/SiteContent.ts'
+import { SeoOverrides } from './collections/SeoOverrides.ts'
 import { SolutionFinderLeads } from './collections/SolutionFinderLeads.ts'
 import { Users } from './collections/Users.ts'
 import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
@@ -30,6 +31,9 @@ import { handleTranslateEndpoint } from './lib/cms/translate-endpoint.ts'
 import { handleBlogPairEndpoint } from './lib/cms/blog-pair-endpoint.ts'
 import { handleBlogImportEndpoint } from './lib/cms/blog-import-endpoint.ts'
 import { handleBlogViewEndpoint } from './lib/cms/blog-view-endpoint.ts'
+import { handleArticlesBulkEndpoint } from './lib/cms/admin/articles-bulk-endpoint.ts'
+import { handleArticleOptimizeEndpoint } from './lib/cms/admin/article-optimize-endpoint.ts'
+import { handleRouteManifestEndpoint } from './lib/cms/admin/route-manifest-endpoint.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -94,7 +98,17 @@ export default buildConfig({
           Component: '@/components/payload/AuthViews#CloudTopiaCreateFirstUserView',
         },
         dashboard: {
-          Component: '@/components/payload/EditorialDashboard#EditorialDashboard',
+          Component: '@/components/payload/CommandCenter#CommandCenter',
+        },
+        articlesWorkspace: {
+          Component: '@/components/payload/ArticlesWorkspaceView#ArticlesWorkspaceView',
+          path: '/articles',
+          exact: true,
+        },
+        seoCenter: {
+          Component: '@/components/payload/SeoControlCenterView#SeoControlCenterView',
+          path: '/seo',
+          exact: true,
         },
         login: {
           Component: '@/components/payload/AuthViews#CloudTopiaLoginView',
@@ -123,6 +137,7 @@ export default buildConfig({
     SiteContent,
     Pages,
     SiteDesign,
+    SeoOverrides,
   ],
   endpoints: [
     {
@@ -149,6 +164,21 @@ export default buildConfig({
       path: '/blog-view',
       method: 'post',
       handler: handleBlogViewEndpoint,
+    },
+    {
+      path: '/admin/articles-bulk',
+      method: 'post',
+      handler: handleArticlesBulkEndpoint,
+    },
+    {
+      path: '/admin/article-optimize',
+      method: 'post',
+      handler: handleArticleOptimizeEndpoint,
+    },
+    {
+      path: '/admin/route-manifest',
+      method: 'post',
+      handler: handleRouteManifestEndpoint,
     },
   ],
   db: postgresAdapter({

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/cms/payload.ts'
 import { isPayloadConfigured } from '@/lib/cms/env.ts'
+import { getClientIp } from '@/lib/cms/client-ip.ts'
 
 export const runtime = 'nodejs'
 
@@ -60,6 +61,7 @@ export async function POST(request: NextRequest) {
     source,
     locale,
     pageUrl:   pageUrl   || undefined,
+    ipAddress: getClientIp(request.headers) || undefined,
     status:    'new',
     createdAt: new Date().toISOString(),
   }

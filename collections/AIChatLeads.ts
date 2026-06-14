@@ -7,7 +7,7 @@ export const AIChatLeads: CollectionConfig = {
   admin: {
     group: 'CRM',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'phone', 'country', 'serviceNeeded', 'budgetRange', 'status', 'createdAt'],
+    defaultColumns: ['name', 'phone', 'country', 'ipAddress', 'serviceNeeded', 'budgetRange', 'status', 'createdAt'],
     description: 'Qualified sales/support inquiries captured by the CloudTopia AI chatbot.',
   },
   access: {
@@ -22,6 +22,7 @@ export const AIChatLeads: CollectionConfig = {
     { name: 'email', type: 'email' },
     { name: 'phone', type: 'text' },
     { name: 'country', type: 'text' },
+    { name: 'ipAddress', type: 'text', admin: { readOnly: true, description: 'Visitor IP captured from the request (x-forwarded-for).' } },
     { name: 'businessType', type: 'text' },
     { name: 'serviceNeeded', type: 'text' },
     { name: 'budgetRange', type: 'text' },

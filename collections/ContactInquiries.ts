@@ -22,6 +22,7 @@ export const ContactInquiries: CollectionConfig = {
     { name: 'phone', type: 'text' },
     { name: 'company', type: 'text' },
     { name: 'country', type: 'text' },
+    { name: 'ipAddress', type: 'text', admin: { readOnly: true, description: 'Visitor IP captured from the request (x-forwarded-for).' } },
     {
       name: 'service',
       type: 'text',

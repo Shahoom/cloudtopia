@@ -3,6 +3,7 @@ import { buildHreflangMap, canonicalUrl, stripBrandSuffix } from '../i18n/url.ts
 import { ogImagesFor } from '../og/og-image.ts'
 import { getPageBundle } from './content.ts'
 import { normalizePageSlug } from './page-structure.ts'
+import { applySeoOverride } from './route-seo.ts'
 
 const ogLocales: Record<string, string> = { en: 'en_US', ar: 'ar_SA' }
 const ogAlternateLocales: Record<string, string> = { en: 'ar_SA', ar: 'en_US' }
@@ -58,7 +59,7 @@ export async function getCMSMetadata(
   )
   const imagePage = ogPage || (normalized === '/' ? 'home' : normalized)
 
-  return {
+  const result: Metadata = {
     title: metadataTitle,
     description,
     robots: seo.noindex ? { index: false, follow: false } : undefined,
@@ -80,4 +81,6 @@ export async function getCMSMetadata(
       languages: buildHreflangMap(path),
     },
   }
+
+  return applySeoOverride(result, locale, normalized)
 }

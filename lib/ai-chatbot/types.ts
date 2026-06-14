@@ -42,6 +42,7 @@ export type AILeadInput = {
   language: ChatLocale
   source: 'ai_chatbot'
   createdAt: string
+  ipAddress?: string | null
 }
 
 export type WhatsappRegion = 'oman' | 'turkey' | 'unknown'
@@ -75,4 +76,5 @@ export type ConversationInput = {
   leadCaptured: boolean
   status: 'active' | 'completed'
   source: string
+  ipAddress?: string | null
 }

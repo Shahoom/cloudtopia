@@ -7,7 +7,7 @@ export const SolutionFinderLeads: CollectionConfig = {
   admin: {
     group: 'CRM',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'phone', 'country', 'recommendedPackage', 'status', 'createdAt'],
+    defaultColumns: ['name', 'phone', 'country', 'ipAddress', 'recommendedPackage', 'status', 'createdAt'],
     description: 'Qualified project inquiries captured by the AI-powered recommendation flow.',
   },
   access: {
@@ -26,6 +26,7 @@ export const SolutionFinderLeads: CollectionConfig = {
     { name: 'email', type: 'email' },
     { name: 'company', type: 'text' },
     { name: 'country', type: 'text' },
+    { name: 'ipAddress', type: 'text', admin: { readOnly: true, description: 'Visitor IP captured from the request (x-forwarded-for).' } },
     { name: 'industry', type: 'text' },
     { name: 'projectType', type: 'text' },
     { name: 'businessGoal', type: 'text' },
