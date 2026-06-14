@@ -5,7 +5,7 @@ import type { PayloadRequest } from 'payload'
 // the Payload local API (overrideAccess) so collection hooks (score recompute,
 // revalidation) still run. Each id is wrapped independently so one failure does
 // not abort the batch.
-type Action = 'publish' | 'status' | 'category' | 'translate' | 'delete' | 'export'
+type Action = 'publish' | 'status' | 'category' | 'translate' | 'delete' | 'export' | 'recalc'
 
 async function parseBody(req: PayloadRequest): Promise<{ action?: Action; ids?: any[]; value?: string }> {
   if (req.data && typeof req.data === 'object') return req.data as any
@@ -87,6 +87,11 @@ export async function handleArticlesBulkEndpoint(req: PayloadRequest): Promise<R
         await req.payload.update({ collection: 'blog-posts' as any, id, data: { category: value }, overrideAccess: true, req, context: { skipAutoTranslate: true } })
       } else if (action === 'translate') {
         await ensureSibling(req, id)
+      } else if (action === 'recalc') {
+        // Re-save with the existing content so normalizePost recomputes + (now
+        // that seoScore/contentScore are real fields) persists the scores.
+        const doc: any = await req.payload.findByID({ collection: 'blog-posts' as any, id, depth: 0, draft: true, overrideAccess: true, req })
+        await req.payload.update({ collection: 'blog-posts' as any, id, data: { content: doc.content }, overrideAccess: true, req, context: { skipAutoTranslate: true } })
       } else {
         throw new Error('Unsupported action.')
       }

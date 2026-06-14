@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
-import { Columns, Download, List, Languages, Plus, Search, Send, Trash2, Upload } from 'lucide-react'
+import { Columns, Download, List, Languages, Plus, RefreshCw, Search, Send, Trash2, Upload } from 'lucide-react'
 import type { ArticleRow, Category, SortKey, Status } from './types.ts'
 import { STATUS_LABELS, STATUS_ORDER } from './types.ts'
 import { bulkAction, fetchArticles, fetchCategories, fetchStatusCounts } from './api.ts'
@@ -159,6 +159,7 @@ export function ArticlesWorkspace() {
             <button type="button" onClick={() => doBulk('publish')} style={bulkBtn()}><Send size={14} /> Publish</button>
             <button type="button" onClick={() => doBulk('translate')} style={bulkBtn()}><Languages size={14} /> Translate</button>
             <button type="button" onClick={() => doBulk('export')} style={bulkBtn()}><Download size={14} /> Export</button>
+            <button type="button" onClick={() => doBulk('recalc')} style={bulkBtn()}><RefreshCw size={14} /> Recalc scores</button>
             <button type="button" onClick={() => doBulk('delete')} style={{ ...bulkBtn(), color: '#dc2626', borderColor: 'rgba(220,38,38,0.4)' }}><Trash2 size={14} /> Delete</button>
           </div>
         </div>

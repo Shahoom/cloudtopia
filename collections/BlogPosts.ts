@@ -301,6 +301,17 @@ export const BlogPosts: CollectionConfig = {
               admin: { components: { Field: '@/components/payload/BlogContentScorePanel#BlogContentScorePanel' } },
             },
             {
+              // These are computed in normalizePost. They MUST be declared as
+              // fields or Payload strips the hook's values before the DB write
+              // (the seo_score/content_score columns already exist) — which is
+              // why the SEO score always read 0.
+              type: 'row',
+              fields: [
+                { name: 'seoScore', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '50%' } },
+                { name: 'contentScore', type: 'number', defaultValue: 0, admin: { readOnly: true, width: '50%' } },
+              ],
+            },
+            {
               type: 'row',
               fields: [
                 { name: 'aiGenerated', type: 'checkbox', defaultValue: false, admin: { width: '25%' } },
