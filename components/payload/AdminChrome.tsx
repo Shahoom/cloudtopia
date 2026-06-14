@@ -61,8 +61,8 @@ const navGroups: NavGroup[] = [
   {
     title: 'AI & Activity',
     items: [
-      { href: '/admin/collections/ai-chat-conversations', label: 'Conversations', icon: Bot },
-      { href: '/admin/collections/blog-ai-generation-logs', label: 'AI logs', icon: Bot },
+      { href: '/admin/collections/ai-chat-conversations', label: 'Chatbot conversations', icon: Bot },
+      { href: '/admin/collections/blog-ai-generation-logs', label: 'Editor AI log', icon: Bot },
     ],
   },
   {

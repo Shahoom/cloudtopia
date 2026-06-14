@@ -114,7 +114,9 @@ export function SeoControlCenter() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {group.routes.map((r) => {
               const ov = overrides[keyFor(r.path)]
+              const cur = r.current?.[locale] || { title: '', description: '' }
               const hasOverride = !!(ov && (ov.metaTitle || ov.metaDescription || ov.canonicalUrl || ov.noIndex || ov.noFollow))
+              const effectiveTitle = ov?.metaTitle || cur.title
               const isEditing = editing === r.path
               return (
                 <div key={r.path} style={isEditing ? editCard() : card()}>
@@ -126,7 +128,7 @@ export function SeoControlCenter() {
                         {ov?.noIndex && <span style={{ fontSize: 10, padding: '1px 7px', borderRadius: 5, background: 'rgba(220,38,38,0.14)', color: '#dc2626' }}>noindex</span>}
                       </div>
                       <span style={{ fontSize: 12, color: 'var(--theme-elevation-450)', fontFamily: 'var(--font-mono, monospace)' }}>/{r.path === '/' ? '' : r.path}</span>
-                      {!isEditing && ov?.metaTitle && <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--theme-elevation-500)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ov.metaTitle}</p>}
+                      {!isEditing && <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--theme-elevation-500)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={effectiveTitle}>{effectiveTitle || '—'}</p>}
                     </div>
                     {!isEditing && (
                       <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
@@ -139,14 +141,14 @@ export function SeoControlCenter() {
                   {isEditing && (
                     <div style={{ marginTop: 12 }}>
                       <label style={lbl()}>Meta title (tab name) <span style={count(form.metaTitle.length, 60)}>{form.metaTitle.length}/60</span></label>
-                      <input value={form.metaTitle} onChange={(e) => setForm({ ...form, metaTitle: e.target.value })} placeholder="Browser-tab title…" style={{ width: '100%', marginBottom: 10 }} />
+                      <input value={form.metaTitle} onChange={(e) => setForm({ ...form, metaTitle: e.target.value })} placeholder={cur.title ? `Default: ${cur.title}` : 'Browser-tab title…'} style={{ width: '100%', marginBottom: 10 }} />
                       <label style={lbl()}>Meta description <span style={count(form.metaDescription.length, 155)}>{form.metaDescription.length}/155</span></label>
-                      <textarea value={form.metaDescription} onChange={(e) => setForm({ ...form, metaDescription: e.target.value })} placeholder="Search-result description…" style={{ width: '100%', minHeight: 56, marginBottom: 10 }} />
+                      <textarea value={form.metaDescription} onChange={(e) => setForm({ ...form, metaDescription: e.target.value })} placeholder={cur.description ? `Default: ${cur.description.slice(0, 90)}…` : 'Search-result description…'} style={{ width: '100%', minHeight: 56, marginBottom: 10 }} />
 
                       <div style={snippet()}>
                         <div style={{ fontSize: 12, color: '#1a7f37', marginBottom: 2 }}>cloudtopia.net › {r.path === '/' ? '' : r.path}</div>
-                        <div style={{ fontSize: 15, color: '#1a0dab', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{form.metaTitle || r.label}</div>
-                        <div style={{ fontSize: 12, color: 'var(--theme-elevation-600)' }}>{form.metaDescription || 'No description set — the page default will be used.'}</div>
+                        <div style={{ fontSize: 15, color: '#1a0dab', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{form.metaTitle || cur.title || r.label}</div>
+                        <div style={{ fontSize: 12, color: 'var(--theme-elevation-600)' }}>{form.metaDescription || cur.description || 'No description set — the page default will be used.'}</div>
                       </div>
 
                       <input value={form.canonicalUrl} onChange={(e) => setForm({ ...form, canonicalUrl: e.target.value })} placeholder="Canonical URL (optional)" style={{ width: '100%', margin: '10px 0' }} />

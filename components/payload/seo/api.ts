@@ -1,4 +1,5 @@
-export type RouteEntry = { path: string; label: string }
+export type RouteMeta = { title: string; description: string }
+export type RouteEntry = { path: string; label: string; current: { en: RouteMeta; ar: RouteMeta } }
 export type RouteGroup = { group: string; routes: RouteEntry[] }
 export type Override = {
   id?: string | number
