@@ -1,7 +1,10 @@
 import type { PayloadRequest } from 'payload'
-import { getIndustry, industrySlugs, localizedValue } from '../../seo/industries.ts'
-import { getService, serviceDetailSlugs, localizedServiceValue } from '../../seo/services.ts'
-import { getCMSMetadata } from '../metadata.ts'
+
+// NOTE: the metadata + seo modules are imported LAZILY inside the handler, not at
+// the top level. payload.config imports this endpoint, and the vercel-build
+// migrate step loads payload.config in plain Node (no bundler) — a top-level
+// `import '../metadata.ts'` drags in lib/i18n/url.ts whose extensionless
+// `./config` import only resolves under the bundler, crashing the migrate step.
 
 // The structural/marketing routes whose SEO is editable from the control center.
 // (Individual articles have their own SEO in the Articles workspace; redirect-only
@@ -35,6 +38,15 @@ export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<
   const { user } = await req.payload.auth({ headers: req.headers })
   if (!user) return Response.json({ error: 'Unauthorized.' }, { status: 401 })
 
+  // Lazy imports — keep these out of payload.config's plain-Node module graph.
+  const [{ getCMSMetadata }, industries, services] = await Promise.all([
+    import('../metadata.ts'),
+    import('../../seo/industries.ts'),
+    import('../../seo/services.ts'),
+  ])
+  const { getIndustry, industrySlugs, localizedValue } = industries as any
+  const { getService, serviceDetailSlugs, localizedServiceValue } = services as any
+
   // One pass over Pages so programmatic routes can honor a CMS row (slug like
   // "industries/<slug>") before falling back to the route's formula.
   const pagesMap: Record<Loc, Record<string, any>> = { en: {}, ar: {} }
@@ -48,7 +60,6 @@ export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<
     /* pages table may be unavailable */
   }
 
-  // Core pages: the real effective metadata (dictionary + CMS + any override).
   async function coreCurrent(path: string): Promise<RouteCurrent> {
     const out = { en: { title: '', description: '' }, ar: { title: '', description: '' } } as RouteCurrent
     await Promise.all(
@@ -96,8 +107,8 @@ export async function handleRouteManifestEndpoint(req: PayloadRequest): Promise<
 
   const groups = [
     { group: 'Core pages', routes: coreRoutes },
-    { group: 'Industries', routes: industrySlugs.map((s: string) => ({ path: `industries/${s}`, label: labelFor(s), current: industryCurrent(s) })) },
-    { group: 'Services', routes: serviceDetailSlugs.map((s: string) => ({ path: `services/${s}`, label: labelFor(s), current: serviceCurrent(s) })) },
+    { group: 'Industries', routes: (industrySlugs as string[]).map((s) => ({ path: `industries/${s}`, label: labelFor(s), current: industryCurrent(s) })) },
+    { group: 'Services', routes: (serviceDetailSlugs as string[]).map((s) => ({ path: `services/${s}`, label: labelFor(s), current: serviceCurrent(s) })) },
   ]
 
   const overrides: Record<string, any> = {}
