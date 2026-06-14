@@ -10,7 +10,7 @@ export const AIChatConversations: CollectionConfig = {
   admin: {
     group: 'CRM',
     useAsTitle: 'sessionId',
-    defaultColumns: ['sessionId', 'language', 'country', 'messageCount', 'leadCaptured', 'status', 'createdAt'],
+    defaultColumns: ['sessionId', 'language', 'country', 'ipAddress', 'messageCount', 'leadCaptured', 'status', 'createdAt'],
     description: 'Full transcripts of every conversation handled by the CloudTopia AI chatbot.',
   },
   access: {
@@ -34,6 +34,7 @@ export const AIChatConversations: CollectionConfig = {
       ],
     },
     { name: 'country', type: 'text' },
+    { name: 'ipAddress', type: 'text', admin: { readOnly: true, description: 'Visitor IP captured from the request (x-forwarded-for).' } },
     { name: 'pageUrl', type: 'text' },
     {
       name: 'transcriptText',

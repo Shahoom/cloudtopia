@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 import { saveAIChatLead } from '@/lib/ai-chatbot/leadService.ts'
 import { buildWhatsappHandoff } from '@/lib/ai-chatbot/whatsapp.ts'
+import { getClientIp } from '@/lib/cms/client-ip.ts'
 import type { AILeadInput, ChatLocale } from '@/lib/ai-chatbot/types.ts'
 
 export const runtime = 'nodejs'
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: parsed.error }, { status: 400 })
   }
 
+  parsed.data.ipAddress = getClientIp(request.headers)
   const saveResult = await saveAIChatLead(parsed.data)
   const handoff = buildWhatsappHandoff({
     language: parsed.data.language,

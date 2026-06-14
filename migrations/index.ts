@@ -14,6 +14,7 @@ import * as migration_20260609_140000_add_ai_chat_conversations from './20260609
 import * as migration_20260609_150000_fix_solution_finder_leads from './20260609_150000_fix_solution_finder_leads';
 import * as migration_20260610_090000_blog_slug_locale_unique from './20260610_090000_blog_slug_locale_unique';
 import * as migration_20260614_120000_add_seo_overrides from './20260614_120000_add_seo_overrides';
+import * as migration_20260614_140000_add_ip_address from './20260614_140000_add_ip_address';
 
 export const migrations = [
   {
@@ -95,5 +96,10 @@ export const migrations = [
     up: migration_20260614_120000_add_seo_overrides.up,
     down: migration_20260614_120000_add_seo_overrides.down,
     name: '20260614_120000_add_seo_overrides'
+  },
+  {
+    up: migration_20260614_140000_add_ip_address.up,
+    down: migration_20260614_140000_add_ip_address.down,
+    name: '20260614_140000_add_ip_address'
   },
 ];

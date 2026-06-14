@@ -35,6 +35,7 @@ export async function saveConversation(input: ConversationInput): Promise<Conver
     leadCaptured: input.leadCaptured,
     status: input.status,
     source: input.source,
+    ipAddress: input.ipAddress,
     startedAt: input.startedAt,
     endedAt: input.endedAt,
   }
