@@ -5,6 +5,7 @@ import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { locales, type Locale } from '@/lib/i18n/config'
 import { getSiteChrome } from '@/lib/cms/content'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import WebMCP from '@/components/agent/WebMCP'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
@@ -88,6 +89,7 @@ export default async function LocaleLayout({
                 <main className="flex-grow">{children}</main>
                 <Footer />
             </div>
+            <WebMCP />
         </LanguageProvider>
     )
 }

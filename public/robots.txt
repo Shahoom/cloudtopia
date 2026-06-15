@@ -2,6 +2,10 @@
 # https://cloudtopia.net
 
 User-agent: *
+# Content Signals (contentsignals.org / draft-romm-aipref-contentsignals):
+# allow search indexing and use as AI answer input (so CloudTopia can be cited),
+# but opt out of AI model training. Consistent with the per-bot rules below.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 Disallow: /_next/

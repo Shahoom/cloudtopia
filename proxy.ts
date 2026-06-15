@@ -36,6 +36,11 @@ const STATIC_PREFIXES = [
     '/logos',
     '/og',
     '/fonts',
+    // Agent-discovery well-known endpoints (RFC 9727 api-catalog, MCP server
+    // card, agent-skills index, etc.). Must bypass locale routing — including
+    // the extensionless `/.well-known/api-catalog` — so they resolve to their
+    // route handlers / static files instead of being rewritten to `/en/...`.
+    '/.well-known',
 ] as const
 
 /**
@@ -119,6 +124,20 @@ export function proxy(request: NextRequest) {
             return NextResponse.redirect(url, { status: 301 })
         }
         return NextResponse.next()
+    }
+
+    // (A.5) Markdown for Agents — content negotiation. When a caller explicitly
+    // asks for markdown we serve a markdown view of the page instead of HTML.
+    // Real browsers never send `Accept: text/markdown`, so HTML remains the
+    // default for humans. Static assets / API / admin already returned above.
+    const accept = request.headers.get('accept') || ''
+    if (accept.toLowerCase().includes('text/markdown')) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/api/markdown'
+        url.search = ''
+        const requestHeaders = new Headers(request.headers)
+        requestHeaders.set('x-md-path', pathname)
+        return NextResponse.rewrite(url, { request: { headers: requestHeaders } })
     }
 
     // Strip trailing slash on non-root paths.

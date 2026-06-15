@@ -12,6 +12,18 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
+          // RFC 8288 Link headers for agent discovery — advertise the machine-
+          // readable entrypoints (API catalog, LLM docs, OpenAPI, sitemap) using
+          // IANA-registered relation types so agents can find them from any page.
+          {
+            key: 'Link',
+            value: [
+              '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+              '</llms.txt>; rel="service-doc"; type="text/markdown"',
+              '</openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"',
+              '</sitemap.xml>; rel="describedby"; type="application/xml"',
+            ].join(', '),
+          },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
@@ -51,6 +63,19 @@ const nextConfig = {
         source: '/images/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' }],
       },
+    ]
+  },
+
+  // Map the agent-discovery well-known paths to clean route handlers. Using
+  // rewrites (rather than `app/.well-known/.../route.ts`) keeps the handlers in
+  // ordinary, dot-free folders while still serving the spec-mandated URLs and
+  // letting each handler set its exact Content-Type (e.g. application/linkset+json).
+  async rewrites() {
+    return [
+      { source: '/.well-known/api-catalog', destination: '/api/agent/api-catalog' },
+      { source: '/.well-known/mcp/server-card.json', destination: '/api/agent/mcp-server-card' },
+      { source: '/.well-known/agent-skills/index.json', destination: '/api/agent/skills-index' },
+      { source: '/openapi.json', destination: '/api/agent/openapi' },
     ]
   },
 
