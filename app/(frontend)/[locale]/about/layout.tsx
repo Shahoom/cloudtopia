@@ -87,7 +87,7 @@ export default async function ({ children, params }: { children: React.ReactNode
                             alternateName: ['كلاود توبيا', 'CloudTopia Digital', 'CloudTopia Technologies'],
                             url: 'https://cloudtopia.net',
                             // SD-1: /logo.svg does not exist — use the verified asset.
-                            logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+                            logo: 'https://cloudtopia.net/images/cloudtopia-logo.png',
                             slogan: 'Bilingual digital delivery with fixed scope, transparent pricing, and owned handoff.',
                             description: 'Gulf-first digital agency specializing in bilingual websites, e-commerce, custom business systems, and web applications.',
                             foundingDate: '2024',

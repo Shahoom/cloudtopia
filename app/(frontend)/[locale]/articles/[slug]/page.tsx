@@ -126,7 +126,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       url: 'https://cloudtopia.net',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://cloudtopia.net/images/CloudTopia.svg',
+        url: 'https://cloudtopia.net/images/cloudtopia-logo.png',
       },
     },
     mainEntityOfPage: canonical,

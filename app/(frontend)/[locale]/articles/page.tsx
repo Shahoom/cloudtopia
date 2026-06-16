@@ -104,7 +104,7 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
       '@id': 'https://cloudtopia.net/#organization',
       name: 'CloudTopia',
       url: 'https://cloudtopia.net',
-      logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/CloudTopia.svg' },
+      logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/cloudtopia-logo.png' },
     },
     ...(listedPosts.length > 0
       ? {

@@ -308,7 +308,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
         '@id': 'https://cloudtopia.net/#organization',
         name: 'CloudTopia',
         url: 'https://cloudtopia.net',
-        logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+        logo: 'https://cloudtopia.net/images/cloudtopia-logo.png',
         sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
         contactPoint: [
             {

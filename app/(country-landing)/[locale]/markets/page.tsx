@@ -99,7 +99,7 @@ export default async function MarketsPage({ params }: PageProps) {
         '@id': 'https://cloudtopia.net/#organization',
         name: 'CloudTopia',
         url: 'https://cloudtopia.net',
-        logo: 'https://cloudtopia.net/images/CloudTopia.svg',
+        logo: 'https://cloudtopia.net/images/cloudtopia-logo.png',
         description: isArabic
             ? 'كلاود توبيا شركة تقنيات رقمية وسحابية تبني مواقع ومتاجر إلكترونية وتطبيقات ويب وأنظمة أعمال للشركات في الخليج والشرق الأوسط.'
             : 'CloudTopia is a digital and cloud technology company building websites, e-commerce stores, web apps, and business systems for companies across the Gulf and Middle East.',

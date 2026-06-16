@@ -96,7 +96,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             name: 'CloudTopia',
             url: 'https://cloudtopia.net',
             // SD-1: /logo.svg does not exist — use the verified asset.
-            logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/CloudTopia.svg' },
+            logo: { '@type': 'ImageObject', url: 'https://cloudtopia.net/images/cloudtopia-logo.png' },
         },
         mainEntityOfPage: canonicalUrl(locale, `/projects/${project.id}`),
         about: project.type,

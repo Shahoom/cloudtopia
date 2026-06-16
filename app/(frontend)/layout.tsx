@@ -46,7 +46,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-    apple: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    // iOS Safari does NOT render SVG apple-touch icons — ship a real 180x180 PNG
+    // so add-to-home-screen / shared links get the brand mark, not a screenshot.
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     type: 'website',
@@ -144,12 +146,10 @@ export default async function FrontendLayout({
               '@id': 'https://cloudtopia.net/#organization',
               name: 'CloudTopia',
               url: 'https://cloudtopia.net',
-              logo: 'https://cloudtopia.net/images/CloudTopia.svg',
-              // NOTE: a raster og-image.jpg (PNG/JPG is preferred by Google for
-              // logo/knowledge-panel eligibility) does not yet exist under
-              // public/. Pointing at the verified CloudTopia.svg until a real
-              // raster public/images/og-image.jpg is added (SD-1).
-              image: 'https://cloudtopia.net/images/CloudTopia.svg',
+              // Raster PNG — Google does NOT accept SVG for Organization logo or
+              // Article publisher.logo (SD-1). 512x512 rasterized from the brand SVG.
+              logo: 'https://cloudtopia.net/images/cloudtopia-logo.png',
+              image: 'https://cloudtopia.net/images/cloudtopia-logo.png',
               description: organizationDescription,
               foundingDate: '2024',
               areaServed: [
