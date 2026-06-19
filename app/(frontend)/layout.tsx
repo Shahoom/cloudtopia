@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ogImagesFor } from '@/lib/og/og-image'
@@ -126,6 +127,8 @@ export default async function FrontendLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <head>
+        {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
+        <GoogleAnalytics />
         {/* Only the LCP hero background is preloaded. The self-hosted TTF body/
             logo faces use font-display:swap, so preheating them at high priority
             here just stole bandwidth from the LCP image and render-critical CSS

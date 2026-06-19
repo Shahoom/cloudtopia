@@ -125,13 +125,14 @@ export default function ArticlesTeaser({ posts: incomingPosts }: { posts?: Tease
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="group flex flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden hover:border-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10"
                         >
-                            <div className="relative h-48 w-full bg-neutral-900 shrink-0 overflow-hidden flex items-center justify-center p-6 border-b border-white/5">
+                            <div className="relative h-48 w-full bg-neutral-900 shrink-0 overflow-hidden border-b border-white/5">
                                 {post.coverImage ? (
                                     <Image
                                         src={post.coverImage}
                                         alt={post.title}
                                         fill
-                                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-in-out opacity-90 group-hover:opacity-100"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
                                     />
                                 ) : (
                                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20" />

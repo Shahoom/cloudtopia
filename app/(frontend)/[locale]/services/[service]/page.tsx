@@ -8,8 +8,10 @@ import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
+import { HeroGeometric } from '@/components/ui/shape-landing-hero'
 import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
+import { getWebsiteServiceContent, asServiceLocale } from '@/lib/services/website-service-content'
 
 type PageProps = {
     params: Promise<{ locale: string; service: string }>
@@ -332,6 +334,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     ])).slice(0, 12)
     const whatsAppUrl = whatsappHref(serviceName, locale)
     const serviceHeroImage = heroImageForService(service.slug, service.categorySlug)
+    // Website-design sub-services (digital-presence) render the new bespoke
+    // design starting with the geometric hero; every other service keeps the
+    // shared HeroOrbitDeck below. Content is hand-crafted per slug, not templated.
+    const websiteContent = getWebsiteServiceContent(service.slug)
+    const serviceLocale = asServiceLocale(locale)
     const heroModes = [
         {
             label: L.problem,
@@ -467,19 +474,31 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             </div>
 
-            <HeroOrbitDeck
-                eyebrow={`${L.badge} / ${categoryName}`}
-                title={serviceName}
-                description={localizedServiceValue(service.description, locale)}
-                image={{ src: serviceHeroImage, alt: `${serviceName} ${isRTL ? 'صورة توضيحية' : 'visual preview'}` }}
-                metrics={heroMetrics}
-                modes={heroModes}
-                protocols={heroProtocols}
-                primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
-                secondaryCta={{ label: L.pricing, href: localePath(locale, '/pricing') }}
-                visualCaption={categoryName}
-                dir={isRTL ? 'rtl' : 'ltr'}
-            />
+            {websiteContent ? (
+                <HeroGeometric
+                    badge={websiteContent.hero[serviceLocale].badge}
+                    title1={websiteContent.hero[serviceLocale].title1}
+                    title2={websiteContent.hero[serviceLocale].title2}
+                    subtitle={websiteContent.hero[serviceLocale].subtitle}
+                    primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
+                    secondaryCta={{ label: L.pricing, href: localePath(locale, '/pricing') }}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                />
+            ) : (
+                <HeroOrbitDeck
+                    eyebrow={`${L.badge} / ${categoryName}`}
+                    title={serviceName}
+                    description={localizedServiceValue(service.description, locale)}
+                    image={{ src: serviceHeroImage, alt: `${serviceName} ${isRTL ? 'صورة توضيحية' : 'visual preview'}` }}
+                    metrics={heroMetrics}
+                    modes={heroModes}
+                    protocols={heroProtocols}
+                    primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
+                    secondaryCta={{ label: L.pricing, href: localePath(locale, '/pricing') }}
+                    visualCaption={categoryName}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                />
+            )}
 
             <section className="relative px-4 py-14 sm:px-6 lg:px-8 md:py-20">
                 <div className="mx-auto max-w-7xl">

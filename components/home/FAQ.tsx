@@ -104,13 +104,13 @@ export default function FAQ() {
                         >
                             {(locale === 'ar'
                                 ? [
-                                    { value: '+2000', label: 'مشروع مُسلَّم' },
-                                    { value: '+50', label: 'دولة' },
+                                    { value: '100%', label: 'ملكية الكود' },
+                                    { value: '7', label: 'مجالات خدمة' },
                                     { value: '24 ساعة', label: 'وقت الرد' },
                                 ]
                                 : [
-                                    { value: '2,000+', label: 'Projects shipped' },
-                                    { value: '50+', label: 'Countries' },
+                                    { value: '100%', label: 'Code ownership' },
+                                    { value: '7', label: 'Service areas' },
                                     { value: '1 day', label: 'Reply time' },
                                 ]
                             ).map((stat) => (

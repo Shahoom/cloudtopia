@@ -30,8 +30,8 @@ export default function FinalCTA() {
                   'تملك 100% من كل ما نبنيه',
               ],
               stats: [
-                  { value: '+2000', label: 'مشروع مُسلَّم' },
-                  { value: '+50', label: 'دولة' },
+                  { value: '100%', label: 'ملكية الكود' },
+                  { value: '24 ساعة', label: 'وقت الرد' },
                   { value: '7', label: 'مجالات خدمة' },
               ],
               panelTitle: 'لنبدأ المحادثة',
@@ -45,8 +45,8 @@ export default function FinalCTA() {
                   'You own 100% of everything we build',
               ],
               stats: [
-                  { value: '2,000+', label: 'Projects shipped' },
-                  { value: '50+', label: 'Countries' },
+                  { value: '100%', label: 'Code ownership' },
+                  { value: '1 day', label: 'Reply time' },
                   { value: '7', label: 'Service areas' },
               ],
               panelTitle: 'Start the conversation',

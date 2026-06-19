@@ -99,7 +99,7 @@ export function Component() {
                 ? {
                     eyebrow: "كلاود توبيا | تكنلوجيا رقمية وسحابية",
                     headline: "أنظمة برمجية وسحابية وذكاء اصطناعي مصممة للعالم العربي.",
-                    subline: "مواقع إلكترونية، متاجر رقمية، تطبيقات ويب، أنظمة CRM/ERP، بنية سحابية، وتدفقات عمل مدعومة بالذكاء الاصطناعي — بتجربة عربية أصلية ودعم كامل لاتجاه RTL.",
+                    subline: "مواقع إلكترونية، متاجر رقمية، تطبيقات ويب، أنظمة CRM/ERP، بنية سحابية، وتدفقات عمل مدعومة بالذكاء الاصطناعي.",
                     description:
                         "تساعد كلاود توبيا الشركات في السعودية، الإمارات، الخليج، والعالم العربي على بناء منتجات رقمية قابلة للتوسع، تحسّن العمليات، تقلل العمل اليدوي، وتسرّع النمو.",
                     primary: t.home?.hero?.freeConsultation || "استشارة مجانية",
@@ -110,7 +110,7 @@ export function Component() {
                 : {
                     eyebrow: "CLOUDTOPIA — DIGITAL & CLOUD TECHNOLOGIES",
                     headline: "Software, cloud, and AI systems built for the Arab world.",
-                    subline: "Websites, e-commerce platforms, web apps, CRM/ERP systems, cloud infrastructure, and AI workflows — built with Arabic-first UX and native RTL support.",
+                    subline: "Websites, e-commerce platforms, web apps, CRM/ERP systems, cloud infrastructure, and AI workflows.",
                     description:
                         "CloudTopia helps businesses in Saudi Arabia, UAE, the GCC, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.",
                     primary: t.home?.hero?.freeConsultation || "Free Consultation",

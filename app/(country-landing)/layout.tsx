@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Cairo } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
@@ -55,6 +56,8 @@ export default async function CountryLandingRootLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
       <head>
+        {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
+        <GoogleAnalytics />
         <link rel="manifest" href="/manifest.json" />
         {/* Canonical WebSite node. The country-landing pages each emit the
             #organization node themselves; the layout supplies the matching
