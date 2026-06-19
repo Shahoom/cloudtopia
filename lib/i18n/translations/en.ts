@@ -290,7 +290,7 @@ export const en = {
         },
         {
           question: 'Do you work with clients internationally?',
-          answer: 'Yes. We have delivered 2,000+ projects for clients across 50+ countries — fully remote, async-friendly, and comfortable across most time zones. The process is the same whether you are next door or on another continent.',
+          answer: 'Yes. We work with clients across the GCC, the wider Arab world, and internationally — fully remote, async-friendly, and comfortable across most time zones. The process is the same whether you are next door or on another continent.',
         },
         {
           question: 'Do you handle hosting, domain, SSL, and email?',

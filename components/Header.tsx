@@ -189,7 +189,7 @@ function AnnouncementTicker({ locale }: { locale: string }) {
           href: "/services"
         },
         {
-          text: "مشاريع حقيقية. عائد حقيقي — أكثر من 2000 مشروع يدفع نمو الأعمال في 50+ دولة — ",
+          text: "مشاريع حقيقية. عائد حقيقي — مواقع ومتاجر وأنظمة مبنية لدفع نمو الأعمال — ",
           cta: "استكشف الآن",
           href: "/projects"
         }
@@ -206,7 +206,7 @@ function AnnouncementTicker({ locale }: { locale: string }) {
           href: "/services"
         },
         {
-          text: "Real projects. Real ROI — 2,000+ deliveries driving business impact across 50+ Countries — ",
+          text: "Real projects. Real ROI — websites, stores, and systems built to drive business impact — ",
           cta: "Explore Now",
           href: "/projects"
         }
