@@ -71,15 +71,23 @@ export function ProjectsShowcase({
     locale = "en",
     dir = "ltr",
     projectHref,
+    eyebrow,
+    heading,
+    sub,
 }: {
     projects: Project[];
     locale?: "en" | "ar";
     dir?: "ltr" | "rtl";
     /** Builds the internal case-study href for a project id. */
     projectHref: (id: string) => string;
+    /** Optional copy overrides (e.g. "applications" instead of "websites"). */
+    eyebrow?: string;
+    heading?: string;
+    sub?: string;
 }) {
     if (!projects.length) return null;
-    const c = COPY[locale] || COPY.en;
+    const base = COPY[locale] || COPY.en;
+    const c = { eyebrow: eyebrow ?? base.eyebrow, heading: heading ?? base.heading, sub: sub ?? base.sub, view: base.view };
     const single = projects.length === 1;
 
     return (

@@ -1,11 +1,13 @@
 import type { WebAppHeroContent } from '@/components/ui/webapp-hero'
 import type { WebAppFeaturesContent } from '@/components/ui/webapp-features'
+import type { WebAppProcessContent } from '@/components/ui/webapp-process'
 
 export type WebAppLocale = 'en' | 'ar'
 
 export type WebAppServiceContent = {
     hero: Record<WebAppLocale, WebAppHeroContent>
     features: Record<WebAppLocale, WebAppFeaturesContent>
+    process: Record<WebAppLocale, WebAppProcessContent>
 }
 
 export const webappServiceContent: Record<string, WebAppServiceContent> = {
@@ -89,6 +91,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     { label: 'مدة البناء', value: '6–10 أسابيع' },
                     { label: 'وقت التشغيل', value: '99.9%' },
                     { label: 'ملكية الكود', value: '100%' },
+                ],
+            },
+        },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'From idea to launched app, without the chaos',
+                subheading: 'A clear, fixed-scope path where you always know exactly where things stand.',
+                ctaLabel: 'Start your project',
+                steps: [
+                    { title: 'Discovery & blueprint', description: 'We map your workflows, users, and must-haves, then agree a fixed scope and architecture before a line of code.', duration: 'Week 1' },
+                    { title: 'UX & UI design', description: 'We design every screen and flow — bilingual and mobile-first — and you approve the look before we build.', duration: 'Week 2–3' },
+                    { title: 'Build & QA', description: 'We develop in reviewable sprints with live previews, testing on real devices and data as we go.', duration: 'Week 3–8' },
+                    { title: 'Launch & handover', description: 'We deploy, hand over the full source code and accounts, and stay on for support.', duration: 'Week 8–10' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'من الفكرة إلى تطبيق مُطلق، دون فوضى',
+                subheading: 'مسار واضح بنطاق ثابت تعرف فيه موقع كل خطوة بدقة.',
+                ctaLabel: 'ابدأ مشروعك',
+                steps: [
+                    { title: 'الاكتشاف والمخطط', description: 'نرسم سير عملك ومستخدميك ومتطلباتك، ثم نتفق على نطاق وبنية ثابتين قبل أي كود.', duration: 'الأسبوع 1' },
+                    { title: 'تصميم التجربة والواجهة', description: 'نصمّم كل شاشة ومسار — بلغتين وبواجهة جوال أولاً — وتعتمد المظهر قبل أن نبني.', duration: 'الأسبوع 2–3' },
+                    { title: 'البناء والاختبار', description: 'نطوّر في جولات قابلة للمراجعة بمعاينات حية، ونختبر على أجهزة وبيانات حقيقية أثناء العمل.', duration: 'الأسبوع 3–8' },
+                    { title: 'الإطلاق والتسليم', description: 'ننشر ونسلّمك الكود المصدري الكامل والحسابات ونبقى للدعم.', duration: 'الأسبوع 8–10' },
                 ],
             },
         },
@@ -176,6 +204,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 ],
             },
         },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'Your branded portal, live in weeks',
+                subheading: 'A focused path from your client workflow to a secure, self-serve space.',
+                ctaLabel: 'Build my portal',
+                steps: [
+                    { title: 'Map the journey', description: 'We define what clients need to see and do — projects, files, invoices, messages — and your access rules.', duration: 'Week 1' },
+                    { title: 'Brand & design', description: 'We design the portal in your branding so it feels like a native part of your product, then you approve it.', duration: 'Week 1–2' },
+                    { title: 'Build & secure', description: 'We build the logins, roles, and screens with encrypted, role-based access, tested end to end.', duration: 'Week 2–5' },
+                    { title: 'Launch & onboard', description: 'We go live, hand over the code and accounts, and help you bring your first clients on board.', duration: 'Week 5–6' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيها',
+                heading: 'بوابتك بهويتك، جاهزة خلال أسابيع',
+                subheading: 'مسار مركّز من سير عمل عملائك إلى مساحة آمنة ذاتية الخدمة.',
+                ctaLabel: 'ابنِ بوابتي',
+                steps: [
+                    { title: 'رسم الرحلة', description: 'نحدّد ما يحتاج العملاء رؤيته وفعله — مشاريع وملفات وفواتير ورسائل — وقواعد وصولك.', duration: 'الأسبوع 1' },
+                    { title: 'الهوية والتصميم', description: 'نصمّم البوابة بهويتك لتبدو جزءاً أصيلاً من منتجك، ثم تعتمدها.', duration: 'الأسبوع 1–2' },
+                    { title: 'البناء والتأمين', description: 'نبني الدخول والأدوار والشاشات بوصول مشفّر حسب الدور، ونختبرها من البداية للنهاية.', duration: 'الأسبوع 2–5' },
+                    { title: 'الإطلاق والتهيئة', description: 'ننشر ونسلّمك الكود والحسابات ونساعدك في إدخال أول عملائك.', duration: 'الأسبوع 5–6' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -257,6 +311,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     { label: 'وقت التقارير', value: '−85%' },
                     { label: 'حداثة البيانات', value: 'مباشر' },
                     { label: 'عروض مخصصة', value: 'لكل دور' },
+                ],
+            },
+        },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'From scattered data to one clear screen',
+                subheading: 'A structured path that turns your sources into decisions you can act on.',
+                ctaLabel: 'Build my dashboard',
+                steps: [
+                    { title: 'Define the KPIs', description: 'We agree the exact metrics, sources, and roles that matter — so the dashboard answers your real questions.', duration: 'Week 1' },
+                    { title: 'Connect the data', description: 'We wire up your database, CRM, payments, or APIs into one reliable, live pipeline.', duration: 'Week 1–3' },
+                    { title: 'Design & build', description: 'We build the charts, filters, drill-downs, and alerts, with a tailored view per role.', duration: 'Week 2–5' },
+                    { title: 'Launch & own it', description: 'We deploy, hand over the code and accounts, and your team starts deciding from live numbers.', duration: 'Week 5–6' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيها',
+                heading: 'من بيانات مبعثرة إلى شاشة واحدة واضحة',
+                subheading: 'مسار منظّم يحوّل مصادرك إلى قرارات قابلة للتنفيذ.',
+                ctaLabel: 'ابنِ لوحتي',
+                steps: [
+                    { title: 'تحديد المؤشرات', description: 'نتفق على المؤشرات والمصادر والأدوار المهمة — لتجيب اللوحة عن أسئلتك الحقيقية.', duration: 'الأسبوع 1' },
+                    { title: 'ربط البيانات', description: 'نربط قاعدة بياناتك وCRM والمدفوعات أو واجهات API في خط أنابيب حيّ موثوق.', duration: 'الأسبوع 1–3' },
+                    { title: 'التصميم والبناء', description: 'نبني الرسوم والمرشّحات والتعمّق والتنبيهات بعرض مخصص لكل دور.', duration: 'الأسبوع 2–5' },
+                    { title: 'الإطلاق والملكية', description: 'ننشر ونسلّمك الكود والحسابات، ويبدأ فريقك القرار من أرقام حية.', duration: 'الأسبوع 5–6' },
                 ],
             },
         },
@@ -344,6 +424,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 ],
             },
         },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'A booking system that fits your rules',
+                subheading: 'From your services and availability to a live, paying booking flow.',
+                ctaLabel: 'Build my booking system',
+                steps: [
+                    { title: 'Map your rules', description: 'We capture your services, durations, staff, capacity, buffers, and payment needs as exact booking rules.', duration: 'Week 1' },
+                    { title: 'Design the flow', description: 'We design a fast, friction-free booking flow — bilingual and mobile-first — that you approve before build.', duration: 'Week 1–2' },
+                    { title: 'Build & connect', description: 'We build availability, payments, reminders, and two-way calendar sync, tested against real scenarios.', duration: 'Week 2–6' },
+                    { title: 'Launch & hand over', description: 'We embed it in your site, go live, and hand over the code and accounts in full.', duration: 'Week 6–8' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'نظام حجز يناسب قواعدك',
+                subheading: 'من خدماتك وتوفّرك إلى مسار حجز حيّ يستلم المدفوعات.',
+                ctaLabel: 'ابنِ نظام حجزي',
+                steps: [
+                    { title: 'رسم قواعدك', description: 'نلتقط خدماتك ومددها وموظفيك وسعتك والفواصل واحتياجات الدفع كقواعد حجز دقيقة.', duration: 'الأسبوع 1' },
+                    { title: 'تصميم المسار', description: 'نصمّم مسار حجز سريعاً بلا احتكاك — بلغتين وجوال أولاً — تعتمده قبل البناء.', duration: 'الأسبوع 1–2' },
+                    { title: 'البناء والربط', description: 'نبني التوفّر والمدفوعات والتذكيرات ومزامنة التقويم الثنائية، ونختبرها على سيناريوهات حقيقية.', duration: 'الأسبوع 2–6' },
+                    { title: 'الإطلاق والتسليم', description: 'ندمجه في موقعك وننشر ونسلّمك الكود والحسابات كاملة.', duration: 'الأسبوع 6–8' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -425,6 +531,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     { label: 'ساعات موفّرة/شهر', value: '40+' },
                     { label: 'أخطاء أقل', value: '↓ حاد' },
                     { label: 'تبنّي الفريق', value: 'عالٍ' },
+                ],
+            },
+        },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'From messy spreadsheet to a tool you trust',
+                subheading: 'A focused path that automates the busywork without disrupting your team.',
+                ctaLabel: 'Build my tool',
+                steps: [
+                    { title: 'Map the workflow', description: 'We shadow how the work happens today — sheets, steps, hand-offs — and pinpoint what to automate.', duration: 'Week 1' },
+                    { title: 'Design the tool', description: 'We design the simplest interface that does the job, with the validation and roles your process needs.', duration: 'Week 1–2' },
+                    { title: 'Build & migrate', description: 'We build it and move your existing data in, so you start from where you are — not a blank slate.', duration: 'Week 2–5' },
+                    { title: 'Roll out & support', description: 'We launch, hand over the code, and support a smooth switch so the team actually adopts it.', duration: 'Week 5–6' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيها',
+                heading: 'من جدول فوضوي إلى أداة تثق بها',
+                subheading: 'مسار مركّز يؤتمت العمل الممل دون تعطيل فريقك.',
+                ctaLabel: 'ابنِ أداتي',
+                steps: [
+                    { title: 'رسم سير العمل', description: 'نراقب كيف يجري العمل اليوم — جداول وخطوات وتسليمات — ونحدّد ما يجب أتمتته.', duration: 'الأسبوع 1' },
+                    { title: 'تصميم الأداة', description: 'نصمّم أبسط واجهة تنجز المهمة، بالتحقّق والأدوار التي تحتاجها عمليتك.', duration: 'الأسبوع 1–2' },
+                    { title: 'البناء والترحيل', description: 'نبنيها وننقل بياناتك الحالية إليها، فتبدأ من حيث أنت لا من صفحة فارغة.', duration: 'الأسبوع 2–5' },
+                    { title: 'الإطلاق والدعم', description: 'ننشر ونسلّمك الكود وندعم انتقالاً سلساً ليتبنّاها الفريق فعلاً.', duration: 'الأسبوع 5–6' },
                 ],
             },
         },
@@ -512,6 +644,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 ],
             },
         },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'From idea to first paying users in ~8 weeks',
+                subheading: 'A lean, validation-first path that gets a real product in front of real users fast.',
+                ctaLabel: 'Launch my MVP',
+                steps: [
+                    { title: 'Scope the core loop', description: 'We strip the idea to the one loop that proves value, so we build what matters and skip what doesn’t.', duration: 'Week 1' },
+                    { title: 'Design the product', description: 'We design onboarding, the core flow, and pricing for conversion — not just a logged-in screen.', duration: 'Week 1–2' },
+                    { title: 'Build with auth & billing', description: 'We build the product with accounts and Stripe subscriptions wired in, ready to charge from day one.', duration: 'Week 2–7' },
+                    { title: 'Launch & measure', description: 'We ship to real users with analytics in place, hand over the code, and set you up to iterate.', duration: 'Week 7–8' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'من الفكرة لأول عميل يدفع خلال ~8 أسابيع',
+                subheading: 'مسار رشيق يبدأ بالتحقّق ويضع منتجاً حقيقياً أمام مستخدمين حقيقيين بسرعة.',
+                ctaLabel: 'أطلق MVP الخاص بي',
+                steps: [
+                    { title: 'تحديد الحلقة الأساسية', description: 'نجرّد الفكرة إلى الحلقة الواحدة التي تثبت القيمة، فنبني ما يهم ونتخطّى ما لا يهم.', duration: 'الأسبوع 1' },
+                    { title: 'تصميم المنتج', description: 'نصمّم التهيئة والمسار الأساسي والتسعير للتحويل — لا مجرد شاشة بعد الدخول.', duration: 'الأسبوع 1–2' },
+                    { title: 'البناء بالحسابات والفوترة', description: 'نبني المنتج بحسابات واشتراكات Stripe جاهزة للتقاضي من اليوم الأول.', duration: 'الأسبوع 2–7' },
+                    { title: 'الإطلاق والقياس', description: 'نطلق لمستخدمين حقيقيين بتحليلات جاهزة، ونسلّمك الكود ونهيّئك للتطوير.', duration: 'الأسبوع 7–8' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -596,6 +754,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 ],
             },
         },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'One build that installs everywhere',
+                subheading: 'A clear path to a fast, offline-ready app reachable from any link.',
+                ctaLabel: 'Build my PWA',
+                steps: [
+                    { title: 'Plan & scope', description: 'We define the screens, offline behavior, and install experience your users need, then fix the scope.', duration: 'Week 1' },
+                    { title: 'Design app-grade UX', description: 'We design a native-feeling, mobile-first interface — installable and instant — that you sign off.', duration: 'Week 1–2' },
+                    { title: 'Build & optimize', description: 'We build with caching, offline support, and push, tuning for top Lighthouse and sub-second loads.', duration: 'Week 2–6' },
+                    { title: 'Launch & hand over', description: 'We ship it live, optionally package it for the stores, and hand over the full code and accounts.', duration: 'Week 6–7' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'بناء واحد يُثبّت في كل مكان',
+                subheading: 'مسار واضح لتطبيق سريع جاهز دون اتصال يُفتح من أي رابط.',
+                ctaLabel: 'ابنِ تطبيقي التقدمي',
+                steps: [
+                    { title: 'التخطيط والنطاق', description: 'نحدّد الشاشات وسلوك عدم الاتصال وتجربة التثبيت التي يحتاجها مستخدموك، ثم نثبّت النطاق.', duration: 'الأسبوع 1' },
+                    { title: 'تصميم بمستوى التطبيق', description: 'نصمّم واجهة بإحساس أصلي وجوال أولاً — قابلة للتثبيت وفورية — تعتمدها.', duration: 'الأسبوع 1–2' },
+                    { title: 'البناء والتحسين', description: 'نبني بتخزين ودعم عدم اتصال ودفع، ونضبط لأعلى Lighthouse وتحميل دون ثانية.', duration: 'الأسبوع 2–6' },
+                    { title: 'الإطلاق والتسليم', description: 'نطلقه حياً، ونغلّفه للمتاجر اختيارياً، ونسلّمك الكود والحسابات كاملة.', duration: 'الأسبوع 6–7' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -677,6 +861,32 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     { label: 'كود مشترك', value: '~90%' },
                     { label: 'كلا المنصتين', value: 'iOS+Android' },
                     { label: 'للإطلاق', value: '10–14 أسبوع' },
+                ],
+            },
+        },
+        process: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'From idea to both app stores',
+                subheading: 'A clear path to a polished iOS and Android app from one codebase.',
+                ctaLabel: 'Start my app',
+                steps: [
+                    { title: 'Discovery & scope', description: 'We define the features, screens, and backend your app needs, then agree a fixed scope and plan.', duration: 'Week 1–2' },
+                    { title: 'Design the experience', description: 'We design a native-feeling, mobile-first interface for both platforms that you approve before build.', duration: 'Week 2–4' },
+                    { title: 'Build & test', description: 'We build the cross-platform app and backend, with test builds you run on your own phone each sprint.', duration: 'Week 4–12' },
+                    { title: 'Store launch & handover', description: 'We prepare the listings, manage App Store and Google Play review, launch, and hand over the code.', duration: 'Week 12–14' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'من الفكرة إلى كلا المتجرين',
+                subheading: 'مسار واضح لتطبيق iOS وAndroid مصقول من كود واحد.',
+                ctaLabel: 'ابدأ تطبيقي',
+                steps: [
+                    { title: 'الاكتشاف والنطاق', description: 'نحدّد الميزات والشاشات والخلفية التي يحتاجها تطبيقك، ثم نتفق على نطاق وخطة ثابتين.', duration: 'الأسبوع 1–2' },
+                    { title: 'تصميم التجربة', description: 'نصمّم واجهة بإحساس أصلي وجوال أولاً للمنصتين تعتمدها قبل البناء.', duration: 'الأسبوع 2–4' },
+                    { title: 'البناء والاختبار', description: 'نبني التطبيق متعدد المنصات والخلفية، بنسخ تجريبية تشغّلها على هاتفك كل جولة.', duration: 'الأسبوع 4–12' },
+                    { title: 'إطلاق المتجر والتسليم', description: 'نجهّز القوائم وندير مراجعة App Store وGoogle Play ونطلق ونسلّمك الكود.', duration: 'الأسبوع 12–14' },
                 ],
             },
         },

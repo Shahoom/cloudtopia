@@ -16,7 +16,9 @@ import { getWebsiteServiceContent, asServiceLocale } from '@/lib/services/websit
 import { getWebsiteFaq } from '@/lib/services/website-faq-content'
 import { WebAppHero } from '@/components/ui/webapp-hero'
 import { WebAppFeatures } from '@/components/ui/webapp-features'
+import { WebAppProcess } from '@/components/ui/webapp-process'
 import { getWebappServiceContent, asWebAppLocale } from '@/lib/services/webapp-service-content'
+import { getWebappFaq } from '@/lib/services/webapp-faq-content'
 import { ProcessOverview } from '@/components/ui/process-overview'
 import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
@@ -32,6 +34,14 @@ const WEBSITE_PROJECT_IDS: Record<string, string[]> = {
     'ecommerce-website-development': ['artucky-ecommerce'],
     'restaurant-website-development': ['joory-cafe'],
     'portfolio-websites': ['lumma-clinics'],
+}
+
+// Real CMS web-app projects (category "webApps") mapped to the interactive
+// web-application sub-services they best represent. Sub-services with no honest
+// match are omitted, so the projects section auto-hides there.
+const WEBAPP_PROJECT_IDS: Record<string, string[]> = {
+    'custom-web-application-development': ['luxury-world-tourism', 'comics-topia', 'dhofar-tourism'],
+    'progressive-web-app-development': ['luxury-world-tourism', 'dhofar-tourism'],
 }
 
 type PageProps = {
@@ -364,9 +374,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const webappLocale = asWebAppLocale(locale)
     const websiteFaq = websiteContent ? getWebsiteFaq(service.slug, locale) : null
     const websiteProjectIds = websiteContent ? (WEBSITE_PROJECT_IDS[service.slug] || []) : []
-    const allWebsiteProjects = websiteProjectIds.length ? await getAllProjects(locale) : []
+    const webappFaq = webappContent ? getWebappFaq(service.slug, locale) : null
+    const webappProjectIds = webappContent ? (WEBAPP_PROJECT_IDS[service.slug] || []) : []
+    const projectIdsToLoad = [...websiteProjectIds, ...webappProjectIds]
+    const allLoadedProjects = projectIdsToLoad.length ? await getAllProjects(locale) : []
     const websiteProjects = websiteProjectIds
-        .map((id) => allWebsiteProjects.find((p) => p.id === id))
+        .map((id) => allLoadedProjects.find((p) => p.id === id))
+        .filter(Boolean) as Project[]
+    const webappProjects = webappProjectIds
+        .map((id) => allLoadedProjects.find((p) => p.id === id))
         .filter(Boolean) as Project[]
     const heroModes = [
         {
@@ -429,11 +445,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         }
     })
 
+    const bespokeFaq = websiteFaq || webappFaq
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: (websiteFaq
-            ? websiteFaq.items.map((f) => ({
+        mainEntity: (bespokeFaq
+            ? bespokeFaq.items.map((f) => ({
                 '@type': 'Question',
                 name: f.q,
                 acceptedAnswer: { '@type': 'Answer', text: f.a },
@@ -566,10 +583,32 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 </>
             ) : null}
 
-            {/* Website sub-services use the new bespoke sections above + the
-                contact section below; the shared-template depth here is hidden
-                for them to keep the page lean (and avoid a duplicate FAQ). */}
-            {!websiteContent && (
+            {webappContent ? (
+                <>
+                    <WebAppProcess content={webappContent.process[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={localePath(locale, '/contact')} />
+                    {webappProjects.length > 0 ? (
+                        <ProjectsShowcase
+                            projects={webappProjects}
+                            locale={webappLocale}
+                            dir={isRTL ? 'rtl' : 'ltr'}
+                            projectHref={(id) => localePath(locale, `/projects/${id}`)}
+                            eyebrow={isRTL ? 'أعمالنا' : 'Our work'}
+                            heading={isRTL ? 'تطبيقات ومنصات نفّذناها' : 'Applications & platforms we’ve built'}
+                            sub={isRTL ? 'تطبيقات ويب حقيقية صمّمناها وبنيناها وأطلقناها لعملاء.' : 'Real web applications we’ve designed, built, and launched for clients.'}
+                        />
+                    ) : null}
+                    <TestimonialsMarquee locale={webappLocale} dir={isRTL ? 'rtl' : 'ltr'} />
+                    {webappFaq ? (
+                        <FaqAccordion eyebrow={webappFaq.eyebrow} heading={webappFaq.heading} subheading={webappFaq.subheading} items={webappFaq.items} dir={isRTL ? 'rtl' : 'ltr'} />
+                    ) : null}
+                </>
+            ) : null}
+
+            {/* Website and interactive-web-app sub-services use the new bespoke
+                sections above + the contact section below; the shared-template
+                depth here is hidden for them to keep the page lean (and avoid a
+                duplicate FAQ). Every other service still gets the full template. */}
+            {!websiteContent && !webappContent && (
             <>
             <section className="relative px-4 py-14 sm:px-6 lg:px-8 md:py-20">
                 <div className="mx-auto max-w-7xl">
@@ -848,7 +887,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             )}
 
-            {!websiteContent && (
+            {!websiteContent && !webappContent && (
             <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden" data-header-theme="dark">
                 <div
                     className="pointer-events-none absolute inset-0"
@@ -875,7 +914,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </section>
             )}
 
-            {websiteContent ? (
+            {(websiteContent || webappContent) ? (
                 <ContactFast serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} />
             ) : null}
         </main>
