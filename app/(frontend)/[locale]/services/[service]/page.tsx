@@ -14,6 +14,8 @@ import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { getWebsiteServiceContent, asServiceLocale } from '@/lib/services/website-service-content'
 import { getWebsiteFaq } from '@/lib/services/website-faq-content'
+import { WebAppHero } from '@/components/ui/webapp-hero'
+import { getWebappServiceContent, asWebAppLocale } from '@/lib/services/webapp-service-content'
 import { ProcessOverview } from '@/components/ui/process-overview'
 import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
@@ -357,6 +359,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     // shared HeroOrbitDeck below. Content is hand-crafted per slug, not templated.
     const websiteContent = getWebsiteServiceContent(service.slug)
     const serviceLocale = asServiceLocale(locale)
+    const webappContent = getWebappServiceContent(service.slug)
+    const webappLocale = asWebAppLocale(locale)
     const websiteFaq = websiteContent ? getWebsiteFaq(service.slug, locale) : null
     const websiteProjectIds = websiteContent ? (WEBSITE_PROJECT_IDS[service.slug] || []) : []
     const allWebsiteProjects = websiteProjectIds.length ? await getAllProjects(locale) : []
@@ -504,7 +508,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             </div>
 
-            {websiteContent ? (
+            {webappContent ? (
+                <WebAppHero
+                    content={webappContent.hero[webappLocale]}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                />
+            ) : websiteContent ? (
                 <HeroGeometric
                     badge={websiteContent.hero[serviceLocale].badge}
                     title1={websiteContent.hero[serviceLocale].title1}
