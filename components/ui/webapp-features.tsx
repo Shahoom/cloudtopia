@@ -31,8 +31,11 @@ const ICON_CSS = `
     0%   { opacity: 0; transform: translate3d(0, 26px, 0) scale(0.97); }
     100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
-.ctf-card { opacity: 0; transform: translate3d(0, 28px, 0); }
-.ctf-section[data-visible="true"] .ctf-card {
+/* Default = visible (resilient to no-JS / failed observer). JS "arms" the
+   reveal on mount, then the observer plays it once the section scrolls in. */
+.ctf-card { opacity: 1; transform: none; }
+.ctf-section[data-armed="true"] .ctf-card { opacity: 0; transform: translate3d(0, 28px, 0); }
+.ctf-section[data-armed="true"][data-visible="true"] .ctf-card {
     animation: ctf-card-in 0.7s cubic-bezier(0.22,0.68,0,1) forwards;
     animation-delay: var(--ctf-delay, 0ms);
 }
@@ -85,8 +88,8 @@ const ICON_CSS = `
 .ctf-icon[data-variant="loop"] span::before { transform: rotate(90deg); }
 .ctf-icon[data-variant="loop"] span::after { opacity: 0.4; }
 @media (prefers-reduced-motion: reduce) {
-    .ctf-card { opacity: 1; transform: none; }
-    .ctf-section[data-visible="true"] .ctf-card { animation: none; }
+    .ctf-section[data-armed="true"] .ctf-card { opacity: 1; transform: none; }
+    .ctf-section[data-armed="true"][data-visible="true"] .ctf-card { animation: none; }
     .ctf-icon span, .ctf-icon span::before, .ctf-icon span::after { animation: none !important; }
 }
 `;
@@ -163,10 +166,12 @@ export function WebAppFeatures({
 }) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(false);
+    const [armed, setArmed] = useState(false);
 
     useEffect(() => {
         const node = sectionRef.current;
         if (!node || typeof window === "undefined") return;
+        setArmed(true);
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -201,6 +206,7 @@ export function WebAppFeatures({
             <div
                 ref={sectionRef}
                 className="ctf-section mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:px-8"
+                data-armed={armed}
                 data-visible={visible}
             >
                 {/* Header */}
