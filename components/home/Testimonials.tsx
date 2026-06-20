@@ -5,7 +5,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { cn } from '@/lib/utils'
 import { StaggerTestimonials } from '@/components/ui/stagger-testimonials'
 
-const testimonials = {
+export const testimonials = {
   en: [
     {
       id: 'oman-operations',
@@ -151,7 +151,7 @@ const testimonials = {
 export default function Testimonials() {
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
-  const items = locale === 'ar' ? testimonials.ar : testimonials.en
+  const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 11)
   const copy = locale === 'ar'
     ? {
       eyebrow: 'ثقة مبنية على التسليم',
