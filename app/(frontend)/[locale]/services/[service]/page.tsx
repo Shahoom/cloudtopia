@@ -9,9 +9,27 @@ import { getService, getServiceCategory, localizedPackageName, localizedServiceF
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { HeroGeometric } from '@/components/ui/shape-landing-hero'
+import { FeaturesBento } from '@/components/ui/features-bento'
 import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { getWebsiteServiceContent, asServiceLocale } from '@/lib/services/website-service-content'
+import { getWebsiteFaq } from '@/lib/services/website-faq-content'
+import { ProcessOverview } from '@/components/ui/process-overview'
+import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
+import { FaqAccordion } from '@/components/ui/faq-accordion'
+import { ContactFast } from '@/components/ui/contact-fast'
+import { ProjectsShowcase } from '@/components/ui/projects-showcase'
+import { getAllProjects, type Project } from '@/lib/projects'
+
+// Which real CMS projects (by public id) showcase each website sub-service.
+// Sub-services not listed have no relevant project yet, so the section is hidden.
+const WEBSITE_PROJECT_IDS: Record<string, string[]> = {
+    'business-website-development': ['kvaii-logistics', 'ram-sustainable', 'lumma-clinics'],
+    'corporate-website-design': ['kvaii-logistics', 'ram-sustainable'],
+    'ecommerce-website-development': ['artucky-ecommerce'],
+    'restaurant-website-development': ['joory-cafe'],
+    'portfolio-websites': ['lumma-clinics'],
+}
 
 type PageProps = {
     params: Promise<{ locale: string; service: string }>
@@ -339,6 +357,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     // shared HeroOrbitDeck below. Content is hand-crafted per slug, not templated.
     const websiteContent = getWebsiteServiceContent(service.slug)
     const serviceLocale = asServiceLocale(locale)
+    const websiteFaq = websiteContent ? getWebsiteFaq(service.slug, locale) : null
+    const websiteProjectIds = websiteContent ? (WEBSITE_PROJECT_IDS[service.slug] || []) : []
+    const allWebsiteProjects = websiteProjectIds.length ? await getAllProjects(locale) : []
+    const websiteProjects = websiteProjectIds
+        .map((id) => allWebsiteProjects.find((p) => p.id === id))
+        .filter(Boolean) as Project[]
     const heroModes = [
         {
             label: L.problem,
@@ -403,14 +427,20 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: service.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: localizedServiceValue(faq.question, locale),
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: localizedServiceValue(faq.answer, locale),
-            },
-        })),
+        mainEntity: (websiteFaq
+            ? websiteFaq.items.map((f) => ({
+                '@type': 'Question',
+                name: f.q,
+                acceptedAnswer: { '@type': 'Answer', text: f.a },
+            }))
+            : service.faqs.map((faq) => ({
+                '@type': 'Question',
+                name: localizedServiceValue(faq.question, locale),
+                acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: localizedServiceValue(faq.answer, locale),
+                },
+            }))),
     }
 
     // The canonical #organization node (with both customer-service and sales
@@ -500,6 +530,33 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             )}
 
+            {websiteContent?.features ? (
+                <FeaturesBento content={websiteContent.features[serviceLocale]} dir={isRTL ? 'rtl' : 'ltr'} />
+            ) : null}
+
+            {websiteContent ? (
+                <>
+                    <ProcessOverview serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={localePath(locale, '/contact')} />
+                    {websiteProjects.length > 0 ? (
+                        <ProjectsShowcase
+                            projects={websiteProjects}
+                            locale={serviceLocale}
+                            dir={isRTL ? 'rtl' : 'ltr'}
+                            projectHref={(id) => localePath(locale, `/projects/${id}`)}
+                        />
+                    ) : null}
+                    <TestimonialsMarquee locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} />
+                    {websiteFaq ? (
+                        <FaqAccordion eyebrow={websiteFaq.eyebrow} heading={websiteFaq.heading} subheading={websiteFaq.subheading} items={websiteFaq.items} dir={isRTL ? 'rtl' : 'ltr'} />
+                    ) : null}
+                </>
+            ) : null}
+
+            {/* Website sub-services use the new bespoke sections above + the
+                contact section below; the shared-template depth here is hidden
+                for them to keep the page lean (and avoid a duplicate FAQ). */}
+            {!websiteContent && (
+            <>
             <section className="relative px-4 py-14 sm:px-6 lg:px-8 md:py-20">
                 <div className="mx-auto max-w-7xl">
                     <div className="grid gap-px border border-eerie bg-eerie lg:grid-cols-2">
@@ -763,6 +820,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     </div>
                 </div>
             </section>
+            </>
+            )}
 
             {serviceTiers.length > 0 && (
                 <CreativePricing
@@ -775,6 +834,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 />
             )}
 
+            {!websiteContent && (
             <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-eerie overflow-hidden" data-header-theme="dark">
                 <div
                     className="pointer-events-none absolute inset-0"
@@ -799,6 +859,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     </div>
                 </div>
             </section>
+            )}
+
+            {websiteContent ? (
+                <ContactFast serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} />
+            ) : null}
         </main>
     )
 }
