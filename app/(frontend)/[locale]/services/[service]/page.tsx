@@ -15,6 +15,7 @@ import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 import { getWebsiteServiceContent, asServiceLocale } from '@/lib/services/website-service-content'
 import { getWebsiteFaq } from '@/lib/services/website-faq-content'
 import { WebAppHero } from '@/components/ui/webapp-hero'
+import { WebAppFeatures } from '@/components/ui/webapp-features'
 import { getWebappServiceContent, asWebAppLocale } from '@/lib/services/webapp-service-content'
 import { ProcessOverview } from '@/components/ui/process-overview'
 import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
@@ -538,6 +539,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     dir={isRTL ? 'rtl' : 'ltr'}
                 />
             )}
+
+            {webappContent?.features ? (
+                <WebAppFeatures content={webappContent.features[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} />
+            ) : null}
 
             {websiteContent?.features ? (
                 <FeaturesBento content={websiteContent.features[serviceLocale]} dir={isRTL ? 'rtl' : 'ltr'} />

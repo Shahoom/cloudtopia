@@ -1,9 +1,11 @@
 import type { WebAppHeroContent } from '@/components/ui/webapp-hero'
+import type { WebAppFeaturesContent } from '@/components/ui/webapp-features'
 
 export type WebAppLocale = 'en' | 'ar'
 
 export type WebAppServiceContent = {
     hero: Record<WebAppLocale, WebAppHeroContent>
+    features: Record<WebAppLocale, WebAppFeaturesContent>
 }
 
 export const webappServiceContent: Record<string, WebAppServiceContent> = {
@@ -54,6 +56,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 techStack: ['React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS'],
             },
         },
+        features: {
+            en: {
+                eyebrow: 'What you get',
+                heading: 'Software measured for how you actually work',
+                subheading: 'No forcing your business into someone else’s template — every screen, rule, and integration is built around your real process.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Architecture', title: 'Built on your logic', description: 'We model your real workflows first, then build the screens — so the app mirrors how your team already thinks and operates.', statLabel: 'Custom modules', statValue: 'Unlimited' },
+                    { id: '02', variant: 'relay', meta: 'Integrations', title: 'Connected to your stack', description: 'Plugs into your CRM, payment gateway, ERP, or any third-party API so data flows in one place instead of five disconnected tools.', statLabel: 'Integrations', statValue: 'Any system' },
+                    { id: '03', variant: 'wave', meta: 'Performance', title: 'Fast under real load', description: 'Optimized queries, caching, and a modern framework keep the app snappy whether it’s 10 users or 10,000.', statLabel: 'Target load', statValue: '< 1s' },
+                    { id: '04', variant: 'spark', meta: 'Security', title: 'Locked down by default', description: 'Role-based access, encrypted data, audit trails, and secure auth come standard — not as an expensive afterthought.', statLabel: 'Access control', statValue: 'Role-based' },
+                    { id: '05', variant: 'loop', meta: 'Ownership', title: 'Yours, completely', description: 'Source code, documentation, and accounts are handed to you at launch. No lock-in, no hostage hosting, no surprises.', statLabel: 'Code handover', statValue: '100%' },
+                ],
+                metrics: [
+                    { label: 'Typical build', value: '6–10 wks' },
+                    { label: 'Uptime SLA', value: '99.9%' },
+                    { label: 'You own the code', value: '100%' },
+                ],
+            },
+            ar: {
+                eyebrow: 'ما الذي تحصل عليه',
+                heading: 'برمجيات مفصّلة على طريقة عملك الفعلية',
+                subheading: 'لا نجبر عملك على قالب جاهز — كل شاشة وقاعدة وتكامل مبني حول عمليتك الحقيقية.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'البنية', title: 'مبني على منطقك', description: 'نرسم سير عملك الفعلي أولاً، ثم نبني الشاشات — ليعكس التطبيق طريقة تفكير فريقك.', statLabel: 'وحدات مخصصة', statValue: 'غير محدودة' },
+                    { id: '02', variant: 'relay', meta: 'التكامل', title: 'متصل بأنظمتك', description: 'يرتبط بـ CRM وبوابة الدفع وERP وأي API آخر لتتدفق البيانات في مكان واحد.', statLabel: 'التكاملات', statValue: 'أي نظام' },
+                    { id: '03', variant: 'wave', meta: 'الأداء', title: 'سريع تحت الضغط', description: 'استعلامات محسّنة وتخزين مؤقت وإطار حديث تبقي التطبيق سريعاً سواء 10 أو 10،000 مستخدم.', statLabel: 'زمن التحميل', statValue: '< 1 ثانية' },
+                    { id: '04', variant: 'spark', meta: 'الأمان', title: 'محمي بشكل افتراضي', description: 'صلاحيات حسب الدور وتشفير للبيانات وسجلات تدقيق تأتي قياسية وليست إضافة باهظة.', statLabel: 'الصلاحيات', statValue: 'حسب الدور' },
+                    { id: '05', variant: 'loop', meta: 'الملكية', title: 'ملكك بالكامل', description: 'الكود المصدري والتوثيق والحسابات تُسلّم لك عند الإطلاق. بلا احتكار ولا مفاجآت.', statLabel: 'تسليم الكود', statValue: '100%' },
+                ],
+                metrics: [
+                    { label: 'مدة البناء', value: '6–10 أسابيع' },
+                    { label: 'وقت التشغيل', value: '99.9%' },
+                    { label: 'ملكية الكود', value: '100%' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -100,6 +138,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     chartBars: [50, 62, 54, 78, 68, 88, 85],
                 },
                 techStack: ['React', 'Auth.js', 'Prisma', 'Supabase', 'Stripe', 'Vercel'],
+            },
+        },
+        features: {
+            en: {
+                eyebrow: 'Inside the portal',
+                heading: 'A self-serve home for every client relationship',
+                subheading: 'Replace the back-and-forth of email and WhatsApp with one secure space where clients find everything themselves.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Access', title: 'Secure client logins', description: 'Each client sees only their own projects, files, and invoices behind encrypted, role-based authentication.', statLabel: 'Per-client view', statValue: 'Isolated' },
+                    { id: '02', variant: 'relay', meta: 'Visibility', title: 'Live project status', description: 'Clients track milestones, approvals, and progress in real time — so “any update?” messages simply stop arriving.', statLabel: 'Status updates', statValue: 'Real-time' },
+                    { id: '03', variant: 'wave', meta: 'Documents', title: 'Files & invoices in one place', description: 'Contracts, reports, and invoices live in a tidy, searchable history clients can download anytime.', statLabel: 'Document access', statValue: '24 / 7' },
+                    { id: '04', variant: 'spark', meta: 'Branding', title: 'Your brand, not ours', description: 'Your logo, colors, and domain throughout — the portal feels like a premium part of your own product.', statLabel: 'White-label', statValue: 'Included' },
+                    { id: '05', variant: 'loop', meta: 'Notifications', title: 'Automatic updates', description: 'Email and in-app alerts fire on new files, status changes, and messages so nothing slips through.', statLabel: 'Alerts', statValue: 'Automated' },
+                ],
+                metrics: [
+                    { label: 'Fewer status emails', value: '−70%' },
+                    { label: 'Document access', value: '24 / 7' },
+                    { label: 'Branded experience', value: '100%' },
+                ],
+            },
+            ar: {
+                eyebrow: 'داخل البوابة',
+                heading: 'مساحة ذاتية لكل علاقة مع عميل',
+                subheading: 'استبدل تبادل الرسائل بمساحة واحدة آمنة يجد فيها العميل كل شيء بنفسه.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'الوصول', title: 'دخول آمن للعملاء', description: 'يرى كل عميل مشاريعه وملفاته وفواتيره فقط خلف مصادقة مشفّرة حسب الدور.', statLabel: 'عرض لكل عميل', statValue: 'منفصل' },
+                    { id: '02', variant: 'relay', meta: 'الوضوح', title: 'حالة المشروع مباشرة', description: 'يتابع العملاء المراحل والموافقات والتقدّم آنياً — فتتوقف رسائل «أي تحديث؟».', statLabel: 'التحديثات', statValue: 'فورية' },
+                    { id: '03', variant: 'wave', meta: 'المستندات', title: 'الملفات والفواتير معاً', description: 'العقود والتقارير والفواتير في سجل مرتّب قابل للبحث والتنزيل في أي وقت.', statLabel: 'الوصول للمستندات', statValue: '24 / 7' },
+                    { id: '04', variant: 'spark', meta: 'الهوية', title: 'علامتك أنت', description: 'شعارك وألوانك ونطاقك في كل مكان — تبدو البوابة جزءاً راقياً من منتجك.', statLabel: 'هوية كاملة', statValue: 'مضمّنة' },
+                    { id: '05', variant: 'loop', meta: 'الإشعارات', title: 'تحديثات تلقائية', description: 'تنبيهات بريد وداخل التطبيق عند الملفات الجديدة وتغيّر الحالة فلا يضيع شيء.', statLabel: 'التنبيهات', statValue: 'تلقائية' },
+                ],
+                metrics: [
+                    { label: 'رسائل متابعة أقل', value: '−70%' },
+                    { label: 'الوصول للمستندات', value: '24 / 7' },
+                    { label: 'تجربة بهويتك', value: '100%' },
+                ],
             },
         },
     },
@@ -150,6 +224,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 techStack: ['React', 'Recharts', 'Supabase', 'PostgreSQL', 'REST API', 'Vercel'],
             },
         },
+        features: {
+            en: {
+                eyebrow: 'On the dashboard',
+                heading: 'Every number that matters, on one screen',
+                subheading: 'Stop exporting spreadsheets and stitching reports — your live operating picture updates itself.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Live data', title: 'Real-time KPIs', description: 'Revenue, users, orders, and the metrics you care about refresh automatically — no manual exports, no stale numbers.', statLabel: 'Refresh', statValue: 'Live' },
+                    { id: '02', variant: 'relay', meta: 'Charts', title: 'Visual at a glance', description: 'Clean charts and trend lines turn raw rows into decisions your team can act on in seconds.', statLabel: 'Chart types', statValue: 'Tailored' },
+                    { id: '03', variant: 'wave', meta: 'Control', title: 'Filter & drill down', description: 'Slice by date, team, region, or product and dive from the big picture straight to the underlying records.', statLabel: 'Drill-down', statValue: 'Any level' },
+                    { id: '04', variant: 'spark', meta: 'Alerts', title: 'Know before it’s a problem', description: 'Threshold alerts flag anomalies — low stock, spiking errors, dropping conversion — before they cost you.', statLabel: 'Smart alerts', statValue: 'Built-in' },
+                    { id: '05', variant: 'loop', meta: 'Roles', title: 'The right view per role', description: 'Finance, ops, and leadership each get a tailored view with permissions that match their responsibility.', statLabel: 'Role views', statValue: 'Per team' },
+                ],
+                metrics: [
+                    { label: 'Reporting time', value: '−85%' },
+                    { label: 'Data freshness', value: 'Live' },
+                    { label: 'Tailored views', value: 'Per role' },
+                ],
+            },
+            ar: {
+                eyebrow: 'على لوحة التحكم',
+                heading: 'كل رقم مهم على شاشة واحدة',
+                subheading: 'توقّف عن تصدير الجداول وتجميع التقارير — صورتك التشغيلية تتحدّث تلقائياً.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'بيانات حيّة', title: 'مؤشرات آنية', description: 'الإيراد والمستخدمون والطلبات والمؤشرات التي تهمك تتحدّث تلقائياً — بلا تصدير يدوي.', statLabel: 'التحديث', statValue: 'مباشر' },
+                    { id: '02', variant: 'relay', meta: 'الرسوم', title: 'مرئي بلمحة', description: 'رسوم نظيفة وخطوط اتجاه تحوّل الصفوف الخام إلى قرارات في ثوانٍ.', statLabel: 'أنواع الرسوم', statValue: 'مخصصة' },
+                    { id: '03', variant: 'wave', meta: 'التحكم', title: 'تصفية وتعمّق', description: 'قسّم حسب التاريخ أو الفريق أو المنطقة وانتقل من الصورة الكبيرة إلى السجل التفصيلي.', statLabel: 'التعمّق', statValue: 'أي مستوى' },
+                    { id: '04', variant: 'spark', meta: 'التنبيهات', title: 'اعرف قبل المشكلة', description: 'تنبيهات حدّية ترصد الشذوذ — مخزون منخفض، أخطاء مرتفعة — قبل أن تكلّفك.', statLabel: 'تنبيهات ذكية', statValue: 'مضمّنة' },
+                    { id: '05', variant: 'loop', meta: 'الأدوار', title: 'العرض المناسب لكل دور', description: 'المالية والعمليات والإدارة لكلٍ عرضه المخصص بصلاحيات تناسب مسؤوليته.', statLabel: 'عروض الأدوار', statValue: 'لكل فريق' },
+                ],
+                metrics: [
+                    { label: 'وقت التقارير', value: '−85%' },
+                    { label: 'حداثة البيانات', value: 'مباشر' },
+                    { label: 'عروض مخصصة', value: 'لكل دور' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -196,6 +306,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     chartBars: [58, 72, 48, 84, 62, 88, 78],
                 },
                 techStack: ['React', 'FullCalendar', 'Stripe', 'Node.js', 'PostgreSQL', 'Twilio'],
+            },
+        },
+        features: {
+            en: {
+                eyebrow: 'How it books',
+                heading: 'A booking flow that sells while you sleep',
+                subheading: 'Customers reserve, pay, and get reminded automatically — your calendar fills without a single phone call.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Availability', title: 'Real-time slots', description: 'Live availability updates the instant a slot is taken, so double-bookings are impossible by design.', statLabel: 'Conflicts', statValue: 'Zero' },
+                    { id: '02', variant: 'relay', meta: 'Payments', title: 'Pay at booking', description: 'Take deposits or full payment up front with secure checkout — fewer no-shows, money in the bank earlier.', statLabel: 'Online pay', statValue: 'Built-in' },
+                    { id: '03', variant: 'wave', meta: 'Reminders', title: 'Automatic reminders', description: 'WhatsApp, SMS, and email reminders go out on schedule, cutting no-shows without staff lifting a finger.', statLabel: 'No-show drop', statValue: 'Major' },
+                    { id: '04', variant: 'spark', meta: 'Calendar', title: 'Synced with your team', description: 'Bookings sync to Google Calendar and per-staff schedules so everyone sees the same source of truth.', statLabel: 'Calendar sync', statValue: 'Two-way' },
+                    { id: '05', variant: 'loop', meta: 'Control', title: 'Rules your way', description: 'Set buffers, lead times, capacity, and services per resource — the system enforces your policies automatically.', statLabel: 'Booking rules', statValue: 'Custom' },
+                ],
+                metrics: [
+                    { label: 'No-show rate', value: '↓ Low' },
+                    { label: 'Booking window', value: '24 / 7' },
+                    { label: 'Manual calls', value: 'None' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف يحجز',
+                heading: 'مسار حجز يبيع بينما تنام',
+                subheading: 'يحجز العملاء ويدفعون ويُذكَّرون تلقائياً — يمتلئ تقويمك دون مكالمة واحدة.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'التوفّر', title: 'مواعيد آنية', description: 'يتحدّث التوفّر لحظة حجز أي موعد، فالحجز المزدوج مستحيل بالتصميم.', statLabel: 'التعارضات', statValue: 'صفر' },
+                    { id: '02', variant: 'relay', meta: 'الدفع', title: 'الدفع عند الحجز', description: 'استلم عربوناً أو كامل المبلغ مسبقاً عبر دفع آمن — غياب أقل ونقد أبكر.', statLabel: 'دفع إلكتروني', statValue: 'مضمّن' },
+                    { id: '03', variant: 'wave', meta: 'التذكير', title: 'تذكيرات تلقائية', description: 'تذكيرات واتساب ورسائل وبريد في موعدها تقلّل الغياب دون أي جهد من الموظفين.', statLabel: 'انخفاض الغياب', statValue: 'كبير' },
+                    { id: '04', variant: 'spark', meta: 'التقويم', title: 'متزامن مع فريقك', description: 'تتزامن الحجوزات مع تقويم Google وجداول الموظفين فيرى الجميع المصدر نفسه.', statLabel: 'مزامنة التقويم', statValue: 'ثنائية' },
+                    { id: '05', variant: 'loop', meta: 'التحكم', title: 'قواعدك أنت', description: 'حدّد الفواصل ومدد الإشعار والسعة والخدمات لكل مورد، والنظام يطبّق سياساتك تلقائياً.', statLabel: 'قواعد الحجز', statValue: 'مخصصة' },
+                ],
+                metrics: [
+                    { label: 'معدل الغياب', value: '↓ منخفض' },
+                    { label: 'نافذة الحجز', value: '24 / 7' },
+                    { label: 'مكالمات يدوية', value: 'لا شيء' },
+                ],
             },
         },
     },
@@ -246,6 +392,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 techStack: ['React', 'Next.js', 'Prisma', 'PostgreSQL', 'Webhooks', 'Vercel'],
             },
         },
+        features: {
+            en: {
+                eyebrow: 'What it replaces',
+                heading: 'The end of “we do that in a spreadsheet”',
+                subheading: 'Turn fragile sheets and manual hand-offs into one tool your team actually wants to use.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Workflow', title: 'Built for one job', description: 'Each tool does exactly what your team needs — no bloat, no 40 unused features, no training marathon.', statLabel: 'Learning curve', statValue: 'Minutes' },
+                    { id: '02', variant: 'relay', meta: 'Automation', title: 'Kill the busywork', description: 'Repetitive steps — calculations, status changes, notifications — run automatically so people do real work.', statLabel: 'Manual steps', statValue: 'Removed' },
+                    { id: '03', variant: 'wave', meta: 'Data', title: 'One source of truth', description: 'Everyone reads and writes the same live data — no more five conflicting copies of the same sheet.', statLabel: 'Version chaos', statValue: 'Gone' },
+                    { id: '04', variant: 'spark', meta: 'Accuracy', title: 'Fewer human errors', description: 'Validation, required fields, and guardrails stop the typos and broken formulas that spreadsheets invite.', statLabel: 'Error rate', statValue: '↓ Sharp' },
+                    { id: '05', variant: 'loop', meta: 'Scale', title: 'Grows with you', description: 'Add fields, roles, and steps as the process evolves — the tool keeps up instead of breaking.', statLabel: 'Extensible', statValue: 'Always' },
+                ],
+                metrics: [
+                    { label: 'Hours saved / mo', value: '40+' },
+                    { label: 'Fewer errors', value: 'Sharp ↓' },
+                    { label: 'Team adoption', value: 'High' },
+                ],
+            },
+            ar: {
+                eyebrow: 'ما الذي يستبدله',
+                heading: 'نهاية «نفعل ذلك في جدول إكسل»',
+                subheading: 'حوّل الجداول الهشّة والتسليمات اليدوية إلى أداة واحدة يرغب فريقك في استخدامها.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'سير العمل', title: 'مبنية لمهمة واحدة', description: 'تفعل كل أداة ما يحتاجه فريقك بالضبط — بلا تضخّم ولا ميزات معطّلة ولا تدريب طويل.', statLabel: 'منحنى التعلّم', statValue: 'دقائق' },
+                    { id: '02', variant: 'relay', meta: 'الأتمتة', title: 'أنهِ العمل الممل', description: 'الخطوات المتكررة — الحسابات وتغيّر الحالة والإشعارات — تعمل تلقائياً ليؤدي الناس عملاً حقيقياً.', statLabel: 'خطوات يدوية', statValue: 'محذوفة' },
+                    { id: '03', variant: 'wave', meta: 'البيانات', title: 'مصدر واحد للحقيقة', description: 'يقرأ الجميع ويكتب على البيانات الحيّة نفسها — لا خمس نسخ متضاربة من الجدول ذاته.', statLabel: 'فوضى النسخ', statValue: 'انتهت' },
+                    { id: '04', variant: 'spark', meta: 'الدقة', title: 'أخطاء بشرية أقل', description: 'التحقق والحقول الإلزامية تمنع الأخطاء والصيغ المكسورة التي تجلبها الجداول.', statLabel: 'معدل الخطأ', statValue: '↓ حاد' },
+                    { id: '05', variant: 'loop', meta: 'التوسّع', title: 'تنمو معك', description: 'أضف حقولاً وأدواراً وخطوات مع تطوّر العملية — تواكب الأداة بدل أن تنكسر.', statLabel: 'قابلة للتوسّع', statValue: 'دائماً' },
+                ],
+                metrics: [
+                    { label: 'ساعات موفّرة/شهر', value: '40+' },
+                    { label: 'أخطاء أقل', value: '↓ حاد' },
+                    { label: 'تبنّي الفريق', value: 'عالٍ' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -292,6 +474,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     chartBars: [18, 28, 40, 54, 64, 78, 94],
                 },
                 techStack: ['React', 'Next.js', 'Stripe', 'Supabase', 'TypeScript', 'Vercel'],
+            },
+        },
+        features: {
+            en: {
+                eyebrow: 'Launch-ready from day one',
+                heading: 'Everything a real SaaS needs, built in',
+                subheading: 'Not a throwaway prototype — a production foundation you can charge for, raise on, and scale.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Auth', title: 'Accounts & teams', description: 'Sign-up, login, password reset, and multi-user teams ship on day one — the plumbing every SaaS reinvents, done.', statLabel: 'User system', statValue: 'Included' },
+                    { id: '02', variant: 'relay', meta: 'Billing', title: 'Subscriptions that work', description: 'Stripe plans, trials, upgrades, and invoices are wired in so you can take recurring revenue from launch.', statLabel: 'Billing', statValue: 'Stripe-ready' },
+                    { id: '03', variant: 'wave', meta: 'Speed', title: 'Weeks, not quarters', description: 'A focused, opinionated build gets your core loop in front of real users fast — momentum beats perfection.', statLabel: 'To first users', statValue: '~8 wks' },
+                    { id: '04', variant: 'spark', meta: 'Conversion', title: 'Designed to convert', description: 'Landing page, onboarding, and pricing are built for sign-ups — not just a logged-in app behind a wall.', statLabel: 'Funnel', statValue: 'End-to-end' },
+                    { id: '05', variant: 'loop', meta: 'Scale', title: 'Ready to grow', description: 'Clean architecture and analytics hooks mean your v2 features build on the MVP instead of replacing it.', statLabel: 'Foundation', statValue: 'Production' },
+                ],
+                metrics: [
+                    { label: 'To first users', value: '~8 wks' },
+                    { label: 'Auth + billing', value: 'Included' },
+                    { label: 'Investor-ready', value: 'Yes' },
+                ],
+            },
+            ar: {
+                eyebrow: 'جاهز للإطلاق من اليوم الأول',
+                heading: 'كل ما يحتاجه SaaS حقيقي، مدمج',
+                subheading: 'ليس نموذجاً يُرمى — أساس إنتاجي تستطيع أن تتقاضى عليه وتجمع عليه استثماراً وتوسّعه.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'الحسابات', title: 'حسابات وفِرق', description: 'تسجيل ودخول واستعادة كلمة مرور وفِرق متعددة المستخدمين من اليوم الأول — البنية التي يعيد كل SaaS اختراعها، جاهزة.', statLabel: 'نظام المستخدمين', statValue: 'مضمّن' },
+                    { id: '02', variant: 'relay', meta: 'الفوترة', title: 'اشتراكات تعمل', description: 'خطط Stripe والتجارب والترقيات والفواتير مدمجة لتستلم إيراداً متكرراً من الإطلاق.', statLabel: 'الفوترة', statValue: 'جاهزة' },
+                    { id: '03', variant: 'wave', meta: 'السرعة', title: 'أسابيع لا أرباع', description: 'بناء مركّز يضع حلقتك الأساسية أمام مستخدمين حقيقيين بسرعة — الزخم يتفوّق على الكمال.', statLabel: 'لأول مستخدم', statValue: '~8 أسابيع' },
+                    { id: '04', variant: 'spark', meta: 'التحويل', title: 'مصمّم للتحويل', description: 'صفحة الهبوط والتهيئة والتسعير مبنية للتسجيل — لا مجرد تطبيق خلف جدار.', statLabel: 'القمع', statValue: 'متكامل' },
+                    { id: '05', variant: 'loop', meta: 'التوسّع', title: 'جاهز للنمو', description: 'بنية نظيفة وتحليلات تعني أن ميزات الإصدار الثاني تُبنى على الـ MVP لا تستبدله.', statLabel: 'الأساس', statValue: 'إنتاجي' },
+                ],
+                metrics: [
+                    { label: 'لأول مستخدم', value: '~8 أسابيع' },
+                    { label: 'حسابات وفوترة', value: 'مضمّنة' },
+                    { label: 'جاهز للمستثمر', value: 'نعم' },
+                ],
             },
         },
     },
@@ -342,6 +560,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                 techStack: ['Next.js', 'Workbox', 'TypeScript', 'IndexedDB', 'Web Push', 'Vercel'],
             },
         },
+        features: {
+            en: {
+                eyebrow: 'Why a PWA',
+                heading: 'App-store quality, without the app store',
+                subheading: 'One build that installs to the home screen, loads instantly, and works offline — reachable from any link.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Speed', title: 'Instant loads', description: 'Smart caching serves the shell immediately, so the app feels native-fast even on shaky mobile connections.', statLabel: 'Load time', statValue: '< 1s' },
+                    { id: '02', variant: 'relay', meta: 'Install', title: 'Add to home screen', description: 'Users install straight from the browser — your icon on their phone, no app-store review or 100MB download.', statLabel: 'Install', statValue: 'One tap' },
+                    { id: '03', variant: 'wave', meta: 'Offline', title: 'Works without signal', description: 'Service workers keep key screens and data available offline, then sync the moment connection returns.', statLabel: 'Offline mode', statValue: 'Yes' },
+                    { id: '04', variant: 'spark', meta: 'Engagement', title: 'Push notifications', description: 'Re-engage users with web push — the retention lever of native apps, without the native overhead.', statLabel: 'Push', statValue: 'Built-in' },
+                    { id: '05', variant: 'loop', meta: 'Reach', title: 'One build, everywhere', description: 'iOS, Android, and desktop run the same codebase — no separate apps, no duplicated cost.', statLabel: 'Codebases', statValue: 'Just one' },
+                ],
+                metrics: [
+                    { label: 'Lighthouse', value: '95+' },
+                    { label: 'Offline ready', value: 'Yes' },
+                    { label: 'Install size', value: 'Tiny' },
+                ],
+            },
+            ar: {
+                eyebrow: 'لماذا PWA',
+                heading: 'جودة متجر التطبيقات، دون المتجر',
+                subheading: 'بناء واحد يُثبّت على الشاشة الرئيسية ويحمّل فوراً ويعمل بلا إنترنت — يُفتح من أي رابط.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'السرعة', title: 'تحميل فوري', description: 'تخزين ذكي يقدّم الواجهة فوراً فيبدو التطبيق بسرعة أصلية حتى على اتصال ضعيف.', statLabel: 'زمن التحميل', statValue: '< 1 ثانية' },
+                    { id: '02', variant: 'relay', meta: 'التثبيت', title: 'إضافة للشاشة', description: 'يُثبّت المستخدمون مباشرة من المتصفح — أيقونتك على هاتفهم بلا مراجعة متجر ولا تنزيل ثقيل.', statLabel: 'التثبيت', statValue: 'بنقرة' },
+                    { id: '03', variant: 'wave', meta: 'بلا اتصال', title: 'يعمل دون شبكة', description: 'تُبقي عمّال الخدمة الشاشات والبيانات المهمة متاحة دون إنترنت ثم تتزامن فور عودة الاتصال.', statLabel: 'وضع بلا اتصال', statValue: 'نعم' },
+                    { id: '04', variant: 'spark', meta: 'التفاعل', title: 'إشعارات الدفع', description: 'أعد إشراك المستخدمين عبر الدفع عبر الويب — رافعة بقاء التطبيقات الأصلية بلا أعبائها.', statLabel: 'الدفع', statValue: 'مضمّن' },
+                    { id: '05', variant: 'loop', meta: 'الوصول', title: 'بناء واحد للجميع', description: 'iOS وAndroid وسطح المكتب على الكود نفسه — بلا تطبيقات منفصلة ولا تكلفة مكرّرة.', statLabel: 'قواعد الكود', statValue: 'واحدة' },
+                ],
+                metrics: [
+                    { label: 'Lighthouse', value: '95+' },
+                    { label: 'جاهز دون اتصال', value: 'نعم' },
+                    { label: 'حجم التثبيت', value: 'صغير' },
+                ],
+            },
+        },
     },
 
     // ─────────────────────────────────────────────────────────────
@@ -388,6 +642,42 @@ export const webappServiceContent: Record<string, WebAppServiceContent> = {
                     chartBars: [44, 54, 58, 68, 74, 84, 90],
                 },
                 techStack: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'Supabase', 'App Store'],
+            },
+        },
+        features: {
+            en: {
+                eyebrow: 'How we build it',
+                heading: 'Both app stores, from one polished codebase',
+                subheading: 'A single React Native build ships to iOS and Android — native feel, half the cost, one team.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'Cross-platform', title: 'iOS + Android together', description: 'One shared codebase powers both platforms, so you launch everywhere without paying to build the app twice.', statLabel: 'Shared code', statValue: '~90%' },
+                    { id: '02', variant: 'relay', meta: 'Native feel', title: 'Smooth & responsive', description: 'Real native components, gestures, and animations — users can’t tell it isn’t a fully native app, because it feels like one.', statLabel: 'Performance', statValue: 'Native' },
+                    { id: '03', variant: 'wave', meta: 'Backend', title: 'Connected & live', description: 'Auth, push notifications, real-time data, and your APIs are wired in so the app does real work, not just demos.', statLabel: 'Backend', statValue: 'Integrated' },
+                    { id: '04', variant: 'spark', meta: 'Launch', title: 'Store-ready submission', description: 'We handle the App Store and Google Play setup, assets, and review process so your launch actually goes live.', statLabel: 'Store launch', statValue: 'Handled' },
+                    { id: '05', variant: 'loop', meta: 'Updates', title: 'Easy to evolve', description: 'Push updates and new features without a painful rebuild — the app keeps improving after launch day.', statLabel: 'Updates', statValue: 'Fast' },
+                ],
+                metrics: [
+                    { label: 'Shared codebase', value: '~90%' },
+                    { label: 'Both platforms', value: 'iOS+Android' },
+                    { label: 'To launch', value: '10–14 wks' },
+                ],
+            },
+            ar: {
+                eyebrow: 'كيف نبنيه',
+                heading: 'كلا المتجرين من كود واحد مصقول',
+                subheading: 'بناء React Native واحد يُطلق على iOS وAndroid — إحساس أصلي، نصف التكلفة، فريق واحد.',
+                cards: [
+                    { id: '01', variant: 'orbit', meta: 'متعدد المنصات', title: 'iOS وAndroid معاً', description: 'كود مشترك واحد يشغّل المنصتين، فتطلق في كل مكان دون دفع تكلفة بناء التطبيق مرتين.', statLabel: 'كود مشترك', statValue: '~90%' },
+                    { id: '02', variant: 'relay', meta: 'إحساس أصلي', title: 'سلس وسريع الاستجابة', description: 'مكوّنات وإيماءات وحركات أصلية حقيقية — لا يميّز المستخدم أنه ليس تطبيقاً أصلياً لأنه يشعر كذلك.', statLabel: 'الأداء', statValue: 'أصلي' },
+                    { id: '03', variant: 'wave', meta: 'الخلفية', title: 'متصل وحيّ', description: 'مصادقة وإشعارات دفع وبيانات آنية وواجهاتك مدمجة ليؤدي التطبيق عملاً حقيقياً.', statLabel: 'الخلفية', statValue: 'مدمجة' },
+                    { id: '04', variant: 'spark', meta: 'الإطلاق', title: 'جاهز للمتجر', description: 'نتولّى إعداد App Store وGoogle Play والأصول وعملية المراجعة ليُطلق تطبيقك فعلاً.', statLabel: 'إطلاق المتجر', statValue: 'متكفّل به' },
+                    { id: '05', variant: 'loop', meta: 'التحديثات', title: 'سهل التطوير', description: 'ادفع تحديثات وميزات جديدة دون إعادة بناء مؤلمة — يستمر التطبيق في التحسّن بعد الإطلاق.', statLabel: 'التحديثات', statValue: 'سريعة' },
+                ],
+                metrics: [
+                    { label: 'كود مشترك', value: '~90%' },
+                    { label: 'كلا المنصتين', value: 'iOS+Android' },
+                    { label: 'للإطلاق', value: '10–14 أسبوع' },
+                ],
             },
         },
     },
