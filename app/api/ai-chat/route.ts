@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
       const args = parseLeadArgs(leadCall.arguments)
       const leadInput = buildLeadInput(args, {
         language,
-        pageUrl: parsed.data.pageUrl,
+        pageUrl: parsed.data.pageUrl ?? null,
         ipAddress: getClientIp(request),
       })
       const saveResult = await saveAIChatLead(leadInput)
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
         budgetRange: leadInput.budgetRange,
         timeline: leadInput.timeline,
         summary: leadInput.message,
-        pageUrl: parsed.data.pageUrl,
+        pageUrl: leadInput.pageUrl,
       })
 
       const reply = await composeLeadConfirmation({
