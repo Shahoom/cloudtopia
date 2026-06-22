@@ -1,74 +1,78 @@
+/* ============================================================
+   CloudTopia AI chatbot — "premium solid" UI
+   Solid surfaces, high contrast, one cyan accent. No muddy glass.
+   ============================================================ */
+
 .root {
   position: fixed;
-  right: 1.35rem;
-  bottom: 1.35rem;
+  right: 1.25rem;
+  bottom: 1.25rem;
   z-index: 80;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.85rem;
+  gap: 0.9rem;
   font-family: var(--font-arabic), var(--font-cairo), var(--font-inter), 'Changa', sans-serif;
 }
 
 .rootRtl {
   right: auto;
-  left: 1.35rem;
+  left: 1.25rem;
   align-items: flex-start;
 }
 
-/* ---------- Launcher ---------- */
+/* ---------- Launcher (pill + label) ---------- */
 .floatingButton {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 3.3rem;
+  gap: 0.6rem;
+  min-height: 3.25rem;
   max-width: calc(100vw - 2rem);
-  padding: 0.78rem 1.2rem 0.78rem 0.82rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.6rem 1.15rem 0.6rem 0.6rem;
+  border: 0;
   border-radius: 999px;
-  background: linear-gradient(140deg, #38bdf8, #0ea5e9);
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
   color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 800;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.005em;
   line-height: 1;
   cursor: pointer;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 18px 42px rgba(2, 132, 199, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
-  transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  box-shadow: 0 14px 32px -10px rgba(2, 132, 199, 0.7), 0 2px 6px rgba(2, 40, 80, 0.18);
+  transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .rootRtl .floatingButton {
-  padding: 0.78rem 0.82rem 0.78rem 1.2rem;
+  padding: 0.6rem 0.6rem 0.6rem 1.15rem;
 }
 
 .floatingButton:hover,
 .floatingButton:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 24px 56px rgba(2, 132, 199, 0.5);
+  box-shadow: 0 20px 42px -10px rgba(2, 132, 199, 0.8), 0 2px 6px rgba(2, 40, 80, 0.18);
   outline: none;
 }
 
 .buttonAura {
   position: absolute;
-  inset: -7px;
+  inset: -5px;
   border-radius: 999px;
-  background: radial-gradient(closest-side, rgba(56, 189, 248, 0.55), rgba(56, 189, 248, 0));
-  filter: blur(7px);
+  background: radial-gradient(closest-side, rgba(56, 189, 248, 0.45), rgba(56, 189, 248, 0));
+  filter: blur(8px);
   z-index: -1;
-  opacity: 0.85;
+  opacity: 0.7;
 }
 
 .buttonIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2.05rem;
+  height: 2.05rem;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 2px 7px rgba(2, 40, 80, 0.18);
+  box-shadow: 0 2px 6px rgba(2, 40, 80, 0.2);
 }
 
 .buttonIconOpen {
@@ -77,54 +81,58 @@
 }
 
 .buttonLogo {
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.35rem;
+  height: 1.35rem;
   object-fit: contain;
   display: block;
 }
 
 .buttonLabel {
   white-space: nowrap;
+  padding-inline-end: 0.15rem;
 }
 
 .floatingButtonOpen {
-  padding: 0.85rem;
-  background: linear-gradient(140deg, #0f172a, #1e293b);
+  gap: 0;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  box-shadow: 0 14px 30px -10px rgba(2, 6, 23, 0.55);
 }
 
 .floatingButtonOpen .buttonIcon {
-  background: rgba(255, 255, 255, 0.12);
+  width: 1.95rem;
+  height: 1.95rem;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
 }
 
 .floatingButtonAttention {
-  animation: chatRing 1.3s ease-in-out infinite;
+  animation: chatRing 1.6s ease-in-out infinite;
 }
 
 /* ---------- Window ---------- */
 .window {
   position: relative;
-  width: min(30rem, calc(100vw - 2rem));
-  max-height: min(46rem, calc(100vh - 6.5rem));
+  width: min(24rem, calc(100vw - 2rem));
+  max-height: min(40rem, calc(100vh - 7rem));
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 1.75rem;
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.88), rgba(236, 246, 255, 0.82));
-  -webkit-backdrop-filter: blur(22px) saturate(140%);
-  backdrop-filter: blur(22px) saturate(140%);
-  box-shadow: 0 32px 90px rgba(2, 40, 80, 0.28), 0 2px 0 rgba(255, 255, 255, 0.7) inset, 0 0 0 1px rgba(2, 132, 199, 0.06);
-  animation: riseIn 220ms ease-out;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1.35rem;
+  background: #ffffff;
+  box-shadow: 0 28px 64px -16px rgba(2, 40, 80, 0.4), 0 4px 12px rgba(2, 40, 80, 0.08);
+  animation: riseIn 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Faint accent glow behind the header only — kept subtle. */
 .glow {
   position: absolute;
-  top: -45%;
-  left: -25%;
-  right: -25%;
-  height: 60%;
-  background: radial-gradient(55% 60% at 50% 0%, rgba(56, 189, 248, 0.45), rgba(56, 189, 248, 0) 70%);
-  filter: blur(18px);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5.5rem;
+  background: radial-gradient(80% 100% at 50% 0%, rgba(14, 165, 233, 0.18), rgba(14, 165, 233, 0) 75%);
   pointer-events: none;
   z-index: 0;
 }
@@ -137,32 +145,34 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 1.1rem;
-  border-bottom: 1px solid rgba(2, 132, 199, 0.12);
-  background: linear-gradient(120deg, rgba(2, 132, 199, 0.1), rgba(56, 189, 248, 0.03));
+  padding: 0.95rem 1rem;
+  background: linear-gradient(120deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
 }
 
 .identity {
   display: flex;
   align-items: center;
   gap: 0.7rem;
+  min-width: 0;
 }
 
 .avatar {
   position: relative;
   display: inline-flex;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.7rem;
+  height: 2.7rem;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.26), 0 0 0 1px rgba(14, 165, 233, 0.12);
+  box-shadow: 0 4px 12px rgba(2, 40, 80, 0.22);
+  flex-shrink: 0;
 }
 
 .avatarImg {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.75rem;
+  height: 1.75rem;
   object-fit: contain;
   display: block;
 }
@@ -171,55 +181,55 @@
   position: absolute;
   right: -1px;
   bottom: -1px;
-  width: 0.72rem;
-  height: 0.72rem;
+  width: 0.78rem;
+  height: 0.78rem;
   border-radius: 50%;
   background: #22c55e;
-  border: 2px solid rgba(255, 255, 255, 0.92);
+  border: 2px solid #ffffff;
 }
 
 .header h2 {
   margin: 0;
-  color: #0f172a;
-  font-size: 1.04rem;
+  color: #ffffff;
+  font-size: 1.02rem;
   font-weight: 800;
   line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kicker {
-  margin: 0.12rem 0 0;
-  color: #0284c7;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  margin: 0.18rem 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  font-weight: 600;
   line-height: 1.2;
 }
 
 .headerActions {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  flex-shrink: 0;
 }
 
 .headerActions button {
   display: inline-flex;
-  width: 2.1rem;
-  height: 2.1rem;
+  width: 2.15rem;
+  height: 2.15rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.55);
-  color: #0f172a;
+  border: 0;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
   cursor: pointer;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition: background 160ms ease, transform 160ms ease;
+  transition: background 160ms ease;
 }
 
 .headerActions button:hover,
 .headerActions button:focus-visible {
-  background: #ffffff;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.3);
   outline: none;
 }
 
@@ -228,12 +238,14 @@
   position: relative;
   z-index: 1;
   display: flex;
-  min-height: 18rem;
+  min-height: 17rem;
   flex: 1;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.9rem;
   overflow-y: auto;
-  padding: 1.1rem;
+  overscroll-behavior: contain;
+  padding: 1.15rem 1rem;
+  background: #f6f9fc;
   scroll-behavior: smooth;
 }
 
@@ -242,12 +254,14 @@
 }
 
 .messages::-webkit-scrollbar-thumb {
-  background: rgba(2, 132, 199, 0.25);
+  background: rgba(2, 132, 199, 0.22);
   border-radius: 999px;
 }
 
 .messageRow {
   display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .assistantRow {
@@ -258,11 +272,34 @@
   justify-content: flex-end;
 }
 
+/* Small logo avatar beside assistant messages */
+.messageAvatar {
+  display: inline-flex;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(2, 132, 199, 0.18);
+  box-shadow: 0 2px 5px rgba(2, 40, 80, 0.1);
+  margin-top: 0.05rem;
+}
+
+.messageAvatarImg {
+  width: 1.05rem;
+  height: 1.05rem;
+  object-fit: contain;
+  display: block;
+}
+
 .messageColumn {
   display: flex;
-  max-width: 86%;
+  max-width: 80%;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .userRow .messageColumn {
@@ -271,12 +308,14 @@
 
 .messageBubble {
   max-width: 100%;
-  border-radius: 1.05rem;
-  padding: 0.8rem 0.95rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.6;
+  border-radius: 1.1rem;
+  padding: 0.72rem 0.92rem;
+  font-size: 0.925rem;
+  font-weight: 450;
+  line-height: 1.55;
   white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .messageBubble p {
@@ -286,20 +325,18 @@
 }
 
 .assistantBubble {
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-start-start-radius: 0.3rem;
-  background: rgba(255, 255, 255, 0.78);
-  color: #0f172a;
-  box-shadow: 0 6px 18px rgba(2, 40, 80, 0.08);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  border-start-start-radius: 0.35rem;
+  background: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 4px 12px -6px rgba(2, 40, 80, 0.12);
 }
 
 .userBubble {
-  border-end-end-radius: 0.3rem;
-  background: linear-gradient(140deg, #0ea5e9, #0284c7);
+  border-end-end-radius: 0.35rem;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
   color: #ffffff;
-  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.32);
+  box-shadow: 0 6px 16px -6px rgba(2, 132, 199, 0.6);
 }
 
 .loadingBubble {
@@ -307,6 +344,7 @@
   min-width: 3.2rem;
   align-items: center;
   justify-content: center;
+  padding: 0.85rem 0.95rem;
 }
 
 .typingDots {
@@ -316,10 +354,10 @@
 }
 
 .typingDots span {
-  width: 0.42rem;
-  height: 0.42rem;
+  width: 0.44rem;
+  height: 0.44rem;
   border-radius: 50%;
-  background: #0284c7;
+  background: #0ea5e9;
   opacity: 0.5;
   animation: typing 1s ease-in-out infinite;
 }
@@ -332,7 +370,7 @@
   animation-delay: 0.3s;
 }
 
-/* ---------- Chips (flows) ---------- */
+/* ---------- Quick-reply chips ---------- */
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -340,119 +378,147 @@
 }
 
 .chip {
-  border: 1px solid rgba(2, 132, 199, 0.28);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.62);
-  color: #075985;
-  padding: 0.5rem 0.82rem;
-  font-size: 0.78rem;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0369a1;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.2;
   cursor: pointer;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
   transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 
 .chip:hover,
 .chip:focus-visible {
-  background: #ffffff;
-  border-color: #0284c7;
+  background: rgba(14, 165, 233, 0.16);
+  border-color: #0ea5e9;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.18);
+  box-shadow: 0 6px 14px -6px rgba(2, 132, 199, 0.5);
   outline: none;
 }
 
-/* ---------- WhatsApp + lead form ---------- */
+/* ---------- WhatsApp action ---------- */
 .whatsappLink,
 .whatsappCta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   margin-top: 0.6rem;
-  border-radius: 0.78rem;
-  background: linear-gradient(140deg, #22c55e, #16a34a);
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, #25d366, #16a34a);
   color: #ffffff;
-  padding: 0.58rem 0.82rem;
-  font-size: 0.78rem;
+  padding: 0.62rem 0.9rem;
+  font-size: 0.82rem;
   font-weight: 800;
   line-height: 1.2;
   text-decoration: none;
-  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
+  box-shadow: 0 8px 18px -6px rgba(22, 163, 74, 0.6);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.whatsappLink:hover,
+.whatsappCta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -8px rgba(22, 163, 74, 0.7);
 }
 
 .whatsappCta {
   position: relative;
   z-index: 1;
-  margin: 0 1.1rem 0.85rem;
-  min-height: 2.6rem;
+  margin: 0 1rem 0.85rem;
+  min-height: 2.7rem;
 }
 
+/* ---------- Lead form ---------- */
 .leadForm {
   position: relative;
   z-index: 1;
-  margin: 0 1.1rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  margin: 0 1rem 0.9rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.62);
-  padding: 0.95rem;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 26px rgba(2, 40, 80, 0.1);
+  background: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 8px 22px -10px rgba(2, 40, 80, 0.22);
+}
+
+.leadFormTitle {
+  margin: 0 0 0.2rem;
+  color: #0f172a;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.leadFormHint {
+  margin: 0 0 0.85rem;
+  color: #64748b;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
+  gap: 0.65rem;
 }
 
 .formGrid label {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 0.25rem;
-  color: #334155;
-  font-size: 0.68rem;
+  gap: 0.28rem;
+  color: #475569;
+  font-size: 0.7rem;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .formGrid input {
   min-width: 0;
-  height: 2.4rem;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  height: 2.55rem;
+  border: 1px solid rgba(15, 23, 42, 0.14);
   border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.85);
+  background: #f8fafc;
   color: #0f172a;
-  padding: 0 0.72rem;
-  font-size: 0.82rem;
+  padding: 0 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .formGrid input:focus {
-  border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14);
+  border-color: #0ea5e9;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.16);
 }
 
 .submitLeadButton {
   display: inline-flex;
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.7rem;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  margin-top: 0.65rem;
+  margin-top: 0.8rem;
   border: 0;
-  border-radius: 0.82rem;
-  background: linear-gradient(140deg, #0ea5e9, #0284c7);
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.3);
+  box-shadow: 0 10px 22px -8px rgba(2, 132, 199, 0.7);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.submitLeadButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -8px rgba(2, 132, 199, 0.8);
 }
 
 /* ---------- Input bar ---------- */
@@ -461,30 +527,36 @@
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr 2.9rem;
+  align-items: center;
   gap: 0.6rem;
-  border-top: 1px solid rgba(2, 132, 199, 0.12);
-  background: rgba(255, 255, 255, 0.5);
-  padding: 0.85rem 1rem;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  padding: 0.8rem 1rem;
 }
 
 .inputBar input {
   min-width: 0;
   height: 2.9rem;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(15, 23, 42, 0.14);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
+  background: #f6f9fc;
   color: #0f172a;
-  padding: 0 1rem;
+  padding: 0 1.05rem;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.inputBar input::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 .inputBar input:focus {
-  border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14);
+  border-color: #0ea5e9;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.16);
 }
 
 .inputBar button {
@@ -495,30 +567,30 @@
   justify-content: center;
   border: 0;
   border-radius: 50%;
-  background: linear-gradient(140deg, #38bdf8, #0ea5e9);
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
   color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+  box-shadow: 0 8px 18px -6px rgba(14, 165, 233, 0.7);
   transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
 .inputBar button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(2, 132, 199, 0.5);
+  box-shadow: 0 12px 24px -8px rgba(2, 132, 199, 0.8);
 }
 
 .inputBar button:disabled,
 .submitLeadButton:disabled,
 .chip:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 /* ---------- Animations ---------- */
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(0.9rem) scale(0.97);
+    transform: translateY(0.9rem) scale(0.98);
   }
 
   to {
@@ -529,15 +601,15 @@
 
 @keyframes chatRing {
   0% {
-    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5), 0 18px 42px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.55), 0 14px 32px -10px rgba(2, 132, 199, 0.7);
   }
 
   70% {
-    box-shadow: 0 0 0 15px rgba(56, 189, 248, 0), 0 18px 42px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 0 14px rgba(56, 189, 248, 0), 0 14px 32px -10px rgba(2, 132, 199, 0.7);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0), 0 18px 42px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0), 0 14px 32px -10px rgba(2, 132, 199, 0.7);
   }
 }
 
@@ -568,51 +640,57 @@
 
 /* ---------- Dark mode ---------- */
 :global(html.dark) .window {
-  background: linear-gradient(170deg, rgba(15, 23, 42, 0.84), rgba(2, 20, 40, 0.82));
-  border-color: rgba(56, 189, 248, 0.22);
+  background: #0f1b2e;
+  border-color: rgba(148, 163, 184, 0.14);
+  box-shadow: 0 28px 64px -16px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(56, 189, 248, 0.08);
+}
+
+:global(html.dark) .glow {
+  background: radial-gradient(80% 100% at 50% 0%, rgba(14, 165, 233, 0.28), rgba(14, 165, 233, 0) 75%);
 }
 
 :global(html.dark) .header {
-  border-bottom-color: rgba(56, 189, 248, 0.16);
-}
-
-:global(html.dark) .header h2 {
-  color: #f1f5f9;
-}
-
-:global(html.dark) .kicker {
-  color: #38bdf8;
+  background: linear-gradient(120deg, #0c4a6e 0%, #075985 100%);
 }
 
 :global(html.dark) .messages {
+  background: #0a1422;
   color: #e2e8f0;
 }
 
 :global(html.dark) .assistantBubble {
-  background: rgba(30, 41, 59, 0.82);
-  border-color: rgba(148, 163, 184, 0.2);
+  background: #1e293b;
+  border-color: rgba(148, 163, 184, 0.16);
   color: #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+:global(html.dark) .messageAvatar {
+  background: #1e293b;
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 :global(html.dark) .chip {
-  background: rgba(30, 41, 59, 0.62);
-  border-color: rgba(56, 189, 248, 0.32);
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
   color: #7dd3fc;
 }
 
 :global(html.dark) .chip:hover {
-  background: rgba(30, 41, 59, 0.95);
-}
-
-:global(html.dark) .headerActions button {
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(148, 163, 184, 0.2);
-  color: #e2e8f0;
+  background: rgba(56, 189, 248, 0.22);
 }
 
 :global(html.dark) .leadForm {
-  background: rgba(15, 23, 42, 0.62);
-  border-color: rgba(148, 163, 184, 0.2);
+  background: #0f1b2e;
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+:global(html.dark) .leadFormTitle {
+  color: #f1f5f9;
+}
+
+:global(html.dark) .leadFormHint {
+  color: #94a3b8;
 }
 
 :global(html.dark) .formGrid label {
@@ -621,17 +699,23 @@
 
 :global(html.dark) .formGrid input,
 :global(html.dark) .inputBar input {
-  background: rgba(30, 41, 59, 0.85);
-  border-color: rgba(148, 163, 184, 0.2);
+  background: #1e293b;
+  border-color: rgba(148, 163, 184, 0.18);
   color: #e2e8f0;
 }
 
-:global(html.dark) .inputBar {
-  background: rgba(15, 23, 42, 0.5);
-  border-top-color: rgba(56, 189, 248, 0.16);
+:global(html.dark) .formGrid input:focus,
+:global(html.dark) .inputBar input:focus {
+  background: #16243a;
+  border-color: #38bdf8;
 }
 
-/* ---------- Responsive ---------- */
+:global(html.dark) .inputBar {
+  background: #0f1b2e;
+  border-top-color: rgba(148, 163, 184, 0.14);
+}
+
+/* ---------- Responsive: full-screen sheet on phones ---------- */
 @media (max-width: 520px) {
   .root,
   .rootRtl {
@@ -647,37 +731,28 @@
     align-items: flex-start;
   }
 
-  /* Open chat is a full-screen sheet, so it must clear the site's sticky
-     header (z-9999). Elevated only while open (root contains a .window),
-     so the closed launcher still sits below the mobile-nav drawer. */
+  /* The open sheet must clear the site's sticky header (z-9999). Elevated only
+     while open; the closed launcher stays below the mobile-nav drawer. */
   .root:has(.window),
   .rootRtl:has(.window) {
     z-index: 10000;
   }
 
-  /* On phones the open chat becomes a full-screen sheet instead of a cramped
-     floating card, so there's room to actually read the conversation. */
   .window {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
+    inset: 0;
     width: 100%;
-    height: 100vh; /* fallback for browsers without dvh */
-    height: 100dvh; /* tracks the visible viewport: input never hides behind the URL bar */
+    height: 100vh; /* fallback */
+    height: 100dvh; /* tracks visible viewport so the input never hides */
     max-height: none;
     border: 0;
     border-radius: 0;
     box-shadow: none;
-    /* Opaque at full-screen — the frosted-glass look let the page bleed through. */
-    background: linear-gradient(180deg, #ffffff 0%, #eaf4ff 100%);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    background: #ffffff;
     animation: slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* The header ✕ closes the chat on mobile, so the open-state launcher is hidden. */
+  /* The header ✕ closes the chat on mobile, so the open launcher is hidden. */
   .floatingButtonOpen {
     display: none;
   }
@@ -690,24 +765,25 @@
     align-self: flex-start;
   }
 
-  /* Respect the notch / status bar at the top and the home indicator at the bottom. */
+  /* Respect the notch and home indicator. */
   .header {
-    padding-top: max(1rem, calc(env(safe-area-inset-top, 0px) + 0.55rem));
-    border-radius: 0;
-    background: linear-gradient(120deg, #e8f5fe, #f5fbff);
+    padding-top: max(0.95rem, calc(env(safe-area-inset-top, 0px) + 0.55rem));
   }
 
   .inputBar {
-    padding-bottom: max(0.9rem, calc(env(safe-area-inset-bottom, 0px) + 0.55rem));
+    padding-bottom: max(0.8rem, calc(env(safe-area-inset-bottom, 0px) + 0.55rem));
   }
 
-  /* Let the message list shrink properly (e.g. in landscape) so it scrolls
-     instead of pushing the input bar off-screen. */
+  /* Let the list shrink (landscape) so it scrolls instead of pushing the input off-screen. */
   .messages {
     min-height: 0;
   }
 
-  /* 16px fields stop iOS from auto-zooming the page when an input is focused. */
+  .messageColumn {
+    max-width: 82%;
+  }
+
+  /* 16px fields stop iOS from auto-zooming on focus. */
   .inputBar input,
   .formGrid input,
   .formGrid textarea,
@@ -715,7 +791,6 @@
     font-size: 16px;
   }
 
-  /* Comfortable header touch targets (≥ 40px). */
   .headerActions button {
     width: 2.5rem;
     height: 2.5rem;
@@ -725,13 +800,8 @@
     grid-template-columns: 1fr;
   }
 
-  /* Opaque dark-mode sheet (these come after the base dark rules so they win). */
   :global(html.dark) .window {
-    background: linear-gradient(180deg, #0f1b2e 0%, #07101f 100%);
-  }
-
-  :global(html.dark) .header {
-    background: linear-gradient(120deg, #0e1a2d, #0a1422);
+    background: #0a1422;
   }
 }
 

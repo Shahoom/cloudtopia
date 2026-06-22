@@ -12,6 +12,9 @@ export type AIChatRequest = {
   pageUrl?: string | null
   locale?: ChatLocale
   countryHint?: string | null
+  // Set by the client once a lead has already been captured this conversation, so the
+  // server disables the submit_lead tool and never creates a duplicate lead.
+  leadCaptured?: boolean
 }
 
 export type AILeadSignal = {
@@ -26,6 +29,10 @@ export type AILeadSignal = {
 export type AIChatResponse = {
   reply: string
   lead: AILeadSignal
+  // Set when the AI agent collected enough detail and persisted a lead to the CMS
+  // during this turn (via the submit_lead tool).
+  leadSaved?: boolean
+  whatsappUrl?: string | null
 }
 
 export type AILeadInput = {

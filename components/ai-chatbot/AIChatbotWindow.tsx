@@ -3,7 +3,6 @@
 import { FormEvent, RefObject } from 'react'
 import { Send, Trash2, X } from 'lucide-react'
 import { AIChatMessage, type ChatChip, type ChatMessage } from './AIChatMessage'
-import { AILeadForm } from './AILeadForm'
 import styles from './AIChatbot.module.css'
 
 const copy = {
@@ -32,7 +31,6 @@ export function AIChatbotWindow({
   messages,
   input,
   loading,
-  showLeadForm,
   latestWhatsappUrl,
   inputRef,
   onInputChange,
@@ -40,13 +38,11 @@ export function AIChatbotWindow({
   onChip,
   onClear,
   onClose,
-  onLeadSubmitted,
 }: {
   locale: 'ar' | 'en'
   messages: ChatMessage[]
   input: string
   loading: boolean
-  showLeadForm: boolean
   latestWhatsappUrl: string | null
   inputRef: RefObject<HTMLInputElement | null>
   onInputChange: (value: string) => void
@@ -54,14 +50,8 @@ export function AIChatbotWindow({
   onChip: (chip: ChatChip) => void
   onClear: () => void
   onClose: () => void
-  onLeadSubmitted: (whatsappUrl: string | null) => void
 }) {
   const L = copy[locale]
-  const latestSummary = messages
-    .filter((message) => message.role === 'user')
-    .slice(-2)
-    .map((message) => message.content)
-    .join('\n')
   const lastIndex = messages.length - 1
 
   return (
@@ -103,6 +93,10 @@ export function AIChatbotWindow({
         ))}
         {loading ? (
           <div className={`${styles.messageRow} ${styles.assistantRow}`}>
+            <span className={styles.messageAvatar} aria-hidden="true">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/CloudTopia.svg" alt="" className={styles.messageAvatarImg} />
+            </span>
             <div className={`${styles.messageBubble} ${styles.assistantBubble} ${styles.loadingBubble}`}>
               <span className={styles.typingDots} aria-hidden="true">
                 <span />
@@ -118,15 +112,6 @@ export function AIChatbotWindow({
         <a className={styles.whatsappCta} href={latestWhatsappUrl} target="_blank" rel="noreferrer">
           {L.whatsapp}
         </a>
-      ) : null}
-
-      {showLeadForm ? (
-        <AILeadForm
-          locale={locale}
-          pageUrl={typeof window === 'undefined' ? null : window.location.href}
-          latestSummary={latestSummary}
-          onSubmitted={onLeadSubmitted}
-        />
       ) : null}
 
       <form className={styles.inputBar} onSubmit={onSubmit}>

@@ -31,6 +31,12 @@ export function AIChatMessage({
 
   return (
     <div className={`${styles.messageRow} ${isAssistant ? styles.assistantRow : styles.userRow}`}>
+      {isAssistant ? (
+        <span className={styles.messageAvatar} aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/CloudTopia.svg" alt="" className={styles.messageAvatarImg} />
+        </span>
+      ) : null}
       <div className={styles.messageColumn}>
         <div
           className={`${styles.messageBubble} ${isAssistant ? styles.assistantBubble : styles.userBubble}`}

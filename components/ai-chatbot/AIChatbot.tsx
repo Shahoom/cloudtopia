@@ -29,11 +29,6 @@ const fallback = {
   en: 'Something went wrong. You can contact us directly on WhatsApp and we’ll help you.',
 }
 
-const submitted = {
-  ar: 'تم استلام طلبك. يمكنك أيضًا إرسال التفاصيل مباشرة عبر واتساب لتسريع التواصل.',
-  en: 'Your request has been received. You can also send the details on WhatsApp to speed things up.',
-}
-
 const proactive = {
   ar: 'أهلًا، لاحظت أنك تتصفح الموقع. هل تحتاج مساعدة في اختيار موقع، تطبيق ويب، CRM، أو حل AI مناسب لشركتك؟',
   en: 'Hi, I noticed you’re exploring CloudTopia. Need help choosing the right website, web app, CRM, or AI solution for your business?',
@@ -52,7 +47,6 @@ export function AIChatbot() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showLeadForm, setShowLeadForm] = useState(false)
   const [leadCaptured, setLeadCaptured] = useState(false)
   const [latestWhatsappUrl, setLatestWhatsappUrl] = useState<string | null>(null)
   const [attention, setAttention] = useState(false)
@@ -63,6 +57,9 @@ export function AIChatbot() {
   const messagesRef = useRef<ChatMessage[]>([])
   const localeRef = useRef<'ar' | 'en'>('en')
   const leadCapturedRef = useRef(false)
+  // True once the AI agent has started collecting the visitor's details, so subsequent
+  // turns route straight to the AI instead of being intercepted by a deterministic flow.
+  const leadCaptureActiveRef = useRef(false)
   const lastSigRef = useRef('')
   const inactivityRef = useRef<number | null>(null)
   // Set after a session-end flush so the next user turn starts a fresh conversation id.
@@ -100,7 +97,7 @@ export function AIChatbot() {
         if (currentLocale === nextLocale) return currentLocale
         setMessages(readStoredMessages(nextLocale))
         setInput('')
-        setShowLeadForm(false)
+        leadCaptureActiveRef.current = false
         setLatestWhatsappUrl(null)
         return nextLocale
       })
@@ -173,7 +170,12 @@ export function AIChatbot() {
       setAttention(false)
       setMessages((current) => {
         if (current.some((message) => message.content === proactive[nextLocale])) return current
-        return [...current, createMessage('assistant', proactive[nextLocale], { source: 'system', options: getEntryChips(nextLocale) })].slice(-20)
+        const proactiveMessage = createMessage('assistant', proactive[nextLocale], { source: 'system', options: getEntryChips(nextLocale) })
+        // If the visitor hasn't said anything yet, the only message is the canned
+        // welcome — replace it so we show a single greeting instead of stacking two.
+        const hasUserTurn = current.some((message) => message.role === 'user')
+        if (!hasUserTurn) return [proactiveMessage]
+        return [...current, proactiveMessage].slice(-20)
       })
       localStorage.setItem(proactiveKey, new Date().toISOString())
     }, 60_000)
@@ -278,7 +280,6 @@ export function AIChatbot() {
       whatsappUrl = handoff.url
       setLatestWhatsappUrl(handoff.url)
     }
-    if (flow.action === 'lead-form') setShowLeadForm(true)
 
     setMessages((current) => [
       ...current,
@@ -305,27 +306,14 @@ export function AIChatbot() {
     ])
   }
 
-  async function submitMessage(content: string) {
-    const trimmed = content.trim()
-    if (!trimmed || loading) return
+  function startLeadCapture() {
+    leadCaptureActiveRef.current = true
+  }
 
-    maybeRotateConversation()
-    const userMessage = createMessage('user', trimmed, { source: 'user' })
-    const next = [...messages, userMessage]
-    setMessages(next)
-    setInput('')
-    setAttention(false)
-    localStorage.setItem(proactiveKey, new Date().toISOString())
-    bumpInactivity()
-
-    // 1) Try the deterministic flow engine — instant, no API.
-    const flow = matchFlow(trimmed, locale)
-    if (flow) {
-      applyFlowResult(flow, trimmed)
-      return
-    }
-
-    // 2) No flow matched. Either use the AI fallback or a graceful guided menu.
+  // Hand the conversation to the AI agent. `history` already includes the latest user turn.
+  // The agent answers and, when it has enough, calls submit_lead server-side; the response
+  // then carries leadSaved + a WhatsApp handoff URL.
+  async function runAssistantAI(history: ChatMessage[]) {
     if (!aiFallbackEnabled) {
       pushGuidedMenu()
       return
@@ -340,28 +328,38 @@ export function AIChatbot() {
           'x-ai-chat-session': ensureSessionId(),
         },
         body: JSON.stringify({
-          messages: next.map(({ role, content }) => ({ role, content })),
+          messages: history.map(({ role, content }) => ({ role, content })),
           pageUrl: window.location.href,
           locale,
+          leadCaptured: leadCapturedRef.current,
         }),
       })
       const data = (await response.json().catch(() => ({}))) as {
         reply?: string
-        lead?: { confidence?: number; whatsappUrl?: string | null; isPotentialLead?: boolean }
+        leadSaved?: boolean
+        whatsappUrl?: string | null
+        lead?: { whatsappUrl?: string | null }
       }
-      const whatsappUrl = data.lead?.whatsappUrl ?? null
+      const whatsappUrl = data.whatsappUrl ?? data.lead?.whatsappUrl ?? null
 
       if (whatsappUrl) setLatestWhatsappUrl(whatsappUrl)
-      if ((data.lead?.confidence ?? 0) >= 0.65 || data.lead?.isPotentialLead) setShowLeadForm(true)
 
       setMessages((current) => [
         ...current,
         createMessage('assistant', data.reply || fallback[locale], {
           source: 'ai',
           whatsappUrl: whatsappUrl || undefined,
-          options: getEntryChips(locale),
+          // After a lead is captured, keep it clean (just the WhatsApp handoff); otherwise
+          // offer the entry chips so the visitor can keep exploring.
+          options: data.leadSaved ? undefined : getEntryChips(locale),
         }),
       ])
+
+      if (data.leadSaved) {
+        setLeadCaptured(true)
+        leadCaptureActiveRef.current = false
+        flushConversation({ status: 'active', leadCaptured: true })
+      }
     } catch {
       setMessages((current) => [...current, createMessage('assistant', fallback[locale], { source: 'system' })])
     } finally {
@@ -369,21 +367,68 @@ export function AIChatbot() {
     }
   }
 
+  async function submitMessage(content: string, options: { forceAI?: boolean } = {}) {
+    const trimmed = content.trim()
+    if (!trimmed || loading) return
+
+    maybeRotateConversation()
+    const userMessage = createMessage('user', trimmed, { source: 'user' })
+    const next = [...messages, userMessage]
+    setMessages(next)
+    setInput('')
+    setAttention(false)
+    localStorage.setItem(proactiveKey, new Date().toISOString())
+    bumpInactivity()
+
+    const captureActive = options.forceAI || leadCaptureActiveRef.current
+
+    if (captureActive) {
+      startLeadCapture()
+    } else if (looksLikeLeadIntent(trimmed)) {
+      // Buying intent or contact info → hand to the AI agent even if a flow would match,
+      // so a greeting/info flow can't intercept an interested visitor.
+      startLeadCapture()
+    } else {
+      // Pure info question → answer instantly with the flow engine (no API).
+      // Flows whose action is to capture a lead are handed to the AI agent instead.
+      const flow = matchFlow(trimmed, locale)
+      if (flow && flow.action !== 'lead-form') {
+        applyFlowResult(flow, trimmed)
+        return
+      }
+      if (flow && flow.action === 'lead-form') {
+        startLeadCapture()
+      }
+    }
+
+    await runAssistantAI(next)
+  }
+
   function handleChip(chip: ChatChip) {
     if (loading) return
 
     maybeRotateConversation()
     const userMessage = createMessage('user', chip.label, { source: 'user' })
-    setMessages((current) => [...current, userMessage])
+    const next = [...messages, userMessage]
+    setMessages(next)
     setAttention(false)
     bumpInactivity()
 
-    const flow = getFlowNode(chip.id, locale)
-    if (flow) {
-      applyFlowResult(flow, chip.label)
-    } else {
-      void submitMessage(chip.label)
+    // Mid-capture: every tap continues the AI conversation.
+    if (leadCaptureActiveRef.current) {
+      void runAssistantAI(next)
+      return
     }
+
+    const flow = getFlowNode(chip.id, locale)
+    if (flow && flow.action !== 'lead-form') {
+      applyFlowResult(flow, chip.label)
+      return
+    }
+
+    // Consultation / quote chips (and any unmapped chip) begin AI-driven lead capture.
+    startLeadCapture()
+    void runAssistantAI(next)
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -395,7 +440,7 @@ export function AIChatbot() {
     const reset = [welcomeMessage(locale)]
     setMessages(reset)
     setLatestWhatsappUrl(null)
-    setShowLeadForm(false)
+    leadCaptureActiveRef.current = false
     setLeadCaptured(false)
     rotateConversationId()
     pendingRotateRef.current = false
@@ -408,16 +453,6 @@ export function AIChatbot() {
     flushConversation({ status: 'active' })
   }
 
-  function handleLeadSubmitted(whatsappUrl: string | null) {
-    if (whatsappUrl) setLatestWhatsappUrl(whatsappUrl)
-    setLeadCaptured(true)
-    setMessages((current) => [
-      ...current,
-      createMessage('assistant', submitted[locale], { source: 'system', whatsappUrl: whatsappUrl || undefined }),
-    ])
-    flushConversation({ status: 'active', leadCaptured: true })
-  }
-
   return (
     <div className={`${styles.root} ${locale === 'ar' ? styles.rootRtl : ''}`}>
       {open ? (
@@ -426,7 +461,6 @@ export function AIChatbot() {
           messages={messages}
           input={input}
           loading={loading}
-          showLeadForm={showLeadForm}
           latestWhatsappUrl={latestWhatsappUrl}
           inputRef={inputRef}
           onInputChange={setInput}
@@ -434,7 +468,6 @@ export function AIChatbot() {
           onChip={handleChip}
           onClear={clearChat}
           onClose={handleClose}
-          onLeadSubmitted={handleLeadSubmitted}
         />
       ) : null}
       <AIChatbotButton
@@ -449,6 +482,19 @@ export function AIChatbot() {
       />
     </div>
   )
+}
+
+// Strong buying-intent / contact signals. When present, route to the AI agent (which can
+// answer AND start collecting a lead) instead of letting a flow answer deterministically.
+const leadIntentEn =
+  /\b(i want|i need|i'?d like|i would like|looking for|interested in|build me|can you (build|make|do)|how much|price|pricing|quote|get started|hire|work with|i have a (business|company|shop|store|restaurant|startup))\b/i
+const leadIntentAr =
+  /(أريد|اريد|أحتاج|احتاج|ابغى|أبغى|أبي|ابي|عايز|عاوز|بدي|مهتم|كم سعر|كم تكلفة|كم السعر|عرض سعر|عرض مخصص|عندي مشروع|عندي محل|عندي متجر|عندي مطعم|عندي شركة|أبغي|أرغب)/
+
+function looksLikeLeadIntent(text: string) {
+  if (/[^\s@]+@[^\s@]+\.[^\s@]+/.test(text)) return true // email
+  if (text.replace(/[^\d]/g, '').length >= 8) return true // phone-like
+  return leadIntentEn.test(text) || leadIntentAr.test(text)
 }
 
 function detectPageLocale(): 'ar' | 'en' {
