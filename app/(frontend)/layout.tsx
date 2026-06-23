@@ -118,8 +118,8 @@ export default async function FrontendLayout({
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
   const isArabic = locale === 'ar'
   const organizationDescription = isArabic
-    ? 'كلاود توبيا شركة تقنيات رقمية وسحابية تطور مواقع محسنة لمحركات البحث، متاجر إلكترونية، تطبيقات ويب، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
-    : 'CloudTopia is a digital and cloud technology company building SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for businesses across the Gulf and Middle East.'
+    ? 'كلاود توبيا شركة تقنيات رقمية وسحابية مسجّلة في سلطنة عُمان، وشريك معتمد لـ AWS ومايكروسوفت وسيلز فورس وسترايب وشوبيفاي. تطور مواقع محسنة لمحركات البحث، متاجر إلكترونية، تطبيقات ويب، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
+    : 'CloudTopia is a digital and cloud technology company registered in the Sultanate of Oman and an official partner of AWS, Microsoft, Salesforce, Stripe, and Shopify. It builds SEO-ready websites, e-commerce platforms, web apps, CRM and ERP systems, cloud infrastructure, and AI automation for businesses across the Gulf and Middle East.'
   const websiteDescription = isArabic
     ? 'خدمات تطوير مواقع، متاجر إلكترونية، تطبيقات ويب، أنظمة أعمال CRM وERP، حلول سحابية، وأتمتة ذكاء اصطناعي باللغة العربية والإنجليزية.'
     : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
@@ -155,6 +155,25 @@ export default async function FrontendLayout({
               image: 'https://cloudtopia.net/images/cloudtopia-logo.png',
               description: organizationDescription,
               foundingDate: '2024',
+              // CloudTopia is a registered company in the Sultanate of Oman.
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'OM',
+                addressRegion: 'Muscat',
+              },
+              foundingLocation: {
+                '@type': 'Country',
+                name: 'Oman',
+              },
+              // Certified/official platform partnerships, surfaced as expertise
+              // topics so search engines associate the brand with these vendors.
+              knowsAbout: [
+                'Amazon Web Services (AWS Advanced Tier Services Partner)',
+                'Microsoft (Microsoft Partner)',
+                'Salesforce (Salesforce Partner)',
+                'Stripe (Stripe Partner)',
+                'Shopify (Shopify Certified Partner)',
+              ],
               areaServed: [
                 { '@type': 'Country', name: 'Saudi Arabia' },
                 { '@type': 'Country', name: 'United Arab Emirates' },

@@ -1,9 +1,20 @@
 'use client'
 
+import type { CSSProperties } from 'react'
+import Script from 'next/script'
 import { ArrowRight, Quote, ShieldCheck, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { cn } from '@/lib/utils'
 import { StaggerTestimonials } from '@/components/ui/stagger-testimonials'
+
+// Certified technology partners shown as a marquee below the reviews.
+const PARTNERS = [
+  { name: 'AWS Advanced Tier Services Partner', src: '/partners/aws-partner.png' },
+  { name: 'Microsoft Partner', src: '/partners/microsoft-partner.webp' },
+  { name: 'Salesforce Partner', src: '/partners/salesforce-partner.png' },
+  { name: 'Stripe Partner', src: '/partners/stripe-partner.png' },
+  { name: 'Shopify Certified Partner', src: '/partners/shopify-partner.png' },
+]
 
 export const testimonials = {
   en: [
@@ -151,20 +162,28 @@ export const testimonials = {
 export default function Testimonials() {
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
-  const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 11)
+  const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 7)
   const copy = locale === 'ar'
     ? {
       eyebrow: 'ثقة مبنية على التسليم',
       title: 'آراء عملاء عملوا معنا على مواقع، أنظمة، سحابة، وذكاء اصطناعي',
       body: 'كلاود توبيا شركة برمجيات وسحابة تبني حلولاً رقمية للشركات: مواقع احترافية، تطبيقات ويب وجوال، CRM وERP، ترحيل بيانات، أتمتة أعمال، ودعم عملاء بالذكاء الاصطناعي.',
       proof: 'استشارة مجانية + معاينة ديمو مجانية قبل بدء المشروع',
+      clutchLabel: 'تقييمات موثّقة على Clutch',
+      partnersLabel: 'شركاء تقنيون معتمدون',
     }
     : {
       eyebrow: 'Trusted Delivery',
       title: 'Client feedback from websites, systems, cloud, and AI projects',
       body: 'CloudTopia is a software company and cloud technology company building business websites, web and mobile apps, CRM and ERP systems, data migration, business automation, and AI customer care workflows.',
       proof: 'Free consultation + free custom demo preview before the project starts',
+      clutchLabel: 'Verified reviews on Clutch',
+      partnersLabel: 'Certified Technology Partners',
     }
+
+  // Repeat the partner badges so the marquee track fills wide screens; the
+  // track is rendered twice in the marquee for a seamless -50% loop.
+  const marqueeRow = [...PARTNERS, ...PARTNERS]
 
   const [featured, ...supporting] = items
 
@@ -193,7 +212,65 @@ export default function Testimonials() {
         <div className="mt-12 relative z-30">
           <StaggerTestimonials testimonials={items} />
         </div>
+
+        {/* ── Certified Partners + Clutch reviews ─────────────────────────── */}
+        <div className="relative z-30 mt-16 md:mt-24">
+          <div className="overflow-hidden rounded-3xl border border-eerie/10 bg-white/70 shadow-sm backdrop-blur-sm">
+            {/* Clutch verified reviews */}
+            <div className="flex flex-col items-center gap-4 px-6 py-7 text-center md:flex-row md:justify-center md:gap-6 md:py-8">
+              <span className="text-xs font-black uppercase tracking-[0.18em] text-primary-700">
+                {copy.clutchLabel}
+              </span>
+              <div className="flex min-h-[52px] items-center">
+                <div
+                  className="clutch-widget"
+                  data-url="https://widget.clutch.co"
+                  data-widget-type="14"
+                  data-height="50"
+                  data-nofollow="false"
+                  data-expandifr="true"
+                  data-clutchcompany-id="2639853"
+                />
+              </div>
+            </div>
+
+            {/* Certified technology partners marquee — full width */}
+            <div className="border-t border-eerie/10 bg-white/50 px-0 py-7 md:py-9">
+              <span className="mb-6 block text-center text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
+                {copy.partnersLabel}
+              </span>
+              <div
+                className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]"
+                dir="ltr"
+              >
+                <div className="flex w-max animate-marquee items-center" style={{ '--duration': '32s' } as CSSProperties}>
+                  {[marqueeRow, marqueeRow].map((row, rowIdx) => (
+                    <div key={rowIdx} aria-hidden={rowIdx === 1} className="flex shrink-0 items-center">
+                      {row.map((partner, i) => (
+                        <div
+                          key={`${rowIdx}-${i}`}
+                          className="mx-3 flex h-24 w-52 shrink-0 items-center justify-center rounded-2xl border border-eerie/10 bg-white px-7 shadow-sm transition-shadow duration-300 hover:shadow-md sm:mx-4"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={partner.src}
+                            alt={partner.name}
+                            loading="lazy"
+                            className="max-h-12 max-w-full object-contain"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Clutch widget loader — scans for .clutch-widget once the page is idle. */}
+      <Script src="https://widget.clutch.co/static/js/widget.js" strategy="lazyOnload" />
     </section>
   )
 }

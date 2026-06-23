@@ -56,15 +56,15 @@ const ICON_MAP: Record<string, IconComponent> = {
 
 function TechCard({ item }: { item: TechItem }) {
   return (
-    <div className="group flex flex-row items-center justify-start gap-4 p-3 sm:p-4 rounded-xl bg-[#1a1f2e] hover:bg-[#1e2538] border border-white/[0.06] hover:border-[#0284c7]/40 transition-all duration-300 cursor-default select-none min-h-[72px] overflow-hidden">
-      <div className="w-12 h-12 relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
+    <div className="group flex flex-col items-center justify-start gap-2.5 p-3 sm:p-4 rounded-xl bg-[#1a1f2e] hover:bg-[#1e2538] border border-white/[0.06] hover:border-[#0284c7]/40 transition-all duration-300 cursor-default select-none min-h-[104px] sm:min-h-[112px]">
+      <div className="w-10 h-10 sm:w-11 sm:h-11 relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={item.icon}
           alt={item.name}
           loading="lazy"
-          width={48}
-          height={48}
+          width={44}
+          height={44}
           className="w-full h-full object-contain drop-shadow-sm"
           onError={(e) => {
             const target = e.currentTarget
@@ -81,7 +81,7 @@ function TechCard({ item }: { item: TechItem }) {
           {item.name.slice(0, 2).toUpperCase()}
         </span>
       </div>
-      <span className="text-xs sm:text-sm text-start font-semibold text-slate-300 group-hover:text-white transition-colors duration-300 leading-tight flex-1 break-words pr-2">
+      <span className="w-full text-center text-[11px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors duration-300 leading-snug break-words hyphens-auto">
         {item.name}
       </span>
     </div>

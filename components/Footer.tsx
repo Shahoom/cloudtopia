@@ -3,11 +3,47 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Script from 'next/script'
+import { usePathname } from 'next/navigation'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { localePath } from '@/lib/i18n/url'
+import { localePath, stripLocalePrefix } from '@/lib/i18n/url'
 import { serviceCategories, localizedServiceValue, categoryFrontDoor } from '@/lib/seo/services'
 import { industries, industrySlugs, localizedValue } from '@/lib/seo/industries'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
+
+// Page- and locale-specific DMCA protection links. Each entry is the exact
+// URL DMCA.com issued for that page; unlisted pages fall back to the homepage.
+const DMCA_LINKS: Record<'home' | 'projects' | 'services' | 'articles' | 'about', { en: string; ar: string }> = {
+  home: {
+    en: 'https://www.dmca.com/Protection/Status.aspx?id=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https%3a%2f%2fcloudtopia.net%2f&rlo=true',
+    ar: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/ar',
+  },
+  projects: {
+    en: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/projects',
+    ar: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/ar/projects',
+  },
+  services: {
+    en: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/services',
+    ar: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/ar/services',
+  },
+  articles: {
+    en: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/articles',
+    ar: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/ar/articles',
+  },
+  about: {
+    en: 'https://www.dmca.com/Protection/Status.aspx?id=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https%3a%2f%2fcloudtopia.net%2fabout&rlo=true',
+    ar: 'https://www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c&refurl=https://cloudtopia.net/ar/about',
+  },
+}
+
+/** Resolve the DMCA link for the current pathname + locale. */
+function dmcaLinkFor(pathname: string | null, locale: string): string {
+  const lang: 'en' | 'ar' = locale === 'ar' ? 'ar' : 'en'
+  const path = stripLocalePrefix(pathname || '/')
+  const section = path === '/' || path === ''
+    ? 'home'
+    : (['projects', 'services', 'articles', 'about'] as const).find((s) => path.startsWith(`/${s}`)) ?? 'home'
+  return DMCA_LINKS[section][lang]
+}
 
 function socialIconFor(name = '', href = '') {
   const value = `${name} ${href}`.toLowerCase()
@@ -52,6 +88,8 @@ function socialIconFor(name = '', href = '') {
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, dir, locale, navigation: cmsNavigation, settings } = useLanguage()
+  const pathname = usePathname()
+  const dmcaUrl = dmcaLinkFor(pathname, locale)
 
   const l = (path: string) => localePath(locale, path)
   const articlesLabel = locale === 'ar' ? 'المقالات' : 'Articles'
@@ -240,7 +278,7 @@ export default function Footer() {
             </p>
 
             <div className="flex items-center justify-center">
-              <a href="//www.dmca.com/Protection/Status.aspx?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c" title="DMCA.com Protection Status" className="dmca-badge"> 
+              <a href={dmcaUrl} title="DMCA.com Protection Status" className="dmca-badge" target="_blank" rel="noopener noreferrer">
                 <img src="https://images.dmca.com/Badges/dmca-badge-w100-2x1-03.png?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c" alt="DMCA.com Protection Status" className="h-8 w-auto" />
               </a>
               <Script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js" strategy="lazyOnload" />
