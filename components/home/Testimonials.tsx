@@ -1,6 +1,6 @@
 'use client'
 
-import type { CSSProperties } from 'react'
+import { useEffect, type CSSProperties } from 'react'
 import Script from 'next/script'
 import { ArrowRight, Quote, ShieldCheck, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -162,6 +162,17 @@ export const testimonials = {
 export default function Testimonials() {
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
+
+  // The Clutch script auto-scans for `.clutch-widget` on load, but this section
+  // is dynamically imported and may mount after that scan. Re-run Init on mount
+  // (and again on script load via onLoad) so the badge renders reliably.
+  useEffect(() => {
+    const init = () => (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO?.Init?.()
+    init()
+    const t = setTimeout(init, 1200)
+    return () => clearTimeout(t)
+  }, [])
+
   const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 7)
   const copy = locale === 'ar'
     ? {
@@ -235,28 +246,28 @@ export default function Testimonials() {
             </div>
 
             {/* Certified technology partners marquee — full width */}
-            <div className="border-t border-eerie/10 bg-white/50 px-0 py-7 md:py-9">
-              <span className="mb-6 block text-center text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
+            <div className="border-t border-eerie/10 bg-white/50 py-8 md:py-10">
+              <span className="mb-7 block text-center text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
                 {copy.partnersLabel}
               </span>
               <div
                 className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]"
                 dir="ltr"
               >
-                <div className="flex w-max animate-marquee items-center" style={{ '--duration': '32s' } as CSSProperties}>
+                <div className="flex w-max animate-marquee items-center" style={{ '--duration': '34s' } as CSSProperties}>
                   {[marqueeRow, marqueeRow].map((row, rowIdx) => (
                     <div key={rowIdx} aria-hidden={rowIdx === 1} className="flex shrink-0 items-center">
                       {row.map((partner, i) => (
                         <div
                           key={`${rowIdx}-${i}`}
-                          className="mx-3 flex h-24 w-52 shrink-0 items-center justify-center rounded-2xl border border-eerie/10 bg-white px-7 shadow-sm transition-shadow duration-300 hover:shadow-md sm:mx-4"
+                          className="mx-8 flex shrink-0 items-center justify-center sm:mx-12"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={partner.src}
                             alt={partner.name}
                             loading="lazy"
-                            className="max-h-12 max-w-full object-contain"
+                            className="h-14 w-auto max-w-[230px] object-contain sm:h-16 md:h-20"
                           />
                         </div>
                       ))}
@@ -269,8 +280,12 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Clutch widget loader — scans for .clutch-widget once the page is idle. */}
-      <Script src="https://widget.clutch.co/static/js/widget.js" strategy="lazyOnload" />
+      {/* Clutch widget loader — runs after hydration; re-init handled in useEffect. */}
+      <Script
+        src="https://widget.clutch.co/static/js/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO?.Init?.()}
+      />
     </section>
   )
 }
