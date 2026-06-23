@@ -236,8 +236,8 @@ export default function Testimonials() {
                 <div
                   className="clutch-widget"
                   data-url="https://widget.clutch.co"
-                  data-widget-type="14"
-                  data-height="50"
+                  data-widget-type="2"
+                  data-height="45"
                   data-nofollow="false"
                   data-expandifr="true"
                   data-clutchcompany-id="2639853"
