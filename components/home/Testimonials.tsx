@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, type CSSProperties } from 'react'
-import Script from 'next/script'
 import { ArrowRight, Quote, ShieldCheck, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { cn } from '@/lib/utils'
@@ -163,14 +162,26 @@ export default function Testimonials() {
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
 
-  // The Clutch script auto-scans for `.clutch-widget` on load, but this section
-  // is dynamically imported and may mount after that scan. Re-run Init on mount
-  // (and again on script load via onLoad) so the badge renders reliably.
+  // Clutch's widget.js only auto-renders `.clutch-widget` elements that exist
+  // while the document is still loading. This section is dynamically imported,
+  // so we inject the script ourselves and poll for window.CLUTCHCO.Init, then
+  // call it once the API is ready — reliable regardless of mount/load order.
   useEffect(() => {
-    const init = () => (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO?.Init?.()
-    init()
-    const t = setTimeout(init, 1200)
-    return () => clearTimeout(t)
+    const SRC = 'https://widget.clutch.co/static/js/widget.js'
+    if (!document.querySelector(`script[src="${SRC}"]`)) {
+      const s = document.createElement('script')
+      s.src = SRC
+      s.async = true
+      document.body.appendChild(s)
+    }
+    let tries = 0
+    const id = window.setInterval(() => {
+      const C = (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO
+      if ((C && typeof C.Init === 'function' && (C.Init(), true)) || ++tries > 40) {
+        window.clearInterval(id)
+      }
+    }, 250)
+    return () => window.clearInterval(id)
   }, [])
 
   const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 7)
@@ -279,13 +290,6 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
-
-      {/* Clutch widget loader — runs after hydration; re-init handled in useEffect. */}
-      <Script
-        src="https://widget.clutch.co/static/js/widget.js"
-        strategy="afterInteractive"
-        onLoad={() => (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO?.Init?.()}
-      />
     </section>
   )
 }
