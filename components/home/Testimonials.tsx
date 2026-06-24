@@ -243,14 +243,17 @@ export default function Testimonials() {
               <span className="text-xs font-black uppercase tracking-[0.18em] text-primary-700">
                 {copy.clutchLabel}
               </span>
-              <div className="flex min-h-[52px] items-center">
+              <div className="flex min-h-[52px] items-center justify-center">
+                {/* The Clutch iframe is width:100% — the container needs an
+                    explicit width or it collapses to 0 inside the flex row. */}
                 <div
-                  className="clutch-widget"
+                  className="clutch-widget w-[300px] max-w-full"
+                  style={{ minHeight: 45 }}
                   data-url="https://widget.clutch.co"
                   data-widget-type="2"
                   data-height="45"
                   data-nofollow="false"
-                  data-expandifr="true"
+                  data-expandifr="false"
                   data-clutchcompany-id="2639853"
                 />
               </div>
