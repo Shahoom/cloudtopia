@@ -38,7 +38,11 @@ export default async function EcommerceSolutionsPage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <p>{title}</p>
+                {/* SSR-rendered h1: the visible hero h1 (ecommerce-service-section)
+                    fills its text on the client, so its SSR markup is empty and
+                    non-JS crawlers saw "no h1". This server-rendered h1 guarantees
+                    one populated h1 in the initial HTML. */}
+                <h1>{title}</h1>
                 {desc && <p>{desc}</p>}
                 <p>
                     <a href={canonicalUrl(locale, '/contact')}>Start Your Project</a>

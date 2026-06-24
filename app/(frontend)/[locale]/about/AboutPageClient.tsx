@@ -588,7 +588,12 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                             />
 
                             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                {t.about.structure.steps.map((step: any, index: number) => (
+                                {t.about.structure.steps
+                                    // Drop any step still pointing at the retired /labs
+                                    // route (stale CMS `about` content injects a 4th
+                                    // "Explore Labs" → /labs step that 404s).
+                                    .filter((step: any) => !String(step.link || '').includes('/labs'))
+                                    .map((step: any, index: number) => (
                                     <motion.div
                                         key={step.id}
                                         initial={{ opacity: 0, y: 20 }}
