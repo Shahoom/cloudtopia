@@ -49,7 +49,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const L = pageLabels(locale)
 
     const meta: Metadata = {
-        title: `${L.title} | CloudTopia`,
+        // Bare title — the layout's "%s | CloudTopia" template adds the brand once.
+        // Hardcoding it here produced "Industry Digital Systems | CloudTopia | CloudTopia".
+        title: L.title,
         description: L.description,
         alternates: {
             canonical: canonicalUrl(locale, '/industries'),

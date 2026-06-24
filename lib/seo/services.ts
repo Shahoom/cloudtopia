@@ -271,6 +271,37 @@ function makeService(categorySlug: string, slug: string, englishName: string): S
         ? ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Next.js', 'PostgreSQL', 'Firebase', 'Vercel']
         : ['Next.js', 'React', 'Payload CMS', 'PostgreSQL', 'Cloudflare', 'Vercel']
 
+    // Category-distinct meta descriptions. The old single template ("…gives growing
+    // teams a structured, multilingual, ownership-first solution…") repeated verbatim
+    // across ~35 /services/* pages, leaving every one generic and near-duplicate.
+    // Each category now gets its own benefit-led, keyword-bearing description.
+    const descByCategory: Record<string, { en: string; ar: string }> = {
+        'digital-presence': {
+            en: `${englishName} for Gulf businesses — conversion-focused, bilingual Arabic + English design with technical SEO foundations, fixed scope, and full code ownership.`,
+            ar: `${arabicName} للشركات في الخليج — تصميم ثنائي اللغة يركّز على التحويل مع أساسيات SEO تقنية ونطاق محدد وملكية كاملة للكود.`,
+        },
+        'interactive-web-applications': {
+            en: `${englishName} from CloudTopia — scalable web apps with clean architecture, dashboards, integrations, and a maintainable codebase your team fully owns.`,
+            ar: `${arabicName} من كلاود توبيا — تطبيقات ويب قابلة للتوسع ببنية نظيفة ولوحات تحكم وتكاملات وكود قابل للصيانة يملكه فريقك بالكامل.`,
+        },
+        'business-systems-development': {
+            en: `${englishName} from CloudTopia — CRM, ERP, and workflow systems that cut manual work, connect your data, and stay yours to own and extend.`,
+            ar: `${arabicName} من كلاود توبيا — أنظمة CRM وERP وسير عمل تقلّل العمل اليدوي وتربط بياناتك وتبقى ملكاً لك لتطويرها.`,
+        },
+        'cloud-infrastructure': {
+            en: `${englishName} from CloudTopia — secure, scalable cloud setup with cost control, monitoring, and reliable deployments for teams across the GCC.`,
+            ar: `${arabicName} من كلاود توبيا — إعداد سحابي آمن وقابل للتوسع مع ضبط التكاليف والمراقبة ونشر موثوق للفرق في الخليج.`,
+        },
+        'ai-powered-solutions': {
+            en: `${englishName} from CloudTopia — practical AI automation and assistants wired into your real workflows, with bilingual support and measurable ROI.`,
+            ar: `${arabicName} من كلاود توبيا — أتمتة ومساعدون بالذكاء الاصطناعي مدمجون في سير عملك الفعلي بدعم ثنائي اللغة وعائد قابل للقياس.`,
+        },
+        'digital-growth-support': {
+            en: `${englishName} from CloudTopia — data-driven growth with bilingual content, paid and organic channels, and measurable pipeline impact.`,
+            ar: `${arabicName} من كلاود توبيا — نمو مبني على البيانات بمحتوى ثنائي اللغة وقنوات مدفوعة وعضوية وأثر واضح على المبيعات.`,
+        },
+    }
+
     return {
         slug,
         categorySlug,
@@ -278,10 +309,12 @@ function makeService(categorySlug: string, slug: string, englishName: string): S
         description: t(
             isMobileAppService
                 ? `${englishName} from CloudTopia gives companies a premium mobile product path with app UX, backend architecture, Arabic-first experience, integrations, launch support, and long-term ownership.`
-                : `${englishName} from CloudTopia gives growing teams a structured, multilingual, ownership-first solution with clear scope, practical delivery, and long-term support.`,
+                : (descByCategory[categorySlug]?.en
+                    ?? `${englishName} from CloudTopia — fixed-scope, bilingual Arabic + English delivery with practical milestones, clear ownership, and long-term support.`),
             isMobileAppService
                 ? `خدمة ${arabicName} من كلاود توبيا تمنح الشركات مسار تطبيق جوال احترافي يشمل تجربة المستخدم، بنية الخلفية، دعم العربية، التكاملات، الإطلاق، وملكية طويلة الأمد.`
-                : `خدمة ${arabicName} من كلاود توبيا تمنح الفرق النامية حلاً منظماً متعدد اللغات مع ملكية واضحة ونطاق محدد ودعم طويل الأمد.`),
+                : (descByCategory[categorySlug]?.ar
+                    ?? `خدمة ${arabicName} من كلاود توبيا — تسليم ثنائي اللغة بنطاق محدد ومراحل عملية وملكية واضحة ودعم طويل الأمد.`)),
         features: defaultFeatures,
         outcomes: defaultOutcomes,
         technologies: defaultTechnologies,

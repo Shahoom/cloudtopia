@@ -58,6 +58,8 @@ export function buildStructuredSiteDesign(dictionary: AnyRecord = en) {
       home: 'Home',
       services: 'Services',
       projects: 'Projects',
+      // Retained as a harmless label only (DB column navigation_labels_labs still
+      // exists); the /labs route is retired via page-structure.ts, so nothing links to it.
       labs: 'Labs',
       about: 'About',
       blog: 'Blog',

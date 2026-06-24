@@ -18,7 +18,7 @@ type PageProps = {
 
 const content = {
     en: {
-        metaTitle: 'Trust Center — Security, Ownership & Enterprise Delivery',
+        metaTitle: 'Trust Center — Security & Code Ownership',
         metaDescription: 'CloudTopia trust center for enterprise buyers: fixed scope, code ownership, account handoff, bilingual Arabic + English delivery, privacy, security, and procurement-ready project governance.',
         badge: 'Trust center',
         title: 'Enterprise delivery without hidden ownership risk.',

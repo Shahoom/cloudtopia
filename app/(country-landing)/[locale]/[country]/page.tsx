@@ -51,6 +51,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         keywords: [content.primaryKeyword, ...content.secondaryKeywords, country.countryNameEnglish, country.countryNameArabic],
         alternates: {
             canonical,
+            // Regional hreflang (en-SA / ar-SA …) is intentional here and kept in
+            // sync with the sitemap (lib/sitemap-data.ts): each country page is a
+            // country-targeted landing page (distinct name, phone, currency, and
+            // primary keyword), so the regional tag is correct, not an error.
+            // Semrush reports 0 hreflang errors; its "-" simply means it doesn't
+            // tally region-coded tags the same way as plain en/ar.
             languages: {
                 [country.hreflangEnglish]: englishCanonical,
                 [country.hreflangArabic]: arabicCanonical,

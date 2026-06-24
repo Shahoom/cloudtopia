@@ -31,6 +31,11 @@ const nextConfig = {
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          // Content-Signal (contentsignals.org) — allow search indexing + AI-answer
+          // input, opt out of AI model training. Served as an HTTP header (not a
+          // robots.txt directive) so it applies site-wide without tripping strict
+          // robots.txt validators that don't recognise the field.
+          { key: 'Content-Signal', value: 'search=yes, ai-input=yes, ai-train=no' },
           {
             key: 'Content-Security-Policy',
             value: `

@@ -30,8 +30,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
     const isArabic = locale === 'ar'
-    const title = isArabic ? 'المشاريع' : 'Projects'
-    const socialTitle = isArabic ? 'المشاريع | كلاود توبيا' : 'Projects | CloudTopia'
+    const title = isArabic ? 'المشاريع ودراسات الحالة' : 'Projects & Case Studies'
+    const socialTitle = isArabic ? 'المشاريع ودراسات الحالة | كلاود توبيا' : 'Projects & Case Studies | CloudTopia'
     const description = isArabic
         ? 'مشاريع كلاود توبيا في المواقع، المتاجر، تطبيقات الويب، الأنظمة، وتجارب الذكاء الاصطناعي.'
         : 'CloudTopia projects across websites, e-commerce, web apps, systems, and AI experiences.'
@@ -161,7 +161,7 @@ export default async function ProjectsPage({
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsFaqSchema) }}
             />
             <div className="sr-only" aria-hidden="false">
-                <h1>{heroTitle} {heroHighlight}</h1>
+                <p>{heroTitle} {heroHighlight}</p>
                 {heroDesc && <p>{heroDesc}</p>}
                 <ul>
                     {projects.map((p) => (

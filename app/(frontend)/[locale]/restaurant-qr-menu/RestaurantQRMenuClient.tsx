@@ -266,6 +266,8 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                   {IMAGES_1.map((imageUrl, index) => (
                     <img
                       key={index}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
                       alt={locale === 'ar' ? 'تصميم داخلي للمطعم' : 'Restaurant interior'}
@@ -276,6 +278,8 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                   {IMAGES_2.map((imageUrl, index) => (
                     <img
                       key={index}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
                       alt={locale === 'ar' ? 'تجربة القائمة الرقمية' : 'Digital menu experience'}
@@ -286,6 +290,8 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
                   {IMAGES_3.map((imageUrl, index) => (
                     <img
                       key={index}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
                       src={imageUrl}
                       alt={locale === 'ar' ? 'تقنية المطاعم' : 'Restaurant technology'}

@@ -38,7 +38,7 @@ export default async function RestaurantQRMenuPage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <h1>{title}</h1>
+                <p>{title}</p>
                 {desc && <p>{desc}</p>}
                 <p>
                     <a href={canonicalUrl(locale, '/contact')}>Start Your Project</a>

@@ -294,8 +294,10 @@ import { applySeoOverride } from '@/lib/cms/route-seo'
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en' } = await params
     const isArabic = locale === 'ar'
-    const title = isArabic ? 'الأسعار' : 'Pricing'
-    const socialTitle = isArabic ? 'الأسعار | كلاود توبيا' : 'Pricing | CloudTopia'
+    // Enriched past the ~30-char minimum (was a bare "Pricing | CloudTopia") so the
+    // title carries intent keywords; the layout template still adds the brand once.
+    const title = isArabic ? 'الأسعار والباقات' : 'Pricing & Service Packages'
+    const socialTitle = isArabic ? 'الأسعار والباقات | كلاود توبيا' : 'Pricing & Service Packages | CloudTopia'
     const description = isArabic
         ? 'أسعار كلاود توبيا للمواقع، المتاجر، أنظمة CRM وERP، تطبيقات الويب والجوال، السحابة، وأتمتة الذكاء الاصطناعي.'
         : 'CloudTopia pricing for websites, e-commerce, CRM, ERP, web apps, mobile apps, cloud, and AI automation.'

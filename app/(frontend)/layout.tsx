@@ -186,7 +186,11 @@ export default async function FrontendLayout({
                 {
                   '@type': 'ContactPoint',
                   contactType: 'customer service',
-                  email: 'info@cloudtopia.net',
+                  // Use the contact page URL rather than a bare email: Cloudflare
+                  // Email Obfuscation rewrites any literal address (even inside
+                  // JSON-LD) into a /cdn-cgi/l/email-protection link that 404s to
+                  // crawlers, polluting the broken-internal-links report.
+                  url: 'https://cloudtopia.net/contact',
                   availableLanguage: ['English', 'Arabic'],
                   areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
                 },

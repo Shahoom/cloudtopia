@@ -42,7 +42,7 @@ export default async function TermsPage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <h1>{title}</h1>
+                <p>{title}</p>
                 {desc && <p>{desc}</p>}
             </div>
             <TermsClient t={t} lastUpdatedDate={lastUpdatedDate} />

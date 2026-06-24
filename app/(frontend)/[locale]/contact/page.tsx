@@ -90,7 +90,7 @@ export default async function ContactPage({
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
             <div className="sr-only" aria-hidden="false">
-                <h1>{title}</h1>
+                <p>{title}</p>
                 {desc && <p>{desc}</p>}
             </div>
             <ContactClient t={t} />

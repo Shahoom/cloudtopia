@@ -7,6 +7,35 @@ import { buildOrganizationRef, buildFaqSchema, type FaqItem } from '@/lib/seo/sc
 import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
 import type { TeaserPost } from '@/components/home/ArticlesTeaser'
 import HomePageClient from './HomePageClient'
+import type { Metadata } from 'next'
+import { getCMSMetadata } from '@/lib/cms/metadata'
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale = 'en' } = await params
+    const meta = await getCMSMetadata(locale, '/', 'home')
+    const isArabic = locale === 'ar'
+    const title = isArabic
+        ? 'كلاود توبيا | شركة برمجيات وحلول سحابية وذكاء اصطناعي عربية'
+        : 'CloudTopia | Arabic Software, Cloud & AI Company'
+    const description = isArabic
+        ? 'كلاود توبيا شركة عربية للبرمجيات والحلول السحابية والذكاء الاصطناعي، تبني مواقع SEO، متاجر إلكترونية، أنظمة CRM/ERP، بنية سحابية، تطبيقات، وأتمتة ذكية للشركات في الخليج والعالم العربي.'
+        : 'CloudTopia is an Arabic software, cloud and AI company building SEO websites, e-commerce platforms, CRM/ERP systems, cloud infrastructure, mobile apps and AI automation for the GCC and Arab world.'
+    // The homepage title already contains the brand, so emit it as `absolute` to
+    // bypass the layout's "%s | CloudTopia" template (which doubled it to
+    // "CloudTopia | … | CloudTopia"). Spreading `meta` keeps the canonical URL and
+    // the en/ar/x-default hreflang alternates the home route was otherwise missing.
+    return {
+        ...meta,
+        title: { absolute: title },
+        description,
+        openGraph: { ...meta.openGraph, title, description },
+        twitter: { ...meta.twitter, title, description },
+    }
+}
 
 type ProjectCardSummary = {
     id: string

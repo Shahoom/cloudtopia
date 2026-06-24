@@ -18,7 +18,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const project = await getProjectById(slug, locale)
     if (!project) return { title: 'Project Not Found' }
 
-    const title = `${project.title} — Case Study | CloudTopia`
+    // Keep the " — Case Study" qualifier only for shorter project names; longer
+    // ones drop it so the title stays under ~60 chars and isn't truncated in SERPs.
+    const titleCore = project.title.length > 34 ? project.title : `${project.title} — Case Study`
+    const title = `${titleCore} | CloudTopia`
     const description = `${project.problem} ${project.solution}`.slice(0, 160)
 
     return {

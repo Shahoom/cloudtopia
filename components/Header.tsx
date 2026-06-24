@@ -282,7 +282,15 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
 
           {/* Email Logo (Gmail) */}
           <a
-            href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia"
+            href={localePath(locale, '/contact')}
+            onClick={(e) => {
+              // Keep the one-tap email UX, but serve a real /contact href in the
+              // SSR HTML so Cloudflare Email Obfuscation never rewrites a sitewide
+              // mailto: into a /cdn-cgi/l/email-protection link (which crawlers
+              // count as a broken internal link on every page).
+              e.preventDefault()
+              window.location.href = 'mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia'
+            }}
             className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/95 transition-transform duration-200 hover:scale-110"
             aria-label={locale === 'ar' ? 'البريد الإلكتروني' : 'Email'}
           >
@@ -565,7 +573,12 @@ export default function Header() {
                   {locale === 'ar' ? 'اتصال' : 'Call'}
                 </a>
                 <a
-                  href="mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia"
+                  href={l('/contact')}
+                  onClick={(e) => {
+                    // Real /contact href in SSR; mailto on click (see desktop note).
+                    e.preventDefault()
+                    window.location.href = 'mailto:info@cloudtopia.net?subject=Project%20Inquiry%20-%20CloudTopia'
+                  }}
                   className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2 py-3 text-[12px] font-bold text-neutral-700 transition-colors duration-200 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-800"
                 >
                   <Mail className="h-4 w-4 text-violet-600" aria-hidden="true" />

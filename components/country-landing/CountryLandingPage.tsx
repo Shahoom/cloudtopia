@@ -348,6 +348,14 @@ export default function CountryLandingPage({ country, locale }: Props) {
         url: schemaUrl,
         image: countryPhoto.src,
         priceRange: '$$',
+        // Google requires `address` on every LocalBusiness/ProfessionalService node;
+        // without it the schema fails validation (the "structured data markup errors"
+        // Semrush flags across all country pages). CloudTopia is a service-area
+        // business, so the served country is the addressed market.
+        address: {
+            '@type': 'PostalAddress',
+            addressCountry: country.code.toUpperCase(),
+        },
         areaServed: { '@type': 'Country', name: countryName, identifier: country.code.toUpperCase() },
         provider: { '@type': 'Organization', '@id': 'https://cloudtopia.net/#organization' },
         telephone: country.phone,

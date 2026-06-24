@@ -34,7 +34,7 @@ export default async function AboutPage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <h1>{hero.title} {hero.titleHighlight}</h1>
+                <p>{hero.title} {hero.titleHighlight}</p>
                 {hero.description && <p>{hero.description}</p>}
                 {hero.philosophy && <p>{hero.philosophy}</p>}
                 {mission.title && (

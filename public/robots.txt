@@ -2,15 +2,16 @@
 # https://cloudtopia.net
 
 User-agent: *
-# Content Signals (contentsignals.org / draft-romm-aipref-contentsignals):
-# allow search indexing and use as AI answer input (so CloudTopia can be cited),
-# but opt out of AI model training. Consistent with the per-bot rules below.
-Content-Signal: search=yes, ai-input=yes, ai-train=no
+# Content-Signal (contentsignals.org / draft-romm-aipref-contentsignals) — search
+# indexing + AI-answer input allowed, AI model training opted out. It is served as
+# an HTTP response header instead of a robots.txt directive (see next.config.mjs)
+# because RFC 9309 defines no Content-Signal field, and emitting it here trips
+# strict robots.txt validators ("Invalid robots.txt format").
 Allow: /
 Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
 Disallow: /admin
+# Cloudflare-internal paths (e.g. /cdn-cgi/l/email-protection) are not site pages.
+Disallow: /cdn-cgi/
 
 Sitemap: https://cloudtopia.net/sitemap.xml
 
