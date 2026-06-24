@@ -8,6 +8,11 @@ User-agent: *
 # because RFC 9309 defines no Content-Signal field, and emitting it here trips
 # strict robots.txt validators ("Invalid robots.txt format").
 Allow: /
+# Social/SEO crawlers must be able to fetch CMS-uploaded OG & cover images, which
+# Payload serves at /api/media/file/... . Without this, "Disallow: /api/" blocks
+# them, so WhatsApp / X / Facebook / LinkedIn link previews render with no image.
+# Longest-match wins, so every other /api/ path stays blocked.
+Allow: /api/media/
 Disallow: /api/
 Disallow: /admin
 # Cloudflare-internal paths (e.g. /cdn-cgi/l/email-protection) are not site pages.
