@@ -16,6 +16,7 @@ import * as migration_20260610_090000_blog_slug_locale_unique from './20260610_0
 import * as migration_20260614_120000_add_seo_overrides from './20260614_120000_add_seo_overrides';
 import * as migration_20260614_140000_add_ip_address from './20260614_140000_add_ip_address';
 import * as migration_20260623_120000_add_clinictopia_leads from './20260623_120000_add_clinictopia_leads';
+import * as migration_20260624_120000_fix_blog_version_array_id_default from './20260624_120000_fix_blog_version_array_id_default';
 
 export const migrations = [
   {
@@ -107,5 +108,10 @@ export const migrations = [
     up: migration_20260623_120000_add_clinictopia_leads.up,
     down: migration_20260623_120000_add_clinictopia_leads.down,
     name: '20260623_120000_add_clinictopia_leads'
+  },
+  {
+    up: migration_20260624_120000_fix_blog_version_array_id_default.up,
+    down: migration_20260624_120000_fix_blog_version_array_id_default.down,
+    name: '20260624_120000_fix_blog_version_array_id_default'
   },
 ];
