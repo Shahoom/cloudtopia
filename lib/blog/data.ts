@@ -3,6 +3,7 @@ import { unstable_cache } from 'next/cache'
 import type { MetadataRoute } from 'next'
 import { isDatabaseConfigured, queryDatabase } from '@/lib/cms/db'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { coerceLocale } from '@/lib/i18n/config'
 import { buildTableOfContents, normalizeMediaUrl } from './utils'
 import { localizeCategoryName, localizeTagName } from './taxonomy-i18n'
 import { filterAndSortBlogPosts, type BlogSearchSort } from './search'
@@ -517,6 +518,7 @@ function normalizePostRow(row: BlogRow): BlogPostSummary {
 }
 
 async function getPublishedBlogPostsUncached(locale: string): Promise<BlogPostSummary[]> {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return []
 
   const columns = localeColumns(locale)
@@ -632,6 +634,7 @@ export const getPublishedBlogPosts = unstable_cache(getPublishedBlogPostsUncache
 })
 
 async function getBlogPostUncached(locale: string, slug: string): Promise<BlogPost | null> {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return null
 
   const columns = localeColumns(locale)
@@ -755,6 +758,7 @@ export const getBlogPost = unstable_cache(getBlogPostUncached, ['cms-blog-post']
 })
 
 async function getBlogCategoriesUncached(locale: string): Promise<BlogCategory[]> {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return []
 
   try {
@@ -831,6 +835,7 @@ export const getBlogCategories = unstable_cache(getBlogCategoriesUncached, ['cms
 })
 
 async function getBlogTagsUncached(locale: string): Promise<BlogTag[]> {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return []
 
   try {
@@ -984,6 +989,7 @@ export async function getRelatedBlogPosts(post: BlogPost, limit = 3): Promise<Bl
 }
 
 async function getBlogAuthorsUncached(locale: string): Promise<BlogAuthor[]> {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return []
 
   const columns = localeColumns(locale)

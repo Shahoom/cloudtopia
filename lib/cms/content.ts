@@ -2,7 +2,7 @@ import 'server-only'
 import { cache } from 'react'
 import type { MetadataRoute } from 'next'
 import { unstable_cache } from 'next/cache'
-import type { Locale } from '../i18n/config.ts'
+import { coerceLocale, type Locale } from '../i18n/config.ts'
 import { ar } from '../i18n/translations/ar.ts'
 import { en } from '../i18n/translations/en.ts'
 import { canonicalUrl } from '../i18n/url.ts'
@@ -56,6 +56,7 @@ export function getStaticDictionary(locale: Locale) {
 }
 
 async function getCMSDictionaryUncached(locale: Locale) {
+  locale = coerceLocale(locale)
   const fallback = getStaticDictionary(locale)
   if (!isDatabaseConfigured()) return fallback
 
@@ -154,6 +155,7 @@ export const getCMSDesign = unstable_cache(getCMSDesignUncached, ['cms-design'],
 })
 
 async function getCMSPageUncached(locale: Locale, slug = '/') {
+  locale = coerceLocale(locale)
   if (!isDatabaseConfigured()) return null
 
   try {
@@ -181,6 +183,7 @@ export const getCMSPage = unstable_cache(getCMSPageUncached, ['cms-page'], {
 })
 
 async function getProjectsUncached(locale: string): Promise<CMSProject[]> {
+  locale = coerceLocale(locale)
   const fallback = getStaticProjects(locale)
   if (!isDatabaseConfigured()) return fallback
 
@@ -215,6 +218,7 @@ export const getProjects = unstable_cache(getProjectsUncached, ['cms-projects'],
 })
 
 const getProjectUncached = async (locale: string, id: string): Promise<CMSProject | null> => {
+  locale = coerceLocale(locale)
   if (isDatabaseConfigured()) {
     try {
       const rows = await queryDatabase<any>(
