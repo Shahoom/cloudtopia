@@ -37,6 +37,7 @@ export type SiteChrome = {
 export type CMSProject = {
   id: string
   category: string
+  relatedServiceSlugs?: string[]
   type: string
   featured: boolean
   title: string
@@ -190,7 +191,7 @@ async function getProjectsUncached(locale: string): Promise<CMSProject[]> {
   try {
     const rows = await queryDatabase<any>(
       `select
-        p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
+        p.id, p.locale, p.cms_key, p.category, coalesce(p.related_service_slugs, '') as related_service_slugs, p.type, p.featured, p.title,
         p.problem, p.solution, coalesce(pm.url, p.image) as image, p.metrics_label, p.metrics_value, p.link,
         coalesce(
           jsonb_agg(f.feature order by f._order) filter (where f.feature is not null),
@@ -200,7 +201,7 @@ async function getProjectsUncached(locale: string): Promise<CMSProject[]> {
        left join projects_features f on f._parent_id = p.id
        left join media pm on pm.id = p.image_media_id
        where p.locale = $1
-       group by p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
+       group by p.id, p.locale, p.cms_key, p.category, p.related_service_slugs, p.type, p.featured, p.title,
          p.problem, p.solution, p.image, pm.url, p.metrics_label, p.metrics_value, p.link, p.created_at
        order by p.created_at asc`,
       [locale],
@@ -223,7 +224,7 @@ const getProjectUncached = async (locale: string, id: string): Promise<CMSProjec
     try {
       const rows = await queryDatabase<any>(
         `select
-          p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
+          p.id, p.locale, p.cms_key, p.category, coalesce(p.related_service_slugs, '') as related_service_slugs, p.type, p.featured, p.title,
           p.problem, p.solution, coalesce(pm.url, p.image) as image, p.metrics_label, p.metrics_value, p.link,
           p.created_at, p.updated_at,
           coalesce(
@@ -234,7 +235,7 @@ const getProjectUncached = async (locale: string, id: string): Promise<CMSProjec
          left join projects_features f on f._parent_id = p.id
          left join media pm on pm.id = p.image_media_id
          where p.locale = $1 and (p.id = $2 or p.cms_key = $3)
-         group by p.id, p.locale, p.cms_key, p.category, p.type, p.featured, p.title,
+         group by p.id, p.locale, p.cms_key, p.category, p.related_service_slugs, p.type, p.featured, p.title,
            p.problem, p.solution, p.image, pm.url, p.metrics_label, p.metrics_value, p.link, p.created_at, p.updated_at
          limit 1`,
         [locale, id, `${locale}:${id}`],
@@ -415,6 +416,12 @@ function normalizeProject(project: any): CMSProject | null {
   return {
     id: publicId,
     category: project.category,
+    relatedServiceSlugs:
+      typeof project.related_service_slugs === 'string'
+        ? project.related_service_slugs.split(/[,\s]+/).filter(Boolean)
+        : Array.isArray(project.relatedServiceSlugs)
+          ? project.relatedServiceSlugs
+          : [],
     type: project.type,
     featured: Boolean(project.featured),
     title: project.title,

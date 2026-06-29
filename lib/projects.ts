@@ -5,6 +5,7 @@ import { getProject, getProjects } from '@/lib/cms/content'
 export type Project = {
     id: string
     category: string
+    relatedServiceSlugs?: string[]
     type: string
     featured: boolean
     title: string
@@ -21,7 +22,7 @@ const translations: Record<string, any> = { en, ar }
 export function getStaticProjects(locale: string): Project[] {
     const t = translations[locale] || translations.en
     const projects = (t?.projects?.projectCards as Project[]) || []
-    return projects
+    return projects.map((p) => ({ relatedServiceSlugs: [], ...p }))
 }
 
 export async function getAllProjects(locale: string): Promise<Project[]> {
