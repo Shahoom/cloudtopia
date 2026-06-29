@@ -1,0 +1,60 @@
+{
+  "slug": "graphic-design-for-social-media",
+  "service": "Graphic Design for Social Media",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Graphic Design for Social Media | CloudTopia",
+    "description": "Scroll-stopping, on-brand social graphics and carousels designed to get noticed and shared. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Social Design",
+    "title1": "Designs that",
+    "title2": "get noticed and shared",
+    "subtitle": "Eye-catching, on-brand graphics, carousels, and templates that make your feed look professional and stop the scroll."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A feed that looks the part",
+    "stat": {
+      "value": "On-brand",
+      "title": "Templates"
+    },
+    "items": [
+      {
+        "title": "Branded visuals",
+        "description": "Posts, carousels, and stories consistent with your identity."
+      },
+      {
+        "title": "Reusable templates",
+        "description": "Editable templates so your team keeps the look effortlessly."
+      },
+      {
+        "title": "Built to share",
+        "description": "Designs crafted to earn saves and shares."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you provide editable templates?",
+      "answer": "Yes — we can deliver reusable templates (Canva or design files) so your team produces on-brand posts without starting from scratch."
+    },
+    {
+      "question": "Can you match our existing brand?",
+      "answer": "Yes — we design to your brand guidelines, or help define them if you do not have any yet."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

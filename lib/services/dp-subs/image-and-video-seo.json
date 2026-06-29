@@ -1,0 +1,64 @@
+{
+  "slug": "image-and-video-seo",
+  "service": "Image & Video SEO",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Image & Video SEO Services Oman | CloudTopia",
+    "description": "Image and video SEO that gets your visuals found in Google Images, video carousels, and AI results — alt text, schema, sitemaps. Free consultation and audit."
+  },
+  "hero": {
+    "badge": "Image & Video SEO",
+    "title1": "Your images and videos are",
+    "title2": "invisible to search — let's fix that",
+    "subtitle": "Most sites publish photos and videos that search engines can't read, so they never surface in Google Images, video carousels, or AI answers. We optimize every visual asset — filenames, alt text, structured data, and sitemaps — so your media earns its own search traffic, in both Arabic and English."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Visual content that ranks, loads fast, and shows up where buyers are looking",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual alt text"
+    },
+    "items": [
+      {
+        "title": "Descriptive filenames and alt text",
+        "description": "We rename cryptic files like IMG_4821.jpg and write clear, keyword-aware alt text for every image — in Arabic and English — so search engines and screen readers both understand what each visual actually shows."
+      },
+      {
+        "title": "Image and video structured data",
+        "description": "We add ImageObject and VideoObject schema with thumbnails, captions, durations, and chapter markers so Google can display your media as rich results and video carousels instead of plain blue links."
+      },
+      {
+        "title": "Dedicated image and video sitemaps",
+        "description": "We build and submit image and video XML sitemaps and confirm indexing in Search Console, so Google reliably discovers and crawls the visual assets it would otherwise miss."
+      },
+      {
+        "title": "Compressed, fast-loading visuals",
+        "description": "We serve next-gen formats like WebP and AVIF, size images correctly, and add lazy loading, because slow-loading media hurts both your Core Web Vitals and how well your visuals rank."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Why aren't my images and videos showing up in Google?",
+      "answer": "Usually because search engines can't tell what they contain. Files named generically, missing alt text, no structured data, and no image or video sitemap all leave Google guessing — so it skips your media. We fix each of those signals so your visuals become eligible for Google Images, video carousels, and AI-generated answers."
+    },
+    {
+      "question": "Do my videos have to be on YouTube for this to work?",
+      "answer": "No. We optimize videos hosted directly on your own site as well as embedded ones, adding VideoObject schema, transcripts, and a video sitemap so they can earn rich results. If your strategy also involves a YouTube channel, that is a separate, complementary service we offer under the same SEO pillar."
+    },
+    {
+      "question": "Will optimizing my images slow down or change my website?",
+      "answer": "The opposite — done right, image SEO makes pages faster, because we compress files and serve modern formats that weigh far less than the originals. Your design and layout stay exactly as they are; only the underlying files, filenames, and markup change. You see a demo preview before anything goes live."
+    },
+    {
+      "question": "Can you write the alt text and captions in Arabic and English?",
+      "answer": "Yes. We produce native bilingual alt text, captions, and transcripts so your visuals are discoverable to both Arabic and English searchers across the GCC. This also makes your media more accessible to screen-reader users in either language, which is a ranking and usability win."
+    },
+    {
+      "question": "How do we get started, and do I own the work afterward?",
+      "answer": "We begin with a free consultation and an audit of your current visual assets to show exactly what's missing and what's achievable. Everything we implement — the optimized files, alt text, schema, and sitemaps — lives in your own site and accounts, with no lock-in, so it stays yours to keep and build on. The quickest way to start is a message on WhatsApp."
+    }
+  ]
+}

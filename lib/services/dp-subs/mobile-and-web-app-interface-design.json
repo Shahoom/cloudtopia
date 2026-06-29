@@ -1,0 +1,64 @@
+{
+  "slug": "mobile-and-web-app-interface-design",
+  "service": "Mobile & Web App Interface Design",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Mobile & Web App Interface Design | CloudTopia",
+    "description": "App interface design for mobile and web — screen flows, every state, and a design system you own, in Arabic and English. Free consultation and clickable demo."
+  },
+  "hero": {
+    "badge": "App Interface Design",
+    "title1": "Mobile and web app interfaces",
+    "title2": "your users move through effortlessly",
+    "subtitle": "We design every screen, state, and flow your app needs — from sign-up to checkout — as a clickable prototype and a reusable design system your developers build straight from. You own the source files, components, and assets outright."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Screens that feel obvious to use and ship without guesswork",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual, RTL-ready"
+    },
+    "items": [
+      {
+        "title": "Every screen, state, and flow",
+        "description": "We design the full journey — empty, loading, error, and success states included — so your team never reaches a screen during the build that was never drawn."
+      },
+      {
+        "title": "A reusable design system",
+        "description": "Buttons, forms, navigation, and cards are built as consistent components in Figma, so the app looks coherent across screens and stays fast to extend later."
+      },
+      {
+        "title": "Native mobile and responsive web",
+        "description": "We follow iOS and Android interaction patterns for apps and design adaptive layouts for web, so each platform feels right rather than a stretched copy of the other."
+      },
+      {
+        "title": "Developer-ready handoff",
+        "description": "Specs, spacing, type scales, and exportable assets are organised for engineers, with a clickable prototype that shows exactly how each interaction should behave."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you design the app or also build it?",
+      "answer": "This service covers the interface design — the screens, flows, components, and a clickable prototype your developers build from. CloudTopia also develops mobile and web apps, so we can carry the same design straight into a working product, or hand the files to your own engineering team if you prefer."
+    },
+    {
+      "question": "What do I actually receive at the end?",
+      "answer": "You get the full set of editable design files, an organised component library and design system, exportable assets and icons, and an interactive prototype that demonstrates how the app flows. Everything is delivered in your own accounts so your team or any developer can pick it up without us."
+    },
+    {
+      "question": "Can you design both Arabic and English versions of the app?",
+      "answer": "Yes. We design native Arabic and English screens with proper right-to-left layout, mirrored navigation, and type that reads well in both languages — not a flipped English layout. Both versions share one component system, so they stay consistent as the app grows."
+    },
+    {
+      "question": "Can you work from our existing brand, or redesign an app we already have?",
+      "answer": "Both. We can design within your existing brand and guidelines, or audit and rework the interface of an app that already exists to fix usability and consistency issues. Where there is no brand system yet, we keep the visual choices documented so the look stays repeatable."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to map your screens, users, and platforms, then share a written scope. You also see early design previews and a clickable prototype before committing further, so you can feel how the app works before any build begins."
+    }
+  ]
+}

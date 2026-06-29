@@ -1,0 +1,64 @@
+{
+  "slug": "e-commerce-seo",
+  "service": "E-Commerce SEO",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "E-Commerce SEO Oman | CloudTopia",
+    "description": "E-commerce SEO that gets product and category pages ranking and winning rich results — built for large catalogs and the GCC. Free consultation and audit first."
+  },
+  "hero": {
+    "badge": "E-Commerce SEO",
+    "title1": "E-commerce SEO for product and category pages that",
+    "title2": "rank, get clicked, and sell",
+    "subtitle": "We make your online store easy for Google to crawl and easy for shoppers to find — from product schema and category structure to the duplicate-content and filter traps that quietly bury big catalogs. Every change lives in your own store, with a clear before-and-after to show it worked."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "SEO built for how stores actually work — large catalogs, variants, filters, and stock that changes daily",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual store SEO"
+    },
+    "items": [
+      {
+        "title": "Category and product pages built to rank",
+        "description": "We optimise titles, descriptions, headings, and on-page copy for the buying terms shoppers actually search, so your collection and product pages compete instead of sitting on page three."
+      },
+      {
+        "title": "Rich results that earn the click",
+        "description": "We add valid Product, Offer, and review structured data so your listings can show price, availability, and star ratings in Google — making them stand out against plain competitor results."
+      },
+      {
+        "title": "Crawl, filter, and duplicate traps fixed",
+        "description": "We tame faceted navigation, URL parameters, variant pages, and pagination so Google spends its crawl budget on pages that sell rather than thousands of near-duplicate filter URLs."
+      },
+      {
+        "title": "Stock and seasonality handled properly",
+        "description": "We set up sensible handling for out-of-stock items, discontinued products, and seasonal lines so you keep ranking equity and avoid dead 404s every time the catalog changes."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How is e-commerce SEO different from regular SEO?",
+      "answer": "A store has problems a brochure site never does: hundreds or thousands of product and category pages, filters that spawn endless URLs, variants that read as duplicates, and stock that changes daily. We focus on getting your category and product pages to rank, controlling what gets crawled and indexed, and adding the product structured data that wins rich results — not just blog posts and homepage keywords."
+    },
+    {
+      "question": "Will my products show price and star ratings in Google?",
+      "answer": "That is exactly what Product and Offer structured data is for, and we implement it across your catalog so listings are eligible to show price, availability, and ratings. Google decides when to display them, but valid markup is the requirement, and we make sure yours is correct and error-free. We also confirm it in Google's testing tools before signing off."
+    },
+    {
+      "question": "Do you work with Shopify, WooCommerce, or our custom store?",
+      "answer": "Yes — we work within whatever platform you already run, whether that is Shopify, WooCommerce, Magento, or a custom build, and apply the changes directly in your store. You do not need to migrate or rebuild for us to improve your SEO. If your platform has a genuine limitation, we will tell you plainly in the free consultation rather than pushing a rebuild you do not need."
+    },
+    {
+      "question": "What happens to SEO when products sell out or get discontinued?",
+      "answer": "Left unmanaged, this is one of the biggest silent leaks in store SEO — discontinued products turn into 404s and you lose the rankings and links they earned. We set up the right approach for each case, whether that is keeping a back-in-stock page live, redirecting to the closest alternative, or removing it cleanly. The goal is to protect the ranking value you have already built."
+    },
+    {
+      "question": "Can you handle a store that sells in both Arabic and English?",
+      "answer": "Yes. We optimise both language versions of your storefront with correct hreflang and RTL-aware metadata, so Arabic and English shoppers each reach the right page in search instead of competing against each other. Product and category SEO is handled in both languages rather than treating Arabic as an afterthought."
+    }
+  ]
+}

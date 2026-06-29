@@ -1,0 +1,60 @@
+{
+  "slug": "press-release-writing-and-distribution",
+  "service": "Press Release (PR) Writing & Distribution",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Press Release Writing & Distribution | CloudTopia",
+    "description": "We write professional press releases and distribute them to the right outlets to earn coverage and authority. Free consultation."
+  },
+  "hero": {
+    "badge": "Press Releases",
+    "title1": "PR that",
+    "title2": "earns real coverage",
+    "subtitle": "Newsworthy, professionally written press releases — and distribution to the outlets that matter — so your announcements get seen and build authority."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Announcements that get picked up",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual PR"
+    },
+    "items": [
+      {
+        "title": "Newsworthy angles",
+        "description": "We shape your news into a story journalists actually want."
+      },
+      {
+        "title": "Press-standard writing",
+        "description": "Proper structure, quotes, and boilerplate ready to publish."
+      },
+      {
+        "title": "Targeted distribution",
+        "description": "Sent to relevant outlets and wires for maximum pickup."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can you guarantee coverage?",
+      "answer": "No one can honestly guarantee editorial coverage. We maximize your odds with strong, newsworthy writing and targeted distribution to the right outlets."
+    },
+    {
+      "question": "Do you write in Arabic for regional media?",
+      "answer": "Yes — we produce bilingual releases tailored for both Arabic and English outlets across the GCC."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

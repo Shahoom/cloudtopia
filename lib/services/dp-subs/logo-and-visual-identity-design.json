@@ -1,0 +1,64 @@
+{
+  "slug": "logo-and-visual-identity-design",
+  "service": "Logo & Visual Identity Design",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Logo & Visual Identity Design | CloudTopia",
+    "description": "Logo and visual identity design that makes your brand recognisable across signage, screens, and print — bilingual and 100% yours. Free consultation first."
+  },
+  "hero": {
+    "badge": "Visual Identity",
+    "title1": "A logo and visual identity that",
+    "title2": "make your brand instantly recognisable",
+    "subtitle": "We design a distinctive logo and a complete visual identity — colours, type, and supporting marks — that hold up everywhere your brand appears, from a phone screen to a shopfront sign. You see real options before you commit, and you own every file we deliver."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "An identity built to work in the real world, not just on a slide",
+    "stat": {
+      "value": "Source files",
+      "title": "Handed over, fully yours"
+    },
+    "items": [
+      {
+        "title": "More than a single logo file",
+        "description": "You get a primary logo plus the variations real use demands — horizontal, stacked, icon-only, and one-colour versions — so it stays clear on a website header, an app icon, an invoice, or a printed sign."
+      },
+      {
+        "title": "Designed to read in Arabic and English",
+        "description": "We craft logotypes and lockups that work bilingually, pairing a Latin and an Arabic treatment that feel like one brand rather than a logo with the Arabic bolted on afterwards."
+      },
+      {
+        "title": "A colour and type system, not just a mark",
+        "description": "Alongside the logo we define your core colours with exact codes and a typeface pairing, so every future poster, post, and page looks unmistakably like you without guesswork."
+      },
+      {
+        "title": "Delivered in every format you will need",
+        "description": "You receive editable vector source files plus ready-to-use PNG and SVG exports for web, social, and print, all handed over so you are never stuck asking us for the logo again."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What exactly do I receive at the end of a logo and visual identity project?",
+      "answer": "You get your final logo in editable vector source files plus exported PNG and SVG versions, along with the logo variations for different uses — full, icon-only, horizontal, and single-colour. You also receive your defined brand colours and chosen typefaces. Everything is handed over to you, with no watermarks and no need to come back to us for the files."
+    },
+    {
+      "question": "How many logo concepts and revisions do I get?",
+      "answer": "We present a focused set of distinct directions rather than dozens of near-identical sketches, so you are choosing between genuinely different ideas. Once you pick a direction, we refine it with you through rounds of revisions until the details are right. We agree the number of concepts and revision rounds upfront in your written scope so there are no surprises."
+    },
+    {
+      "question": "Can you design a logo that works in both Arabic and English?",
+      "answer": "Yes, and it is something we handle properly rather than as an afterthought. We design the Latin and Arabic versions to share the same character and weight, so your brand looks consistent whether it appears on an English website or an Arabic shopfront. You receive both language lockups as part of the delivery."
+    },
+    {
+      "question": "Do I own the logo and all the rights to it?",
+      "answer": "Completely. Once the project is finished, the logo and all the identity assets are yours to use however you want, forever, including on products, signage, packaging, and advertising. You own the source files outright with no licensing fees or lock-in, so you are free to use it, edit it, or hand it to another designer later."
+    },
+    {
+      "question": "I already have a logo — can you refine it instead of starting over?",
+      "answer": "Often, yes. If your existing logo has good bones but feels dated or inconsistent, we can refresh it and build the missing pieces — clean files, proper variations, and a colour and type system around it. We will tell you honestly in the free consultation whether a refresh or a full redesign will serve you better before you commit to anything."
+    }
+  ]
+}

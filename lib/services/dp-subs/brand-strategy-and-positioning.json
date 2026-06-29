@@ -1,0 +1,64 @@
+{
+  "slug": "brand-strategy-and-positioning",
+  "service": "Brand Strategy & Positioning",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Brand Strategy & Positioning | CloudTopia",
+    "description": "Define who you are, who you serve, and why you win — a clear brand strategy and positioning for GCC markets. Free consultation before you commit, AR + EN."
+  },
+  "hero": {
+    "badge": "Brand Strategy",
+    "title1": "Brand strategy and positioning that",
+    "title2": "give every decision a clear reason",
+    "subtitle": "Before a logo or a website, you need to know who you serve, what you stand for, and why a customer should pick you. We turn that into a written brand strategy your whole team can act on — and that you own outright."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A positioning you can put to work, not a slide deck you file away",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Positioned for both audiences"
+    },
+    "items": [
+      {
+        "title": "A position you can defend",
+        "description": "We map your competitors, audience, and strengths to find the space you can credibly own in the GCC, then write a positioning statement that makes the choice obvious to your customer."
+      },
+      {
+        "title": "Messaging your team will actually use",
+        "description": "You get a clear value proposition, key messages, and a brand voice with do's and don'ts, so sales decks, social posts, and website copy all sound like the same company."
+      },
+      {
+        "title": "Built for Arabic and English markets",
+        "description": "We define how your brand sounds and positions itself in both languages from the start, so the Arabic side is a deliberate strategy, not a late translation of English ideas."
+      },
+      {
+        "title": "The brief your designers build on",
+        "description": "The strategy becomes the foundation for your logo, identity, and website — so visual and UX work has a documented reason behind it instead of guesswork and subjective taste."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between brand strategy and a logo or visual identity?",
+      "answer": "Brand strategy is the thinking that comes first: who you serve, what you stand for, how you're different, and what you say. A logo and visual identity are how that strategy is expressed visually. We define the strategy so any designer — us or your own team — has a clear brief to design against, instead of starting from taste alone."
+    },
+    {
+      "question": "What do I actually receive at the end?",
+      "answer": "You get a written brand strategy document: your positioning statement, target audience and what they care about, a value proposition, key messages, and a brand voice guide. It's a practical reference your marketing, sales, and design teams use day to day, not a one-off presentation. Everything is yours to keep and reuse."
+    },
+    {
+      "question": "We already have a logo and a name. Is this still useful?",
+      "answer": "Yes. Many businesses have a name and a logo but no agreed answer to why a customer should choose them or how the brand should sound. We work from what you already have and define the positioning and messaging around it, so your existing identity finally has a clear strategy behind it."
+    },
+    {
+      "question": "Do you handle the positioning in both Arabic and English?",
+      "answer": "Yes. We define how your brand is positioned and how it speaks in both Arabic and English, treating each as its own audience rather than translating one into the other. That way your messaging lands naturally with GCC customers in whichever language they read."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to understand your business, market, and goals, then outline a clear scope for the work. You see exactly what the strategy will cover before you commit, and the simplest way to start is a quick message on WhatsApp — there's no obligation to proceed."
+    }
+  ]
+}

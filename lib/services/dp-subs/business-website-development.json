@@ -1,0 +1,64 @@
+{
+  "slug": "business-website-development",
+  "service": "Business Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Business Website Development | CloudTopia",
+    "description": "Lead-focused business websites for SMEs in Oman and the GCC — fast, multilingual, and 100% owned by you. Book a free consultation and preview."
+  },
+  "hero": {
+    "badge": "Business Websites",
+    "title1": "Business websites that",
+    "title2": "turn visitors into enquiries",
+    "subtitle": "A lean, fast, multilingual website built around what your business actually sells — designed to win calls, messages, and quote requests, and handed over for your team to own and run."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A business site built to bring in real enquiries",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual delivery"
+    },
+    "items": [
+      {
+        "title": "Structured around your services",
+        "description": "Clear service pages, trust signals, and prominent calls to action that guide visitors from \"what do you do\" to \"contact us\" without friction."
+      },
+      {
+        "title": "Fast and mobile-first",
+        "description": "Built for speed on phones, where most of your customers browse, so pages load quickly and the contact buttons are always within reach."
+      },
+      {
+        "title": "A CMS your team controls",
+        "description": "Update services, prices, and pages yourself through a clean editor — no developer ticket for routine changes, and no monthly lock-in."
+      },
+      {
+        "title": "Arabic and English, done properly",
+        "description": "Native bilingual content with full right-to-left support, so every customer reads a site built for them, not a machine translation."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between a business website and a corporate website?",
+      "answer": "A business website is a leaner site focused on generating enquiries for small and medium businesses — services, proof, and clear contact paths. A corporate website is built for larger organizations with multiple departments, leadership, and external stakeholders, carrying deeper sections like governance, careers, and investor pages. Most SMEs are best served by a focused business website."
+    },
+    {
+      "question": "Can our team update the website without a developer?",
+      "answer": "Yes. We build on a content management system with clear templates, so your team can edit services, update prices, and publish pages themselves. We hand over admin access and train your staff, so routine updates never wait on us."
+    },
+    {
+      "question": "Do we fully own the website after it launches?",
+      "answer": "Completely. You receive the source code, design files, the CMS, hosting and domain accounts, and documentation at handover, with no lock-in. The site is yours to keep, move to another provider, or extend in-house whenever you choose."
+    },
+    {
+      "question": "Can you build the site in both Arabic and English with RTL?",
+      "answer": "Yes. We deliver native Arabic and English experiences with full right-to-left support, not machine translation. Both language versions share one structure, so your team manages and publishes content once across both audiences."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to map your services and goals, then prepare a written scope. You also see a demo preview of the design before you commit, so there are no surprises and no obligation to proceed until you're confident."
+    }
+  ]
+}

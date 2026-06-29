@@ -1,0 +1,64 @@
+{
+  "slug": "corporate-rebranding-strategy",
+  "service": "Corporate Rebranding Strategy",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Corporate Rebranding Strategy | CloudTopia",
+    "description": "Corporate rebranding for established GCC companies — evolve your brand without losing the recognition you have earned. Free consultation and preview included."
+  },
+  "hero": {
+    "badge": "Corporate Rebranding",
+    "title1": "Rebrand your company",
+    "title2": "without losing what you have built",
+    "subtitle": "A structured rebrand for established companies that have outgrown their identity — we audit the equity worth keeping, redesign the rest, and roll the new look across every touchpoint. You own the full brand system at the end."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A rebrand planned around the recognition you already have",
+    "stat": {
+      "value": "Yours",
+      "title": "The full brand system"
+    },
+    "items": [
+      {
+        "title": "We audit before we change anything",
+        "description": "We map what your current brand gets right — the colours customers recognise, the name equity, the associations worth protecting — so the rebrand evolves your identity instead of erasing it."
+      },
+      {
+        "title": "A clear reason behind every decision",
+        "description": "Each change traces back to a defined goal, whether that is shedding an outdated image, signalling a new direction, or unifying brands after a merger, so leadership can sign off with confidence."
+      },
+      {
+        "title": "Rolled out across every touchpoint",
+        "description": "We plan the migration from old to new — website, signage, documents, social profiles, email, and stationery — with a phased sequence and checklist so nothing keeps showing the previous identity."
+      },
+      {
+        "title": "One identity that works in Arabic and English",
+        "description": "The new logo, type, and guidelines are built to read and feel right in both languages with full right-to-left support, not an Arabic version bolted on after the fact."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How is a rebrand different from designing a brand from scratch?",
+      "answer": "A rebrand starts with an identity that customers already recognise, so the work is as much about deciding what to keep as what to change. We audit your existing equity first, then evolve the parts that no longer fit, which protects the recognition you have earned. A from-scratch brand has no such history to weigh."
+    },
+    {
+      "question": "Will we lose the recognition we have built with our current brand?",
+      "answer": "That is exactly what the audit step is designed to prevent. We identify the assets your audience associates with you — often a colour, a name, or a mark — and carry the right ones forward so the new identity still feels like you. Where a clean break is the goal, we plan the transition so the change reads as intentional, not jarring."
+    },
+    {
+      "question": "Do you handle rolling the new brand out, or just design it?",
+      "answer": "Both. Beyond the new identity and guidelines, we plan the rollout across your website, social profiles, documents, signage, and email so the old and new are not running side by side. You get a phased sequence and a checklist of every place the brand appears, so the switch is orderly rather than piecemeal."
+    },
+    {
+      "question": "Do we own the new brand assets and files after the project?",
+      "answer": "Completely. You receive the source design files, the logo in every format, the full brand guidelines, and any accounts we set up, with no lock-in. Your team or any future agency can use and extend the brand without coming back to us for the originals."
+    },
+    {
+      "question": "How do we start, and can we see direction before committing?",
+      "answer": "We begin with a free consultation to understand why you are rebranding and what must stay. From there you see early creative direction as a preview before you commit to the full project, so you can judge the fit with no obligation to continue. We are reachable on WhatsApp throughout."
+    }
+  ]
+}

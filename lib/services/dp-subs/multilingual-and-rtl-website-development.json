@@ -1,0 +1,64 @@
+{
+  "slug": "multilingual-and-rtl-website-development",
+  "service": "Multilingual & RTL Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Multilingual & RTL Website Development | CloudTopia",
+    "description": "Arabic-English websites built for real RTL — mirrored layouts, smooth language switching, and multilingual SEO. Free consultation and preview before you commit."
+  },
+  "hero": {
+    "badge": "Multilingual & RTL",
+    "title1": "Arabic and English websites",
+    "title2": "with true RTL, native in both languages",
+    "subtitle": "We build genuinely bilingual sites where the Arabic version is mirrored, typeset, and SEO-ready — not a flipped afterthought. One codebase, two first-class experiences, owned entirely by you."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "RTL done properly, not bolted on at the end",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Native in both"
+    },
+    "items": [
+      {
+        "title": "True RTL mirroring",
+        "description": "The Arabic layout flips direction the right way — navigation, icons, forms, and spacing all mirror cleanly instead of breaking against a left-to-right design."
+      },
+      {
+        "title": "Frictionless language switching",
+        "description": "A clear AR/EN toggle keeps visitors on the same page in their language, with each version on its own clean URL so it can be shared and bookmarked."
+      },
+      {
+        "title": "Arabic typography that reads well",
+        "description": "We choose and tune Arabic webfonts for proper line height, letterforms, and weight, so Arabic copy looks deliberate and reads comfortably, not cramped."
+      },
+      {
+        "title": "Multilingual SEO built in",
+        "description": "Correct hreflang tags, localized metadata, and per-language sitemaps tell Google to serve Arabic searchers the Arabic page and English searchers the English one."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Is this just running my site through Google Translate?",
+      "answer": "No. We build a real bilingual structure where each language has its own properly written, editable content and its own URL. You can use professional Arabic copy or your own team's wording, and the Arabic side is engineered as a first-class version, not an auto-translated copy."
+    },
+    {
+      "question": "What does RTL actually mean for my Arabic pages?",
+      "answer": "Right-to-left means the entire Arabic layout mirrors — text aligns right, navigation and buttons flip, and icons and spacing follow Arabic reading order. We design and test the RTL version directly so it feels native, rather than reversing an English layout and hoping it holds together."
+    },
+    {
+      "question": "Will having two languages hurt my SEO or create duplicate content?",
+      "answer": "Done correctly it helps, not hurts. We add hreflang tags, language-specific metadata, and separate sitemaps so search engines understand the two versions are intentional and rank each for the right audience. That lets you show up for both Arabic and English searches in Oman and the wider GCC."
+    },
+    {
+      "question": "Can I add more languages later, or update content myself?",
+      "answer": "Yes. We build on a structure that lets you edit both languages from one place and add further languages later without rebuilding the site. Because you fully own the code and the CMS, your team can manage translations and content independently of us."
+    },
+    {
+      "question": "Can you convert my existing English-only site to bilingual?",
+      "answer": "In most cases, yes. We review your current site, plan the Arabic and RTL layer, and add language switching and multilingual SEO around your existing content. You will see a working preview of the bilingual version before anything goes live, and there is no commitment until you are happy with it."
+    }
+  ]
+}

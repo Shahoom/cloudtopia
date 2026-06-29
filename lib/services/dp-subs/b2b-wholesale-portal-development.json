@@ -1,0 +1,60 @@
+{
+  "slug": "b2b-wholesale-portal-development",
+  "service": "B2B Wholesale Portal Development",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "B2B Wholesale Portal Development | CloudTopia",
+    "description": "Build a B2B wholesale portal with custom pricing, bulk ordering, and account terms — owned by you. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "B2B Commerce",
+    "title1": "Wholesale portals",
+    "title2": "built for B2B buyers",
+    "subtitle": "A B2B ordering portal with per-account pricing, bulk and re-order flows, quotes, and credit terms — so wholesale buyers order with ease."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Make wholesale ordering effortless",
+    "stat": {
+      "value": "B2B",
+      "title": "Account pricing"
+    },
+    "items": [
+      {
+        "title": "Per-account pricing",
+        "description": "Custom price lists, tiers, and discounts per customer."
+      },
+      {
+        "title": "Bulk & re-order",
+        "description": "Fast bulk ordering and one-click re-orders for regulars."
+      },
+      {
+        "title": "Quotes & terms",
+        "description": "Quote requests, approvals, and credit/payment terms."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can each client see their own pricing?",
+      "answer": "Yes — every B2B account logs in to its own catalog, negotiated pricing, and terms, controlled from your admin."
+    },
+    {
+      "question": "Does it support quotes and credit terms?",
+      "answer": "Yes — buyers can request quotes and order on agreed credit terms, with approvals routed to your team."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

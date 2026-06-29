@@ -1,0 +1,60 @@
+{
+  "slug": "custom-e-commerce-development",
+  "service": "Custom E-Commerce Development",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "Custom E-Commerce Development | CloudTopia",
+    "description": "Custom online stores built around your products, payments, and operations — fast, scalable, and fully owned by you. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Custom E-Commerce",
+    "title1": "Online stores built",
+    "title2": "around how you sell",
+    "subtitle": "A bespoke e-commerce platform engineered for your catalog, checkout, and growth — not squeezed into a rigid template."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "An online store that fits your business",
+    "stat": {
+      "value": "100%",
+      "title": "Yours to own"
+    },
+    "items": [
+      {
+        "title": "Tailored storefront",
+        "description": "Custom design and flows for your products, categories, and customers."
+      },
+      {
+        "title": "Conversion-built checkout",
+        "description": "Fast, frictionless checkout with the payment methods your buyers use."
+      },
+      {
+        "title": "Scales with you",
+        "description": "Architecture that handles growth in traffic, SKUs, and orders."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which platform do you build on?",
+      "answer": "We pick the right foundation — fully custom (Next.js / headless) or a platform like Shopify/WooCommerce — based on your needs, then tailor it to your catalog and operations."
+    },
+    {
+      "question": "Can it integrate with our systems?",
+      "answer": "Yes — payments, shipping, inventory, accounting, and CRM connect into one flow so orders and stock stay in sync."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "website-copywriting",
+  "service": "Website Copywriting",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Website Copywriting | CloudTopia",
+    "description": "We write clear, persuasive website copy that explains your value and turns visitors into customers — in Arabic and English. Free consultation."
+  },
+  "hero": {
+    "badge": "Website Copy",
+    "title1": "Website copy that",
+    "title2": "makes visitors take action",
+    "subtitle": "Sharp, structured copy for every page — homepage to services — that explains what you do, why it matters, and what to do next."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Words that sell, not just describe",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual copy"
+    },
+    "items": [
+      {
+        "title": "Conversion-focused",
+        "description": "Every page guides visitors toward a clear next step."
+      },
+      {
+        "title": "Structured for clarity",
+        "description": "Headlines, sections, and CTAs that are easy to scan and act on."
+      },
+      {
+        "title": "Your voice, sharpened",
+        "description": "Copy that sounds like you — only clearer and more persuasive."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which pages do you cover?",
+      "answer": "Homepage, about, services, product, and landing pages — whatever your site needs, structured and written to convert."
+    },
+    {
+      "question": "Do you write for SEO too?",
+      "answer": "Yes — copy is written for readers first and search engines second, with keywords woven in naturally."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

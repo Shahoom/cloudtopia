@@ -1,0 +1,60 @@
+{
+  "slug": "seo-blog-post-and-article-writing",
+  "service": "SEO Blog Post & Article Writing",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "SEO Blog & Article Writing | CloudTopia",
+    "description": "We write SEO blog posts and articles that rank, read well, and turn searchers into customers — in Arabic and English. Free consultation."
+  },
+  "hero": {
+    "badge": "Blog & Articles",
+    "title1": "Articles that",
+    "title2": "rank and convert",
+    "subtitle": "Original, research-backed articles built around real search intent — written to rank on Google and turn readers into enquiries, not just traffic."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Content that earns rankings and trust",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual writing"
+    },
+    "items": [
+      {
+        "title": "Search-intent driven",
+        "description": "Every piece targets keywords your customers actually search for."
+      },
+      {
+        "title": "Original & accurate",
+        "description": "Genuinely useful, fact-checked writing in your brand voice — no filler."
+      },
+      {
+        "title": "On-page SEO built in",
+        "description": "Structured headings, internal links, and meta written to rank."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you do keyword research?",
+      "answer": "Yes — we map each article to real search intent and keywords so it has a genuine chance to rank, not just fill a calendar."
+    },
+    {
+      "question": "Is the content original?",
+      "answer": "Always. Every article is written from scratch in your brand voice and fact-checked — never spun or duplicated."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

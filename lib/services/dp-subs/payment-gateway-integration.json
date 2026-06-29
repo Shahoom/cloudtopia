@@ -1,0 +1,60 @@
+{
+  "slug": "payment-gateway-integration",
+  "service": "Payment Gateway Integration",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "Payment Gateway Integration Oman | CloudTopia",
+    "description": "Integrate the right payment gateways — Mada, Apple Pay, Tabby, Tamara, cards — with secure, smooth checkout. Free consultation."
+  },
+  "hero": {
+    "badge": "Payments",
+    "title1": "Checkout that takes",
+    "title2": "every payment they want",
+    "subtitle": "Add the payment methods Gulf shoppers actually use — securely integrated for a smooth, trusted checkout that reduces drop-off."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Take the payments your buyers prefer",
+    "stat": {
+      "value": "GCC",
+      "title": "Local methods"
+    },
+    "items": [
+      {
+        "title": "Local + global methods",
+        "description": "Mada, Apple Pay, STC Pay, Tabby, Tamara, and cards — as you need."
+      },
+      {
+        "title": "Secure & compliant",
+        "description": "PCI-aware integration with tokenization and 3-D Secure."
+      },
+      {
+        "title": "Smooth checkout",
+        "description": "Fewer steps and failures means fewer abandoned carts."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which payment methods can you add?",
+      "answer": "Cards, Mada, Apple Pay, STC Pay, and BNPL options like Tabby and Tamara — plus global gateways like Stripe/PayPal — based on your market."
+    },
+    {
+      "question": "Is it secure?",
+      "answer": "Yes — we use tokenized, PCI-aware integrations with 3-D Secure so card data is handled safely."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

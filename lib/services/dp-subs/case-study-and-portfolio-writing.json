@@ -1,0 +1,60 @@
+{
+  "slug": "case-study-and-portfolio-writing",
+  "service": "Case Study & Portfolio Writing",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Case Study & Portfolio Writing | CloudTopia",
+    "description": "We write case studies and portfolio pieces that prove your results and win trust with serious buyers. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Case Studies",
+    "title1": "Case studies that",
+    "title2": "prove your results",
+    "subtitle": "Turn your best projects into persuasive case studies — challenge, approach, and outcome — that give serious buyers a reason to choose you."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Show the work that wins deals",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual writing"
+    },
+    "items": [
+      {
+        "title": "Story structure",
+        "description": "Clear challenge → approach → result narratives that build credibility."
+      },
+      {
+        "title": "Outcome-focused",
+        "description": "We frame real results in language buyers care about."
+      },
+      {
+        "title": "Interview-led",
+        "description": "We pull the details from your team so each story rings true."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do you get the details?",
+      "answer": "We interview your team and review project notes, then shape an accurate, compelling story — you approve every claim before publishing."
+    },
+    {
+      "question": "Can you design the layout too?",
+      "answer": "Yes — we can pair the writing with on-brand design for the web or a downloadable PDF."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

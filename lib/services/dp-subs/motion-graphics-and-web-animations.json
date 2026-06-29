@@ -1,0 +1,64 @@
+{
+  "slug": "motion-graphics-and-web-animations",
+  "service": "Motion Graphics & Web Animations",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Motion Graphics & Web Animations | CloudTopia",
+    "description": "Motion graphics and web animations that guide attention and make your brand feel alive — smooth, accessible, and 100% yours. Free consultation and preview."
+  },
+  "hero": {
+    "badge": "Motion & Animation",
+    "title1": "Motion graphics and web animations that",
+    "title2": "make every interaction feel alive",
+    "subtitle": "Animated logos, scroll effects, and interface micro-interactions that guide attention and add polish — tuned to stay smooth on real phones and handed over as files and code you own outright."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Motion with a purpose — built to perform, not just to dazzle",
+    "stat": {
+      "value": "100%",
+      "title": "Yours to own"
+    },
+    "items": [
+      {
+        "title": "Motion drawn from your brand",
+        "description": "We animate your existing logo, type, and colors with timing and easing that match your brand's personality, so the movement feels deliberate rather than borrowed from a template."
+      },
+      {
+        "title": "Micro-interactions that guide users",
+        "description": "Hover states, button feedback, loaders, and scroll-triggered reveals are choreographed to direct attention and confirm actions, making the interface feel responsive instead of flashy for its own sake."
+      },
+      {
+        "title": "Lightweight and built for performance",
+        "description": "We use Lottie, SVG, and CSS animation kept off the main thread where possible, so effects stay smooth on mid-range phones and never drag down your page speed or Core Web Vitals."
+      },
+      {
+        "title": "Accessible and bilingual by default",
+        "description": "Animations respect reduced-motion preferences and work cleanly in both Arabic and English layouts, including right-to-left direction, so no visitor is left dizzy or excluded."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What kinds of motion graphics and web animations do you create?",
+      "answer": "We cover animated logos and brand intros, scroll-triggered and hover effects, loading and transition animations, and interface micro-interactions like buttons, toggles, and menus. We also produce short animated explainer pieces and looping graphics for social and ads. During the free consultation we map which moments on your site actually benefit from motion."
+    },
+    {
+      "question": "Will animations slow down my website?",
+      "answer": "Not when they are built properly. We favor lightweight techniques like Lottie, SVG, and GPU-friendly CSS over heavy video, lazy-load effects below the fold, and test on real mid-range devices. The goal is motion that adds polish while keeping your load times and Core Web Vitals healthy."
+    },
+    {
+      "question": "Can you animate our existing logo and brand instead of starting from scratch?",
+      "answer": "Yes. We work from your current logo, brand colors, and any existing guidelines so the motion stays on-brand and consistent. If you don't have a brand kit yet, our UI/UX and branding team can establish that first so the animation has a solid foundation."
+    },
+    {
+      "question": "How do you handle users who prefer less motion or are on slower devices?",
+      "answer": "We honor the browser's reduced-motion setting and provide calmer or static fallbacks, so visitors who are sensitive to movement get a comfortable experience. On slower connections and older phones, effects scale back gracefully rather than stuttering, keeping the site usable for everyone."
+    },
+    {
+      "question": "What files do we receive, and do we own the animations?",
+      "answer": "You own everything outright — the source files, Lottie or SVG exports, and the animation code integrated into your site, with no lock-in. We hand over organized assets and brief notes so your team or any other developer can reuse, tweak, or extend the motion later. You also see a working preview before committing."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "multilingual-and-international-seo",
+  "service": "Multilingual & International SEO",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Multilingual & International SEO | CloudTopia",
+    "description": "Rank in Arabic and English across the GCC with international SEO: correct hreflang, native keyword research, country targeting. Free consultation, no lock-in."
+  },
+  "hero": {
+    "badge": "International SEO",
+    "title1": "Rank in every language",
+    "title2": "and market your customers search in",
+    "subtitle": "We make the right page win for the right searcher — Arabic to Arabic, English to English, and the correct country edition for each GCC market. Proper hreflang, native keyword research, and a setup you own outright."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Get found by Arabic and English searchers, in every market you serve",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Researched natively"
+    },
+    "items": [
+      {
+        "title": "hreflang done correctly",
+        "description": "We map and validate hreflang across every language and country edition so Google serves Arabic searchers your Arabic page and English searchers your English one — no wrong-language results in the SERP."
+      },
+      {
+        "title": "Native Arabic keyword research",
+        "description": "We research how people actually search in Arabic — including dialect, transliteration, and English-Arabic mixing common in the Gulf — instead of translating English keywords and hoping they match real demand."
+      },
+      {
+        "title": "Country and language targeting",
+        "description": "We choose and configure the right structure for your markets — subfolders, subdomains, or country domains — with geo-targeting and per-region signals so Oman, the UAE, Saudi Arabia, and beyond each rank for their audience."
+      },
+      {
+        "title": "Duplicate-content safeguards",
+        "description": "Canonical tags, language-specific metadata, and clean per-language URLs keep your Arabic and English versions from competing with or cannibalizing each other in search."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How is this different from just building a bilingual website?",
+      "answer": "A bilingual build gives you Arabic and English pages; international SEO makes sure each one actually ranks for the people it's meant for. We handle hreflang, native keyword targeting, country signals, and the technical setup that tells search engines which version to show in which language and market — work that goes well beyond putting a language toggle on the page."
+    },
+    {
+      "question": "What exactly is hreflang and why does it matter?",
+      "answer": "hreflang is the signal that tells Google which language and region each page is for, so an Arabic searcher gets your Arabic page and a UAE searcher gets your UAE edition. Done wrong, it's one of the most common causes of the wrong-language page ranking or pages competing against each other. We map, implement, and validate it so the right page wins every time."
+    },
+    {
+      "question": "Can you help us rank across the wider GCC, not just Oman?",
+      "answer": "Yes. We plan the right structure for each market you serve — choosing between subfolders, subdomains, or country domains — and configure geo-targeting and localized content signals for the UAE, Saudi Arabia, Qatar, and beyond. The goal is for each country and language to surface for its own audience, rather than one market drowning out the rest."
+    },
+    {
+      "question": "Do you translate keywords, or research them properly in Arabic?",
+      "answer": "We research them properly. Arabic search behaviour in the Gulf includes dialect, multiple spellings, transliteration, and frequent English-Arabic mixing, so a translated English keyword list misses real demand. We build the Arabic keyword strategy from how people actually search, then align your pages and metadata to it."
+    },
+    {
+      "question": "Do we own the work, and how do we get started?",
+      "answer": "You own all of it — the on-page changes, hreflang setup, keyword research, and documentation stay with you, with no lock-in to CloudTopia. We start with a free consultation to review your current setup and target markets, walk you through the plan before any commitment, and you can reach us anytime on WhatsApp."
+    }
+  ]
+}

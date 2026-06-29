@@ -1,0 +1,60 @@
+{
+  "slug": "pos-integration",
+  "service": "POS Integration for Online Stores",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "POS Integration for Online Stores | CloudTopia",
+    "description": "Sync your point-of-sale with your online store so inventory, sales, and customers stay unified. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "POS Integration",
+    "title1": "One stock, synced",
+    "title2": "online and in-store",
+    "subtitle": "Connect your POS and online store so inventory, orders, and customers stay in sync across every channel — no more double entry."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Unify online and in-store selling",
+    "stat": {
+      "value": "Synced",
+      "title": "Omnichannel"
+    },
+    "items": [
+      {
+        "title": "Unified inventory",
+        "description": "Stock updates in real time across store and online."
+      },
+      {
+        "title": "One customer view",
+        "description": "Online and in-store purchases tied to one customer profile."
+      },
+      {
+        "title": "No double entry",
+        "description": "Sales and products sync automatically between systems."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which POS systems do you integrate?",
+      "answer": "Common POS platforms (Shopify POS, Square, Lightspeed, Odoo, and others) — connected to your online store so data flows both ways."
+    },
+    {
+      "question": "Will inventory stay accurate?",
+      "answer": "Yes — stock syncs in real time so you avoid overselling and keep one source of truth across channels."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

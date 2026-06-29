@@ -1,0 +1,64 @@
+{
+  "slug": "corporate-website-development",
+  "service": "Corporate Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Corporate Website Development | CloudTopia",
+    "description": "Custom corporate websites for established companies in Oman and the GCC — credible, multilingual, and 100% owned by you. Book a free consultation and preview."
+  },
+  "hero": {
+    "badge": "Corporate Websites",
+    "title1": "Corporate websites that",
+    "title2": "represent the whole organization",
+    "subtitle": "A structured, multilingual corporate website for established companies — built around your leadership, divisions, and stakeholders, and handed over for your team to own and run."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A corporate site your whole organization can stand behind",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual delivery"
+    },
+    "items": [
+      {
+        "title": "Built for the full org chart",
+        "description": "Clear sections for leadership, divisions, careers, news, and investor or partner information, structured so every department has a proper home."
+      },
+      {
+        "title": "A CMS your team controls",
+        "description": "Marketing and HR update press releases, board bios, and job openings themselves through a clean editor — no developer ticket for routine content."
+      },
+      {
+        "title": "Governed and consistent",
+        "description": "Reusable page templates and a defined content model keep design, tone, and brand consistent as the site grows across teams and regions."
+      },
+      {
+        "title": "Arabic and English, done properly",
+        "description": "Native bilingual content with full right-to-left support, so head-office and regional audiences each read a site built for them, not a translation."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between a corporate website and a regular business website?",
+      "answer": "A corporate website is built for an established, often larger organization with multiple departments, leadership, and external stakeholders to represent. It carries deeper sections — leadership, governance, careers, news, investor or partner pages — and a content structure several teams can manage. A standard business website is usually leaner and focused mainly on generating enquiries."
+    },
+    {
+      "question": "Can our marketing and HR teams update content without a developer?",
+      "answer": "Yes. We build on a content management system with clear templates, so your teams can publish press releases, update leadership bios, and post job openings themselves. We hand over the admin access and train your staff, so routine updates never wait on us."
+    },
+    {
+      "question": "Do we fully own the corporate website after it launches?",
+      "answer": "Completely. You receive the source code, design files, the CMS, hosting and domain accounts, and documentation at handover, with no lock-in. The site is yours to keep, move to another provider, or extend in-house whenever you choose."
+    },
+    {
+      "question": "Can you build the site in both Arabic and English with RTL?",
+      "answer": "Yes. We deliver native Arabic and English experiences with full right-to-left support, not machine translation. Both language versions share one structure, so your team manages and publishes content once across both audiences."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to map your departments, stakeholders, and content needs, then prepare a written scope. You also see a demo preview of the design before you commit, so there are no surprises and no obligation to proceed until you're confident."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "social-media-strategy-and-planning",
+  "service": "Social Media Strategy & Planning",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Social Media Strategy & Planning | CloudTopia",
+    "description": "A clear social media strategy — audience, channels, content pillars, and a plan that actually drives results. Free consultation."
+  },
+  "hero": {
+    "badge": "Social Strategy",
+    "title1": "A social plan that",
+    "title2": "drives real results",
+    "subtitle": "Stop posting randomly. We build a focused strategy — audience, channels, content pillars, and goals — so every post has a purpose."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Strategy before posting",
+    "stat": {
+      "value": "Goal-led",
+      "title": "Strategy"
+    },
+    "items": [
+      {
+        "title": "Audience & channels",
+        "description": "We define who you are reaching and where they actually are."
+      },
+      {
+        "title": "Content pillars",
+        "description": "Clear themes that keep your content consistent and on-brand."
+      },
+      {
+        "title": "Measurable goals",
+        "description": "KPIs tied to real outcomes, not just likes."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What does the strategy include?",
+      "answer": "Audience research, channel selection, content pillars, posting cadence, tone, and measurable goals — a practical plan your team or ours can execute."
+    },
+    {
+      "question": "Will it fit our industry?",
+      "answer": "Yes — the strategy is built around your specific market, audience, and goals in the GCC, not a generic template."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

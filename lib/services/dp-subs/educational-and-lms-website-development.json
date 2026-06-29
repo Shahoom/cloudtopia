@@ -1,0 +1,64 @@
+{
+  "slug": "educational-and-lms-website-development",
+  "service": "Educational & LMS Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Educational & LMS Website Development | CloudTopia",
+    "description": "LMS and course website development with enrollment, lessons, quizzes, and certificates — bilingual and fully yours. Book a free consultation and live demo."
+  },
+  "hero": {
+    "badge": "LMS Development",
+    "title1": "Course and LMS websites that",
+    "title2": "turn learners into graduates",
+    "subtitle": "We build education websites and learning platforms where students enroll, watch lessons, take quizzes, track progress, and earn certificates — all on a system you fully own. Built bilingual in Arabic and English, with WhatsApp support and a working demo before you commit."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A learning platform built around how you actually teach",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual, RTL-ready"
+    },
+    "items": [
+      {
+        "title": "Enrollment and student accounts",
+        "description": "Self-serve sign-up, course catalogs, cohort or open enrollment, and student dashboards that show exactly what each learner has started, finished, and has left to do."
+      },
+      {
+        "title": "Lessons, quizzes and certificates",
+        "description": "Structured courses with video and document lessons, drip scheduling, graded quizzes and assignments, and auto-issued completion certificates learners can download."
+      },
+      {
+        "title": "Instructor and admin control",
+        "description": "Role-based access so instructors manage their own content and grading while admins oversee enrollments, reporting, and revenue from a single back office."
+      },
+      {
+        "title": "Payments and access rules",
+        "description": "Sell courses, bundles, or subscriptions through local and international gateways, with content locked until purchase, enrollment, or prerequisite completion."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you build on an existing LMS or code it from scratch?",
+      "answer": "Both — we recommend whichever fits your needs and budget. We can build on proven platforms like Moodle, LearnDash, or Tutor LMS, or develop a fully custom learning system when your courses and rules are too specific for an off-the-shelf tool. Either way you own the result, and we show you a live demo before you commit."
+    },
+    {
+      "question": "Can students pay for courses and get access automatically?",
+      "answer": "Yes. We integrate local and international payment gateways so learners can buy a single course, a bundle, or a recurring subscription, and access unlocks the moment payment clears. You can also offer free courses, coupons, and manual enrollment for sponsored or corporate students."
+    },
+    {
+      "question": "Will the platform work in Arabic and English?",
+      "answer": "Yes. We deliver the interface, course content structure, emails, and certificates bilingually with full right-to-left support for Arabic. Students get a native experience in their language, and you can publish each course in one or both languages."
+    },
+    {
+      "question": "Can it handle video lessons, quizzes, and certificates?",
+      "answer": "Those are core to every learning platform we build. We set up secure video hosting, downloadable resources, drip-scheduled lessons, graded quizzes and assignments, and certificates that generate automatically when a learner completes a course. Progress tracking keeps both students and instructors informed."
+    },
+    {
+      "question": "Do we own the platform and our student data after launch?",
+      "answer": "Completely. You receive the source code, the database with all your courses and student records, the hosting accounts, and the documentation. There is no per-student licence and no lock-in — your team can host it, extend it, and run it independently of us."
+    }
+  ]
+}

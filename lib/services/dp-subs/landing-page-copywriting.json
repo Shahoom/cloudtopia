@@ -1,0 +1,60 @@
+{
+  "slug": "landing-page-copywriting",
+  "service": "Landing Page Copywriting",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Landing Page Copywriting | CloudTopia",
+    "description": "We write high-converting landing page copy for campaigns, launches, and ads — built to win the click and the lead. Free consultation."
+  },
+  "hero": {
+    "badge": "Landing Pages",
+    "title1": "Landing copy that",
+    "title2": "turns clicks into leads",
+    "subtitle": "Persuasive, single-focus landing page copy for ads, launches, and campaigns — with the message, structure, and CTA that convert paid traffic."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Make every ad click count",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual copy"
+    },
+    "items": [
+      {
+        "title": "Single clear offer",
+        "description": "One focused message and CTA so visitors know exactly what to do."
+      },
+      {
+        "title": "Built for paid traffic",
+        "description": "Copy aligned to your ad so the click-to-page story is seamless."
+      },
+      {
+        "title": "Objection-handling",
+        "description": "Proof, benefits, and FAQs that remove hesitation before the form."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you match copy to our ads?",
+      "answer": "Yes — we align the landing page message to your ad so visitors get a seamless, high-converting experience."
+    },
+    {
+      "question": "Can you write A/B variants?",
+      "answer": "We can write multiple headline and CTA variants so you can test what converts best."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

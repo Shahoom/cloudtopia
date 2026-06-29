@@ -1,0 +1,64 @@
+{
+  "slug": "near-me-search-optimization",
+  "service": "Near Me Search Optimization",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "\"Near Me\" Search Optimization | CloudTopia",
+    "description": "Be the business nearby customers find when they search \"near me\" or \"open now\" on Google and Maps. Near me search optimization with a free consultation first."
+  },
+  "hero": {
+    "badge": "Near Me Search",
+    "title1": "Be the business people find",
+    "title2": "when they search \"near me\"",
+    "subtitle": "When someone nearby reaches for their phone and types \"near me\" or \"open now,\" we make sure your business is the one that shows up — on the map, in the local pack, and ready to be called or visited. You own every account and asset we set up."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Caught at the exact moment someone nearby is ready to act",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual local search"
+    },
+    "items": [
+      {
+        "title": "Tuned for high-intent local searches",
+        "description": "We optimize your Google Business Profile and website for the \"near me,\" \"nearby,\" and \"open now\" phrasing people actually type when they want to visit or call today — not vague, far-off keywords."
+      },
+      {
+        "title": "Set to surface in the moment of decision",
+        "description": "We align your categories, service area, and hours with what nearby searchers ask for, so Google reads your location as the relevant answer and places you in the map and local results customers see first."
+      },
+      {
+        "title": "Arabic and English search behavior, both covered",
+        "description": "We target how people in Oman and the GCC search in both languages — Arabic and English, with and without diacritics — so you appear whichever way a nearby customer phrases it."
+      },
+      {
+        "title": "Found on the device that drives walk-ins",
+        "description": "\"Near me\" searches are overwhelmingly mobile, so we make sure your listing, click-to-call, directions, and landing pages work fast and cleanly on a phone in someone's hand."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What exactly is \"near me\" search optimization?",
+      "answer": "It's tuning your online presence so you appear when people nearby search phrases like \"restaurant near me\" or \"plumber open now.\" These searches signal someone ready to act in the next few minutes or hours, so we optimize your Google Business Profile, location signals, and website to capture that intent. The goal is showing up on the map and in local results exactly when a nearby customer is deciding where to go."
+    },
+    {
+      "question": "Do I still need keywords with my city or area name, or just \"near me\"?",
+      "answer": "You need both, and they work together. Google increasingly answers \"near me\" by using the searcher's location rather than a typed place name, so we make your location and service area unmistakable to Google. We also keep your city, neighborhood, and landmark terms strong on your site, so you're covered whether someone types \"near me\" or names the area directly."
+    },
+    {
+      "question": "How is this different from regular local SEO or just setting up a Google Business Profile?",
+      "answer": "Setting up a profile is the starting point; this work targets the location-triggered, ready-to-buy searches specifically. We focus on the signals that decide whether you appear in the moment of intent — accurate categories, service area, hours, proximity relevance, and a fast mobile experience for the \"near me\" and \"open now\" searcher. It's a sharper, intent-focused layer on top of the foundational local SEO basics."
+    },
+    {
+      "question": "Will this work for both my Arabic-speaking and English-speaking customers?",
+      "answer": "Yes. People across Oman and the GCC search in both Arabic and English, often switching between them, so we optimize for both. We account for Arabic spelling variations, transliterations, and the English terms locals commonly use, so a nearby customer finds you no matter how they phrase the search."
+    },
+    {
+      "question": "How do we get started, and is anything owed upfront?",
+      "answer": "We begin with a free consultation to review your current local visibility and the \"near me\" searches that matter for your business. Before you commit, we'll walk you through a clear plan and a preview of what the optimized listing and pages will look like. The simplest way to start is a quick message on WhatsApp, and everything we build stays fully yours."
+    }
+  ]
+}

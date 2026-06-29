@@ -1,0 +1,64 @@
+{
+  "slug": "website-redesign-and-modernization",
+  "service": "Website Redesign & Modernization",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Website Redesign & Modernization | CloudTopia",
+    "description": "Redesign a slow, dated website into a fast, modern, bilingual site you fully own — and keep the Google rankings you have. Free consultation and a preview first."
+  },
+  "hero": {
+    "badge": "Website Redesign",
+    "title1": "Redesign your dated website into",
+    "title2": "a faster, modern site you own",
+    "subtitle": "We redesign ageing, slow, or hard-to-edit websites into clean, fast, mobile-first sites in Arabic and English — keeping the content and rankings you have earned. You see a live preview of the new design before you commit, and you own everything we hand over."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A redesign that modernises the look without losing your traffic",
+    "stat": {
+      "value": "Yours",
+      "title": "Code, content & accounts"
+    },
+    "items": [
+      {
+        "title": "Rankings and URLs protected",
+        "description": "We map every existing page and put 301 redirects in place so your search rankings, backlinks, and indexed URLs survive the move to the redesigned site."
+      },
+      {
+        "title": "Content migrated, not lost",
+        "description": "Your existing pages, images, and copy are audited, tidied, and carried over into the new design so nothing important disappears in the redesign."
+      },
+      {
+        "title": "Faster, mobile-first, accessible",
+        "description": "We rebuild on a modern, lightweight stack tuned for Core Web Vitals, so the new site loads quickly, reads well on phones, and meets current accessibility standards."
+      },
+      {
+        "title": "Easy to edit and fully yours",
+        "description": "You get a clean CMS your team can update without a developer, plus the source code, hosting, and accounts handed over with no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Will a redesign hurt my Google rankings?",
+      "answer": "Not when it is done carefully. We map your current URLs, keep your important content, and set up 301 redirects so search engines follow the old pages to their new homes. The goal of the redesign is to hold the rankings you have and improve on them, not reset them to zero."
+    },
+    {
+      "question": "Can you keep my existing content and branding, or does it all change?",
+      "answer": "That is your call. Most clients keep their logo, brand colours, and core content while we modernise the layout, speed, and structure around them. If you want a fuller visual refresh as part of the redesign, we can do that too — we will show you a preview either way before anything goes live."
+    },
+    {
+      "question": "Will my site go down or be unreachable during the redesign?",
+      "answer": "No. We build and test the redesigned version separately, then switch it over once you have approved the preview. Your current site stays live and working the whole time, so there is no gap where visitors hit a broken or empty page."
+    },
+    {
+      "question": "What if my old site was built on WordPress or a platform I can't easily edit?",
+      "answer": "We handle that regularly. We can redesign from your existing WordPress, an old page builder, or a hand-coded site, and move you onto a clean CMS your team can actually update. After launch you own the code, the hosting, and the accounts outright with no lock-in to us."
+    },
+    {
+      "question": "How do we start, and can I see something before committing?",
+      "answer": "Start with a free consultation over WhatsApp where we look at your current site and what is holding it back. Before you commit, we put together a demo preview of the new direction so you can judge the redesign on something real, in both Arabic and English, rather than a promise."
+    }
+  ]
+}

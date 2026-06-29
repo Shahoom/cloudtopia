@@ -1,0 +1,64 @@
+{
+  "slug": "website-maintenance-and-support",
+  "service": "Website Maintenance & Support",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Website Maintenance & Support | CloudTopia",
+    "description": "Keep your website fast, updated, backed up, and secure with proactive website maintenance and support from CloudTopia. Free consultation. Reach us on WhatsApp."
+  },
+  "hero": {
+    "badge": "Website Care",
+    "title1": "Website maintenance and support that",
+    "title2": "keeps your site fast, secure, and online",
+    "subtitle": "Launching a website is the start, not the finish. We handle the updates, backups, security patches, and content edits that keep yours running while you run your business — and you keep full ownership of the code and accounts the whole time."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Ongoing care for a site you still fully own",
+    "stat": {
+      "value": "100%",
+      "title": "Still yours to own"
+    },
+    "items": [
+      {
+        "title": "Updates and security patches",
+        "description": "We keep your CMS, plugins, themes, and dependencies current and patched, closing the vulnerabilities that outdated software quietly opens on a live site."
+      },
+      {
+        "title": "Backups and quick recovery",
+        "description": "Scheduled off-site backups mean a bad update, hack, or human error never costs you the site — we can roll it back to a working version fast."
+      },
+      {
+        "title": "Content edits and small changes",
+        "description": "Send us text tweaks, new pages, images, banners, or pricing updates in Arabic or English, and we make the changes for you instead of you wrestling with the dashboard."
+      },
+      {
+        "title": "Uptime, speed, and fixes",
+        "description": "We monitor that your site stays online and loading fast, and when something breaks we diagnose and fix it rather than leaving you to guess what went wrong."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you maintain websites you didn't originally build?",
+      "answer": "Yes. We take on sites built by other agencies or freelancers, whether they run on WordPress, a custom stack, or a page builder. We start with a quick review of how it's set up, then tell you honestly what it needs before any commitment."
+    },
+    {
+      "question": "What's actually covered under maintenance and support?",
+      "answer": "Software and security updates, scheduled backups, uptime and performance monitoring, bug fixes, and small content or design edits. Larger work like a redesign or a new feature is scoped separately, and we'll always flag when a request crosses that line."
+    },
+    {
+      "question": "How quickly do you respond when something breaks?",
+      "answer": "WhatsApp is the fastest way to reach us, and urgent issues like a site that's down or hacked are treated as priority. For everyday edits and requests we agree on a clear turnaround with you up front so you know what to expect."
+    },
+    {
+      "question": "If we use your maintenance, do we still own everything?",
+      "answer": "Completely. The code, hosting, domain, and CMS accounts stay in your name throughout — we work inside your setup, not a locked platform of ours. You're free to move your site to another provider at any time, with no barriers over access or files."
+    },
+    {
+      "question": "Can you handle updates and content in both Arabic and English?",
+      "answer": "Yes. We maintain bilingual and RTL sites as a standard part of the work, so edits, new pages, and fixes are handled correctly in both languages. Nothing breaks in your Arabic layout because a change was only tested in English."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "woocommerce-store-development",
+  "service": "WooCommerce Store Development",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "WooCommerce Store Development Oman | CloudTopia",
+    "description": "Custom WooCommerce stores on WordPress — flexible, owned by you, with GCC payments and bilingual checkout. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "WooCommerce",
+    "title1": "WooCommerce stores",
+    "title2": "you fully control",
+    "subtitle": "A flexible WooCommerce store on WordPress — full ownership, no platform fees, and customized to exactly how you sell."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Maximum control, no platform lock-in",
+    "stat": {
+      "value": "100%",
+      "title": "Self-hosted"
+    },
+    "items": [
+      {
+        "title": "Fully customizable",
+        "description": "Open-source flexibility for custom products, pricing, and flows."
+      },
+      {
+        "title": "No transaction fees",
+        "description": "Self-hosted means no per-sale platform cut — you keep more margin."
+      },
+      {
+        "title": "Content + commerce",
+        "description": "WordPress content and your store in one place, SEO-friendly."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Why WooCommerce over a hosted platform?",
+      "answer": "It gives you full ownership, no per-sale platform fees, and unlimited customization — ideal when you want control and a content-rich site alongside the store."
+    },
+    {
+      "question": "Is it secure and reliable?",
+      "answer": "Yes — we handle secure hosting, backups, updates, and performance so the store stays fast and safe."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

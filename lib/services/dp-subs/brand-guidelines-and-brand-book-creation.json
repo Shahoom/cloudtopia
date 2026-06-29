@@ -1,0 +1,64 @@
+{
+  "slug": "brand-guidelines-and-brand-book-creation",
+  "service": "Brand Guidelines & Brand Book Creation",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Brand Guidelines & Brand Book Creation | CloudTopia",
+    "description": "Brand guidelines and a brand book that keep your logo, colors, type, and voice consistent across teams and vendors. Free consultation, editable files you own."
+  },
+  "hero": {
+    "badge": "Brand Guidelines",
+    "title1": "Brand guidelines that keep",
+    "title2": "your brand consistent everywhere",
+    "subtitle": "We turn your logo, colors, typography, and tone into a clear brand book your whole team and any vendor can follow — in Arabic and English, with the editable source files handed over for you to own."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "One rulebook that stops your brand drifting",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual brand rules"
+    },
+    "items": [
+      {
+        "title": "Logo rules anyone can follow",
+        "description": "We document every approved logo lockup, clear space, minimum sizes, correct backgrounds, and the misuses to avoid, so the mark stays sharp whether a printer, agency, or new hire uses it."
+      },
+      {
+        "title": "Defined color and type systems",
+        "description": "Your palette is fixed with exact HEX, RGB, CMYK, and Pantone values, paired with a clear type scale and Arabic and Latin font rules, so screens and print always look like the same brand."
+      },
+      {
+        "title": "Voice, tone, and bilingual usage",
+        "description": "We set how the brand sounds and writes in both Arabic and English — naming, capitalization, and RTL layout rules included — so copy stays on-brand across every channel and language."
+      },
+      {
+        "title": "A handover pack you actually own",
+        "description": "You get the brand book plus an organized asset library of logo files, fonts, and templates, in editable source format with no lock-in, ready to share with any team or supplier."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between brand guidelines and a brand book?",
+      "answer": "Brand guidelines are the core rules — how the logo, colors, typography, and spacing are used correctly. A brand book is the fuller document that wraps those rules together with your brand story, voice, tone, and real application examples. We can deliver a concise one-page set of guidelines or a complete brand book, depending on how widely your brand needs to be governed."
+    },
+    {
+      "question": "Do I need a logo or brand strategy before this?",
+      "answer": "It helps to have your logo and core direction settled first, because guidelines codify decisions rather than make them. If your visual identity already exists, we document it into a usable system; if pieces are missing or inconsistent, we will flag that in the free consultation and can handle the logo or brand strategy as a separate step before writing the book."
+    },
+    {
+      "question": "Can the brand book cover both Arabic and English properly?",
+      "answer": "Yes, and this is where many generic guidelines fall short. We define paired Arabic and Latin typefaces, right-to-left layout rules, bilingual logo lockups, and naming conventions so the brand reads correctly in both scripts. Your team gets clear rules for designing in Arabic and English rather than forcing one to imitate the other."
+    },
+    {
+      "question": "What files do I receive, and can I edit them later?",
+      "answer": "You receive the brand book as a polished PDF plus the editable source file, alongside an organized asset library of logo formats, fonts, and color values. Everything is fully yours with no lock-in, so your team or any future designer can update and extend the guidelines as the brand grows."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to review your existing assets and where your brand is being applied inconsistently. From there we prepare a written scope and share a preview of the brand book layout before you commit, so you can see the direction and structure with no obligation to proceed. The easiest way to start is a quick message on WhatsApp."
+    }
+  ]
+}

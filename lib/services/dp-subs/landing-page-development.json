@@ -1,0 +1,64 @@
+{
+  "slug": "landing-page-development",
+  "service": "Landing Page Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Landing Page Development in Oman | CloudTopia",
+    "description": "Landing page development built around one offer and one action — fast, bilingual, and fully tracked. Free consultation and a live preview before you commit."
+  },
+  "hero": {
+    "badge": "Landing Pages",
+    "title1": "Landing pages built around",
+    "title2": "one offer and one action",
+    "subtitle": "We build focused, fast-loading landing pages that turn a single campaign, ad, or offer into sign-ups, calls, and bookings — with the tracking already wired in so you can see exactly what's working."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Pages designed to convert, not just to exist",
+    "stat": {
+      "value": "1 goal",
+      "title": "Per page, no distractions"
+    },
+    "items": [
+      {
+        "title": "One clear action, zero detours",
+        "description": "Every section, headline, and button points to a single conversion — a form fill, a WhatsApp message, a booking, or a purchase — with no competing menus or dead-end links."
+      },
+      {
+        "title": "Built to load fast on mobile data",
+        "description": "We optimize images, scripts, and layout so the page opens quickly on phones and 4G across the GCC, because a slow landing page loses the click you already paid for."
+      },
+      {
+        "title": "Conversion tracking wired in from day one",
+        "description": "We connect your analytics, ad pixels, and form events so you can see real submissions, cost per lead, and which traffic source actually converts — not just visits."
+      },
+      {
+        "title": "Bilingual AR + EN, ready to A/B test",
+        "description": "We deliver matching Arabic and English versions with proper right-to-left layout, and structure the page so you can swap headlines or offers and test variants later."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between a landing page and a full website?",
+      "answer": "A website explains everything about your business across many pages; a landing page does one job — convert visitors from a specific ad, email, or campaign into a single action. It strips away navigation and extra links so the only choices are to convert or leave, which is why focused landing pages typically outperform sending traffic to a homepage."
+    },
+    {
+      "question": "Can you connect the page to my ads, forms, and WhatsApp?",
+      "answer": "Yes. We wire the form to email or your CRM, add a one-tap WhatsApp button pre-filled with your message, and install the tracking and ad pixels you use so every lead and conversion is recorded. You'll be able to see which campaign drove each enquiry instead of guessing."
+    },
+    {
+      "question": "Will I be able to launch new campaigns and test variations?",
+      "answer": "We build the page so you can duplicate it, change the headline, offer, or hero image, and run different versions against each other. Because you own the code and accounts outright, you're free to keep iterating on your own or have us run the tests with you — there's no lock-in."
+    },
+    {
+      "question": "How fast can a landing page go live, and do I see it first?",
+      "answer": "A single, focused landing page is one of the quickest things we build, since the scope is deliberately tight. We start with a free consultation to pin down the offer and audience, then share a working preview so you can review the design and copy before anything goes public or you commit."
+    },
+    {
+      "question": "Do I own the page, or am I tied to a platform?",
+      "answer": "You own all of it — the code, the hosting and analytics accounts, and every asset we create. We can host it for you or hand it over to deploy wherever you like, with nothing locked to a proprietary builder you'd have to keep paying for to keep the page online."
+    }
+  ]
+}

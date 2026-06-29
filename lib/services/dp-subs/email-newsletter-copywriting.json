@@ -1,0 +1,60 @@
+{
+  "slug": "email-newsletter-copywriting",
+  "service": "Email Newsletter Copywriting",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Email Newsletter Copywriting | CloudTopia",
+    "description": "We write email newsletters that get opened, read, and clicked — keeping your audience engaged and buying. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Email Copy",
+    "title1": "Newsletters that",
+    "title2": "get opened and clicked",
+    "subtitle": "Engaging, on-brand email copy — subject lines to CTAs — that keeps your list warm and turns subscribers into repeat customers."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Email that earns the open",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual copy"
+    },
+    "items": [
+      {
+        "title": "Subject lines that land",
+        "description": "Tested, curiosity-driven lines that lift your open rates."
+      },
+      {
+        "title": "Value-first content",
+        "description": "Emails people actually want to read, not just promotions."
+      },
+      {
+        "title": "Clear CTAs",
+        "description": "Every send drives one obvious, measurable action."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you set up the email platform too?",
+      "answer": "We can write within your existing platform (Mailchimp, Klaviyo, etc.) or help set one up and connect it to your audience."
+    },
+    {
+      "question": "How often should we send?",
+      "answer": "We help you find a sustainable cadence that keeps your list engaged without fatigue — quality over volume."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

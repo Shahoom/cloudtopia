@@ -1,0 +1,60 @@
+{
+  "slug": "multi-vendor-marketplace-development",
+  "service": "Multi-Vendor Marketplace Development",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "Multi-Vendor Marketplace Development | CloudTopia",
+    "description": "Build a multi-vendor marketplace with vendor onboarding, commissions, and payouts — owned by you. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Marketplaces",
+    "title1": "Marketplaces where",
+    "title2": "many vendors sell",
+    "subtitle": "Launch your own marketplace — vendor onboarding, product approvals, commissions, and automated payouts in one platform you own."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Your own marketplace, your rules",
+    "stat": {
+      "value": "Multi-vendor",
+      "title": "Commissions"
+    },
+    "items": [
+      {
+        "title": "Vendor onboarding",
+        "description": "Self-serve registration, storefronts, and product management per vendor."
+      },
+      {
+        "title": "Commissions & payouts",
+        "description": "Automated commission rules and clean payout reporting."
+      },
+      {
+        "title": "Admin control",
+        "description": "Approvals, moderation, and full oversight from one dashboard."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can vendors manage their own products?",
+      "answer": "Yes — each vendor gets a dashboard to manage products, orders, and earnings, while you keep approval and oversight from the admin."
+    },
+    {
+      "question": "How are commissions and payouts handled?",
+      "answer": "You set commission rules per vendor or category; the platform tracks earnings and reports payouts automatically."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "on-page-seo-optimization",
+  "service": "On-Page SEO Optimization",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "On-Page SEO Optimization Oman | CloudTopia",
+    "description": "On-page SEO that makes every page rank for what it is about: titles, headings, content, internal links, and schema. Free consultation and a live preview first."
+  },
+  "hero": {
+    "badge": "On-Page SEO",
+    "title1": "On-page SEO that makes",
+    "title2": "every page rank for what it's about",
+    "subtitle": "We optimize each page from the inside out — titles, headings, copy, internal links, and structured data — so search engines understand it clearly and rank it for the right terms. Every change lands in your own site, documented and yours to keep."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Pages tuned so search engines know exactly what each one is for",
+    "stat": {
+      "value": "Page by page",
+      "title": "Optimized, not guessed"
+    },
+    "items": [
+      {
+        "title": "Titles and metas that earn the click",
+        "description": "We write a unique, keyword-led title tag and meta description for every page, sized to display in full, so you rank for the right term and get the click instead of being skipped in the results."
+      },
+      {
+        "title": "Clean heading and content structure",
+        "description": "We give each page one clear H1 and a logical H2/H3 outline, then sharpen the copy around its target topic so both readers and search engines grasp the point fast — without keyword stuffing."
+      },
+      {
+        "title": "Internal links and schema that add context",
+        "description": "We connect related pages with descriptive internal links and add the right structured data — FAQ, breadcrumb, article, or local business — so Google understands your content and can show rich results."
+      },
+      {
+        "title": "Arabic and English, optimized natively",
+        "description": "We optimize each language on its own terms with full RTL support, so your Arabic pages target how people actually search in Arabic rather than reading like a translated afterthought."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between on-page SEO and technical SEO?",
+      "answer": "On-page SEO is about what's on each page — the title tag, headings, body copy, images, internal links, and structured data that tell search engines what the page is about. Technical SEO covers the site-wide foundations like crawling, indexing, site speed, and sitemaps. The two work together, and we'll tell you in the free consultation which one your site needs most right now."
+    },
+    {
+      "question": "Will you rewrite my content, and do I get a say?",
+      "answer": "We refine and restructure your existing copy so it targets the right terms and reads clearly, rather than throwing everything out. You review and approve every change before it goes live, and we show you a preview first. Nothing is published behind your back, and the final wording is always yours to sign off on."
+    },
+    {
+      "question": "How long until on-page changes show up in rankings?",
+      "answer": "On-page work is often the fastest part of SEO to register, because search engines re-crawl and re-evaluate updated pages over the following days and weeks. That said, how far you move depends on competition and the rest of your site, so we set honest expectations up front and track each page rather than promising an overnight jump."
+    },
+    {
+      "question": "Do you optimize pages on any platform, or only sites you built?",
+      "answer": "We work on whatever you're already running — WordPress, Shopify, Webflow, a custom build, or anything else with editable content and meta fields. We adapt to your CMS, apply the changes there, and document exactly what we did. You don't need to rebuild or migrate your site for us to optimize it."
+    },
+    {
+      "question": "Do I own the work, and how do we get started?",
+      "answer": "Yes — every optimization lives in your own site and accounts, with no lock-in and nothing rented from us. We start with a free consultation to review your priority pages and show you what's achievable, then a preview before anything goes live. The quickest way to begin is a message on WhatsApp, and everything is delivered in both Arabic and English."
+    }
+  ]
+}

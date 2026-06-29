@@ -1,0 +1,60 @@
+{
+  "slug": "community-management-and-engagement",
+  "service": "Community Management & Engagement",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Community Management & Engagement | CloudTopia",
+    "description": "We manage comments, DMs, and engagement so your audience feels heard and your brand stays responsive. Free consultation."
+  },
+  "hero": {
+    "badge": "Community",
+    "title1": "Engagement that",
+    "title2": "builds loyal followers",
+    "subtitle": "Active community management — replying to comments and DMs, sparking conversation, and turning followers into a loyal, engaged audience."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Turn followers into a community",
+    "stat": {
+      "value": "Responsive",
+      "title": "Engagement"
+    },
+    "items": [
+      {
+        "title": "Comments & DMs",
+        "description": "Timely, on-brand replies that make followers feel heard."
+      },
+      {
+        "title": "Proactive engagement",
+        "description": "Joining conversations to grow reach and relationships."
+      },
+      {
+        "title": "Lead capture",
+        "description": "Routing genuine inquiries from DMs to your sales team."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you respond in our brand voice?",
+      "answer": "Yes — we manage replies in your tone, with clear guidelines for escalation so sensitive messages reach your team."
+    },
+    {
+      "question": "Can you handle Arabic and English audiences?",
+      "answer": "Yes — bilingual community management so both audiences get prompt, natural responses."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

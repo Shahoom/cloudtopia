@@ -1,0 +1,60 @@
+{
+  "slug": "video-scriptwriting",
+  "service": "Video Scriptwriting",
+  "pillarSlug": "content-marketing-authority",
+  "pillarName": "Content Marketing & Authority",
+  "seo": {
+    "title": "Video Scriptwriting | CloudTopia",
+    "description": "We write video scripts for ads, explainers, and social that hook viewers fast and drive action. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Video Scripts",
+    "title1": "Scripts that",
+    "title2": "hook viewers in seconds",
+    "subtitle": "Tight, structured scripts for explainers, ads, and social video — built to grab attention in the first seconds and carry viewers to a clear action."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Words that make video work",
+    "stat": {
+      "value": "EN + AR",
+      "title": "Bilingual scripts"
+    },
+    "items": [
+      {
+        "title": "Strong hooks",
+        "description": "Openers engineered to stop the scroll and hold attention."
+      },
+      {
+        "title": "Format-aware",
+        "description": "Scripts shaped for Reels, TikTok, YouTube, or explainer length."
+      },
+      {
+        "title": "Action-driven",
+        "description": "Every script ends with one clear, persuasive call to action."
+      },
+      {
+        "title": "You own everything",
+        "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What types of video do you script?",
+      "answer": "Explainers, product and ad videos, social shorts (Reels/TikTok/Shorts), and brand films — each structured for its platform."
+    },
+    {
+      "question": "Do you provide shot or scene direction?",
+      "answer": "Yes — scripts can include scene, visual, and tone notes so production runs smoothly."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+    }
+  ]
+}

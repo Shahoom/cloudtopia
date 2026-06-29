@@ -1,0 +1,64 @@
+{
+  "slug": "local-map-ranking-strategies",
+  "service": "Local Map Ranking Strategies",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Local Map Ranking Strategies | CloudTopia",
+    "description": "Climb the Google Maps local pack across Oman and the GCC. We tune the map ranking signals that win the top three. Free consultation and grid audit to start."
+  },
+  "hero": {
+    "badge": "Map Ranking",
+    "title1": "Local map ranking that",
+    "title2": "lands you in the top three",
+    "subtitle": "We work the signals Google actually uses to rank the map pack — relevance, distance, and prominence — so your business shows up first when nearby customers search. You see exactly where you rank across the city before and after, on a real map grid."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A deliberate plan to move you up the Google Maps pack, not guesswork",
+    "stat": {
+      "value": "Top 3",
+      "title": "The local pack target"
+    },
+    "items": [
+      {
+        "title": "We tune the three ranking signals",
+        "description": "Google ranks the map pack on relevance, distance, and prominence, so we sharpen your primary and secondary categories, services, and on-profile content to match how nearby customers actually search."
+      },
+      {
+        "title": "Ranking measured on a real map grid",
+        "description": "Instead of one position, we track where you rank across a grid of points around your area, so you can see your true reach across Muscat or your city and watch it widen as we work."
+      },
+      {
+        "title": "Reviews and signals that build prominence",
+        "description": "We set up a steady, policy-safe flow of fresh reviews and owner replies, and align your name, address, and phone across the listings Google cross-checks, which together lift the prominence that decides pack placement."
+      },
+      {
+        "title": "Built for Arabic and English searchers",
+        "description": "We optimise your profile and supporting content for how customers across the GCC search in both Arabic and English, so you surface for local terms in either language, not just one."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What exactly is the Google Maps local pack, and why does ranking there matter?",
+      "answer": "The local pack is the set of three businesses Google shows on the map at the top of local search results, above the regular blue links. Most nearby customers tap one of those three rather than scrolling further, so a top-three spot captures the calls, directions, and visits that lower positions never see. Our whole focus is moving you into that group for the searches that matter to you."
+    },
+    {
+      "question": "How is map ranking different from setting up or optimising my Google Business Profile?",
+      "answer": "Profile setup and optimisation get your listing complete, accurate, and presentable, which is the necessary foundation. Map ranking is the ongoing work of climbing above competitors for specific searches — refining categories, building review momentum, fixing inconsistent citations, and strengthening the prominence signals Google weighs. We can start from a profile we set up or improve one you already have."
+    },
+    {
+      "question": "Can you guarantee the number one spot on the map?",
+      "answer": "No honest provider can guarantee a fixed position, because rankings shift with the searcher's distance, the competition nearby, and Google's own changes. What we do guarantee is a clear baseline, a deliberate plan against the real ranking factors, and grid reports that show your movement over time. If a competitor is genuinely hard to outrank, we tell you plainly rather than overpromising."
+    },
+    {
+      "question": "How does proximity affect whether I show up, and can you help if competitors are closer?",
+      "answer": "Distance from the searcher is a real factor, so a business right next to someone has a natural edge for that exact spot — which is why we measure your ranking across a grid rather than from one point. We widen the area where you appear by strengthening relevance and prominence, the signals you can influence, so you hold the pack across more of your city even where you are not the closest option."
+    },
+    {
+      "question": "How do we start, and do I have to commit upfront?",
+      "answer": "We begin with a free consultation and a map-ranking audit that shows where you currently sit on the grid and what is holding you back. You get a clear picture and a proposed plan before any commitment, and we are reachable on WhatsApp throughout. Everything we touch — your profile, accounts, and assets — stays fully owned by you, with no lock-in."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "website-speed-and-performance-optimization",
+  "service": "Website Speed & Performance Optimization",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Website Speed Optimization Oman | CloudTopia",
+    "description": "Website speed optimization that passes Core Web Vitals: we fix LCP, INP, and CLS, shrink images, and cut load time. Free consultation and a live demo first."
+  },
+  "hero": {
+    "badge": "Performance",
+    "title1": "A slow website loses visitors —",
+    "title2": "we make yours load fast",
+    "subtitle": "We diagnose what is dragging your site down and fix it for real: faster load times, smoother interaction, and a green pass on Google's Core Web Vitals. You keep every change in your own codebase, with a clear before-and-after to prove it worked."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Measurable speed gains you can see, on the hardware your visitors actually use",
+    "stat": {
+      "value": "Before / after",
+      "title": "Proven on your own metrics"
+    },
+    "items": [
+      {
+        "title": "Core Web Vitals, fixed at the root",
+        "description": "We target the three metrics Google ranks on — LCP, INP, and CLS — and fix the underlying cause instead of papering over the score with a caching plugin."
+      },
+      {
+        "title": "Lean images, fonts, and scripts",
+        "description": "We compress and lazy-load images, serve modern formats like WebP and AVIF, subset fonts, and strip render-blocking JavaScript so the page paints fast on a mid-range phone."
+      },
+      {
+        "title": "Tuned for GCC mobile networks",
+        "description": "We test on real 4G and throttled connections and add caching, a CDN, and server-side improvements so your site stays quick for visitors across Oman and the wider Gulf."
+      },
+      {
+        "title": "A transparent before-and-after report",
+        "description": "You get PageSpeed and field-data scores from before we start and after we finish, plus a written list of exactly what we changed and why it moved the needle."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How much faster will my website actually get?",
+      "answer": "It depends on where you are starting — a heavy, unoptimised site usually sees the biggest jump, while a fairly lean one gains less. We always run a baseline audit first and share an honest estimate of what is realistically achievable, then prove the result with before-and-after numbers rather than promising a magic figure."
+    },
+    {
+      "question": "What are Core Web Vitals, and why do they matter?",
+      "answer": "Core Web Vitals are three metrics Google uses to measure real user experience: how fast the main content loads (LCP), how quickly the page responds to taps (INP), and how much the layout shifts as it loads (CLS). They affect both your search ranking and whether visitors stay, so we tune your site to pass all three on real devices."
+    },
+    {
+      "question": "Will speeding up my site break how it looks or works?",
+      "answer": "No. We optimise behind the scenes — images, code, fonts, caching, and the server — without changing your design or content unless you ask. Before anything goes live, we show you a demo preview so you can confirm the site looks and behaves exactly as it should."
+    },
+    {
+      "question": "Do I need to rebuild my whole website to make it fast?",
+      "answer": "Usually not. Most sites can be made dramatically faster through targeted optimisation of the existing build, and a full rebuild is the exception, not the rule. If your platform is genuinely holding you back, we will tell you plainly in the free consultation rather than selling you work you do not need."
+    },
+    {
+      "question": "Will I be able to keep the site fast after you hand it over?",
+      "answer": "Yes. Every change lives in your own code and accounts — there is no lock-in and nothing rented from us. We hand over the optimisations along with simple guidance on keeping the site quick, and we are available for ongoing maintenance only if you want it."
+    }
+  ]
+}

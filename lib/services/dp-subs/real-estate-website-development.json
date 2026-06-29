@@ -1,0 +1,64 @@
+{
+  "slug": "real-estate-website-development",
+  "service": "Real Estate Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Real Estate Website Development | CloudTopia",
+    "description": "Property and real estate websites for developers and agencies in Oman and the GCC — searchable listings, multilingual, and 100% owned by you. Book a free consultation and preview."
+  },
+  "hero": {
+    "badge": "Real Estate Websites",
+    "title1": "Real estate websites that",
+    "title2": "showcase listings and capture buyers",
+    "subtitle": "A searchable, multilingual property website for developers, agencies, and brokers — built around listings, projects, and enquiry capture, and handed over for your team to own and run."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A property site that turns browsers into qualified leads",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual delivery"
+    },
+    "items": [
+      {
+        "title": "Searchable, filterable listings",
+        "description": "Buyers filter by location, price, type, and bedrooms, with rich property pages — galleries, maps, floor plans, and amenities — that answer questions before they call."
+      },
+      {
+        "title": "Built for lead capture",
+        "description": "Enquiry forms, WhatsApp, and call buttons on every listing and project page, so an interested buyer is always one tap from reaching your sales team."
+      },
+      {
+        "title": "A CMS your team controls",
+        "description": "List, update, and mark properties as sold yourself through a clean editor — manage your inventory in-house without a developer ticket for every change."
+      },
+      {
+        "title": "Arabic and English, done properly",
+        "description": "Native bilingual listings with full right-to-left support, so local and international buyers each read a site built for them, not a translation."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can buyers search and filter properties on the site?",
+      "answer": "Yes. We build a searchable listings system where buyers filter by location, price, property type, bedrooms, and more. Each property has its own page with galleries, maps, floor plans, and amenities, so visitors find and evaluate the right property quickly."
+    },
+    {
+      "question": "Can our agents add and update listings without a developer?",
+      "answer": "Yes. We build on a content management system, so your team adds new properties, updates prices, uploads photos, and marks listings as sold themselves. We hand over admin access and train your agents, so your inventory stays current without waiting on us."
+    },
+    {
+      "question": "Do we fully own the real estate website after it launches?",
+      "answer": "Completely. You receive the source code, design files, the CMS, hosting and domain accounts, and documentation at handover, with no lock-in. The site is yours to keep, move to another provider, or extend in-house whenever you choose."
+    },
+    {
+      "question": "Can you build the site in both Arabic and English with RTL?",
+      "answer": "Yes. We deliver native Arabic and English experiences with full right-to-left support, not machine translation. Both language versions share one structure, so your team manages listings once across both audiences."
+    },
+    {
+      "question": "How does the project start, and is there any commitment upfront?",
+      "answer": "We begin with a free consultation to map your projects, listing needs, and sales process, then prepare a written scope. You also see a demo preview of the design before you commit, so there are no surprises and no obligation to proceed until you're confident."
+    }
+  ]
+}

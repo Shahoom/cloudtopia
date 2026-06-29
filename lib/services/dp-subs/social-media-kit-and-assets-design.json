@@ -1,0 +1,64 @@
+{
+  "slug": "social-media-kit-and-assets-design",
+  "service": "Social Media Kit & Assets Design",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "Social Media Kit & Assets Design | CloudTopia",
+    "description": "Editable, on-brand social media kit — post templates, profile art, covers and highlight icons in Arabic and English, yours to own and reuse. Free consultation."
+  },
+  "hero": {
+    "badge": "Social Media Design",
+    "title1": "A social media kit that keeps",
+    "title2": "every post unmistakably on brand",
+    "subtitle": "Editable templates, profile art, covers and highlight icons designed for the platforms you actually post on — in Arabic and English. You own the source files and reuse them for every post, so your feed looks consistent without a designer on call."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "One coherent kit your team can post with every day",
+    "stat": {
+      "value": "Editable",
+      "title": "Source files, yours"
+    },
+    "items": [
+      {
+        "title": "Templates sized per platform",
+        "description": "Post, story, reel cover and carousel layouts built to the right dimensions and safe zones for Instagram, LinkedIn, TikTok, X and Facebook — so nothing gets cropped or rejected."
+      },
+      {
+        "title": "A complete profile refresh",
+        "description": "Matching profile pictures, banners, covers and highlight icons across every channel, so your accounts read as one brand the moment someone lands on them."
+      },
+      {
+        "title": "Arabic and English, by design",
+        "description": "Every template is laid out for both languages with proper right-to-left handling and Arabic typography — not English artwork with text dropped on top."
+      },
+      {
+        "title": "Editable, not locked images",
+        "description": "You receive organized, editable source files plus a short guide on fonts, colors and spacing, so your team swaps copy and imagery without breaking the look."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What exactly is included in a social media kit?",
+      "answer": "It's a reusable set of branded assets for your channels: editable post, story and carousel templates, reel and video covers, plus profile pictures, banners, covers and highlight icons. Everything is built on one visual system, so your whole feed looks deliberate and consistent. We tailor the exact list to the platforms you actually use rather than handing over generic files you'll never open."
+    },
+    {
+      "question": "How is this different from your logo and brand identity service?",
+      "answer": "Brand identity defines the core — your logo, colors and typography. This service takes that identity and applies it specifically to social media, turning it into ready-to-post templates and profile assets sized for each platform. If you don't have a brand system yet, we can align on the basics first or work from your existing one."
+    },
+    {
+      "question": "Which platforms and formats do you design for?",
+      "answer": "We design for the channels you're active on — typically Instagram, LinkedIn, TikTok, Facebook, X and YouTube. That covers feed posts, stories, carousels, reel and video covers, highlight icons, profile images and banners, each at the correct size and safe area. Tell us where you post and we scope the kit to match, so you're not paying for formats you won't use."
+    },
+    {
+      "question": "Can our team edit the templates ourselves after handover?",
+      "answer": "Yes — that's the point of a kit. We deliver organized, editable source files in tools your team can work in, along with a short guide covering fonts, colors and spacing. You change the headline, photo or offer and post, while the layout keeps everything on brand without a designer each time."
+    },
+    {
+      "question": "How do we get started, and do we see anything before committing?",
+      "answer": "We begin with a free consultation to look at your current accounts, brand and the platforms you care about. You then see a preview of the design direction before any commitment, so you know exactly what the kit will look like. WhatsApp is the fastest way to reach us, and everything we deliver — files and assets — is fully yours to own."
+    }
+  ]
+}

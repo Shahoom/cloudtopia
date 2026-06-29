@@ -1,0 +1,60 @@
+{
+  "slug": "e-commerce-redesign-and-migration",
+  "service": "E-Commerce Redesign & Migration",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "E-Commerce Redesign & Migration | CloudTopia",
+    "description": "Redesign or re-platform your store — faster, modern, and migrated safely with SEO preserved. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Redesign & Migration",
+    "title1": "Store redesigns that",
+    "title2": "lift sales and speed",
+    "subtitle": "Modernize or re-platform your store without losing data or rankings — a faster, better-converting store, migrated safely."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A better store, migrated safely",
+    "stat": {
+      "value": "Zero-loss",
+      "title": "Migration"
+    },
+    "items": [
+      {
+        "title": "Conversion redesign",
+        "description": "A modern, faster design built to lift conversion, not just looks."
+      },
+      {
+        "title": "Safe data migration",
+        "description": "Products, customers, and orders moved and validated — nothing lost."
+      },
+      {
+        "title": "SEO preserved",
+        "description": "Redirects and structure that protect your rankings through the move."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Will we lose SEO rankings in a migration?",
+      "answer": "Not if it is done right — we map URLs, set 301 redirects, and preserve structured data so rankings and traffic carry over."
+    },
+    {
+      "question": "Can you move us between platforms?",
+      "answer": "Yes — Shopify, WooCommerce, Magento, or custom; we migrate products, customers, and order history with validation."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

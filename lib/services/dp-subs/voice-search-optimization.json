@@ -1,0 +1,64 @@
+{
+  "slug": "voice-search-optimization",
+  "service": "Voice Search Optimization",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Voice Search Optimization Oman | CloudTopia",
+    "description": "Voice search optimization that wins the spoken answer — conversational queries, FAQ schema and featured snippets, Arabic and English. Free consultation first."
+  },
+  "hero": {
+    "badge": "Voice Search",
+    "title1": "Win the voice search",
+    "title2": "when customers ask out loud",
+    "subtitle": "People increasingly search by talking — on phones, in cars, and through smart speakers — and they ask full questions, not keywords. We restructure your content so assistants like Google, Siri, and Alexa read your business as the spoken answer, in both Arabic and English."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Content shaped for how people actually talk to their devices",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Voice queries in both"
+    },
+    "items": [
+      {
+        "title": "Built around conversational questions",
+        "description": "We map the real, spoken phrasing your customers use — full who, what, where, and how questions — and rewrite pages to answer them directly, instead of chasing the short, typed keywords voice search ignores."
+      },
+      {
+        "title": "Engineered to win the spoken answer",
+        "description": "Assistants usually read one result aloud, so we structure pages for featured snippets and answer boxes with tight, quotable responses and FAQ and How-To schema that tells search engines exactly what to say."
+      },
+      {
+        "title": "Tuned for 'near me' and on-the-go intent",
+        "description": "Most voice searches are local and urgent, so we align your content and business details with the spoken 'near me' and 'open now' questions people ask while driving or out and about across Oman and the Gulf."
+      },
+      {
+        "title": "Optimized for Arabic and English voice",
+        "description": "We handle how people phrase questions out loud in both languages — including spoken dialect patterns and English-Arabic mixing — so you surface whether a customer asks Google or Siri in Arabic or in English."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How is voice search optimization different from regular SEO?",
+      "answer": "Typed searches are short and clipped, while voice searches are longer, full spoken questions phrased the way people actually talk. So instead of targeting a two-word keyword, we optimize for the complete question and the concise, quotable answer an assistant can read back. It builds on your existing SEO rather than replacing it."
+    },
+    {
+      "question": "Which assistants and devices does this cover?",
+      "answer": "We optimize for the voice experiences people use most — Google Assistant on Android and Google Maps, Siri on iPhone, and Alexa on smart speakers. Because these draw on search results, featured snippets, and your business listings, the same well-structured content earns answers across all of them rather than needing a separate build for each."
+    },
+    {
+      "question": "Do you handle voice search questions asked in Arabic?",
+      "answer": "Yes. Because we deliver bilingually, we research how your customers phrase spoken questions in both Arabic and English, including the casual, conversational wording people use out loud. That way your business can be the answer whether someone speaks to their device in Arabic or in English."
+    },
+    {
+      "question": "How will I know whether voice optimization is working?",
+      "answer": "We track the concrete signals voice answers come from — featured snippets and answer boxes you hold, rankings on the question-style and 'near me' queries we target, and growth in long, conversational search traffic. You get a clear before-and-after view instead of a vague promise about voice."
+    },
+    {
+      "question": "Do I own the work once it's done?",
+      "answer": "Completely. The optimized content, the schema markup, and every change live in your own site and accounts, with no lock-in to CloudTopia. We start with a free consultation and a preview of the approach, and you can reach us on WhatsApp at any point."
+    }
+  ]
+}

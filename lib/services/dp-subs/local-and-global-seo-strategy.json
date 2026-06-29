@@ -1,0 +1,64 @@
+{
+  "slug": "local-and-global-seo-strategy",
+  "service": "Local & Global SEO Strategy",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Local & Global SEO Strategy | CloudTopia",
+    "description": "A clear SEO strategy for ranking in Oman, the GCC, or worldwide — the right markets, languages, and pages mapped out. Free consultation before you commit."
+  },
+  "hero": {
+    "badge": "SEO Strategy",
+    "title1": "An SEO strategy that decides",
+    "title2": "exactly where you should rank",
+    "subtitle": "We map out which markets are worth competing in — a single city, the whole GCC, or several countries — and build the keyword, language, and page structure to win each one. You leave with a documented plan and the accounts to run it."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "One roadmap that tells you where, in which language, and why",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual search strategy"
+    },
+    "items": [
+      {
+        "title": "Local and international intent, separated",
+        "description": "We split the searches that mean \"near me\" from the ones buyers type across borders, then design dedicated pages for each so a Muscat enquiry and a regional one each land somewhere built to convert them."
+      },
+      {
+        "title": "Markets chosen on real demand",
+        "description": "We size search volume and competition city by city and country by country, so you invest in the markets where you can realistically rank — not spread effort thin across every place at once."
+      },
+      {
+        "title": "Arabic and English mapped to each region",
+        "description": "We plan hreflang, language targeting, and per-market keywords so Google serves the right Arabic or English page to the right country, instead of letting versions compete against each other."
+      },
+      {
+        "title": "A documented plan you keep",
+        "description": "You receive the market priorities, keyword map, page structure, and search-console and analytics accounts in full — yours to execute with us, in-house, or with anyone else, with no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between local SEO and global SEO strategy?",
+      "answer": "Local SEO strategy targets buyers searching within a specific area — a city, an emirate, or a few towns — where intent often includes \"near me\" or a place name, and proximity decides rankings. Global SEO strategy targets several countries or languages at once and depends on the right page structure, language signals, and content per market. Most CloudTopia clients need a deliberate blend of both, and that mix is exactly what we map out first."
+    },
+    {
+      "question": "We're in Oman but want customers across the GCC — how do you plan for that?",
+      "answer": "We start by checking where the actual demand is, market by market, so you know whether Saudi Arabia, the UAE, Qatar, or staying local is the better bet before you spend a riyal. From there we plan dedicated pages, Arabic and English targeting, and the keyword set for each chosen market. The result is a focused plan that competes where you can win rather than chasing every country at once."
+    },
+    {
+      "question": "Do I need separate pages or domains for different countries and languages?",
+      "answer": "Usually separate pages and clear language signals are enough — full country domains are rarely necessary for businesses starting out across the GCC, and we'll tell you honestly if yours is an exception. We plan the structure, hreflang tags, and Arabic and English versions so search engines show the right page to the right audience without your own pages competing. You see the recommended structure in the plan before anything is built."
+    },
+    {
+      "question": "How is this different from your Local SEO & Discoverability service?",
+      "answer": "Local SEO & Discoverability is the hands-on work of ranking in maps and Google Business Profile — listings, citations, and \"near me\" visibility for one or more locations. This service is the strategy layer above it: deciding which markets and languages to pursue at all, and how local and international SEO fit together. Many clients take the strategy first, then we execute the local and on-page work from that plan."
+    },
+    {
+      "question": "What do I actually receive, and is there any commitment to start?",
+      "answer": "You receive a written strategy: prioritized markets, a keyword map split by local and global intent, the recommended page and language structure, and your own search-console and analytics accounts. It all starts with a free consultation and a clear preview of the approach before you commit to anything. Everything is delivered in Arabic and English, and the quickest way to begin is a message on WhatsApp."
+    }
+  ]
+}

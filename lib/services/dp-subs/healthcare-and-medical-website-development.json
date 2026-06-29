@@ -1,0 +1,64 @@
+{
+  "slug": "healthcare-and-medical-website-development",
+  "service": "Healthcare & Medical Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Healthcare & Medical Website Development | CloudTopia",
+    "description": "Custom medical websites for clinics, hospitals & doctors in Oman and the GCC, with online booking and bilingual care. Book a free consultation and preview."
+  },
+  "hero": {
+    "badge": "Healthcare Websites",
+    "title1": "Medical websites that",
+    "title2": "turn searches into booked appointments",
+    "subtitle": "We build clear, professional websites for clinics, hospitals, dental practices, and specialist doctors, with online booking, easy-to-scan service pages, and bilingual Arabic and English care. You own every line of code and every account, with no lock-in."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A medical site patients trust and act on",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual, RTL-ready care"
+    },
+    "items": [
+      {
+        "title": "Appointment booking that fits your front desk",
+        "description": "We add an online booking flow and a WhatsApp-first contact path so patients can request a slot day or night, instead of waiting on a busy phone line."
+      },
+      {
+        "title": "Doctor and department directories",
+        "description": "We build searchable profiles for each doctor, specialty, and clinic location, with credentials, working hours, and the services they offer laid out clearly."
+      },
+      {
+        "title": "Built for trust and patient privacy",
+        "description": "Clean, reassuring design, HTTPS by default, and contact forms handled with care signal a serious practice and keep patient details protected from the first click."
+      },
+      {
+        "title": "Fast on the phone where patients actually search",
+        "description": "Most people look for a clinic on mobile while in pain or in a hurry, so we build pages that load quickly and put your address, hours, and call button within thumb's reach."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can patients book appointments directly on the website?",
+      "answer": "Yes. We can add an online appointment request or booking flow tied to your services, doctors, and locations, plus a one-tap WhatsApp option. We tailor it to how your front desk works, whether that is a simple request form or a full calendar."
+    },
+    {
+      "question": "Will the website work in both Arabic and English?",
+      "answer": "Yes. We deliver bilingual Arabic and English sites with proper right-to-left layout, so both versions read naturally rather than looking like a translation. This matters in the GCC, where patients and their families switch between languages comfortably."
+    },
+    {
+      "question": "Can you show separate pages for each doctor, department, or clinic branch?",
+      "answer": "Absolutely. We build individual profiles for doctors and specialties and dedicated pages for each location with maps, hours, and contact details. Patients can find the right specialist and the nearest branch without digging."
+    },
+    {
+      "question": "We already have a clinic website. Can you redesign it?",
+      "answer": "Yes. We can modernise your existing medical site, keep the content and search rankings you have earned, and migrate everything cleanly. You can see a preview of the new design before you commit to anything."
+    },
+    {
+      "question": "Do we own the website and everything it runs on?",
+      "answer": "Completely. You own the code, the domain, the hosting accounts, and all content and images, with no lock-in to us. We can keep maintaining the site if you want ongoing support, but the choice always stays with you."
+    }
+  ]
+}

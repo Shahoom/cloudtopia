@@ -1,0 +1,64 @@
+{
+  "slug": "ux-design-and-wireframing",
+  "service": "UX (User Experience) Design & Wireframing",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "UX Design & Wireframing in Oman | CloudTopia",
+    "description": "UX design and wireframing that maps real user journeys and proves your layout on clickable wireframes you own — before any pixel. Free consultation and preview."
+  },
+  "hero": {
+    "badge": "UX & Wireframing",
+    "title1": "UX design and wireframes that",
+    "title2": "settle the structure before a pixel is drawn",
+    "subtitle": "We map your users' real journeys and turn them into clickable wireframes you can test and approve early — so the layout, flow, and content are right before any visual design or code begins. Every flow, wireframe, and source file is handed over for you to keep."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Decide the layout and flow on cheap wireframes, not expensive rebuilds",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Flows & files yours to own"
+    },
+    "items": [
+      {
+        "title": "Real user flows, mapped first",
+        "description": "We chart how each type of user moves toward their goal — sign up, book, buy, find an answer — and design the screens and steps around those paths instead of guessing at a sitemap."
+      },
+      {
+        "title": "Clickable wireframes you can test early",
+        "description": "Low and mid-fidelity wireframes become an interactive prototype you click through and approve, so confusing steps and dead ends get caught before any visual design or development starts."
+      },
+      {
+        "title": "Information architecture that makes sense",
+        "description": "We organize pages, navigation, and content into a structure people can scan and follow, with labels and groupings drawn from how your customers actually think, not internal jargon."
+      },
+      {
+        "title": "Bilingual flows, including right-to-left",
+        "description": "Wireframes account for Arabic and English from the start, so layouts, navigation, and reading direction work properly in RTL rather than being bolted on after the design is locked."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between UX design and UI design?",
+      "answer": "UX design and wireframing decide how the product is structured and how people move through it — the flows, screens, and content order — usually as grey-box wireframes and a clickable prototype. UI design then adds the visual layer: colour, typography, imagery, and polish on top of that approved structure. We handle both, but doing UX first means the expensive visual and build work starts on a layout that's already been tested."
+    },
+    {
+      "question": "Why wireframe instead of jumping straight to the design?",
+      "answer": "A wireframe is fast and cheap to change, while a finished design or a coded page is not. By agreeing the layout, flow, and content on wireframes first, you catch missing steps and confusing journeys when they cost minutes to fix, not a rebuild. It also means everyone is reviewing the structure without getting distracted by colours and fonts too early."
+    },
+    {
+      "question": "Will I be able to click through the wireframes before approving?",
+      "answer": "Yes. We link the wireframes into an interactive prototype you can open in your browser and click through, screen by screen, on desktop and mobile. You get a free consultation up front and this preview before committing, so you experience the flow yourself rather than judging it from static images."
+    },
+    {
+      "question": "Do you do user research, or just draw screens?",
+      "answer": "We start by understanding your real users and their goals — through your input, existing data, and quick usability checks where useful — and the wireframes follow from that. This is design and architecture work, not a usability audit of an existing product; if you mainly need an audit of something already live, we offer that separately and will point you to it."
+    },
+    {
+      "question": "What do I receive at the end, and do I own it?",
+      "answer": "You receive the user flows, the wireframes, and the interactive prototype, along with the editable source files in the design tool. It's all yours to keep, hand to any developer, or take to another studio with no lock-in. The same wireframes become the blueprint if you continue with us for UI design and build."
+    }
+  ]
+}

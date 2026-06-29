@@ -1,0 +1,60 @@
+{
+  "slug": "social-media-analytics-and-reporting",
+  "service": "Social Media Analytics & Reporting",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Social Media Analytics & Reporting | CloudTopia",
+    "description": "Clear social reporting that shows what is working and what to do next — not just vanity metrics. Free consultation."
+  },
+  "hero": {
+    "badge": "Social Analytics",
+    "title1": "Reports that",
+    "title2": "show what actually works",
+    "subtitle": "Clear, regular reporting on the metrics that matter — reach, engagement, and conversions — with insights on what to do next."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Know what is working, and why",
+    "stat": {
+      "value": "Clarity",
+      "title": "Insights"
+    },
+    "items": [
+      {
+        "title": "Meaningful metrics",
+        "description": "Reach, engagement, and conversions — not just follower counts."
+      },
+      {
+        "title": "Clear dashboards",
+        "description": "Simple reports your whole team can understand at a glance."
+      },
+      {
+        "title": "Actionable insights",
+        "description": "Each report ends with what to do next, not just numbers."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What do the reports cover?",
+      "answer": "Growth, reach, engagement, top content, and conversions across your channels — with plain-language insights and recommendations."
+    },
+    {
+      "question": "How often do we get reports?",
+      "answer": "Typically monthly, with a clear summary of wins, learnings, and next steps — more frequent during active campaigns."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

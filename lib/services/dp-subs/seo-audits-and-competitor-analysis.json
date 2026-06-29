@@ -1,0 +1,64 @@
+{
+  "slug": "seo-audits-and-competitor-analysis",
+  "service": "SEO Audits & Competitor Analysis",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "SEO Audits & Competitor Analysis | CloudTopia",
+    "description": "An SEO audit and competitor analysis that shows what holds your rankings back and how rivals outrank you. Keep the full report. Free consultation, AR and EN."
+  },
+  "hero": {
+    "badge": "SEO",
+    "title1": "An SEO audit that shows you",
+    "title2": "what's holding your rankings back — and how rivals outrank you",
+    "subtitle": "We crawl your whole site, check it against Google's ranking signals, and line you up beside the competitors who beat you in search — then hand over a clear, prioritized fix list with the reasoning behind every item. You keep the full report and all the data; nothing is locked to us."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A diagnosis you can act on, not a 200-page PDF you'll never read",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual reporting"
+    },
+    "items": [
+      {
+        "title": "A full technical crawl, not a surface scan",
+        "description": "We crawl every page to surface what quietly blocks rankings — broken links, redirect chains, duplicate or thin content, missing titles and meta, indexing and canonical errors, slow Core Web Vitals and crawl waste — and show where each problem sits on your site."
+      },
+      {
+        "title": "Side-by-side competitor benchmarking",
+        "description": "We pick the rivals actually outranking you for the searches that matter, then compare keywords, content depth, site structure and backlink profiles so you can see the specific gaps you need to close to overtake them."
+      },
+      {
+        "title": "Findings ranked by impact and effort",
+        "description": "Every issue is sorted into quick wins, high-impact fixes and longer plays, with the likely ranking effect of each — so you spend on what moves you up the results page first instead of chasing a flat checklist."
+      },
+      {
+        "title": "Built for the GCC and bilingual sites",
+        "description": "We audit Arabic and English versions properly, checking hreflang, RTL rendering and local-search signals for Oman and the wider GCC, so neither language is quietly under-optimized or competing against itself in search."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What exactly do I get at the end of the audit?",
+      "answer": "You get a written report covering the technical health of your site, on-page and content gaps, your backlink profile, and a direct comparison against the competitors outranking you. Everything is sorted into a prioritized action list — quick wins first, bigger fixes after — with the reasoning behind each item, plus a walkthrough so it's clear what to tackle and why."
+    },
+    {
+      "question": "What's the difference between an SEO audit and competitor analysis?",
+      "answer": "The audit looks inward: it diagnoses what's wrong or missing on your own site and what's limiting your rankings. Competitor analysis looks outward: it shows what the sites beating you in search are doing — the keywords they rank for, how their content and structure are built, and where their links come from. Together they tell you both what to fix and what to match or beat."
+    },
+    {
+      "question": "Do I have to commit to an ongoing SEO retainer to get an audit?",
+      "answer": "No. The audit is a standalone deliverable — you can take the report and have your own team act on it, hand it to another agency, or ask us to implement the fixes. We start with a free consultation to scope your site and goals, and there's no obligation to continue with us afterwards."
+    },
+    {
+      "question": "Can you audit a site that isn't built in Arabic, or one that's bilingual?",
+      "answer": "Yes. We audit sites in any language and CMS, and we're set up specifically for Arabic and bilingual GCC sites — checking hreflang tags, RTL rendering and local-search signals so the Arabic and English versions both rank and don't cannibalize each other. The full report is delivered in Arabic and English."
+    },
+    {
+      "question": "How do I get started, and is anything shared upfront?",
+      "answer": "Message us on WhatsApp and we'll book a free consultation to understand your site and which competitors to benchmark against. Before any commitment we can show a sample of the findings so you see the depth and format first. The final report and all underlying data are yours to keep, with no lock-in."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "restaurant-and-hospitality-website-development",
+  "service": "Restaurant & Hospitality Website Development",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Restaurant & Hospitality Websites | CloudTopia",
+    "description": "Restaurant and hospitality websites with menus you update yourself, online reservations, and delivery links. Bilingual, mobile-first, yours. Free consultation."
+  },
+  "hero": {
+    "badge": "Restaurant & Hospitality",
+    "title1": "Restaurant and hospitality websites that",
+    "title2": "turn hungry browsers into booked tables",
+    "subtitle": "We build appetite-led websites for restaurants, cafes, and hotels in Oman and the GCC, with menus you can change yourself, online reservations, and direct delivery links. You own every file and account, in Arabic and English, with no monthly platform fee."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Everything a diner needs before they pick your table",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual menus"
+    },
+    "items": [
+      {
+        "title": "A menu you update in minutes",
+        "description": "Change dishes, prices, and the Ramadan or seasonal menu yourself from your phone, with no developer call and no per-change fee."
+      },
+      {
+        "title": "Reservations and orders built in",
+        "description": "Take table bookings directly on your site and link straight to your delivery and ordering channels so guests reach you without a middleman taking a cut."
+      },
+      {
+        "title": "Photo-first, mobile-first design",
+        "description": "Your food and venue lead the page on the small screen where most diners actually browse, loading fast over mobile data so nobody bounces while hungry."
+      },
+      {
+        "title": "Found on the map, ready for reviews",
+        "description": "Hours, location, directions, and Google Business details are wired in so your site, your map listing, and your reviews all point people to your door."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Can I update the menu and prices myself?",
+      "answer": "Yes. We set the menu up so you can add dishes, adjust prices, mark items sold out, and swap in a seasonal or Ramadan menu from your phone. There is no developer call and no charge each time you make a change."
+    },
+    {
+      "question": "Can guests book a table or order food on the website?",
+      "answer": "They can. We can add a direct table-reservation flow that lands enquiries in your inbox or on WhatsApp, and link clearly to your delivery apps and ordering channels. We will recommend the right mix for your venue during the free consultation."
+    },
+    {
+      "question": "Will the site work well in both Arabic and English?",
+      "answer": "Yes. We deliver the whole site, including the menu, in Arabic and English with proper right-to-left layout, so local diners and visiting tourists both get a natural experience. Each dish and section reads correctly in both languages."
+    },
+    {
+      "question": "Will it look good on a phone and load quickly?",
+      "answer": "That is the priority, because most people check a restaurant on their phone before deciding. We design mobile-first and optimise your food photos so the site looks sharp and loads fast even on mobile data, without slow, heavy pages."
+    },
+    {
+      "question": "Do I own the website and everything in it?",
+      "answer": "Completely. You receive the code, the hosting and domain accounts, and all your photos and content in your own name, with no lock-in. Before you commit anything, we show you a free demo preview of how your restaurant site will look."
+    }
+  ]
+}

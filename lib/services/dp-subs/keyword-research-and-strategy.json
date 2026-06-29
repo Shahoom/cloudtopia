@@ -1,0 +1,64 @@
+{
+  "slug": "keyword-research-and-strategy",
+  "service": "Keyword Research & Strategy",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Keyword Research & Strategy | CloudTopia",
+    "description": "Arabic and English keyword research built around real search intent in Oman and the GCC — a prioritized, ownable SEO roadmap. Book a free consultation today."
+  },
+  "hero": {
+    "badge": "Keyword Strategy",
+    "title1": "Keyword research that tells you",
+    "title2": "exactly what to publish next",
+    "subtitle": "We map what your customers in Oman and the GCC actually search for — in Arabic and English — and turn it into a prioritized keyword plan your team can act on and keep. No guesswork, no padded lists of terms nobody types."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "A keyword plan ranked by intent, effort, and payoff",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Both search markets"
+    },
+    "items": [
+      {
+        "title": "Real GCC search demand",
+        "description": "We pull live search volumes for your products and services in Oman and the Gulf, separating terms people genuinely use from the vanity keywords that never convert."
+      },
+      {
+        "title": "Arabic and English, side by side",
+        "description": "We research both languages as distinct markets, including dialect and transliteration habits, so you capture searchers who type in Arabic and those who type in English."
+      },
+      {
+        "title": "Grouped by search intent",
+        "description": "Every keyword is sorted by what the searcher wants — to learn, compare, or buy — and mapped to the right page, so each term lands where it can actually win."
+      },
+      {
+        "title": "Prioritized, not just listed",
+        "description": "You get a ranked roadmap scoring each keyword by demand, competition, and commercial value, so you know which pages to build first instead of facing a thousand-row spreadsheet."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What do I actually receive from a keyword research project?",
+      "answer": "You get a structured keyword plan — terms grouped by topic and search intent, each tagged with its search volume, difficulty, and commercial value. It maps every priority keyword to a specific page or article and ranks them so your team knows exactly what to publish first. The file is yours to keep and reuse with any writer or agency."
+    },
+    {
+      "question": "Do you research Arabic keywords as well as English?",
+      "answer": "Yes, and we treat them as two separate markets rather than translating one list into the other. Arabic searchers use different phrasing, dialect, and even transliterated spellings, so we research each language on its own. That way you rank for how people genuinely search across Oman and the wider GCC, not just a literal translation."
+    },
+    {
+      "question": "How is this different from an SEO audit?",
+      "answer": "An audit looks at your existing site to find what is broken or underperforming. Keyword research looks outward at the market to find the demand you should be targeting in the first place. They pair well — the research tells you what to create, while an audit tells you how to fix what you already have."
+    },
+    {
+      "question": "Will you tell me which keywords are realistic to rank for?",
+      "answer": "That is the core of the work. We weigh each keyword's competition against the authority of your site, so we flag quick wins you can realistically reach as well as the bigger terms worth a longer-term push. You will not get a list of impossible head terms dressed up as opportunities."
+    },
+    {
+      "question": "How do we start, and is there any commitment?",
+      "answer": "We begin with a free consultation to understand your services, customers, and the markets you want to reach. From there we can share a sample of the research approach before you commit, and we are easiest to reach on WhatsApp. The finished keyword strategy belongs entirely to you, with no lock-in."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "shopify-store-development",
+  "service": "Shopify Store Development",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "Shopify Store Development in Oman | CloudTopia",
+    "description": "Custom Shopify stores designed, built, and optimized to convert — with GCC payments and bilingual checkout. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Shopify",
+    "title1": "Shopify stores that",
+    "title2": "look sharp and sell",
+    "subtitle": "A custom-designed Shopify store tuned for your brand, your products, and Gulf shoppers — launched fast and built to convert."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Shopify, done properly",
+    "stat": {
+      "value": "Custom",
+      "title": "Theme & apps"
+    },
+    "items": [
+      {
+        "title": "Custom theme",
+        "description": "A branded, fast theme — not a generic template everyone uses."
+      },
+      {
+        "title": "App & checkout setup",
+        "description": "The right apps and a streamlined checkout, without bloat that slows you down."
+      },
+      {
+        "title": "GCC-ready",
+        "description": "Local payment methods, Arabic + English, and regional shipping."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do you customize the theme or use a template?",
+      "answer": "We build a custom, on-brand theme (or deeply customize a premium one) so your store stands out and loads fast — no cookie-cutter look."
+    },
+    {
+      "question": "Can you migrate our existing Shopify store?",
+      "answer": "Yes — we redesign and re-platform existing stores while preserving products, orders, and SEO."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

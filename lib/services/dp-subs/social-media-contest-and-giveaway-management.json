@@ -1,0 +1,60 @@
+{
+  "slug": "social-media-contest-and-giveaway-management",
+  "service": "Social Media Contest & Giveaway Management",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Social Contest & Giveaway Management | CloudTopia",
+    "description": "We plan and run contests and giveaways that grow followers and engagement — the right way. Free consultation."
+  },
+  "hero": {
+    "badge": "Contests",
+    "title1": "Giveaways that",
+    "title2": "grow real followers",
+    "subtitle": "Well-run contests and giveaways — mechanics, rules, promotion, and winner selection — designed to grow engaged followers, not just freebie-hunters."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Grow your audience, the right way",
+    "stat": {
+      "value": "Engagement",
+      "title": "Growth"
+    },
+    "items": [
+      {
+        "title": "Smart mechanics",
+        "description": "Entry rules designed to attract real, relevant followers."
+      },
+      {
+        "title": "Full management",
+        "description": "Setup, promotion, moderation, and fair winner selection."
+      },
+      {
+        "title": "Compliant & fair",
+        "description": "Clear terms that meet platform rules and build trust."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do giveaways actually help?",
+      "answer": "Done right — with mechanics that attract your target audience, not just prize-hunters — they boost reach, followers, and engagement meaningfully."
+    },
+    {
+      "question": "Do you handle winner selection and rules?",
+      "answer": "Yes — we set clear, compliant terms, moderate entries, and select winners fairly and transparently."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "social-media-profile-setup",
+  "service": "Social Media Profile Setup",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Social Media Profile Setup | CloudTopia",
+    "description": "Professional, fully optimized social profiles that look credible and convert visitors into followers. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Profile Setup",
+    "title1": "Profiles that",
+    "title2": "look credible instantly",
+    "subtitle": "Set up and optimize your social profiles end to end — branding, bios, links, and highlights — so you look professional from the first visit."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "First impressions that build trust",
+    "stat": {
+      "value": "Optimized",
+      "title": "Branded"
+    },
+    "items": [
+      {
+        "title": "Complete branding",
+        "description": "Consistent visuals, bios, and handles across every platform."
+      },
+      {
+        "title": "Optimized for discovery",
+        "description": "Keywords, links, and CTAs that turn visitors into followers."
+      },
+      {
+        "title": "Conversion-ready",
+        "description": "Link-in-bio, highlights, and contact options set up right."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which platforms do you set up?",
+      "answer": "Instagram, TikTok, LinkedIn, Facebook, X, YouTube, and others — whichever fit your audience and strategy."
+    },
+    {
+      "question": "Do you design the visuals too?",
+      "answer": "Yes — profile and cover images, highlight covers, and a consistent look across every channel."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

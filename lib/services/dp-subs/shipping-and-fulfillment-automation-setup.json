@@ -1,0 +1,60 @@
+{
+  "slug": "shipping-and-fulfillment-automation-setup",
+  "service": "Shipping & Fulfillment Automation Setup",
+  "pillarSlug": "ecommerce-development",
+  "pillarName": "E-Commerce Development",
+  "seo": {
+    "title": "Shipping & Fulfillment Automation | CloudTopia",
+    "description": "Automate shipping rates, labels, tracking, and fulfillment so orders ship faster with fewer errors. Free consultation & demo."
+  },
+  "hero": {
+    "badge": "Shipping & Fulfillment",
+    "title1": "Fulfillment that",
+    "title2": "runs on autopilot",
+    "subtitle": "Connect carriers and automate rates, labels, tracking, and updates — so orders ship faster with fewer manual steps and errors."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Ship faster, with fewer mistakes",
+    "stat": {
+      "value": "Automated",
+      "title": "Carriers"
+    },
+    "items": [
+      {
+        "title": "Live rates & labels",
+        "description": "Real-time carrier rates at checkout and one-click label printing."
+      },
+      {
+        "title": "Tracking & updates",
+        "description": "Automated tracking and proactive status emails to customers."
+      },
+      {
+        "title": "Carrier integration",
+        "description": "Connect local and global couriers into one workflow."
+      },
+      {
+        "title": "You own everything",
+        "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which couriers do you integrate?",
+      "answer": "Local GCC couriers and global carriers (Aramex, DHL, etc.) plus aggregators — chosen for your regions and volumes."
+    },
+    {
+      "question": "Does it update customers automatically?",
+      "answer": "Yes — customers get automated tracking and status updates, which cuts \"where is my order\" support tickets."
+    },
+    {
+      "question": "Do you deliver in Arabic and English?",
+      "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
+    },
+    {
+      "question": "Do we own the result?",
+      "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
+    }
+  ]
+}

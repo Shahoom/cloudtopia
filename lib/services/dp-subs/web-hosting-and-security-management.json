@@ -1,0 +1,64 @@
+{
+  "slug": "web-hosting-and-security-management",
+  "service": "Web Hosting & Security Management",
+  "pillarSlug": "website-development",
+  "pillarName": "Website Development",
+  "seo": {
+    "title": "Web Hosting & Security Management | CloudTopia",
+    "description": "Managed web hosting and security for your site: fast uptime, SSL, firewall, automated backups, and quick recovery. Book a free consultation with CloudTopia."
+  },
+  "hero": {
+    "badge": "Hosting & Security",
+    "title1": "Managed hosting and security that",
+    "title2": "keep your site fast, online, and protected",
+    "subtitle": "We host your website on fast, monitored infrastructure and lock it down with SSL, a firewall, and automated backups — on accounts you fully own, with no lock-in."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Hosting that stays up, security that keeps threats out",
+    "stat": {
+      "value": "Yours",
+      "title": "Accounts in your name"
+    },
+    "items": [
+      {
+        "title": "Uptime monitoring",
+        "description": "Your site is watched around the clock, and we step in the moment something slips — so visitors and Google see it online, not down."
+      },
+      {
+        "title": "SSL & firewall protection",
+        "description": "We set up HTTPS, a web application firewall, and bot and brute-force filtering to block the common attacks that target small-business sites."
+      },
+      {
+        "title": "Automated backups & recovery",
+        "description": "Regular off-site backups mean that if anything breaks, gets hacked, or is changed by mistake, we can roll your site back to a clean version fast."
+      },
+      {
+        "title": "Patches & SSL renewals handled",
+        "description": "Core, plugin, and server updates plus certificate renewals are managed for you, so nothing expires, breaks, or quietly opens a hole."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What does managed hosting and security actually cover?",
+      "answer": "We host your website on fast, monitored infrastructure and handle the technical side: SSL/HTTPS, a firewall, malware scanning, automated backups, software and server updates, and uptime monitoring. If something goes wrong, we are the team that fixes it — you do not have to chase a hosting helpdesk."
+    },
+    {
+      "question": "Do I own the hosting and domain, or are they locked to you?",
+      "answer": "You own them, fully. Hosting, domain, SSL, and email are set up in accounts registered in your name, and you keep the logins. There is no lock-in — if you ever move on, everything goes with you, and we will help with a clean migration."
+    },
+    {
+      "question": "What happens if my website gets hacked or goes down?",
+      "answer": "Because we monitor uptime and keep regular off-site backups, we can usually catch issues quickly and restore your site to a clean, working version. We then close the gap that caused it — whether that is an outdated plugin, a weak password, or a missing firewall rule — so it does not happen again."
+    },
+    {
+      "question": "Can you take over hosting for a site you didn't build?",
+      "answer": "Yes. We can migrate an existing website onto our managed hosting with little or no downtime, then secure and monitor it the same way. We will review your current setup first, in a free consultation, and tell you honestly what needs attention before anything moves."
+    },
+    {
+      "question": "How is this different from website maintenance?",
+      "answer": "Maintenance is about your content and features — edits, new pages, and design tweaks. Hosting and security is about where the site lives and how it is protected: server performance, uptime, SSL, the firewall, and backups. Many clients take both, and they work well together."
+    }
+  ]
+}

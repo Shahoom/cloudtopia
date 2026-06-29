@@ -1,0 +1,64 @@
+{
+  "slug": "google-business-profile-optimization",
+  "service": "Google Business Profile Optimization",
+  "pillarSlug": "search-engine-optimization",
+  "pillarName": "Search Engine Optimization (SEO)",
+  "seo": {
+    "title": "Google Business Profile Optimization | CloudTopia",
+    "description": "Climb the local map pack and win more calls, visits, and direction requests. We optimize your Google Business Profile end to end. Free consultation and preview."
+  },
+  "hero": {
+    "badge": "Local SEO",
+    "title1": "A Google Business Profile that",
+    "title2": "ranks in the map pack and wins calls",
+    "subtitle": "We turn a half-finished listing into a complete, keyword-rich Google Business Profile that surfaces in local and \"near me\" searches — driving more calls, direction requests, and walk-ins from people ready to buy nearby."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Everything your profile needs to outrank nearby competitors",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual profile"
+    },
+    "items": [
+      {
+        "title": "Complete, keyword-rich profile",
+        "description": "We fill every field that influences ranking — primary and secondary categories, services, attributes, hours, and a description written with the search terms your customers actually use."
+      },
+      {
+        "title": "Built to rank in the map pack",
+        "description": "We tighten your categories, service areas, and on-profile signals so you surface for local and \"near me\" searches across Muscat and the wider GCC."
+      },
+      {
+        "title": "Reviews and Q&A that build trust",
+        "description": "We set up a steady review-request flow, draft professional replies in Arabic and English, and seed the Q&A with the questions buyers ask before they call."
+      },
+      {
+        "title": "Photos, posts, and tracking",
+        "description": "We add geotagged photos, publish Google Posts that keep the profile active, and wire up call, message, and direction tracking so you can see exactly what the listing brings in."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Do I keep ownership of my Google Business Profile?",
+      "answer": "Yes — the profile stays in your own Google account, and you remain the primary owner throughout. We work as a manager on your listing, and when the project ends you keep full control with no lock-in. Every login, asset, and setting is yours."
+    },
+    {
+      "question": "How is this different from just setting up the profile?",
+      "answer": "Setup creates the listing; optimization is what makes it rank and convert. We go field by field on an existing profile — categories, services, description, attributes, reviews, photos, and posts — to fix gaps and strengthen the signals Google uses to rank you in the local map pack."
+    },
+    {
+      "question": "Can you optimize the profile in Arabic and English?",
+      "answer": "Yes. We write your business description, services, posts, and review replies in both Arabic and English so customers searching in either language find a clear, professional listing. This matters for ranking and trust across Oman and the GCC."
+    },
+    {
+      "question": "How long until I see better rankings and more calls?",
+      "answer": "Most profiles show movement within a few weeks as Google re-crawls the updated information, though competitive categories and cities take longer. Local SEO compounds over time, so consistent reviews, posts, and accurate details keep improving your position month after month."
+    },
+    {
+      "question": "Can I see the plan before I commit?",
+      "answer": "Absolutely. We start with a free consultation and a review of your current profile, then show you exactly what we'd change and the gaps holding back your ranking. You only move ahead once you're happy with the plan — reach us on WhatsApp to begin."
+    }
+  ]
+}
