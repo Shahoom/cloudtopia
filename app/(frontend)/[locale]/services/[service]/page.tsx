@@ -34,25 +34,16 @@ import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
 import { ContactFast } from '@/components/ui/contact-fast'
 import { ProjectsShowcase } from '@/components/ui/projects-showcase'
-import { getAllProjects, type Project } from '@/lib/projects'
+import { type Project } from '@/lib/projects'
+import { getProjectsForService } from '@/lib/services/related-projects'
 
 // Which real CMS projects (by public id) showcase each website sub-service.
-// Sub-services not listed have no relevant project yet, so the section is hidden.
-const WEBSITE_PROJECT_IDS: Record<string, string[]> = {
-    'business-website-development': ['kvaii-logistics', 'ram-sustainable', 'lumma-clinics'],
-    'corporate-website-design': ['kvaii-logistics', 'ram-sustainable'],
-    'ecommerce-website-development': ['artucky-ecommerce'],
-    'restaurant-website-development': ['joory-cafe'],
-    'portfolio-websites': ['lumma-clinics'],
-}
-
-// Real CMS web-app projects (category "webApps") mapped to the interactive
-// web-application sub-services they best represent. Sub-services with no honest
-// match are omitted, so the projects section auto-hides there.
-const WEBAPP_PROJECT_IDS: Record<string, string[]> = {
-    'custom-web-application-development': ['luxury-world-tourism', 'comics-topia', 'dhofar-tourism'],
-    'progressive-web-app-development': ['luxury-world-tourism', 'dhofar-tourism'],
-}
+// Related "Projects we did" are now data-driven: each project is tagged in the
+// CMS via `relatedServiceSlugs`, and getProjectsForService() resolves the best
+// matches with an exact → pillar → category → featured → all fallback (see
+// lib/services/related-projects.ts). The previous hardcoded WEBSITE_PROJECT_IDS /
+// WEBAPP_PROJECT_IDS maps were removed; their mapping lives in the backfill doc
+// at the top of related-projects.ts.
 
 type PageProps = {
     params: Promise<{ locale: string; service: string }>
@@ -461,17 +452,26 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const webappContent = getWebappServiceContent(service.slug)
     const webappLocale = asWebAppLocale(locale)
     const websiteFaq = websiteContent ? getWebsiteFaq(service.slug, locale) : null
-    const websiteProjectIds = websiteContent ? (WEBSITE_PROJECT_IDS[service.slug] || []) : []
     const webappFaq = webappContent ? getWebappFaq(service.slug, locale) : null
-    const webappProjectIds = webappContent ? (WEBAPP_PROJECT_IDS[service.slug] || []) : []
-    const projectIdsToLoad = [...websiteProjectIds, ...webappProjectIds]
-    const allLoadedProjects = projectIdsToLoad.length ? await getAllProjects(locale) : []
-    const websiteProjects = websiteProjectIds
-        .map((id) => allLoadedProjects.find((p) => p.id === id))
-        .filter(Boolean) as Project[]
-    const webappProjects = webappProjectIds
-        .map((id) => allLoadedProjects.find((p) => p.id === id))
-        .filter(Boolean) as Project[]
+    // Related projects are data-driven (CMS `relatedServiceSlugs`) with an
+    // exact → pillar → category → featured → all fallback, so the section
+    // surfaces the closest relevant client work and is only empty when there
+    // are zero projects. Website sub-services live under the website-development
+    // pillar; interactive web apps under the interactive-web-applications pillar.
+    const websiteProjects: Project[] = websiteContent
+        ? await getProjectsForService(locale, {
+            serviceSlug: service.slug,
+            pillarSlug: 'website-development',
+            categorySlug: service.categorySlug,
+        })
+        : []
+    const webappProjects: Project[] = webappContent
+        ? await getProjectsForService(locale, {
+            serviceSlug: service.slug,
+            pillarSlug: 'interactive-web-applications',
+            categorySlug: service.categorySlug,
+        })
+        : []
     const heroModes = [
         {
             label: L.problem,

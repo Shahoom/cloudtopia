@@ -7,7 +7,8 @@ import { localePath } from '@/lib/i18n/url'
 import { SubServiceContactHero } from '@/components/services/SubServiceContactHero'
 import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { ProjectsShowcase } from '@/components/ui/projects-showcase'
-import { getAllProjects, type Project } from '@/lib/projects'
+import { type Project } from '@/lib/projects'
+import { getProjectsForService } from '@/lib/services/related-projects'
 import { ServiceOverview, ServiceDeliverables, ServiceUseCases } from '@/components/services/SubServiceSections'
 
 export type DPSubServiceContent = {
@@ -20,14 +21,6 @@ export type DPSubServiceContent = {
     features: FeaturesBentoContent
     faqs: { question: string; answer: string }[]
 }
-
-// Pillars where a website/portfolio showcase is genuinely on-topic, so the
-// "Featured work" section only appears where real client work is relevant.
-const PORTFOLIO_PILLARS = new Set([
-    'website-development',
-    'ecommerce-development',
-    'ui-ux-design-branding',
-])
 
 /**
  * Digital Presence sub-service page — the bespoke "portfolio-website" design:
@@ -48,15 +41,14 @@ export async function DigitalPresenceSubServicePage({ content, locale }: { conte
     // geometric hero); website + other DP pages keep the geometric hero.
     const showGeometricHero = !['ecommerce-development', 'social-media-management'].includes(c.pillarSlug)
 
-    // Featured work — real client projects from the CMS, prioritising featured
-    // ones. Only loaded/shown for portfolio-relevant pillars.
-    const showWork = PORTFOLIO_PILLARS.has(c.pillarSlug)
-    let projects: Project[] = []
-    if (showWork) {
-        const all = await getAllProjects(locale)
-        const featured = all.filter((p) => p.featured)
-        projects = (featured.length >= 3 ? featured : all).slice(0, 6)
-    }
+    // Featured work — real client projects from the CMS, matched to this
+    // sub-service via its CMS `relatedServiceSlugs` tags, with a pillar →
+    // featured → all fallback so the section shows the closest relevant work
+    // and is only hidden when there are zero projects at all.
+    const projects: Project[] = await getProjectsForService(locale, {
+        serviceSlug: c.slug,
+        pillarSlug: c.pillarSlug,
+    })
     const isEcom = c.pillarSlug === 'ecommerce-development'
 
     const steps = [
