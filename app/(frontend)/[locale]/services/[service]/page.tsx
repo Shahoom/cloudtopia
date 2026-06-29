@@ -2,10 +2,20 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
-import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
+import { localizedDP } from '@/lib/services/digital-presence'
+import { getStructuredPillarBySlug, structuredPillarRoutes } from '@/lib/services/structured-catalog'
+import { PillarPage } from '@/components/services/PillarPage'
+import RichPillarPage from '@/components/services/RichPillarPage'
+import { GetFoundPillarPage } from '@/components/services/GetFoundPillarPage'
+import { getGetFoundContent } from '@/lib/services/get-found-content'
+import { SubServicePage } from '@/components/services/SubServicePage'
+import { getRichPillarData, getBusinessSystemsSubService, businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
+import { getDigitalPresenceSubService, dpSubServiceSlugs } from '@/lib/services/digital-presence-content'
+import { DigitalPresenceSubServicePage } from '@/components/services/DigitalPresenceSubServicePage'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { HeroGeometric } from '@/components/ui/shape-landing-hero'
@@ -276,8 +286,9 @@ function whatsappHref(serviceName: string, locale: string) {
 }
 
 export function generateStaticParams() {
+    const slugs = [...serviceDetailSlugs, ...structuredPillarRoutes.map((p) => p.slug), ...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs]
     return ['en', 'ar'].flatMap((locale) =>
-        serviceDetailSlugs.map((service) => ({
+        slugs.map((service) => ({
             locale,
             service,
         })),
@@ -286,14 +297,76 @@ export function generateStaticParams() {
 
 import { applySeoOverride } from '@/lib/cms/route-seo'
 
+// Near-duplicate website services: the older bespoke pages and the new Digital
+// Presence catalog cover the same offering under different slugs. Both URLs stay
+// live, but the older page declares the new page as its canonical so search
+// engines consolidate ranking signals (no duplicate-content penalty).
+const WEBSITE_DUPLICATE_CANONICAL: Record<string, string> = {
+    'portfolio-websites': 'portfolio-website-development',
+    'corporate-website-design': 'corporate-website-development',
+    'landing-page-design': 'landing-page-development',
+    'restaurant-website-development': 'restaurant-and-hospitality-website-development',
+    'educational-website-development': 'educational-and-lms-website-development',
+    'website-redesign': 'website-redesign-and-modernization',
+    'website-maintenance': 'website-maintenance-and-support',
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', service: serviceSlug } = await params
+    const pillar = getStructuredPillarBySlug(serviceSlug)
+    if (pillar) {
+        const pName = localizedDP(pillar.name, locale)
+        const pDesc = localizedDP(pillar.description, locale)
+        const pPath = `/services/${pillar.slug}`
+        const brand = locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'
+        return {
+            // Bare title — the layout's `%s | CloudTopia` template appends the brand once.
+            title: pName,
+            description: pDesc,
+            openGraph: { title: `${pName} | ${brand}`, description: pDesc, url: canonicalUrl(locale, pPath), siteName: 'CloudTopia', type: 'website' },
+            alternates: {
+                canonical: canonicalUrl(locale, pPath),
+                languages: { en: canonicalUrl('en', pPath), ar: canonicalUrl('ar', pPath), 'x-default': canonicalUrl('en', pPath) },
+            },
+        }
+    }
+    const sub = getBusinessSystemsSubService(serviceSlug, locale)
+    if (sub) {
+        const subPath = `/services/${sub.slug}`
+        return {
+            // seo.title already ends with "| CloudTopia"; strip it so the layout
+            // template doesn't double the brand ("… | CloudTopia | CloudTopia").
+            title: stripBrandSuffix(sub.seo.title),
+            description: sub.seo.description,
+            openGraph: { title: sub.seo.title, description: sub.seo.description, url: canonicalUrl(locale, subPath), siteName: 'CloudTopia', type: 'website' },
+            alternates: {
+                canonical: canonicalUrl(locale, subPath),
+                languages: { en: canonicalUrl('en', subPath), ar: canonicalUrl('ar', subPath), 'x-default': canonicalUrl('en', subPath) },
+            },
+        }
+    }
+    const dpSub = getDigitalPresenceSubService(serviceSlug, locale)
+    if (dpSub) {
+        const dpPath = `/services/${dpSub.slug}`
+        return {
+            // Strip the baked-in "| CloudTopia" so the layout template adds it once.
+            title: stripBrandSuffix(dpSub.seo.title),
+            description: dpSub.seo.description,
+            openGraph: { title: dpSub.seo.title, description: dpSub.seo.description, url: canonicalUrl(locale, dpPath), siteName: 'CloudTopia', type: 'website' },
+            alternates: {
+                canonical: canonicalUrl(locale, dpPath),
+                languages: { en: canonicalUrl('en', dpPath), ar: canonicalUrl('ar', dpPath), 'x-default': canonicalUrl('en', dpPath) },
+            },
+        }
+    }
     const service = getService(serviceSlug)
     if (!service) return { title: 'Service Not Found' }
 
     const name = localizedServiceValue(service.name, locale)
     const description = localizedServiceValue(service.description, locale)
     const path = `/services/${service.slug}`
+    // If this is an older near-duplicate, canonicalize to the new equivalent page.
+    const canonicalPath = `/services/${WEBSITE_DUPLICATE_CANONICAL[service.slug] || service.slug}`
     const category = getServiceCategory(service.categorySlug)
     const categoryName = category ? localizedServiceValue(category.name, locale) : locale === 'ar' ? 'خدمات كلاود توبيا' : 'CloudTopia Services'
     const title = locale === 'ar'
@@ -321,11 +394,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             images: images.map((image) => image.url),
         },
         alternates: {
-            canonical: canonicalUrl(locale, path),
+            canonical: canonicalUrl(locale, canonicalPath),
             languages: {
-                en: canonicalUrl('en', path),
-                ar: canonicalUrl('ar', path),
-                'x-default': canonicalUrl('en', path),
+                en: canonicalUrl('en', canonicalPath),
+                ar: canonicalUrl('ar', canonicalPath),
+                'x-default': canonicalUrl('en', canonicalPath),
             },
         },
     }
@@ -335,6 +408,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServiceDetailPage({ params }: PageProps) {
     const { locale = 'en', service: serviceSlug } = await params
+    // "Get Found" trio (SEO/AEO/GEO) share a bespoke pillar design. They are
+    // structured pillars, so this branch MUST precede the getStructuredPillarBySlug
+    // render below — otherwise they would fall through to the generic PillarPage.
+    const getFound = getGetFoundContent(serviceSlug)
+    if (getFound) return <GetFoundPillarPage content={getFound} locale={locale} />
+    const pillar = getStructuredPillarBySlug(serviceSlug)
+    if (pillar) {
+        const rich = getRichPillarData(serviceSlug)
+        if (rich) return <RichPillarPage data={rich} locale={locale} />
+        return <PillarPage pillar={pillar} locale={locale} />
+    }
+    const sub = getBusinessSystemsSubService(serviceSlug, locale)
+    if (sub) return <SubServicePage content={sub} locale={locale} />
+    const dpSub = getDigitalPresenceSubService(serviceSlug, locale)
+    if (dpSub) return <DigitalPresenceSubServicePage content={dpSub} locale={locale} />
     const service = getService(serviceSlug)
     if (!service) notFound()
 
