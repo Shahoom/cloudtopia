@@ -12,6 +12,7 @@ const DotGlobeHero = dynamic(() => import('@/components/ui/globe-hero').then(mod
 const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then(mod => mod.HorizontalScrollCards), { ssr: false })
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { SeoH1 } from '@/components/seo/SeoH1'
+import { CategoryExplorer } from '@/components/services/CategoryExplorer'
 const WebAppFeatures = dynamic(() => import('@/components/ui/features-8').then(mod => mod.WebAppFeatures), { ssr: false })
 const StickyFeatureSection = dynamic(() => import('@/components/ui/sticky-scroll-cards-section').then(mod => mod.StickyFeatureSection), { ssr: false })
 import DetailedServicesSection from '@/components/services/DetailedServicesSection'
@@ -201,6 +202,26 @@ export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
                 isRTL={locale === 'ar'}
                 variant="light"
             />
+
+            {/* Full sub-service catalog (pillars → sub-services as always-visible cards) */}
+            <section className="bg-lavender py-16 md:py-24">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto mb-10 max-w-2xl text-center">
+                        <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#0369a1]">
+                            {locale === 'ar' ? 'استكشف الكتالوج' : 'Explore the catalog'}
+                        </p>
+                        <h2 className="text-balance text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                            {locale === 'ar' ? 'كل خدمات تطبيقات الويب' : 'Every Web Application service'}
+                        </h2>
+                        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg">
+                            {locale === 'ar'
+                                ? 'تصفّح أنظمتنا المحورية والخدمات المتخصصة تحت كل نظام.'
+                                : 'Browse our core systems and the specialized services under each.'}
+                        </p>
+                    </div>
+                    <CategoryExplorer categoryId="interactive-web-applications" />
+                </div>
+            </section>
 
             <WebAppFeatures locale={locale} />
 

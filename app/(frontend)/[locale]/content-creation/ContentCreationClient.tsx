@@ -8,6 +8,7 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ContentBlock from "@/components/ui/content-block"
 import { ParticleTextEffect } from "@/components/ui/interactive-text-particle"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
+import { PillarSubServicesGrid } from "@/components/services/PillarSubServicesGrid"
 
 const localContent = {
   en: {
@@ -92,6 +93,9 @@ export default function ContentCreationClient({ t: pageT }: { t?: any }) {
 
       {/* Section 4: Content Block - Services & Features */}
       <ContentBlock locale={locale} />
+
+      {/* Sub-service glow cards — always visible */}
+      <PillarSubServicesGrid pillarSlug="content-marketing-authority" locale={locale} />
 
       {/* Section 5: Interactive Particle Text Effect (Final Section) */}
       <section className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] bg-lavender dark:bg-lavender">
