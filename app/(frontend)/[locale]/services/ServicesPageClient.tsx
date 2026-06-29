@@ -900,7 +900,9 @@ function PillarCard({ pillar, locale, index }: { pillar: DPPillar; locale: strin
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 transition-colors duration-300 group-hover:border-sky-200 group-hover:bg-sky-50">
                         <Image src={pillar.icon} alt="" aria-hidden="true" width={26} height={26} className="h-[26px] w-[26px] object-contain" />
                     </div>
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-500">{pillar.subServices.length} {locale === 'ar' ? 'خدمة فرعية' : 'sub-services'}</span>
+                    {pillar.subServices.length > 0 && (
+                        <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-500">{pillar.subServices.length} {locale === 'ar' ? 'خدمة فرعية' : 'sub-services'}</span>
+                    )}
                 </div>
 
                 <h4 className="text-base font-bold leading-snug text-slate-900">{name}</h4>
