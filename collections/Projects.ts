@@ -212,6 +212,15 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
+      name: 'relatedServiceSlugs',
+      type: 'text',
+      required: false,
+      admin: {
+        description:
+          'Comma-separated service/pillar slugs this project showcases (e.g. "website-development, corporate-website-development"). Drives the “Projects we did” section on those service pages.',
+      },
+    },
+    {
       name: 'type',
       type: 'text',
       required: true,
