@@ -3,13 +3,13 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
-import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { cn } from '@/lib/utils'
-import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck } from 'lucide-react'
-import TechCursor from '@/components/ui/tech-cursor'
+import { ArrowRight, ArrowUpRight, Check, Search } from 'lucide-react'
+import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
+import { structuredCategoryIds, getStructuredGroups, getStructuredPillars, allStructuredPillars } from '@/lib/services/structured-catalog'
 
 interface ServiceCard {
     name: string
@@ -38,7 +38,7 @@ const digitalPresenceServices: ServiceCard[] = [
         icon: '/icons/services/Website Design & Development.png',
         gradient: 'from-blue-500 to-blue-700',
         glowColor: 'bg-lavender/50',
-        href: '/website-design',
+        href: '/website-development',
         features: ['Custom Design', 'Mobile-First', 'SEO Optimized', 'Fast Loading'],
         featuresAr: ['تصميم مخصص', 'الجوال أولاً', 'محسن لمحركات البحث', 'سرعة تحميل عالية'],
     },
@@ -52,7 +52,7 @@ const digitalPresenceServices: ServiceCard[] = [
         icon: '/icons/services/E-commerce Solutions.png',
         gradient: 'from-cyan-500 to-blue-600',
         glowColor: 'bg-lavender/50',
-        href: '/ecommerce-solutions',
+        href: '/ecommerce-development',
         features: ['Product Catalog', 'Secure Checkout', 'Order Management', 'Shipping Integration'],
         featuresAr: ['كتالوج المنتجات', 'دفع آمن', 'إدارة الطلبات', 'تكامل الشحن'],
     },
@@ -270,7 +270,7 @@ const webApplicationsServices: ServiceCard[] = [
         icon: '/icons/services/E-commerce Solutions.png',
         gradient: 'from-teal-500 to-teal-600',
         glowColor: 'bg-lavender/50',
-        href: '/ecommerce-solutions',
+        href: '/ecommerce-development',
         features: ['Product Management', 'Secure Payments', 'Order Tracking', 'Multi-vendor'],
         featuresAr: ['إدارة المنتجات', 'دفع آمن', 'تتبع الطلبات', 'متعدد البائعين'],
     },
@@ -757,8 +757,8 @@ const categories = [
         id: 'digital-presence',
         name: 'Digital Presence',
         nameAr: 'الحضور الرقمي',
-        description: 'Company websites, SEO, online stores, content, and lead generation paths that help customers find you and contact you.',
-        descriptionAr: 'مواقع شركات، SEO، متاجر إلكترونية، محتوى، ومسارات توليد عملاء تساعد الناس أن يجدوا شركتك ويتواصلوا معها.',
+        description: 'Your full digital presence — websites, e-commerce, branding, SEO, social, content, support, and analytics, organized around the customer journey.',
+        descriptionAr: 'حضورك الرقمي الكامل — مواقع، متاجر، هوية، SEO، تواصل اجتماعي، محتوى، دعم، وتحليلات، منظّمة حول رحلة العميل.',
         icon: '/icons/services/digitalpresence.png',
         gradient: 'from-blue-600 via-blue-400 to-teal-400',
         accentColor: 'from-blue-400 to-cyan-400',
@@ -819,29 +819,16 @@ const categories = [
         accentColor: 'from-violet-400 to-fuchsia-500',
         services: aiPoweredServices,
     },
-    {
-        id: 'digital-growth-support',
-        name: 'Digital Growth Support',
-        nameAr: 'دعم النمو الرقمي',
-        description: 'Social media, paid ads landing pages, brand identity, SEO, content, lead generation, CRO, and email automation.',
-        descriptionAr: 'وسائل التواصل، صفحات هبوط للإعلانات، الهوية البصرية، SEO، المحتوى، توليد العملاء، تحسين التحويل، وأتمتة البريد.',
-        icon: '/icons/services/Social Media Management.png',
-        gradient: 'from-rose-600 via-pink-500 to-orange-400',
-        accentColor: 'from-rose-400 to-orange-400',
-        services: digitalGrowthSupportServices,
-    },
 ]
 
 function ServiceCardComponent({
     service,
     locale,
     index,
-    featured = false,
 }: {
     service: ServiceCard
     locale: string
     index: number
-    featured?: boolean
 }) {
     const name = locale === 'ar' ? service.nameAr : service.name
     const tagline = locale === 'ar' ? service.taglineAr : service.tagline
@@ -850,161 +837,120 @@ function ServiceCardComponent({
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className={cn('group', featured && 'md:col-span-2')}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.4), ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="group h-full"
         >
-            <Link href={localePath(locale, service.href)} className="block h-full" aria-label={name}>
-                <div className={cn(
-                    'relative h-full rounded-lg transition-[box-shadow,transform] duration-300',
-                    'hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/70'
-                )}>
-                    <GlowingEffect
-                        spread={50}
-                        glow={true}
-                        disabled={false}
-                        proximity={100}
-                        inactiveZone={0.01}
-                        borderWidth={1}
-                    />
+            <Link
+                href={localePath(locale, service.href)}
+                aria-label={name}
+                className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+            >
+                {/* Top accent on hover */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
 
-                    {/* Card surface — white glass on lavender */}
-                    <div className={cn(
-                        'relative z-10 flex h-full flex-col overflow-hidden rounded-[7px]',
-                        'border border-slate-200 transition-[background-color,border-color,box-shadow] duration-300',
-                        'bg-white shadow-sm shadow-slate-200/70',
-                        'group-hover:border-sky-200 group-hover:bg-[#fbfdff] group-hover:shadow-lg',
-                        featured ? 'p-6 md:p-8' : 'p-5'
-                    )}>
-                        {/* Top-edge shimmer on hover */}
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                        {/* Soft violet bloom — top right */}
-                        <div className={cn(
-                            'absolute rounded-full blur-3xl transition-all duration-700 pointer-events-none',
-                            'opacity-0 group-hover:opacity-[0.12]',
-                            'bg-gradient-to-br from-sky-200 to-emerald-100',
-                            featured ? '-top-16 -right-16 w-72 h-72' : '-top-10 -right-10 w-44 h-44'
-                        )} aria-hidden="true" />
-
-                        <div className="relative z-10 mb-4 flex items-center justify-between gap-3">
-                            <span className="inline-flex items-center gap-1.5 rounded-md border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
-                                <ShieldCheck className="h-3 w-3" aria-hidden="true" />
-                                {locale === 'ar' ? 'جاهز للمؤسسات' : 'Enterprise Ready'}
-                            </span>
-                            <span className="text-[10px] font-black tracking-[0.18em] text-slate-300">
-                                {String(index + 1).padStart(2, '0')}
-                            </span>
-                        </div>
-
-                        {/* Header row */}
-                        <div className={cn('flex items-start gap-3 mb-3 relative z-10')}>
-                            {/* Icon container */}
-                            <div className={cn(
-                                'flex items-center justify-center flex-shrink-0 rounded-lg transition-[background-color,border-color] duration-300',
-                                'bg-slate-50 border border-slate-200',
-                                'group-hover:border-sky-200 group-hover:bg-sky-50',
-                                featured ? 'w-16 h-16' : 'w-12 h-12'
-                            )}>
-                                <Image
-                                    src={service.icon}
-                                    alt={name}
-                                    width={featured ? 36 : 28}
-                                    height={featured ? 36 : 28}
-                                    className={cn(
-                                        'object-contain transition-transform duration-500 group-hover:scale-110',
-                                        featured ? 'w-9 h-9' : 'w-7 h-7'
-                                    )}
-                                />
-                            </div>
-
-                            <div className="flex-1 min-w-0 pt-0.5">
-                                {/* Tagline */}
-                                <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-600/70 mb-1.5 transition-colors duration-300 group-hover:text-amber-600">
-                                    {tagline}
-                                </p>
-                                {/* Name */}
-                                <h3 className={cn(
-                                    'font-bold leading-snug text-slate-800 transition-colors duration-300 group-hover:text-slate-900',
-                                    featured ? 'text-xl md:text-2xl' : 'text-base'
-                                )}>
-                                    {name}
-                                </h3>
-                            </div>
-
-                            {/* Arrow — appears on hover */}
-                            <div className="flex-shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 rtl:-translate-x-1 rtl:group-hover:translate-x-0">
-                                <div className="w-7 h-7 rounded-md bg-amber-500/10 border border-amber-400/30 flex items-center justify-center">
-                                    <ArrowUpRight className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Description */}
-                        <p className={cn(
-                            'text-slate-600 leading-relaxed relative z-10 mb-3 transition-colors duration-300 group-hover:text-slate-700',
-                            featured ? 'text-sm max-w-xl' : 'text-xs'
-                        )}>
-                            {description}
-                        </p>
-
-                        {/* Hairline divider */}
-                        <div className="border-t border-slate-100 mb-3 relative z-10 transition-colors duration-300 group-hover:border-violet-100" />
-
-                        {/* Feature chips */}
-                        <div className="mt-auto relative z-10 grid gap-1.5">
-                            {features.map((feature, idx) => (
-                                <span
-                                    key={idx}
-                                    className={cn(
-                                        'inline-flex min-h-8 items-center gap-2 rounded-md px-2.5 py-1 text-[11px] font-semibold',
-                                        'text-slate-500 bg-slate-50 border border-slate-100/80',
-                                        'transition-all duration-300',
-                                        'group-hover:text-sky-800 group-hover:bg-sky-50 group-hover:border-sky-100'
-                                    )}
-                                >
-                                    <CheckCircle2 className="h-3.5 w-3.5 flex-none text-emerald-500" />
-                                    {feature}
-                                </span>
-                            ))}
-                        </div>
+                <div className="mb-4 flex items-start justify-between gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 transition-colors duration-300 group-hover:border-sky-200 group-hover:bg-sky-50">
+                        <Image src={service.icon} alt="" aria-hidden="true" width={26} height={26} className="h-[26px] w-[26px] object-contain" />
                     </div>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-300 transition-all duration-300 group-hover:border-sky-300 group-hover:bg-sky-50 group-hover:text-sky-600 rtl:-scale-x-100">
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                </div>
+
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-sky-600/70">{tagline}</p>
+                <h3 className="text-base font-bold leading-snug text-slate-900">{name}</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-slate-500">{description}</p>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                    {features.slice(0, 4).map((feature, idx) => (
+                        <span key={idx} className="inline-flex items-center gap-1.5 rounded-md border border-slate-100 bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-600">
+                            <Check className="h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
+                            {feature}
+                        </span>
+                    ))}
                 </div>
             </Link>
         </motion.div>
     )
 }
 
+function PillarCard({ pillar, locale, index }: { pillar: DPPillar; locale: string; index: number }) {
+    const name = localizedDP(pillar.name, locale)
+    const description = localizedDP(pillar.description, locale)
+    const sample = pillar.subServices.slice(0, 4)
+    const more = pillar.subServices.length - sample.length
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.35), ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="group h-full"
+        >
+            <Link
+                href={localePath(locale, pillar.href)}
+                aria-label={name}
+                className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+            >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
+
+                <div className="mb-3 flex items-start justify-between gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 transition-colors duration-300 group-hover:border-sky-200 group-hover:bg-sky-50">
+                        <Image src={pillar.icon} alt="" aria-hidden="true" width={26} height={26} className="h-[26px] w-[26px] object-contain" />
+                    </div>
+                    <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-500">{pillar.subServices.length} {locale === 'ar' ? 'خدمة فرعية' : 'sub-services'}</span>
+                </div>
+
+                <h4 className="text-base font-bold leading-snug text-slate-900">{name}</h4>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{description}</p>
+
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                    {sample.map((sub, i) => (
+                        <span key={i} className="inline-flex items-center rounded-md border border-slate-100 bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-600">{sub}</span>
+                    ))}
+                    {more > 0 && (
+                        <span className="inline-flex items-center px-1.5 py-1 text-[11px] font-bold text-sky-700">+{more} {locale === 'ar' ? 'المزيد' : 'more'}</span>
+                    )}
+                </div>
+
+                <span className="mt-4 inline-flex items-center gap-1 text-[13px] font-bold text-sky-700 transition-colors group-hover:text-sky-900">
+                    {locale === 'ar' ? 'استكشف الخدمة' : 'Explore service'}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
+                </span>
+            </Link>
+        </motion.div>
+    )
+}
+
+function StructuredCategoryGroups({ categoryId, locale }: { categoryId: string; locale: string }) {
+    const groups = getStructuredGroups(categoryId) ?? []
+    return (
+        <div className="space-y-10">
+            {groups.map((group) => (
+                <section key={group.slug} aria-label={localizedDP(group.name, locale)}>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-sky-600/80">{localizedDP(group.tagline, locale)}</p>
+                    <div className="mb-4 mt-1 flex items-center gap-2">
+                        <h3 className="text-xl font-black tracking-tight text-slate-900 md:text-2xl">{localizedDP(group.name, locale)}</h3>
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-500">{group.pillars.length}</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                        {group.pillars.map((pillar, i) => (
+                            <PillarCard key={pillar.slug} pillar={pillar} locale={locale} index={i} />
+                        ))}
+                    </div>
+                </section>
+            ))}
+        </div>
+    )
+}
+
 export default function ServicesPageClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
     const t = pageT || contextT
-    const [isMobile, setIsMobile] = React.useState(false)
     const [activeCategory, setActiveCategory] = React.useState('digital-presence')
-
-    React.useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768)
-        checkMobile()
-        window.addEventListener('resize', checkMobile)
-        return () => window.removeEventListener('resize', checkMobile)
-    }, [])
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) setActiveCategory(entry.target.id)
-                })
-            },
-            { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
-        )
-        categories.forEach((cat) => {
-            const el = document.getElementById(cat.id)
-            if (el) observer.observe(el)
-        })
-        return () => observer.disconnect()
-    }, [])
+    const [query, setQuery] = React.useState('')
 
     const content = {
         en: {
@@ -1050,11 +996,32 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
     const finalCtaDesc = t.services?.finalCta?.description || t.services?.finalCTA?.description || c.finalCta.description
     const finalCtaButton = t.services?.finalCta?.button || t.services?.finalCTA?.button || c.finalCta.button
 
+    const q = query.trim().toLowerCase()
+    const matchesQuery = (service: ServiceCard) =>
+        [service.name, service.nameAr, service.tagline, service.taglineAr, service.description, service.descriptionAr]
+            .join(' ')
+            .toLowerCase()
+            .includes(q)
+
+    const activeCat = categories.find((cat) => cat.id === activeCategory) ?? categories[0]
+    const isStructured = structuredCategoryIds.includes(activeCategory)
+
+    // Structured categories (Digital Presence, Business Systems…) render as grouped
+    // pillars; the remaining categories stay flat.
+    const structuredPillarMatches = q
+        ? allStructuredPillars.filter((p) => [p.name.en, p.name.ar, ...p.subServices].join(' ').toLowerCase().includes(q))
+        : []
+    const serviceMatches = q
+        ? categories.filter((cat) => !structuredCategoryIds.includes(cat.id)).flatMap((cat) => cat.services.filter(matchesQuery))
+        : []
+    const flatServices = q ? serviceMatches : isStructured ? [] : activeCat.services
+    const resultCount = serviceMatches.length + structuredPillarMatches.length
+    const gridKey = q ? `q:${q}` : activeCat.id
+
     return (
         <div className="min-h-screen bg-[#f4f1f8] text-slate-900 selection:bg-sky-200/60" dir={dir}>
-            {!isMobile && <TechCursor />}
 
-            {/* ─── HERO ─────────────────────────────────────────────── */}
+            {/* ─── HERO (original light background restored) ─────────── */}
             <section
                 className="relative overflow-hidden bg-[#f4f1f8] px-4 pb-14 pt-28 sm:px-6 lg:px-8 md:pb-16 md:pt-32"
                 aria-label="Services hero"
@@ -1076,285 +1043,170 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                     aria-hidden="true"
                 />
 
-                {/* Ambient amber orb — subtle */}
+                {/* Ambient orb */}
                 <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-sky-300/10 blur-[100px] pointer-events-none" aria-hidden="true" />
 
                 <div className="relative z-10 max-w-5xl mx-auto text-center">
                     <div className="flex flex-col items-center space-y-5">
-
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: -12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                        >
+                        <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                             <span className="inline-flex items-center gap-2.5 rounded-md border border-sky-200 bg-white/75 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-sky-700 shadow-sm shadow-sky-100">
                                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
                                 {heroBadge}
                             </span>
                         </motion.div>
 
-                        {/* Pre-title + Headline */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 28 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-                            className="space-y-3"
-                        >
-                            <p className="text-base md:text-lg font-medium text-slate-400 tracking-wide">
-                                {heroPreTitle}
-                            </p>
-                            {/* h2 (not h1): the page's single h1 is the SEO hero
-                                in services/page.tsx ("Services to Move…"). Two h1s
-                                hurt SEO/a11y; classes unchanged → identical look. */}
-                            <h2
-                                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.04] text-slate-900"
-                                style={{ textWrap: 'balance' } as React.CSSProperties}
-                            >
+                        <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }} className="space-y-3">
+                            <p className="text-base md:text-lg font-medium text-slate-400 tracking-wide">{heroPreTitle}</p>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.04] text-slate-900" style={{ textWrap: 'balance' } as React.CSSProperties}>
                                 {heroTitle}
                             </h2>
                         </motion.div>
 
-                        {/* Gold rule */}
-                        <motion.div
-                            initial={{ scaleX: 0, opacity: 0 }}
-                            animate={{ scaleX: 1, opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.38 }}
-                            className="w-14 h-px bg-gradient-to-r from-transparent via-sky-500 to-transparent"
-                            aria-hidden="true"
-                        />
+                        <motion.div initial={{ scaleX: 0, opacity: 0 }} animate={{ scaleX: 1, opacity: 1 }} transition={{ duration: 0.8, delay: 0.38 }} className="w-14 h-px bg-gradient-to-r from-transparent via-sky-500 to-transparent" aria-hidden="true" />
 
-                        {/* Description */}
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                            className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed mx-auto"
-                            style={{ textWrap: 'balance' } as React.CSSProperties}
-                        >
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.5 }} className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed mx-auto" style={{ textWrap: 'balance' } as React.CSSProperties}>
                             {heroDesc}
                         </motion.p>
 
-                        {/* CTAs */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.7, delay: 0.62 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full"
-                        >
-                            <a
-                                href="mailto:info@cloudtopia.net"
-                                className="group inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-eerie px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-sky-800 active:scale-95 sm:w-auto"
-                                aria-label={c.ctaButton}
-                            >
+                        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.62 }} className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+                            <a href="mailto:info@cloudtopia.net" className="group inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-eerie px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-sky-800 active:scale-95 sm:w-auto" aria-label={c.ctaButton}>
                                 {c.ctaButton}
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" aria-hidden="true" />
                             </a>
-                            <Link
-                                href={localePath(locale, '/projects')}
-                                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/70 px-8 py-3.5 text-sm font-semibold text-slate-700 transition-[background-color,border-color,color] duration-300 hover:border-sky-200 hover:bg-white hover:text-sky-800 sm:w-auto"
-                            >
+                            <Link href={localePath(locale, '/projects')} className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/70 px-8 py-3.5 text-sm font-semibold text-slate-700 transition-[background-color,border-color,color] duration-300 hover:border-sky-200 hover:bg-white hover:text-sky-800 sm:w-auto">
                                 {c.ctaSecondary}
                             </Link>
                         </motion.div>
 
-                        {/* Reply note */}
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.88 }}
-                            className="text-[11px] text-slate-400 tracking-wide"
-                        >
-                            {c.replyNote}
-                        </motion.p>
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.88 }} className="text-[11px] text-slate-400 tracking-wide">{c.replyNote}</motion.p>
                     </div>
                 </div>
-
-                {/* Scroll indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, y: [0, 8, 0] }}
-                    transition={{ delay: 1.4, duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                    aria-hidden="true"
-                >
-                    <div className="w-px h-10 bg-gradient-to-b from-sky-400/50 to-transparent" />
-                </motion.div>
             </section>
 
-            {/* ─── SERVICES ─────────────────────────────────────────── */}
+            {/* ─── CATALOG (two-pane sidebar) ───────────────────────── */}
             <div className="bg-[#f4f1f8]">
-
-                {/* Sticky category nav */}
-                <nav
-                    className="sticky top-0 z-40 border-b border-slate-200 bg-[#f4f1f8]/92 backdrop-blur-xl"
-                    aria-label="Service categories"
-                >
-                    <div className="max-w-7xl mx-auto px-4 md:px-8">
-                        <div className="flex items-center justify-center gap-2 md:gap-3 py-3.5 overflow-x-auto no-scrollbar">
-                            {categories.map((category) => {
-                                const catName = locale === 'ar' ? category.nameAr : category.name
-                                const isActive = activeCategory === category.id
-                                return (
-                                    <Link
-                                        key={category.id}
-                                        href={`#${category.id}`}
-                                        aria-current={isActive ? 'true' : undefined}
-                                        className={cn(
-                                            'group whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 touch-manipulation',
-                                            isActive
-                                                ? 'bg-white border border-sky-200 text-sky-800 shadow-sm shadow-sky-100'
-                                                : 'text-slate-500 hover:text-slate-800 border border-transparent hover:border-slate-200 hover:bg-white/70'
-                                        )}
-                                    >
-                                        <Image
-                                            src={category.icon}
-                                            alt=""
-                                            aria-hidden="true"
-                                            width={14}
-                                            height={14}
-                                            className={cn(
-                                                'w-3.5 h-3.5 transition-opacity duration-300',
-                                                isActive ? 'opacity-70' : 'opacity-35 group-hover:opacity-60'
-                                            )}
-                                        />
-                                        <span>{catName}</span>
-                                        {isActive && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" aria-hidden="true" />
-                                        )}
-                                    </Link>
-                                )
-                            })}
+                <div className="mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+                    <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <h2 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">{locale === 'ar' ? 'تصفّح كل الخدمات' : 'Browse all services'}</h2>
+                            <p className="mt-2 text-sm text-slate-500">{locale === 'ar' ? 'اختر فئة من القائمة، أو ابحث عمّا تحتاجه.' : 'Pick a category from the list, or search for what you need.'}</p>
+                        </div>
+                        <div className="relative w-full max-w-sm">
+                            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 rtl:left-auto rtl:right-3.5" aria-hidden="true" />
+                            <input
+                                type="search"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder={locale === 'ar' ? 'ابحث في الخدمات…' : 'Search services…'}
+                                aria-label={locale === 'ar' ? 'ابحث في الخدمات' : 'Search services'}
+                                className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-700 shadow-sm transition-colors placeholder:text-slate-400 focus:border-sky-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 rtl:pl-4 rtl:pr-10"
+                            />
                         </div>
                     </div>
-                </nav>
 
-                {/* Category sections */}
-                <div className="max-w-7xl mx-auto px-4 md:px-8">
-                    {categories.map((category, catIndex) => {
-                        const catName = locale === 'ar' ? category.nameAr : category.name
-                        const catDesc = locale === 'ar' ? category.descriptionAr : category.description
-                        const [featuredService, ...restServices] = category.services
-
-                        return (
-                            <section
-                                key={category.id}
-                                id={category.id}
-                                className="py-10 md:py-16 border-b border-slate-200 last:border-0"
-                                aria-labelledby={`cat-heading-${category.id}`}
+                    <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+                        {/* Sidebar — categories */}
+                        <aside className="lg:sticky lg:top-24 lg:self-start">
+                            <nav
+                                className="flex gap-2 overflow-x-auto pb-2 no-scrollbar lg:flex-col lg:gap-1.5 lg:overflow-visible lg:pb-0"
+                                aria-label={locale === 'ar' ? 'فئات الخدمات' : 'Service categories'}
                             >
-                                {/* Category header */}
-                                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
-                                    <div className="space-y-2">
-                                        {/* Index + accent line */}
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-[11px] font-black tracking-[0.3em] text-amber-500">
-                                                0{catIndex + 1}
+                                {categories.map((category) => {
+                                    const isActive = !q && activeCategory === category.id
+                                    return (
+                                        <button
+                                            key={category.id}
+                                            type="button"
+                                            onClick={() => { setQuery(''); setActiveCategory(category.id) }}
+                                            aria-pressed={isActive}
+                                            className={cn(
+                                                'group flex shrink-0 items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition-all duration-200 lg:w-full rtl:text-right',
+                                                isActive
+                                                    ? 'border-sky-200 bg-white shadow-sm shadow-sky-100'
+                                                    : 'border-transparent bg-white/50 hover:border-slate-200 hover:bg-white'
+                                            )}
+                                        >
+                                            <span className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors duration-200', isActive ? 'border-sky-200 bg-sky-50' : 'border-slate-200 bg-slate-50 group-hover:border-sky-200 group-hover:bg-sky-50')}>
+                                                <Image src={category.icon} alt="" aria-hidden="true" width={18} height={18} className="h-[18px] w-[18px] object-contain opacity-80" />
                                             </span>
-                                            <div className={cn(
-                                                'h-px flex-1 max-w-[48px] bg-gradient-to-r',
-                                                category.accentColor
-                                            )} aria-hidden="true" />
-                                        </div>
+                                            <span className="min-w-0 flex-1">
+                                                <span className={cn('block whitespace-nowrap text-sm font-bold transition-colors duration-200 lg:whitespace-normal lg:leading-tight', isActive ? 'text-sky-900' : 'text-slate-700 group-hover:text-slate-900')}>
+                                                    {locale === 'ar' ? category.nameAr : category.name}
+                                                </span>
+                                                <span className="hidden text-[11px] text-slate-400 lg:block">{(structuredCategoryIds.includes(category.id) ? getStructuredPillars(category.id).length : category.services.length)} {locale === 'ar' ? 'خدمة' : 'services'}</span>
+                                            </span>
+                                            <ArrowRight className={cn('hidden h-4 w-4 shrink-0 transition-all duration-200 lg:block rtl:rotate-180', isActive ? 'text-sky-500 opacity-100' : 'text-slate-300 opacity-0 group-hover:opacity-100')} aria-hidden="true" />
+                                        </button>
+                                    )
+                                })}
+                            </nav>
+                        </aside>
 
-                                        {/* Category icon + name */}
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-11 h-11 rounded-lg flex items-center justify-center bg-white border border-slate-200 shadow-sm">
-                                                <Image
-                                                    src={category.icon}
-                                                    alt=""
-                                                    aria-hidden="true"
-                                                    width={20}
-                                                    height={20}
-                                                    className="w-5 h-5 opacity-75"
-                                                />
+                        {/* Right panel */}
+                        <div>
+                            {isStructured && !q ? (
+                                <motion.div key={`grp-${activeCategory}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+                                    <StructuredCategoryGroups categoryId={activeCategory} locale={locale as string} />
+                                </motion.div>
+                            ) : (
+                                <>
+                                    {!q ? (
+                                        <div className="mb-6 flex items-end gap-3">
+                                            <div className={cn('h-9 w-1.5 shrink-0 rounded-full bg-gradient-to-b', activeCat.accentColor)} aria-hidden="true" />
+                                            <div>
+                                                <h3 className="text-2xl font-black tracking-tight text-slate-900 md:text-3xl">{locale === 'ar' ? activeCat.nameAr : activeCat.name}</h3>
+                                                <p className="mt-1 max-w-2xl text-sm text-slate-500">{locale === 'ar' ? activeCat.descriptionAr : activeCat.description}</p>
                                             </div>
-                                            <h2
-                                                id={`cat-heading-${category.id}`}
-                                                className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900"
-                                            >
-                                                {catName}
-                                            </h2>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <p className="mb-6 text-sm text-slate-500">{resultCount} {locale === 'ar' ? 'نتيجة' : 'results'} · “{query}”</p>
+                                    )}
 
-                                    {/* Description — right on desktop */}
-                                    <p className="max-w-[320px] border-l border-slate-200 pl-4 text-sm leading-relaxed text-slate-500 md:text-right rtl:border-l-0 rtl:border-r rtl:pl-0 rtl:pr-4 rtl:md:text-left">
-                                        {catDesc}
-                                    </p>
-                                </div>
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={gridKey}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -8 }}
+                                            transition={{ duration: 0.25 }}
+                                            className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                                        >
+                                            {structuredPillarMatches.map((pillar, idx) => (
+                                                <PillarCard key={`pillar-${pillar.slug}`} pillar={pillar} locale={locale as string} index={idx} />
+                                            ))}
+                                            {flatServices.map((service, idx) => (
+                                                <ServiceCardComponent key={`${gridKey}-${service.name}`} service={service} locale={locale as string} index={structuredPillarMatches.length + idx} />
+                                            ))}
+                                        </motion.div>
+                                    </AnimatePresence>
 
-                                {/* Featured card — full width */}
-                                <div className="mb-3">
-                                    <ServiceCardComponent
-                                        service={featuredService}
-                                        locale={locale as string}
-                                        index={0}
-                                        featured={true}
-                                    />
-                                </div>
-
-                                {/* Remaining cards grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {restServices.map((service, idx) => (
-                                        <ServiceCardComponent
-                                            key={service.name}
-                                            service={service}
-                                            locale={locale as string}
-                                            index={idx + 1}
-                                        />
-                                    ))}
-                                </div>
-                            </section>
-                        )
-                    })}
+                                    {q && resultCount === 0 && (
+                                        <p className="py-20 text-center text-base text-slate-500">{locale === 'ar' ? `لا توجد خدمات مطابقة لـ "${query}".` : `No services match "${query}".`}</p>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* ─── FINAL CTA ─────────────────────────────────────────── */}
-            {/* Deep violet/plum section — contrasts beautifully with lavender body */}
+            {/* ─── FINAL CTA (original) ─────────────────────────────── */}
             <section
                 className="relative py-16 md:py-24 flex items-center justify-center overflow-hidden"
                 style={{ background: 'linear-gradient(135deg, #1e0b3e 0%, #2d1065 50%, #1a0a38 100%)' }}
                 aria-label="Call to action"
             >
-                {/* Mesh glow layers */}
                 <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none" aria-hidden="true" />
                 <div className="absolute bottom-0 right-1/4 w-[320px] h-[320px] rounded-full bg-amber-400/8 blur-[100px] pointer-events-none" aria-hidden="true" />
-
-                {/* Top edge shimmer */}
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" aria-hidden="true" />
 
                 <div className="relative z-10 max-w-3xl mx-auto px-5 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="flex flex-col items-center space-y-5"
-                    >
-                        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-400/20 bg-violet-400/5 text-violet-300 text-[11px] font-bold tracking-[0.2em] uppercase">
-                            {finalCtaPreTitle}
-                        </span>
-
-                        <h2
-                            className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] text-white"
-                            style={{ textWrap: 'balance' } as React.CSSProperties}
-                        >
-                            {finalCtaTitle}
-                        </h2>
-
+                    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }} className="flex flex-col items-center space-y-5">
+                        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-400/20 bg-violet-400/5 text-violet-300 text-[11px] font-bold tracking-[0.2em] uppercase">{finalCtaPreTitle}</span>
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] text-white" style={{ textWrap: 'balance' } as React.CSSProperties}>{finalCtaTitle}</h2>
                         <div className="w-12 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" aria-hidden="true" />
-
-                        <p className="text-base md:text-lg text-violet-200/60 max-w-lg mx-auto leading-relaxed">
-                            {finalCtaDesc}
-                        </p>
-
-                        <Link
-                            href={localePath(locale, '/contact')}
-                            className="group inline-flex items-center gap-3 px-10 py-4 bg-amber-500 text-white rounded-xl font-bold text-base transition-all duration-300 hover:bg-amber-400 hover:scale-105 active:scale-95 touch-manipulation shadow-lg shadow-amber-500/25"
-                            aria-label={finalCtaButton}
-                        >
+                        <p className="text-base md:text-lg text-violet-200/60 max-w-lg mx-auto leading-relaxed">{finalCtaDesc}</p>
+                        <Link href={localePath(locale, '/contact')} className="group inline-flex items-center gap-3 px-10 py-4 bg-amber-500 text-white rounded-xl font-bold text-base transition-all duration-300 hover:bg-amber-400 hover:scale-105 active:scale-95 touch-manipulation shadow-lg shadow-amber-500/25" aria-label={finalCtaButton}>
                             {finalCtaButton}
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" aria-hidden="true" />
                         </Link>
