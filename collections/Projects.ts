@@ -66,6 +66,10 @@ const autoLocalizeProject: CollectionAfterChangeHook = async ({ doc, req }) => {
         locale,
         cmsKey: targetId,
         category: translated.category || doc.category,
+        // Mirror the EN tag verbatim onto the AR row — service slugs are
+        // locale-agnostic (not translated), so the AR "Projects we did" section
+        // resolves the same curated matches instead of the featured fallback.
+        relatedServiceSlugs: doc.relatedServiceSlugs || '',
         type: translated.type || doc.type,
         featured: doc.featured,
         title: translated.title || doc.title,

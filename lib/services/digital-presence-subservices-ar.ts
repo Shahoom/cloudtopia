@@ -1146,8 +1146,8 @@ export const generatedDPSubServicesAr: Record<string, DPSubServiceContent> = {
   "franchise-and-multi-location-seo": {
     "slug": "franchise-and-multi-location-seo",
     "service": "تحسين محركات البحث للامتيازات التجارية والمواقع المتعددة",
-    "pillarSlug": "local-seo-discoverability",
-    "pillarName": "تحسين محركات البحث المحلي وتعزيز الظهور",
+    "pillarSlug": "search-engine-optimization",
+    "pillarName": "تحسين محركات البحث",
     "seo": {
       "title": "SEO للامتيازات التجارية والمواقع المتعددة | كلاود توبيا",
       "description": "احصل على تصدّر كل فرع في مدينته وعلى خرائط جوجل. إدارة صفحات ومجلدات وتقييمات المواقع المتعددة على نطاق واسع في دول الخليج. استشارة مجانية للبدء."
@@ -1210,8 +1210,8 @@ export const generatedDPSubServicesAr: Record<string, DPSubServiceContent> = {
   "google-business-profile-optimization": {
     "slug": "google-business-profile-optimization",
     "service": "تحسين Google Business Profile",
-    "pillarSlug": "local-seo-discoverability",
-    "pillarName": "تحسين محركات البحث المحلي وتعزيز الظهور",
+    "pillarSlug": "search-engine-optimization",
+    "pillarName": "تحسين محركات البحث",
     "seo": {
       "title": "تحسين Google Business Profile للظهور المحلي | كلاود توبيا",
       "description": "تصدّر حزمة الخرائط المحلية واستقطب المزيد من المكالمات والزيارات. نُحسّن ملف Google Business Profile بالكامل. استشارة مجانية ومعاينة فورية."
@@ -1274,8 +1274,8 @@ export const generatedDPSubServicesAr: Record<string, DPSubServiceContent> = {
   "local-map-ranking-strategies": {
     "slug": "local-map-ranking-strategies",
     "service": "استراتيجيات التصنيف في خرائط جوجل المحلية",
-    "pillarSlug": "local-seo-discoverability",
-    "pillarName": "تحسين محركات البحث المحلي وتعزيز الظهور",
+    "pillarSlug": "search-engine-optimization",
+    "pillarName": "تحسين محركات البحث",
     "seo": {
       "title": "استراتيجيات التصنيف في خرائط جوجل المحلية | كلاود توبيا",
       "description": "تصدّر حزمة الخرائط المحلية في جوجل في عُمان ودول الخليج. نُعدّل إشارات التصنيف للفوز بالمراكز الثلاثة الأولى. استشارة مجانية وتدقيق شبكي للبدء."
@@ -1338,8 +1338,8 @@ export const generatedDPSubServicesAr: Record<string, DPSubServiceContent> = {
   "near-me-search-optimization": {
     "slug": "near-me-search-optimization",
     "service": "تحسين البحث «بالقرب مني»",
-    "pillarSlug": "local-seo-discoverability",
-    "pillarName": "تحسين محركات البحث المحلي وتعزيز الظهور",
+    "pillarSlug": "search-engine-optimization",
+    "pillarName": "تحسين محركات البحث",
     "seo": {
       "title": "تحسين البحث «بالقرب مني» على جوجل | كلاود توبيا",
       "description": "كن النشاط التجاري الذي يجده العملاء القريبون حين يبحثون عن «بالقرب مني» أو «مفتوح الآن» على جوجل والخرائط. تحسين البحث المحلي مع استشارة مجانية أولاً."
