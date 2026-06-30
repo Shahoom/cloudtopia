@@ -1,0 +1,258 @@
+{
+  "slug": "automated-invoicing-payment-reminders",
+  "service": "Invoicing & Reminder Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Automated Invoicing & Payment Reminders | CloudTopia",
+    "description": "Automate invoicing and chase late payments with scheduled WhatsApp and email reminders that stop the moment clients pay. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Automated Invoicing & Payment Reminder Workflows",
+    "subtitle": "Stop chasing payments by hand. We build a workflow that raises invoices automatically, sends polite WhatsApp and email reminders on your schedule, and goes quiet the moment a client pays.",
+    "chips": [
+      "Auto-generated invoices",
+      "WhatsApp + email reminders",
+      "Stops when paid",
+      "Bilingual AR + EN",
+      "VAT-ready templates",
+      "Aging dashboard",
+      "WhatsApp-first setup",
+      "You own it all"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Automated invoice generation",
+      "description": "Invoices are created and numbered the moment an order, contract milestone, or subscription cycle triggers them.",
+      "features": [
+        "Trigger from order, deal, or due date",
+        "Sequential VAT-ready numbering",
+        "Branded AR + EN PDF templates",
+        "Auto-send on creation"
+      ]
+    },
+    {
+      "name": "Reminder schedule engine",
+      "description": "We map your follow-up cadence into timed steps that fire before and after the due date without anyone lifting a finger.",
+      "features": [
+        "Pre-due courtesy notice",
+        "Day-after and 7/15/30-day chases",
+        "Quiet-hours and weekend rules",
+        "Escalating tone per stage"
+      ]
+    },
+    {
+      "name": "WhatsApp + email delivery",
+      "description": "Reminders reach clients where they actually reply — on WhatsApp first, with email as a documented fallback.",
+      "features": [
+        "WhatsApp Business API messages",
+        "Approved bilingual templates",
+        "Email with attached PDF",
+        "Delivery and read tracking"
+      ]
+    },
+    {
+      "name": "Stop-on-payment logic",
+      "description": "When a payment lands the workflow detects it and instantly cancels any pending reminders for that invoice.",
+      "features": [
+        "Payment-gateway and bank-feed checks",
+        "Manual mark-as-paid option",
+        "Partial-payment handling",
+        "Auto-cancel queued chases"
+      ]
+    },
+    {
+      "name": "Receivables dashboard",
+      "description": "A live view of who owes what, how overdue it is, and which reminders have gone out.",
+      "features": [
+        "Aging buckets (0-30-60-90)",
+        "Outstanding total by client",
+        "Reminder history timeline",
+        "Export to accounting"
+      ]
+    },
+    {
+      "name": "Receipts & reconciliation",
+      "description": "Paid invoices generate a receipt and close themselves out cleanly against your records.",
+      "features": [
+        "Auto receipt on payment",
+        "Thank-you confirmation message",
+        "Reference matching to invoice",
+        "Sync to ERP or sheet"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster cash collection",
+      "description": "Invoices go out the day work is done and follow-ups never slip, so money arrives sooner."
+    },
+    {
+      "label": "Hours back every week",
+      "description": "No one manually drafts invoices or hunts down late payers across spreadsheets and chats."
+    },
+    {
+      "label": "Fewer awkward calls",
+      "description": "Polite, automatic reminders do the chasing, keeping client relationships calm and professional."
+    },
+    {
+      "label": "Clear receivables view",
+      "description": "You always know exactly who is overdue and by how much, with no end-of-month surprises."
+    }
+  ],
+  "industries": [
+    "Professional services & agencies",
+    "Trading & wholesale distribution",
+    "Construction & contracting",
+    "Clinics & medical practices",
+    "Facilities & maintenance services",
+    "Logistics & freight forwarding"
+  ],
+  "faqs": [
+    {
+      "question": "Will clients keep getting reminders after they pay?",
+      "answer": "No. The workflow watches for payment through your gateway, bank feed, or a manual mark-as-paid, and cancels every pending reminder for that invoice the moment it clears. Clients only ever get a thank-you and receipt, never a chase for something already settled."
+    },
+    {
+      "question": "Can reminders go out in Arabic and English?",
+      "answer": "Yes. Every invoice, WhatsApp message, and email is delivered bilingually with RTL-ready Arabic, and we set the language per client so each one is reached in the language they prefer. Templates are reviewed with you before anything goes live."
+    },
+    {
+      "question": "Does this work with the accounting tool we already use?",
+      "answer": "In most cases, yes. We connect to common gateways, bank feeds, and systems like Odoo, QuickBooks, Zoho, or even a Google Sheet, so invoicing and payment status stay in sync. During the free consultation we confirm exactly which connections your setup supports."
+    },
+    {
+      "question": "How are the WhatsApp messages sent so they don't get blocked?",
+      "answer": "We use the official WhatsApp Business API with pre-approved message templates, not an unofficial bot, so delivery is reliable and compliant. This keeps your number in good standing and lets clients reply to a real, monitored channel."
+    },
+    {
+      "question": "Do we own the system once it's built?",
+      "answer": "Completely. You receive the code, the workflow configuration, the database, and the documentation, with no vendor lock-in. Your team can run it, adjust the reminder cadence, and extend it without depending on us."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven automation, messaging, and payment tooling wired into one reliable invoicing-and-reminder workflow you own end to end.",
+    "categories": [
+      {
+        "label": "Automation & orchestration",
+        "items": [
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "Cron scheduling"
+          }
+        ]
+      },
+      {
+        "label": "Messaging & reminders",
+        "items": [
+          {
+            "name": "WhatsApp Business API",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Twilio"
+          },
+          {
+            "name": "Resend",
+            "icon": "https://cdn.simpleicons.org/resend/000000"
+          },
+          {
+            "name": "Bilingual templates"
+          }
+        ]
+      },
+      {
+        "label": "Payments & reconciliation",
+        "items": [
+          {
+            "name": "Stripe",
+            "icon": "https://cdn.simpleicons.org/stripe/635BFF"
+          },
+          {
+            "name": "Thawani"
+          },
+          {
+            "name": "Bank feed matching"
+          },
+          {
+            "name": "Payment webhooks"
+          }
+        ]
+      },
+      {
+        "label": "Data & records",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          },
+          {
+            "name": "Invoice PDF engine"
+          }
+        ]
+      },
+      {
+        "label": "Accounting integrations",
+        "items": [
+          {
+            "name": "Odoo",
+            "icon": "https://cdn.simpleicons.org/odoo/714B67"
+          },
+          {
+            "name": "QuickBooks",
+            "icon": "https://cdn.simpleicons.org/quickbooks/2CA01C"
+          },
+          {
+            "name": "Zoho Books",
+            "icon": "https://cdn.simpleicons.org/zoho/E42527"
+          },
+          {
+            "name": "REST APIs"
+          }
+        ]
+      },
+      {
+        "label": "Dashboard & hosting",
+        "items": [
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Role-based access"
+          }
+        ]
+      }
+    ]
+  }
+}

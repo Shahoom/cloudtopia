@@ -1,0 +1,186 @@
+{
+  "slug": "legacy-system-migration",
+  "service": "Legacy System Migration",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Legacy Spreadsheet & System Migration | CloudTopia",
+    "description": "Move scattered Excel files and outdated software into one clean, owned system — history intact, deduplicated, validated. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Legacy Spreadsheet & Outdated System Migration",
+    "subtitle": "Move years of scattered spreadsheets, ageing desktop software, and disconnected tools into one clean system that fits how you work today. Your history comes with you — cleansed, deduplicated, and verified — and the result is fully yours to own.",
+    "chips": [
+      "Excel & Access exit",
+      "Zero data loss",
+      "Cleansed & deduplicated",
+      "Field-by-field mapping",
+      "Parallel-run cutover",
+      "Bilingual (AR + EN)",
+      "Full ownership",
+      "Free demo preview"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Source audit & data mapping",
+      "description": "We catalogue every spreadsheet, database, and old tool you rely on, then map each field to its new home.",
+      "features": [
+        "Inventory of files, tabs & systems",
+        "Field-by-field mapping document",
+        "Hidden formula & macro review",
+        "Rules for duplicates & conflicts"
+      ]
+    },
+    {
+      "name": "Data cleansing & deduplication",
+      "description": "We fix the mess that built up over years before any of it moves across.",
+      "features": [
+        "Merge duplicate customers & records",
+        "Standardize formats, dates & codes",
+        "Repair broken references & gaps",
+        "Flag bad rows for your sign-off"
+      ]
+    },
+    {
+      "name": "Extraction & transformation (ETL)",
+      "description": "We pull data out of locked-in formats and reshape it to fit the new structure.",
+      "features": [
+        "Export from Excel, Access & CSV",
+        "Read legacy database tables",
+        "Transform to the target schema",
+        "Preserve open balances & history"
+      ]
+    },
+    {
+      "name": "Target system build",
+      "description": "We stand up the clean system your data lands in — structured around your real workflow.",
+      "features": [
+        "Custom schema or ERP/CRM setup",
+        "Relationships & validation rules",
+        "Role-based access on the new data",
+        "Bilingual AR + EN, RTL-ready"
+      ]
+    },
+    {
+      "name": "Validated import & reconciliation",
+      "description": "Every batch is imported, counted, and checked against the source before you trust it.",
+      "features": [
+        "Staged trial imports first",
+        "Row counts & totals reconciled",
+        "Spot-check & exception reports",
+        "Rollback safety on every load"
+      ]
+    },
+    {
+      "name": "Cutover, training & handoff",
+      "description": "We move you off the old files for good — with your team ready and everything documented.",
+      "features": [
+        "Parallel run before final switch",
+        "Clean cutover with a fallback plan",
+        "Hands-on team training",
+        "Mapping docs, data & access handed over"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "One trusted record",
+      "description": "No more conflicting versions across files — a single source everyone reads and updates."
+    },
+    {
+      "label": "Nothing left behind",
+      "description": "Years of customers, stock, and transactions arrive intact, cleansed, and reconciled."
+    },
+    {
+      "label": "Off fragile spreadsheets",
+      "description": "End the broken formulas, lost files, and one-person bottlenecks that come with manual workbooks."
+    },
+    {
+      "label": "A foundation you own",
+      "description": "Clean, structured data in a system your team controls and can build on — no lock-in."
+    }
+  ],
+  "industries": [
+    "Trading & distribution",
+    "Retail & wholesale",
+    "Construction & contracting",
+    "Logistics & freight",
+    "Healthcare & clinics",
+    "Professional services & agencies"
+  ],
+  "faqs": [
+    {
+      "question": "Will we lose any data during the migration?",
+      "answer": "No. We run staged trial imports, reconcile row counts and totals against your source files, and keep the originals untouched until you sign off. Any rows that fail validation are flagged for your review rather than silently dropped."
+    },
+    {
+      "question": "Our spreadsheets are messy and full of duplicates — is that a problem?",
+      "answer": "That is exactly what this service is for. Before anything moves, we merge duplicate records, standardize formats and dates, and repair broken references, so you land in the new system with clean data instead of carrying the mess forward."
+    },
+    {
+      "question": "Can you migrate from old desktop software or an Access database, not just Excel?",
+      "answer": "Yes. We extract from Excel, CSV, Microsoft Access, and most legacy databases or older line-of-business tools. If we can read the data, we can map, transform, and bring it into your new system."
+    },
+    {
+      "question": "Do we have to stop working while you migrate?",
+      "answer": "No. We run the new system in parallel with your old files first, so your team keeps operating during the move. Once the data reconciles and everyone is comfortable, we do a clean cutover with a fallback plan in place."
+    },
+    {
+      "question": "What do we end up owning after the migration?",
+      "answer": "Everything. You receive the cleansed data, the new system, the field-by-field mapping documentation, and full access. There is no lock-in — your team can run and extend it independently."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we migrate on",
+    "subtitle": "Proven tools for pulling data out of legacy formats, cleaning it, and loading it into a system you own.",
+    "categories": [
+      {
+        "label": "Source formats",
+        "items": [
+          { "name": "Microsoft Excel" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" },
+          { "name": "Microsoft Access" },
+          { "name": "CSV / Flat files" }
+        ]
+      },
+      {
+        "label": "Extraction & ETL",
+        "items": [
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "pandas", "icon": "https://cdn.simpleicons.org/pandas/150458" },
+          { "name": "ETL pipelines" },
+          { "name": "OCR / Data capture" }
+        ]
+      },
+      {
+        "label": "Target databases",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "MySQL", "icon": "https://cdn.simpleicons.org/mysql/4479A1" },
+          { "name": "Odoo", "icon": "https://cdn.simpleicons.org/odoo/714B67" },
+          { "name": "Schema design" }
+        ]
+      },
+      {
+        "label": "Quality & validation",
+        "items": [
+          { "name": "Deduplication" },
+          { "name": "Reconciliation reports" },
+          { "name": "Data validation" },
+          { "name": "Rollback safety" }
+        ]
+      },
+      {
+        "label": "Cloud & delivery",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "AWS" },
+          { "name": "Automated backups" },
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" }
+        ]
+      }
+    ]
+  }
+}

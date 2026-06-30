@@ -1,0 +1,258 @@
+{
+  "slug": "lead-management-distribution",
+  "service": "Lead Management & Distribution",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Lead Management & Distribution Engine | CloudTopia",
+    "description": "Centralize lead management and distribution: catch every enquiry in one inbox, auto-route to the right rep in seconds. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Centralized Lead Management & Distribution Engines",
+    "subtitle": "Every enquiry from WhatsApp, your website, ads, and phone lands in one inbox and is routed to the right rep in seconds. No lead sits unclaimed, no source goes untracked, and you fully own the whole engine — code, data, and rules.",
+    "chips": [
+      "One unified inbox",
+      "Rule-based routing",
+      "Round-robin & weighted",
+      "SLA & response timers",
+      "Full source tracking",
+      "Duplicate detection",
+      "Bilingual (AR + EN)",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Unified lead capture",
+      "description": "Every channel your enquiries come from, pouring into one structured inbox instead of scattered chats and inboxes.",
+      "features": [
+        "WhatsApp, web forms & landing pages",
+        "Ad platforms & call logs",
+        "Email-to-lead parsing",
+        "Walk-in & manual entry"
+      ]
+    },
+    {
+      "name": "Distribution rule engine",
+      "description": "A routing brain you configure once that assigns each lead to the right owner the moment it arrives.",
+      "features": [
+        "Round-robin & weighted load",
+        "By territory, branch or language",
+        "By product, value or source",
+        "Skill & availability matching"
+      ]
+    },
+    {
+      "name": "SLA & response enforcement",
+      "description": "Countdown timers and escalations that make sure no lead waits longer than your promised response window.",
+      "features": [
+        "First-response SLA timers",
+        "Auto-reassign on no-claim",
+        "Manager escalation alerts",
+        "Stale-lead recovery queue"
+      ]
+    },
+    {
+      "name": "Source & attribution tracking",
+      "description": "Every lead stamped with where it came from so you can see which campaigns and channels actually pay off.",
+      "features": [
+        "UTM & campaign capture",
+        "Per-source conversion rates",
+        "Cost-per-lead inputs",
+        "Channel ROI dashboards"
+      ]
+    },
+    {
+      "name": "Dedup & data hygiene",
+      "description": "Automatic matching that catches repeat enquiries before they become duplicate work and double-calls.",
+      "features": [
+        "Phone & email matching",
+        "Merge with full history",
+        "Repeat-lead flagging",
+        "Clean, validated records"
+      ]
+    },
+    {
+      "name": "Rep workspace & alerts",
+      "description": "A focused queue and instant notifications so reps act on the freshest lead without digging through threads.",
+      "features": [
+        "Prioritized lead queue",
+        "WhatsApp & push alerts",
+        "One-tap claim & log",
+        "Mobile-friendly, RTL-ready"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster first response",
+      "description": "Leads reach a rep in seconds instead of sitting in a shared inbox for hours."
+    },
+    {
+      "label": "Zero leaked leads",
+      "description": "Every enquiry is captured, owned, and chased — nothing slips through the cracks."
+    },
+    {
+      "label": "Fair, transparent workload",
+      "description": "Routing rules split leads evenly so no rep is starved and none is overloaded."
+    },
+    {
+      "label": "Spend you can trust",
+      "description": "Source tracking shows which channels convert, so you fund what works and cut what doesn't."
+    }
+  ],
+  "industries": [
+    "Real estate & property",
+    "Automotive dealerships",
+    "Healthcare & clinics",
+    "Education & training",
+    "Insurance & financial services",
+    "Travel & tourism"
+  ],
+  "faqs": [
+    {
+      "question": "Can you pull leads in from WhatsApp and our ad campaigns?",
+      "answer": "Yes. WhatsApp is usually the first channel we connect, alongside web forms, Meta and Google lead ads, and call logs. Every enquiry lands in the same inbox already tagged with its source, so your team works from one list instead of switching between apps."
+    },
+    {
+      "question": "How does the system decide which rep gets a lead?",
+      "answer": "You set the rules — round-robin, weighted by capacity, or based on territory, branch, language, product, or lead value. The engine applies them the instant a lead arrives, and if the assigned rep doesn't claim it within your SLA window, it reassigns automatically."
+    },
+    {
+      "question": "What stops the same lead being worked twice?",
+      "answer": "Incoming leads are matched on phone and email against your existing records. Repeat enquiries are flagged and merged into the original contact with full history, so a customer who messages twice isn't called by two different reps."
+    },
+    {
+      "question": "Does this replace our CRM or work with it?",
+      "answer": "Either way. We can build it as a standalone capture-and-routing layer that feeds your current CRM, or as part of a custom CRM we build for you. The engine is yours to extend, and your leads and rules are never locked into someone else's platform."
+    },
+    {
+      "question": "Will it work in Arabic and English?",
+      "answer": "Yes. The interface, alerts, and auto-replies are delivered bilingually in Arabic and English with full RTL support, and you can route leads to reps by the customer's preferred language. Before any commitment you get a free consultation and a demo preview."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A capture, routing, and notification engine assembled from proven tools you keep full control of.",
+    "categories": [
+      {
+        "label": "Core & data",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          }
+        ]
+      },
+      {
+        "label": "Lead capture",
+        "items": [
+          {
+            "name": "WhatsApp Business",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Meta Lead Ads",
+            "icon": "https://cdn.simpleicons.org/meta/0467DF"
+          },
+          {
+            "name": "Web form intake"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          }
+        ]
+      },
+      {
+        "label": "Routing & automation",
+        "items": [
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Routing rule engine"
+          },
+          {
+            "name": "SLA timer service"
+          },
+          {
+            "name": "Zapier",
+            "icon": "https://cdn.simpleicons.org/zapier/FF4F00"
+          }
+        ]
+      },
+      {
+        "label": "Alerts & messaging",
+        "items": [
+          {
+            "name": "Twilio",
+            "icon": "https://cdn.simpleicons.org/twilio/F22F46"
+          },
+          {
+            "name": "WhatsApp alerts",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Email notifications"
+          },
+          {
+            "name": "Push notifications"
+          }
+        ]
+      },
+      {
+        "label": "Dashboards & access",
+        "items": [
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "Attribution dashboards"
+          },
+          {
+            "name": "Role-based access"
+          },
+          {
+            "name": "Audit logs"
+          }
+        ]
+      },
+      {
+        "label": "Hosting & ops",
+        "items": [
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "AWS",
+            "icon": "https://cdn.simpleicons.org/amazonwebservices/FF9900"
+          },
+          {
+            "name": "Scheduled backups"
+          }
+        ]
+      }
+    ]
+  }
+}

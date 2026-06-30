@@ -1,0 +1,252 @@
+{
+  "slug": "hr-management-systems",
+  "service": "HR Management Systems",
+  "pillarSlug": "business-management-systems",
+  "pillarName": "Business Management Systems",
+  "seo": {
+    "title": "HR Management Systems in Oman | CloudTopia",
+    "description": "Custom HR management systems for Oman and GCC teams — one record for every employee, leave, attendance, and approvals you fully own. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Internal Apps",
+    "title": "HR Management Systems",
+    "subtitle": "One internal system that holds every employee record, runs leave and attendance, and routes approvals the way your company actually works. Built around your policies, bilingual in Arabic and English, and fully owned by you — no per-seat licence to renew.",
+    "chips": [
+      "Single employee record",
+      "Leave & attendance",
+      "Org chart & structure",
+      "Self-service requests",
+      "Document expiry alerts",
+      "Role-based access",
+      "Bilingual AR + EN",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Central employee record",
+      "description": "A single, structured profile for every employee that replaces scattered spreadsheets and folders as your one source of truth.",
+      "features": [
+        "Personal, job & contract details",
+        "Department, grade & reporting line",
+        "Document & certificate store",
+        "Full change history per field"
+      ]
+    },
+    {
+      "name": "Leave & attendance engine",
+      "description": "Configurable leave types and attendance rules that match your handbook, with balances that update automatically as requests are approved.",
+      "features": [
+        "Annual, sick & unpaid leave rules",
+        "Accrual, carry-over & encashment",
+        "Shift, timesheet & overtime capture",
+        "Public-holiday & weekend calendars"
+      ]
+    },
+    {
+      "name": "Self-service & approvals",
+      "description": "An employee and manager portal where staff raise requests and managers approve them, instead of the HR team chasing email and paper.",
+      "features": [
+        "Leave, expense & letter requests",
+        "Multi-level approval routing",
+        "Manager team dashboard",
+        "Arabic + English, RTL-ready"
+      ]
+    },
+    {
+      "name": "Org structure & directory",
+      "description": "A live org chart and searchable staff directory that mirror your real hierarchy across branches and departments.",
+      "features": [
+        "Drag-to-build org chart",
+        "Branch & department grouping",
+        "Searchable employee directory",
+        "Vacancy & headcount view"
+      ]
+    },
+    {
+      "name": "Document & compliance alerts",
+      "description": "Automated tracking of every expiring document so visas, IDs, and contracts never lapse without an early warning.",
+      "features": [
+        "Passport, visa & resident-card dates",
+        "Contract & certificate renewals",
+        "WhatsApp & email reminders",
+        "HR escalation dashboard"
+      ]
+    },
+    {
+      "name": "Reports & payroll handoff",
+      "description": "The HR reports managers actually use, plus a clean export of approved leave and attendance that feeds your payroll run.",
+      "features": [
+        "Headcount, turnover & leave reports",
+        "Attendance & overtime summaries",
+        "Payroll-ready data export",
+        "One-click Excel & PDF output"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "One source of truth",
+      "description": "Every employee detail, document, and leave balance lives in one place, so HR stops reconciling spreadsheets and starts trusting the numbers."
+    },
+    {
+      "label": "HR off email duty",
+      "description": "Self-service requests and manager approvals replace the daily back-and-forth, freeing your HR team for work that actually needs a person."
+    },
+    {
+      "label": "Always compliant",
+      "description": "Visa, ID, and contract expiries are flagged well in advance, and a complete change history makes labour audits straightforward."
+    },
+    {
+      "label": "You own it all",
+      "description": "The code, your employee data, and the documentation stay yours — no per-seat fees and no vendor lock-in as your headcount grows."
+    }
+  ],
+  "industries": [
+    "Construction & contracting",
+    "Facilities & manpower services",
+    "Retail & hospitality groups",
+    "Healthcare & clinics",
+    "Logistics & transport",
+    "Professional services firms"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from an HR and payroll portal?",
+      "answer": "This is the HR system of record — the single place that holds your people data, org structure, leave, and attendance and runs your approval flows. It produces a clean, payroll-ready export of approved leave and hours, and we can connect it directly to a payroll engine, but its job is to keep your HR data accurate and your day-to-day requests moving."
+    },
+    {
+      "question": "Can we map our own leave policies and approval chains?",
+      "answer": "Yes. We configure your exact leave types, accrual and carry-over rules, and weekend and public-holiday calendars, then build the approval routing to match your real hierarchy. Because you own the system, those rules can be adjusted as your handbook or labour requirements change."
+    },
+    {
+      "question": "Will it remind us before visas, IDs, and contracts expire?",
+      "answer": "It will. The system tracks passport, visa, resident-card, and contract dates and sends automated WhatsApp and email reminders ahead of each deadline. An HR dashboard escalates anything approaching expiry so nothing lapses unnoticed."
+    },
+    {
+      "question": "Can our Arabic-speaking staff use it in their own language?",
+      "answer": "The entire system is bilingual Arabic and English with full right-to-left support. Each employee and manager can switch to their preferred language, and requests, letters, and notifications follow that choice."
+    },
+    {
+      "question": "Do we own the system, or is there a per-employee licence?",
+      "answer": "You fully own the code, the database, and the documentation — there is no per-seat or per-employee licence to renew, so you can add unlimited staff without your costs changing. Start with a free consultation and a demo preview built around your structure; WhatsApp is the fastest way to reach us."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A secure, maintainable foundation for sensitive HR data and everyday workflows that your team fully owns.",
+    "categories": [
+      {
+        "label": "Application",
+        "items": [
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          },
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Encrypted document store"
+          },
+          {
+            "name": "Automated backups"
+          }
+        ]
+      },
+      {
+        "label": "Leave & attendance",
+        "items": [
+          {
+            "name": "Accrual rules engine"
+          },
+          {
+            "name": "Timesheet capture"
+          },
+          {
+            "name": "Holiday calendars"
+          },
+          {
+            "name": "Overtime tracking"
+          }
+        ]
+      },
+      {
+        "label": "Access & security",
+        "items": [
+          {
+            "name": "Role-based access"
+          },
+          {
+            "name": "Audit logging"
+          },
+          {
+            "name": "Single sign-on"
+          },
+          {
+            "name": "Field encryption"
+          }
+        ]
+      },
+      {
+        "label": "Notifications & export",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Email alerts"
+          },
+          {
+            "name": "Payroll export"
+          },
+          {
+            "name": "Excel & PDF reports"
+          }
+        ]
+      },
+      {
+        "label": "Hosting & ops",
+        "items": [
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Regional hosting"
+          },
+          {
+            "name": "GCC data residency"
+          }
+        ]
+      }
+    ]
+  }
+}

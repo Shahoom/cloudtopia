@@ -1,0 +1,258 @@
+{
+  "slug": "secure-document-client-portals",
+  "service": "Secure Document Sharing & Client Approval Portals",
+  "pillarSlug": "internal-enterprise-applications",
+  "pillarName": "Internal Enterprise Applications",
+  "seo": {
+    "title": "Secure Document & Client Approval Portals | CloudTopia",
+    "description": "Secure document sharing and client approval portals: send files, collect sign-offs, log every decision in Arabic and English. Book a free consultation."
+  },
+  "hero": {
+    "eyebrow": "Internal Apps",
+    "title": "Secure Document Sharing & Client Approval Portals",
+    "subtitle": "Stop chasing approvals over email and WhatsApp. We build branded portals where clients open documents securely, approve or comment in a few taps, and every sign-off is logged with a full audit trail you own outright.",
+    "chips": [
+      "Secure file sharing",
+      "Online approvals",
+      "Audit trail logging",
+      "Arabic + English",
+      "Role-based access",
+      "E-signature ready",
+      "Version control",
+      "No vendor lock-in"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Branded Client Portal",
+      "description": "A login-protected portal under your own domain where each client signs in to see only their own documents, pending approvals, and full history, on any device.",
+      "features": [
+        "Per-client workspaces",
+        "Your logo and brand",
+        "Custom domain",
+        "Mobile-friendly"
+      ]
+    },
+    {
+      "name": "Secure Document Vault",
+      "description": "Encrypted storage with expiring share links, download limits, and optional watermarking so sensitive contracts and records never leak outside the people meant to see them.",
+      "features": [
+        "Encrypted at rest",
+        "Expiring share links",
+        "Download limits",
+        "Optional watermark"
+      ]
+    },
+    {
+      "name": "Approval & Sign-Off Flows",
+      "description": "Configurable, multi-step approval routes where clients accept, reject with a reason, or request changes, with comments tied to the exact document and version under review.",
+      "features": [
+        "Multi-step approvals",
+        "Reject with reason",
+        "Inline comments",
+        "Live status tracking"
+      ]
+    },
+    {
+      "name": "Audit Trail & Records",
+      "description": "Every view, download, and decision is timestamped and attributed to a named user, giving you a tamper-evident, exportable record of exactly who approved what and when.",
+      "features": [
+        "Timestamped events",
+        "Signer identity capture",
+        "Exportable logs",
+        "Tamper-evident records"
+      ]
+    },
+    {
+      "name": "Version Control & History",
+      "description": "Replace an outdated file without losing the trail, so clients always open the current version while you keep every prior revision and the notes behind each change.",
+      "features": [
+        "Latest version surfaced",
+        "Full revision history",
+        "Change notes",
+        "No overwrites lost"
+      ]
+    },
+    {
+      "name": "Notifications & Reminders",
+      "description": "Automated WhatsApp and email alerts nudge clients toward pending approvals and confirm completed sign-offs, so nothing stalls in an inbox or an unread chat.",
+      "features": [
+        "WhatsApp alerts",
+        "Email reminders",
+        "Pending follow-ups",
+        "Sign-off receipts"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster Approvals",
+      "description": "Clients review and approve from their phone in minutes instead of waiting days for an email reply or a printed, scanned signature to come back."
+    },
+    {
+      "label": "Defensible Records",
+      "description": "A complete, timestamped audit trail of every view and sign-off protects you in disputes and satisfies internal governance and compliance checks."
+    },
+    {
+      "label": "Fewer Lost Files",
+      "description": "One secure source of truth replaces scattered email attachments and WhatsApp forwards, so the right document is always at hand and nothing goes missing."
+    },
+    {
+      "label": "Professional Trust",
+      "description": "A branded, secure portal shows clients that your firm handles their documents and approvals seriously and consistently, every single time."
+    }
+  ],
+  "industries": [
+    "Law Firms & Legal Consultancies",
+    "Architecture & Engineering Offices",
+    "Accounting & Audit Firms",
+    "Construction & Contracting",
+    "Real Estate & Property Management",
+    "Marketing & Creative Agencies"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from sharing files over WhatsApp or email?",
+      "answer": "Email and WhatsApp scatter documents across threads with no record of who saw or approved what. The portal gives each client one secure place to review and sign off, and logs every action with a timestamp and a named user. You get clear proof of approval instead of hunting through chat history."
+    },
+    {
+      "question": "Can clients approve documents in Arabic?",
+      "answer": "Yes. Every portal is delivered fully bilingual in Arabic and English with correct right-to-left layout, so clients read and approve in the language they prefer. The audit trail and the WhatsApp and email notifications follow the same language settings."
+    },
+    {
+      "question": "Is it secure enough for sensitive contracts and records?",
+      "answer": "Files are encrypted at rest, share links can be set to expire, and downloads can be limited or watermarked. Role-based access means each person sees only what they are permitted to. We can also host within the GCC and align the setup with your internal data policies."
+    },
+    {
+      "question": "Do we own the portal, or are we locked into a subscription?",
+      "answer": "You fully own the source code, the data, and the documentation. There is no per-seat license and no vendor lock-in, and you can host it wherever you choose. We hand over everything so your team stays in control of the portal and every document inside it."
+    },
+    {
+      "question": "Can it connect to e-signatures and our existing systems?",
+      "answer": "Yes. We can wire in e-signature flows and connect the portal to your CRM, ERP, or document storage so approved files move straight into your workflow. We start with a free consultation and a demo preview so you can see it working before any commitment."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A secure, bilingual foundation chosen for document handling, approvals, and a clean audit trail you own outright.",
+    "categories": [
+      {
+        "label": "Portal & Frontend",
+        "items": [
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          },
+          {
+            "name": "Tailwind CSS",
+            "icon": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+          }
+        ]
+      },
+      {
+        "label": "Backend & APIs",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "NestJS",
+            "icon": "https://cdn.simpleicons.org/nestjs/E0234E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "REST APIs"
+          }
+        ]
+      },
+      {
+        "label": "Data & Storage",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Amazon S3"
+          },
+          {
+            "name": "Encrypted File Vault"
+          }
+        ]
+      },
+      {
+        "label": "Security & Access",
+        "items": [
+          {
+            "name": "Auth0",
+            "icon": "https://cdn.simpleicons.org/auth0/EB5424"
+          },
+          {
+            "name": "JSON Web Tokens",
+            "icon": "https://cdn.simpleicons.org/jsonwebtokens/000000"
+          },
+          {
+            "name": "Role-Based Access"
+          },
+          {
+            "name": "Audit Logging"
+          }
+        ]
+      },
+      {
+        "label": "Notifications & E-Sign",
+        "items": [
+          {
+            "name": "WhatsApp API",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Twilio"
+          },
+          {
+            "name": "DocuSign"
+          },
+          {
+            "name": "E-Signature Flows"
+          }
+        ]
+      },
+      {
+        "label": "Hosting & Delivery",
+        "items": [
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Cloudflare",
+            "icon": "https://cdn.simpleicons.org/cloudflare/F38020"
+          },
+          {
+            "name": "GCC Hosting"
+          }
+        ]
+      }
+    ]
+  }
+}

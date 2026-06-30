@@ -1,0 +1,259 @@
+{
+  "slug": "accounting-system-integration",
+  "service": "Accounting Integration",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Accounting System Integration | CloudTopia",
+    "description": "Accounting system integration that posts sales, payroll and bank feeds into your books automatically — clean VAT, faster month-end. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Accounting System Integration",
+    "subtitle": "Stop typing the same sale, expense, and payment into your books by hand. We wire your sales, payroll, inventory, and bank feeds straight into your accounting software so entries post themselves, VAT stays clean, and month-end stops being a scramble.",
+    "chips": [
+      "Auto-posted entries",
+      "Bank feed matching",
+      "VAT-ready in OMR",
+      "No double entry",
+      "Live reconciliation",
+      "Bilingual AR + EN",
+      "You own the code",
+      "Free demo preview"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Chart-of-accounts & VAT mapping",
+      "description": "We map every transaction type from your operations to the right ledger account and tax code so each entry lands where your accountant expects it.",
+      "features": [
+        "Account & cost-centre mapping",
+        "5% VAT and zero-rated codes",
+        "OMR and multi-currency rules",
+        "Sign-off with your accountant"
+      ]
+    },
+    {
+      "name": "Sales & POS posting",
+      "description": "Sales from your store, POS, and invoicing tools post into accounting as journal entries the moment they are confirmed.",
+      "features": [
+        "Daily POS sales summaries",
+        "Per-order or batched journals",
+        "Discounts, refunds & tips split out",
+        "Payment method breakdown"
+      ]
+    },
+    {
+      "name": "Bank feed reconciliation",
+      "description": "We pull statement lines from your bank and match them against invoices, bills, and payouts so reconciliation is mostly done before you look.",
+      "features": [
+        "Automated statement import",
+        "Rule-based auto-matching",
+        "Gateway payout settlement",
+        "Unmatched items flagged"
+      ]
+    },
+    {
+      "name": "Payables & expense capture",
+      "description": "Supplier bills, staff expenses, and recurring costs flow into accounting with line items already coded and ready to approve.",
+      "features": [
+        "Bill & receipt OCR capture",
+        "Auto-coded line items",
+        "Approval routing before posting",
+        "Recurring expense schedules"
+      ]
+    },
+    {
+      "name": "Payroll & inventory journals",
+      "description": "Salaries, WPS runs, and stock movements turn into the right journals so your P&L and balance sheet reflect them without manual entry.",
+      "features": [
+        "Payroll & WPS journal posting",
+        "Cost of goods sold on each sale",
+        "Stock valuation adjustments",
+        "Accruals & depreciation runs"
+      ]
+    },
+    {
+      "name": "Sync monitoring & handover",
+      "description": "A live dashboard shows what posted, what failed, and why, with retries and alerts — then we hand you the code, mappings, and documentation.",
+      "features": [
+        "Live posting log & retries",
+        "WhatsApp or email failure alerts",
+        "Mapping reference docs",
+        "Code & credential handover"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Books that stay current",
+      "description": "Sales, expenses, and payments post as they happen, so your ledgers reflect reality instead of last month."
+    },
+    {
+      "label": "Month-end in hours",
+      "description": "Most lines are already matched and coded, so closing the period stops eating days of your finance team's time."
+    },
+    {
+      "label": "Clean, audit-ready VAT",
+      "description": "Every entry carries the correct tax code from the start, making VAT returns and audits far less stressful."
+    },
+    {
+      "label": "Fewer costly mistakes",
+      "description": "Removing manual re-keying cuts the typos, missed bills, and mismatched figures that quietly distort your numbers."
+    }
+  ],
+  "industries": [
+    "Retail & multi-branch stores",
+    "Restaurants & hospitality",
+    "Trading & wholesale distribution",
+    "Construction & contracting",
+    "Clinics & medical practices",
+    "Logistics & freight forwarding"
+  ],
+  "faqs": [
+    {
+      "question": "Do we have to switch accounting software?",
+      "answer": "No. We integrate with the system you already use, whether that is QuickBooks, Xero, Zoho Books, Odoo, or SAP. The integration sits around your books and feeds them, so your accountant keeps working in the tool they know."
+    },
+    {
+      "question": "How does the VAT and OMR handling stay correct?",
+      "answer": "During mapping we agree the exact tax code for each transaction type with your accountant, including 5% standard, zero-rated, and exempt items, so every posted entry is tagged correctly from day one. Multi-currency sales are converted and recorded in OMR, and your VAT return draws from clean, consistent data."
+    },
+    {
+      "question": "What happens when an entry can't be matched or posted?",
+      "answer": "Nothing is dropped silently. Unmatched bank lines and failed postings are queued, retried, and surfaced on the dashboard, and you get a WhatsApp or email alert when something needs a human decision. You stay in control of anything ambiguous."
+    },
+    {
+      "question": "Will this replace our accountant or bookkeeper?",
+      "answer": "No, it makes their work faster and cleaner. The integration handles the repetitive data entry and reconciliation so your finance team can focus on review, reporting, and decisions instead of typing the same numbers twice."
+    },
+    {
+      "question": "Do we own the integration once it's built?",
+      "answer": "Completely. You receive the connector code, the account and tax mappings, and plain-language documentation, with no vendor lock-in. Your team or any developer can run, audit, and extend it without depending on us."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Real accounting APIs, resilient posting jobs, and bank-grade matching wired into one integration you own end to end.",
+    "categories": [
+      {
+        "label": "Accounting platforms",
+        "items": [
+          {
+            "name": "QuickBooks",
+            "icon": "https://cdn.simpleicons.org/quickbooks/2CA01C"
+          },
+          {
+            "name": "Xero",
+            "icon": "https://cdn.simpleicons.org/xero/13B5EA"
+          },
+          {
+            "name": "Zoho Books",
+            "icon": "https://cdn.simpleicons.org/zoho/E42527"
+          },
+          {
+            "name": "Odoo Accounting",
+            "icon": "https://cdn.simpleicons.org/odoo/714B67"
+          }
+        ]
+      },
+      {
+        "label": "Integration & posting",
+        "items": [
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "Celery",
+            "icon": "https://cdn.simpleicons.org/celery/37814A"
+          }
+        ]
+      },
+      {
+        "label": "Payments & bank feeds",
+        "items": [
+          {
+            "name": "Stripe",
+            "icon": "https://cdn.simpleicons.org/stripe/635BFF"
+          },
+          {
+            "name": "PayPal",
+            "icon": "https://cdn.simpleicons.org/paypal/003087"
+          },
+          {
+            "name": "Thawani"
+          },
+          {
+            "name": "Bank statement import"
+          }
+        ]
+      },
+      {
+        "label": "Capture & matching",
+        "items": [
+          {
+            "name": "Receipt OCR"
+          },
+          {
+            "name": "Reconciliation rules"
+          },
+          {
+            "name": "VAT tax engine"
+          },
+          {
+            "name": "ETL pipeline"
+          }
+        ]
+      },
+      {
+        "label": "Data & reliability",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          },
+          {
+            "name": "Retry & queueing"
+          }
+        ]
+      },
+      {
+        "label": "Monitoring & alerts",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Grafana",
+            "icon": "https://cdn.simpleicons.org/grafana/F46800"
+          },
+          {
+            "name": "Sentry",
+            "icon": "https://cdn.simpleicons.org/sentry/362D59"
+          },
+          {
+            "name": "Posting audit log"
+          }
+        ]
+      }
+    ]
+  }
+}

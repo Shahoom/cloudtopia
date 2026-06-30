@@ -1,0 +1,258 @@
+{
+  "slug": "sales-management-systems",
+  "service": "Sales Management System",
+  "pillarSlug": "business-management-systems",
+  "pillarName": "Business Management Systems",
+  "seo": {
+    "title": "Sales Management Systems in Oman | CloudTopia",
+    "description": "Custom sales management systems that run your whole sales team — territories, targets, rep activity, and orders in one place you own. Free consultation."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Sales Management Systems",
+    "subtitle": "Run your entire sales operation from one system built around how your team actually sells — accounts, territories, targets, daily activity, and order handoff all in one place. Your managers get a true picture of performance, and your team owns every line of the code and data.",
+    "chips": [
+      "Built around your team",
+      "Territory & account mapping",
+      "Target vs actual",
+      "Rep activity tracking",
+      "Order-to-cash handoff",
+      "Manager oversight",
+      "Bilingual (AR + EN)",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Account & territory management",
+      "description": "We organise your customers, prospects, and coverage areas so every account has a clear owner and no territory overlaps.",
+      "features": [
+        "Account ownership & hierarchy",
+        "Region & territory mapping",
+        "Coverage gap & overlap checks",
+        "Account history in one view"
+      ]
+    },
+    {
+      "name": "Targets & quota tracking",
+      "description": "We set quotas per rep, team, product, or branch and track progress live so everyone sees where they stand against target.",
+      "features": [
+        "Monthly & quarterly quotas",
+        "Per-rep and per-team targets",
+        "Live target-vs-actual tracking",
+        "Shortfall & overshoot alerts"
+      ]
+    },
+    {
+      "name": "Activity & visit logging",
+      "description": "Reps log calls, meetings, and site visits from the field so managers can see real effort behind every number.",
+      "features": [
+        "Call, meeting & visit logs",
+        "Mobile field check-ins",
+        "Next-action scheduling",
+        "Activity-per-account view"
+      ]
+    },
+    {
+      "name": "Quote & order handoff",
+      "description": "Won deals turn into quotes and orders that pass cleanly to inventory, finance, or your ERP without re-keying.",
+      "features": [
+        "Quote generation & approval",
+        "Order push to ERP/inventory",
+        "Stock & price checks at quote",
+        "Invoice & payment status sync"
+      ]
+    },
+    {
+      "name": "Manager control centre",
+      "description": "Sales managers get one screen to monitor the whole team, spot stalling accounts, and step in before a deal is lost.",
+      "features": [
+        "Team performance dashboard",
+        "Branch & region drill-down",
+        "Stalled-account alerts",
+        "Approval & override controls"
+      ]
+    },
+    {
+      "name": "Access, roles & handoff",
+      "description": "Role-based permissions keep reps in their lane and managers across everything, with a trained team and full documentation.",
+      "features": [
+        "Role-based permissions",
+        "Manager vs rep views",
+        "Hands-on team training",
+        "Documentation & ownership handoff"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "One source of truth",
+      "description": "Accounts, targets, activity, and orders live in one system instead of scattered spreadsheets and rep notebooks."
+    },
+    {
+      "label": "Managers in control",
+      "description": "Leaders see real activity and quota progress as it happens, so they coach and intervene instead of guessing at month-end."
+    },
+    {
+      "label": "Cleaner order handoff",
+      "description": "Won deals flow straight into quotes, orders, and your ERP, cutting re-keying errors and delays between sales and finance."
+    },
+    {
+      "label": "You own it",
+      "description": "The system, the data, and the documentation stay with your team — no per-seat licences and no vendor lock-in."
+    }
+  ],
+  "industries": [
+    "Wholesale distribution & FMCG",
+    "Building materials & trading",
+    "Automotive & equipment dealerships",
+    "Real estate & property",
+    "Industrial & MEP suppliers",
+    "Pharmaceutical & medical supplies"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from just a CRM or a sales pipeline?",
+      "answer": "A pipeline tracks deals; a sales management system runs the whole operation around them. On top of stages it covers territories and account ownership, quotas and target tracking, field activity, and the handoff of won deals into quotes, orders, and your ERP. It is the system your sales managers use to run the team day to day, not only to watch the funnel."
+    },
+    {
+      "question": "Can it manage territories, quotas, and multiple branches?",
+      "answer": "Yes. We map your regions and assign account ownership so coverage is clear and there are no overlaps, then set quotas per rep, team, product, or branch. Managers can drill from a company-wide view down to a single branch or rep, which makes it a natural fit for distributors and trading firms operating across the GCC."
+    },
+    {
+      "question": "Will it connect to our ERP or accounting system for orders and invoices?",
+      "answer": "It will. We push approved quotes and orders into your existing ERP, inventory, or accounting software and pull invoice and payment status back, so sales and finance work from the same numbers. That removes the manual re-keying that usually causes errors and delays between a closed deal and a fulfilled order."
+    },
+    {
+      "question": "Can reps in the field use it in Arabic on their phones?",
+      "answer": "Yes. The whole system is delivered in Arabic and English with full right-to-left layout, and the field screens — visit check-ins, activity logs, and account lookups — are built to work on a phone. Reps work in the language they prefer while managers see everything roll up in real time."
+    },
+    {
+      "question": "How do we know it fits before committing?",
+      "answer": "Start with a free consultation where we walk through how your team actually sells, then we prepare a demo preview tailored to your setup before any commitment. The fastest way to begin is a WhatsApp message, and we take it from there."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Dependable tooling we use to run accounts, targets, activity, and order handoff in a system your team can audit and extend.",
+    "categories": [
+      {
+        "label": "Application core",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          }
+        ]
+      },
+      {
+        "label": "Data & records",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "MySQL",
+            "icon": "https://cdn.simpleicons.org/mysql/4479A1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Audit logging"
+          }
+        ]
+      },
+      {
+        "label": "ERP & order handoff",
+        "items": [
+          {
+            "name": "Odoo",
+            "icon": "https://cdn.simpleicons.org/odoo/714B67"
+          },
+          {
+            "name": "REST APIs"
+          },
+          {
+            "name": "Webhooks"
+          },
+          {
+            "name": "Invoice sync"
+          }
+        ]
+      },
+      {
+        "label": "Field & comms",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Google Maps",
+            "icon": "https://cdn.simpleicons.org/googlemaps/4285F4"
+          },
+          {
+            "name": "Mobile check-ins"
+          },
+          {
+            "name": "Email & SMTP"
+          }
+        ]
+      },
+      {
+        "label": "Targets & reporting",
+        "items": [
+          {
+            "name": "Chart.js",
+            "icon": "https://cdn.simpleicons.org/chartdotjs/FF6384"
+          },
+          {
+            "name": "Metabase",
+            "icon": "https://cdn.simpleicons.org/metabase/509EE3"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          },
+          {
+            "name": "Quota engine"
+          }
+        ]
+      },
+      {
+        "label": "Access & hosting",
+        "items": [
+          {
+            "name": "Role-based access"
+          },
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Automated backups"
+          }
+        ]
+      }
+    ]
+  }
+}

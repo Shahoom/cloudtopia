@@ -1,0 +1,195 @@
+{
+  "slug": "cross-platform-api-integration",
+  "service": "Cross-Platform API Syncing",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Cross-Platform API Syncing in Oman | CloudTopia",
+    "description": "Sync your website, CRM and accounting with cross-platform API integration — no double entry, no mismatched data. Free consultation and demo before you commit."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Cross-Platform API Syncing (Website, CRM & Accounting)",
+    "subtitle": "Stop copying the same order, contact, and invoice between three systems. We wire your website, CRM, and accounting together so every record updates itself the moment something changes — and you own the integration end to end.",
+    "chips": [
+      "Website to CRM",
+      "CRM to accounting",
+      "Two-way sync",
+      "No double entry",
+      "Webhook-driven",
+      "Bilingual support",
+      "You own the code",
+      "Free demo preview"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Integration Mapping & Field Matching",
+      "description": "We map every record and field across your website, CRM, and accounting so the same customer, order, or invoice means the same thing in all three.",
+      "features": [
+        "Field-by-field mapping",
+        "Record matching rules",
+        "Duplicate handling",
+        "Source-of-truth decisions"
+      ]
+    },
+    {
+      "name": "Website-to-CRM Lead & Order Sync",
+      "description": "Form submissions, enquiries, and online orders land in your CRM instantly with the right owner, tags, and source attached.",
+      "features": [
+        "Form & checkout capture",
+        "Auto-assign to rep",
+        "Source tagging",
+        "Instant CRM entry"
+      ]
+    },
+    {
+      "name": "CRM-to-Accounting Sync",
+      "description": "Won deals and confirmed orders flow into your accounting system as invoices, customers, and payments without re-keying a thing.",
+      "features": [
+        "Invoice creation",
+        "Customer record sync",
+        "Payment status updates",
+        "Tax-ready line items"
+      ]
+    },
+    {
+      "name": "Two-Way Real-Time Connectors",
+      "description": "We build webhook and API connectors so a change in one system pushes to the others in seconds, in whichever direction you need.",
+      "features": [
+        "Webhook listeners",
+        "Scheduled fallback polling",
+        "Bidirectional updates",
+        "Rate-limit handling"
+      ]
+    },
+    {
+      "name": "Sync Health Dashboard & Alerts",
+      "description": "A live view of what synced, what failed, and why — with automatic retries and WhatsApp or email alerts when something needs a human.",
+      "features": [
+        "Live sync log",
+        "Auto-retry queue",
+        "Failure alerts",
+        "One-click resync"
+      ]
+    },
+    {
+      "name": "Documentation & Full Handover",
+      "description": "You receive the connector code, API mappings, and plain-language docs so your team can run, audit, and extend the integration without us.",
+      "features": [
+        "Connector source code",
+        "Mapping reference docs",
+        "Credential handover",
+        "Team walkthrough"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "No more double entry",
+      "description": "Your team stops re-typing orders and invoices across systems, freeing hours every week for actual work."
+    },
+    {
+      "label": "One source of truth",
+      "description": "Customer, order, and payment data matches across website, CRM, and accounting, so reports finally agree."
+    },
+    {
+      "label": "Faster cash flow",
+      "description": "Won deals become invoices the same day, shortening the gap between sale and payment."
+    },
+    {
+      "label": "Fewer costly errors",
+      "description": "Automated mapping removes the typos and missed records that come from manual copying between tools."
+    }
+  ],
+  "industries": [
+    "Retail & e-commerce",
+    "Real estate agencies",
+    "Trading & distribution",
+    "Professional services firms",
+    "Healthcare clinics",
+    "Logistics & freight forwarders"
+  ],
+  "faqs": [
+    {
+      "question": "Which platforms can you connect?",
+      "answer": "If a system has an API or webhook, we can usually connect it — common setups include WordPress, WooCommerce, and custom websites talking to HubSpot, Zoho, Salesforce, or Odoo, then through to QuickBooks, Xero, Zoho Books, or Odoo accounting. In the free consultation we confirm exactly which of your tools can sync and which need a workaround."
+    },
+    {
+      "question": "Will the sync run in real time or on a schedule?",
+      "answer": "Most integrations are webhook-driven, so a change pushes across in seconds. Where a platform does not support webhooks, we add scheduled polling as a fallback, and you can see in the dashboard exactly when each system last synced."
+    },
+    {
+      "question": "What happens when a sync fails?",
+      "answer": "Failures are caught, logged, and automatically retried, and you get a WhatsApp or email alert if a record still needs attention. Nothing disappears silently — every event is visible in the sync log so you can resync with one click."
+    },
+    {
+      "question": "Do I own the integration, or am I locked into you?",
+      "answer": "You own it completely — the connector code, the field mappings, the documentation, and your data. There is no monthly platform fee to us and no vendor lock-in; your team can run and extend the integration on its own, and we are here if you want us."
+    },
+    {
+      "question": "Can you avoid creating duplicate records?",
+      "answer": "Yes. We define matching rules and a source of truth for each record type during the mapping phase, so an existing customer updates instead of duplicating. We also clean up existing duplicates as part of the initial setup where needed."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven connectors, real APIs, and tooling chosen to keep your three systems in lockstep.",
+    "categories": [
+      {
+        "label": "Integration & orchestration",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Webhooks" }
+        ]
+      },
+      {
+        "label": "CRM platforms",
+        "items": [
+          { "name": "HubSpot", "icon": "https://cdn.simpleicons.org/hubspot/FF7A59" },
+          { "name": "Salesforce" },
+          { "name": "Zoho", "icon": "https://cdn.simpleicons.org/zoho/E42527" },
+          { "name": "Odoo CRM", "icon": "https://cdn.simpleicons.org/odoo/714B67" }
+        ]
+      },
+      {
+        "label": "Accounting systems",
+        "items": [
+          { "name": "QuickBooks", "icon": "https://cdn.simpleicons.org/quickbooks/2CA01C" },
+          { "name": "Xero", "icon": "https://cdn.simpleicons.org/xero/13B5EA" },
+          { "name": "Zoho Books", "icon": "https://cdn.simpleicons.org/zoho/E42527" },
+          { "name": "Odoo Accounting", "icon": "https://cdn.simpleicons.org/odoo/714B67" }
+        ]
+      },
+      {
+        "label": "Website & e-commerce",
+        "items": [
+          { "name": "WordPress", "icon": "https://cdn.simpleicons.org/wordpress/21759B" },
+          { "name": "WooCommerce", "icon": "https://cdn.simpleicons.org/woocommerce/96588A" },
+          { "name": "Shopify", "icon": "https://cdn.simpleicons.org/shopify/7AB55C" },
+          { "name": "Stripe", "icon": "https://cdn.simpleicons.org/stripe/635BFF" }
+        ]
+      },
+      {
+        "label": "Data & reliability",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "REST & GraphQL APIs" },
+          { "name": "Retry & queueing" }
+        ]
+      },
+      {
+        "label": "Alerts & notifications",
+        "items": [
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Telegram", "icon": "https://cdn.simpleicons.org/telegram/26A5E4" },
+          { "name": "Gmail API", "icon": "https://cdn.simpleicons.org/gmail/EA4335" },
+          { "name": "Slack" }
+        ]
+      }
+    ]
+  }
+}

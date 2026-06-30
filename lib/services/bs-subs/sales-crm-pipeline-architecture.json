@@ -1,0 +1,195 @@
+{
+  "slug": "sales-crm-pipeline-architecture",
+  "service": "Sales CRM Pipeline Architecture",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Sales CRM Pipeline Architecture & Setup | CloudTopia",
+    "description": "CloudTopia builds a sales CRM pipeline around how your team really sells — clear stages, lead routing, follow-ups, and forecasts you own. Free consultation."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Sales CRM Pipeline Architecture & Optimization",
+    "subtitle": "We architect a sales pipeline that mirrors how your team actually closes — clear stages, automatic follow-ups, and honest forecasts. The result is a CRM your reps trust and your team fully owns.",
+    "chips": [
+      "Stages that fit you",
+      "Auto lead routing",
+      "Follow-up reminders",
+      "Accurate forecasting",
+      "WhatsApp & email sync",
+      "Rep activity tracking",
+      "Bilingual (AR + EN)",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Pipeline & stage design",
+      "description": "We map your real sales motion into a pipeline with clear entry and exit criteria for every stage.",
+      "features": [
+        "Stages built from your actual deals",
+        "Win/loss reasons captured",
+        "Multiple pipelines per team",
+        "Exit criteria per stage"
+      ]
+    },
+    {
+      "name": "Lead capture & routing",
+      "description": "Every enquiry lands in the CRM and reaches the right rep automatically, with the source attached.",
+      "features": [
+        "WhatsApp, web form & email capture",
+        "Round-robin or rule-based routing",
+        "Source & campaign tracking",
+        "Duplicate detection"
+      ]
+    },
+    {
+      "name": "Follow-up automation",
+      "description": "Reminders, tasks, and sequences fire on their own so no deal goes cold.",
+      "features": [
+        "Stage-based task creation",
+        "Stale-deal alerts",
+        "Templated email & WhatsApp replies",
+        "Quote & approval workflows"
+      ]
+    },
+    {
+      "name": "Forecasting & reporting",
+      "description": "Weighted pipeline value and conversion metrics that managers can actually trust.",
+      "features": [
+        "Weighted forecast by stage",
+        "Conversion & velocity reports",
+        "Per-rep and per-team dashboards",
+        "Aging & bottleneck views"
+      ]
+    },
+    {
+      "name": "Pipeline health audit",
+      "description": "We review an existing CRM, clean the clutter, and rebuild stages that have drifted from reality.",
+      "features": [
+        "Stuck-deal & data cleanup",
+        "Stage logic re-mapping",
+        "Rep adoption fixes",
+        "Field & permission tidy-up"
+      ]
+    },
+    {
+      "name": "Access, training & handoff",
+      "description": "Role-based access plus a team trained to run the pipeline day to day.",
+      "features": [
+        "Role-based permissions",
+        "Manager vs. rep views",
+        "Hands-on team training",
+        "Documentation & handoff"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Fewer dropped leads",
+      "description": "Every enquiry is captured and routed, so nothing slips through between channels."
+    },
+    {
+      "label": "Faster deal cycles",
+      "description": "Automated follow-ups keep deals moving instead of stalling in a rep's inbox."
+    },
+    {
+      "label": "Forecasts you trust",
+      "description": "Weighted, stage-based pipeline value replaces gut-feel guesses at month-end."
+    },
+    {
+      "label": "You own it",
+      "description": "The CRM, data, and configuration stay with your team — no vendor lock-in."
+    }
+  ],
+  "industries": [
+    "Real estate & property",
+    "Trading & distribution",
+    "Professional services & agencies",
+    "Construction & contracting",
+    "Travel & tourism",
+    "Automotive sales & dealerships"
+  ],
+  "faqs": [
+    {
+      "question": "Do we have to switch CRMs, or can you optimize the one we use?",
+      "answer": "Both are on the table. We can architect a fresh pipeline in Odoo or another CRM, or audit and rebuild the one you already run. If your current tool is the bottleneck, we will tell you honestly before any commitment."
+    },
+    {
+      "question": "Can leads from WhatsApp and our website land in the pipeline automatically?",
+      "answer": "Yes. We capture leads from WhatsApp, web forms, and email into a single inbox, then route each one to the right rep with the source attached. That removes manual copy-paste and the leads that get lost in between."
+    },
+    {
+      "question": "How do you build a forecast we can actually rely on?",
+      "answer": "We weight each deal by its stage probability and tie stages to real exit criteria, so the number reflects genuine momentum rather than optimism. Managers get conversion, velocity, and aging reports to see exactly where deals stall."
+    },
+    {
+      "question": "Will our sales team actually use it?",
+      "answer": "That is the whole point of designing the pipeline around your real motion instead of a generic template. We keep data entry light, automate the busywork, and train reps hands-on so the CRM helps them close rather than slowing them down."
+    },
+    {
+      "question": "Do we own the pipeline and data after launch?",
+      "answer": "Completely. You receive the configuration, the data, the documentation, and full administrator access. There is no lock-in — your team can run, adjust, and extend the pipeline independently."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven CRM tooling and integrations we use to architect, automate, and report on your sales pipeline.",
+    "categories": [
+      {
+        "label": "CRM platform",
+        "items": [
+          { "name": "Odoo CRM" },
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "Odoo Studio" }
+        ]
+      },
+      {
+        "label": "Lead capture",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Web forms" },
+          { "name": "Meta Lead Ads", "icon": "https://cdn.simpleicons.org/meta/0467DF" },
+          { "name": "Email-to-lead" }
+        ]
+      },
+      {
+        "label": "Automation",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" },
+          { "name": "Twilio" },
+          { "name": "Lead routing rules" }
+        ]
+      },
+      {
+        "label": "Reporting & forecasting",
+        "items": [
+          { "name": "Pipeline dashboards" },
+          { "name": "Weighted forecasting" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" },
+          { "name": "Metabase", "icon": "https://cdn.simpleicons.org/metabase/509EE3" }
+        ]
+      },
+      {
+        "label": "Integrations & APIs",
+        "items": [
+          { "name": "REST & XML-RPC API" },
+          { "name": "Webhooks" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Email & SMTP" }
+        ]
+      },
+      {
+        "label": "Security & hosting",
+        "items": [
+          { "name": "Role-based access" },
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Automated backups" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "slug": "whatsapp-crm-lead-capture",
+  "service": "WhatsApp Lead Capture & Routing",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "WhatsApp-to-CRM Lead Capture & Routing | CloudTopia",
+    "description": "Turn every WhatsApp message into a tracked CRM lead, auto-routed to the right rep in seconds with full source tracking. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "WhatsApp-to-CRM Lead Capture & Routing Setup",
+    "subtitle": "We connect your WhatsApp Business line straight into your CRM, so every enquiry becomes a tracked lead and lands with the right rep within seconds — no message left on read, no deal lost in a shared inbox.",
+    "chips": [
+      "WhatsApp Business API",
+      "Instant lead capture",
+      "Rule-based routing",
+      "Full source tracking",
+      "Round-robin assignment",
+      "Bilingual AR + EN",
+      "No vendor lock-in",
+      "You own the data"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "WhatsApp Business connection",
+      "description": "We connect your official WhatsApp Business line to your CRM through a verified, compliant integration.",
+      "features": [
+        "Official WhatsApp Business API setup",
+        "Number verification & green-tick guidance",
+        "Webhook listener for every inbound message",
+        "Works with your existing business number"
+      ]
+    },
+    {
+      "name": "Automatic lead capture",
+      "description": "Every new chat is parsed into a structured CRM record the moment it arrives — name, number, message, and timestamp.",
+      "features": [
+        "New contacts created instantly",
+        "First message logged to the record",
+        "Duplicate detection on phone number",
+        "Media & attachments saved to the lead"
+      ]
+    },
+    {
+      "name": "Routing & assignment rules",
+      "description": "We build the logic that decides who gets each lead, based on the rules your sales team actually works by.",
+      "features": [
+        "Round-robin or weighted distribution",
+        "Route by branch, language, or product",
+        "Working-hours & availability checks",
+        "Fallback owner so nothing goes unassigned"
+      ]
+    },
+    {
+      "name": "Source & campaign tracking",
+      "description": "We tag where each lead came from so you can see which channels and ads actually drive conversations.",
+      "features": [
+        "Click-to-WhatsApp ad attribution",
+        "ref / UTM capture from chat links",
+        "QR code & landing-page source tags",
+        "Reporting by source in your CRM"
+      ]
+    },
+    {
+      "name": "Auto-replies & qualifying flow",
+      "description": "An instant first reply greets the lead and gathers the basics before a rep ever picks up the chat.",
+      "features": [
+        "Bilingual AR + EN greeting & menu",
+        "Qualifying questions on the record",
+        "Office-hours auto-acknowledgement",
+        "Hand-off to the assigned rep"
+      ]
+    },
+    {
+      "name": "Alerts, SLA & handoff",
+      "description": "The right rep is notified the instant a lead lands, with escalation if it sits untouched.",
+      "features": [
+        "Instant assignment notifications",
+        "SLA timer with stale-lead escalation",
+        "Reassign on no-response",
+        "Reply from inside the CRM"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "No lead slips through",
+      "description": "Every WhatsApp enquiry becomes a tracked record instead of a forgotten chat in a shared phone."
+    },
+    {
+      "label": "Faster first response",
+      "description": "Leads are assigned and acknowledged in seconds, so reps reach hot enquiries while intent is high."
+    },
+    {
+      "label": "Fair, visible distribution",
+      "description": "Round-robin and rule-based routing spread leads evenly and end the scramble over who takes what."
+    },
+    {
+      "label": "Real channel insight",
+      "description": "Source tracking shows which ads, links, and campaigns actually start conversations that close."
+    }
+  ],
+  "industries": [
+    "Real estate & property",
+    "Car dealerships & rentals",
+    "Clinics & medical centres",
+    "Retail & e-commerce",
+    "Travel & tourism agencies",
+    "Education & training centres"
+  ],
+  "faqs": [
+    {
+      "question": "Do I have to change my WhatsApp number?",
+      "answer": "No. We connect your existing WhatsApp Business number through the official API, so customers keep messaging the same line they already know. We handle the verification steps and guide you through the green-tick application where it applies."
+    },
+    {
+      "question": "Which CRM does this work with?",
+      "answer": "We build it around whatever CRM you run — Odoo, HubSpot, Zoho, or a custom system we develop for you. The routing rules, fields, and source tags are configured to match your existing pipeline rather than forcing you onto a fixed template."
+    },
+    {
+      "question": "How does the lead get sent to the right person?",
+      "answer": "We set up the routing logic with you — round-robin for even distribution, or rules based on branch, language, product line, or working hours. Each lead is assigned the moment it arrives, and if no one responds within your SLA it escalates or reassigns automatically."
+    },
+    {
+      "question": "Can it reply automatically in Arabic and English?",
+      "answer": "Yes. The instant greeting and qualifying flow are fully bilingual and RTL-ready, so an Arabic-speaking customer gets an Arabic reply and an English speaker gets English. The rep then takes over the conversation from inside the CRM."
+    },
+    {
+      "question": "Do we own the setup once it is live?",
+      "answer": "Completely. You receive the integration, the routing logic, the configuration, and the documentation, and the lead data lives in your own CRM. There is no lock-in — your team can run, adjust, and extend it without depending on us."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven, well-documented tools wired into your CRM — chosen so your team can own and maintain the setup after launch.",
+    "categories": [
+      {
+        "label": "Messaging",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio", "icon": "https://cdn.simpleicons.org/twilio/F22F46" },
+          { "name": "Meta Cloud API", "icon": "https://cdn.simpleicons.org/meta/0467DF" },
+          { "name": "Webhooks" }
+        ]
+      },
+      {
+        "label": "Automation & routing",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Routing rules engine" },
+          { "name": "Round-robin assignment" }
+        ]
+      },
+      {
+        "label": "CRM targets",
+        "items": [
+          { "name": "Odoo CRM" },
+          { "name": "HubSpot", "icon": "https://cdn.simpleicons.org/hubspot/FF7A59" },
+          { "name": "Zoho CRM", "icon": "https://cdn.simpleicons.org/zoho/E42527" },
+          { "name": "Custom CRM" }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" },
+          { "name": "Media storage" }
+        ]
+      },
+      {
+        "label": "Attribution",
+        "items": [
+          { "name": "Click-to-WhatsApp ads" },
+          { "name": "UTM & ref capture" },
+          { "name": "QR code sources" },
+          { "name": "Source reporting" }
+        ]
+      },
+      {
+        "label": "Delivery & ops",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "REST APIs" },
+          { "name": "Monitoring & alerts" }
+        ]
+      }
+    ]
+  }
+}

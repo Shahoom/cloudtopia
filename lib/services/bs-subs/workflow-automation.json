@@ -1,0 +1,195 @@
+{
+  "slug": "workflow-automation",
+  "service": "Workflow Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Workflow Automation in Oman | CloudTopia",
+    "description": "CloudTopia builds custom workflow automation to link your apps, run multi-step processes, and end manual handoffs. Book a free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Workflow Automation",
+    "subtitle": "Turn the repetitive, multi-step work your team does by hand into automation that runs itself. We map a real process end to end, then build the triggers, rules, and handoffs that move it forward without anyone copying data between apps or chasing the next step.",
+    "chips": [
+      "Trigger-based flows",
+      "Cross-app handoffs",
+      "Approval routing",
+      "WhatsApp & email alerts",
+      "Conditional logic",
+      "Error retries & alerts",
+      "Bilingual AR + EN",
+      "You own it"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Process mapping & build",
+      "description": "We sit with your team, map a real workflow step by step, then build automation that mirrors exactly how it should run.",
+      "features": [
+        "End-to-end workflow blueprint",
+        "Triggers, steps, and decision points",
+        "Built around your actual process",
+        "Bilingual AR + EN, RTL-ready"
+      ]
+    },
+    {
+      "name": "Triggers & event handling",
+      "description": "Each flow starts on its own, the moment something happens, so no one has to remember to kick it off.",
+      "features": [
+        "Form, email, and webhook triggers",
+        "Scheduled and time-based runs",
+        "New-record and status-change events",
+        "Incoming WhatsApp or chat messages"
+      ]
+    },
+    {
+      "name": "Conditional logic & branching",
+      "description": "We encode your rules so the workflow makes the right call automatically instead of waiting on a person.",
+      "features": [
+        "If / then routing by field values",
+        "Multi-branch and parallel paths",
+        "Thresholds, tiers, and date rules",
+        "Skip, hold, or re-route on conditions"
+      ]
+    },
+    {
+      "name": "Cross-system data handoffs",
+      "description": "Information flows between your tools on its own, ending the copy-paste and re-keying between systems.",
+      "features": [
+        "Two-way sync across apps and sheets",
+        "Field mapping and data formatting",
+        "Create, update, and lookup records",
+        "API and webhook connections"
+      ]
+    },
+    {
+      "name": "Tasks, approvals & notifications",
+      "description": "The right person gets pinged at the right step, with one-tap actions that push the workflow forward.",
+      "features": [
+        "Auto-assigned tasks with deadlines",
+        "Approve / reject from WhatsApp or email",
+        "Reminders and overdue escalations",
+        "Status updates to staff and customers"
+      ]
+    },
+    {
+      "name": "Monitoring, logs & error handling",
+      "description": "Every run is logged, retried on failure, and visible on a dashboard, so a flow never breaks silently.",
+      "features": [
+        "Full run history and audit log",
+        "Auto-retry with failure alerts",
+        "Live status dashboard",
+        "Bottleneck and cycle-time view"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Hours given back",
+      "description": "The manual, repeatable steps your team does daily run on their own, freeing people for work that actually needs them."
+    },
+    {
+      "label": "Fewer human errors",
+      "description": "Rules and validation replace copy-paste and memory, so steps stop getting missed, mistyped, or skipped."
+    },
+    {
+      "label": "Nothing stalls",
+      "description": "Triggers, reminders, and escalations keep every process moving even when someone is busy or away."
+    },
+    {
+      "label": "You own it",
+      "description": "The workflows, connections, and documentation are entirely yours to run and extend, with no vendor lock-in."
+    }
+  ],
+  "industries": [
+    "Trading & distribution",
+    "Logistics & freight",
+    "Real estate & property",
+    "Clinics & healthcare",
+    "Professional services & consulting",
+    "Retail & e-commerce"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from buying a tool like Zapier or Make myself?",
+      "answer": "Off-the-shelf tools are great for simple two-app links, but they get expensive and fragile once a process has many steps, conditions, and edge cases. We design the whole workflow around how your business actually runs, build the logic that ready-made connectors can't handle, and host it so you are not paying per task forever. You end up with something that fits your process instead of forcing your process to fit the tool."
+    },
+    {
+      "question": "Will it work with the apps and systems we already use?",
+      "answer": "In most cases, yes. We connect to common CRMs, accounting, inventory, and spreadsheet tools through their APIs or webhooks, and we can bridge older systems with scheduled syncs or file exchange. Where no connection exists, we build a lightweight one so your tools talk to each other."
+    },
+    {
+      "question": "What happens when a step fails or an app is down?",
+      "answer": "Reliability is built in, not bolted on. Each workflow retries failed steps automatically, alerts you when something needs a human, and keeps a full log of every run so nothing breaks silently. You can always see what ran, what is pending, and what needs attention."
+    },
+    {
+      "question": "Can the automation send WhatsApp messages and handle approvals?",
+      "answer": "Yes. We build on the official WhatsApp Business API so flows can notify staff or customers and collect one-tap approvals from a phone. Email, SMS, and in-app tasks can run in the same workflow, and a sequence can pause or branch based on the response."
+    },
+    {
+      "question": "Do we own the automation after it is built?",
+      "answer": "Completely. You receive the workflows, the connected accounts, the source code, and full documentation, with no vendor lock-in. Your team can run, edit, and extend everything on its own, and we start with a free consultation and demo preview before any commitment."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven automation, integration, and messaging tools wired into one reliable engine you fully own.",
+    "categories": [
+      {
+        "label": "Automation engine",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Make", "icon": "https://cdn.simpleicons.org/make/6D00CC" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" },
+          { "name": "Custom rules engine" }
+        ]
+      },
+      {
+        "label": "Backend & logic",
+        "items": [
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "REST & webhooks" },
+          { "name": "Scheduled cron jobs" }
+        ]
+      },
+      {
+        "label": "Integrations",
+        "items": [
+          { "name": "Odoo", "icon": "https://cdn.simpleicons.org/odoo/714B67" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" },
+          { "name": "Airtable", "icon": "https://cdn.simpleicons.org/airtable/18BFFF" },
+          { "name": "Gmail", "icon": "https://cdn.simpleicons.org/gmail/EA4335" }
+        ]
+      },
+      {
+        "label": "Notifications & actions",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio", "icon": "https://cdn.simpleicons.org/twilio/F22F46" },
+          { "name": "Email / SMTP" },
+          { "name": "One-tap approvals" }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Supabase", "icon": "https://cdn.simpleicons.org/supabase/3FCF8E" },
+          { "name": "Run & audit logs" }
+        ]
+      },
+      {
+        "label": "Hosting & reliability",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "NGINX", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "AWS", "icon": "https://cdn.simpleicons.org/amazonwebservices/FF9900" },
+          { "name": "Retries & monitoring" }
+        ]
+      }
+    ]
+  }
+}

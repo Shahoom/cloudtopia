@@ -1,0 +1,254 @@
+{
+  "slug": "purchase-order-approval-workflows",
+  "service": "PO Approval Workflows",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Purchase Order & Approval Workflows | CloudTopia",
+    "description": "Automate purchase orders and manager approvals with multi-level routing, budget checks, WhatsApp sign-off, and audit trails. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Purchase Order & Manager Approval Workflows",
+    "subtitle": "Replace email chains and paper sign-offs with a structured PO system that routes every request to the right approver, enforces your spending limits, and keeps a clean audit trail. Faster approvals, controlled spend, and a workflow your team fully owns.",
+    "chips": [
+      "Multi-level approvals",
+      "Amount-based routing",
+      "WhatsApp sign-off",
+      "Live budget checks",
+      "Delegation & escalation",
+      "Full audit trail",
+      "Bilingual (AR + EN)",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Requisition & PO capture",
+      "description": "A clean intake form that turns purchase requests into structured POs with everything an approver needs to decide.",
+      "features": [
+        "Line items, quantities, and cost centres",
+        "Supplier and budget code lookup",
+        "Attach quotes, specs, and invoices",
+        "Bilingual AR + EN, RTL-ready forms"
+      ]
+    },
+    {
+      "name": "Multi-level approval chains",
+      "description": "Approval routes that mirror your real authority structure, branch by branch and department by department.",
+      "features": [
+        "Sequential and parallel approvers",
+        "Amount-based thresholds and tiers",
+        "Per-department and per-branch routing",
+        "Mandatory vs. optional sign-offs"
+      ]
+    },
+    {
+      "name": "Delegation & escalation rules",
+      "description": "Rules that keep approvals moving when a manager is on leave or sitting on a request too long.",
+      "features": [
+        "Out-of-office delegate assignment",
+        "Auto-escalate after a set time",
+        "Reminder nudges to pending approvers",
+        "Skip or reroute on no response"
+      ]
+    },
+    {
+      "name": "Mobile & WhatsApp approvals",
+      "description": "Managers approve or reject from their phone in seconds, without logging into a heavy desktop system.",
+      "features": [
+        "One-tap approve / reject links",
+        "WhatsApp and email notifications",
+        "Full request detail on mobile",
+        "Comments and rejection reasons"
+      ]
+    },
+    {
+      "name": "Budget checks & spend limits",
+      "description": "Live budget validation that flags overspend before a PO is ever approved, not after.",
+      "features": [
+        "Budget vs. committed-spend view",
+        "Block or warn on limit breach",
+        "Per-department spending caps",
+        "Running totals by cost centre"
+      ]
+    },
+    {
+      "name": "Audit trail & PO reporting",
+      "description": "A complete, tamper-evident record of who approved what, when, and why, with reporting on top.",
+      "features": [
+        "Time-stamped approval history",
+        "Exportable PO and spend reports",
+        "Pending, approved, rejected dashboards",
+        "Supplier and cycle-time analytics"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster approvals",
+      "description": "POs clear in hours instead of days once routing, reminders, and mobile sign-off replace email chasing."
+    },
+    {
+      "label": "Controlled spend",
+      "description": "Budget checks and authority limits stop unapproved or over-budget purchases before they happen."
+    },
+    {
+      "label": "Full accountability",
+      "description": "Every decision is logged with a name, time, and reason, so audits and disputes are settled in minutes."
+    },
+    {
+      "label": "You own it",
+      "description": "The workflow engine, data, and documentation are entirely yours to run and extend, with no vendor lock-in."
+    }
+  ],
+  "industries": [
+    "Construction & contracting",
+    "Trading & distribution",
+    "Manufacturing",
+    "Retail & wholesale",
+    "Healthcare & clinics",
+    "Hospitality & facilities"
+  ],
+  "faqs": [
+    {
+      "question": "Can the approval chain match our exact authority matrix?",
+      "answer": "Yes. We map your real delegation-of-authority rules, including amount thresholds, department routes, and per-branch approvers, then build the chain to match. Sequential, parallel, and conditional steps are all supported, and rules can be changed as your structure evolves."
+    },
+    {
+      "question": "Can managers approve from their phone or WhatsApp?",
+      "answer": "They can. We wire up mobile-friendly approval links plus WhatsApp and email notifications, so an approver sees the full request and taps approve or reject in seconds. There is no need to log into a heavy desktop system to keep purchases moving."
+    },
+    {
+      "question": "Does it connect to our existing ERP or accounting system?",
+      "answer": "Usually yes. We integrate the workflow with systems like Odoo or your accounting and inventory tools so approved POs flow straight through without re-keying. Where a direct integration is not possible, we use APIs, file exchange, or scheduled sync."
+    },
+    {
+      "question": "What happens to requests when an approver is on leave?",
+      "answer": "Delegation and escalation rules handle it automatically. You can assign a stand-in approver, auto-escalate after a set time, or send reminder nudges so nothing stalls. Every reroute is recorded in the audit trail."
+    },
+    {
+      "question": "Do we own the system after launch?",
+      "answer": "Fully. You receive the source code, database, and documentation, along with team training and an access handoff. There is no lock-in, so your team can run, audit, and extend the workflow independently. We start with a free consultation and demo preview before any commitment."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven tools for routing, notifications, and integration, assembled around how your purchasing actually works.",
+    "categories": [
+      {
+        "label": "Workflow & backend",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Rules engine"
+          }
+        ]
+      },
+      {
+        "label": "Data & records",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "MySQL",
+            "icon": "https://cdn.simpleicons.org/mysql/4479A1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Audit log store"
+          }
+        ]
+      },
+      {
+        "label": "Notifications & sign-off",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Twilio"
+          },
+          {
+            "name": "Email / SMTP"
+          },
+          {
+            "name": "Mobile approval links"
+          }
+        ]
+      },
+      {
+        "label": "ERP & accounting",
+        "items": [
+          {
+            "name": "Odoo",
+            "icon": "https://cdn.simpleicons.org/odoo/714B67"
+          },
+          {
+            "name": "REST API"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          },
+          {
+            "name": "Webhooks"
+          }
+        ]
+      },
+      {
+        "label": "Access & security",
+        "items": [
+          {
+            "name": "Role-based access"
+          },
+          {
+            "name": "Approval thresholds"
+          },
+          {
+            "name": "Spend limits"
+          },
+          {
+            "name": "Change history"
+          }
+        ]
+      },
+      {
+        "label": "Infrastructure",
+        "items": [
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "AWS"
+          },
+          {
+            "name": "Scheduled backups"
+          }
+        ]
+      }
+    ]
+  }
+}

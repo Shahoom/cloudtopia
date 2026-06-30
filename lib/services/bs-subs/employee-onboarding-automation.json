@@ -1,0 +1,195 @@
+{
+  "slug": "employee-onboarding-automation",
+  "service": "Onboarding & Offboarding Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Employee Onboarding Automation | CloudTopia",
+    "description": "Automate employee onboarding and offboarding so accounts, access, and paperwork are handled in order, with a full audit trail. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Automated Employee Onboarding & Offboarding Flows",
+    "subtitle": "Turn every new hire and exit into a single triggered workflow that creates accounts, grants the right access, chases signatures, and notifies every department on time. When someone leaves, the same flow revokes access the moment it should, so nothing slips through.",
+    "chips": [
+      "First-day readiness",
+      "Account provisioning",
+      "Access revocation",
+      "E-signature paperwork",
+      "Approval routing",
+      "Asset tracking",
+      "Audit trail",
+      "Arabic + English"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Trigger & intake forms",
+      "description": "A bilingual intake form starts the flow the moment a hire is confirmed or a resignation is logged, capturing role, department, branch, and start or last-working day.",
+      "features": [
+        "Arabic + English forms",
+        "Role & department fields",
+        "Start / exit date capture",
+        "Hire vs. exit branching"
+      ]
+    },
+    {
+      "name": "Task orchestration engine",
+      "description": "We map your onboarding and offboarding checklist into ordered, role-aware tasks that fire to HR, IT, finance, and the line manager with the right deadlines.",
+      "features": [
+        "Sequenced task lists",
+        "Per-role checklists",
+        "Auto-assigned owners",
+        "Deadline reminders"
+      ]
+    },
+    {
+      "name": "Account provisioning hooks",
+      "description": "Connect to your email, directory, and core tools so accounts, mailboxes, and group memberships are created on onboarding and disabled on exit without manual tickets.",
+      "features": [
+        "Email & directory sync",
+        "Group / licence assignment",
+        "Day-one credentials",
+        "One-click deprovision"
+      ]
+    },
+    {
+      "name": "Documents & e-signature",
+      "description": "Offer letters, contracts, NDAs, and policy acknowledgements are generated from templates, sent for signature, and filed against the employee record automatically.",
+      "features": [
+        "Template document fill",
+        "E-signature requests",
+        "Acknowledgement tracking",
+        "Auto-filed records"
+      ]
+    },
+    {
+      "name": "Approvals & asset handover",
+      "description": "Route equipment requests, access approvals, and final clearances to the right approvers, and track laptops, SIMs, and access cards from issue to return.",
+      "features": [
+        "Multi-step approvals",
+        "Asset issue / return log",
+        "Exit clearance checklist",
+        "Final-settlement handoff"
+      ]
+    },
+    {
+      "name": "Status dashboard & alerts",
+      "description": "A live dashboard shows where every joiner and leaver stands, with WhatsApp and email alerts when a step is overdue or an access revocation is pending.",
+      "features": [
+        "Live flow status",
+        "WhatsApp / email alerts",
+        "Overdue-step flags",
+        "Completion audit log"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Productive from day one",
+      "description": "New hires arrive to working accounts, signed paperwork, and assigned equipment instead of waiting days for IT tickets to clear."
+    },
+    {
+      "label": "No lingering access",
+      "description": "Offboarding revokes logins, email, and building access on the exact last working day, closing the security gap that manual exits leave open."
+    },
+    {
+      "label": "Less HR admin",
+      "description": "Repetitive chasing across departments becomes one automated flow, freeing HR to handle the people part instead of the paperwork."
+    },
+    {
+      "label": "Audit-ready records",
+      "description": "Every account created, document signed, and asset returned is logged with a timestamp, so internal audits and labour-compliance reviews are straightforward."
+    }
+  ],
+  "industries": [
+    "Banking & financial services",
+    "Healthcare & clinics",
+    "Retail & multi-branch chains",
+    "Construction & contracting",
+    "Logistics & supply chain",
+    "Professional services & consultancies"
+  ],
+  "faqs": [
+    {
+      "question": "Can it connect to the HR and email systems we already use?",
+      "answer": "Yes. We build the flow around your existing stack, whether that is your Microsoft or Google email and directory, an Odoo or other HR module, or a directory you maintain. Where a tool offers an API or webhook, we provision and deprovision through it; where it does not, the flow generates a clear assigned task instead, so nothing is missed."
+    },
+    {
+      "question": "How does the offboarding side prevent access from being left open?",
+      "answer": "The exit flow is scheduled against the employee's last working day, so revocation tasks fire automatically at the right time rather than relying on someone remembering. Logins, email, group memberships, and asset returns each become a tracked step, and the dashboard flags anything still pending past its deadline."
+    },
+    {
+      "question": "Is the system bilingual for our Arabic-speaking staff?",
+      "answer": "It is. Intake forms, notifications, documents, and the dashboard are delivered in Arabic and English with full right-to-left support. Each employee and approver can work in the language they are comfortable with, while the underlying flow stays the same."
+    },
+    {
+      "question": "Do we own the workflow, or are we locked into your platform?",
+      "answer": "You own it outright. The code, the workflow definitions, the data, and the documentation are all handed over to you with no vendor lock-in. You can run it on your own infrastructure and have full freedom to extend or adjust it later, with or without us."
+    },
+    {
+      "question": "Can we see how it works before committing?",
+      "answer": "Yes. We start with a free consultation to map your current onboarding and exit steps, then show you a demo preview of the automated flow built around them. WhatsApp is the fastest way to reach us and book that first session."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A practical toolchain for triggering flows, provisioning accounts, generating documents, and keeping a clean audit trail.",
+    "categories": [
+      {
+        "label": "Workflow & orchestration",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Temporal" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" }
+        ]
+      },
+      {
+        "label": "Data & records",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "MySQL", "icon": "https://cdn.simpleicons.org/mysql/4479A1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Audit logging" }
+        ]
+      },
+      {
+        "label": "Identity & provisioning",
+        "items": [
+          { "name": "Microsoft 365" },
+          { "name": "Google Workspace" },
+          { "name": "Keycloak", "icon": "https://cdn.simpleicons.org/keycloak/4D4D4D" },
+          { "name": "Role-based access" }
+        ]
+      },
+      {
+        "label": "Documents & signatures",
+        "items": [
+          { "name": "DocuSign" },
+          { "name": "PDF generation" },
+          { "name": "Template merge" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" }
+        ]
+      },
+      {
+        "label": "Notifications",
+        "items": [
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio" },
+          { "name": "Email / SMTP" },
+          { "name": "Slack" }
+        ]
+      },
+      {
+        "label": "Hosting & delivery",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "AWS" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "React", "icon": "https://cdn.simpleicons.org/react/61DAFB" }
+        ]
+      }
+    ]
+  }
+}

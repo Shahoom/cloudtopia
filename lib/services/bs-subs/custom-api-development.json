@@ -1,0 +1,195 @@
+{
+  "slug": "custom-api-development",
+  "service": "Custom API Development & Integration",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Custom API Development & Integration | CloudTopia",
+    "description": "Custom API development and integration — REST & GraphQL APIs that securely connect your systems, partners, and paid tools. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Custom API Development & Integration",
+    "subtitle": "We build the APIs that let your software, your partners, and the apps you already pay for talk to each other — and we connect to almost any third-party or government service that exposes one. You own every endpoint, every key, and every line of code.",
+    "chips": [
+      "REST & GraphQL APIs",
+      "Third-party integrations",
+      "Webhooks & events",
+      "Auth & rate limiting",
+      "OpenAPI docs",
+      "Bilingual (AR + EN)",
+      "You own the code",
+      "Free demo preview"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Custom REST & GraphQL APIs",
+      "description": "We design and build the endpoints your apps, partners, and internal tools need, modelled around your actual data and operations rather than a rigid template.",
+      "features": [
+        "Resource & schema design",
+        "REST or GraphQL",
+        "Versioned endpoints",
+        "Pagination & filtering"
+      ]
+    },
+    {
+      "name": "Third-Party API Integration",
+      "description": "We connect your systems to the external services you depend on and normalise their messy responses into one clean, predictable shape your team can rely on.",
+      "features": [
+        "Payment & SMS gateways",
+        "Shipping & maps APIs",
+        "Government & bank portals",
+        "Response normalisation"
+      ]
+    },
+    {
+      "name": "Integration Middleware Layer",
+      "description": "We build a middleware service that sits between your systems so each one talks to one stable interface instead of a tangle of point-to-point connections.",
+      "features": [
+        "Single integration hub",
+        "Data transformation",
+        "Legacy system adapters",
+        "Decoupled services"
+      ]
+    },
+    {
+      "name": "Authentication & Rate Limiting",
+      "description": "We secure every endpoint with proper authentication, scoped permissions, and rate limits so only the right callers get in and no one can overwhelm your service.",
+      "features": [
+        "API keys & OAuth 2.0",
+        "JWT & token refresh",
+        "Per-client rate limits",
+        "Scoped access roles"
+      ]
+    },
+    {
+      "name": "Webhooks & Event Delivery",
+      "description": "We add outbound webhooks and event handling so other systems react the moment something changes, with retries and a delivery log so nothing is lost silently.",
+      "features": [
+        "Outbound webhooks",
+        "Signed payloads",
+        "Automatic retries",
+        "Delivery log & replay"
+      ]
+    },
+    {
+      "name": "API Docs & Full Handover",
+      "description": "You receive interactive OpenAPI documentation, a ready-to-use request collection, and the full source so your developers can build against it without us.",
+      "features": [
+        "Interactive OpenAPI docs",
+        "Postman collection",
+        "Source code & keys",
+        "Developer walkthrough"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Systems that connect",
+      "description": "Your apps, partners, and paid tools exchange data automatically instead of relying on exports, emails, and manual re-keying."
+    },
+    {
+      "label": "Faster to ship",
+      "description": "New features and partner integrations plug into a stable, documented API instead of forcing a rebuild every time."
+    },
+    {
+      "label": "Secure by design",
+      "description": "Authentication, scoped access, and rate limiting protect your data and keep a clear record of who called what."
+    },
+    {
+      "label": "No vendor lock-in",
+      "description": "You hold the code, keys, and documentation, so your team or any developer can run and extend the API independently."
+    }
+  ],
+  "industries": [
+    "Fintech & payments",
+    "Logistics & delivery",
+    "E-commerce & retail",
+    "Healthcare & clinics",
+    "Insurance & brokerages",
+    "Government & semi-government"
+  ],
+  "faqs": [
+    {
+      "question": "Can you connect to a system that has no public API?",
+      "answer": "Often, yes. Where there is no official API we build adapters using database access, file feeds, secure scraping, or SDKs the vendor provides, then wrap it in a clean interface your other systems can use. In the free consultation we confirm exactly what is possible for your specific tools."
+    },
+    {
+      "question": "Should my API be REST or GraphQL?",
+      "answer": "It depends on how it will be used. REST is simple and a great fit for partner integrations and straightforward apps, while GraphQL shines when clients need to pull exactly the fields they want in one call. We recommend the right one for your case during scoping, and we can build both where it makes sense."
+    },
+    {
+      "question": "How do you keep the API secure?",
+      "answer": "Every endpoint is protected with authentication such as API keys, OAuth 2.0, or JWTs, plus scoped permissions so each caller only reaches what it should. We add rate limiting, request validation, and logging so abuse is blocked and every call is traceable."
+    },
+    {
+      "question": "Will my developers be able to work with it after handover?",
+      "answer": "Yes, that is the point. You receive interactive OpenAPI documentation, a Postman collection, the full source code, and the keys, plus a walkthrough with your team. There is no lock-in to us, so any competent developer can run and extend the API."
+    },
+    {
+      "question": "Can you integrate with local Oman and GCC services?",
+      "answer": "Yes. We regularly connect to regional payment gateways, SMS providers, courier and maps APIs, and government or bank portals used across Oman and the wider GCC. We handle the bilingual Arabic and English data and the quirks each provider tends to have."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Battle-tested API frameworks, real authentication standards, and tooling chosen to keep your endpoints fast, secure, and easy to integrate against.",
+    "categories": [
+      {
+        "label": "API frameworks",
+        "items": [
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Express", "icon": "https://cdn.simpleicons.org/express/000000" },
+          { "name": "NestJS", "icon": "https://cdn.simpleicons.org/nestjs/E0234E" },
+          { "name": "FastAPI", "icon": "https://cdn.simpleicons.org/fastapi/009688" }
+        ]
+      },
+      {
+        "label": "API styles & contracts",
+        "items": [
+          { "name": "REST" },
+          { "name": "GraphQL", "icon": "https://cdn.simpleicons.org/graphql/E10098" },
+          { "name": "OpenAPI", "icon": "https://cdn.simpleicons.org/openapiinitiative/6BA539" },
+          { "name": "Webhooks" }
+        ]
+      },
+      {
+        "label": "Auth & security",
+        "items": [
+          { "name": "OAuth 2.0" },
+          { "name": "JWT", "icon": "https://cdn.simpleicons.org/jsonwebtokens/000000" },
+          { "name": "Kong Gateway", "icon": "https://cdn.simpleicons.org/kong/003459" },
+          { "name": "Rate limiting" }
+        ]
+      },
+      {
+        "label": "Data & messaging",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "MongoDB", "icon": "https://cdn.simpleicons.org/mongodb/47A248" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "RabbitMQ", "icon": "https://cdn.simpleicons.org/rabbitmq/FF6600" }
+        ]
+      },
+      {
+        "label": "Docs & testing",
+        "items": [
+          { "name": "Swagger UI", "icon": "https://cdn.simpleicons.org/swagger/85EA2D" },
+          { "name": "Postman", "icon": "https://cdn.simpleicons.org/postman/FF6C37" },
+          { "name": "Contract tests" },
+          { "name": "Mock servers" }
+        ]
+      },
+      {
+        "label": "Deploy & monitoring",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Sentry", "icon": "https://cdn.simpleicons.org/sentry/362D59" },
+          { "name": "Grafana", "icon": "https://cdn.simpleicons.org/grafana/F46800" }
+        ]
+      }
+    ]
+  }
+}

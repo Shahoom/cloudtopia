@@ -1,0 +1,256 @@
+{
+  "slug": "inventory-management-systems",
+  "service": "Inventory Management Systems",
+  "pillarSlug": "business-management-systems",
+  "pillarName": "Business Management Systems",
+  "seo": {
+    "title": "Inventory Management Systems | CloudTopia",
+    "description": "Custom inventory management systems that keep stock, costs, and reorder points accurate in real time — built around your operation. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Internal Apps",
+    "title": "Inventory Management Systems",
+    "subtitle": "Stop guessing what you have, what it cost, and what to reorder. We build an inventory system around your actual products, units, and suppliers — so every item, value, and movement stays accurate and yours to control.",
+    "chips": [
+      "Real-time stock",
+      "Reorder automation",
+      "Stock valuation",
+      "Batch & expiry",
+      "Supplier purchasing",
+      "Multi-location ready",
+      "Bilingual AR + EN",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Item & product catalogue",
+      "description": "A structured catalogue that models your real products, units, categories, and suppliers instead of forcing your stock into someone else's template.",
+      "features": [
+        "SKUs, variants & barcodes",
+        "Multiple units (piece, box, carton)",
+        "Categories, brands & attributes",
+        "Linked supplier & cost data"
+      ]
+    },
+    {
+      "name": "Real-time stock control",
+      "description": "Every receipt, sale, return, and adjustment updates stock instantly, so the number on screen is the number on the shelf.",
+      "features": [
+        "Live on-hand & available stock",
+        "Goods-in & goods-out entries",
+        "Stock adjustments with reasons",
+        "Full movement history per item"
+      ]
+    },
+    {
+      "name": "Reorder & demand planning",
+      "description": "Min/max levels and consumption trends tell you what to reorder and how much, before a fast mover runs out.",
+      "features": [
+        "Reorder points per item",
+        "Suggested purchase quantities",
+        "Low-stock & out-of-stock alerts",
+        "WhatsApp & email notifications"
+      ]
+    },
+    {
+      "name": "Purchasing & supplier orders",
+      "description": "Raise purchase orders to suppliers, receive against them, and keep landed costs tied to each batch you bring in.",
+      "features": [
+        "Purchase orders to suppliers",
+        "Partial & full goods receipt",
+        "Landed cost per batch",
+        "Supplier price & lead-time history"
+      ]
+    },
+    {
+      "name": "Valuation & costing",
+      "description": "Know what your inventory is actually worth and what each item costs you, with consistent costing you can trust in reports.",
+      "features": [
+        "FIFO or weighted-average costing",
+        "Live stock valuation report",
+        "Cost of goods sold tracking",
+        "Slow-mover & ageing analysis"
+      ]
+    },
+    {
+      "name": "Dashboards, roles & reports",
+      "description": "Live inventory dashboards and exportable reports, with each role seeing only the items and locations it should.",
+      "features": [
+        "Stock, sales & valuation dashboards",
+        "Role-based access per location",
+        "Export to Excel & PDF",
+        "Audit trail of every change"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Accurate stock, always",
+      "description": "Live updates on every movement mean the system matches reality, so your team stops second-guessing the count."
+    },
+    {
+      "label": "Less tied-up cash",
+      "description": "Reorder rules and slow-mover reports cut dead stock and overstocking, freeing cash that was sitting on shelves."
+    },
+    {
+      "label": "Fewer lost sales",
+      "description": "Early low-stock alerts and demand trends keep your best-selling items in stock instead of out of stock."
+    },
+    {
+      "label": "You own it",
+      "description": "The system, code, data, and documentation are fully yours to run, extend, and export — no per-user fees, no lock-in."
+    }
+  ],
+  "industries": [
+    "Retail & supermarkets",
+    "Wholesale & distribution",
+    "Trading & import/export",
+    "Pharmacy & medical supplies",
+    "Restaurants & food service",
+    "Building materials & hardware"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from the spreadsheets we use now?",
+      "answer": "A spreadsheet does not update itself, control who edits what, or warn you when stock runs low — and it breaks the moment two people open it at once. The system enforces accurate counts on every movement, keeps a full history, and gives each item a single trustworthy balance. You get the structure of real software without losing the flexibility you liked in the sheet."
+    },
+    {
+      "question": "Can it handle multiple branches or warehouses?",
+      "answer": "Yes. Stock can be tracked per branch, store, or warehouse with consolidated totals across the whole business, and transfers between locations are recorded so nothing goes missing in between. We size this to where you are now and leave room to add locations later without a rebuild."
+    },
+    {
+      "question": "Does it support batch numbers and expiry dates?",
+      "answer": "It does. Items can carry batch and lot numbers with expiry dates, which is essential for pharmacy, food, and cosmetics, and the system can alert you before stock expires. Costing stays tied to each batch so your valuation reflects what you actually paid."
+    },
+    {
+      "question": "Can it connect to our accounting, POS, or online store?",
+      "answer": "Yes. We integrate the inventory system with your accounting software, point-of-sale, or e-commerce platform through their APIs so stock and sales stay in sync instead of being entered twice. If you do not have those systems yet, the inventory system runs on its own and can connect later."
+    },
+    {
+      "question": "Do we really own the system, and is it in Arabic too?",
+      "answer": "You own the code, the database, and the documentation outright — there is no vendor lock-in and nothing trapped in a proprietary format. The interface is fully bilingual Arabic and English with right-to-left support, and we give you a free consultation and demo preview before any commitment."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Dependable, ownable technology for an inventory system that stays accurate under real daily volume — and stays yours.",
+    "categories": [
+      {
+        "label": "Application",
+        "items": [
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          },
+          {
+            "name": "Tailwind CSS",
+            "icon": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+          }
+        ]
+      },
+      {
+        "label": "Inventory Backend",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "NestJS",
+            "icon": "https://cdn.simpleicons.org/nestjs/E0234E"
+          },
+          {
+            "name": "REST API"
+          },
+          {
+            "name": "Stock & Costing Engine"
+          }
+        ]
+      },
+      {
+        "label": "Data & Storage",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Batch & Serial Records"
+          },
+          {
+            "name": "Movement Ledger"
+          }
+        ]
+      },
+      {
+        "label": "Integrations & Alerts",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Accounting / POS API"
+          },
+          {
+            "name": "E-commerce Sync"
+          },
+          {
+            "name": "Webhooks"
+          }
+        ]
+      },
+      {
+        "label": "Reporting",
+        "items": [
+          {
+            "name": "Metabase",
+            "icon": "https://cdn.simpleicons.org/metabase/509EE3"
+          },
+          {
+            "name": "Grafana",
+            "icon": "https://cdn.simpleicons.org/grafana/F46800"
+          },
+          {
+            "name": "Excel & PDF Export"
+          },
+          {
+            "name": "Stock Valuation Reports"
+          }
+        ]
+      },
+      {
+        "label": "Access & Hosting",
+        "items": [
+          {
+            "name": "Role-Based Access"
+          },
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Audit Logs"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "slug": "b2b-vendor-ordering-portals",
+  "service": "B2B Ordering Portals",
+  "pillarSlug": "internal-enterprise-applications",
+  "pillarName": "Internal Enterprise Applications",
+  "seo": {
+    "title": "B2B Vendor & Wholesale Ordering Portals | CloudTopia",
+    "description": "CloudTopia builds B2B vendor, supplier and wholesale ordering portals with account pricing, credit limits and live stock. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Internal Apps",
+    "title": "B2B Vendor, Supplier & Wholesale Ordering Portals",
+    "subtitle": "Give your trade accounts a self-service portal to reorder, track shipments, and settle invoices on their own terms — with their negotiated pricing, credit limits, and live stock built in. Your sales team stops keying orders from WhatsApp and email, and you fully own the platform.",
+    "chips": [
+      "Account-specific pricing",
+      "Credit limit controls",
+      "Live stock visibility",
+      "Bulk & repeat orders",
+      "Quote-to-order flow",
+      "Bilingual AR + EN",
+      "ERP & accounting sync",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Trade account onboarding",
+      "description": "A controlled portal where you approve each buyer and set exactly what they can see and order.",
+      "features": [
+        "Application & approval workflow",
+        "Per-account price lists & tiers",
+        "Multiple users per company",
+        "Buyer roles & approval limits"
+      ]
+    },
+    {
+      "name": "Contract pricing engine",
+      "description": "Each account sees its own negotiated rates, volume breaks, and currency — never your public list.",
+      "features": [
+        "Customer-specific price lists",
+        "Volume & tiered discounts",
+        "Promotions & contract rates",
+        "OMR / multi-currency display"
+      ]
+    },
+    {
+      "name": "Catalog & live stock",
+      "description": "A searchable wholesale catalog showing real availability so buyers stop calling to check stock.",
+      "features": [
+        "SKU search & fast filters",
+        "Real-time stock & lead times",
+        "Case packs & order multiples",
+        "Saved lists & quick reorder"
+      ]
+    },
+    {
+      "name": "Credit & checkout controls",
+      "description": "Orders respect each account's credit limit, payment terms, and approval rules before they reach you.",
+      "features": [
+        "Credit limit & balance checks",
+        "Net terms & on-account checkout",
+        "Purchase order number capture",
+        "Minimum order enforcement"
+      ]
+    },
+    {
+      "name": "Quotes, orders & tracking",
+      "description": "From a request for quote to a confirmed order, buyers self-serve and follow every shipment.",
+      "features": [
+        "Request-for-quote to order",
+        "Order status & history",
+        "Reorder from past invoices",
+        "Shipment & delivery tracking"
+      ]
+    },
+    {
+      "name": "ERP & accounting sync",
+      "description": "Approved orders flow straight into your back office, so stock and invoices stay in one place.",
+      "features": [
+        "Two-way ERP order sync",
+        "Live inventory deduction",
+        "Invoice & statement access",
+        "WhatsApp & email order alerts"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Fewer manual orders",
+      "description": "Buyers place and reorder themselves, so your team stops re-keying orders from email and WhatsApp."
+    },
+    {
+      "label": "Faster cash collection",
+      "description": "On-account checkout, credit checks, and invoice access shorten the time from order to payment."
+    },
+    {
+      "label": "Cleaner pricing",
+      "description": "Every account sees its agreed rates automatically, ending pricing disputes and costly manual errors."
+    },
+    {
+      "label": "Sales team freed up",
+      "description": "Reps spend time growing accounts instead of processing routine repeat orders by hand."
+    }
+  ],
+  "industries": [
+    "Wholesale & distribution",
+    "FMCG & food suppliers",
+    "Building materials & hardware",
+    "Pharmaceutical & medical supply",
+    "Auto parts & spare parts trading",
+    "Industrial & electrical equipment"
+  ],
+  "faqs": [
+    {
+      "question": "Can each customer see their own negotiated prices?",
+      "answer": "Yes. We build a pricing engine where every trade account is assigned its own price list, volume breaks, and contract rates, so buyers only ever see what was agreed with them. Your public catalog and other accounts' pricing stay completely hidden."
+    },
+    {
+      "question": "Will the portal enforce credit limits and payment terms?",
+      "answer": "It will. At checkout the portal checks each account's credit limit and outstanding balance, applies their net terms, and can block or flag orders that exceed the limit. You decide whether over-limit orders are held for approval or stopped outright."
+    },
+    {
+      "question": "Can it connect to our existing ERP or accounting system?",
+      "answer": "Yes. We sync approved orders, live stock, customer records, and invoices with systems like Odoo, SAP, or your accounting software through their APIs. If you have no ERP yet, the portal can run as your order system of record and connect later."
+    },
+    {
+      "question": "Is the portal available in Arabic for our GCC buyers?",
+      "answer": "Fully. We deliver the buyer-facing portal in both Arabic and English with proper right-to-left layout, so your GCC trade accounts order in the language they prefer. Product names, units, and documents can be bilingual too."
+    },
+    {
+      "question": "Do we own the portal once it's built?",
+      "answer": "Completely. You receive the source code, database, and documentation, and the platform is hosted under your control with no licence per buyer. There is no vendor lock-in — your team can run, extend, and add accounts independently. We start with a free consultation and demo preview before you commit."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A practical, ownable stack for secure B2B ordering — account pricing, credit checks, live stock, and ERP sync.",
+    "categories": [
+      {
+        "label": "Portal & buyer experience",
+        "items": [
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          },
+          {
+            "name": "Tailwind CSS",
+            "icon": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+          }
+        ]
+      },
+      {
+        "label": "Application & APIs",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "REST & GraphQL APIs"
+          },
+          {
+            "name": "Role-based access"
+          }
+        ]
+      },
+      {
+        "label": "Data & pricing",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Contract pricing engine"
+          },
+          {
+            "name": "Credit limit checks"
+          }
+        ]
+      },
+      {
+        "label": "ERP & accounting sync",
+        "items": [
+          {
+            "name": "Odoo"
+          },
+          {
+            "name": "ERP / accounting APIs"
+          },
+          {
+            "name": "Live stock sync"
+          },
+          {
+            "name": "Invoice & statement feed"
+          }
+        ]
+      },
+      {
+        "label": "Notifications & payments",
+        "items": [
+          {
+            "name": "WhatsApp Business",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Mailgun",
+            "icon": "https://cdn.simpleicons.org/mailgun/F06B66"
+          },
+          {
+            "name": "Stripe",
+            "icon": "https://cdn.simpleicons.org/stripe/635BFF"
+          },
+          {
+            "name": "On-account checkout"
+          }
+        ]
+      },
+      {
+        "label": "Hosting & operations",
+        "items": [
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Cloudflare",
+            "icon": "https://cdn.simpleicons.org/cloudflare/F38020"
+          },
+          {
+            "name": "Automated backups"
+          }
+        ]
+      }
+    ]
+  }
+}

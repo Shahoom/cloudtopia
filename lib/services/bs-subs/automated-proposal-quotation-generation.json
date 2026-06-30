@@ -1,0 +1,256 @@
+{
+  "slug": "automated-proposal-quotation-generation",
+  "service": "Quote & Proposal Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Automated Quotation & Proposal PDFs | CloudTopia",
+    "description": "Generate branded, error-free quotes and proposals as PDFs straight from your data, in Arabic and English. CRM-connected, you own the code. Free consultation."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Automated Proposal, Quotation & PDF Generation",
+    "subtitle": "Turn enquiries into branded, error-free quotes and proposals in minutes, generated as polished PDFs straight from your own data. Built around your pricing, your templates, and your approval rules, in Arabic and English.",
+    "chips": [
+      "Branded PDF output",
+      "Bilingual AR / EN",
+      "Live pricing rules",
+      "CRM-connected",
+      "Approval workflows",
+      "WhatsApp delivery",
+      "Online e-sign",
+      "You own the code"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Quote & Proposal Builder",
+      "description": "An internal tool where your team assembles a quotation or proposal from reusable line items, scopes, and clause libraries in minutes instead of rebuilding documents from scratch.",
+      "features": [
+        "Reusable line-item catalog",
+        "Saved scope & clause blocks",
+        "Bilingual AR/EN templates",
+        "Draft, review, send states"
+      ]
+    },
+    {
+      "name": "Branded PDF Engine",
+      "description": "A generation engine that turns approved quote data into a pixel-accurate, print-ready PDF carrying your logo, fonts, colours, and legal footer every single time.",
+      "features": [
+        "Pixel-accurate layouts",
+        "RTL Arabic typesetting",
+        "Auto page breaks & totals",
+        "VAT-ready number formatting"
+      ]
+    },
+    {
+      "name": "Pricing & Discount Logic",
+      "description": "Configurable rules that calculate line totals, tiered discounts, taxes, and margins automatically so numbers are never keyed in by hand or wrong on the page.",
+      "features": [
+        "Tiered & volume discounts",
+        "Auto VAT calculation",
+        "Margin floor guardrails",
+        "Currency & rounding rules"
+      ]
+    },
+    {
+      "name": "Approval & Numbering Flow",
+      "description": "A routing layer that sends high-value or below-margin quotes for sign-off and stamps every document with a sequential, audit-safe reference number.",
+      "features": [
+        "Threshold-based approvals",
+        "Sequential quote numbers",
+        "Version history & revisions",
+        "Locked once approved"
+      ]
+    },
+    {
+      "name": "CRM & Data Integration",
+      "description": "Connections that pull client, product, and pricing data from your existing CRM, accounting, or product catalog so proposals build themselves from a single source of truth.",
+      "features": [
+        "CRM contact & deal sync",
+        "Product catalog pull-through",
+        "Push accepted quotes to accounting",
+        "API & webhook hooks"
+      ]
+    },
+    {
+      "name": "Send, Track & E-Sign",
+      "description": "Delivery that emails or WhatsApps the PDF to the client, then tells your team the moment it is opened, accepted, or signed off.",
+      "features": [
+        "Email & WhatsApp delivery",
+        "Open & view tracking",
+        "Online accept / e-sign",
+        "Auto follow-up reminders"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Quotes out in minutes",
+      "description": "Sales teams send accurate, branded proposals the same day an enquiry lands instead of waiting on a free analyst to format a document."
+    },
+    {
+      "label": "No more pricing errors",
+      "description": "Discounts, taxes, and totals are calculated by rules you set, so figures on the PDF are always right and never below your margin floor."
+    },
+    {
+      "label": "Consistent brand & compliance",
+      "description": "Every document carries the same logo, terms, numbering, and legal footer, keeping your proposals professional and audit-ready."
+    },
+    {
+      "label": "Faster deal closure",
+      "description": "Tracking and online acceptance shorten the gap between sending a quote and getting a signed yes, with timely automated follow-ups."
+    }
+  ],
+  "industries": [
+    "Construction & contracting",
+    "Trading & equipment supply",
+    "Professional & consulting services",
+    "IT & managed service providers",
+    "Manufacturing & industrial",
+    "Logistics & freight forwarding"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from using a Word or Excel template?",
+      "answer": "Templates still rely on a person to copy numbers, apply the right discount, and avoid breaking the layout, which is where errors and delays creep in. This is a real system that pulls live data, runs your pricing rules, and renders a locked PDF automatically, so every quote is consistent and correct without manual rework."
+    },
+    {
+      "question": "Can it produce Arabic and English proposals?",
+      "answer": "Yes. We build the document engine to handle full right-to-left Arabic typesetting alongside English, including mixed-language lines, and your team can generate either version from the same quote data. Layouts, fonts, and number formatting stay correct in both directions."
+    },
+    {
+      "question": "Will it connect to the CRM and accounting tools we already use?",
+      "answer": "That is the usual goal. We integrate with your existing CRM, product catalog, or accounting software through their APIs so client and pricing data flows in and accepted quotes flow out, with no double entry. Where a system has no API, we agree a clean import or sync approach during scoping."
+    },
+    {
+      "question": "Do we own the system or are we tied to your subscription?",
+      "answer": "You fully own the source code, the data, and the documentation. There is no vendor lock-in and no per-document licence fee from us. You can host it yourself or have us manage it, and you are free to extend or move it whenever you want."
+    },
+    {
+      "question": "How do we know it fits our quoting process before committing?",
+      "answer": "We start with a free consultation to map exactly how you quote today, then show you a demo preview built around your line items and document style before any commitment. You see your own proposal coming out of the system before you decide to proceed."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A proven toolchain for fast quote assembly, rule-driven pricing, and pixel-accurate bilingual PDF output that your team fully owns.",
+    "categories": [
+      {
+        "label": "Application & API",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "REST & Webhooks"
+          }
+        ]
+      },
+      {
+        "label": "PDF & Documents",
+        "items": [
+          {
+            "name": "Puppeteer",
+            "icon": "https://cdn.simpleicons.org/puppeteer/40B5A4"
+          },
+          {
+            "name": "HTML to PDF"
+          },
+          {
+            "name": "RTL Arabic typesetting"
+          },
+          {
+            "name": "LaTeX",
+            "icon": "https://cdn.simpleicons.org/latex/008080"
+          }
+        ]
+      },
+      {
+        "label": "Data & Storage",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "MySQL",
+            "icon": "https://cdn.simpleicons.org/mysql/4479A1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Document storage"
+          }
+        ]
+      },
+      {
+        "label": "Pricing & Rules",
+        "items": [
+          {
+            "name": "Rules engine"
+          },
+          {
+            "name": "VAT & tax logic"
+          },
+          {
+            "name": "Approval routing"
+          },
+          {
+            "name": "Sequential numbering"
+          }
+        ]
+      },
+      {
+        "label": "Delivery & Signing",
+        "items": [
+          {
+            "name": "WhatsApp API",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Twilio",
+            "icon": "https://cdn.simpleicons.org/twilio/F22F46"
+          },
+          {
+            "name": "Email delivery"
+          },
+          {
+            "name": "Online e-sign"
+          }
+        ]
+      },
+      {
+        "label": "Integrations",
+        "items": [
+          {
+            "name": "Zapier",
+            "icon": "https://cdn.simpleicons.org/zapier/FF4F00"
+          },
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Google Sheets",
+            "icon": "https://cdn.simpleicons.org/googlesheets/34A853"
+          },
+          {
+            "name": "CRM & accounting sync"
+          }
+        ]
+      }
+    ]
+  }
+}

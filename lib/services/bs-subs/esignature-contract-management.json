@@ -1,0 +1,252 @@
+{
+  "slug": "esignature-contract-management",
+  "service": "E-Signature & Contract Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "E-Signature & Contract Automation | CloudTopia",
+    "description": "Automate contract drafting, bilingual e-signing, and renewals with audit-ready records you fully own. Book a free consultation and demo preview with CloudTopia."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "E-Signature & Contract Management Automation",
+    "subtitle": "Send, sign, and track contracts in hours instead of days, with bilingual signing pages and audit-ready records that hold up in a dispute. Built around your approval flow and owned entirely by you.",
+    "chips": [
+      "Same-day signing",
+      "Bilingual signer pages",
+      "Audit-ready trail",
+      "Renewal alerts",
+      "CRM & ERP sync",
+      "WhatsApp notifications",
+      "Tamper-evident seal",
+      "You own the code"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Document Template Builder",
+      "description": "We turn your standard agreements into smart, reusable templates with auto-filled fields, clause libraries, and pre-placed signature blocks so a new contract is generated in seconds instead of rebuilt by hand.",
+      "features": [
+        "Reusable contract templates",
+        "Auto-filled merge fields",
+        "Approved clause library",
+        "Pre-placed signature anchors"
+      ]
+    },
+    {
+      "name": "Sequential Signing Workflows",
+      "description": "We map your real approval chain into ordered, parallel, or conditional signing routes so each contract reaches the right signer at the right step without anyone chasing emails.",
+      "features": [
+        "Ordered signer routing",
+        "Parallel & conditional steps",
+        "Auto reminder nudges",
+        "Delegate & re-assign rules"
+      ]
+    },
+    {
+      "name": "Bilingual Signing Experience",
+      "description": "Signers receive a clean Arabic or English signing page that mirrors their language and reads right-to-left correctly, so GCC counterparties sign with confidence on any device.",
+      "features": [
+        "Arabic & English pages",
+        "Full RTL layout",
+        "Mobile-ready signing",
+        "Branded signer view"
+      ]
+    },
+    {
+      "name": "Audit Trail & Tamper Seal",
+      "description": "Every signed contract is locked with a complete, timestamped audit trail capturing who signed, when, and from where, plus a tamper-evident seal you can prove in a dispute.",
+      "features": [
+        "Timestamped event log",
+        "Signer identity capture",
+        "Tamper-evident sealing",
+        "Court-ready certificate"
+      ]
+    },
+    {
+      "name": "Contract Lifecycle Tracking",
+      "description": "We build a central repository that tracks every contract from draft to signed to renewal, with status dashboards and alerts so nothing expires or auto-renews unnoticed.",
+      "features": [
+        "Central contract registry",
+        "Status & stage dashboard",
+        "Renewal & expiry alerts",
+        "Full-text contract search"
+      ]
+    },
+    {
+      "name": "System & WhatsApp Integration",
+      "description": "We wire signing into the tools you already use, so a signed contract updates your CRM, triggers the invoice, files the PDF, and pings the deal owner on WhatsApp automatically.",
+      "features": [
+        "CRM & ERP sync",
+        "WhatsApp signing alerts",
+        "Auto-file signed PDFs",
+        "Trigger downstream actions"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster Deal Closure",
+      "description": "Contracts that once waited days for printing, signing, and scanning get returned signed the same day, shortening your sales and onboarding cycles."
+    },
+    {
+      "label": "Zero Missed Renewals",
+      "description": "Automatic expiry and renewal alerts mean no contract lapses or silently auto-renews without your team deciding on it first."
+    },
+    {
+      "label": "Dispute-Proof Records",
+      "description": "A complete audit trail and tamper seal on every agreement give you defensible proof of consent if a signature or term is ever questioned."
+    },
+    {
+      "label": "Hours Back Per Week",
+      "description": "Removing manual drafting, chasing, filing, and data re-entry frees your admin and legal staff to focus on higher-value work."
+    }
+  ],
+  "industries": [
+    "Real Estate & Property Management",
+    "Legal & Professional Services",
+    "Construction & Contracting",
+    "Financial Services & Lending",
+    "Logistics & Freight Forwarding",
+    "HR & Recruitment Agencies"
+  ],
+  "faqs": [
+    {
+      "question": "Are electronically signed contracts legally valid in Oman and the GCC?",
+      "answer": "Yes. Oman's Electronic Transactions Law and equivalent regulations across the GCC recognise electronic signatures and records as legally binding when intent and identity are properly captured. We build the audit trail, timestamping, and signer verification needed to make each signature defensible, and you own that evidence in full."
+    },
+    {
+      "question": "Do we have to move off the tools we already use?",
+      "answer": "No. The automation connects to your existing CRM, ERP, accounting, and document storage rather than replacing them. A contract signed in the new flow updates those systems automatically, so your team keeps working where they already do."
+    },
+    {
+      "question": "Can the signing experience work fully in Arabic?",
+      "answer": "Yes. Every signing page, email, and reminder can be delivered in Arabic or English with correct right-to-left layout, and signers can choose their language. This keeps the experience clear for counterparties anywhere in the GCC."
+    },
+    {
+      "question": "Who owns the system and the signed contracts once it is built?",
+      "answer": "You do, completely. CloudTopia builds custom automation around your process and hands over the full source code, your data, and the documentation with no vendor lock-in. Your signed contracts and their audit trails live in infrastructure you control."
+    },
+    {
+      "question": "Can we see how it works before committing?",
+      "answer": "Absolutely. We start with a free consultation to map your contract and approval flow, then build a demo preview so you can see your own templates and signing routes in action before any commitment. The fastest way to begin is a message on WhatsApp."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A signing and contract engine assembled from proven, open tools and your existing systems, all delivered as code you own.",
+    "categories": [
+      {
+        "label": "Application Core",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "TypeScript",
+            "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+          },
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          }
+        ]
+      },
+      {
+        "label": "Documents & Signing",
+        "items": [
+          {
+            "name": "PDF Generation"
+          },
+          {
+            "name": "Signature Capture"
+          },
+          {
+            "name": "Template Engine"
+          },
+          {
+            "name": "OCR Field Extraction"
+          }
+        ]
+      },
+      {
+        "label": "Data & Storage",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Amazon S3"
+          },
+          {
+            "name": "Tamper-Evident Sealing"
+          }
+        ]
+      },
+      {
+        "label": "Automation & Workflows",
+        "items": [
+          {
+            "name": "n8n",
+            "icon": "https://cdn.simpleicons.org/n8n/EA4B71"
+          },
+          {
+            "name": "Approval Routing"
+          },
+          {
+            "name": "Audit Trail Logging"
+          },
+          {
+            "name": "Renewal Scheduler"
+          }
+        ]
+      },
+      {
+        "label": "Notifications & Delivery",
+        "items": [
+          {
+            "name": "WhatsApp",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Twilio",
+            "icon": "https://cdn.simpleicons.org/twilio/F22F46"
+          },
+          {
+            "name": "Email Delivery"
+          },
+          {
+            "name": "Signer Reminders"
+          }
+        ]
+      },
+      {
+        "label": "Integrations & Security",
+        "items": [
+          {
+            "name": "REST & Webhook APIs"
+          },
+          {
+            "name": "CRM & ERP Sync"
+          },
+          {
+            "name": "Role-Based Access"
+          },
+          {
+            "name": "Encryption at Rest"
+          }
+        ]
+      }
+    ]
+  }
+}

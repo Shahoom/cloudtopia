@@ -1,0 +1,195 @@
+{
+  "slug": "customer-support-ticketing-systems",
+  "service": "Support & Ticketing System",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Customer Support & Ticketing Systems | CloudTopia",
+    "description": "Custom support desks and automated ticketing systems that route, track, and resolve every customer issue across WhatsApp and email. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Customer Support & Automated Ticketing Systems",
+    "subtitle": "We build a support desk shaped around how your team really handles customers — every WhatsApp message, email, and call turned into a tracked ticket that routes itself, escalates on time, and never slips through the cracks.",
+    "chips": [
+      "WhatsApp + email intake",
+      "Auto-routing & assignment",
+      "SLA timers & escalation",
+      "Knowledge base",
+      "Linked to your CRM",
+      "Bilingual (AR + EN)",
+      "CSAT & response reports",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Omnichannel ticket intake",
+      "description": "Turn every incoming message into one trackable ticket, no matter where the customer reached you.",
+      "features": [
+        "WhatsApp Business API inbox",
+        "Email-to-ticket inbox",
+        "Web form & in-app widget",
+        "One thread per customer"
+      ]
+    },
+    {
+      "name": "Routing & assignment rules",
+      "description": "Send each ticket to the right agent or team automatically, based on rules you control.",
+      "features": [
+        "Route by topic, language or product",
+        "Round-robin & load balancing",
+        "Priority & VIP flags",
+        "Auto-assign with fallbacks"
+      ]
+    },
+    {
+      "name": "SLA timers & escalation",
+      "description": "Put response and resolution clocks on every ticket so nothing ages out silently.",
+      "features": [
+        "First-response & resolution SLAs",
+        "Breach warnings before they hit",
+        "Auto-escalate to a manager",
+        "Business-hours & holiday calendars"
+      ]
+    },
+    {
+      "name": "Automation & canned replies",
+      "description": "Cut repetitive work with auto-replies, macros, and trigger-based actions.",
+      "features": [
+        "Instant acknowledgement messages",
+        "Saved replies in AR + EN",
+        "Auto-tagging & categorization",
+        "Optional AI reply suggestions"
+      ]
+    },
+    {
+      "name": "Knowledge base & self-service",
+      "description": "Deflect common questions with a searchable help center customers can use before they ever open a ticket.",
+      "features": [
+        "Bilingual articles, RTL-ready",
+        "Search & suggested answers",
+        "Public or login-only access",
+        "Agent-side internal notes"
+      ]
+    },
+    {
+      "name": "CRM link & reporting",
+      "description": "Connect tickets to the customer record and report on what your support team is actually delivering.",
+      "features": [
+        "Full history per customer",
+        "Linked orders & accounts",
+        "Agent & queue dashboards",
+        "CSAT & response-time reports"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Nothing slips",
+      "description": "Every message becomes a tracked ticket with an owner and a deadline, so requests stop getting lost in personal inboxes and chats."
+    },
+    {
+      "label": "Faster replies",
+      "description": "Auto-routing, canned answers, and SLA timers cut the time customers wait for a first response and a resolution."
+    },
+    {
+      "label": "Clear accountability",
+      "description": "Dashboards show who is handling what, where tickets are stuck, and which SLAs are at risk — in real time."
+    },
+    {
+      "label": "You own it",
+      "description": "The support system, its data, and its documentation are yours to run and extend, with no per-agent licence trap."
+    }
+  ],
+  "industries": [
+    "Retail & e-commerce",
+    "Telecom & internet providers",
+    "Banking & financial services",
+    "Healthcare & clinics",
+    "Logistics & delivery",
+    "Government & public services"
+  ],
+  "faqs": [
+    {
+      "question": "Can customers reach support over WhatsApp?",
+      "answer": "Yes. We connect the official WhatsApp Business API so every chat becomes a ticket your agents answer from one shared desk, with the full conversation kept on record. Email, web forms, and an in-app widget feed into the same place, so your team works from a single queue instead of scattered apps."
+    },
+    {
+      "question": "How does a ticket get to the right agent?",
+      "answer": "You define the routing rules and the system applies them automatically — by topic, language, product, branch, or VIP status. Tickets can be balanced round-robin across a team, escalated to a manager when an SLA is about to breach, and reassigned with fallbacks if nobody picks them up."
+    },
+    {
+      "question": "Does it work in Arabic and English?",
+      "answer": "Fully. The agent interface, customer help center, and canned replies all support Arabic and English, with proper right-to-left layout. Agents can answer a customer in the language they wrote in, and the knowledge base can hold both versions of every article."
+    },
+    {
+      "question": "Can it connect to our CRM or ERP?",
+      "answer": "Yes — that is the point. We link each ticket to the customer record so agents see past orders, accounts, and previous issues without switching systems. If you run Odoo, a custom CRM, or another platform, we integrate over its API so support and operations share the same data."
+    },
+    {
+      "question": "Do we own the system and its data?",
+      "answer": "Completely. You receive the source code, the database, the documentation, and admin access. There is no per-seat licensing and no lock-in — you can add agents, change workflows, or host it wherever you like, and your team can run it independently after handoff."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven, ownable tools for intake, automation, and reporting — wired together around your support workflow.",
+    "categories": [
+      {
+        "label": "Core platform",
+        "items": [
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "React", "icon": "https://cdn.simpleicons.org/react/61DAFB" },
+          { "name": "Odoo Helpdesk" }
+        ]
+      },
+      {
+        "label": "Channels & messaging",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio", "icon": "https://cdn.simpleicons.org/twilio/F22F46" },
+          { "name": "Email (IMAP/SMTP)" },
+          { "name": "Web chat widget" }
+        ]
+      },
+      {
+        "label": "Automation & AI",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "OpenAI", "icon": "https://cdn.simpleicons.org/openai/412991" },
+          { "name": "SLA rule engine" },
+          { "name": "Auto-routing" }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Full ticket history" },
+          { "name": "Attachments store" }
+        ]
+      },
+      {
+        "label": "Reporting & access",
+        "items": [
+          { "name": "CSAT surveys" },
+          { "name": "Queue dashboards" },
+          { "name": "Role-based access" },
+          { "name": "Audit logs" }
+        ]
+      },
+      {
+        "label": "Hosting & delivery",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Amazon Web Services", "icon": "https://cdn.simpleicons.org/amazonwebservices/FF9900" },
+          { "name": "Automated backups" }
+        ]
+      }
+    ]
+  }
+}

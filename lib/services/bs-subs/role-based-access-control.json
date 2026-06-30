@@ -1,0 +1,186 @@
+{
+  "slug": "role-based-access-control",
+  "service": "RBAC & Security Policies",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Role-Based Access Control (RBAC) in Oman | CloudTopia",
+    "description": "Secure your ERP and CRM with role-based access control, permission matrices, and audit trails so each user sees only what their role allows. Free consultation."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Role-Based Access Control (RBAC) & Security Policies",
+    "subtitle": "Give every person exactly the access their role requires — no more, no less — across your ERP and CRM. We design permission matrices, enforce data-level rules, and log every action so sensitive records stay protected and fully auditable.",
+    "chips": [
+      "Permission matrices",
+      "Field-level rules",
+      "Audit trails",
+      "Two-factor login",
+      "Branch-based access",
+      "Approval workflows",
+      "You own it",
+      "Arabic + English"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Role & permission matrix",
+      "description": "We map every job function to a clear set of permissions, so access reflects how your team actually works instead of a vague all-or-nothing login.",
+      "features": [
+        "Role discovery workshop",
+        "Module-by-module rights",
+        "Create, read, edit, delete control",
+        "Documented permission map"
+      ]
+    },
+    {
+      "name": "Record & field-level rules",
+      "description": "We restrict access down to individual records and fields, so a salesperson sees only their own deals and finance figures stay hidden from those who don't need them.",
+      "features": [
+        "Own-records-only rules",
+        "Hidden sensitive fields",
+        "Read-only vs editable",
+        "Customer & supplier scoping"
+      ]
+    },
+    {
+      "name": "Branch & team segmentation",
+      "description": "For multi-branch operations, we scope data and screens per branch or department so each location works in its own space without seeing the others.",
+      "features": [
+        "Per-branch data isolation",
+        "Department-level views",
+        "Shared vs private records",
+        "Manager cross-branch access"
+      ]
+    },
+    {
+      "name": "Approval & escalation workflows",
+      "description": "We build rules that route high-risk actions — large discounts, refunds, credit limits — for sign-off before they take effect.",
+      "features": [
+        "Threshold-based approvals",
+        "Multi-step sign-off",
+        "Maker-checker controls",
+        "Auto-escalation alerts"
+      ]
+    },
+    {
+      "name": "Authentication & login security",
+      "description": "We harden how people sign in with two-factor authentication, session timeouts, and password policies that fit your risk level.",
+      "features": [
+        "Two-factor authentication",
+        "Session & idle timeouts",
+        "Password & lockout policies",
+        "Device and login alerts"
+      ]
+    },
+    {
+      "name": "Audit trail & access reports",
+      "description": "Every login, edit, export, and permission change is logged, giving you a tamper-evident record and ready-to-review access reports.",
+      "features": [
+        "Who-did-what logging",
+        "Change history per record",
+        "Export & download tracking",
+        "Periodic access reviews"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Data stays protected",
+      "description": "Sensitive financials, payroll, and customer data are visible only to the roles that genuinely need them, shrinking the chance of internal leaks."
+    },
+    {
+      "label": "Clean audit on demand",
+      "description": "When auditors or management ask who changed what, you have a complete, time-stamped trail instead of guesswork."
+    },
+    {
+      "label": "Fewer costly mistakes",
+      "description": "Approval gates on discounts, refunds, and edits stop accidental or unauthorized changes before they hit your numbers."
+    },
+    {
+      "label": "Faster, safer onboarding",
+      "description": "New hires get the right access on day one from a predefined role, and leavers are revoked instantly without breaking anything."
+    }
+  ],
+  "industries": [
+    "Retail & multi-branch trading",
+    "Banking & financial services",
+    "Healthcare & clinics",
+    "Logistics & distribution",
+    "Construction & contracting",
+    "Professional services firms"
+  ],
+  "faqs": [
+    {
+      "question": "What exactly is role-based access control?",
+      "answer": "RBAC means access is tied to a person's role rather than handed out individually. We define roles like sales rep, branch manager, or accountant once, attach the right permissions to each, and assign people to roles — so access stays consistent and easy to manage as your team grows."
+    },
+    {
+      "question": "Can one person see only their own customers and deals?",
+      "answer": "Yes. We apply record-level rules so each user sees only the data they own or are assigned, while managers get a wider view. This keeps your pipeline and customer list private between team members without separate systems."
+    },
+    {
+      "question": "Does this work with our existing ERP or CRM?",
+      "answer": "In most cases, yes. We configure the native permission engine of platforms like Odoo and layer our own rules and audit logging where needed. If you're on a custom system we built, RBAC is woven directly into the application."
+    },
+    {
+      "question": "Will we be able to manage roles ourselves later?",
+      "answer": "Absolutely. We hand over a documented permission map and train your admins to create roles, adjust rights, and onboard staff. You fully own the code, data, and documentation — there's no lock-in and no dependency on us to add a user."
+    },
+    {
+      "question": "How do we get started?",
+      "answer": "Book a free consultation and we'll review your structure and show a demo preview of how access and audit trails would work for your team. The fastest way to reach us is WhatsApp, and we work in both Arabic and English."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we secure this on",
+    "subtitle": "Proven tools for permissions, authentication, and audit logging — configured around your ERP and CRM, not bolted on.",
+    "categories": [
+      {
+        "label": "Access & Permissions",
+        "items": [
+          { "name": "Role-based access" },
+          { "name": "Permission matrices" },
+          { "name": "Record-level rules" },
+          { "name": "Field-level security" }
+        ]
+      },
+      {
+        "label": "Authentication",
+        "items": [
+          { "name": "Two-factor (2FA)" },
+          { "name": "Single sign-on" },
+          { "name": "OAuth 2.0" },
+          { "name": "Session policies" }
+        ]
+      },
+      {
+        "label": "Platform & ERP",
+        "items": [
+          { "name": "Odoo" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" }
+        ]
+      },
+      {
+        "label": "Audit & Monitoring",
+        "items": [
+          { "name": "Audit trails" },
+          { "name": "Access reviews" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Activity logging" }
+        ]
+      },
+      {
+        "label": "Hardening & Delivery",
+        "items": [
+          { "name": "Encryption" },
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "slug": "ecommerce-erp-synchronization",
+  "service": "E-Commerce ERP Sync",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "E-Commerce to ERP Synchronization | CloudTopia",
+    "description": "Connect your e-commerce, marketplaces, and POS to your ERP in real time — one stock count, no double entry. Free consultation and demo before you commit."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Omnichannel E-Commerce to ERP Synchronization",
+    "subtitle": "Connect your online store, marketplaces, and POS to your ERP so orders, stock, and customers stay in sync across every channel — automatically, with no spreadsheets or double entry. You own the integration end to end.",
+    "chips": [
+      "Real-time order sync",
+      "One live stock count",
+      "Marketplace + POS",
+      "No double entry",
+      "Two-way inventory",
+      "Bilingual AR + EN",
+      "Full ownership",
+      "WhatsApp-first support"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Channel connectors",
+      "description": "We connect each sales channel you run to one central sync layer.",
+      "features": [
+        "Shopify, WooCommerce & custom storefronts",
+        "Amazon, noon & local marketplaces",
+        "In-store POS terminals",
+        "One unified order feed"
+      ]
+    },
+    {
+      "name": "Real-time order sync",
+      "description": "Every order flows into your ERP the moment it is placed, fully mapped.",
+      "features": [
+        "Instant order push to ERP",
+        "Line items, taxes & discounts",
+        "Customer & shipping details",
+        "Payment status & refunds"
+      ]
+    },
+    {
+      "name": "Two-way inventory engine",
+      "description": "One stock figure shared across every channel, updated both ways.",
+      "features": [
+        "Single live stock count",
+        "Auto-deduct on each sale",
+        "Restock & purchase sync",
+        "Per-warehouse allocation"
+      ]
+    },
+    {
+      "name": "Product & price mapping",
+      "description": "Your catalog stays aligned across channels from one source of truth.",
+      "features": [
+        "SKU & barcode matching",
+        "Variant & bundle handling",
+        "Channel-specific pricing",
+        "Image & description push"
+      ]
+    },
+    {
+      "name": "Fulfilment & returns flow",
+      "description": "Shipping, tracking, and returns stay current on both sides.",
+      "features": [
+        "Status & tracking sync",
+        "Courier & AWB updates",
+        "Returns & restock handling",
+        "WhatsApp order alerts"
+      ]
+    },
+    {
+      "name": "Conflict handling & monitoring",
+      "description": "Guardrails that catch mismatches before they reach a customer.",
+      "features": [
+        "Oversell prevention",
+        "Retry & queue on failures",
+        "Mismatch alerts & logs",
+        "Sync dashboard per channel"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "No oversells",
+      "description": "One shared stock count stops you selling items you no longer have."
+    },
+    {
+      "label": "Zero double entry",
+      "description": "Orders post straight to your ERP, so no one re-keys them by hand."
+    },
+    {
+      "label": "Faster fulfilment",
+      "description": "Picking, invoicing, and dispatch start the second an order lands."
+    },
+    {
+      "label": "One clear view",
+      "description": "Every channel's sales and stock visible in a single, owned system."
+    }
+  ],
+  "industries": [
+    "Retail & multi-store chains",
+    "Fashion & apparel brands",
+    "Electronics & appliances",
+    "Grocery & FMCG distribution",
+    "Health, beauty & cosmetics",
+    "Trading & wholesale"
+  ],
+  "faqs": [
+    {
+      "question": "Which stores and marketplaces can you connect?",
+      "answer": "We connect mainstream platforms like Shopify and WooCommerce, regional marketplaces such as noon and Amazon, and custom-built storefronts. We also tie in your in-store POS so online and offline sales draw from the same stock."
+    },
+    {
+      "question": "How does the inventory sync stay accurate?",
+      "answer": "Stock lives as a single live figure that every channel reads from and writes to. When an item sells anywhere, the count drops everywhere within seconds, and oversell guards plus retry queues catch any channel that is briefly unreachable."
+    },
+    {
+      "question": "Do we have to replace our current store or ERP?",
+      "answer": "No. The sync layer sits between the tools you already use, so you keep your existing storefront and ERP. We adapt the integration to your setup rather than forcing you onto new software."
+    },
+    {
+      "question": "What happens if a channel goes offline or an order fails to sync?",
+      "answer": "Failed syncs are queued and retried automatically, and you get an alert with a clear log of what went wrong. Nothing is silently dropped, and the sync dashboard shows the live status of every channel."
+    },
+    {
+      "question": "Do we own the integration after launch?",
+      "answer": "Yes, completely. You receive the source code, the configuration, and full documentation, with no vendor lock-in. Your team can run, extend, or hand it to another developer at any time."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven channel APIs, a resilient sync layer, and your ERP — wired together so data moves reliably in both directions.",
+    "categories": [
+      {
+        "label": "Storefronts & marketplaces",
+        "items": [
+          { "name": "Shopify", "icon": "https://cdn.simpleicons.org/shopify/7AB55C" },
+          { "name": "WooCommerce", "icon": "https://cdn.simpleicons.org/woocommerce/96588A" },
+          { "name": "PrestaShop", "icon": "https://cdn.simpleicons.org/prestashop/DF0067" },
+          { "name": "Marketplace APIs" }
+        ]
+      },
+      {
+        "label": "ERP & POS",
+        "items": [
+          { "name": "Odoo", "icon": "https://cdn.simpleicons.org/odoo/714B67" },
+          { "name": "SAP", "icon": "https://cdn.simpleicons.org/sap/0FAAFF" },
+          { "name": "Zoho", "icon": "https://cdn.simpleicons.org/zoho/E42527" },
+          { "name": "POS integration" }
+        ]
+      },
+      {
+        "label": "Sync services",
+        "items": [
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Celery", "icon": "https://cdn.simpleicons.org/celery/37814A" }
+        ]
+      },
+      {
+        "label": "Data & queues",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "RabbitMQ", "icon": "https://cdn.simpleicons.org/rabbitmq/FF6600" },
+          { "name": "ETL pipeline" }
+        ]
+      },
+      {
+        "label": "Notifications",
+        "items": [
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Resend", "icon": "https://cdn.simpleicons.org/resend/000000" },
+          { "name": "Mailgun", "icon": "https://cdn.simpleicons.org/mailgun/F06B66" },
+          { "name": "Webhook alerts" }
+        ]
+      },
+      {
+        "label": "Infrastructure",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Grafana", "icon": "https://cdn.simpleicons.org/grafana/F46800" },
+          { "name": "Sentry", "icon": "https://cdn.simpleicons.org/sentry/362D59" }
+        ]
+      }
+    ]
+  }
+}

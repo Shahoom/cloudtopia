@@ -1,0 +1,257 @@
+{
+  "slug": "order-management-systems",
+  "service": "Order Management System",
+  "pillarSlug": "business-management-systems",
+  "pillarName": "Business Management Systems",
+  "seo": {
+    "title": "Custom Order Management Systems | CloudTopia",
+    "description": "A custom order management system that captures every order, reserves stock, and tracks it from quote to delivery — fully owned. Free consultation and demo."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Order Management Systems",
+    "subtitle": "Run every order from one place — captured from any channel, checked against stock, invoiced, and tracked from confirmed to delivered. We build the order workflow around how your business actually sells, and you own all of it.",
+    "chips": [
+      "One order inbox",
+      "Stock-checked at entry",
+      "Quote to delivery",
+      "Partial & backorders",
+      "Auto invoicing",
+      "WhatsApp order updates",
+      "Bilingual (AR + EN)",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Order capture & entry",
+      "description": "Every order lands in one place, whether it comes from a rep, a portal, the phone, or your store.",
+      "features": [
+        "Sales rep & counter order entry",
+        "Web, WhatsApp & email orders",
+        "Customer, pricing & terms auto-filled",
+        "Duplicate and error checks on entry"
+      ]
+    },
+    {
+      "name": "Stock allocation & availability",
+      "description": "Each order is checked against live stock and reserved the moment it is confirmed, so you never promise what you cannot ship.",
+      "features": [
+        "Real-time availability at entry",
+        "Reserve stock on confirmation",
+        "Allocate across warehouses & branches",
+        "Backorder & partial-fulfilment handling"
+      ]
+    },
+    {
+      "name": "Order workflow & statuses",
+      "description": "A clear lifecycle that moves each order through the exact steps your operation runs, with nothing falling between stages.",
+      "features": [
+        "Quote, confirmed, picked, shipped, delivered",
+        "Credit limit & approval holds",
+        "Edit, split & cancel with audit trail",
+        "Per-stage owner and timestamps"
+      ]
+    },
+    {
+      "name": "Fulfilment & dispatch",
+      "description": "Turn confirmed orders into picking lists, packing slips, and deliveries without re-keying a thing.",
+      "features": [
+        "Auto picking & packing documents",
+        "Courier & driver assignment",
+        "Delivery notes & proof of delivery",
+        "Tracking pushed back to the order"
+      ]
+    },
+    {
+      "name": "Invoicing & payments",
+      "description": "Invoices and receipts generate straight from the order, matched to what was actually shipped.",
+      "features": [
+        "Auto-invoice on dispatch",
+        "Partial & consolidated invoicing",
+        "Payment status & balance tracking",
+        "Credit notes for returns"
+      ]
+    },
+    {
+      "name": "Tracking, alerts & reporting",
+      "description": "Live visibility for your team and your customers, with the reports managers need to spot problems early.",
+      "features": [
+        "WhatsApp & email status alerts",
+        "Self-service order tracking page",
+        "Open, late & on-hold dashboards",
+        "Fulfilment-time & sales reports"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "No lost orders",
+      "description": "Every order from every channel lands in one inbox and moves through a tracked lifecycle, so nothing is forgotten in a chat or notebook."
+    },
+    {
+      "label": "Accurate promises",
+      "description": "Stock is checked and reserved at order entry, so what you confirm to a customer is what you can actually deliver."
+    },
+    {
+      "label": "Faster fulfilment",
+      "description": "Picking, dispatch, and invoicing trigger straight from the order, cutting the time between confirmed and delivered."
+    },
+    {
+      "label": "You own it",
+      "description": "The system, code, data, and documentation are entirely yours to run and extend, with no per-order fees and no lock-in."
+    }
+  ],
+  "industries": [
+    "Trading & distribution",
+    "Wholesale & B2B supply",
+    "Retail & multi-store chains",
+    "Food & beverage distribution",
+    "Manufacturing & assembly",
+    "Building materials & hardware"
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from the order screen in our accounting software?",
+      "answer": "Accounting tools record an order for invoicing; an order management system runs the whole lifecycle around it — availability checks, reservations, fulfilment steps, holds, and status tracking. We build that flow around how your team actually takes and ships orders, then connect it to your accounting so the financial side stays in sync without double entry."
+    },
+    {
+      "question": "Can orders come in from WhatsApp, a sales rep, and our website all into one place?",
+      "answer": "Yes. We funnel orders from your reps, counter staff, customer portal, WhatsApp, and website into a single order inbox, each tagged with its source. Your team works one consistent list instead of stitching orders together from different channels by hand."
+    },
+    {
+      "question": "Can it handle partial deliveries, backorders, and order changes?",
+      "answer": "It can. An order can ship in parts, hold a backorder for out-of-stock lines, and be edited, split, or cancelled with every change recorded in an audit trail. Invoices and stock reservations adjust to match what was actually fulfilled, not just what was ordered."
+    },
+    {
+      "question": "Does it connect to our inventory and accounting systems?",
+      "answer": "Yes. We integrate the order system with your inventory, ERP, accounting, or e-commerce platform through their APIs so stock, invoices, and customers stay consistent across all of them. If you do not have those systems yet, the order system can run on its own and connect later."
+    },
+    {
+      "question": "Do we own the system after launch?",
+      "answer": "Completely. You receive the source code, the database, and full documentation, along with team training and an access handoff — no vendor lock-in and no per-order charges. We start with a free consultation and a demo preview before any commitment, and you can reach us on WhatsApp throughout."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A dependable, ownable order engine wired to your channels, stock, and accounting so every order moves cleanly from entry to delivery.",
+    "categories": [
+      {
+        "label": "Order engine & backend",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E"
+          },
+          {
+            "name": "NestJS",
+            "icon": "https://cdn.simpleicons.org/nestjs/E0234E"
+          },
+          {
+            "name": "Python",
+            "icon": "https://cdn.simpleicons.org/python/3776AB"
+          },
+          {
+            "name": "Order state machine"
+          }
+        ]
+      },
+      {
+        "label": "Data & records",
+        "items": [
+          {
+            "name": "PostgreSQL",
+            "icon": "https://cdn.simpleicons.org/postgresql/4169E1"
+          },
+          {
+            "name": "MySQL",
+            "icon": "https://cdn.simpleicons.org/mysql/4479A1"
+          },
+          {
+            "name": "Redis",
+            "icon": "https://cdn.simpleicons.org/redis/FF4438"
+          },
+          {
+            "name": "Audit log store"
+          }
+        ]
+      },
+      {
+        "label": "Channels & order intake",
+        "items": [
+          {
+            "name": "WhatsApp Business API",
+            "icon": "https://cdn.simpleicons.org/whatsapp/25D366"
+          },
+          {
+            "name": "Shopify",
+            "icon": "https://cdn.simpleicons.org/shopify/7AB55C"
+          },
+          {
+            "name": "WooCommerce",
+            "icon": "https://cdn.simpleicons.org/woocommerce/96588A"
+          },
+          {
+            "name": "Order portal & forms"
+          }
+        ]
+      },
+      {
+        "label": "Stock & accounting sync",
+        "items": [
+          {
+            "name": "Odoo",
+            "icon": "https://cdn.simpleicons.org/odoo/714B67"
+          },
+          {
+            "name": "REST API"
+          },
+          {
+            "name": "Inventory sync"
+          },
+          {
+            "name": "Webhooks"
+          }
+        ]
+      },
+      {
+        "label": "Customer interface",
+        "items": [
+          {
+            "name": "React",
+            "icon": "https://cdn.simpleicons.org/react/61DAFB"
+          },
+          {
+            "name": "Next.js",
+            "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+          },
+          {
+            "name": "Order tracking page"
+          },
+          {
+            "name": "PDF invoices & notes"
+          }
+        ]
+      },
+      {
+        "label": "Access & hosting",
+        "items": [
+          {
+            "name": "Role-based access"
+          },
+          {
+            "name": "Docker",
+            "icon": "https://cdn.simpleicons.org/docker/2496ED"
+          },
+          {
+            "name": "Nginx",
+            "icon": "https://cdn.simpleicons.org/nginx/009639"
+          },
+          {
+            "name": "Automated backups"
+          }
+        ]
+      }
+    ]
+  }
+}

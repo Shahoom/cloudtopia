@@ -1,0 +1,186 @@
+{
+  "slug": "multi-branch-operations-management",
+  "service": "Multi-Branch Operations System",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Multi-Branch & Franchise Operations | CloudTopia",
+    "description": "Run every branch and franchisee on one multi-branch system in Muscat and the GCC. Live consolidated reporting, per-location control. Book a free consultation."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Multi-Branch & Franchise Operations Management",
+    "subtitle": "Run every branch, outlet, and franchisee on one connected system, with live consolidated numbers for head office and clean per-location control for each manager. You own the code, the data, and the documentation outright.",
+    "chips": [
+      "One system, every branch",
+      "Live consolidated reporting",
+      "Per-location permissions",
+      "Inter-branch transfers",
+      "Arabic + English / RTL",
+      "Franchisee onboarding",
+      "You own everything",
+      "Free consultation + demo"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Branch & Franchise Hierarchy",
+      "description": "We model your real structure, head office, regions, branches, and independent franchisees, so data rolls up correctly and each level sees only what it should.",
+      "features": [
+        "Region and branch grouping",
+        "Franchisee vs owned outlets",
+        "Per-branch profiles and settings",
+        "Clean head-office rollup"
+      ]
+    },
+    {
+      "name": "Consolidated Head-Office Dashboard",
+      "description": "One live view that combines sales, stock, and performance from every location, with the ability to drill from the group total down to a single branch.",
+      "features": [
+        "Group vs per-branch comparison",
+        "Live sales and revenue rollup",
+        "Branch league tables",
+        "Drill-down to transactions"
+      ]
+    },
+    {
+      "name": "Per-Location Access & Roles",
+      "description": "Branch managers and franchise staff log into the same system but are scoped to their own outlet, while head office keeps the full cross-branch view.",
+      "features": [
+        "Branch-scoped logins",
+        "Role-based permissions",
+        "Franchisee-limited visibility",
+        "Head-office override view"
+      ]
+    },
+    {
+      "name": "Inter-Branch Stock & Transfers",
+      "description": "Track inventory by location and move it between branches with proper requests, approvals, and a record both sides can trust.",
+      "features": [
+        "Stock balance per branch",
+        "Transfer requests and approvals",
+        "In-transit tracking",
+        "Low-stock alerts by location"
+      ]
+    },
+    {
+      "name": "Franchisee Onboarding Workflow",
+      "description": "A repeatable setup flow that spins up a new branch or franchisee with your standard catalog, pricing rules, and templates already in place.",
+      "features": [
+        "New-branch setup checklist",
+        "Standard catalog and pricing",
+        "Document and contract vault",
+        "Royalty / fee tracking fields"
+      ]
+    },
+    {
+      "name": "Cross-Branch Reporting & Royalties",
+      "description": "Automated reports that compare locations side by side and calculate franchise fees or royalties from the same numbers everyone is already using.",
+      "features": [
+        "Branch-vs-branch KPIs",
+        "Royalty and fee calculation",
+        "Scheduled report delivery",
+        "Export to PDF and Excel"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "One source of truth",
+      "description": "Head office stops chasing branch spreadsheets and reads one set of numbers that every location feeds in real time."
+    },
+    {
+      "label": "Faster branch openings",
+      "description": "A repeatable onboarding flow gets a new outlet or franchisee operational on day one instead of reinventing the setup each time."
+    },
+    {
+      "label": "Tighter stock control",
+      "description": "Knowing exact stock per location and moving it cleanly between branches cuts dead inventory and lost sales from stockouts."
+    },
+    {
+      "label": "Accountable franchisees",
+      "description": "Per-branch dashboards and automatic royalty figures make every location measurable on the same yardstick."
+    }
+  ],
+  "industries": [
+    "Retail chains & multi-store groups",
+    "Restaurant & café franchises",
+    "Clinics & medical center groups",
+    "Salons, spas & fitness chains",
+    "Automotive service & spare-parts branches",
+    "Logistics & distribution networks"
+  ],
+  "faqs": [
+    {
+      "question": "Can head office and individual branches see different things in the same system?",
+      "answer": "Yes. We scope each login to a branch or franchisee so managers only see their own outlet, while head office keeps the full cross-branch view. Permissions are role-based, so you decide exactly who can see sales, stock, costs, or reports at each location."
+    },
+    {
+      "question": "Will it work for both branches we own and independent franchisees?",
+      "answer": "It will. We model owned outlets and franchisees as different node types in the same hierarchy, so consolidated reporting still works while franchisees get limited, fee-tracked access. Royalty or franchise-fee fields are calculated from the same live numbers, not re-keyed by hand."
+    },
+    {
+      "question": "Can we move stock between branches and see who has what?",
+      "answer": "Yes. Inventory is tracked per location, and branches can raise transfer requests that go through approval and in-transit tracking before they land. Both branches keep a record, and low-stock alerts fire per location so nothing quietly runs dry."
+    },
+    {
+      "question": "Is the system available in Arabic as well as English?",
+      "answer": "Every interface we build is bilingual Arabic and English with full right-to-left support, so branch staff and head office can each work in their preferred language. Reports and documents can be generated in either language too."
+    },
+    {
+      "question": "Do we own the system, or are we locked into CloudTopia?",
+      "answer": "You fully own the code, the data, and the documentation, with no vendor lock-in. We start with a free consultation and a demo preview before any commitment, and the fastest way to reach us is on WhatsApp."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven, well-documented tools chosen so consolidated reporting stays fast and every branch stays in sync, code and data you fully own.",
+    "categories": [
+      {
+        "label": "Core platform",
+        "items": [
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Odoo", "icon": "https://cdn.simpleicons.org/odoo/714B67" },
+          { "name": "Django", "icon": "https://cdn.simpleicons.org/django/092E20" }
+        ]
+      },
+      {
+        "label": "Data & reporting",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "MySQL", "icon": "https://cdn.simpleicons.org/mysql/4479A1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Metabase", "icon": "https://cdn.simpleicons.org/metabase/509EE3" }
+        ]
+      },
+      {
+        "label": "Branch interfaces",
+        "items": [
+          { "name": "React", "icon": "https://cdn.simpleicons.org/react/61DAFB" },
+          { "name": "Next.js", "icon": "https://cdn.simpleicons.org/nextdotjs/000000" },
+          { "name": "Bilingual RTL UI" },
+          { "name": "Role-based access" }
+        ]
+      },
+      {
+        "label": "Sync & integrations",
+        "items": [
+          { "name": "REST APIs" },
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" }
+        ]
+      },
+      {
+        "label": "Hosting & operations",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "AWS", "icon": "https://cdn.simpleicons.org/amazonwebservices/FF9900" },
+          { "name": "Automated backups" }
+        ]
+      }
+    ]
+  }
+}

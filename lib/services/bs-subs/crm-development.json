@@ -1,0 +1,195 @@
+{
+  "slug": "crm-development",
+  "service": "CRM Development",
+  "pillarSlug": "custom-erp-crm-solutions",
+  "pillarName": "Custom ERP & CRM Solutions",
+  "seo": {
+    "title": "Custom CRM Development in Oman | CloudTopia",
+    "description": "Custom CRM development shaped around how your team really works — contacts, deals, follow-ups, and reports you fully own. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Custom ERP & CRM",
+    "title": "Custom CRM Development Built Around Your Business",
+    "subtitle": "We build a custom CRM shaped around how your team really works with customers — every contact, deal, and conversation in one place. You own the code, the data, and the documentation, with no monthly seat fees and no vendor lock-in.",
+    "chips": [
+      "Built around your workflow",
+      "Contacts & accounts",
+      "Deal & quote tracking",
+      "WhatsApp-connected",
+      "Bilingual AR + EN",
+      "Role-based access",
+      "You own the code",
+      "No vendor lock-in"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Contact & account model",
+      "description": "We design the data model your business actually needs — people, companies, and the relationships between them — instead of bending you to a fixed template.",
+      "features": [
+        "Custom fields for your industry",
+        "Company and contact hierarchies",
+        "Merge and duplicate handling",
+        "Full activity timeline per record"
+      ]
+    },
+    {
+      "name": "Deal & opportunity tracking",
+      "description": "Every enquiry becomes a tracked deal with the stages, values, and owners that match how you really sell.",
+      "features": [
+        "Stages built from your sales motion",
+        "Quote and product line items",
+        "Win and loss reasons captured",
+        "Per-owner and per-team views"
+      ]
+    },
+    {
+      "name": "Conversation & follow-up hub",
+      "description": "Calls, emails, and WhatsApp threads live on the customer record so anyone picking it up sees the full history.",
+      "features": [
+        "WhatsApp Business integration",
+        "Logged calls, emails, and notes",
+        "Automated follow-up reminders",
+        "Bilingual templated replies"
+      ]
+    },
+    {
+      "name": "Reports & dashboards",
+      "description": "Live dashboards built on your own database show pipeline, activity, and conversion without exporting to spreadsheets.",
+      "features": [
+        "Pipeline and revenue dashboards",
+        "Rep activity and response times",
+        "Conversion and source reports",
+        "Scheduled email summaries"
+      ]
+    },
+    {
+      "name": "Roles, access & audit",
+      "description": "Granular permissions control who sees and edits what, with a full trail of every change for accountability.",
+      "features": [
+        "Role-based field and record access",
+        "Branch and team data separation",
+        "Change history and audit log",
+        "Approval steps for sensitive actions"
+      ]
+    },
+    {
+      "name": "Migration, ownership & training",
+      "description": "We move your existing data in cleanly, hand over the full system, and train your team to run it without us.",
+      "features": [
+        "Data import from sheets or old CRM",
+        "Source code and documentation handover",
+        "Hands-on team training",
+        "Admin access with no lock-in"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "One source of truth",
+      "description": "Every customer, deal, and conversation lives in one system instead of scattered across phones, inboxes, and spreadsheets."
+    },
+    {
+      "label": "Nothing falls through",
+      "description": "Automated reminders and clear ownership mean follow-ups happen on time and no enquiry goes cold."
+    },
+    {
+      "label": "A CRM your team uses",
+      "description": "Because it is built around your real workflow, reps actually log in daily rather than working around it."
+    },
+    {
+      "label": "You own it outright",
+      "description": "The code, data, and documentation are yours — extend it, host it anywhere, and pay no per-seat licence."
+    }
+  ],
+  "industries": [
+    "Real estate & property",
+    "Trading & distribution",
+    "Professional services & consultancies",
+    "Clinics & medical centres",
+    "Construction & contracting",
+    "Travel & tourism agencies"
+  ],
+  "faqs": [
+    {
+      "question": "How is a custom CRM different from Salesforce or Zoho?",
+      "answer": "Off-the-shelf CRMs make you adapt your process to their structure and charge a recurring fee per user. We build the system around how your team already works, and you own the code and data outright with no per-seat licence. If a ready-made tool genuinely fits you better, we will say so before any commitment."
+    },
+    {
+      "question": "Can the CRM capture leads from WhatsApp and our website?",
+      "answer": "Yes. We connect your WhatsApp Business line and web forms so every enquiry becomes a CRM record automatically, with the source attached and the conversation logged on the contact. That removes manual copy-paste and the leads that get lost in a shared inbox."
+    },
+    {
+      "question": "Can you move our existing data into the new CRM?",
+      "answer": "We do this on most projects. We import contacts, deals, and history from spreadsheets or your current CRM, clean duplicates along the way, and map the old fields to your new structure. You see a demo preview with your real data before anything goes live."
+    },
+    {
+      "question": "Will it work in both Arabic and English?",
+      "answer": "Yes. The interface, templates, and notifications are fully bilingual and RTL-ready, so Arabic and English users each get a native experience. Customer-facing replies can go out in the language each contact prefers."
+    },
+    {
+      "question": "Do we really own the system after launch?",
+      "answer": "Completely. You receive the full source code, the database, and the documentation, plus administrator access. There is no lock-in — your team can host it, adjust it, and extend it independently of us."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven, well-documented tools we use to build a CRM your team can own, host, and extend after launch.",
+    "categories": [
+      {
+        "label": "Application",
+        "items": [
+          { "name": "Odoo CRM" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" },
+          { "name": "React", "icon": "https://cdn.simpleicons.org/react/61DAFB" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" }
+        ]
+      },
+      {
+        "label": "Database",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "MySQL", "icon": "https://cdn.simpleicons.org/mysql/4479A1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Custom data model" }
+        ]
+      },
+      {
+        "label": "Messaging & lead capture",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio" },
+          { "name": "Web forms" },
+          { "name": "Email-to-lead" }
+        ]
+      },
+      {
+        "label": "Automation",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" },
+          { "name": "Follow-up reminders" },
+          { "name": "Webhooks" }
+        ]
+      },
+      {
+        "label": "Reporting",
+        "items": [
+          { "name": "Metabase", "icon": "https://cdn.simpleicons.org/metabase/509EE3" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" },
+          { "name": "Live dashboards" },
+          { "name": "Scheduled summaries" }
+        ]
+      },
+      {
+        "label": "Security & hosting",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Role-based access" },
+          { "name": "Automated backups" }
+        ]
+      }
+    ]
+  }
+}

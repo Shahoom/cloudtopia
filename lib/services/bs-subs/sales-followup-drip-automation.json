@@ -1,0 +1,195 @@
+{
+  "slug": "sales-followup-drip-automation",
+  "service": "Sales Follow-Up Automation",
+  "pillarSlug": "business-process-automation",
+  "pillarName": "Business Process Automation (BPA)",
+  "seo": {
+    "title": "Sales Follow-Up & Drip Automation | CloudTopia",
+    "description": "CloudTopia builds custom sales follow-up and drip campaign automation chasing every lead on WhatsApp and email. Book a free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Process Automation",
+    "title": "Sales Follow-Up & Drip Campaign Automation",
+    "subtitle": "Stop losing deals to slow or forgotten follow-up. We build automation that chases every new lead on WhatsApp and email, nurtures the ones who go quiet, and hands your reps only the prospects ready to talk.",
+    "chips": [
+      "WhatsApp-first follow-up",
+      "Timed drip sequences",
+      "Lead scoring & routing",
+      "Bilingual AR + EN",
+      "CRM-connected",
+      "Reply detection",
+      "No-show recovery",
+      "You own it"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Instant lead-response automation",
+      "description": "Every new enquiry gets a reply within seconds, day or night, before a competitor gets there first.",
+      "features": [
+        "WhatsApp + email auto-reply",
+        "Triggers from web form, ads & DMs",
+        "Assigns the lead to a rep instantly",
+        "Logged straight into your CRM"
+      ]
+    },
+    {
+      "name": "Multi-step drip sequences",
+      "description": "We map and build the timed message cadences that nurture a lead from first contact to closed deal.",
+      "features": [
+        "Stage-based message flows",
+        "Delays, working-hours & day rules",
+        "Branching by reply or no-reply",
+        "Bilingual AR + EN, RTL-ready copy"
+      ]
+    },
+    {
+      "name": "Lead scoring & smart routing",
+      "description": "Score and segment leads by behaviour so hot prospects reach a human while the rest keep getting nurtured.",
+      "features": [
+        "Scoring by source & engagement",
+        "Hot-lead alerts to the right rep",
+        "Round-robin or territory routing",
+        "Quiet-lead recycling to a drip"
+      ]
+    },
+    {
+      "name": "Reply detection & auto-stop",
+      "description": "The moment a lead replies or books, the sequence pauses and a person takes over the conversation.",
+      "features": [
+        "Detects WhatsApp & email replies",
+        "Auto-pauses on human handoff",
+        "Stops on unsubscribe or opt-out",
+        "Resumes if the lead goes cold"
+      ]
+    },
+    {
+      "name": "Quote, no-show & re-engagement flows",
+      "description": "Automated nudges for sent quotes, missed appointments, and dormant prospects who once showed interest.",
+      "features": [
+        "Quote follow-up reminders",
+        "Appointment & no-show recovery",
+        "Win-back drips for old leads",
+        "Review & referral asks after a sale"
+      ]
+    },
+    {
+      "name": "Campaign dashboard & CRM sync",
+      "description": "One view of what every sequence is doing, wired two-way into the CRM your team already uses.",
+      "features": [
+        "Sent, opened, replied & booked metrics",
+        "Per-sequence conversion view",
+        "Two-way CRM contact sync",
+        "Automated daily summary to managers"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "No lead left cold",
+      "description": "Every enquiry is followed up on time, automatically, so deals stop slipping through the cracks."
+    },
+    {
+      "label": "Reps focus on closers",
+      "description": "Your team spends time only on leads warmed and qualified by the sequence, not chasing dead ends."
+    },
+    {
+      "label": "Faster response, more replies",
+      "description": "Second-by-second response times and consistent nudges lift reply and booking rates."
+    },
+    {
+      "label": "A revivable pipeline",
+      "description": "Dormant and lost leads keep getting nurtured, turning a stale list back into real conversations."
+    }
+  ],
+  "industries": [
+    "Real estate & brokerage",
+    "Car dealerships & rentals",
+    "Clinics & aesthetic centres",
+    "Education & training institutes",
+    "Travel & tourism agencies",
+    "Trading & wholesale suppliers"
+  ],
+  "faqs": [
+    {
+      "question": "Will the follow-up messages go through WhatsApp?",
+      "answer": "Yes. We build on the official WhatsApp Business API so your sequences send from a verified business number, not a personal one that risks being banned. Email, SMS, and other channels can run alongside it in the same flow."
+    },
+    {
+      "question": "What happens when a lead actually replies?",
+      "answer": "The automation detects the reply, instantly pauses that lead's sequence, and alerts the assigned rep so a real person takes over. Nobody gets a robotic message after they've already started a conversation, and the sequence can resume only if the lead goes quiet again."
+    },
+    {
+      "question": "Can it work with the CRM or tools we already use?",
+      "answer": "In most cases, yes. We connect to common CRMs and lead sources through their APIs, or we build a lightweight pipeline board for you if you don't have one. Either way the leads, replies, and outcomes all stay in sync."
+    },
+    {
+      "question": "Are the messages in Arabic and English?",
+      "answer": "Both. We write and structure bilingual, RTL-ready sequences and can branch the flow by a lead's language preference so each prospect gets messages that read naturally to them."
+    },
+    {
+      "question": "Do we own the automation once it's built?",
+      "answer": "Completely. You receive the workflows, the connected accounts, the message templates, and full documentation, with no vendor lock-in. Your team can run, edit, and extend the sequences on its own."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "Proven automation, messaging, and data tools wired into one follow-up engine you fully own.",
+    "categories": [
+      {
+        "label": "Automation engine",
+        "items": [
+          { "name": "n8n", "icon": "https://cdn.simpleicons.org/n8n/EA4B71" },
+          { "name": "Zapier", "icon": "https://cdn.simpleicons.org/zapier/FF4F00" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
+          { "name": "Python", "icon": "https://cdn.simpleicons.org/python/3776AB" }
+        ]
+      },
+      {
+        "label": "Messaging channels",
+        "items": [
+          { "name": "WhatsApp Business API", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "Twilio", "icon": "https://cdn.simpleicons.org/twilio/F22F46" },
+          { "name": "Email / SMTP" },
+          { "name": "Telegram", "icon": "https://cdn.simpleicons.org/telegram/26A5E4" }
+        ]
+      },
+      {
+        "label": "CRM & lead sources",
+        "items": [
+          { "name": "HubSpot", "icon": "https://cdn.simpleicons.org/hubspot/FF7A59" },
+          { "name": "Odoo CRM", "icon": "https://cdn.simpleicons.org/odoo/714B67" },
+          { "name": "Meta Lead Ads", "icon": "https://cdn.simpleicons.org/meta/0467DF" },
+          { "name": "Google Sheets", "icon": "https://cdn.simpleicons.org/googlesheets/34A853" }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Supabase", "icon": "https://cdn.simpleicons.org/supabase/3FCF8E" },
+          { "name": "Lead scoring rules" }
+        ]
+      },
+      {
+        "label": "AI & personalization",
+        "items": [
+          { "name": "OpenAI", "icon": "https://cdn.simpleicons.org/openai/412991" },
+          { "name": "Reply intent detection" },
+          { "name": "AR / EN copy variants" },
+          { "name": "Dynamic merge fields" }
+        ]
+      },
+      {
+        "label": "Hosting & delivery",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "NGINX", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "AWS", "icon": "https://cdn.simpleicons.org/amazonwebservices/FF9900" },
+          { "name": "Scheduled cron jobs" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "slug": "hr-payroll-management-portals",
+  "service": "HR & Payroll Portals",
+  "pillarSlug": "internal-enterprise-applications",
+  "pillarName": "Internal Enterprise Applications",
+  "seo": {
+    "title": "HR, Payroll & Document Vault Portals | CloudTopia",
+    "description": "Custom HR and payroll portals for GCC teams — WPS-ready pay runs, leave, and a secure document vault you fully own. Free consultation and demo preview."
+  },
+  "hero": {
+    "eyebrow": "Internal Apps",
+    "title": "HR Management, Payroll & Document Vault Portals",
+    "subtitle": "We build a single internal portal where your team runs payroll, approves leave, and stores every employee document securely — shaped around your policies, fully owned by you, with no per-seat licence to renew.",
+    "chips": [
+      "WPS-ready payroll",
+      "Self-service leave",
+      "Secure document vault",
+      "Expiry alerts",
+      "Role-based access",
+      "Bilingual AR + EN",
+      "Audit trail",
+      "Full ownership"
+    ]
+  },
+  "deliver": [
+    {
+      "name": "Employee self-service portal",
+      "description": "A bilingual portal where staff handle their own HR tasks instead of emailing the HR team.",
+      "features": [
+        "Personal profile & document access",
+        "Payslip download history",
+        "Leave & request submission",
+        "Arabic + English, RTL-ready"
+      ]
+    },
+    {
+      "name": "Payroll & WPS pay runs",
+      "description": "A payroll engine that calculates salaries to your rules and exports clean WPS files for the bank.",
+      "features": [
+        "Allowances, deductions & overtime",
+        "Gratuity & end-of-service calc",
+        "WPS / SIF bank-file export",
+        "Locked, auditable pay runs"
+      ]
+    },
+    {
+      "name": "Leave & attendance management",
+      "description": "Configurable leave types and approval chains tied directly into the payroll calculation.",
+      "features": [
+        "Annual, sick & unpaid leave rules",
+        "Multi-level approval routing",
+        "Balance accrual & carry-over",
+        "Attendance & timesheet capture"
+      ]
+    },
+    {
+      "name": "Secure document vault",
+      "description": "An encrypted store for every employee file with granular access and a full access log.",
+      "features": [
+        "Contracts, IDs & certificates",
+        "Per-document permissions",
+        "Version history",
+        "Tamper-evident audit log"
+      ]
+    },
+    {
+      "name": "Expiry & compliance alerts",
+      "description": "Automated reminders so visas, IDs, and contracts never lapse without warning.",
+      "features": [
+        "Passport & visa expiry tracking",
+        "Resident card & contract alerts",
+        "WhatsApp & email reminders",
+        "HR escalation dashboard"
+      ]
+    },
+    {
+      "name": "Roles, approvals & reporting",
+      "description": "Granular access control plus the HR and finance reports your managers actually need.",
+      "features": [
+        "Role-based permission matrix",
+        "Manager & finance dashboards",
+        "Headcount & cost reports",
+        "Export to Excel / PDF"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Faster, error-free payroll",
+      "description": "Pay runs are calculated and WPS-exported in minutes instead of wrestling with spreadsheets each month."
+    },
+    {
+      "label": "HR off email duty",
+      "description": "Self-service requests and document access free your HR team from repetitive lookups and approvals."
+    },
+    {
+      "label": "Always compliant",
+      "description": "Visa, ID, and contract expiries are flagged early, so nothing lapses and audits go smoothly."
+    },
+    {
+      "label": "You own it all",
+      "description": "The code, employee data, and documentation stay yours — no per-seat fees, no vendor lock-in."
+    }
+  ],
+  "industries": [
+    "Construction & contracting",
+    "Facilities & manpower services",
+    "Retail & hospitality groups",
+    "Healthcare & clinics",
+    "Logistics & transport",
+    "Oil, gas & field services"
+  ],
+  "faqs": [
+    {
+      "question": "Does the payroll support the WPS bank file for Oman and the GCC?",
+      "answer": "Yes. The payroll engine calculates salaries to your structure and exports the WPS / SIF file in the format your bank requires. We also handle gratuity and end-of-service calculations, and the layout can be adjusted as regulations change since you own the system."
+    },
+    {
+      "question": "How secure is the document vault?",
+      "answer": "Documents are encrypted at rest and access is controlled per file by role, so a line manager only sees their own team's records. Every view, upload, and download is logged in a tamper-evident audit trail, which makes internal and external audits straightforward."
+    },
+    {
+      "question": "Can staff use it in Arabic?",
+      "answer": "The entire portal is bilingual Arabic and English with full right-to-left support. Each employee can switch to their preferred language, and payslips and notifications follow that choice."
+    },
+    {
+      "question": "Will it remind us before visas and IDs expire?",
+      "answer": "Yes. The system tracks passport, visa, resident card, and contract expiry dates and sends automated WhatsApp and email reminders ahead of each deadline, with an HR dashboard that escalates anything approaching its expiry."
+    },
+    {
+      "question": "Do we own the system, or is there a per-employee licence?",
+      "answer": "You fully own the code, the database, and the documentation — there is no per-seat or per-employee licence to renew. Add unlimited staff without your costs changing, and your team can run and extend the portal independently."
+    }
+  ],
+  "techStack": {
+    "title": "The stack we build this on",
+    "subtitle": "A secure, maintainable foundation for sensitive HR and payroll data that your team fully owns.",
+    "categories": [
+      {
+        "label": "Application",
+        "items": [
+          { "name": "React", "icon": "https://cdn.simpleicons.org/react/61DAFB" },
+          { "name": "Next.js", "icon": "https://cdn.simpleicons.org/nextdotjs/000000" },
+          { "name": "TypeScript", "icon": "https://cdn.simpleicons.org/typescript/3178C6" },
+          { "name": "Node.js", "icon": "https://cdn.simpleicons.org/nodedotjs/5FA04E" }
+        ]
+      },
+      {
+        "label": "Data & storage",
+        "items": [
+          { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql/4169E1" },
+          { "name": "Redis", "icon": "https://cdn.simpleicons.org/redis/FF4438" },
+          { "name": "Encrypted document vault" },
+          { "name": "Automated backups" }
+        ]
+      },
+      {
+        "label": "Payroll & files",
+        "items": [
+          { "name": "WPS / SIF export" },
+          { "name": "End-of-service calc" },
+          { "name": "Excel exports" },
+          { "name": "PDF payslips" }
+        ]
+      },
+      {
+        "label": "Access & security",
+        "items": [
+          { "name": "Role-based access" },
+          { "name": "Audit logging" },
+          { "name": "Single sign-on" },
+          { "name": "Field encryption" }
+        ]
+      },
+      {
+        "label": "Notifications",
+        "items": [
+          { "name": "WhatsApp", "icon": "https://cdn.simpleicons.org/whatsapp/25D366" },
+          { "name": "SMS gateway" },
+          { "name": "Expiry reminders" },
+          { "name": "Email alerts" }
+        ]
+      },
+      {
+        "label": "Hosting & ops",
+        "items": [
+          { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker/2496ED" },
+          { "name": "Nginx", "icon": "https://cdn.simpleicons.org/nginx/009639" },
+          { "name": "Regional hosting" },
+          { "name": "GCC data residency" }
+        ]
+      }
+    ]
+  }
+}
