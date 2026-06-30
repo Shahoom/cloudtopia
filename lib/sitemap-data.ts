@@ -4,7 +4,23 @@ import path from 'path'
 import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
 import { serviceDetailSlugs } from '@/lib/seo/services'
+import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
+import { dpSubServiceSlugs } from '@/lib/services/digital-presence-content'
+import { businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
+
+// Every /services/<slug> page that actually renders after the catalog restructure:
+// the old flat catalog (serviceDetailSlugs) PLUS the new structured pillar pages
+// and the Digital Presence + Business Systems sub-service pages. Deduped so a slug
+// that appears in more than one source is emitted once.
+const allServiceDetailSlugs: string[] = Array.from(
+    new Set<string>([
+        ...serviceDetailSlugs,
+        ...structuredPillarRoutes.map((p) => p.slug),
+        ...dpSubServiceSlugs,
+        ...businessSystemsSubServiceSlugs,
+    ]),
+)
 import { hasPageOgImage } from '@/lib/og/og-image'
 import { BASE_URL, canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { locales } from '@/lib/i18n/config'
@@ -57,8 +73,8 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
         { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
         { path: '/contact', priority: 0.7, changeFrequency: 'yearly' },
-        { path: '/website-design', priority: 0.8, changeFrequency: 'monthly' },
-        { path: '/ecommerce-solutions', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/website-development', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/ecommerce-development', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/business-systems-development', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/restaurant-qr-menu', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/content-creation', priority: 0.8, changeFrequency: 'monthly' },
@@ -133,7 +149,7 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         })
     })
 
-    serviceDetailSlugs.forEach((service) => {
+    allServiceDetailSlugs.forEach((service) => {
         const languages = buildHreflangMap(`/services/${service}`)
         locales.forEach((loc) => {
             entries.push({
@@ -167,8 +183,8 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/trust', priority: 0.74, changeFrequency: 'monthly' },
         { path: '/about', priority: 0.7, changeFrequency: 'monthly', ogPage: 'about' },
         { path: '/contact', priority: 0.7, changeFrequency: 'yearly', ogPage: 'contact' },
-        { path: '/website-design', priority: 0.8, changeFrequency: 'monthly', ogPage: 'website-design' },
-        { path: '/ecommerce-solutions', priority: 0.8, changeFrequency: 'monthly', ogPage: 'ecommerce-solutions' },
+        { path: '/website-development', priority: 0.8, changeFrequency: 'monthly', ogPage: 'website-design' },
+        { path: '/ecommerce-development', priority: 0.8, changeFrequency: 'monthly', ogPage: 'ecommerce-solutions' },
         { path: '/business-systems-development', priority: 0.8, changeFrequency: 'monthly', ogPage: 'business-systems-development' },
         { path: '/restaurant-qr-menu', priority: 0.8, changeFrequency: 'monthly', ogPage: 'restaurant-qr-menu' },
         { path: '/content-creation', priority: 0.8, changeFrequency: 'monthly', ogPage: 'content-creation' },
@@ -184,8 +200,8 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         '/services': 'lib/i18n/translations/en.ts',
         '/pricing': 'lib/i18n/translations/en.ts',
         '/projects': 'lib/i18n/translations/en.ts',
-        '/website-design': 'lib/i18n/translations/en.ts',
-        '/ecommerce-solutions': 'lib/i18n/translations/en.ts',
+        '/website-development': 'lib/i18n/translations/en.ts',
+        '/ecommerce-development': 'lib/i18n/translations/en.ts',
         '/business-systems-development': 'lib/i18n/translations/en.ts',
         '/restaurant-qr-menu': 'lib/i18n/translations/en.ts',
         '/content-creation': 'lib/i18n/translations/en.ts',
@@ -319,7 +335,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         return new Date()
     })()
 
-    serviceDetailSlugs.forEach((service) => {
+    allServiceDetailSlugs.forEach((service) => {
         const languages = buildHreflangMap(`/services/${service}`)
         locales.forEach((loc) => {
             sitemapEntries.push({

@@ -86,7 +86,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Business Websites', ar: 'مواقع الشركات والأعمال' },
         description: { en: 'Custom corporate websites built for outstanding speed, premium look, and Google visibility.', ar: 'موقع تعريفي للشركة لتبسيط الخدمات، وإثبات الهوية والظهور المحلي.' },
-        link: '/website-design',
+        link: '/website-development',
         iconName: 'Globe'
       },
       {
@@ -104,7 +104,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'E-commerce Solutions', ar: 'المتاجر الإلكترونية' },
         description: { en: 'Modern online shops with secure payments, inventory managers, and WhatsApp notifications.', ar: 'متاجر مع دفع إلكتروني، إدارة منتجات، مخزون، طلبات، وربط واتساب.' },
-        link: '/ecommerce-solutions',
+        link: '/ecommerce-development',
         iconName: 'ShoppingBag'
       },
       {
@@ -305,7 +305,7 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Supply Chain Platforms', ar: 'أنظمة سلاسل الإمداد والخدمات' },
         description: { en: 'Track vendor shipments, logistics updates, warehouse routing, and lead times.', ar: 'أنظمة إدارة سلاسل الإمداد لتتبع شحنات الموردين، التحديثات اللوجستية، وتوجيه المستودعات.' },
-        link: '/services/supply-chain-management-systems',
+        link: '/services/business-management-systems',
         iconName: 'Database'
       }
     ]
@@ -440,19 +440,19 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Search Engine Optimization', ar: 'تحسين محركات البحث (SEO)' },
         description: { en: 'Technical audits, keyword planning, content writing, and local business indexing.', ar: 'تحسين محركات البحث (SEO)، تدقيق تقني، كلمات مفتاحية، وصياغة محتوى متوافق.' },
-        link: '/services/seo-optimization',
+        link: '/services/search-engine-optimization',
         iconName: 'Search'
       },
       {
         title: { en: 'Conversion Rate Optimization', ar: 'تحسين معدلات التحويل (CRO)' },
         description: { en: 'Analyze heatmaps, simplify checkouts, rewrite copy, and double lead conversion.', ar: 'تحسين معدل التحويل (CRO)، تحليل الخرائط الحرارية، وتبسيط خطوات الدفع والطلبات.' },
-        link: '/services/conversion-rate-optimization',
+        link: '/services/search-engine-optimization',
         iconName: 'TrendingUp'
       },
       {
         title: { en: 'Paid Ad Campaign Pages', ar: 'إعلانات مدفوعة وصفحات هبوط' },
         description: { en: 'Google Search, Meta, and LinkedIn campaign management paired with high-converting pages.', ar: 'إدارة إعلانات جوجل وفيسبوك ولينكد إن مع صفحات هبوط سريعة الاستجابة وعالية التحويل.' },
-        link: '/services/paid-ads-landing-pages',
+        link: '/services/paid-ads-and-lead-generation',
         iconName: 'AppWindow'
       },
       {
@@ -470,19 +470,19 @@ const TABS_DATA: TabData[] = [
       {
         title: { en: 'Lead Generation Engines', ar: 'أنظمة جذب العملاء المحتملين' },
         description: { en: 'Design calculators, audit tools, and gated content setups to capture business leads.', ar: 'أنظمة توليد عملاء محتملين تشمل حاسبات رقمية وأدوات تدقيق لجمع بيانات العملاء.' },
-        link: '/services/lead-generation-systems',
+        link: '/services/paid-ads-and-lead-generation',
         iconName: 'Users'
       },
       {
         title: { en: 'Analytics & GA4 Tracking', ar: 'التحليلات وتتبع GA4' },
         description: { en: 'Google Analytics 4 setup, GTM containers, custom conversion events, and reports.', ar: 'إعداد تحليلات جوجل (GA4)، مدير العلامات (GTM)، وتتبع أحداث التحويل المخصصة.' },
-        link: '/services/conversion-rate-optimization',
+        link: '/services/search-engine-optimization',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Brand Identity Systems', ar: 'تصميم وبناء الهوية البصرية' },
         description: { en: 'Premium custom logos, brand guidelines, presentation decks, and web visuals.', ar: 'تصميم الهوية البصرية، شعارات مخصصة، أدلة هوية، وعروض تقديمية وعناصر بصرية.' },
-        link: '/services/brand-identity',
+        link: '/services/ui-ux-design-branding',
         iconName: 'PenTool'
       }
     ]

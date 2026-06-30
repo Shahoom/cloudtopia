@@ -114,18 +114,11 @@ const serviceGroups: Record<string, Array<[string, string]>> = {
         ['app-store-launch-support', 'App Store Launch Support'],
         ['mobile-app-maintenance', 'Mobile App Maintenance'],
     ],
-    'business-systems-development': [
-        ['crm-development', 'CRM Development'],
-        ['inventory-management-systems', 'Inventory Management Systems'],
-        ['sales-management-systems', 'Sales Management Systems'],
-        ['order-management-systems', 'Order Management Systems'],
-        ['hr-management-systems', 'HR Management Systems'],
-        ['accounting-system-integration', 'Accounting System Integration'],
-        ['workflow-automation', 'Workflow Automation'],
-        ['business-process-automation', 'Business Process Automation'],
-        ['supply-chain-management-systems', 'Supply Chain Management Systems'],
-        ['custom-api-development', 'Custom API Development & Integration'],
-    ],
+    // Deduped into the restructured Business Systems catalog (new sub-service
+    // pages). The old slugs 301-redirect to their matching new sub-service in
+    // proxy.ts, so they're intentionally removed here — out of the sitemap and
+    // static params, with link equity preserved via the redirects.
+    'business-systems-development': [],
     'cloud-infrastructure': [
         ['cloud-hosting-setup', 'Cloud Hosting Setup'],
         ['cloud-migration', 'Cloud Migration'],
@@ -150,16 +143,10 @@ const serviceGroups: Record<string, Array<[string, string]>> = {
         ['machine-learning-model-development', 'Machine Learning Model Development'],
         ['natural-language-processing-solutions', 'Natural Language Processing Solutions'],
     ],
-    'digital-growth-support': [
-        ['social-media-management', 'Social Media Management'],
-        ['paid-ads-landing-pages', 'Paid Ads Landing Pages'],
-        ['brand-identity', 'Brand Identity'],
-        ['seo-optimization', 'SEO Optimization'],
-        ['content-systems', 'Content Systems'],
-        ['lead-generation-systems', 'Lead Generation Systems'],
-        ['conversion-rate-optimization', 'Conversion Rate Optimization'],
-        ['email-marketing-automation', 'Email Marketing Automation'],
-    ],
+    // 'digital-growth-support' was deleted — its offerings are duplicated by the
+    // new Digital Presence structure (Social → SMM, SEO → SEO pillar, Brand →
+    // UI/UX, Content → Content Marketing). Email Marketing + Paid Ads & Lead Gen
+    // moved into the SMM pillar's sub-services.
 }
 
 const arabicServiceNames: Record<string, string> = {
@@ -398,24 +385,91 @@ export const serviceDetailSlugs = Object.keys(servicesBySlug)
  * one page per intent (sitelink consolidation) instead of splitting it across
  * /services#anchor and the standalone.
  *
- * Categories with no standalone equivalent (cloud-infrastructure,
- * ai-powered-solutions) fall back to the /services hub anchor via
- * categoryFrontDoor() below. Note interactive-web-applications and
- * mobile-app-development deliberately share /web-applications (no mobile
+ * Categories with no dedicated standalone page (cloud-infrastructure,
+ * ai-powered-solutions) point at the /services hub itself — NOT a `/services#id`
+ * fragment, which no longer resolves to a section after the catalog restructure
+ * (those categories render as grouped pillar cards with their own ids, and a bare
+ * `#category` anchor 404s as a dead in-page target). Note interactive-web-applications
+ * and mobile-app-development deliberately share /web-applications (no mobile
  * standalone exists), which is fine — both reinforce the same canonical URL.
  */
 export const categoryStandaloneRoutes: Record<string, string> = {
-    'digital-presence': '/website-design',
+    'digital-presence': '/website-development',
     'interactive-web-applications': '/web-applications',
     'mobile-app-development': '/web-applications',
     'business-systems-development': '/business-systems-development',
-    'digital-growth-support': '/social-media-marketing',
+    'cloud-infrastructure': '/services',
+    'ai-powered-solutions': '/services',
 }
 
-/** Canonical front-door URL for a category: its standalone page, else the hub anchor. */
+/** Canonical front-door URL for a category: its standalone page, else the /services hub. */
 export function categoryFrontDoor(categorySlug: string): string {
-    return categoryStandaloneRoutes[categorySlug] || `/services#${categorySlug}`
+    return categoryStandaloneRoutes[categorySlug] || '/services'
 }
+
+export type FeaturedPage = {
+    title: LocalizedText
+    description: LocalizedText
+    href: string
+    icon: string
+}
+
+/**
+ * The hand-built, conversion-optimized "front door" pages. These polished standalone
+ * pages should LEAD the services experience (header mega-menu + /services hub), ahead
+ * of the long-tail catalog of generic /services/[slug] pages. Single source of truth so
+ * the menu and the listing surface the exact same featured set.
+ */
+export const featuredPages: FeaturedPage[] = [
+    {
+        title: t('Website Design', 'تصميم المواقع'),
+        description: t('Conversion-focused, bilingual business websites.', 'مواقع أعمال ثنائية اللغة تركّز على التحويل.'),
+        href: '/website-development',
+        icon: '/icons/services/Website Design & Development.png',
+    },
+    {
+        title: t('Web Applications', 'تطبيقات الويب'),
+        description: t('Portals, dashboards, and SaaS platforms.', 'بوابات ولوحات تحكم ومنصات SaaS.'),
+        href: '/web-applications',
+        icon: '/icons/services/webapps.png',
+    },
+    {
+        title: t('Business Systems', 'أنظمة الأعمال'),
+        description: t('CRM, ERP, and workflow automation.', 'أنظمة CRM وERP وأتمتة سير العمل.'),
+        href: '/business-systems-development',
+        icon: '/icons/services/systems.png',
+    },
+    {
+        title: t('E-commerce Solutions', 'حلول التجارة الإلكترونية'),
+        description: t('Online stores built to sell.', 'متاجر إلكترونية مبنية للبيع.'),
+        href: '/ecommerce-development',
+        icon: '/icons/services/E-commerce Solutions.png',
+    },
+    {
+        title: t('Mobile Apps', 'تطبيقات الجوال'),
+        description: t('iOS, Android, and cross-platform apps.', 'تطبيقات iOS وأندرويد ومتعددة المنصات.'),
+        href: '/services/mobile-app-development',
+        icon: '/icons/services/Mobile-Responsive Apps.png',
+    },
+    {
+        title: t('Social Media Marketing', 'التسويق عبر وسائل التواصل'),
+        description: t('Content, campaigns, and audience growth.', 'محتوى وحملات ونمو الجمهور.'),
+        href: '/social-media-marketing',
+        icon: '/icons/services/Social Media Management.png',
+    },
+    {
+        title: t('Restaurant QR Menu', 'قائمة QR للمطاعم'),
+        description: t('Digital menus for cafes and venues.', 'قوائم رقمية للمقاهي والمطاعم.'),
+        href: '/restaurant-qr-menu',
+        icon: '/icons/services/Restaurant QR Menu Systems.png',
+    },
+    {
+        title: t('Content Creation', 'إنشاء المحتوى'),
+        description: t('Visuals, copy, and brand assets.', 'محتوى مرئي ونصوص وأصول للعلامة.'),
+        href: '/content-creation',
+        icon: '/icons/services/Professional Content Creation.png',
+    },
+]
 
 export function getService(slug: string): ServiceDetail | null {
     return servicesBySlug[slug] || null
