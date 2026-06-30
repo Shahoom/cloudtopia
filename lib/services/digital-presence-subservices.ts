@@ -64,70 +64,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
-  "brand-guidelines-and-brand-book-creation": {
-    "slug": "brand-guidelines-and-brand-book-creation",
-    "service": "Brand Guidelines & Brand Book Creation",
-    "pillarSlug": "ui-ux-design-branding",
-    "pillarName": "UI/UX Design & Branding",
-    "seo": {
-      "title": "Brand Guidelines & Brand Book Creation | CloudTopia",
-      "description": "Brand guidelines and a brand book that keep your logo, colors, type, and voice consistent across teams and vendors. Free consultation, editable files you own."
-    },
-    "hero": {
-      "badge": "Brand Guidelines",
-      "title1": "Brand guidelines that keep",
-      "title2": "your brand consistent everywhere",
-      "subtitle": "We turn your logo, colors, typography, and tone into a clear brand book your whole team and any vendor can follow — in Arabic and English, with the editable source files handed over for you to own."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "One rulebook that stops your brand drifting",
-      "stat": {
-        "value": "AR + EN",
-        "title": "Bilingual brand rules"
-      },
-      "items": [
-        {
-          "title": "Logo rules anyone can follow",
-          "description": "We document every approved logo lockup, clear space, minimum sizes, correct backgrounds, and the misuses to avoid, so the mark stays sharp whether a printer, agency, or new hire uses it."
-        },
-        {
-          "title": "Defined color and type systems",
-          "description": "Your palette is fixed with exact HEX, RGB, CMYK, and Pantone values, paired with a clear type scale and Arabic and Latin font rules, so screens and print always look like the same brand."
-        },
-        {
-          "title": "Voice, tone, and bilingual usage",
-          "description": "We set how the brand sounds and writes in both Arabic and English — naming, capitalization, and RTL layout rules included — so copy stays on-brand across every channel and language."
-        },
-        {
-          "title": "A handover pack you actually own",
-          "description": "You get the brand book plus an organized asset library of logo files, fonts, and templates, in editable source format with no lock-in, ready to share with any team or supplier."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What's the difference between brand guidelines and a brand book?",
-        "answer": "Brand guidelines are the core rules — how the logo, colors, typography, and spacing are used correctly. A brand book is the fuller document that wraps those rules together with your brand story, voice, tone, and real application examples. We can deliver a concise one-page set of guidelines or a complete brand book, depending on how widely your brand needs to be governed."
-      },
-      {
-        "question": "Do I need a logo or brand strategy before this?",
-        "answer": "It helps to have your logo and core direction settled first, because guidelines codify decisions rather than make them. If your visual identity already exists, we document it into a usable system; if pieces are missing or inconsistent, we will flag that in the free consultation and can handle the logo or brand strategy as a separate step before writing the book."
-      },
-      {
-        "question": "Can the brand book cover both Arabic and English properly?",
-        "answer": "Yes, and this is where many generic guidelines fall short. We define paired Arabic and Latin typefaces, right-to-left layout rules, bilingual logo lockups, and naming conventions so the brand reads correctly in both scripts. Your team gets clear rules for designing in Arabic and English rather than forcing one to imitate the other."
-      },
-      {
-        "question": "What files do I receive, and can I edit them later?",
-        "answer": "You receive the brand book as a polished PDF plus the editable source file, alongside an organized asset library of logo formats, fonts, and color values. Everything is fully yours with no lock-in, so your team or any future designer can update and extend the guidelines as the brand grows."
-      },
-      {
-        "question": "How does the project start, and is there any commitment upfront?",
-        "answer": "We begin with a free consultation to review your existing assets and where your brand is being applied inconsistently. From there we prepare a written scope and share a preview of the brand book layout before you commit, so you can see the direction and structure with no obligation to proceed. The easiest way to start is a quick message on WhatsApp."
-      }
-    ]
-  },
   "brand-strategy-and-positioning": {
     "slug": "brand-strategy-and-positioning",
     "service": "Brand Strategy & Positioning",
@@ -253,66 +189,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       {
         "question": "How does the project start, and is there any commitment upfront?",
         "answer": "We begin with a free consultation to map your services and goals, then prepare a written scope. You also see a demo preview of the design before you commit, so there are no surprises and no obligation to proceed until you're confident."
-      }
-    ]
-  },
-  "cart-abandonment-recovery-systems": {
-    "slug": "cart-abandonment-recovery-systems",
-    "service": "Cart Abandonment Recovery Systems",
-    "pillarSlug": "ecommerce-development",
-    "pillarName": "E-Commerce Development",
-    "seo": {
-      "title": "Cart Abandonment Recovery in Oman | CloudTopia",
-      "description": "Recover lost sales with automated cart-abandonment flows over email, SMS, and WhatsApp. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "Cart Recovery",
-      "title1": "Win back carts",
-      "title2": "customers left behind",
-      "subtitle": "Automatically follow up on abandoned carts over email, SMS, and WhatsApp — recovering sales you would otherwise lose."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Turn abandoned carts into orders",
-      "stat": {
-        "value": "Automated",
-        "title": "Recovery"
-      },
-      "items": [
-        {
-          "title": "Multi-channel follow-up",
-          "description": "Email, SMS, and WhatsApp reminders timed to convert."
-        },
-        {
-          "title": "Smart incentives",
-          "description": "Optional, rules-based nudges that protect your margin."
-        },
-        {
-          "title": "Measured recovery",
-          "description": "Track exactly how much revenue the flows bring back."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "How does cart recovery work?",
-        "answer": "When a shopper leaves items behind, automated, well-timed reminders go out over email, SMS, or WhatsApp — often with a gentle incentive — to bring them back to check out."
-      },
-      {
-        "question": "Which channels work best here?",
-        "answer": "In the GCC, WhatsApp and SMS recovery often outperform email — we set up all three and let the data show what converts for you."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
       }
     ]
   },
@@ -872,6 +748,70 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
+  "email-marketing-automation": {
+    "slug": "email-marketing-automation",
+    "service": "Email Marketing Automation",
+    "pillarSlug": "social-media-management",
+    "pillarName": "Social Media Management (SMM)",
+    "seo": {
+      "title": "Email Marketing Automation | CloudTopia",
+      "description": "Automated email flows, newsletters, and lifecycle campaigns for businesses in Oman and the GCC — bilingual, segmented, and built on a platform you own. Book a free consultation and preview."
+    },
+    "hero": {
+      "badge": "Email Marketing Automation",
+      "title1": "Email that works",
+      "title2": "while you focus on the business",
+      "subtitle": "Automated welcome flows, lifecycle campaigns, and newsletters set up end to end — segmented, bilingual, and connected to your tools, so the right message reaches the right person without you sending it by hand."
+    },
+    "features": {
+      "eyebrow": "Why CloudTopia",
+      "heading": "Lifecycle email that runs on its own",
+      "stat": {
+        "value": "AR + EN",
+        "title": "Bilingual campaigns"
+      },
+      "items": [
+        {
+          "title": "Automated flows, not manual sends",
+          "description": "Welcome series, post-purchase follow-ups, re-engagement, and abandoned-form reminders are set up to trigger on their own, so subscribers get timely emails without your team in the loop every time."
+        },
+        {
+          "title": "Segmentation that fits your audience",
+          "description": "We structure your list by behavior, interest, and lifecycle stage, so messages stay relevant — and we keep your sending list clean to protect deliverability."
+        },
+        {
+          "title": "Bilingual, on-brand templates",
+          "description": "Reusable email templates designed in your brand style with native Arabic right-to-left and English layouts, ready for your team to reuse for every send."
+        },
+        {
+          "title": "Set up on a platform you own",
+          "description": "We build inside your own email platform and hand over the account, automations, and templates with documentation — so the program is yours to run and extend, with no lock-in."
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "question": "What is email marketing automation, exactly?",
+        "answer": "It's setting up emails that send themselves based on triggers and timing rather than being written and sent one by one. A new subscriber automatically receives a welcome series; a customer gets a follow-up after a purchase; an inactive contact receives a re-engagement message. You define the logic once, and the right email goes out at the right moment, every time, without manual effort."
+      },
+      {
+        "question": "Which email platform do you use?",
+        "answer": "We work with established email platforms such as Mailchimp, Brevo, and similar tools, and we'll recommend the best fit for your goals, list size, and budget. Everything is built inside an account you own and control, so you're never locked into us to keep your emails running."
+      },
+      {
+        "question": "Can you write and design the emails, or just set up the automation?",
+        "answer": "Both. We handle the strategy and the technical automation as well as the copy and on-brand template design. If your team prefers to write the content, we can set up the flows and templates for you to populate. We'll scope whichever split works best for you."
+      },
+      {
+        "question": "Do you handle Arabic and English emails?",
+        "answer": "Yes. We design and build bilingual campaigns with native Arabic right-to-left and English layouts, and can segment your audience by language so each contact receives emails in the language they prefer rather than a mixed message."
+      },
+      {
+        "question": "How does the project start, and is there any commitment upfront?",
+        "answer": "We begin with a free consultation to understand your audience, goals, and existing tools, then prepare a written scope. You also see a preview of the template direction before you commit, so there's no obligation to proceed until you're confident in the plan."
+      }
+    ]
+  },
   "email-newsletter-copywriting": {
     "slug": "email-newsletter-copywriting",
     "service": "Email Newsletter Copywriting",
@@ -1109,130 +1049,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       {
         "question": "Can you match our existing brand?",
         "answer": "Yes — we design to your brand guidelines, or help define them if you do not have any yet."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
-      }
-    ]
-  },
-  "headless-cms-implementation": {
-    "slug": "headless-cms-implementation",
-    "service": "Headless CMS Implementation",
-    "pillarSlug": "website-development",
-    "pillarName": "Website Development",
-    "seo": {
-      "title": "Headless CMS Implementation | CloudTopia",
-      "description": "Headless CMS implementation that decouples your content from a fast front end, with bilingual AR + EN editing you own outright. Free consultation and preview."
-    },
-    "hero": {
-      "badge": "Website Development",
-      "title1": "A headless CMS your team can edit and",
-      "title2": "a front end that loads instantly",
-      "subtitle": "We separate your content from your code so editors update pages through a clean admin while visitors get a fast, statically rendered site. You own the CMS, the database, and the repository outright."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Content your team controls, served by a front end built for speed and search",
-      "stat": {
-        "value": "100%",
-        "title": "Yours to own"
-      },
-      "items": [
-        {
-          "title": "Content models built around your pages",
-          "description": "We design collections, fields, and reusable blocks that mirror how your business actually publishes, so editors fill in structured forms instead of fighting a rigid page builder."
-        },
-        {
-          "title": "A decoupled, fast front end",
-          "description": "Your site is built with Next.js or Astro and pulls content over an API, rendering pages statically or on demand so they load quickly and stay easy for search engines to crawl."
-        },
-        {
-          "title": "Bilingual Arabic and English editing",
-          "description": "Every content type supports AR and EN side by side with correct right-to-left rendering, so your team manages both languages from one entry without duplicating the whole site."
-        },
-        {
-          "title": "Editor preview and safe publishing",
-          "description": "Authors see a live preview of changes before they go live, with draft and published states and roles, so the right people review content without touching code or risking the build."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Which headless CMS do you use?",
-        "answer": "We match the platform to your needs rather than forcing one tool. We commonly build on Payload, Sanity, Strapi, or Contentful, and we will recommend the right fit during the free consultation based on your team size, content volume, and whether you prefer a self-hosted or managed setup."
-      },
-      {
-        "question": "What is the advantage of going headless instead of WordPress?",
-        "answer": "A headless setup separates your content from the website that displays it, so the front end can be a fast, modern framework while editors still get a friendly admin. That usually means better performance, cleaner content structure, and the freedom to reuse the same content across a website, app, or kiosk later."
-      },
-      {
-        "question": "Can my non-technical team update content without a developer?",
-        "answer": "Yes, that is the whole point. We design the admin around plain forms and reusable blocks, add live preview, and set up roles so your team writes, edits, and publishes day to day on their own. We provide a walkthrough and documentation so editing feels routine, not technical."
-      },
-      {
-        "question": "Do you handle both Arabic and English content?",
-        "answer": "Yes. We build every content type to hold Arabic and English together, with proper right-to-left layout on the front end and language switching for visitors. Your editors manage both languages from a single entry, so the two versions stay in sync."
-      },
-      {
-        "question": "Do I own the CMS and the code after the project?",
-        "answer": "Completely. You receive the full source repository, the CMS instance, the database, and all the accounts and keys in your own name. There is no lock-in to CloudTopia, so your team or any developer can host, run, and extend the system independently."
-      }
-    ]
-  },
-  "headless-e-commerce-development": {
-    "slug": "headless-e-commerce-development",
-    "service": "Headless E-Commerce Development",
-    "pillarSlug": "ecommerce-development",
-    "pillarName": "E-Commerce Development",
-    "seo": {
-      "title": "Headless E-Commerce Development | CloudTopia",
-      "description": "Headless commerce — a lightning-fast custom storefront on a flexible commerce backend, fully owned by you. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "Headless Commerce",
-      "title1": "Headless stores that",
-      "title2": "load almost instantly",
-      "subtitle": "Decouple your storefront from the backend for blazing speed, total design freedom, and the flexibility to sell anywhere."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Speed and freedom, decoupled",
-      "stat": {
-        "value": "Fast",
-        "title": "API-first"
-      },
-      "items": [
-        {
-          "title": "Blazing performance",
-          "description": "A custom front end (Next.js) with near-instant page loads."
-        },
-        {
-          "title": "Total design freedom",
-          "description": "Build any experience without theme or platform limits."
-        },
-        {
-          "title": "Sell everywhere",
-          "description": "One commerce API powering web, app, and other channels."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What is headless commerce?",
-        "answer": "It separates the storefront (what shoppers see) from the commerce engine, connected via APIs — giving you a faster, fully custom front end and more flexibility."
-      },
-      {
-        "question": "Which backends do you use?",
-        "answer": "Shopify, commercetools, Medusa, or a custom backend — chosen to fit your scale and budget, with a Next.js storefront on top."
       },
       {
         "question": "Do you deliver in Arabic and English?",
@@ -2124,70 +1940,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
-  "multilingual-and-rtl-website-development": {
-    "slug": "multilingual-and-rtl-website-development",
-    "service": "Multilingual & RTL Website Development",
-    "pillarSlug": "website-development",
-    "pillarName": "Website Development",
-    "seo": {
-      "title": "Multilingual & RTL Website Development | CloudTopia",
-      "description": "Arabic-English websites built for real RTL — mirrored layouts, smooth language switching, and multilingual SEO. Free consultation and preview before you commit."
-    },
-    "hero": {
-      "badge": "Multilingual & RTL",
-      "title1": "Arabic and English websites",
-      "title2": "with true RTL, native in both languages",
-      "subtitle": "We build genuinely bilingual sites where the Arabic version is mirrored, typeset, and SEO-ready — not a flipped afterthought. One codebase, two first-class experiences, owned entirely by you."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "RTL done properly, not bolted on at the end",
-      "stat": {
-        "value": "AR + EN",
-        "title": "Native in both"
-      },
-      "items": [
-        {
-          "title": "True RTL mirroring",
-          "description": "The Arabic layout flips direction the right way — navigation, icons, forms, and spacing all mirror cleanly instead of breaking against a left-to-right design."
-        },
-        {
-          "title": "Frictionless language switching",
-          "description": "A clear AR/EN toggle keeps visitors on the same page in their language, with each version on its own clean URL so it can be shared and bookmarked."
-        },
-        {
-          "title": "Arabic typography that reads well",
-          "description": "We choose and tune Arabic webfonts for proper line height, letterforms, and weight, so Arabic copy looks deliberate and reads comfortably, not cramped."
-        },
-        {
-          "title": "Multilingual SEO built in",
-          "description": "Correct hreflang tags, localized metadata, and per-language sitemaps tell Google to serve Arabic searchers the Arabic page and English searchers the English one."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Is this just running my site through Google Translate?",
-        "answer": "No. We build a real bilingual structure where each language has its own properly written, editable content and its own URL. You can use professional Arabic copy or your own team's wording, and the Arabic side is engineered as a first-class version, not an auto-translated copy."
-      },
-      {
-        "question": "What does RTL actually mean for my Arabic pages?",
-        "answer": "Right-to-left means the entire Arabic layout mirrors — text aligns right, navigation and buttons flip, and icons and spacing follow Arabic reading order. We design and test the RTL version directly so it feels native, rather than reversing an English layout and hoping it holds together."
-      },
-      {
-        "question": "Will having two languages hurt my SEO or create duplicate content?",
-        "answer": "Done correctly it helps, not hurts. We add hreflang tags, language-specific metadata, and separate sitemaps so search engines understand the two versions are intentional and rank each for the right audience. That lets you show up for both Arabic and English searches in Oman and the wider GCC."
-      },
-      {
-        "question": "Can I add more languages later, or update content myself?",
-        "answer": "Yes. We build on a structure that lets you edit both languages from one place and add further languages later without rebuilding the site. Because you fully own the code and the CMS, your team can manage translations and content independently of us."
-      },
-      {
-        "question": "Can you convert my existing English-only site to bilingual?",
-        "answer": "In most cases, yes. We review your current site, plan the Arabic and RTL layer, and add language switching and multilingual SEO around your existing content. You will see a working preview of the bilingual version before anything goes live, and there is no commitment until you are happy with it."
-      }
-    ]
-  },
   "near-me-search-optimization": {
     "slug": "near-me-search-optimization",
     "service": "Near Me Search Optimization",
@@ -2380,6 +2132,70 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
+  "paid-ads-and-lead-generation": {
+    "slug": "paid-ads-and-lead-generation",
+    "service": "Paid Ads & Lead Generation",
+    "pillarSlug": "social-media-management",
+    "pillarName": "Social Media Management (SMM)",
+    "seo": {
+      "title": "Paid Ads & Lead Generation | CloudTopia",
+      "description": "Paid advertising and lead generation on Google, Meta, and LinkedIn for businesses in Oman and the GCC — bilingual campaigns, tracked conversions, and accounts you own. Book a free consultation."
+    },
+    "hero": {
+      "badge": "Paid Ads & Lead Generation",
+      "title1": "Paid campaigns built to bring you",
+      "title2": "qualified leads, not just clicks",
+      "subtitle": "Strategy, creative, and management for paid advertising across Google, Meta, and LinkedIn — bilingual campaigns with proper conversion tracking, run inside ad accounts you own and can keep."
+    },
+    "features": {
+      "eyebrow": "Why CloudTopia",
+      "heading": "Ad spend aimed at leads, with the tracking to prove it",
+      "stat": {
+        "value": "AR + EN",
+        "title": "Bilingual ads"
+      },
+      "items": [
+        {
+          "title": "Campaigns built around leads",
+          "description": "We design paid search and paid social campaigns to drive qualified enquiries and form submissions — targeting, offers, and landing flows shaped around the customers you actually want."
+        },
+        {
+          "title": "Conversion tracking done properly",
+          "description": "We set up tracking so you can see which campaigns generate leads and what each one costs — clear reporting instead of guesswork about where the budget went."
+        },
+        {
+          "title": "Bilingual creative and targeting",
+          "description": "Ad copy and creative produced in native Arabic and English, with audiences and locations set for your market, so each segment sees a message written for them."
+        },
+        {
+          "title": "Accounts you own and keep",
+          "description": "Campaigns are built inside your own Google, Meta, and LinkedIn ad accounts. You retain full ownership, billing control, and your performance history — no lock-in, ever."
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "question": "Which platforms do you run paid ads on?",
+        "answer": "We focus on the channels that fit your audience and goals — typically Google Ads for search and display, Meta (Facebook and Instagram) for social, and LinkedIn for B2B. We'll recommend the right mix based on where your customers are and what you're trying to achieve, rather than spreading budget thin across every platform."
+      },
+      {
+        "question": "Is the ad budget included in your fee?",
+        "answer": "No. Our fee covers strategy, creative, setup, and ongoing management; the advertising budget is separate and paid directly to the platforms through your own ad accounts. That keeps your spend transparent — you always see exactly what goes to ads versus management."
+      },
+      {
+        "question": "How do I know the campaigns are actually generating leads?",
+        "answer": "We implement conversion tracking from the start, so leads and form submissions are measured against each campaign. You receive clear reporting that ties spend to results, including cost per lead, so you can judge performance on outcomes rather than vanity metrics like impressions alone."
+      },
+      {
+        "question": "Do you create the ads in both Arabic and English?",
+        "answer": "Yes. We produce bilingual ad copy and creative with native Arabic and English versions, and structure targeting and audiences for your market, so each language segment sees ads written for them rather than a single translated message."
+      },
+      {
+        "question": "Do we own the ad accounts and data?",
+        "answer": "Completely. We build and run campaigns inside ad accounts that belong to you, so you keep full ownership, billing control, and all of your historical performance data. If you ever move on, your accounts, audiences, and learnings stay with you. We start with a free consultation, with no obligation to proceed."
+      }
+    ]
+  },
   "payment-gateway-integration": {
     "slug": "payment-gateway-integration",
     "service": "Payment Gateway Integration",
@@ -2489,126 +2305,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       {
         "question": "Will inventory stay accurate?",
         "answer": "Yes — stock syncs in real time so you avoid overselling and keep one source of truth across channels."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
-      }
-    ]
-  },
-  "press-release-writing-and-distribution": {
-    "slug": "press-release-writing-and-distribution",
-    "service": "Press Release (PR) Writing & Distribution",
-    "pillarSlug": "content-marketing-authority",
-    "pillarName": "Content Marketing & Authority",
-    "seo": {
-      "title": "Press Release Writing & Distribution | CloudTopia",
-      "description": "We write professional press releases and distribute them to the right outlets to earn coverage and authority. Free consultation."
-    },
-    "hero": {
-      "badge": "Press Releases",
-      "title1": "PR that",
-      "title2": "earns real coverage",
-      "subtitle": "Newsworthy, professionally written press releases — and distribution to the outlets that matter — so your announcements get seen and build authority."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Announcements that get picked up",
-      "stat": {
-        "value": "EN + AR",
-        "title": "Bilingual PR"
-      },
-      "items": [
-        {
-          "title": "Newsworthy angles",
-          "description": "We shape your news into a story journalists actually want."
-        },
-        {
-          "title": "Press-standard writing",
-          "description": "Proper structure, quotes, and boilerplate ready to publish."
-        },
-        {
-          "title": "Targeted distribution",
-          "description": "Sent to relevant outlets and wires for maximum pickup."
-        },
-        {
-          "title": "You own everything",
-          "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Can you guarantee coverage?",
-        "answer": "No one can honestly guarantee editorial coverage. We maximize your odds with strong, newsworthy writing and targeted distribution to the right outlets."
-      },
-      {
-        "question": "Do you write in Arabic for regional media?",
-        "answer": "Yes — we produce bilingual releases tailored for both Arabic and English outlets across the GCC."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
-      }
-    ]
-  },
-  "product-information-management-setup": {
-    "slug": "product-information-management-setup",
-    "service": "Product Information Management (PIM) Setup",
-    "pillarSlug": "ecommerce-development",
-    "pillarName": "E-Commerce Development",
-    "seo": {
-      "title": "Product Information Management (PIM) | CloudTopia",
-      "description": "Centralize product data with a PIM so listings stay accurate and consistent across every channel. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "PIM",
-      "title1": "One source for",
-      "title2": "all your product data",
-      "subtitle": "Manage every product detail, image, and translation in one PIM and push consistent, accurate listings to every store and channel."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Clean product data, everywhere you sell",
-      "stat": {
-        "value": "Centralized",
-        "title": "Product data"
-      },
-      "items": [
-        {
-          "title": "Single source of truth",
-          "description": "All product attributes, media, and copy in one managed place."
-        },
-        {
-          "title": "Channel-ready",
-          "description": "Push consistent listings to web, marketplaces, and more."
-        },
-        {
-          "title": "Bilingual catalogs",
-          "description": "Manage Arabic + English product content cleanly."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What problem does a PIM solve?",
-        "answer": "It ends scattered, inconsistent product data — you manage every attribute, image, and translation once and publish accurate listings everywhere."
-      },
-      {
-        "question": "Can it feed multiple sales channels?",
-        "answer": "Yes — a PIM pushes consistent product data to your store, marketplaces, and other channels, so nothing is out of date."
       },
       {
         "question": "Do you deliver in Arabic and English?",
@@ -2872,66 +2568,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
-  "shipping-and-fulfillment-automation-setup": {
-    "slug": "shipping-and-fulfillment-automation-setup",
-    "service": "Shipping & Fulfillment Automation Setup",
-    "pillarSlug": "ecommerce-development",
-    "pillarName": "E-Commerce Development",
-    "seo": {
-      "title": "Shipping & Fulfillment Automation | CloudTopia",
-      "description": "Automate shipping rates, labels, tracking, and fulfillment so orders ship faster with fewer errors. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "Shipping & Fulfillment",
-      "title1": "Fulfillment that",
-      "title2": "runs on autopilot",
-      "subtitle": "Connect carriers and automate rates, labels, tracking, and updates — so orders ship faster with fewer manual steps and errors."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Ship faster, with fewer mistakes",
-      "stat": {
-        "value": "Automated",
-        "title": "Carriers"
-      },
-      "items": [
-        {
-          "title": "Live rates & labels",
-          "description": "Real-time carrier rates at checkout and one-click label printing."
-        },
-        {
-          "title": "Tracking & updates",
-          "description": "Automated tracking and proactive status emails to customers."
-        },
-        {
-          "title": "Carrier integration",
-          "description": "Connect local and global couriers into one workflow."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Which couriers do you integrate?",
-        "answer": "Local GCC couriers and global carriers (Aramex, DHL, etc.) plus aggregators — chosen for your regions and volumes."
-      },
-      {
-        "question": "Does it update customers automatically?",
-        "answer": "Yes — customers get automated tracking and status updates, which cuts \"where is my order\" support tickets."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
-      }
-    ]
-  },
   "shopify-store-development": {
     "slug": "shopify-store-development",
     "service": "Shopify Store Development",
@@ -3112,66 +2748,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
-  "social-media-contest-and-giveaway-management": {
-    "slug": "social-media-contest-and-giveaway-management",
-    "service": "Social Media Contest & Giveaway Management",
-    "pillarSlug": "social-media-management",
-    "pillarName": "Social Media Management (SMM)",
-    "seo": {
-      "title": "Social Contest & Giveaway Management | CloudTopia",
-      "description": "We plan and run contests and giveaways that grow followers and engagement — the right way. Free consultation."
-    },
-    "hero": {
-      "badge": "Contests",
-      "title1": "Giveaways that",
-      "title2": "grow real followers",
-      "subtitle": "Well-run contests and giveaways — mechanics, rules, promotion, and winner selection — designed to grow engaged followers, not just freebie-hunters."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Grow your audience, the right way",
-      "stat": {
-        "value": "Engagement",
-        "title": "Growth"
-      },
-      "items": [
-        {
-          "title": "Smart mechanics",
-          "description": "Entry rules designed to attract real, relevant followers."
-        },
-        {
-          "title": "Full management",
-          "description": "Setup, promotion, moderation, and fair winner selection."
-        },
-        {
-          "title": "Compliant & fair",
-          "description": "Clear terms that meet platform rules and build trust."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Do giveaways actually help?",
-        "answer": "Done right — with mechanics that attract your target audience, not just prize-hunters — they boost reach, followers, and engagement meaningfully."
-      },
-      {
-        "question": "Do you handle winner selection and rules?",
-        "answer": "Yes — we set clear, compliant terms, moderate entries, and select winners fairly and transparently."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
-      }
-    ]
-  },
   "social-media-copywriting": {
     "slug": "social-media-copywriting",
     "service": "Social Media Copywriting",
@@ -3293,66 +2869,6 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       {
         "question": "How do we get started, and do we see anything before committing?",
         "answer": "We begin with a free consultation to look at your current accounts, brand and the platforms you care about. You then see a preview of the design direction before any commitment, so you know exactly what the kit will look like. WhatsApp is the fastest way to reach us, and everything we deliver — files and assets — is fully yours to own."
-      }
-    ]
-  },
-  "social-media-profile-setup": {
-    "slug": "social-media-profile-setup",
-    "service": "Social Media Profile Setup",
-    "pillarSlug": "social-media-management",
-    "pillarName": "Social Media Management (SMM)",
-    "seo": {
-      "title": "Social Media Profile Setup | CloudTopia",
-      "description": "Professional, fully optimized social profiles that look credible and convert visitors into followers. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "Profile Setup",
-      "title1": "Profiles that",
-      "title2": "look credible instantly",
-      "subtitle": "Set up and optimize your social profiles end to end — branding, bios, links, and highlights — so you look professional from the first visit."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "First impressions that build trust",
-      "stat": {
-        "value": "Optimized",
-        "title": "Branded"
-      },
-      "items": [
-        {
-          "title": "Complete branding",
-          "description": "Consistent visuals, bios, and handles across every platform."
-        },
-        {
-          "title": "Optimized for discovery",
-          "description": "Keywords, links, and CTAs that turn visitors into followers."
-        },
-        {
-          "title": "Conversion-ready",
-          "description": "Link-in-bio, highlights, and contact options set up right."
-        },
-        {
-          "title": "You own everything",
-          "description": "The store/accounts, code, data, and documentation stay with you — no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Which platforms do you set up?",
-        "answer": "Instagram, TikTok, LinkedIn, Facebook, X, YouTube, and others — whichever fit your audience and strategy."
-      },
-      {
-        "question": "Do you design the visuals too?",
-        "answer": "Yes — profile and cover images, highlight covers, and a consistent look across every channel."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, and configurations. There is no lock-in to CloudTopia."
       }
     ]
   },
@@ -3480,319 +2996,67 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
       }
     ]
   },
-  "third-party-api-integration": {
-    "slug": "third-party-api-integration",
-    "service": "Third-Party API Integration",
-    "pillarSlug": "website-development",
-    "pillarName": "Website Development",
-    "seo": {
-      "title": "Third-Party API Integration in Oman | CloudTopia",
-      "description": "Third-party API integration links your website to booking, payments, CRM and maps so data moves itself. Free consultation and a live preview before you commit."
-    },
-    "hero": {
-      "badge": "API Integration",
-      "title1": "Third-party API integration",
-      "title2": "that wires your tools into one flow",
-      "subtitle": "We connect your website to the booking, payment, CRM, maps, and messaging services you already use — so data moves on its own and your team stops copying it by hand. You own every key and every connection."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Your site, talking cleanly to the tools behind it",
-      "stat": {
-        "value": "100%",
-        "title": "Keys and connections stay yours"
-      },
-      "items": [
-        {
-          "title": "Connected to what you actually use",
-          "description": "We wire your website into booking calendars, payment gateways, CRMs, maps, email, and WhatsApp, so every enquiry, order, and booking lands in the right place automatically — no manual re-entry."
-        },
-        {
-          "title": "Built to survive real-world APIs",
-          "description": "Each integration gets retries, timeouts, clear error handling, and a fallback, so a slow or down third-party service never breaks your page or silently loses a customer's submission."
-        },
-        {
-          "title": "Your own accounts and credentials",
-          "description": "We connect through your accounts and API keys, document each one, and hand them over in full — nothing is tied to us, and you can rotate, revoke, or move any connection whenever you want."
-        },
-        {
-          "title": "Fast pages, even with live data",
-          "description": "We call external services server-side and cache responses sensibly, so pulling live availability, prices, or listings never drags down load times or exposes your keys to the browser."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "Which third-party services can you connect my website to?",
-        "answer": "Common ones include Stripe and local payment gateways, booking and scheduling tools like Calendly, CRMs such as HubSpot or Zoho, Google Maps and Places, Mailchimp and similar email platforms, and WhatsApp. If a service offers an API or webhook, we can almost always connect it — tell us your tools in the free consultation and we'll confirm what's possible."
-      },
-      {
-        "question": "What happens if one of the connected services goes down or changes its API?",
-        "answer": "We build every integration to fail gracefully, so a third-party outage shows a friendly message or falls back rather than breaking your site or losing a customer's form. We also keep the integration code clean and documented, so when a provider updates its API it's a quick, contained fix rather than a rebuild."
-      },
-      {
-        "question": "Do I need to share my passwords or accounts with you?",
-        "answer": "No passwords. Integrations run on API keys and secure tokens generated inside your own accounts, which keeps you in full control. We set them up with you, store them safely server-side, and document each one so your team can rotate or revoke access at any time. You own every credential when we hand over."
-      },
-      {
-        "question": "Will adding these integrations slow my website down?",
-        "answer": "It shouldn't. We make external calls on the server and cache results where it's sensible, so live data like availability or pricing loads fast and your API keys never reach the browser. Keeping the site quick and secure is part of how we build the integration, not an afterthought."
-      },
-      {
-        "question": "Can I see it working before I commit?",
-        "answer": "Yes. We start with a free consultation to map out exactly which tools you want connected and how the data should flow, then show you a working preview of the integration before you commit to anything. Everything is delivered in both Arabic and English, and the easiest way to start is a quick message on WhatsApp."
-      }
-    ]
-  },
-  "ui-design": {
-    "slug": "ui-design",
-    "service": "UI (User Interface) Design",
+  "ui-ux-design-and-testing": {
+    "slug": "ui-ux-design-and-testing",
+    "service": "UI/UX Design & Testing",
     "pillarSlug": "ui-ux-design-branding",
     "pillarName": "UI/UX Design & Branding",
     "seo": {
-      "title": "UI Design Services | CloudTopia",
-      "description": "Pixel-precise UI design for websites and apps in Arabic and English, delivered as a reusable design system and dev-ready files you own. Free consultation first."
+      "title": "UI/UX Design & Testing | CloudTopia",
+      "description": "Interface design, UX wireframing, and usability testing for websites and apps in Oman and the GCC — research-led, bilingual, and validated with real users. Book a free consultation and preview."
     },
     "hero": {
-      "badge": "UI Design",
-      "title1": "UI design that turns your screens",
-      "title2": "into interfaces people instantly trust",
-      "subtitle": "We design the actual screens your customers tap and click — every layout, button, state, and spacing decision — in Arabic and English, delivered as a clean design system and dev-ready files you fully own. See a preview before you commit."
+      "badge": "UI/UX Design & Testing",
+      "title1": "Interfaces designed around people,",
+      "title2": "then tested with real users",
+      "subtitle": "End-to-end UX and UI for your website or app — from user research and wireflows to polished interface design, validated through usability testing before a single line of production code is written."
     },
     "features": {
       "eyebrow": "Why CloudTopia",
-      "heading": "Polished, consistent screens backed by a system your team can reuse",
+      "heading": "Design decisions grounded in evidence, not opinion",
       "stat": {
         "value": "AR + EN",
-        "title": "Bilingual, RTL-ready"
+        "title": "Bilingual UX"
       },
       "items": [
         {
-          "title": "A reusable design system, not loose mockups",
-          "description": "We build a library of consistent components, colours, typography, and spacing tokens so every new screen matches the last one without guesswork."
+          "title": "UX research and wireflows first",
+          "description": "We map user journeys, information architecture, and wireflows before any visuals, so the structure is right and stakeholders agree on flow before we design a single screen."
         },
         {
-          "title": "Every state designed, not just the happy path",
-          "description": "Buttons, forms, and pages get hover, active, empty, loading, and error states designed up front, so the build has no missing screens to improvise."
+          "title": "Interface design that feels effortless",
+          "description": "High-fidelity UI built on a consistent component system — clear hierarchy, accessible contrast, and interaction states defined for every element your users touch."
         },
         {
-          "title": "Arabic and English laid out properly",
-          "description": "Interfaces are designed for both languages with true right-to-left mirroring, so the Arabic screens feel native rather than a flipped English layout."
+          "title": "Usability testing and audits",
+          "description": "We run moderated usability sessions and heuristic audits on prototypes or your live product, then turn the friction we observe into a prioritized list of fixes."
         },
         {
-          "title": "Dev-ready files, fully handed over",
-          "description": "Developers receive organised Figma files with specs, exportable assets, and the full source — yours to keep, edit, and reuse with no lock-in."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What's the difference between UI design and UX design?",
-        "answer": "UX design decides how the product is structured and how people move through it — the flows, wireframes, and logic. UI design is the visible layer on top: the exact colours, typography, spacing, icons, and component styling of each screen. We offer both, and they work best together, but UI design specifically delivers the polished, final look your customers actually see."
-      },
-      {
-        "question": "Do you design the screens, or do you build the working website or app too?",
-        "answer": "UI design delivers the visual design of every screen as files developers can build from. Many clients pair it with our website or app development so the same team designs and builds, but you're free to take the design files to your own developers. Either way the handover includes everything needed to build it faithfully."
-      },
-      {
-        "question": "Will the design work on mobile and in both Arabic and English?",
-        "answer": "Yes. We design responsive screens for mobile, tablet, and desktop rather than one fixed size, so the interface holds up on real devices. Each screen is designed in both Arabic and English with proper right-to-left layouts, so the Arabic version reads naturally instead of looking like a mirrored afterthought."
-      },
-      {
-        "question": "Do we own the design files, and can we edit them later?",
-        "answer": "Completely. You receive the full Figma source files, exported assets, and the design system at handover with no lock-in. Your team or any other designer can open, edit, and extend everything later without coming back to us for access."
-      },
-      {
-        "question": "Can we see the design direction before committing?",
-        "answer": "Yes. Start with a free consultation over WhatsApp, where we review your product and goals. Before you commit, we prepare a preview of the visual direction on a real screen — in Arabic and English — so you can judge the look and feel on something concrete rather than a description."
-      }
-    ]
-  },
-  "ux-audits-and-usability-testing": {
-    "slug": "ux-audits-and-usability-testing",
-    "service": "UX Audits & Usability Testing",
-    "pillarSlug": "ui-ux-design-branding",
-    "pillarName": "UI/UX Design & Branding",
-    "seo": {
-      "title": "UX Audits & Usability Testing | CloudTopia",
-      "description": "Find out exactly where users get stuck, confused, or drop off — with a UX audit and real usability testing you fully own. Book a free consultation first."
-    },
-    "hero": {
-      "badge": "UX Audits",
-      "title1": "UX audits that show you",
-      "title2": "exactly where users drop off",
-      "subtitle": "We pinpoint why people hesitate, get confused, or abandon a flow on your website or app — then hand you a prioritized fix list backed by real user sessions. Every finding, recording, and recommendation is yours to keep."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Clear answers about what's broken and what to fix first",
-      "stat": {
-        "value": "AR + EN",
-        "title": "Tested in both"
-      },
-      "items": [
-        {
-          "title": "Expert heuristic review",
-          "description": "We evaluate your key screens and flows against established usability principles, flagging friction in navigation, forms, layout, and copy — each issue rated by how badly it hurts the experience."
-        },
-        {
-          "title": "Testing with real users",
-          "description": "We recruit people who match your actual audience and watch them attempt real tasks, recording where they stall, misread, or give up so you see the problem instead of guessing at it."
-        },
-        {
-          "title": "A prioritized fix list",
-          "description": "You get findings ranked by impact and effort — not a vague slide deck — so your team knows which quick wins to ship this week and which deeper changes to plan for."
-        },
-        {
-          "title": "Audited in Arabic and English",
-          "description": "We test both language versions, including right-to-left layouts, so issues that only surface for your Arabic users get caught rather than slipping through an English-only review."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What's the difference between a UX audit and usability testing?",
-        "answer": "A UX audit is an expert review where we inspect your screens and flows against proven usability principles to catch problems quickly. Usability testing puts real people in front of your product and records them attempting actual tasks, which reveals issues experts can miss. We usually combine both so you get fast expert insight backed by evidence of how people genuinely behave."
-      },
-      {
-        "question": "Does my website or app need to be finished before you can test it?",
-        "answer": "No. We can audit a live product, a staging build, or even a clickable design prototype before development, which is often the cheapest time to catch problems. We will recommend the right approach for your stage during the free consultation."
-      },
-      {
-        "question": "What exactly do we receive at the end?",
-        "answer": "You get a clear report of every issue we found, each one rated by severity and matched to a specific screen or step, plus concrete recommendations on how to fix it. Where we run live sessions, you also keep the recordings and a summary of what users struggled with. Everything is yours to keep and act on, with or without us."
-      },
-      {
-        "question": "Can you test with users who actually match our audience?",
-        "answer": "Yes. We recruit testers who reflect your real customers rather than random participants, including Arabic and English speakers in the GCC where relevant. Watching the right people use your product is what makes the findings trustworthy and worth acting on."
-      },
-      {
-        "question": "Do you only point out problems, or can you fix them too?",
-        "answer": "We can do both. The audit hands you a clear, prioritized list you are free to fix in-house, and if you'd like, our UI/UX team can redesign and implement the changes for you. We start with a free consultation, walk you through the findings, and you can reach us on WhatsApp at any point."
-      }
-    ]
-  },
-  "ux-design-and-wireframing": {
-    "slug": "ux-design-and-wireframing",
-    "service": "UX (User Experience) Design & Wireframing",
-    "pillarSlug": "ui-ux-design-branding",
-    "pillarName": "UI/UX Design & Branding",
-    "seo": {
-      "title": "UX Design & Wireframing in Oman | CloudTopia",
-      "description": "UX design and wireframing that maps real user journeys and proves your layout on clickable wireframes you own — before any pixel. Free consultation and preview."
-    },
-    "hero": {
-      "badge": "UX & Wireframing",
-      "title1": "UX design and wireframes that",
-      "title2": "settle the structure before a pixel is drawn",
-      "subtitle": "We map your users' real journeys and turn them into clickable wireframes you can test and approve early — so the layout, flow, and content are right before any visual design or code begins. Every flow, wireframe, and source file is handed over for you to keep."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Decide the layout and flow on cheap wireframes, not expensive rebuilds",
-      "stat": {
-        "value": "AR + EN",
-        "title": "Flows & files yours to own"
-      },
-      "items": [
-        {
-          "title": "Real user flows, mapped first",
-          "description": "We chart how each type of user moves toward their goal — sign up, book, buy, find an answer — and design the screens and steps around those paths instead of guessing at a sitemap."
-        },
-        {
-          "title": "Clickable wireframes you can test early",
-          "description": "Low and mid-fidelity wireframes become an interactive prototype you click through and approve, so confusing steps and dead ends get caught before any visual design or development starts."
-        },
-        {
-          "title": "Information architecture that makes sense",
-          "description": "We organize pages, navigation, and content into a structure people can scan and follow, with labels and groupings drawn from how your customers actually think, not internal jargon."
-        },
-        {
-          "title": "Bilingual flows, including right-to-left",
-          "description": "Wireframes account for Arabic and English from the start, so layouts, navigation, and reading direction work properly in RTL rather than being bolted on after the design is locked."
+          "title": "Bilingual and RTL by design",
+          "description": "Layouts, typography, and components are designed for both Arabic right-to-left and English left-to-right, so neither language is an afterthought bolted on at the end."
         }
       ]
     },
     "faqs": [
       {
         "question": "What's the difference between UX design and UI design?",
-        "answer": "UX design and wireframing decide how the product is structured and how people move through it — the flows, screens, and content order — usually as grey-box wireframes and a clickable prototype. UI design then adds the visual layer: colour, typography, imagery, and polish on top of that approved structure. We handle both, but doing UX first means the expensive visual and build work starts on a layout that's already been tested."
+        "answer": "UX design is about how the product works — user research, journeys, information architecture, and wireflows that decide what goes where and why. UI design is how it looks and feels — the visual layer of colors, typography, spacing, and interaction states on top of that structure. We handle both as one connected process, so the experience is sound before it's styled."
       },
       {
-        "question": "Why wireframe instead of jumping straight to the design?",
-        "answer": "A wireframe is fast and cheap to change, while a finished design or a coded page is not. By agreeing the layout, flow, and content on wireframes first, you catch missing steps and confusing journeys when they cost minutes to fix, not a rebuild. It also means everyone is reviewing the structure without getting distracted by colours and fonts too early."
+        "question": "Do you test designs with real users, or just hand over screens?",
+        "answer": "We test. Beyond delivering designs, we run usability sessions on interactive prototypes and conduct heuristic audits against established UX principles. Watching real people use the interface surfaces confusion early, while it's still cheap to fix in design rather than expensive to fix in code."
       },
       {
-        "question": "Will I be able to click through the wireframes before approving?",
-        "answer": "Yes. We link the wireframes into an interactive prototype you can open in your browser and click through, screen by screen, on desktop and mobile. You get a free consultation up front and this preview before committing, so you experience the flow yourself rather than judging it from static images."
+        "question": "Can you audit our existing website or app instead of designing from scratch?",
+        "answer": "Yes. A usability audit is one of our most common starting points. We review your live product against UX best practices, optionally test it with users, and deliver a clear report of issues ranked by impact and effort — so you know exactly what to fix first."
       },
       {
-        "question": "Do you do user research, or just draw screens?",
-        "answer": "We start by understanding your real users and their goals — through your input, existing data, and quick usability checks where useful — and the wireframes follow from that. This is design and architecture work, not a usability audit of an existing product; if you mainly need an audit of something already live, we offer that separately and will point you to it."
+        "question": "Do you design for both Arabic and English with RTL support?",
+        "answer": "Yes. We design native bilingual experiences with full right-to-left support for Arabic and left-to-right for English. Layout, alignment, iconography, and typography are considered for both directions from the start, not retrofitted, so each audience gets an interface that reads naturally."
       },
       {
-        "question": "What do I receive at the end, and do I own it?",
-        "answer": "You receive the user flows, the wireframes, and the interactive prototype, along with the editable source files in the design tool. It's all yours to keep, hand to any developer, or take to another studio with no lock-in. The same wireframes become the blueprint if you continue with us for UI design and build."
-      }
-    ]
-  },
-  "video-scriptwriting": {
-    "slug": "video-scriptwriting",
-    "service": "Video Scriptwriting",
-    "pillarSlug": "content-marketing-authority",
-    "pillarName": "Content Marketing & Authority",
-    "seo": {
-      "title": "Video Scriptwriting | CloudTopia",
-      "description": "We write video scripts for ads, explainers, and social that hook viewers fast and drive action. Free consultation & demo."
-    },
-    "hero": {
-      "badge": "Video Scripts",
-      "title1": "Scripts that",
-      "title2": "hook viewers in seconds",
-      "subtitle": "Tight, structured scripts for explainers, ads, and social video — built to grab attention in the first seconds and carry viewers to a clear action."
-    },
-    "features": {
-      "eyebrow": "Why CloudTopia",
-      "heading": "Words that make video work",
-      "stat": {
-        "value": "EN + AR",
-        "title": "Bilingual scripts"
-      },
-      "items": [
-        {
-          "title": "Strong hooks",
-          "description": "Openers engineered to stop the scroll and hold attention."
-        },
-        {
-          "title": "Format-aware",
-          "description": "Scripts shaped for Reels, TikTok, YouTube, or explainer length."
-        },
-        {
-          "title": "Action-driven",
-          "description": "Every script ends with one clear, persuasive call to action."
-        },
-        {
-          "title": "You own everything",
-          "description": "Code, data, accounts, and documentation stay with you — no lock-in to CloudTopia."
-        }
-      ]
-    },
-    "faqs": [
-      {
-        "question": "What types of video do you script?",
-        "answer": "Explainers, product and ad videos, social shorts (Reels/TikTok/Shorts), and brand films — each structured for its platform."
-      },
-      {
-        "question": "Do you provide shot or scene direction?",
-        "answer": "Yes — scripts can include scene, visual, and tone notes so production runs smoothly."
-      },
-      {
-        "question": "Do you deliver in Arabic and English?",
-        "answer": "Yes — bilingual Arabic + English with full RTL support, so both audiences get a first-class experience."
-      },
-      {
-        "question": "Do we own the result?",
-        "answer": "Completely. You keep the accounts, data, configurations, and documentation. There is no lock-in to CloudTopia."
+        "question": "What do we receive at the end, and do we own it?",
+        "answer": "You receive the complete design files, an organized component library, prototypes, and the usability findings, and you own all of it outright with no lock-in. We begin with a free consultation and a demo preview of the direction before you commit, so you can see our approach with no obligation."
       }
     ]
   },

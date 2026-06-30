@@ -1,0 +1,64 @@
+{
+  "slug": "ui-ux-design-and-testing",
+  "service": "UI/UX Design & Testing",
+  "pillarSlug": "ui-ux-design-branding",
+  "pillarName": "UI/UX Design & Branding",
+  "seo": {
+    "title": "UI/UX Design & Testing | CloudTopia",
+    "description": "Interface design, UX wireframing, and usability testing for websites and apps in Oman and the GCC — research-led, bilingual, and validated with real users. Book a free consultation and preview."
+  },
+  "hero": {
+    "badge": "UI/UX Design & Testing",
+    "title1": "Interfaces designed around people,",
+    "title2": "then tested with real users",
+    "subtitle": "End-to-end UX and UI for your website or app — from user research and wireflows to polished interface design, validated through usability testing before a single line of production code is written."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Design decisions grounded in evidence, not opinion",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual UX"
+    },
+    "items": [
+      {
+        "title": "UX research and wireflows first",
+        "description": "We map user journeys, information architecture, and wireflows before any visuals, so the structure is right and stakeholders agree on flow before we design a single screen."
+      },
+      {
+        "title": "Interface design that feels effortless",
+        "description": "High-fidelity UI built on a consistent component system — clear hierarchy, accessible contrast, and interaction states defined for every element your users touch."
+      },
+      {
+        "title": "Usability testing and audits",
+        "description": "We run moderated usability sessions and heuristic audits on prototypes or your live product, then turn the friction we observe into a prioritized list of fixes."
+      },
+      {
+        "title": "Bilingual and RTL by design",
+        "description": "Layouts, typography, and components are designed for both Arabic right-to-left and English left-to-right, so neither language is an afterthought bolted on at the end."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What's the difference between UX design and UI design?",
+      "answer": "UX design is about how the product works — user research, journeys, information architecture, and wireflows that decide what goes where and why. UI design is how it looks and feels — the visual layer of colors, typography, spacing, and interaction states on top of that structure. We handle both as one connected process, so the experience is sound before it's styled."
+    },
+    {
+      "question": "Do you test designs with real users, or just hand over screens?",
+      "answer": "We test. Beyond delivering designs, we run usability sessions on interactive prototypes and conduct heuristic audits against established UX principles. Watching real people use the interface surfaces confusion early, while it's still cheap to fix in design rather than expensive to fix in code."
+    },
+    {
+      "question": "Can you audit our existing website or app instead of designing from scratch?",
+      "answer": "Yes. A usability audit is one of our most common starting points. We review your live product against UX best practices, optionally test it with users, and deliver a clear report of issues ranked by impact and effort — so you know exactly what to fix first."
+    },
+    {
+      "question": "Do you design for both Arabic and English with RTL support?",
+      "answer": "Yes. We design native bilingual experiences with full right-to-left support for Arabic and left-to-right for English. Layout, alignment, iconography, and typography are considered for both directions from the start, not retrofitted, so each audience gets an interface that reads naturally."
+    },
+    {
+      "question": "What do we receive at the end, and do we own it?",
+      "answer": "You receive the complete design files, an organized component library, prototypes, and the usability findings, and you own all of it outright with no lock-in. We begin with a free consultation and a demo preview of the direction before you commit, so you can see our approach with no obligation."
+    }
+  ]
+}

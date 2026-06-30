@@ -1,0 +1,64 @@
+{
+  "slug": "paid-ads-and-lead-generation",
+  "service": "Paid Ads & Lead Generation",
+  "pillarSlug": "social-media-management",
+  "pillarName": "Social Media Management (SMM)",
+  "seo": {
+    "title": "Paid Ads & Lead Generation | CloudTopia",
+    "description": "Paid advertising and lead generation on Google, Meta, and LinkedIn for businesses in Oman and the GCC — bilingual campaigns, tracked conversions, and accounts you own. Book a free consultation."
+  },
+  "hero": {
+    "badge": "Paid Ads & Lead Generation",
+    "title1": "Paid campaigns built to bring you",
+    "title2": "qualified leads, not just clicks",
+    "subtitle": "Strategy, creative, and management for paid advertising across Google, Meta, and LinkedIn — bilingual campaigns with proper conversion tracking, run inside ad accounts you own and can keep."
+  },
+  "features": {
+    "eyebrow": "Why CloudTopia",
+    "heading": "Ad spend aimed at leads, with the tracking to prove it",
+    "stat": {
+      "value": "AR + EN",
+      "title": "Bilingual ads"
+    },
+    "items": [
+      {
+        "title": "Campaigns built around leads",
+        "description": "We design paid search and paid social campaigns to drive qualified enquiries and form submissions — targeting, offers, and landing flows shaped around the customers you actually want."
+      },
+      {
+        "title": "Conversion tracking done properly",
+        "description": "We set up tracking so you can see which campaigns generate leads and what each one costs — clear reporting instead of guesswork about where the budget went."
+      },
+      {
+        "title": "Bilingual creative and targeting",
+        "description": "Ad copy and creative produced in native Arabic and English, with audiences and locations set for your market, so each segment sees a message written for them."
+      },
+      {
+        "title": "Accounts you own and keep",
+        "description": "Campaigns are built inside your own Google, Meta, and LinkedIn ad accounts. You retain full ownership, billing control, and your performance history — no lock-in, ever."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Which platforms do you run paid ads on?",
+      "answer": "We focus on the channels that fit your audience and goals — typically Google Ads for search and display, Meta (Facebook and Instagram) for social, and LinkedIn for B2B. We'll recommend the right mix based on where your customers are and what you're trying to achieve, rather than spreading budget thin across every platform."
+    },
+    {
+      "question": "Is the ad budget included in your fee?",
+      "answer": "No. Our fee covers strategy, creative, setup, and ongoing management; the advertising budget is separate and paid directly to the platforms through your own ad accounts. That keeps your spend transparent — you always see exactly what goes to ads versus management."
+    },
+    {
+      "question": "How do I know the campaigns are actually generating leads?",
+      "answer": "We implement conversion tracking from the start, so leads and form submissions are measured against each campaign. You receive clear reporting that ties spend to results, including cost per lead, so you can judge performance on outcomes rather than vanity metrics like impressions alone."
+    },
+    {
+      "question": "Do you create the ads in both Arabic and English?",
+      "answer": "Yes. We produce bilingual ad copy and creative with native Arabic and English versions, and structure targeting and audiences for your market, so each language segment sees ads written for them rather than a single translated message."
+    },
+    {
+      "question": "Do we own the ad accounts and data?",
+      "answer": "Completely. We build and run campaigns inside ad accounts that belong to you, so you keep full ownership, billing control, and all of your historical performance data. If you ever move on, your accounts, audiences, and learnings stay with you. We start with a free consultation, with no obligation to proceed."
+    }
+  ]
+}
