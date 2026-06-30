@@ -1,60 +1,77 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowUpRight, CheckCircle2, Layers } from 'lucide-react'
-import { localePath } from '@/lib/i18n/url'
-import { getServiceCategory, localizedServiceOutcomes, localizedServiceValue } from '@/lib/seo/services'
+import { Layers } from 'lucide-react'
+import { getStructuredGroups, getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
+import { getDigitalPresenceSubServicesByPillar } from '@/lib/services/digital-presence-content'
+import { getBusinessSystemsSubServicesByPillar } from '@/lib/services/business-systems-content'
+import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
+import { SubServiceGlowCard } from './SubServiceGlowCard'
 import { cn } from '@/lib/utils'
 
-const mainServiceCategoryMap: Record<string, string[]> = {
-  'website-design': ['digital-presence'],
-  'ecommerce-solutions': ['digital-presence', 'digital-growth-support'],
-  'business-systems-development': ['business-systems-development'],
-  'web-applications': ['interactive-web-applications'],
-  'content-creation': ['digital-growth-support'],
-  'social-media-marketing': ['digital-growth-support'],
-  'restaurant-qr-menu': ['digital-presence', 'interactive-web-applications'],
-}
+/**
+ * The single "Detailed services" section for every main service page. It renders
+ * the page's OWN sub-services as flowing glow cards, data-driven from the new
+ * group → pillar → sub-service taxonomy — so the cards are always relevant to the
+ * page (no stale catalog content) and there is exactly ONE sub-services section
+ * per page (no duplicate grid).
+ *
+ *   • pillarSlug  → one pillar's sub-services (e.g. /website-development).
+ *   • categoryId  → every pillar in a category, grouped by pillar
+ *                   (e.g. /business-systems-development, /web-applications).
+ */
+type SubCard = { name: string; desc?: string; href: string }
 
-const serviceIcons: Record<string, string> = {
-  'digital-presence': '/icons/services/Website Design & Development.png',
-  'interactive-web-applications': '/icons/services/webapps.png',
-  'business-systems-development': '/icons/services/systems.png',
-  'cloud-infrastructure': '/icons/services/systems.png',
-  'ai-powered-solutions': '/icons/services/Real-time Chat System.png',
-  'digital-growth-support': '/icons/services/Analytics Dashboard.png',
+function pillarSubCards(pillar: DPPillar, locale: string): SubCard[] {
+  const bs = getBusinessSystemsSubServicesByPillar(pillar.slug, locale)
+  const tailored = bs.length > 0 ? bs : getDigitalPresenceSubServicesByPillar(pillar.slug, locale)
+  if (tailored.length > 0) {
+    return tailored.map((s) => ({ name: s.name, desc: s.desc as string | undefined, href: `/services/${s.slug}` }))
+  }
+  // Pillars whose sub-services have no own page yet → name cards link to the pillar.
+  return pillar.subServices.map((n) => ({ name: n, desc: undefined, href: pillar.href }))
 }
 
 type DetailedServicesSectionProps = {
-  mainService: keyof typeof mainServiceCategoryMap
+  /** Single-pillar main pages (website-development, ecommerce-development, …). */
+  pillarSlug?: string
+  /** Multi-pillar category pages (business-systems-development, interactive-web-applications). */
+  categoryId?: string
   locale: string
   className?: string
 }
 
 export default function DetailedServicesSection({
-  mainService,
+  pillarSlug,
+  categoryId,
   locale,
   className,
 }: DetailedServicesSectionProps) {
   const isRTL = locale === 'ar'
-  const categorySlugs = mainServiceCategoryMap[mainService] || []
-  const categories = categorySlugs.map(getServiceCategory).filter(Boolean)
-  const services = categories.flatMap((category) => category?.services || [])
-  if (services.length === 0) return null
+
+  const pillars: DPPillar[] = pillarSlug
+    ? ([getStructuredPillarBySlug(pillarSlug)].filter(Boolean) as DPPillar[])
+    : categoryId
+      ? (getStructuredGroups(categoryId) ?? []).flatMap((g) => g.pillars)
+      : []
+
+  const visiblePillars = pillars
+    .map((pillar) => ({ pillar, subs: pillarSubCards(pillar, locale) }))
+    .filter((p) => p.subs.length > 0)
+
+  if (visiblePillars.length === 0) return null
+
+  const grouped = visiblePillars.length > 1
 
   const copy = isRTL
     ? {
         eyebrow: 'الخدمات التفصيلية',
-        title: 'اختر المسار الأدق داخل هذه الخدمة',
-        body: 'هذه البطاقات تربط الخدمة الرئيسية بالحلول المتخصصة الجديدة، حتى تصل مباشرة إلى النطاق المناسب دون تغيير تصميم صفحة الخدمة الأساسية.',
-        cta: 'تفاصيل الخدمة',
+        title: 'اختر الخدمة الأنسب لمشروعك',
+        body: 'كل خدمة فرعية لها صفحة مخصصة بنطاق وتفاصيل خاصة بها — اختر ما يناسب احتياجك بدقة.',
       }
     : {
         eyebrow: 'Detailed services',
-        title: 'Choose the more specific delivery path',
-        body: 'These cards connect the main service page to the newer specialized services, so visitors can move from the broad offer into a precise scope.',
-        cta: 'View details',
+        title: 'Choose the exact service you need',
+        body: 'Every sub-service has its own page with a tailored scope and details — move from the broad offer straight into a precise fit.',
       }
 
   return (
@@ -74,42 +91,29 @@ export default function DetailedServicesSection({
           <p className="max-w-2xl text-base font-semibold leading-8 text-neutral-600 md:text-lg">{copy.body}</p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {services.map((service, index) => {
-            const name = localizedServiceValue(service.name, locale)
-            const categoryIcon = serviceIcons[service.categorySlug] || '/icons/services/Admin Dashboard.png'
-            return (
-              <Link
-                key={service.slug}
-                href={localePath(locale, `/services/${service.slug}`)}
-                className="group flex min-h-[17rem] flex-col rounded-lg border border-eerie/10 bg-white/86 p-5 shadow-sm backdrop-blur transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-primary-300 hover:shadow-xl hover:shadow-primary-100"
-              >
-                <div className="mb-5 flex items-start justify-between gap-4">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-[#f4f1f8] p-2">
-                    <Image src={categoryIcon} alt="" width={32} height={32} className="h-8 w-8 object-contain" />
-                  </span>
-                  <span className="text-xs font-black tracking-[0.18em] text-neutral-300">{String(index + 1).padStart(2, '0')}</span>
+        {grouped ? (
+          <div className="space-y-12">
+            {visiblePillars.map(({ pillar, subs }) => (
+              <div key={pillar.slug}>
+                <div className="mb-5 flex items-center gap-2.5">
+                  <h3 className="text-xl font-black tracking-tight text-eerie md:text-2xl">{localizedDP(pillar.name, locale)}</h3>
+                  <span className="rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-bold text-neutral-500">{subs.length}</span>
                 </div>
-                <h3 className="text-xl font-black leading-tight text-eerie">{name}</h3>
-                <p className="mt-3 line-clamp-3 flex-1 text-sm leading-7 text-neutral-600">
-                  {localizedServiceValue(service.description, locale)}
-                </p>
-                <div className="mt-5 grid gap-2">
-                  {localizedServiceOutcomes(service, locale).slice(0, 2).map((outcome) => (
-                    <span key={outcome} className="inline-flex items-start gap-2 text-xs font-bold leading-5 text-neutral-600">
-                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-none text-primary-600" aria-hidden="true" />
-                      {outcome}
-                    </span>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {subs.map((s) => (
+                    <SubServiceGlowCard key={s.name} href={s.href} name={s.name} desc={s.desc} icon={pillar.icon} locale={locale} />
                   ))}
                 </div>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-primary-700">
-                  {copy.cta}
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                </span>
-              </Link>
-            )
-          })}
-        </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {visiblePillars[0].subs.map((s) => (
+              <SubServiceGlowCard key={s.name} href={s.href} name={s.name} desc={s.desc} icon={visiblePillars[0].pillar.icon} locale={locale} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
