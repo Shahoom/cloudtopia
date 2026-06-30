@@ -310,7 +310,7 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
       {/* Service Explanation Section - SEO Optimized */}
       <QRMenuServiceSection isRTL={isRTL} locale={locale} />
 
-      <DetailedServicesSection mainService="restaurant-qr-menu" locale={locale === 'ar' ? 'ar' : 'en'} />
+      <DetailedServicesSection pillarSlug="website-development" locale={locale === 'ar' ? 'ar' : 'en'} />
     </main>
   )
 }

@@ -9,7 +9,6 @@ import { ServiceExplanationSection } from "@/components/ui/service-explanation-s
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { localePath } from "@/lib/i18n/url"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
-import { PillarSubServicesGrid } from "@/components/services/PillarSubServicesGrid"
 
 const exampleImages = [
   {
@@ -265,10 +264,7 @@ export default function WebsiteDesignClient({ t: pageT }: { t?: any }) {
       {/* Service Explanation Section */}
       <WebDesignServiceSection />
 
-      {/* Sub-service glow cards — always visible */}
-      <PillarSubServicesGrid pillarSlug="website-development" locale={locale} />
-
-      <DetailedServicesSection mainService="website-design" locale={locale === 'ar' ? 'ar' : 'en'} />
+      <DetailedServicesSection pillarSlug="website-development" locale={locale === 'ar' ? 'ar' : 'en'} />
     </div>
   )
 }

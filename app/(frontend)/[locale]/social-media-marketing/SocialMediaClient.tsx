@@ -944,7 +944,7 @@ export default function SocialMediaClient({ t }: { t?: any }) {
   return (
     <>
       <Hero t={t} />
-      <DetailedServicesSection mainService="social-media-marketing" locale={locale === 'ar' ? 'ar' : 'en'} />
+      <DetailedServicesSection pillarSlug="social-media-management" locale={locale === 'ar' ? 'ar' : 'en'} />
     </>
   )
 }

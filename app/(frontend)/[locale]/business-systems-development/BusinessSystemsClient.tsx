@@ -12,6 +12,7 @@ const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-s
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { SeoH1 } from '@/components/seo/SeoH1'
 import DetailedServicesSection from '@/components/services/DetailedServicesSection'
+import { businessSystemsGroups } from '@/lib/services/business-systems'
 
 export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
@@ -86,65 +87,26 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
         },
     ]
 
-    const s = t?.serviceCards?.businessSystems
+    const isAr = locale === 'ar'
 
-    // Business Systems Cards with same icons as services page
-    const businessSystemsCards: ScrollCardItem[] = [
-        {
-            name: s?.crm?.name || 'CRM System',
-            tagline: s?.crm?.tagline || 'Smart Customer Management',
-            icon: <img src="/icons/services/CRM System.png" alt="CRM" width={40} height={40} className="w-10 h-10" />,
-            description: s?.crm?.description || 'Complete CRM solution for customer relationship management, sales tracking, and marketing automation.',
-            gradient: "bg-gradient-to-br from-purple-500 to-purple-700",
-            glowColor: "bg-lavender/50",
-            features: s?.crm?.features?.slice(0, 4) || [],
-        },
-        {
-            name: s?.inventory?.name || 'Inventory Management',
-            tagline: s?.inventory?.tagline || 'Precise Stock Tracking',
-            icon: <img src="/icons/services/Inventory Management.png" alt="Inventory" width={40} height={40} className="w-10 h-10" />,
-            description: s?.inventory?.description || 'Comprehensive inventory and warehouse management system with real-time product tracking.',
-            gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
-            glowColor: "bg-lavender/50",
-            features: s?.inventory?.features?.slice(0, 4) || [],
-        },
-        {
-            name: s?.pos?.name || 'POS System',
-            tagline: s?.pos?.tagline || 'Advanced Point of Sale',
-            icon: <img src="/icons/services/POS System.png" alt="POS" width={40} height={40} className="w-10 h-10" />,
-            description: s?.pos?.description || 'Cloud-based POS system integrated with inventory, customer management, and financial reporting.',
-            gradient: "bg-gradient-to-br from-indigo-500 to-indigo-600",
-            glowColor: "bg-lavender/50",
-            features: s?.pos?.features?.slice(0, 4) || [],
-        },
-        {
-            name: s?.hr?.name || 'HR Management',
-            tagline: s?.hr?.tagline || 'Efficient Team Management',
-            icon: <img src="/icons/services/HR Management.png" alt="HR" width={40} height={40} className="w-10 h-10" />,
-            description: s?.hr?.description || 'Complete HR system from recruitment to payroll and performance management.',
-            gradient: "bg-gradient-to-br from-green-500 to-green-600",
-            glowColor: "bg-lavender/50",
-            features: s?.hr?.features?.slice(0, 4) || [],
-        },
-        {
-            name: s?.booking?.name || 'Booking System',
-            tagline: s?.booking?.tagline || 'Smart & Flexible Booking',
-            icon: <img src="/icons/services/Booking System.png" alt="Booking" width={40} height={40} className="w-10 h-10" />,
-            description: s?.booking?.description || 'Integrated booking system for services and appointments with calendar integration.',
-            gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
-            glowColor: "bg-lavender/50",
-            features: s?.booking?.features?.slice(0, 4) || [],
-        },
-        {
-            name: s?.analytics?.name || 'Analytics Dashboard',
-            tagline: s?.analytics?.tagline || 'Advanced Business Insights',
-            icon: <img src="/icons/services/Analytics Dashboard.png" alt="Analytics" width={40} height={40} className="w-10 h-10" />,
-            description: s?.analytics?.description || 'Advanced analytics dashboards to monitor business performance and make data-driven decisions.',
-            gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
-            glowColor: "bg-lavender/50",
-            features: s?.analytics?.features?.slice(0, 4) || [],
-        },
+    // Solution cards = the 5 Business Systems pillars (same structure + content as
+    // the /services hub), each showing a few of its sub-services as "what's included".
+    const pillarGradients = [
+        'bg-gradient-to-br from-purple-500 to-purple-700',
+        'bg-gradient-to-br from-blue-600 to-indigo-700',
+        'bg-gradient-to-br from-amber-500 to-orange-600',
+        'bg-gradient-to-br from-emerald-500 to-teal-600',
+        'bg-gradient-to-br from-pink-500 to-rose-600',
     ]
+    const businessSystemsCards: ScrollCardItem[] = (businessSystemsGroups[0]?.pillars ?? []).map((pillar, i) => ({
+        name: isAr ? pillar.name.ar : pillar.name.en,
+        tagline: isAr ? 'الكفاءة التشغيلية' : 'Operational Efficiency',
+        icon: <img src={pillar.icon} alt="" width={40} height={40} className="w-10 h-10" />,
+        description: isAr ? pillar.description.ar : pillar.description.en,
+        gradient: pillarGradients[i % pillarGradients.length],
+        glowColor: 'bg-lavender/50',
+        features: pillar.subServices.slice(0, 4),
+    }))
 
     return (
         <div className="min-h-screen bg-lavender" dir={dir}>
@@ -169,6 +131,26 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                 isRTL={locale === 'ar'}
                 variant="light"
             />
+
+            {/* Section 2b: Full sub-service catalog (pillars → tailored sub-services) */}
+            <section className="bg-lavender py-16 md:py-24">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto mb-10 max-w-2xl text-center">
+                        <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#0369a1]">
+                            {locale === 'ar' ? 'استكشف الكتالوج' : 'Explore the catalog'}
+                        </p>
+                        <h2 className="text-balance text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                            {locale === 'ar' ? 'كل خدمات أنظمة الأعمال' : 'Every Business Systems service'}
+                        </h2>
+                        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg">
+                            {locale === 'ar'
+                                ? 'تصفّح أنظمتنا المحورية والخدمات المخصصة تحت كل نظام — اضغط على أي نظام لعرض ما نبنيه.'
+                                : 'Browse our core systems and the tailored services under each — click a system to see what we build.'}
+                        </p>
+                    </div>
+                    <DetailedServicesSection categoryId="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
+                </div>
+            </section>
 
             {/* Section 3: HeroModern - Comprehensive Business Systems Overview */}
             <HeroModern
@@ -198,7 +180,6 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                 labelApproach={locale === 'ar' ? 'نهجنا' : 'Our Approach'}
             />
 
-            <DetailedServicesSection mainService="business-systems-development" locale={locale === 'ar' ? 'ar' : 'en'} />
 
             {/* Final CTA Section */}
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">
