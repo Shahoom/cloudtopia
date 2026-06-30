@@ -58,7 +58,6 @@ export const digitalPresenceGroups: DPGroup[] = [
                     'Corporate Website Development', 'Business Website Development', 'Landing Page Development',
                     'Real Estate Website Development', 'Educational & LMS Website Development',
                     'Healthcare & Medical Website Development', 'Restaurant & Hospitality Website Development',
-                    'Multilingual & RTL Website Development', 'Headless CMS Implementation', 'Third-Party API Integration',
                     'Website Speed & Performance Optimization', 'Website Redesign & Modernization',
                     'Website Maintenance & Support', 'Web Hosting & Security Management',
                 ],
@@ -73,11 +72,8 @@ export const digitalPresenceGroups: DPGroup[] = [
                 href: '/ecommerce-development',
                 subServices: [
                     'Custom E-Commerce Development', 'Shopify Store Development', 'WooCommerce Store Development',
-                    'Headless E-Commerce Development', 'Multi-Vendor Marketplace Development',
-                    'E-Commerce Redesign & Migration', 'Payment Gateway Integration',
-                    'Shipping & Fulfillment Automation Setup', 'Cart Abandonment Recovery Systems',
-                    'B2B Wholesale Portal Development', 'POS (Point of Sale) Integration',
-                    'Product Information Management (PIM) Setup',
+                    'Multi-Vendor Marketplace Development', 'E-Commerce Redesign & Migration',
+                    'Payment Gateway Integration', 'B2B Wholesale Portal Development', 'POS (Point of Sale) Integration',
                 ],
             },
             {
@@ -90,9 +86,8 @@ export const digitalPresenceGroups: DPGroup[] = [
                 href: '/services/ui-ux-design-branding',
                 subServices: [
                     'Brand Strategy & Positioning', 'Corporate Rebranding Strategy', 'Logo & Visual Identity Design',
-                    'Brand Guidelines & Brand Book Creation', 'Motion Graphics & Web Animations',
-                    'UI (User Interface) Design', 'UX (User Experience) Design & Wireframing',
-                    'UX Audits & Usability Testing', 'Mobile & Web App Interface Design', 'Social Media Kit & Assets Design',
+                    'Motion Graphics & Web Animations', 'UI/UX Design & Testing',
+                    'Mobile & Web App Interface Design', 'Social Media Kit & Assets Design',
                 ],
             },
         ],
@@ -150,11 +145,11 @@ export const digitalPresenceGroups: DPGroup[] = [
                 icon: '/icons/services/Social Media Management.png',
                 href: '/social-media-marketing',
                 subServices: [
-                    'Social Media Strategy & Planning', 'Social Media Profile Setup', 'Content Calendar Creation',
+                    'Social Media Strategy & Planning', 'Content Calendar Creation',
                     'Social Media Copywriting', 'Graphic Design for Social Media',
                     'Short-Form Video Editing (Reels, TikTok, Shorts)', 'Community Management & Engagement',
-                    'Influencer Outreach & Management', 'Social Media Contest & Giveaway Management',
-                    'LinkedIn B2B Personal Branding', 'Social Media Analytics & Reporting',
+                    'Influencer Outreach & Management', 'LinkedIn B2B Personal Branding',
+                    'Social Media Analytics & Reporting', 'Email Marketing Automation', 'Paid Ads & Lead Generation',
                 ],
             },
             {
@@ -166,7 +161,6 @@ export const digitalPresenceGroups: DPGroup[] = [
                 subServices: [
                     'SEO Blog Post & Article Writing', 'Website Copywriting', 'Landing Page Copywriting',
                     'Case Study & Portfolio Writing', 'Email Newsletter Copywriting',
-                    'Press Release (PR) Writing & Distribution', 'Video Scriptwriting',
                 ],
             },
         ],

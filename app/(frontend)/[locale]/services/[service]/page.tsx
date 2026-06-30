@@ -7,7 +7,7 @@ import { ogImagesFor } from '@/lib/og/og-image'
 import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
 import { localizedDP } from '@/lib/services/digital-presence'
-import { getStructuredPillarBySlug, structuredPillarRoutes } from '@/lib/services/structured-catalog'
+import { getStructuredPillarBySlug, structuredPillarRoutes, legacyMainPagePillarSlugs } from '@/lib/services/structured-catalog'
 import { PillarPage } from '@/components/services/PillarPage'
 import RichPillarPage from '@/components/services/RichPillarPage'
 import { GetFoundPillarPage } from '@/components/services/GetFoundPillarPage'
@@ -277,7 +277,7 @@ function whatsappHref(serviceName: string, locale: string) {
 }
 
 export function generateStaticParams() {
-    const slugs = [...serviceDetailSlugs, ...structuredPillarRoutes.map((p) => p.slug), ...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs]
+    const slugs = [...new Set([...serviceDetailSlugs, ...structuredPillarRoutes.map((p) => p.slug), ...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs])]
     return ['en', 'ar'].flatMap((locale) =>
         slugs.map((service) => ({
             locale,
@@ -405,7 +405,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const getFound = getGetFoundContent(serviceSlug)
     if (getFound) return <GetFoundPillarPage content={getFound} locale={locale} />
     const pillar = getStructuredPillarBySlug(serviceSlug)
-    if (pillar) {
+    // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
+    if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
         const rich = getRichPillarData(serviceSlug)
         if (rich) return <RichPillarPage data={rich} locale={locale} />
         return <PillarPage pillar={pillar} locale={locale} />
