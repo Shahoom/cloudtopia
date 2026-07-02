@@ -10,13 +10,14 @@ and Web-App pillars (its sub-service grid only works for Digital Presence).
 
 ---
 
-## 1. Web Applications — 5 pillar pages (currently EMPTY / lean PillarPage)
+## 1. Web Applications — 5 pillar pages — ✅ DONE (commit `9294228`)
 
-Target design: a **rich, full template** applied to each, then content-crafted per page (SEO + Arabic).
-> ⚠️ DECISION when we start: which base template —
-> (a) the `/web-applications` hub template (parallax hero → HorizontalScrollCards → HeroModern), or
-> (b) the `/services/custom-web-application-development` template (app-window WebAppHero → features → process).
-> Owner named both; pick one at design time.
+Built rich + fully bilingual (EN/AR). **Template chosen: (b)** the `custom-web-application-development` family
+(WebAppHero app-window hero → WebAppFeatures → WebAppProcess → ProjectsShowcase → TestimonialsMarquee → FAQ w/ FAQPage JSON-LD),
+extracted into a reusable `components/services/WebAppPillarPage.tsx` and wired in the route. Content authored per page
+in `webapp-service-content.ts` + `webapp-faq-content.ts`. Chosen over (a) because it's per-service data-driven, visually
+distinct from Business Systems (RichPillarPage), image-free (CSS hero), and FAQ-rich for SEO/AEO.
+Also: `/web-applications` hub now has a **"Main hub" lead-card** in the /services catalog (commit `b71a007`).
 
 | Page | URL | Current | Target |
 |---|---|---|---|
@@ -30,9 +31,10 @@ Note: `/web-applications` has **no card in the /services hub** — decide if it 
 
 ---
 
-## 2. Mobile App Development — 13 pages (currently generic HeroOrbitDeck template)
+## 2. Mobile App Development — 13 pages (currently generic HeroOrbitDeck template) — ⏸️ DEFERRED
 
-Each is its own main page (no sub-services). Redesign each section by section.
+**The only remaining item.** Owner said "leave mobile app pages now" — parked for a later pass.
+Each is its own main page (no sub-services). Redesign each section by section when we pick it up.
 
 /services/ios-app-development · /services/android-app-development · /services/cross-platform-app-development ·
 /services/flutter-app-development · /services/react-native-app-development · /services/mvp-app-development ·
@@ -42,9 +44,15 @@ Each is its own main page (no sub-services). Redesign each section by section.
 
 ---
 
-## 3. Business Systems — pillar pages
+## 3. Business Systems — pillar pages — ✅ DONE (commit `a448e35`)
 
-**Target template for all: `RichPillarPage`** (the same design as `/services/custom-erp-crm-solutions` — the parallax product hero → scroll cards → HeroModern overview). Each gets **totally different, rich, high-SEO content + perfect Arabic**. Content maps the pillar's sub-services **high → low by Arabic-world search demand** (my proposed order below — adjust at design time).
+Built on `RichPillarPage`, now made **fully bilingual** (source stores `LocalizedText` per field; `getRichPillarData(slug, locale)`
+resolves it — RichPillarPage component untouched). `business-management-systems` + `business-process-automation` authored rich
+(EN/AR), sub-services ordered by Arabic-world search demand; `custom-erp-crm-solutions` Arabic-ified (the "polish"). Pillars
+reordered (BMS → BPA → ERP-CRM). `/business-systems-development` hub got the **ContactLeadForm → CMS** section + a **"Main hub"
+lead-card** in the /services catalog (commit `b71a007`).
+
+_Original plan (kept for reference):_
 
 **Card order on Business Systems (main = first because it's otherwise not visible):**
 1. `/business-systems-development` (the standalone hub — same rich design + details, **+ a contact form at the end → CMS leads**)
