@@ -151,6 +151,118 @@ export function resolveRichPillar(src: RichPillarDataI18n, locale: string): Rich
 const L = (en: string, ar: string): LocalizedText => ({ en, ar })
 
 const richPillarData: Record<string, RichPillarDataI18n> = {
+    'ui-ux-design-branding': {
+        slug: 'ui-ux-design-branding',
+        hero: {
+            title: L('UI/UX Design & Brand Identity', 'تصميم واجهات المستخدم والهوية البصرية'),
+            description: L(
+                'Brand strategy, visual identity, and interface design that make your product feel premium and trustworthy — from logo and design system to pixel-perfect, user-tested screens for web and mobile.',
+                'استراتيجية العلامة والهوية البصرية وتصميم الواجهات التي تمنح منتجك إحساساً راقياً وجديراً بالثقة — من الشعار ونظام التصميم إلى شاشات دقيقة ومختبَرة مع المستخدمين للويب والجوال.',
+            ),
+        },
+        products: [
+            { title: L('Brand Identity Systems', 'أنظمة الهوية البصرية'), thumbnail: '/images/services/social-media-marketing/brand-identity.avif' },
+            { title: L('Logo & Visual Identity', 'الشعار والهوية البصرية'), thumbnail: '/images/services/social-media-marketing/Visual Design.webp' },
+            { title: L('Web UI Design', 'تصميم واجهات الويب'), thumbnail: '/images/services/website-design/1.avif' },
+            { title: L('App Interface Design', 'تصميم واجهات التطبيقات'), thumbnail: '/images/services/website-design/2.avif' },
+            { title: L('Design Systems', 'أنظمة التصميم'), thumbnail: '/images/services/website-design/3.avif' },
+            { title: L('Motion & Animation', 'الموشن والأنيميشن'), thumbnail: '/images/services/social-media-marketing/Creative Campaigns.avif' },
+            { title: L('Brand Storytelling', 'سرد قصة العلامة'), thumbnail: '/images/services/social-media-marketing/Brand Storytelling.webp' },
+            { title: L('Social Media Kits', 'حزم السوشيال ميديا'), thumbnail: '/images/services/social-media-marketing/content production.avif' },
+            { title: L('UX Research & Testing', 'أبحاث واختبار تجربة المستخدم'), thumbnail: '/images/services/website-design/4.avif' },
+            { title: L('Interactive Prototyping', 'النماذج التفاعلية'), thumbnail: '/images/services/website-design/5.avif' },
+        ],
+        solutionsTitle: L('What this pillar delivers', 'ما تقدّمه هذه الخدمة'),
+        solutionsSubtitle: L('Seven design capabilities that turn a product into a brand people remember and trust.', 'سبع قدرات تصميمية تحوّل المنتج إلى علامة يتذكّرها الناس ويثقون بها.'),
+        cards: [
+            {
+                name: L('Brand Strategy & Positioning', 'استراتيجية العلامة والتموضع'),
+                tagline: L('Know why you win', 'اعرف لماذا تفوز'),
+                description: L('We define your positioning, personality, and messaging so every design decision has a reason — and your brand stands apart in a crowded Gulf market.', 'نحدّد تموضعك وشخصيتك ورسائلك ليصبح لكل قرار تصميمي سبب — وتتميّز علامتك في سوق خليجي مزدحم.'),
+                icon: '/icons/services/Corporate Visual Identity Design.png',
+                features: [L('Brand positioning', 'تموضع العلامة'), L('Messaging & tone', 'الرسائل والنبرة'), L('Competitor analysis', 'تحليل المنافسين'), L('Brand guidelines', 'دليل العلامة')],
+            },
+            {
+                name: L('Corporate Rebranding Strategy', 'استراتيجية إعادة تصميم الهوية'),
+                tagline: L('Evolve without losing equity', 'تطوّر دون فقدان القيمة'),
+                description: L('A structured rebrand that modernizes how you look and feel while protecting the recognition you have already earned — rolled out across every touchpoint.', 'إعادة تصميم منظّمة تُحدِّث شكلك وإحساسك مع الحفاظ على الحضور الذي بنيته — وتُطبَّق عبر كل نقاط التواصل.'),
+                icon: '/icons/services/Corporate Visual Identity Design.png',
+                features: [L('Brand audit', 'تدقيق العلامة'), L('Visual refresh', 'تحديث بصري'), L('Rollout plan', 'خطة الإطلاق'), L('Asset migration', 'نقل الأصول')],
+            },
+            {
+                name: L('Logo & Visual Identity Design', 'تصميم الشعار والهوية البصرية'),
+                tagline: L('A system, not just a logo', 'نظام متكامل لا مجرّد شعار'),
+                description: L('A distinctive logo plus the full toolkit — colors, typography, iconography, and usage rules — bilingual for Arabic and English so your brand is consistent everywhere.', 'شعار مميّز مع مجموعة أدوات كاملة — ألوان وخطوط وأيقونات وقواعد استخدام — ثنائية اللغة بالعربية والإنجليزية لتبقى علامتك متّسقة في كل مكان.'),
+                icon: '/icons/services/Corporate Visual Identity Design.png',
+                features: [L('Logo design', 'تصميم الشعار'), L('Color & type system', 'نظام الألوان والخطوط'), L('Arabic + English lockups', 'صيغ عربية وإنجليزية'), L('Brand asset kit', 'حزمة أصول العلامة')],
+            },
+            {
+                name: L('Motion Graphics & Web Animations', 'الموشن جرافيك وحركات الويب'),
+                tagline: L('Bring the brand to life', 'امنح العلامة الحياة'),
+                description: L('Purposeful motion — animated logos, micro-interactions, and explainer visuals — that adds polish and guides attention without slowing the experience down.', 'حركة هادفة — شعارات متحرّكة وتفاعلات دقيقة ومرئيات توضيحية — تضيف لمسة راقية وتوجّه الانتباه دون إبطاء التجربة.'),
+                icon: '/icons/services/Social Media Management.png',
+                features: [L('Animated logo', 'شعار متحرّك'), L('Micro-interactions', 'تفاعلات دقيقة'), L('Explainer motion', 'موشن توضيحي'), L('Lottie / video export', 'تصدير Lottie / فيديو')],
+            },
+            {
+                name: L('UI/UX Design & Testing', 'تصميم واختبار تجربة المستخدم'),
+                tagline: L('Designed on evidence', 'تصميم مبني على الدليل'),
+                description: L('User flows, wireframes, and high-fidelity interfaces validated with real usability testing — so the product is not just beautiful, it is easy to use and converts.', 'مسارات المستخدم والمخططات والواجهات عالية الدقة، مُتحقَّق منها باختبارات استخدام حقيقية — ليكون المنتج جميلاً وسهل الاستخدام ويحقّق التحويل.'),
+                icon: '/icons/services/Website Design & Development.png',
+                features: [L('User flows & wireframes', 'مسارات ومخططات'), L('High-fidelity UI', 'واجهات عالية الدقة'), L('Usability testing', 'اختبار قابلية الاستخدام'), L('Accessibility', 'إتاحة الوصول')],
+            },
+            {
+                name: L('Mobile & Web App Interface Design', 'تصميم واجهات تطبيقات الجوال والويب'),
+                tagline: L('One system, every screen', 'نظام واحد لكل الشاشات'),
+                description: L('Consistent, component-based interface design and a reusable design system that scales across your web app and mobile app — and hands off cleanly to developers.', 'تصميم واجهات متّسق قائم على المكوّنات ونظام تصميم قابل لإعادة الاستخدام يتوسّع عبر تطبيق الويب والجوال — ويُسلَّم للمطوّرين بسلاسة.'),
+                icon: '/icons/services/Website Design & Development.png',
+                features: [L('Design system', 'نظام تصميم'), L('Component library', 'مكتبة مكوّنات'), L('Responsive layouts', 'تخطيطات متجاوبة'), L('Developer handoff', 'تسليم للمطوّرين')],
+            },
+            {
+                name: L('Social Media Kit & Assets Design', 'تصميم حزمة ومحتوى السوشيال ميديا'),
+                tagline: L('Ship-ready, on-brand', 'جاهزة للنشر ومتّسقة مع العلامة'),
+                description: L('Templated posts, stories, and ad creatives plus profile assets — all on-brand and bilingual, so your team can publish consistent content fast.', 'قوالب منشورات وستوريز وإعلانات إضافة إلى أصول الحسابات — كلها متّسقة مع العلامة وثنائية اللغة، ليتمكّن فريقك من النشر بسرعة واتساق.'),
+                icon: '/icons/services/Social Media Management.png',
+                features: [L('Post & story templates', 'قوالب منشورات وستوريز'), L('Ad creative sets', 'حزم إعلانات'), L('Profile assets', 'أصول الحسابات'), L('Bilingual layouts', 'تخطيطات ثنائية اللغة')],
+            },
+        ],
+        overview: {
+            badge: L('UI/UX Design & Branding', 'تصميم الواجهات والهوية'),
+            title: L('Design that makes people trust you at first glance', 'تصميم يجعل الناس يثقون بك من النظرة الأولى'),
+            description: L(
+                'Design is how your business earns trust before a word is read. We combine brand strategy, a distinctive visual identity, and evidence-based UI/UX into one system — bilingual, consistent, and built to convert across web, mobile, and social.',
+                'التصميم هو الطريقة التي تكسب بها ثقة العميل قبل قراءة أي كلمة. نجمع استراتيجية العلامة وهوية بصرية مميّزة وتجربة استخدام مبنية على الدليل في نظام واحد — ثنائي اللغة ومتّسق ومصمَّم للتحويل عبر الويب والجوال والسوشيال.',
+            ),
+            metrics: [
+                { label: L('Languages designed', 'لغتا التصميم'), value: L('AR + EN', 'عربي + إنجليزي') },
+                { label: L('Delivered as', 'يُسلَّم كـ'), value: L('Design system', 'نظام تصميم') },
+                { label: L('Validated by', 'مُتحقَّق منه عبر'), value: L('User testing', 'اختبار المستخدم') },
+                { label: L('You own', 'تملك'), value: L('Source files', 'الملفات المصدرية') },
+            ],
+            expertiseTitle: L('Where we go deep', 'أين نتعمّق'),
+            expertiseDescription: L('Brand and product design for Gulf businesses that want to look world-class in both Arabic and English.', 'تصميم العلامة والمنتج لشركات الخليج التي تريد مظهراً عالمياً بالعربية والإنجليزية.'),
+            expertiseItems: [
+                L('Brand strategy & identity systems', 'استراتيجية العلامة وأنظمة الهوية'),
+                L('Bilingual (Arabic-first) design', 'تصميم ثنائي اللغة يراعي العربية أولاً'),
+                L('Product UI/UX & design systems', 'تصميم واجهات المنتج وأنظمة التصميم'),
+                L('Usability testing & accessibility', 'اختبار الاستخدام وإتاحة الوصول'),
+                L('Motion & interaction design', 'تصميم الحركة والتفاعل'),
+                L('Developer-ready handoff', 'تسليم جاهز للمطوّرين'),
+            ],
+            processTitle: L('How we deliver', 'كيف نُنجز'),
+            processSteps: [
+                { name: L('Discover & define', 'اكتشاف وتحديد'), detail: L('We learn your business, audience, and competitors, then define positioning and the design direction.', 'نفهم أعمالك وجمهورك ومنافسيك، ثم نحدّد التموضع واتجاه التصميم.'), status: L('Phase 1', 'المرحلة ١') },
+                { name: L('Design & validate', 'تصميم وتحقّق'), detail: L('We design the identity and interfaces, then validate with real users and refine.', 'نصمّم الهوية والواجهات، ثم نتحقّق مع مستخدمين حقيقيين ونحسّن.'), status: L('Phase 2', 'المرحلة ٢') },
+                { name: L('System & handoff', 'نظام وتسليم'), detail: L('We package a reusable design system and hand off clean, documented files to your team and developers.', 'نُجهّز نظام تصميم قابلاً لإعادة الاستخدام ونسلّم ملفات نظيفة وموثّقة لفريقك ومطوّريك.'), status: L('Phase 3', 'المرحلة ٣') },
+            ],
+            showcase: { src: '/images/services/website-design/6.jpg', alt: L('Brand identity and interface design showcase', 'عرض للهوية البصرية وتصميم الواجهات'), caption: L('Identity + interface', 'هوية + واجهة'), captionRight: L('One design system', 'نظام تصميم واحد') },
+        },
+        cta: {
+            title: L('Ready to look world-class?', 'جاهز لتظهر بمستوى عالمي؟'),
+            description: L("Let's craft a brand and interface your customers trust on sight — bilingual, distinctive, and built to convert.", 'لنصنع علامة وواجهة يثق بها عملاؤك من النظرة الأولى — ثنائية اللغة ومميّزة ومصمَّمة للتحويل.'),
+            button: L('Start Your Project', 'ابدأ مشروعك'),
+            explore: L('Explore All Services', 'استكشف كل الخدمات'),
+        },
+    },
     'custom-erp-crm-solutions': {
         slug: 'custom-erp-crm-solutions',
         hero: {
