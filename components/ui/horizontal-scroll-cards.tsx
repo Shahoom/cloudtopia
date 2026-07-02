@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import Link from 'next/link'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { GlowingEffect } from './glowing-effect'
 import { cn } from '@/lib/utils'
@@ -12,6 +13,8 @@ export interface ScrollCardItem {
     features: string[]
     gradient: string
     glowColor: string
+    /** When set, the whole card becomes a link to this URL (locale-resolved by the caller). */
+    href?: string
 }
 
 interface HorizontalScrollCardsProps {
@@ -130,6 +133,27 @@ export function HorizontalScrollCards({
     const scrollRef = useRef<HTMLDivElement>(null)
     const [constraints, setConstraints] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
+    // True only when the last interaction was a drag, so a card link doesn't
+    // navigate when the user was really dragging the strip. Reset on each new
+    // pointer-down (a fresh potential click).
+    const wasDraggingRef = useRef(false)
+
+    const renderCard = (card: ScrollCardItem) => {
+        const inner = (
+            <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={effectiveWhatsIncluded} />
+        )
+        if (!card.href) return inner
+        return (
+            <Link
+                href={card.href}
+                draggable={false}
+                onClick={(e) => { if (wasDraggingRef.current) e.preventDefault() }}
+                className="block h-full"
+            >
+                {inner}
+            </Link>
+        )
+    }
 
     useEffect(() => {
         const updateConstraints = () => {
@@ -200,7 +224,8 @@ export function HorizontalScrollCards({
                             right: isRTL ? -constraints : 0,
                             left: isRTL ? 0 : constraints
                         }}
-                        onDragStart={() => setIsDragging(true)}
+                        onPointerDownCapture={() => { wasDraggingRef.current = false }}
+                        onDragStart={() => { setIsDragging(true); wasDraggingRef.current = true }}
                         onDragEnd={() => setIsDragging(false)}
                         className={cn(
                             "flex gap-6 cursor-grab active:cursor-grabbing py-4",
@@ -217,7 +242,7 @@ export function HorizontalScrollCards({
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 className="flex-shrink-0 w-[420px]"
                             >
-                                <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={effectiveWhatsIncluded} />
+                                {renderCard(card)}
                             </motion.div>
                         ))}
                         <div className="flex-shrink-0 w-32 h-1" />
@@ -234,7 +259,7 @@ export function HorizontalScrollCards({
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}
                         >
-                            <CardContent card={card} variant={variant} isRTL={isRTL} whatsIncludedLabel={effectiveWhatsIncluded} />
+                            {renderCard(card)}
                         </motion.div>
                     ))}
                 </div>

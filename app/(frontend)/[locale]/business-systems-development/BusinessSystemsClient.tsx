@@ -14,6 +14,7 @@ import { SeoH1 } from '@/components/seo/SeoH1'
 import DetailedServicesSection from '@/components/services/DetailedServicesSection'
 import { ContactLeadForm } from '@/components/services/ContactLeadForm'
 import { businessSystemsGroups } from '@/lib/services/business-systems'
+import { getLocalizedPillarSubServiceNames } from '@/lib/services/pillar-subservices-localized'
 
 export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
@@ -106,7 +107,8 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
         description: isAr ? pillar.description.ar : pillar.description.en,
         gradient: pillarGradients[i % pillarGradients.length],
         glowColor: 'bg-lavender/50',
-        features: pillar.subServices.slice(0, 4),
+        features: getLocalizedPillarSubServiceNames(pillar.slug, locale, 4),
+        href: localePath(locale, pillar.href),
     }))
 
     return (
