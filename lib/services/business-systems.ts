@@ -56,24 +56,6 @@ export const businessSystemsGroups: DPGroup[] = [
                 ],
             },
             {
-                slug: 'internal-enterprise-applications',
-                name: t('Internal Enterprise Applications', 'تطبيقات مؤسسية داخلية'),
-                description: t(
-                    'Custom dashboards and portals for teams, vendors, and field staff.',
-                    'لوحات وبوابات مخصصة للفرق والموردين والفرق الميدانية.'),
-                icon: '/icons/services/Customer Portal.png',
-                href: '/services/internal-enterprise-applications',
-                subServices: [
-                    'B2B Vendor, Supplier & Wholesale Ordering Portals',
-                    'Custom Sales Rep Performance & Commission Dashboards',
-                    'Multi-Warehouse Inventory Control & Barcode Tracking Apps',
-                    'HR Management, Payroll & Document Vault Portals',
-                    'Field Agent, Technician & Delivery Tracking Web Apps',
-                    'Secure Document Sharing & Client Approval Portals',
-                    'Debt Collection & Accounts Receivable Dashboards',
-                ],
-            },
-            {
                 slug: 'business-management-systems',
                 name: t('Business Management Systems', 'أنظمة إدارة الأعمال'),
                 description: t(

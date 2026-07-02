@@ -319,14 +319,6 @@ const BS_PILLAR_ORDER: Record<string, string[]> = {
         'esignature-contract-management',
         'employee-onboarding-automation',
     ],
-    'internal-enterprise-applications': [
-        'b2b-vendor-ordering-portals',
-        'sales-commission-dashboards',
-        'multi-warehouse-inventory-barcode',
-        'field-agent-delivery-tracking',
-        'secure-document-client-portals',
-        'debt-collection-receivables-dashboards',
-    ],
 }
 
 /** All sub-services that belong to a pillar, with their slug + display copy. */

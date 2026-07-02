@@ -138,7 +138,7 @@ export const digitalPresenceGroups: DPGroup[] = [
         pillars: [
             {
                 slug: 'social-media-management',
-                name: t('Social Media Management (SMM)', 'إدارة وسائل التواصل الاجتماعي'),
+                name: t('Social Media Marketing', 'التسويق عبر وسائل التواصل الاجتماعي'),
                 description: t(
                     'Strategy, content, and community management across every channel.',
                     'استراتيجية ومحتوى وإدارة مجتمع عبر كل القنوات.'),
