@@ -308,12 +308,35 @@ const WEBSITE_DUPLICATE_CANONICAL: Record<string, string> = {
     'website-maintenance': 'website-maintenance-and-support',
 }
 
+// Per-slug SEO overrides for structured pillars — richer, keyword-led titles and
+// descriptions than the plain pillar name/description (used for the flagship
+// design + Get-Found pillars). Other pillars fall back to name/description.
+const PILLAR_SEO_OVERRIDES: Record<string, { title: { en: string; ar: string }; description: { en: string; ar: string } }> = {
+    'ui-ux-design-branding': {
+        title: { en: 'UI/UX Design & Branding Services in Oman & the Gulf', ar: 'خدمات تصميم واجهات المستخدم والهوية البصرية في عُمان والخليج' },
+        description: { en: 'Premium UI/UX design and brand identity for Gulf businesses — logo, design systems, motion, and user-tested web & mobile interfaces, bilingual Arabic + English. Free consultation.', ar: 'تصميم واجهات وهوية بصرية راقية لشركات الخليج — شعار وأنظمة تصميم وموشن وواجهات ويب وجوال مختبَرة مع المستخدمين، بالعربية والإنجليزية. استشارة مجانية.' },
+    },
+    'search-engine-optimization': {
+        title: { en: 'SEO Services in Oman & the Gulf — Rank Higher, Earn Organic Traffic', ar: 'خدمات تحسين محركات البحث SEO في عُمان والخليج' },
+        description: { en: 'Technical, on-page, and off-page SEO that earns durable organic traffic across the Gulf — bilingual Arabic + English keyword strategy, audits, and link building. Free consultation.', ar: 'تحسين تقني وعلى الصفحة وخارجها يجلب زيارات عضوية مستدامة عبر الخليج — استراتيجية كلمات ثنائية اللغة وتدقيق وبناء روابط موثوقة. استشارة مجانية.' },
+    },
+    'answer-engine-optimization': {
+        title: { en: 'Answer Engine Optimization (AEO) — Get Cited by AI Answers', ar: 'تحسين محركات الإجابة (AEO) — كن مصدر إجابات الذكاء الاصطناعي' },
+        description: { en: 'Get your brand cited by AI answer engines — ChatGPT, Perplexity, and Google AI Overviews. Structured content, schema, and authority built to own the direct answer. Bilingual AR + EN.', ar: 'اجعل علامتك مصدراً تستشهد به محركات الإجابة بالذكاء الاصطناعي — ChatGPT وPerplexity ونظرات Google AI. محتوى منظّم وبيانات مهيكلة وموثوقية لامتلاك الإجابة المباشرة. بالعربية والإنجليزية.' },
+    },
+    'generative-engine-optimization': {
+        title: { en: 'Generative Engine Optimization (GEO) — Surface Inside AI Results', ar: 'تحسين المحركات التوليدية (GEO) — اظهر داخل نتائج الذكاء الاصطناعي' },
+        description: { en: 'Optimize your brand to be recommended inside generative-AI results, so AI assistants surface you when buyers ask. Entity, content, and authority strategy — bilingual AR + EN.', ar: 'هيّئ علامتك لتُرشَّح داخل نتائج الذكاء الاصطناعي التوليدي، ليقترحك المساعدون الأذكياء حين يسأل المشترون. استراتيجية كيان ومحتوى وموثوقية — بالعربية والإنجليزية.' },
+    },
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', service: serviceSlug } = await params
     const pillar = getStructuredPillarBySlug(serviceSlug)
     if (pillar) {
-        const pName = localizedDP(pillar.name, locale)
-        const pDesc = localizedDP(pillar.description, locale)
+        const seoOverride = PILLAR_SEO_OVERRIDES[serviceSlug]
+        const pName = seoOverride ? (locale === 'ar' ? seoOverride.title.ar : seoOverride.title.en) : localizedDP(pillar.name, locale)
+        const pDesc = seoOverride ? (locale === 'ar' ? seoOverride.description.ar : seoOverride.description.en) : localizedDP(pillar.description, locale)
         const pPath = `/services/${pillar.slug}`
         const brand = locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'
         return {
