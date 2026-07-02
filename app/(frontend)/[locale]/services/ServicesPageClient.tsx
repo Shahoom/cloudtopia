@@ -1063,7 +1063,7 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                         </div>
                     </div>
 
-                    <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
                         {/* Sidebar — categories */}
                         <aside className="lg:sticky lg:top-24 lg:self-start">
                             <nav
@@ -1102,7 +1102,7 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                         </aside>
 
                         {/* Right panel */}
-                        <div>
+                        <div className="min-w-0">
                             {isStructured && !q ? (
                                 <motion.div key={`grp-${activeCategory}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
                                     <StructuredCategoryGroups categoryId={activeCategory} locale={locale as string} />
