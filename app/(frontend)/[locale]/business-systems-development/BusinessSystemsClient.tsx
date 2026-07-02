@@ -12,6 +12,7 @@ const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-s
 import type { ScrollCardItem } from '@/components/ui/horizontal-scroll-cards'
 import { SeoH1 } from '@/components/seo/SeoH1'
 import DetailedServicesSection from '@/components/services/DetailedServicesSection'
+import { ContactLeadForm } from '@/components/services/ContactLeadForm'
 import { businessSystemsGroups } from '@/lib/services/business-systems'
 
 export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
@@ -180,6 +181,32 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                 labelApproach={locale === 'ar' ? 'نهجنا' : 'Our Approach'}
             />
 
+            {/* Contact / lead-capture section → CMS (ContactInquiries) */}
+            <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 py-20 md:py-28">
+                <div className="pointer-events-none absolute inset-0 opacity-20" aria-hidden="true">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(251, 191, 36, 0.25) 0%, transparent 50%)',
+                    }} />
+                </div>
+                <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+                    <div className="text-center lg:text-start">
+                        <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-amber-300">
+                            {isAr ? 'لنتحدّث' : "Let's talk"}
+                        </p>
+                        <h2 className="text-balance text-3xl font-black tracking-tight text-white md:text-4xl lg:text-5xl">
+                            {isAr ? 'ابنِ نظام أعمالك مع كلاودتوبيا' : 'Build your business system with CloudTopia'}
+                        </h2>
+                        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg lg:mx-0">
+                            {isAr
+                                ? 'أخبرنا عن عملياتك وسيتواصل معك مختصونا خلال ٢٤ ساعة باستشارة مجانية وخطة واضحة.'
+                                : 'Tell us about your operation and our specialists will reach out within 24 hours with a free consultation and a clear plan.'}
+                        </p>
+                    </div>
+                    <div className="mx-auto w-full max-w-md">
+                        <ContactLeadForm service={isAr ? 'تطوير أنظمة الأعمال' : 'Business Systems Development'} locale={locale} />
+                    </div>
+                </div>
+            </section>
 
             {/* Final CTA Section */}
             <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">

@@ -386,7 +386,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const pillar = getStructuredPillarBySlug(serviceSlug)
     // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
     if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
-        const rich = getRichPillarData(serviceSlug)
+        const rich = getRichPillarData(serviceSlug, locale)
         if (rich) return <RichPillarPage data={rich} locale={locale} />
         return <PillarPage pillar={pillar} locale={locale} />
     }
