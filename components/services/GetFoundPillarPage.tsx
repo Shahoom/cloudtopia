@@ -4,7 +4,6 @@ import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
-import { ContactFast } from '@/components/ui/contact-fast'
 import { ContactLeadForm } from '@/components/services/ContactLeadForm'
 import { PillarSubServicesGrid } from '@/components/services/PillarSubServicesGrid'
 import { localizedDP } from '@/lib/services/digital-presence'
@@ -192,7 +191,39 @@ export function GetFoundPillarPage({
                 dir={dir}
             />
 
-            <ContactFast serviceName={pillarName} locale={isAr ? 'ar' : 'en'} dir={dir} />
+            {/* Closing CTA — premium, form-free (the owner removed the contact
+                form from these pages; a strong link CTA replaces it). */}
+            <section dir={dir} data-header-theme="dark" className="relative overflow-hidden bg-[#070b16] py-16 text-center md:py-24">
+                <div
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_0%,rgba(245,158,11,0.12),transparent_60%),radial-gradient(ellipse_60%_60%_at_50%_100%,rgba(56,189,248,0.12),transparent_60%)]"
+                    aria-hidden="true"
+                />
+                <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-balance text-3xl font-black leading-tight text-white md:text-4xl lg:text-5xl">
+                        {isAr ? `جاهز لتتصدّر نتائج ${pillarName}؟` : `Ready to lead in ${pillarName}?`}
+                    </h2>
+                    <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+                        {isAr
+                            ? 'احجز استشارة مجانية ولنرسم معاً خطة نموّك القادمة.'
+                            : "Book a free consultation and we'll map your next growth play together."}
+                    </p>
+                    <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+                        <Link
+                            href={L('/contact')}
+                            className="group inline-flex items-center gap-2 rounded-full bg-amber-400 px-8 py-4 text-sm font-black text-[#070b16] transition-all duration-300 hover:bg-amber-300 hover:shadow-[0_14px_44px_-12px_rgba(245,158,11,0.6)]"
+                        >
+                            {isAr ? 'ابدأ الآن' : 'Get started'}
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
+                        </Link>
+                        <Link
+                            href={L('/projects')}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-sm font-bold text-white transition-colors duration-300 hover:bg-white/10"
+                        >
+                            {isAr ? 'شاهد أعمالنا' : 'See our work'}
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </main>
     )
 }
