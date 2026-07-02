@@ -4,6 +4,7 @@ import { Layers } from 'lucide-react'
 import { getStructuredGroups, getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { getDigitalPresenceSubServicesByPillar } from '@/lib/services/digital-presence-content'
 import { getBusinessSystemsSubServicesByPillar } from '@/lib/services/business-systems-content'
+import { getLocalizedPillarSubServiceNames } from '@/lib/services/pillar-subservices-localized'
 import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
 import { SubServiceGlowCard } from './SubServiceGlowCard'
 import { cn } from '@/lib/utils'
@@ -27,8 +28,10 @@ function pillarSubCards(pillar: DPPillar, locale: string): SubCard[] {
   if (tailored.length > 0) {
     return tailored.map((s) => ({ name: s.name, desc: s.desc as string | undefined, href: s.href }))
   }
-  // Pillars whose sub-services have no own page yet → name cards link to the pillar.
-  return pillar.subServices.map((n) => ({ name: n, desc: undefined, href: pillar.href }))
+  // Pillars whose sub-services have no own page yet → name cards link to the
+  // pillar. Names are localized (falls back to raw English subServices) so the
+  // cards read Arabic on /ar instead of leaking the English string[].
+  return getLocalizedPillarSubServiceNames(pillar.slug, locale).map((n) => ({ name: n, desc: undefined, href: pillar.href }))
 }
 
 type DetailedServicesSectionProps = {

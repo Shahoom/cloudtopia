@@ -11,6 +11,7 @@ import { ArrowRight, ArrowUpRight, Check, Search } from 'lucide-react'
 import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
 import type { LocalizedText } from '@/lib/seo/industries'
 import { structuredCategoryIds, getStructuredGroups, getStructuredPillars, allStructuredPillars } from '@/lib/services/structured-catalog'
+import { getLocalizedPillarSubServiceNames } from '@/lib/services/pillar-subservices-localized'
 
 interface ServiceCard {
     name: string
@@ -764,8 +765,12 @@ function ServiceCardComponent({
 function PillarCard({ pillar, locale, index }: { pillar: DPPillar; locale: string; index: number }) {
     const name = localizedDP(pillar.name, locale)
     const description = localizedDP(pillar.description, locale)
-    const sample = pillar.subServices.slice(0, 4)
-    const more = pillar.subServices.length - sample.length
+    const sample = getLocalizedPillarSubServiceNames(pillar.slug, locale, 4)
+    // Total sub-service count is whichever list is longer: the localized names
+    // resolved by the content getters, or the pillar's raw English subServices
+    // (the getters can return fewer than the raw list if some have no page yet).
+    const total = Math.max(getLocalizedPillarSubServiceNames(pillar.slug, locale).length, pillar.subServices.length)
+    const more = total - sample.length
 
     return (
         <motion.div
