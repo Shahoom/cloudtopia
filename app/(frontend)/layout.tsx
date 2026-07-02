@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
-import { Cairo } from 'next/font/google'
+import { Cairo, Fraunces, Amiri } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
+import { CONTACTS } from '@/lib/agent/site-facts'
+import { FloatingWhatsApp } from '@/components/FloatingWhatsApp'
 import '../globals.css'
 
 const cairo = Cairo({
@@ -17,6 +19,25 @@ const cairo = Cairo({
   // 300/500 cuts four Cairo font files (two weights × two subsets) from the
   // critical download path.
   weight: ['400', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+// Editorial display serif (Latin) for the blog — headlines, pull quotes, drop
+// caps. Variable-weight range 400–600 plus italic covers every editorial use.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+
+// Arabic display serif (Naskh) — the RTL counterpart to Fraunces for blog
+// headlines and pull quotes. Fraunces is Latin-only and never applied to Arabic.
+const amiri = Amiri({
+  subsets: ['arabic', 'latin'],
+  variable: '--font-amiri',
+  weight: ['400', '700'],
   display: 'swap',
 })
 
@@ -116,6 +137,14 @@ export default async function FrontendLayout({
   const requestHeaders = await headers()
   const locale = requestHeaders.get('x-locale') ?? 'en'
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
+  // Regional WhatsApp routing: GCC visitors reach the Oman number, everyone else
+  // the Türkiye number. Country comes from the CDN geo header (Cloudflare /
+  // Vercel); when it's absent (e.g. local dev) we default to the Oman number.
+  const geoCountry = (requestHeaders.get('cf-ipcountry') || requestHeaders.get('x-vercel-ip-country') || '').toUpperCase()
+  const GCC_COUNTRIES = ['OM', 'SA', 'AE', 'QA', 'KW', 'BH']
+  const whatsappHref = !geoCountry || GCC_COUNTRIES.includes(geoCountry)
+    ? CONTACTS.whatsapp[0].link
+    : CONTACTS.whatsapp[1].link
   const isArabic = locale === 'ar'
   const organizationDescription = isArabic
     ? 'كلاود توبيا شركة تقنيات رقمية وسحابية مسجّلة في سلطنة عُمان، وشريك معتمد لـ AWS ومايكروسوفت وسيلز فورس وسترايب وشوبيفاي. تطور مواقع محسنة لمحركات البحث، متاجر إلكترونية، تطبيقات ويب، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
@@ -125,7 +154,7 @@ export default async function FrontendLayout({
     : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable}`}>
       <head>
         {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
         <GoogleAnalytics />
@@ -252,6 +281,7 @@ export default async function FrontendLayout({
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             {children}
             <AIChatbot />
+            <FloatingWhatsApp href={whatsappHref} locale={locale} />
           </ThemeProvider>
           <SpeedInsights />
           <Analytics />
