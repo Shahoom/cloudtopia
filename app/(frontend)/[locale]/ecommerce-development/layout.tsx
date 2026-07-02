@@ -17,7 +17,7 @@ export const ecommerceSolutionsSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/ecommerce-solutions', 'ecommerce-solutions', {
+    return getCMSMetadata(locale, '/ecommerce-development', 'ecommerce-solutions', {
         title: ecommerceSolutionsSeoFallback.titles[locale] || ecommerceSolutionsSeoFallback.titles.en,
         description: ecommerceSolutionsSeoFallback.descriptions[locale] || ecommerceSolutionsSeoFallback.descriptions.en,
     })
@@ -34,12 +34,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'E-Commerce Solutions', path: '/ecommerce-solutions' },
+                        { name: 'E-Commerce Solutions', path: '/ecommerce-development' },
                     ]),
                     buildServiceSchema(locale, {
                         name: 'E-Commerce Solutions & Online Stores',
                         description: 'Full e-commerce stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA e-invoicing, and Arabic + English checkout.',
-                        path: '/ecommerce-solutions',
+                        path: '/ecommerce-development',
                         serviceType: 'E-Commerce Development',
                     }),
                     faqSchema,
