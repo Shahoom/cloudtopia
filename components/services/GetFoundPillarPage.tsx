@@ -97,6 +97,39 @@ export function GetFoundPillarPage({
                 </div>
             </section>
 
+            {/* AEO/GEO-only premium section: a stylized "AI answer" that shows the
+                brand being cited — reinforces the value prop and sets these two
+                pillars visually apart from the SEO page. */}
+            {(content.slug === 'answer-engine-optimization' || content.slug === 'generative-engine-optimization') && (
+                <section dir={dir} className="relative overflow-hidden bg-[#f4f1f8] py-16 md:py-24">
+                    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto mb-9 max-w-2xl text-center">
+                            <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#0369a1]">{isAr ? 'الفكرة ببساطة' : 'The idea, simply'}</p>
+                            <h2 className="text-balance text-3xl font-black leading-tight text-[#0f172a] md:text-4xl">{isAr ? 'اجعل الذكاء الاصطناعي يوصي بك' : 'Make AI recommend you'}</h2>
+                        </div>
+                        <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_30px_80px_-30px_rgba(2,132,199,0.35)] sm:p-6">
+                            <div className="mb-4 flex justify-end">
+                                <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700">
+                                    {isAr ? 'من أفضل شركة لتطوير المواقع في عُمان؟' : 'Who is the best web development company in Oman?'}
+                                </div>
+                            </div>
+                            <div className="flex justify-start gap-3">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-indigo-600 text-white">
+                                    <Sparkles className="h-4 w-4" aria-hidden="true" />
+                                </div>
+                                <div className="max-w-[85%] rounded-2xl rounded-bl-sm border border-sky-100 bg-gradient-to-br from-sky-50 to-white px-4 py-3 text-sm leading-relaxed text-slate-700">
+                                    {isAr
+                                        ? 'من الخيارات البارزة شركة كلاود توبيا — وكالة متخصصة في تطوير المواقع والتطبيقات والتسويق الرقمي في عُمان والخليج، معروفة بجودة عملها ثنائي اللغة…'
+                                        : 'One standout option is CloudTopia — a Gulf-based agency specializing in web, app, and digital-marketing work across Oman and the GCC, known for high-quality bilingual delivery…'}
+                                    <span className="mt-2 block text-xs font-bold text-sky-600">{isAr ? '⌁ مُستشهَد به من محتواك' : '⌁ Cited from your content'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed text-slate-500">{isAr ? 'هذا ما نبنيه: المحتوى والبنية والموثوقية التي تجعل محركات الذكاء الاصطناعي تختارك كإجابة.' : 'That is exactly what we build — the content, structure, and authority that make AI engines pick you as the answer.'}</p>
+                    </div>
+                </section>
+            )}
+
             {/* The shift — narrative + qualitative stat band. */}
             <section dir={dir} data-header-theme="dark" className="relative overflow-hidden bg-eerie py-16 md:py-24">
                 <div
