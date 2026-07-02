@@ -1,6 +1,7 @@
 import type { SubServiceContent } from '@/components/services/SubServicePage'
 import { generatedSubServices } from './business-systems-subservices'
 import { generatedSubServicesAr } from './business-systems-subservices-ar'
+import { subServiceHref } from './sub-service-routing'
 
 /**
  * Tailored rich content for Business Systems — PILOT.
@@ -325,7 +326,7 @@ const BS_PILLAR_ORDER: Record<string, string[]> = {
 export function getBusinessSystemsSubServicesByPillar(
     pillarSlug: string,
     locale = 'en',
-): { slug: string; name: string; desc: string }[] {
+): { slug: string; name: string; desc: string; href: string }[] {
     const all = Object.values(subServiceContent).filter((s) => s.pillarSlug === pillarSlug)
     const bySlug = new Map(all.map((s) => [s.slug, s]))
     const ordered: SubServiceContent[] = []
@@ -340,6 +341,7 @@ export function getBusinessSystemsSubServicesByPillar(
             slug: s.slug,
             name: ar?.hero?.title ?? s.hero.title,
             desc: ar?.hero?.subtitle ?? s.hero.subtitle,
+            href: subServiceHref(pillarSlug, s.slug),
         }
     })
 }

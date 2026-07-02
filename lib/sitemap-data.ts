@@ -5,20 +5,38 @@ import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
 import { serviceDetailSlugs } from '@/lib/seo/services'
 import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
-import { dpSubServiceSlugs } from '@/lib/services/digital-presence-content'
-import { businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
+import { dpSubServiceSlugs, getDigitalPresenceSubService } from '@/lib/services/digital-presence-content'
+import { businessSystemsSubServiceSlugs, getBusinessSystemsSubService } from '@/lib/services/business-systems-content'
+import { subServiceHref } from '@/lib/services/sub-service-routing'
 import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 
-// Every /services/<slug> page that actually renders after the catalog restructure:
-// the old flat catalog (serviceDetailSlugs) PLUS the new structured pillar pages
-// and the Digital Presence + Business Systems sub-service pages. Deduped so a slug
-// that appears in more than one source is emitted once.
+// DP + BS sub-services now live nested under their parent pillar
+// (/services/<parent>/<sub>), so they are emitted separately (see
+// nestedSubServicePaths) rather than as flat /services/<slug> URLs.
+const subServiceSlugSet = new Set<string>([...dpSubServiceSlugs, ...businessSystemsSubServiceSlugs])
+
+// Flat /services/<slug> pages that still render after the catalog restructure:
+// the old flat catalog (serviceDetailSlugs, minus any that became nested subs)
+// PLUS the new structured pillar pages. Deduped so a slug that appears in more
+// than one source is emitted once.
 const allServiceDetailSlugs: string[] = Array.from(
     new Set<string>([
-        ...serviceDetailSlugs,
+        ...serviceDetailSlugs.filter((s) => !subServiceSlugSet.has(s)),
         ...structuredPillarRoutes.map((p) => p.slug),
-        ...dpSubServiceSlugs,
-        ...businessSystemsSubServiceSlugs,
+    ]),
+)
+
+// Nested sub-service URLs (/services/<parent>/<sub>) for every DP + BS sub.
+const nestedSubServicePaths: string[] = Array.from(
+    new Set<string>([
+        ...businessSystemsSubServiceSlugs
+            .map((slug) => getBusinessSystemsSubService(slug))
+            .filter((s): s is NonNullable<typeof s> => Boolean(s))
+            .map((s) => subServiceHref(s.pillarSlug, s.slug)),
+        ...dpSubServiceSlugs
+            .map((slug) => getDigitalPresenceSubService(slug))
+            .filter((s): s is NonNullable<typeof s> => Boolean(s))
+            .map((s) => subServiceHref(s.pillarSlug, s.slug)),
     ]),
 )
 import { hasPageOgImage } from '@/lib/og/og-image'
@@ -154,6 +172,20 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         locales.forEach((loc) => {
             entries.push({
                 url: canonicalUrl(loc, `/services/${service}`),
+                lastModified: servicesMtime,
+                changeFrequency: 'monthly',
+                priority: 0.76,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Nested sub-service pages (/services/<parent>/<sub>).
+    nestedSubServicePaths.forEach((servicePath) => {
+        const languages = buildHreflangMap(servicePath)
+        locales.forEach((loc) => {
+            entries.push({
+                url: canonicalUrl(loc, servicePath),
                 lastModified: servicesMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,
@@ -340,6 +372,20 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         locales.forEach((loc) => {
             sitemapEntries.push({
                 url: canonicalUrl(loc, `/services/${service}`),
+                lastModified: servicesDataMtime,
+                changeFrequency: 'monthly',
+                priority: 0.76,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Nested sub-service pages (/services/<parent>/<sub>).
+    nestedSubServicePaths.forEach((servicePath) => {
+        const languages = buildHreflangMap(servicePath)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: canonicalUrl(loc, servicePath),
                 lastModified: servicesDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,

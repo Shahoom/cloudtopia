@@ -1,8 +1,8 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
-import { canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
+import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { buildOrganizationRef } from '@/lib/seo/schema'
 import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
@@ -12,10 +12,9 @@ import { PillarPage } from '@/components/services/PillarPage'
 import RichPillarPage from '@/components/services/RichPillarPage'
 import { GetFoundPillarPage } from '@/components/services/GetFoundPillarPage'
 import { getGetFoundContent } from '@/lib/services/get-found-content'
-import { SubServicePage } from '@/components/services/SubServicePage'
 import { getRichPillarData, getBusinessSystemsSubService, businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
 import { getDigitalPresenceSubService, dpSubServiceSlugs } from '@/lib/services/digital-presence-content'
-import { DigitalPresenceSubServicePage } from '@/components/services/DigitalPresenceSubServicePage'
+import { findSubServiceParent } from '@/lib/services/sub-service-routing'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { HeroOrbitDeck } from '@/components/ui/hero-modern'
 import { HeroGeometric } from '@/components/ui/shape-landing-hero'
@@ -277,7 +276,14 @@ function whatsappHref(serviceName: string, locale: string) {
 }
 
 export function generateStaticParams() {
-    const slugs = [...new Set([...serviceDetailSlugs, ...structuredPillarRoutes.map((p) => p.slug), ...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs])]
+    // DP + BS sub-services are nested now (/services/<parent>/<sub>) and owned by
+    // the [subservice] route, so exclude their slugs here — this flat route only
+    // pre-renders pillar pages and the remaining flat service-detail pages.
+    const subSlugs = new Set<string>([...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs])
+    const slugs = [...new Set([
+        ...serviceDetailSlugs.filter((s) => !subSlugs.has(s)),
+        ...structuredPillarRoutes.map((p) => p.slug),
+    ])]
     return ['en', 'ar'].flatMap((locale) =>
         slugs.map((service) => ({
             locale,
@@ -321,35 +327,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             },
         }
     }
-    const sub = getBusinessSystemsSubService(serviceSlug, locale)
-    if (sub) {
-        const subPath = `/services/${sub.slug}`
-        return {
-            // seo.title already ends with "| CloudTopia"; strip it so the layout
-            // template doesn't double the brand ("… | CloudTopia | CloudTopia").
-            title: stripBrandSuffix(sub.seo.title),
-            description: sub.seo.description,
-            openGraph: { title: sub.seo.title, description: sub.seo.description, url: canonicalUrl(locale, subPath), siteName: 'CloudTopia', type: 'website' },
-            alternates: {
-                canonical: canonicalUrl(locale, subPath),
-                languages: { en: canonicalUrl('en', subPath), ar: canonicalUrl('ar', subPath), 'x-default': canonicalUrl('en', subPath) },
-            },
-        }
-    }
-    const dpSub = getDigitalPresenceSubService(serviceSlug, locale)
-    if (dpSub) {
-        const dpPath = `/services/${dpSub.slug}`
-        return {
-            // Strip the baked-in "| CloudTopia" so the layout template adds it once.
-            title: stripBrandSuffix(dpSub.seo.title),
-            description: dpSub.seo.description,
-            openGraph: { title: dpSub.seo.title, description: dpSub.seo.description, url: canonicalUrl(locale, dpPath), siteName: 'CloudTopia', type: 'website' },
-            alternates: {
-                canonical: canonicalUrl(locale, dpPath),
-                languages: { en: canonicalUrl('en', dpPath), ar: canonicalUrl('ar', dpPath), 'x-default': canonicalUrl('en', dpPath) },
-            },
-        }
-    }
+    // Sub-service metadata (DP + BS) is owned by the nested route now; the flat
+    // route 301s those slugs, so no sub metadata branch is needed here.
     const service = getService(serviceSlug)
     if (!service) return { title: 'Service Not Found' }
 
@@ -411,10 +390,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         if (rich) return <RichPillarPage data={rich} locale={locale} />
         return <PillarPage pillar={pillar} locale={locale} />
     }
-    const sub = getBusinessSystemsSubService(serviceSlug, locale)
-    if (sub) return <SubServicePage content={sub} locale={locale} />
-    const dpSub = getDigitalPresenceSubService(serviceSlug, locale)
-    if (dpSub) return <DigitalPresenceSubServicePage content={dpSub} locale={locale} />
+    // Sub-service pages now live nested under their parent pillar
+    // (/services/<parent>/<sub>). Any hit on the old flat /services/<sub> URL is
+    // permanently redirected to its nested home; the nested route owns the render.
+    if (getBusinessSystemsSubService(serviceSlug) || getDigitalPresenceSubService(serviceSlug)) {
+        const parent = findSubServiceParent(serviceSlug)
+        if (parent) permanentRedirect(`/services/${parent}/${serviceSlug}`)
+    }
     const service = getService(serviceSlug)
     if (!service) notFound()
 

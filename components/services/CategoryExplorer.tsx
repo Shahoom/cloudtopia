@@ -48,7 +48,7 @@ export function CategoryExplorer({
                             const tailored = bs.length > 0 ? bs : getDigitalPresenceSubServicesByPillar(pillar.slug, locale)
                             const subs =
                                 tailored.length > 0
-                                    ? tailored.map((s) => ({ name: s.name, desc: s.desc as string | undefined, href: `/services/${s.slug}` }))
+                                    ? tailored.map((s) => ({ name: s.name, desc: s.desc as string | undefined, href: s.href }))
                                     : pillar.subServices.map((n) => ({ name: n, desc: undefined as string | undefined, href: pillar.href }))
                             const name = localizedDP(pillar.name, locale)
                             const description = localizedDP(pillar.description, locale)
