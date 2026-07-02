@@ -1,0 +1,110 @@
+import { localePath } from '@/lib/i18n/url'
+import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
+import { WebAppHero } from '@/components/ui/webapp-hero'
+import { WebAppFeatures } from '@/components/ui/webapp-features'
+import { WebAppProcess } from '@/components/ui/webapp-process'
+import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
+import { FaqAccordion } from '@/components/ui/faq-accordion'
+import { ProjectsShowcase } from '@/components/ui/projects-showcase'
+import { type Project } from '@/lib/projects'
+import { getProjectsForService } from '@/lib/services/related-projects'
+import { asWebAppLocale, type WebAppServiceContent } from '@/lib/services/webapp-service-content'
+import { getWebappFaq } from '@/lib/services/webapp-faq-content'
+
+/**
+ * Self-contained render for a structured interactive-web-application pillar.
+ *
+ * Mirrors the legacy inline webapp branch of ServiceDetail (WebAppHero →
+ * WebAppFeatures → WebAppProcess → ProjectsShowcase → TestimonialsMarquee →
+ * FaqAccordion) so the new structured pillars (SaaS/MVP, full-stack, portals,
+ * modernization, media) get the same rich, bilingual experience.
+ *
+ * Because this component is returned early from the /services/[service] route —
+ * before the page reaches its shared JSON-LD <script> block — it emits its own
+ * FAQPage structured data so each pillar still wins Google "People also ask".
+ */
+export default async function WebAppPillarPage({
+    slug,
+    data,
+    locale,
+}: {
+    slug: string
+    data: WebAppServiceContent
+    locale: string
+}) {
+    const webappLocale = asWebAppLocale(locale)
+    const isRTL = locale === 'ar'
+    const faq = getWebappFaq(slug, locale)
+
+    const projects: Project[] = await getProjectsForService(locale, {
+        serviceSlug: slug,
+        pillarSlug: 'interactive-web-applications',
+    })
+
+    const faqSchema = faq
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faq.items.map((f) => ({
+                '@type': 'Question',
+                name: f.q,
+                acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+        }
+        : null
+
+    return (
+        <>
+            {faqSchema ? (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            ) : null}
+
+            <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+                <PageBreadcrumbs
+                    locale={locale}
+                    items={[
+                        { label: isRTL ? 'الخدمات' : 'Services', href: localePath(locale, '/services') },
+                        { label: data.hero[webappLocale].badge },
+                    ]}
+                />
+            </div>
+
+            <WebAppHero content={data.hero[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} />
+
+            <WebAppFeatures content={data.features[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} />
+
+            <WebAppProcess
+                content={data.process[webappLocale]}
+                dir={isRTL ? 'rtl' : 'ltr'}
+                ctaHref={localePath(locale, '/contact')}
+            />
+
+            {projects.length > 0 ? (
+                <ProjectsShowcase
+                    projects={projects}
+                    locale={webappLocale}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                    projectHref={(id) => localePath(locale, `/projects/${id}`)}
+                    eyebrow={isRTL ? 'أعمالنا' : 'Our work'}
+                    heading={isRTL ? 'تطبيقات ومنصات نفّذناها' : 'Applications & platforms we’ve built'}
+                    sub={isRTL ? 'تطبيقات ويب حقيقية صمّمناها وبنيناها وأطلقناها لعملاء.' : 'Real web applications we’ve designed, built, and launched for clients.'}
+                />
+            ) : null}
+
+            <TestimonialsMarquee locale={webappLocale} dir={isRTL ? 'rtl' : 'ltr'} />
+
+            {faq ? (
+                <FaqAccordion
+                    eyebrow={faq.eyebrow}
+                    heading={faq.heading}
+                    subheading={faq.subheading}
+                    items={faq.items}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                />
+            ) : null}
+        </>
+    )
+}

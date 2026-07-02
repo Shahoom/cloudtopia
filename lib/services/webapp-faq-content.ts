@@ -199,6 +199,145 @@ export const webappFaqContent: Record<string, Record<Locale, FaqBlock>> = {
         },
     },
 
+    // ═════════════════════════════════════════════════════════════
+    // STRUCTURED PILLARS — Interactive Web Applications catalog FAQs
+    // ═════════════════════════════════════════════════════════════
+
+    "custom-saas-mvp-development": {
+        en: {
+            eyebrow: "FAQ",
+            heading: "SaaS & MVP development questions, answered",
+            subheading: "Cost, timeline, what's included, multi-tenancy, and whether it's investor-ready.",
+            items: [
+                { q: "How much does it cost to build a SaaS or MVP?", a: "Every SaaS and MVP is quoted to its exact scope after a free consultation — we deliberately focus the build on your core value loop to keep cost and timeline tight. You'll get a fixed written quote before any work begins." },
+                { q: "How long does it take to launch a SaaS MVP?", a: "Most SaaS MVPs reach their first real users in about 8–12 weeks, depending on features, tenancy, and integrations. We scope to the core loop first so you can validate with paying users quickly, then expand from there." },
+                { q: "Does it include user accounts and subscription billing?", a: "Yes. Sign-up, login, multi-user teams, and subscription billing with Stripe — plans, free trials, upgrades, proration, and invoices — are part of the build, so you can charge recurring revenue from launch instead of bolting it on later." },
+                { q: "What is multi-tenant architecture and do I need it?", a: "Multi-tenancy means one platform serves many customers or organizations with their data and settings kept securely isolated. It's how real SaaS is built — we design it in from the start so you can onboard many accounts without a costly re-architecture." },
+                { q: "Is the MVP investor-ready and do I own the code?", a: "Yes to both. You get a real, working product with live users and metrics — far more convincing than slides — built on clean architecture, and you receive 100% of the source code, database, and accounts at handover with no lock-in." },
+            ],
+        },
+        ar: {
+            eyebrow: "أسئلة شائعة",
+            heading: "أسئلة عن تطوير SaaS وMVP، بإجابات واضحة",
+            subheading: "التكلفة والمدة وما المتضمَّن والتعدّد المستأجري وهل هو جاهز للمستثمر.",
+            items: [
+                { q: "كم تكلفة بناء SaaS أو MVP؟", a: "كل SaaS وMVP يُسعّر حسب نطاقه بعد استشارة مجانية — نركّز البناء عمداً على حلقة قيمتك الأساسية لإبقاء التكلفة والمدة محدودتين. تحصل على عرض سعر مكتوب قبل بدء أي عمل." },
+                { q: "كم يستغرق إطلاق SaaS MVP؟", a: "تصل معظم منتجات SaaS MVP لأول مستخدميها الحقيقيين خلال 8–12 أسبوعاً تقريباً، حسب الميزات والتعدّد المستأجري والتكاملات. نحدّد النطاق على الحلقة الأساسية أولاً لتتحقّق بمستخدمين يدفعون بسرعة ثم تتوسّع." },
+                { q: "هل يشمل حسابات المستخدمين والفوترة بالاشتراك؟", a: "نعم. التسجيل والدخول والفِرق المتعددة والفوترة بالاشتراك عبر Stripe — خطط وتجارب مجانية وترقيات واحتساب نسبي وفواتير — جزء من البناء، لتتقاضى إيراداً متكرراً من الإطلاق لا لاحقاً." },
+                { q: "ما هي بنية التعدّد المستأجري وهل أحتاجها؟", a: "التعدّد المستأجري يعني أن منصة واحدة تخدم عملاء أو مؤسسات كثيرة مع بقاء بياناتهم وإعداداتهم معزولة بأمان. هكذا تُبنى منتجات SaaS الحقيقية — نصمّمها من البداية لتُدخل حسابات كثيرة دون إعادة هيكلة مكلفة." },
+                { q: "هل الـ MVP جاهز للمستثمر وهل أملك الكود؟", a: "نعم لكليهما. تحصل على منتج حقيقي عامل بمستخدمين ومؤشرات حية — أكثر إقناعاً من الشرائح — مبني على بنية نظيفة، وتستلم 100% من الكود المصدري وقاعدة البيانات والحسابات عند التسليم دون أي تقييد." },
+            ],
+        },
+    },
+
+    "full-stack-web-engineering": {
+        en: {
+            eyebrow: "FAQ",
+            heading: "Full-stack engineering questions, answered",
+            subheading: "Tech stack, front-end and back-end, integrations, timeline, and ownership.",
+            items: [
+                { q: "What tech stack do you build with?", a: "We build front-ends with React and Next.js, and back-ends in the runtime that best fits the job — Node.js, Python, or PHP/Laravel — on PostgreSQL or MySQL. We choose the stack around your needs, not a one-size-fits-all default, and explain the trade-offs before we start." },
+                { q: "Do you handle both front-end and back-end?", a: "Yes — that's the point of full-stack. One accountable team designs the interface, the server, the database, and the APIs as a single coherent system, so nothing falls through the gap between a separate front-end shop and back-end contractor." },
+                { q: "Can you integrate with our existing systems and add SSO?", a: "Yes. We build custom REST and GraphQL APIs and connect to your CRM, ERP, payment gateways, and any third-party service, including single sign-on (SSO / OAuth) so your users and systems authenticate securely in one place." },
+                { q: "How long does a full-stack web app take to build?", a: "Most full-stack builds launch in about 8–12 weeks, depending on the number of screens, integrations, and back-end complexity. We agree the exact timeline in writing after discovery and show you working previews along the way." },
+                { q: "Do I own the source code?", a: "Yes — 100%. You receive the full front-end and back-end source code, database, and accounts at handover with no lock-in, so you can host, move, or extend the app with any developer." },
+            ],
+        },
+        ar: {
+            eyebrow: "أسئلة شائعة",
+            heading: "أسئلة عن الهندسة المتكاملة، بإجابات واضحة",
+            subheading: "الحزمة التقنية والواجهة والخلفية والتكاملات والمدة والملكية.",
+            items: [
+                { q: "ما الحزمة التقنية التي تبنون بها؟", a: "نبني الواجهات بـ React وNext.js، والخلفيات بالبيئة الأنسب للمهمة — Node.js أو Python أو PHP/Laravel — على PostgreSQL أو MySQL. نختار الحزمة حول احتياجاتك لا افتراضاً موحّداً، ونشرح المفاضلات قبل البدء." },
+                { q: "هل تتولّون الواجهة والخلفية معاً؟", a: "نعم — هذا جوهر الهندسة المتكاملة. فريق واحد مسؤول يصمّم الواجهة والخادم وقاعدة البيانات وواجهات API كنظام واحد متماسك، فلا يضيع شيء بين شركة واجهة ومقاول خلفية منفصلين." },
+                { q: "هل يمكن التكامل مع أنظمتنا وإضافة SSO؟", a: "نعم. نبني واجهات REST وGraphQL مخصصة ونربط بـ CRM وERP وبوابات الدفع وأي خدمة طرف ثالث، بما في ذلك تسجيل الدخول الموحّد (SSO / OAuth) ليصادق مستخدموك وأنظمتك بأمان في مكان واحد." },
+                { q: "كم يستغرق بناء تطبيق ويب متكامل؟", a: "تُطلق معظم المشاريع المتكاملة خلال 8–12 أسبوعاً تقريباً، حسب عدد الشاشات والتكاملات وتعقيد الخلفية. نتفق على المدة الدقيقة كتابياً بعد الاكتشاف ونعرض معاينات حية أثناء العمل." },
+                { q: "هل أملك الكود المصدري؟", a: "نعم — 100%. تستلم كامل كود الواجهة والخلفية وقاعدة البيانات والحسابات عند التسليم دون أي تقييد، لتستضيف التطبيق أو تنقله أو توسّعه مع أي مطوّر." },
+            ],
+        },
+    },
+
+    "interactive-portals-dashboards": {
+        en: {
+            eyebrow: "FAQ",
+            heading: "Portal & dashboard questions, answered",
+            subheading: "What they are, what they cost, data sources, permissions, and branding.",
+            items: [
+                { q: "What's the difference between a portal and a dashboard?", a: "A portal is a secure space where your clients or customers log in to self-serve — track projects, view invoices, download files. A dashboard is an internal control panel where your team reads live KPIs and manages operations. We often build both, tied together with role-based access." },
+                { q: "How much does a custom portal or dashboard cost?", a: "Both are quoted by scope after a free consultation — the number of user roles, data sources, and features (messaging, payments, file management, charts) drives the price. You'll get a fixed written quote before any build starts." },
+                { q: "Where does the dashboard data come from and is it live?", a: "From your real sources — your database, CRM, payment gateway, spreadsheets, or any API. We wire them into one live pipeline so the dashboard shows your true, real-time operating picture instead of manual exports." },
+                { q: "Can different users see different data?", a: "Yes. Granular role-based access control (RBAC) gives clients, admins, finance, and operations each their own view and permissions, so everyone sees exactly what's relevant to them and nothing they shouldn't." },
+                { q: "Can it use our own branding and handle file uploads?", a: "Yes to both. The portal is fully white-label — your logo, colors, and domain throughout — and includes file upload, versioning, and document management in a searchable, permissioned library." },
+            ],
+        },
+        ar: {
+            eyebrow: "أسئلة شائعة",
+            heading: "أسئلة عن البوابات ولوحات التحكم، بإجابات واضحة",
+            subheading: "ما هي، وكم تكلّف، ومصادر البيانات، والصلاحيات، والهوية.",
+            items: [
+                { q: "ما الفرق بين البوابة ولوحة التحكم؟", a: "البوابة مساحة آمنة يدخل إليها عملاؤك أو زبائنك ليخدموا أنفسهم — متابعة المشاريع وعرض الفواتير وتنزيل الملفات. لوحة التحكم لوحة داخلية يقرأ فيها فريقك المؤشرات الحية ويدير العمليات. نبني الاثنين معاً غالباً، مرتبطين بصلاحيات حسب الأدوار." },
+                { q: "كم تكلفة بوابة أو لوحة تحكم مخصصة؟", a: "يُسعّر الاثنان حسب النطاق بعد استشارة مجانية — عدد الأدوار ومصادر البيانات والميزات (مراسلة، دفع، إدارة ملفات، رسوم) يحدّد السعر. تحصل على عرض مكتوب قبل بدء أي بناء." },
+                { q: "من أين تأتي بيانات اللوحة وهل هي حية؟", a: "من مصادرك الحقيقية — قاعدة بياناتك وCRM وبوابة الدفع والجداول وأي API. نربطها في خط أنابيب حيّ واحد لتعرض اللوحة صورتك التشغيلية الحقيقية آنياً بدل التصدير اليدوي." },
+                { q: "هل يرى المستخدمون بيانات مختلفة؟", a: "نعم. يمنح التحكّم الدقيق بالصلاحيات (RBAC) العملاء والمدراء والمالية والعمليات كلٌ عرضه وصلاحياته، فيرى الجميع ما يخصّهم فقط دون ما لا ينبغي." },
+                { q: "هل يمكن استخدام هويتنا ورفع الملفات؟", a: "نعم لكليهما. البوابة بهوية كاملة — شعارك وألوانك ونطاقك في كل مكان — وتتضمّن رفع الملفات وإصدارها وإدارة المستندات في مكتبة قابلة للبحث ومحكومة الصلاحيات." },
+            ],
+        },
+    },
+
+    "application-modernization-performance": {
+        en: {
+            eyebrow: "FAQ",
+            heading: "App modernization questions, answered",
+            subheading: "Refactor vs rewrite, performance, security, cost, and ongoing monitoring.",
+            items: [
+                { q: "Do I need a full rewrite or just a refactor?", a: "Usually a refactor, not a rewrite. We start with an honest audit and often find that targeted refactoring, the right tests, and a proper pipeline fix the problem far more cheaply and safely than starting over. We only recommend a rewrite for the parts that genuinely warrant it." },
+                { q: "Can you make our slow app pass Core Web Vitals?", a: "Yes. We profile the real bottlenecks — database queries, JavaScript bundles, caching, images — and fix them so the app passes Core Web Vitals and genuinely feels fast to users, not just faster on a synthetic test." },
+                { q: "How much does modernization or performance work cost?", a: "It's quoted by scope after a free audit — a focused performance pass is far cheaper than a monolith-to-microservices migration. We give you a phased, fixed-scope plan so you can start with the highest-impact fixes first." },
+                { q: "Can you fix security vulnerabilities in our app?", a: "Yes. We run a security audit, patch known vulnerabilities, update risky dependencies, and add end-to-end automated testing so the same gaps don't reopen — closing the holes that cause outages and breaches." },
+                { q: "Do you offer ongoing maintenance and monitoring?", a: "Yes. We set up CI/CD deployment pipelines and 24/7 monitoring with alerting, so releases are safe and repeatable and problems are caught before your users notice them. Ongoing support is available after handover." },
+            ],
+        },
+        ar: {
+            eyebrow: "أسئلة شائعة",
+            heading: "أسئلة عن تحديث التطبيقات، بإجابات واضحة",
+            subheading: "إعادة الهيكلة مقابل إعادة الكتابة والأداء والأمان والتكلفة والمراقبة المستمرة.",
+            items: [
+                { q: "هل أحتاج إعادة كتابة كاملة أم إعادة هيكلة فقط؟", a: "عادة إعادة هيكلة لا إعادة كتابة. نبدأ بتدقيق صادق ونجد غالباً أن إعادة هيكلة موجّهة والاختبارات الصحيحة وخط أنابيب سليم تُصلح المشكلة أرخص وأأمن من البدء من جديد. لا نوصي بإعادة الكتابة إلا للأجزاء التي تستحقها فعلاً." },
+                { q: "هل يمكن جعل تطبيقنا البطيء يجتاز Core Web Vitals؟", a: "نعم. نحلّل الاختناقات الحقيقية — استعلامات قاعدة البيانات وحزم JavaScript والتخزين المؤقت والصور — ونُصلحها ليجتاز التطبيق Core Web Vitals ويشعر المستخدمون بسرعته فعلاً، لا مجرد سرعة على اختبار اصطناعي." },
+                { q: "كم تكلفة أعمال التحديث أو الأداء؟", a: "تُسعّر حسب النطاق بعد تدقيق مجاني — تحسين أداء مركّز أرخص بكثير من ترحيل من متجانس إلى microservices. نمنحك خطة مرحلية بنطاق ثابت لتبدأ بأعلى الإصلاحات أثراً أولاً." },
+                { q: "هل يمكن إصلاح الثغرات الأمنية في تطبيقنا؟", a: "نعم. نجري تدقيقاً أمنياً ونرقّع الثغرات المعروفة ونحدّث الاعتماديات الخطرة ونضيف اختبارات آلية شاملة لئلا تُفتح الفجوات نفسها مجدداً — مغلقين الثغرات التي تسبّب الأعطال والاختراقات." },
+                { q: "هل تقدّمون صيانة ومراقبة مستمرة؟", a: "نعم. نُعدّ خطوط نشر CI/CD ومراقبة 24/7 بتنبيهات، فتكون الإصدارات آمنة قابلة للتكرار وتُلتقط المشكلات قبل أن يلاحظها مستخدموك. والدعم المستمر متاح بعد التسليم." },
+            ],
+        },
+    },
+
+    "media-entertainment-streaming": {
+        en: {
+            eyebrow: "FAQ",
+            heading: "Streaming platform questions, answered",
+            subheading: "VoD and live, monetization, DRM, delivery, cost, and timeline.",
+            items: [
+                { q: "Can you build both video-on-demand and live streaming?", a: "Yes. We build VoD/OTT libraries with adaptive HLS/DASH playback and low-latency live streaming for events, shows, and webinars — often in the same platform, so you can offer both on-demand catalogs and live broadcasts." },
+                { q: "How can I monetize my streaming platform?", a: "We build the monetization model that fits you — recurring subscriptions, tiered memberships, pay-per-view, or paywalls — with billing handled through Stripe, so your audience directly funds the content and you earn predictable recurring revenue." },
+                { q: "How do you protect content from piracy?", a: "With DRM (such as Widevine), signed and expiring URLs, and secure delivery, so your premium content can't simply be downloaded or shared. We match the protection level to your content's value and licensing requirements." },
+                { q: "Will it stream fast and hold up under load?", a: "Yes. We deliver over a global CDN for fast start times worldwide and use adaptive bitrate streaming so playback stays smooth on any connection, with an architecture that scales from hundreds to tens of thousands of concurrent viewers." },
+                { q: "How much does a streaming platform cost and how long does it take?", a: "It's quoted by scope after a free consultation — catalog size, live vs on-demand, monetization, and DRM all affect it. Most platforms launch in about 12–14 weeks, confirmed in writing after discovery, and you own the full source code at handover." },
+            ],
+        },
+        ar: {
+            eyebrow: "أسئلة شائعة",
+            heading: "أسئلة عن منصات البث، بإجابات واضحة",
+            subheading: "عند الطلب والمباشر وتحقيق الدخل وحماية DRM والتوصيل والتكلفة والمدة.",
+            items: [
+                { q: "هل تبنون الفيديو عند الطلب والبث المباشر معاً؟", a: "نعم. نبني مكتبات VoD/OTT بتشغيل تكيّفي HLS/DASH وبثاً مباشراً منخفض الاستجابة للأحداث والبرامج والندوات — غالباً في المنصة نفسها، لتقدّم كتالوجات عند الطلب وبثاً مباشراً معاً." },
+                { q: "كيف أحقّق دخلاً من منصة البث؟", a: "نبني نموذج تحقيق الدخل الأنسب لك — اشتراكات متكرّرة أو عضويات متدرّجة أو دفع لكل مشاهدة أو جدران دفع — مع فوترة عبر Stripe، ليموّل جمهورك المحتوى مباشرة وتكسب إيراداً متكرراً يمكن التنبؤ به." },
+                { q: "كيف تحمون المحتوى من القرصنة؟", a: "بحماية DRM (مثل Widevine) وروابط موقّعة تنتهي صلاحيتها وتوصيل آمن، فلا يمكن ببساطة تنزيل محتواك المميّز أو مشاركته. نطابق مستوى الحماية مع قيمة محتواك ومتطلبات الترخيص." },
+                { q: "هل سيبثّ بسرعة ويصمد تحت الحِمل؟", a: "نعم. نوصّل عبر CDN عالمي لأزمنة بدء سريعة حول العالم ونستخدم بثاً بمعدّل بت تكيّفي ليبقى التشغيل سلساً على أي اتصال، ببنية تتوسّع من مئات إلى عشرات الآلاف من المشاهدين المتزامنين." },
+                { q: "كم تكلفة منصة البث وكم تستغرق؟", a: "تُسعّر حسب النطاق بعد استشارة مجانية — حجم الكتالوج والمباشر مقابل عند الطلب وتحقيق الدخل وحماية DRM كلها تؤثّر. تُطلق معظم المنصات خلال 12–14 أسبوعاً تقريباً، تُؤكَّد كتابياً بعد الاكتشاف، وتملك الكود المصدري الكامل عند التسليم." },
+            ],
+        },
+    },
+
     "mobile-app-development": {
         en: {
             eyebrow: "FAQ",
