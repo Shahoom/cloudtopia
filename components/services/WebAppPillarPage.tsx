@@ -10,6 +10,9 @@ import { type Project } from '@/lib/projects'
 import { getProjectsForService } from '@/lib/services/related-projects'
 import { asWebAppLocale, type WebAppServiceContent } from '@/lib/services/webapp-service-content'
 import { getWebappFaq } from '@/lib/services/webapp-faq-content'
+import { getWebApplicationsSubServicesByPillar } from '@/lib/services/web-applications'
+import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
+import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 
 /**
  * Self-contained render for a structured interactive-web-application pillar.
@@ -35,6 +38,8 @@ export default async function WebAppPillarPage({
     const webappLocale = asWebAppLocale(locale)
     const isRTL = locale === 'ar'
     const faq = getWebappFaq(slug, locale)
+    const subServices = getWebApplicationsSubServicesByPillar(slug, locale)
+    const subServiceIcon = getStructuredPillarBySlug(slug)?.icon ?? '/icons/services/webapps.png'
 
     const projects: Project[] = await getProjectsForService(locale, {
         serviceSlug: slug,
@@ -81,6 +86,33 @@ export default async function WebAppPillarPage({
                 dir={isRTL ? 'rtl' : 'ltr'}
                 ctaHref={localePath(locale, '/contact')}
             />
+
+            {subServices.length > 0 ? (
+                <section dir={isRTL ? 'rtl' : 'ltr'} className="w-full bg-[#f4f1f8] py-14 md:py-20">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto mb-10 max-w-2xl text-center">
+                            <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#0369a1]">
+                                {isRTL ? 'ماذا يشمل' : 'What’s included'}
+                            </p>
+                            <h2 className="text-3xl font-black tracking-tight text-[#0f172a] md:text-4xl">
+                                {isRTL ? 'ما نبنيه ضمن هذه الخدمة' : 'What we build under this service'}
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {subServices.map((s) => (
+                                <SubServiceGlowCard
+                                    key={s.name}
+                                    href="/contact"
+                                    name={s.name}
+                                    desc={s.desc}
+                                    icon={subServiceIcon}
+                                    locale={locale}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            ) : null}
 
             {projects.length > 0 ? (
                 <ProjectsShowcase

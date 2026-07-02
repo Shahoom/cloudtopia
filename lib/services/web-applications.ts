@@ -22,7 +22,7 @@ export const webApplicationsGroups: DPGroup[] = [
                 name: t('Custom SaaS & MVP Development', 'تطوير SaaS وMVP مخصص'),
                 description: t('Launch-ready SaaS products and startup MVPs, multi-tenant and billing-ready.', 'منتجات SaaS وMVP جاهزة للإطلاق، متعددة المستأجرين وجاهزة للفوترة.'),
                 icon: '/icons/services/Admin Dashboard.png',
-                href: '/services/custom-saas-mvp-development',
+                href: '/web-applications/custom-saas-mvp-development',
                 subServices: [
                     'Minimum Viable Product (MVP) Development for Startups',
                     'Software-as-a-Service (SaaS) Platform Architecture',
@@ -35,7 +35,7 @@ export const webApplicationsGroups: DPGroup[] = [
                 name: t('Full-Stack Web Engineering', 'هندسة ويب متكاملة'),
                 description: t('Front-end and back-end engineering, APIs, and integrations with clean, scalable architecture.', 'هندسة الواجهة الأمامية والخلفية وواجهات API والتكاملات ببنية نظيفة قابلة للتوسّع.'),
                 icon: '/icons/services/webapps.png',
-                href: '/services/full-stack-web-engineering',
+                href: '/web-applications/full-stack-web-engineering',
                 subServices: [
                     'Next.js & React Front-End Engineering',
                     'Node.js, Python & PHP/Laravel Back-End Engineering',
@@ -50,7 +50,7 @@ export const webApplicationsGroups: DPGroup[] = [
                 name: t('Interactive Portals & Dashboards', 'بوابات ولوحات تفاعلية'),
                 description: t('Client portals, admin panels, and data dashboards with role-based access.', 'بوابات عملاء ولوحات إدارة وتحليلات بصلاحيات حسب الأدوار.'),
                 icon: '/icons/services/Customer Portal.png',
-                href: '/services/interactive-portals-dashboards',
+                href: '/web-applications/interactive-portals-dashboards',
                 subServices: [
                     'Custom Client & Customer Portals',
                     'Admin Dashboards & Control Panels',
@@ -64,7 +64,7 @@ export const webApplicationsGroups: DPGroup[] = [
                 name: t('App Modernization, Security & Maintenance', 'تحديث التطبيقات والأمان والصيانة'),
                 description: t('Refactor, secure, test, deploy, and monitor your web apps for the long run.', 'إعادة هيكلة وتأمين واختبار ونشر ومراقبة تطبيقاتك على المدى الطويل.'),
                 icon: '/icons/services/Analytics Dashboard.png',
-                href: '/services/application-modernization-performance',
+                href: '/web-applications/application-modernization-performance',
                 subServices: [
                     'Legacy Application Refactoring & Rewrites',
                     'Monolith to Microservices Migration',
@@ -86,9 +86,256 @@ export const webApplicationsGroups: DPGroup[] = [
                 name: t('Media, Entertainment & Streaming', 'الإعلام والترفيه والبث'),
                 description: t('VoD/OTT platforms, live streaming, and creator-monetization web apps.', 'منصات بث ومحتوى عند الطلب وبث مباشر وتطبيقات تحقيق دخل للصنّاع.'),
                 icon: '/icons/services/Real-time Chat System.png',
-                href: '/services/media-entertainment-streaming',
+                href: '/web-applications/media-entertainment-streaming',
                 subServices: [],
             },
         ],
     },
 ]
+
+/**
+ * Bilingual (EN/AR) sub-services shown as cards ON each web-app pillar page.
+ * This is a PARALLEL source to each pillar's English-only `DPPillar.subServices`
+ * (the shared type stays `string[]`) — here every entry carries a natural Gulf
+ * MSA translation plus a one-line bilingual `desc`. `media-entertainment-streaming`
+ * has an empty `subServices` array upstream, so its entries are authored here
+ * directly so the pillar still shows a populated "what we build" section.
+ * Resolve with getWebApplicationsSubServicesByPillar(slug, locale).
+ */
+export const webAppPillarSubServices: Record<string, { en: string; ar: string; desc?: { en: string; ar: string } }[]> = {
+    'custom-saas-mvp-development': [
+        {
+            en: 'Minimum Viable Product (MVP) Development for Startups',
+            ar: 'تطوير المنتج الأولي (MVP) للشركات الناشئة',
+            desc: {
+                en: 'Ship the one core loop that proves value and put it in front of real users fast.',
+                ar: 'نطلق الحلقة الأساسية التي تثبت القيمة ونضعها أمام مستخدمين حقيقيين بسرعة.',
+            },
+        },
+        {
+            en: 'Software-as-a-Service (SaaS) Platform Architecture',
+            ar: 'بنية منصات البرمجيات كخدمة (SaaS)',
+            desc: {
+                en: 'A clean, service-oriented codebase your v2 and funding round build on, not a rewrite.',
+                ar: 'كود نظيف موجّه للخدمات يُبنى عليه إصدارك الثاني وجولة تمويلك، لا إعادة كتابة.',
+            },
+        },
+        {
+            en: 'Multi-Tenant Application Architecture',
+            ar: 'بنية تطبيقات متعددة المستأجرين',
+            desc: {
+                en: 'Isolated data and settings per customer or workspace — one platform, many secure accounts.',
+                ar: 'بيانات وإعدادات معزولة لكل عميل أو مساحة عمل — منصة واحدة تخدم حسابات كثيرة بأمان.',
+            },
+        },
+        {
+            en: 'Subscription-Based Product Development (Stripe Billing)',
+            ar: 'تطوير منتجات بنظام الاشتراك (فوترة Stripe)',
+            desc: {
+                en: 'Plans, free trials, upgrades, and invoices wired in so you charge recurring revenue from launch.',
+                ar: 'خطط وتجارب مجانية وترقيات وفواتير مدمجة لتتقاضى إيراداً متكرراً من الإطلاق.',
+            },
+        },
+    ],
+    'full-stack-web-engineering': [
+        {
+            en: 'Next.js & React Front-End Engineering',
+            ar: 'هندسة الواجهة الأمامية بـ Next.js وReact',
+            desc: {
+                en: 'Fast, accessible, bilingual interfaces — server-rendered for SEO and speed.',
+                ar: 'واجهات سريعة وسهلة الوصول وثنائية اللغة، مُصيَّرة على الخادم للسيو والسرعة.',
+            },
+        },
+        {
+            en: 'Node.js, Python & PHP/Laravel Back-End Engineering',
+            ar: 'هندسة الخلفية بـ Node.js وPython وPHP/Laravel',
+            desc: {
+                en: 'Robust back-ends in the right runtime for the job, with clean, testable business logic.',
+                ar: 'خلفيات متينة بالبيئة الأنسب للمهمة، بمنطق أعمال نظيف قابل للاختبار.',
+            },
+        },
+        {
+            en: 'Single & Multi-Page Application Development',
+            ar: 'تطوير تطبيقات الصفحة الواحدة والمتعددة',
+            desc: {
+                en: 'SPAs for rich interactivity or MPAs for SEO reach — matched to your goals.',
+                ar: 'تطبيقات صفحة واحدة للتفاعل الغني أو متعددة الصفحات لوصول السيو — مطابقة لأهدافك.',
+            },
+        },
+        {
+            en: 'Progressive Web App (PWA) Development',
+            ar: 'تطوير تطبيقات الويب التقدمية (PWA)',
+            desc: {
+                en: 'Installable apps that load instantly, work offline, and send push notifications.',
+                ar: 'تطبيقات قابلة للتثبيت تحمّل فوراً وتعمل دون إنترنت وترسل إشعارات دفع.',
+            },
+        },
+        {
+            en: 'Database Architecture & Data Modeling',
+            ar: 'بنية قاعدة البيانات ونمذجة البيانات',
+            desc: {
+                en: 'Proper schema design and indexing so the app stays fast and consistent as data grows.',
+                ar: 'تصميم مخطط وفهرسة سليمين ليبقى التطبيق سريعاً ومتّسقاً مع نمو البيانات.',
+            },
+        },
+        {
+            en: 'Custom API, Third-Party Integrations & Payment/SSO Setup',
+            ar: 'واجهات API مخصصة وتكاملات طرف ثالث وإعداد الدفع/SSO',
+            desc: {
+                en: 'REST and GraphQL APIs, payment gateways, and single sign-on connected securely in one place.',
+                ar: 'واجهات REST وGraphQL وبوابات دفع وتسجيل دخول موحّد موصولة بأمان في مكان واحد.',
+            },
+        },
+    ],
+    'interactive-portals-dashboards': [
+        {
+            en: 'Custom Client & Customer Portals',
+            ar: 'بوابات مخصصة للعملاء والزبائن',
+            desc: {
+                en: 'Secure, branded spaces where clients track projects, view invoices, and self-serve.',
+                ar: 'مساحات آمنة بهويتك يتابع فيها العملاء المشاريع ويرون الفواتير ويخدمون أنفسهم.',
+            },
+        },
+        {
+            en: 'Admin Dashboards & Control Panels',
+            ar: 'لوحات إدارة ولوحات تحكم',
+            desc: {
+                en: 'A command center to manage users, content, orders, and operations on one screen you own.',
+                ar: 'مركز قيادة لإدارة المستخدمين والمحتوى والطلبات والعمليات على شاشة واحدة تملكها.',
+            },
+        },
+        {
+            en: 'Data Visualization & Interactive Charting',
+            ar: 'تصوير البيانات والرسوم التفاعلية',
+            desc: {
+                en: 'Live KPIs, trend lines, and interactive charts with filters and drill-down.',
+                ar: 'مؤشرات حية وخطوط اتجاه ورسوم تفاعلية بمرشّحات وتعمّق في التفاصيل.',
+            },
+        },
+        {
+            en: 'Role-Based Access Control & Permissions',
+            ar: 'صلاحيات وتحكم بالوصول حسب الأدوار',
+            desc: {
+                en: 'Granular RBAC gives each team and client their own view — nobody sees data they shouldn’t.',
+                ar: 'تحكّم دقيق (RBAC) يمنح كل فريق وعميل عرضه الخاص — فلا يرى أحد بيانات لا تخصّه.',
+            },
+        },
+        {
+            en: 'File Upload & Document Management Modules',
+            ar: 'وحدات رفع الملفات وإدارة المستندات',
+            desc: {
+                en: 'Upload, version, and share files in a searchable, permissioned document library.',
+                ar: 'ارفع وأصدر إصدارات وشارك الملفات في مكتبة مستندات قابلة للبحث ومحكومة الصلاحيات.',
+            },
+        },
+    ],
+    'application-modernization-performance': [
+        {
+            en: 'Legacy Application Refactoring & Rewrites',
+            ar: 'إعادة هيكلة وإعادة كتابة التطبيقات القديمة',
+            desc: {
+                en: 'Untangle brittle code so your app is safe and cheap to evolve again.',
+                ar: 'نفكّ الكود الهشّ ليعود تطبيقك آمناً ورخيص التطوير من جديد.',
+            },
+        },
+        {
+            en: 'Monolith to Microservices Migration',
+            ar: 'الترحيل من نظام متجانس إلى microservices',
+            desc: {
+                en: 'Break a tangled monolith into well-bounded services so it scales by part, not all at once.',
+                ar: 'نقسّم النظام المتجانس المتشابك إلى خدمات محدودة النطاق ليتوسّع بالجزء لا دفعة واحدة.',
+            },
+        },
+        {
+            en: 'Web App Speed & Core Web Vitals Optimization',
+            ar: 'تحسين سرعة تطبيق الويب وCore Web Vitals',
+            desc: {
+                en: 'Fix the real bottlenecks — queries, bundles, caching, images — to pass Core Web Vitals.',
+                ar: 'نُصلح الاختناقات الحقيقية — الاستعلامات والحزم والتخزين المؤقت والصور — لاجتياز Core Web Vitals.',
+            },
+        },
+        {
+            en: 'End-to-End Automated Testing & QA',
+            ar: 'اختبار آلي شامل وضمان جودة',
+            desc: {
+                en: 'Automated tests close the gaps that cause outages, regressions, and broken releases.',
+                ar: 'اختبارات آلية تُغلق الفجوات التي تسبّب الأعطال والانحدارات والإصدارات المكسورة.',
+            },
+        },
+        {
+            en: 'Security Auditing & Vulnerability Patching',
+            ar: 'تدقيق أمني وترقيع الثغرات',
+            desc: {
+                en: 'Audit, patch known vulnerabilities, and update risky dependencies so the gaps stay closed.',
+                ar: 'نُدقّق ونرقّع الثغرات المعروفة ونحدّث الاعتماديات الخطرة لتبقى الفجوات مغلقة.',
+            },
+        },
+        {
+            en: 'Deployment Pipelines & 24/7 Monitoring',
+            ar: 'خطوط النشر والمراقبة 24/7',
+            desc: {
+                en: 'CI/CD releases and round-the-clock monitoring catch problems before your users do.',
+                ar: 'إصدارات CI/CD ومراقبة على مدار الساعة تلتقط المشكلات قبل مستخدميك.',
+            },
+        },
+    ],
+    'media-entertainment-streaming': [
+        {
+            en: 'VoD & OTT Streaming Platforms',
+            ar: 'منصات بث VoD وOTT',
+            desc: {
+                en: 'On-demand libraries with categories, search, watchlists, and adaptive HLS/DASH playback.',
+                ar: 'مكتبات عند الطلب بتصنيفات وبحث وقوائم مشاهدة وتشغيل تكيّفي HLS/DASH.',
+            },
+        },
+        {
+            en: 'Live Streaming & Events',
+            ar: 'البث المباشر والفعاليات',
+            desc: {
+                en: 'Low-latency live shows and webinars that scale from hundreds to tens of thousands of viewers.',
+                ar: 'برامج وندوات مباشرة بزمن استجابة منخفض تتوسّع من مئات إلى عشرات الآلاف من المشاهدين.',
+            },
+        },
+        {
+            en: 'Subscriptions, Memberships & Paywalls',
+            ar: 'الاشتراكات والعضويات وجدران الدفع',
+            desc: {
+                en: 'Recurring plans, tiers, and pay-per-view via Stripe so your audience funds the content.',
+                ar: 'خطط متكرّرة وعضويات ودفع لكل مشاهدة عبر Stripe ليموّل جمهورك المحتوى.',
+            },
+        },
+        {
+            en: 'Media Asset Management & Transcoding',
+            ar: 'إدارة الأصول الإعلامية وتحويل الترميز',
+            desc: {
+                en: 'Upload, transcode, tag, and organize a growing catalog with metadata and thumbnails.',
+                ar: 'ارفع وحوّل الترميز وصنّف ونظّم كتالوجاً متنامياً ببيانات وصفية وصور مصغّرة.',
+            },
+        },
+        {
+            en: 'CDN Delivery & DRM Content Protection',
+            ar: 'توصيل CDN وحماية المحتوى بـ DRM',
+            desc: {
+                en: 'Global CDN for fast start times, plus DRM and signed URLs to protect premium content.',
+                ar: 'CDN عالمي لأزمنة بدء سريعة، مع DRM وروابط موقّعة لحماية المحتوى المميّز.',
+            },
+        },
+    ],
+}
+
+/**
+ * Resolve a pillar's bilingual sub-service cards for the given locale.
+ * Returns `{ name, desc? }` pairs; empty array for an unknown slug.
+ */
+export function getWebApplicationsSubServicesByPillar(
+    slug: string,
+    locale = 'en',
+): { name: string; desc?: string }[] {
+    const entries = webAppPillarSubServices[slug]
+    if (!entries) return []
+    const loc: 'en' | 'ar' = locale === 'ar' ? 'ar' : 'en'
+    return entries.map((e) => ({
+        name: e[loc],
+        ...(e.desc ? { desc: e.desc[loc] } : {}),
+    }))
+}

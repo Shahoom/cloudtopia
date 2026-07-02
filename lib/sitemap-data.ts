@@ -5,6 +5,7 @@ import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
 import { serviceDetailSlugs } from '@/lib/seo/services'
 import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
+import { webApplicationsGroups } from '@/lib/services/web-applications'
 import { dpSubServiceSlugs, getDigitalPresenceSubService } from '@/lib/services/digital-presence-content'
 import { businessSystemsSubServiceSlugs, getBusinessSystemsSubService } from '@/lib/services/business-systems-content'
 import { subServiceHref } from '@/lib/services/sub-service-routing'
@@ -24,6 +25,15 @@ const allServiceDetailSlugs: string[] = Array.from(
         ...serviceDetailSlugs.filter((s) => !subServiceSlugSet.has(s)),
         ...structuredPillarRoutes.map((p) => p.slug),
     ]),
+)
+
+// Web-app pillar pages moved to their own top-level segment
+// (/web-applications/<slug>). Their href no longer starts with `/services/`, so
+// they auto-drop from structuredPillarRoutes (and thus allServiceDetailSlugs) —
+// emit them here explicitly as /web-applications/<slug>. The /web-applications
+// hub itself is a guaranteed static route below and is unaffected.
+const webApplicationPillarPaths: string[] = webApplicationsGroups.flatMap((g) =>
+    g.pillars.map((p) => `/web-applications/${p.slug}`),
 )
 
 // Nested sub-service URLs (/services/<parent>/<sub>) for every DP + BS sub.
@@ -189,6 +199,20 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
                 lastModified: servicesMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Web-app pillar pages (/web-applications/<slug>).
+    webApplicationPillarPaths.forEach((pillarPath) => {
+        const languages = buildHreflangMap(pillarPath)
+        locales.forEach((loc) => {
+            entries.push({
+                url: canonicalUrl(loc, pillarPath),
+                lastModified: servicesMtime,
+                changeFrequency: 'monthly',
+                priority: 0.78,
                 alternates: { languages },
             })
         })
@@ -389,6 +413,20 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
                 lastModified: servicesDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,
+                alternates: { languages },
+            })
+        })
+    })
+
+    // Web-app pillar pages (/web-applications/<slug>).
+    webApplicationPillarPaths.forEach((pillarPath) => {
+        const languages = buildHreflangMap(pillarPath)
+        locales.forEach((loc) => {
+            sitemapEntries.push({
+                url: canonicalUrl(loc, pillarPath),
+                lastModified: servicesDataMtime,
+                changeFrequency: 'monthly',
+                priority: 0.78,
                 alternates: { languages },
             })
         })
