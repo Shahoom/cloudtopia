@@ -9,8 +9,11 @@ import {
   BookOpen,
   Building2,
   ChevronDown,
+  ChevronRight,
   CircleDollarSign,
+  Cloud,
   FolderKanban,
+  Globe,
   Home,
   Info,
   Layers,
@@ -18,32 +21,62 @@ import {
   Menu,
   MessageSquare,
   Phone,
+  Smartphone,
+  Sparkles,
   X,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import { serviceCategories, localizedServiceValue, categoryFrontDoor } from '@/lib/seo/services'
 import { industries, industrySlugs, localizedValue } from '@/lib/seo/industries'
+import { getStructuredPillars } from '@/lib/services/structured-catalog'
+import { localizedDP } from '@/lib/services/digital-presence'
+
+// The 6 service categories, sourced from the structured catalog (single source of
+// truth) so the menu always matches the /services hub + correct pillar URLs
+// (incl. web-apps under /web-applications).
+const SERVICE_CATEGORY_META = [
+  { id: 'digital-presence', en: 'Digital Presence', ar: 'الحضور الرقمي', hub: '/services', Icon: Globe },
+  { id: 'business-systems-development', en: 'Business Systems', ar: 'أنظمة الأعمال', hub: '/business-systems-development', Icon: Building2 },
+  { id: 'interactive-web-applications', en: 'Web Applications', ar: 'تطبيقات الويب', hub: '/web-applications', Icon: Layers },
+  { id: 'mobile-app-development', en: 'Mobile Apps', ar: 'تطبيقات الجوال', hub: '/services', Icon: Smartphone },
+  { id: 'cloud-infrastructure', en: 'Cloud & Infrastructure', ar: 'السحابة والبنية التحتية', hub: '/services', Icon: Cloud },
+  { id: 'ai-powered-solutions', en: 'AI Solutions', ar: 'حلول الذكاء الاصطناعي', hub: '/services', Icon: Sparkles },
+] as const
+
+function headerServiceCategories(locale: string) {
+  return SERVICE_CATEGORY_META.map((c) => ({
+    id: c.id,
+    name: locale === 'ar' ? c.ar : c.en,
+    hub: c.hub,
+    Icon: c.Icon,
+    pillars: getStructuredPillars(c.id).map((p) => ({ slug: p.slug, name: localizedDP(p.name, locale), href: p.href })),
+  }))
+}
 
 type MegaMenuType = 'services' | 'industries'
 
 function MenuPanel({
   children,
+  tone = 'light',
   width = 'w-[min(1320px,calc(100vw-2rem))]',
 }: {
   children: React.ReactNode
+  tone?: 'light' | 'dark'
   width?: string
 }) {
+  // Solid (non-glass) surface on purpose: a backdrop-filter here would break
+  // because the sticky header becomes a backdrop-filter ancestor once scrolled
+  // (nested backdrop-filters are unreliable across browsers). A solid card +
+  // layered shadow reads as premium and renders correctly in every scroll state.
+  const surface =
+    tone === 'dark'
+      ? 'border-white/10 bg-[#0a0e1a] text-white shadow-[0_28px_80px_rgba(0,0,0,0.55)]'
+      : 'border-slate-200 bg-white text-eerie shadow-[0_28px_80px_rgba(27,27,35,0.18)]'
   return (
     <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3`}>
-      {/* Solid (non-glass) surface on purpose: a backdrop-filter here would break
-          because the sticky header becomes a backdrop-filter ancestor once
-          scrolled (nested backdrop-filters are unreliable across browsers and
-          flicker while scrolling). A solid white card + layered shadow reads as
-          premium and renders correctly in every scroll state. */}
-      <div className="relative flex flex-col max-h-[calc(100vh-6rem)] rounded-lg border border-slate-200 bg-white shadow-[0_28px_80px_rgba(27,27,35,0.18)] overflow-hidden">
-        <div className="overflow-y-auto p-4 text-eerie">
+      <div className={`relative flex max-h-[calc(100vh-6rem)] flex-col overflow-hidden rounded-2xl border ${surface}`}>
+        <div className="overflow-y-auto p-4">
           {children}
         </div>
       </div>
@@ -66,10 +99,11 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
         subtitle: 'Websites, apps, systems, cloud, AI, and digital growth.',
         viewAll: 'View All Services',
       }
+    const cats = headerServiceCategories(locale)
 
     return (
       <MenuPanel>
-        <div className="mb-3 grid gap-4 border-b border-slate-200 pb-3 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div className="mb-4 grid gap-4 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
             <p className="mt-2 max-w-xl text-sm font-bold leading-6 text-slate-600">{copy.subtitle}</p>
@@ -83,31 +117,39 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
-          {serviceCategories.map((category) => (
-            <section key={category.slug} className="rounded-lg border border-slate-200 bg-[#f8fbff] p-3 transition-colors duration-200 hover:border-sky-200 hover:bg-sky-50">
+
+        {/* 6 structured categories, each with its pillars (correct URLs). */}
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {cats.map((cat) => (
+            <section key={cat.id} className="rounded-xl border border-slate-200 bg-[#f8fbff] p-3.5 transition-colors duration-200 hover:border-sky-200 hover:bg-sky-50">
               <Link
-                href={l(categoryFrontDoor(category.slug))}
+                href={l(cat.hub)}
                 onClick={onClose}
-                className="group flex items-center gap-2 text-sm font-black text-eerie hover:text-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                className="group mb-2.5 flex items-center gap-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white text-sky-700 shadow-sm">
-                  <Layers className="h-4 w-4" aria-hidden="true" />
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sky-100 bg-white text-sky-700 shadow-sm transition-colors duration-200 group-hover:border-sky-300 group-hover:bg-sky-600 group-hover:text-white">
+                  <cat.Icon className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span className="line-clamp-1">{localizedServiceValue(category.name, locale)}</span>
+                <span className="flex-1 text-sm font-black text-eerie transition-colors group-hover:text-sky-800">{cat.name}</span>
+                <span className="shrink-0 rounded-full bg-white px-1.5 text-[10px] font-bold text-slate-500 shadow-sm">{cat.pillars.length}</span>
               </Link>
-              <div className="mt-2 grid gap-1">
-                {category.services.slice(0, 2).map((service) => (
+              <div className="grid gap-0.5">
+                {cat.pillars.slice(0, 6).map((p) => (
                   <Link
-                    key={service.slug}
-                    href={l(`/services/${service.slug}`)}
+                    key={p.slug}
+                    href={l(p.href)}
                     onClick={onClose}
                     className="group flex min-w-0 items-center justify-between gap-2 rounded-md px-2 py-1.5 text-xs font-bold text-slate-600 transition-colors duration-200 hover:bg-white hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                   >
-                    <span className="line-clamp-1">{localizedServiceValue(service.name, locale)}</span>
-                    <ArrowUpRight className="h-3 w-3 shrink-0 opacity-45 transition-opacity duration-200 group-hover:opacity-100" aria-hidden="true" />
+                    <span className="line-clamp-1">{p.name}</span>
+                    <ArrowUpRight className="h-3 w-3 shrink-0 opacity-45 transition-opacity duration-200 group-hover:opacity-100 rtl:-scale-x-100" aria-hidden="true" />
                   </Link>
                 ))}
+                {cat.pillars.length > 6 && (
+                  <Link href={l(cat.hub)} onClick={onClose} className="px-2 py-1 text-[11px] font-black text-sky-700 transition-colors hover:text-sky-900">
+                    +{cat.pillars.length - 6} {locale === 'ar' ? 'المزيد' : 'more'}
+                  </Link>
+                )}
               </div>
             </section>
           ))}
@@ -330,6 +372,8 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeMegaMenu, setActiveMegaMenu] = useState<MegaMenuType | null>(null)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [mobileOpenCat, setMobileOpenCat] = useState<string | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isDarkSection, setIsDarkSection] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
@@ -514,16 +558,88 @@ export default function Header() {
         <div className={`xl:hidden transition-[max-height,opacity] duration-300 ${mobileMenuOpen ? 'max-h-[86vh] overflow-y-auto opacity-100' : 'max-h-0 overflow-hidden opacity-0'}`}>
           <div className="my-4 overflow-hidden rounded-2xl border border-slate-200 bg-white text-eerie shadow-[0_20px_60px_rgba(27,27,35,0.16)]">
             {/* Primary navigation */}
-            <nav className="grid p-2">
-              {navigation.map((item, index) => {
+            <nav className="grid gap-0.5 p-2">
+              {navigation.map((item) => {
+                const isServices = 'menu' in item && item.menu === 'services'
                 const MobileIcon = item.icon
-                  || ('menu' in item && item.menu === 'services' ? Layers : 'menu' in item && item.menu === 'industries' ? Building2 : Home)
+                  || (isServices ? Layers : 'menu' in item && item.menu === 'industries' ? Building2 : Home)
+
+                if (isServices) {
+                  return (
+                    <div key={item.name}>
+                      <button
+                        type="button"
+                        onClick={() => setMobileServicesOpen((o) => !o)}
+                        aria-expanded={mobileServicesOpen}
+                        className="group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-bold text-eerie transition-colors duration-200 hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                      >
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f1f7ff] text-sky-700 transition-colors duration-200 group-hover:bg-sky-600 group-hover:text-white">
+                          <Layers className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <span className="flex-1 text-start">{item.name}</span>
+                        <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+                      </button>
+
+                      {mobileServicesOpen && (
+                        <div className="mt-1 grid gap-1 pb-1 ps-1">
+                          {headerServiceCategories(locale).map((cat) => {
+                            const open = mobileOpenCat === cat.id
+                            return (
+                              <div key={cat.id} className="overflow-hidden rounded-xl border border-slate-200 bg-[#f8fbff]">
+                                <button
+                                  type="button"
+                                  onClick={() => setMobileOpenCat(open ? null : cat.id)}
+                                  aria-expanded={open}
+                                  className="flex w-full items-center gap-2.5 px-2.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                                >
+                                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white text-sky-700 shadow-sm">
+                                    <cat.Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                                  </span>
+                                  <span className="flex-1 text-start text-[13.5px] font-black text-eerie">{cat.name}</span>
+                                  <span className="rounded-full bg-white px-1.5 text-[10px] font-bold text-slate-500 shadow-sm">{cat.pillars.length}</span>
+                                  <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+                                </button>
+                                {open && (
+                                  <div className="grid gap-0.5 px-2 pb-2">
+                                    {cat.pillars.map((p) => (
+                                      <Link
+                                        key={p.slug}
+                                        href={l(p.href)}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="flex items-center justify-between gap-2 rounded-lg bg-white px-2.5 py-2 text-[12.5px] font-bold text-slate-600 shadow-sm transition-colors duration-200 hover:text-sky-800"
+                                      >
+                                        <span className="line-clamp-1">{p.name}</span>
+                                        <ArrowUpRight className="h-3 w-3 shrink-0 opacity-45 rtl:-scale-x-100" aria-hidden="true" />
+                                      </Link>
+                                    ))}
+                                    <Link href={l(cat.hub)} onClick={() => setMobileMenuOpen(false)} className="px-2.5 py-1.5 text-[11px] font-black text-sky-700">
+                                      {locale === 'ar' ? 'عرض القسم' : 'View category'} <span aria-hidden="true">→</span>
+                                    </Link>
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })}
+                          <Link
+                            href={l('/services')}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="mt-0.5 flex items-center justify-center gap-1.5 rounded-xl bg-eerie px-3 py-2.5 text-[13px] font-black !text-white transition-colors duration-200 hover:bg-sky-800"
+                          >
+                            {locale === 'ar' ? 'عرض كل الخدمات' : 'View all services'}
+                            <ArrowUpRight className="h-3.5 w-3.5 rtl:-scale-x-100" aria-hidden="true" />
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`group flex items-center gap-3 rounded-xl px-3 py-3.5 text-[15px] font-bold text-eerie transition-colors duration-200 hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${index !== 0 ? 'border-t border-slate-100' : ''}`}
+                    className="group flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-bold text-eerie transition-colors duration-200 hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                   >
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f1f7ff] text-sky-700 transition-colors duration-200 group-hover:bg-sky-600 group-hover:text-white">
                       <MobileIcon className="h-4 w-4" aria-hidden="true" />
@@ -534,24 +650,6 @@ export default function Header() {
                 )
               })}
             </nav>
-
-            {/* Services quick grid */}
-            <section className="border-t border-slate-100 bg-[#f8fbff] p-3">
-              <p className="mb-2.5 px-1 text-[11px] font-black uppercase tracking-[0.16em] text-neutral-500">{servicesLabel}</p>
-              <div className="grid grid-cols-2 gap-2">
-                {serviceCategories.map((category) => (
-                  <Link
-                    key={category.slug}
-                    href={l(categoryFrontDoor(category.slug))}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-[13px] font-bold leading-tight text-neutral-800 transition-colors duration-200 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
-                  >
-                    <Layers className="h-3.5 w-3.5 shrink-0 text-sky-600" aria-hidden="true" />
-                    <span className="line-clamp-2">{localizedServiceValue(category.name, locale)}</span>
-                  </Link>
-                ))}
-              </div>
-            </section>
 
             {/* Contact + CTA */}
             <div className="border-t border-slate-100 p-3">
