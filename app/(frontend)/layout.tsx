@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
-import { Cairo, Fraunces, Amiri } from 'next/font/google'
+import { Cairo, Fraunces, Amiri, Hanken_Grotesk } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
@@ -38,6 +38,17 @@ const amiri = Amiri({
   subsets: ['arabic', 'latin'],
   variable: '--font-amiri',
   weight: ['400', '700'],
+  display: 'swap',
+})
+
+// Latin UI face for English. A refined grotesque with more character and a
+// crisper read than Changa's Latin glyphs (Changa is Arabic-first). Placed
+// FIRST in the English font stack so Latin text renders in Hanken while any
+// Arabic glyph falls through to Changa — Arabic typography is untouched.
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-hanken',
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
@@ -154,7 +165,7 @@ export default async function FrontendLayout({
     : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable}`}>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable} ${hanken.variable}`}>
       <head>
         {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
         <GoogleAnalytics />
@@ -165,7 +176,7 @@ export default async function FrontendLayout({
         <link rel="preload" as="image" href="/images/homepage/clouds.webp" type="image/webp" fetchPriority="high" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="min-h-screen antialiased font-['Changa',sans-serif]" suppressHydrationWarning>
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           suppressHydrationWarning

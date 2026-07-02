@@ -39,8 +39,8 @@
 @import "tailwindcss/utilities";
 
 :root {
-  /* Body text: Changa */
-  --font-inter: 'Changa', sans-serif;
+  /* Body text: Hanken Grotesk for Latin (English), Changa for Arabic glyphs. */
+  --font-inter: var(--font-hanken), 'Changa', sans-serif;
   --font-arabic: 'Changa', sans-serif;
   /* Headings: Cairo (loaded via next/font in layout.tsx) */
   --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
