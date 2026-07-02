@@ -9,6 +9,7 @@ import { localePath } from '@/lib/i18n/url'
 import { cn } from '@/lib/utils'
 import { ArrowRight, ArrowUpRight, Check, Search } from 'lucide-react'
 import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
+import type { LocalizedText } from '@/lib/seo/industries'
 import { structuredCategoryIds, getStructuredGroups, getStructuredPillars, allStructuredPillars } from '@/lib/services/structured-catalog'
 
 interface ServiceCard {
@@ -810,10 +811,77 @@ function PillarCard({ pillar, locale, index }: { pillar: DPPillar; locale: strin
     )
 }
 
+/**
+ * Some structured categories have a rich "hub" landing page that is not itself a
+ * pillar (so it never appears in the pillar grid). We surface it as a prominent
+ * lead card at the top of the category — it's the main entry point.
+ */
+const CATEGORY_HUB: Record<
+    string,
+    { href: string; name: LocalizedText; description: LocalizedText; icon: string; cta: LocalizedText }
+> = {
+    'business-systems-development': {
+        href: '/business-systems-development',
+        name: { en: 'Business Systems Development', ar: 'تطوير أنظمة الأعمال' },
+        description: {
+            en: 'The complete hub — ERP, CRM, process automation, and management systems, engineered around how your business actually runs. Start here for the full picture.',
+            ar: 'المركز المتكامل — أنظمة ERP وCRM وأتمتة العمليات وأنظمة الإدارة، مبنية حول طريقة عمل شركتك فعلياً. ابدأ من هنا للصورة الكاملة.',
+        },
+        icon: '/icons/services/systems.png',
+        cta: { en: 'Explore the full hub', ar: 'استكشف المركز الكامل' },
+    },
+    'interactive-web-applications': {
+        href: '/web-applications',
+        name: { en: 'Web Applications', ar: 'تطبيقات الويب' },
+        description: {
+            en: 'The complete hub — SaaS platforms, portals, dashboards, and custom-engineered web apps built to scale. Start here for the full overview.',
+            ar: 'المركز المتكامل — منصات SaaS وبوابات ولوحات تحكم وتطبيقات ويب مخصصة مبنية للتوسّع. ابدأ من هنا للنظرة الشاملة.',
+        },
+        icon: '/icons/services/webapps.png',
+        cta: { en: 'Explore the full hub', ar: 'استكشف المركز الكامل' },
+    },
+}
+
+function CategoryHubCard({ hub, locale }: { hub: (typeof CATEGORY_HUB)[string]; locale: string }) {
+    const name = localizedDP(hub.name, locale)
+    const description = localizedDP(hub.description, locale)
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="group"
+        >
+            <Link
+                href={localePath(locale, hub.href)}
+                aria-label={name}
+                className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-sky-200/70 bg-gradient-to-br from-sky-50 via-white to-indigo-50/50 p-5 shadow-sm shadow-sky-100/60 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 sm:flex-row sm:items-center"
+            >
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white shadow-sm">
+                    <Image src={hub.icon} alt="" aria-hidden="true" width={30} height={30} className="h-[30px] w-[30px] object-contain" />
+                </div>
+                <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex items-center gap-2">
+                        <span className="rounded-full bg-sky-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{locale === 'ar' ? 'الرئيسي' : 'Main hub'}</span>
+                        <h3 className="truncate text-base font-black tracking-tight text-slate-900 md:text-lg">{name}</h3>
+                    </div>
+                    <p className="text-[13px] leading-relaxed text-slate-600">{description}</p>
+                </div>
+                <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg bg-sky-600 px-3.5 py-2 text-[13px] font-bold text-white transition-colors group-hover:bg-sky-700 sm:self-center">
+                    {localizedDP(hub.cta, locale)}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
+                </span>
+            </Link>
+        </motion.div>
+    )
+}
+
 function StructuredCategoryGroups({ categoryId, locale }: { categoryId: string; locale: string }) {
     const groups = getStructuredGroups(categoryId) ?? []
+    const hub = CATEGORY_HUB[categoryId]
     return (
         <div className="space-y-10">
+            {hub && <CategoryHubCard hub={hub} locale={locale} />}
             {groups.map((group) => (
                 <section key={group.slug} aria-label={localizedDP(group.name, locale)}>
                     <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-sky-600/80">{localizedDP(group.tagline, locale)}</p>
