@@ -83,7 +83,7 @@ export function FloatingWhatsApp({ href, locale }: { href: string; locale: strin
             onPointerCancel={endDrag}
             onClick={onClick}
             style={pos ? { left: pos.left, top: pos.top, right: 'auto', bottom: 'auto' } : undefined}
-            className="group fixed bottom-24 left-4 z-[55] flex h-14 w-14 touch-none cursor-grab select-none items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_34px_-8px_rgba(37,211,102,0.7)] ring-2 ring-white/80 transition-transform duration-200 hover:scale-105 active:scale-95 active:cursor-grabbing md:h-[60px] md:w-[60px]"
+            className={`group fixed bottom-24 z-[55] flex h-14 w-14 touch-none cursor-grab select-none items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_34px_-8px_rgba(37,211,102,0.7)] ring-2 ring-white/80 transition-transform duration-200 hover:scale-105 active:scale-95 active:cursor-grabbing md:h-[60px] md:w-[60px] ${isAr ? 'right-4' : 'left-4'}`}
         >
             {/* idle pulse ring */}
             {mounted && !pos && (
