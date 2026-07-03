@@ -43,6 +43,7 @@ import {
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
+import { getStructuredPillars } from '@/lib/services/structured-catalog'
 
 // Map of Icon strings to Lucide components for type safety
 const IconMap: Record<string, React.ComponentType<any>> = {
@@ -73,7 +74,9 @@ type TabData = {
   services: ServiceItem[]
 }
 
-const TABS_DATA: TabData[] = [
+// Legacy hardcoded data — SUPERSEDED by the catalog-driven TABS_DATA below.
+// (Kept inert to avoid a 400-line diff; safe to delete in a follow-up.)
+const _LEGACY_TABS: TabData[] = [
   {
     id: 'digital-presence',
     label: { en: 'Digital Presence', ar: 'الحضور الرقمي' },
@@ -488,6 +491,34 @@ const TABS_DATA: TabData[] = [
     ]
   }
 ]
+
+// Per-category display meta (label/image/icon). One tab per structured-catalog
+// category; the legacy standalone "Digital Growth" tab is folded into Digital
+// Presence, matching the restructured taxonomy.
+const SERVICE_TABS_META: { id: string; label: LocalizedText; description: LocalizedText; image: string; iconName: string }[] = [
+  { id: 'digital-presence', label: { en: 'Digital Presence', ar: 'الحضور الرقمي' }, description: { en: 'Websites, e-commerce, branding, SEO, social, and content.', ar: 'مواقع ومتاجر وهوية وSEO وتواصل اجتماعي ومحتوى.' }, image: '/images/homepage/digital presence.png', iconName: 'Globe' },
+  { id: 'interactive-web-applications', label: { en: 'Web Applications', ar: 'تطبيقات الويب' }, description: { en: 'SaaS platforms, portals, dashboards, and custom web apps.', ar: 'منصات SaaS وبوابات ولوحات تحكم وتطبيقات ويب مخصصة.' }, image: '/images/homepage/web application.jpeg', iconName: 'Layers' },
+  { id: 'business-systems-development', label: { en: 'Business Systems', ar: 'أنظمة الأعمال' }, description: { en: 'ERP, CRM, automation, and management systems.', ar: 'أنظمة ERP وCRM وأتمتة وإدارة الأعمال.' }, image: '/images/homepage/business systems.jpeg', iconName: 'Briefcase' },
+  { id: 'mobile-app-development', label: { en: 'Mobile Apps', ar: 'تطبيقات الجوال' }, description: { en: 'iOS, Android, and cross-platform apps built to scale.', ar: 'تطبيقات iOS وأندرويد ومتعددة المنصات مبنية للتوسّع.' }, image: '/images/homepage/app development.jpg', iconName: 'Smartphone' },
+  { id: 'cloud-infrastructure', label: { en: 'Cloud & Infrastructure', ar: 'السحابة والبنية التحتية' }, description: { en: 'Migration, hosting, DevOps, security, and monitoring.', ar: 'ترحيل واستضافة وDevOps وأمان ومراقبة.' }, image: '/images/homepage/cloud & infrastructure.webp', iconName: 'Cloud' },
+  { id: 'ai-powered-solutions', label: { en: 'AI Solutions', ar: 'حلول الذكاء الاصطناعي' }, description: { en: 'Chatbots, automation, assistants, and AI reporting.', ar: 'روبوتات محادثة وأتمتة ومساعدون وتقارير بالذكاء الاصطناعي.' }, image: '/images/homepage/ai automation.webp', iconName: 'Brain' },
+]
+
+// Data-driven from the structured catalog: every card links to that pillar's
+// canonical href, so links stay correct as the taxonomy / URLs evolve (no more
+// hand-maintained, mismatched links).
+const TABS_DATA: TabData[] = SERVICE_TABS_META.map((meta) => ({
+  id: meta.id,
+  label: meta.label,
+  description: meta.description,
+  image: meta.image,
+  services: getStructuredPillars(meta.id).slice(0, 8).map((p) => ({
+    title: p.name,
+    description: p.description,
+    link: p.href,
+    iconName: meta.iconName,
+  })),
+}))
 
 export default function ServicesGrid() {
   const { t, locale } = useLanguage()
