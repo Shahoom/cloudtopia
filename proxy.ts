@@ -146,6 +146,23 @@ export function proxy(request: NextRequest) {
             ? pathname.slice(0, -1)
             : pathname
 
+    // Renamed page: old /website-design → /website-development (single 301, any locale).
+    if (cleanPath === '/website-design' || cleanPath === '/ar/website-design' || cleanPath === '/en/website-design') {
+        const url = request.nextUrl.clone()
+        url.host = apexHost
+        url.pathname = cleanPath === '/ar/website-design' ? '/ar/website-development' : '/website-development'
+        return NextResponse.redirect(url, { status: 301 })
+    }
+
+    // Renamed page: old /ecommerce-solutions → /ecommerce-development (single 301, any locale).
+    if (cleanPath === '/ecommerce-solutions' || cleanPath === '/ar/ecommerce-solutions' || cleanPath === '/en/ecommerce-solutions') {
+        const url = request.nextUrl.clone()
+        url.host = apexHost
+        url.pathname = cleanPath === '/ar/ecommerce-solutions' ? '/ar/ecommerce-development' : '/ecommerce-development'
+        return NextResponse.redirect(url, { status: 301 })
+    }
+
+
     const seg1 = cleanPath.split('/')[1] // '', 'en', 'ar', or something else
     const isEnPrefixed = seg1 === 'en'
     const isNonEnLocale = seg1 === 'ar'

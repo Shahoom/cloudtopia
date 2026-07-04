@@ -29,13 +29,18 @@ export async function POST(request: NextRequest) {
   const service = clean(b.service, 180)
   const budget  = clean(b.budget,  120)
   const timeline = clean(b.timeline, 120)
-  const message = clean(b.message, 3000)
   const locale  = b.locale === 'ar' ? 'ar' : 'en'
   const pageUrl = clean(b.pageUrl, 500)
-  const source  = ['contact-form', 'article-sidebar', 'pricing-page'].includes(String(b.source || ''))
+  const source  = ['contact-form', 'service-page', 'article-sidebar', 'pricing-page'].includes(String(b.source || ''))
     ? String(b.source)
     : 'contact-form'
 
+  // Service-page quick forms collect only name/email/phone — synthesize a message
+  // so the lead is still captured, tagged with the source service it came from.
+  let message = clean(b.message, 3000)
+  if (!message && source === 'service-page') {
+    message = `Quick inquiry from the ${service || 'services'} page.`
+  }
   if (!message) {
     return NextResponse.json({ error: 'Message is required.' }, { status: 400 })
   }

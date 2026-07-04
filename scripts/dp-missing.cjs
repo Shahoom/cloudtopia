@@ -1,0 +1,7 @@
+const fs = require('fs')
+const all = JSON.parse(fs.readFileSync('/tmp/dp-args.json', 'utf8'))
+const done = new Set(fs.readdirSync('lib/services/dp-subs').filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', '')))
+const missing = all.filter((a) => !done.has(a.slug))
+fs.writeFileSync('/tmp/dp-missing.json', JSON.stringify(missing))
+console.log('missing:', missing.length)
+missing.forEach((m) => console.log(m.pillarSlug + ' | ' + m.slug + ' | ' + m.service))

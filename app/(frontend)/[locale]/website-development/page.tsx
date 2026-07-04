@@ -13,11 +13,11 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/website-design', 'website-design', {
+    const metadata = await getCMSMetadata(locale, '/website-development', 'website-design', {
         title: websiteDesignSeoFallback.titles[locale] || websiteDesignSeoFallback.titles.en,
         description: websiteDesignSeoFallback.descriptions[locale] || websiteDesignSeoFallback.descriptions.en,
     })
-    const title = locale === 'ar' ? 'أفضل شركة تصميم وتطوير مواقع' : 'Best Website Design & Development Company'
+    const title = locale === 'ar' ? 'أفضل شركة تطوير مواقع' : 'Best Website Development Company'
     return { ...metadata, title }
 }
 

@@ -6,8 +6,8 @@ import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
 
 export const websiteDesignSeoFallback = {
     titles: {
-        en: 'Website Design & Development in the Gulf',
-        ar: 'تصميم وتطوير مواقع الويب في الخليج',
+        en: 'Website Development in the Gulf',
+        ar: 'تطوير مواقع الويب في الخليج',
     } as Record<string, string>,
     descriptions: {
         en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct, and scoped clearly.',
@@ -17,7 +17,7 @@ export const websiteDesignSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/website-design', 'website-design', {
+    return getCMSMetadata(locale, '/website-development', 'website-design', {
         title: websiteDesignSeoFallback.titles[locale] || websiteDesignSeoFallback.titles.en,
         description: websiteDesignSeoFallback.descriptions[locale] || websiteDesignSeoFallback.descriptions.en,
     })
@@ -34,13 +34,13 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'Website Design', path: '/website-design' },
+                        { name: 'Website Development', path: '/website-development' },
                     ]),
                     buildServiceSchema(locale, {
-                        name: 'Website Design & Development',
+                        name: 'Website Development',
                         description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
-                        path: '/website-design',
-                        serviceType: 'Web Design',
+                        path: '/website-development',
+                        serviceType: 'Web Development',
                     }),
                     faqSchema,
                 ]}

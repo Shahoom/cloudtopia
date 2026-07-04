@@ -41,6 +41,7 @@ export const ContactInquiries: CollectionConfig = {
       defaultValue: 'contact-form',
       options: [
         { label: 'Contact Form', value: 'contact-form' },
+        { label: 'Service Page', value: 'service-page' },
         { label: 'Article Sidebar', value: 'article-sidebar' },
         { label: 'Pricing Page', value: 'pricing-page' },
         { label: 'Other', value: 'other' },

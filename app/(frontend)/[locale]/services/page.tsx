@@ -29,8 +29,8 @@ export default async function ServicesPage({
     const heroDesc = t.services?.hero?.description ?? ''
 
     const detailRoutes: Array<{ path: string; key: string }> = [
-        { path: '/website-design', key: 'Website Design' },
-        { path: '/ecommerce-solutions', key: 'Ecommerce Solutions' },
+        { path: '/website-development', key: 'Website Development' },
+        { path: '/ecommerce-development', key: 'Ecommerce Solutions' },
         { path: '/business-systems-development', key: 'Business Systems Development' },
         { path: '/restaurant-qr-menu', key: 'Restaurant QR Menu' },
         { path: '/content-creation', key: 'Content Creation' },
