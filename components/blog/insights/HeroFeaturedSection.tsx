@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, Eye } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
+import { Kicker } from '@/components/blog/editorial/Kicker'
+import { TypographicCover } from '@/components/blog/editorial/TypographicCover'
+import { categoryAccent } from '@/components/blog/editorial/categoryColor'
 
 function formatDate(value: string, locale: string) {
   return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-SA' : 'en', {
@@ -12,51 +14,28 @@ function formatDate(value: string, locale: string) {
   }).format(new Date(value))
 }
 
-function CategoryPill({ category }: { category: NonNullable<BlogPostSummary['category']> }) {
-  const color = category.color || '#0284c7'
-  return (
-    <span
-      className="inline-flex shrink-0 items-center rounded border px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wide"
-      style={{ borderColor: color, color }}
-    >
-      {category.name}
-    </span>
-  )
-}
-
-function MetaRow({
-  publishedAt,
-  viewsCount,
-  locale,
-}: {
-  publishedAt: string
-  viewsCount: number
-  locale: string
-}) {
-  return (
-    <div className="flex items-center gap-4 text-xs font-bold text-neutral-400">
-      <span className="flex items-center gap-1">
-        <Calendar className="h-3.5 w-3.5" />
-        <time dateTime={publishedAt}>{formatDate(publishedAt, locale)}</time>
-      </span>
-      {viewsCount > 0 && (
-        <span className="flex items-center gap-1">
-          <Eye className="h-3.5 w-3.5" />
-          {viewsCount.toLocaleString(locale === 'ar' ? 'ar-SA' : 'en')}{' '}
-          {locale === 'ar' ? 'مشاهدة' : 'views'}
-        </span>
-      )}
-    </div>
-  )
+function metaLine(post: BlogPostSummary, locale: string) {
+  const isAr = locale === 'ar'
+  const segments = [formatDate(post.publishedAt, locale)]
+  if (post.viewsCount > 0) {
+    segments.push(
+      `${post.viewsCount.toLocaleString(isAr ? 'ar-EG' : 'en')} ${isAr ? 'مشاهدة' : 'views'}`,
+    )
+  }
+  const author = post.author?.name
+  const by = author ? `${isAr ? 'بقلم' : 'By'} ${author}` : undefined
+  return [by, ...segments].filter(Boolean).join('  ·  ')
 }
 
 function FeaturedPost({ post, locale }: { post: BlogPostSummary; locale: string }) {
   const href = localePath(locale, `/articles/${post.slug}`)
+  const isAr = locale === 'ar'
+  const accent = categoryAccent(post.category)
 
   return (
-    <article>
-      <Link href={href} className="group block">
-        <div className="relative aspect-[2/1] overflow-hidden rounded-xl">
+    <article className="group">
+      <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ed-accent)]">
+        <div className="relative aspect-[2/1] overflow-hidden">
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
@@ -64,64 +43,68 @@ function FeaturedPost({ post, locale }: { post: BlogPostSummary; locale: string 
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="ed-zoom object-cover"
             />
           ) : (
-            <div className="h-full w-full bg-gradient-to-br from-sky-100 via-white to-indigo-100" />
+            <TypographicCover title={post.title} category={post.category} size="lead" className="absolute inset-0" />
           )}
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5">
-            <span className="h-1.5 w-5 rounded-full bg-white" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
-          </div>
         </div>
-        <div className="mt-4 space-y-2">
-          {post.category && <CategoryPill category={post.category} />}
-          <MetaRow publishedAt={post.publishedAt} viewsCount={post.viewsCount} locale={locale} />
-          <h2 className="line-clamp-2 text-[22px] font-bold leading-snug text-neutral-900 transition-colors group-hover:text-primary-700">
+        <div className="mt-5">
+          {post.category && <Kicker color={accent}>{post.category.name}</Kicker>}
+          <h2
+            className="ed-serif mt-3 transition-colors group-hover:text-[color:var(--ed-accent-ink)]"
+            style={{ fontSize: 'clamp(1.8rem, 3.2vw, 2.5rem)', lineHeight: 1.12 }}
+          >
             {post.title}
           </h2>
-          <p className="line-clamp-2 text-sm text-neutral-500">
+          <p
+            className="mt-3 max-w-2xl"
+            style={{
+              fontFamily: 'var(--ed-serif)',
+              fontStyle: isAr ? 'normal' : 'italic',
+              fontSize: '1.1rem',
+              lineHeight: 1.5,
+              color: 'var(--ed-graphite)',
+            }}
+          >
             {post.shortExcerpt || post.excerpt}
           </p>
+          <div className="ed-meta mt-4">{metaLine(post, locale)}</div>
         </div>
       </Link>
     </article>
   )
 }
 
-function SidebarPost({ post, locale }: { post: BlogPostSummary; locale: string }) {
+function SecondaryPost({
+  post,
+  locale,
+  divided,
+}: {
+  post: BlogPostSummary
+  locale: string
+  divided: boolean
+}) {
   const href = localePath(locale, `/articles/${post.slug}`)
+  const accent = categoryAccent(post.category)
+
+  // Broadsheet columns: 2nd and 3rd items carry a leading vertical hairline on
+  // wide screens; on narrow screens they stack with a top hairline instead.
+  const dividerClass = divided
+    ? 'border-t border-[var(--ed-rule)] pt-5 sm:border-t-0 sm:border-s sm:border-[var(--ed-rule)] sm:ps-5 sm:pt-0'
+    : ''
 
   return (
-    <article>
-      <Link href={href} className="group flex gap-3">
-        <div className="relative h-[105px] w-[180px] shrink-0 overflow-hidden rounded-lg">
-          {post.coverImage?.url ? (
-            <Image
-              src={post.coverImage.url}
-              alt={post.coverImage.alt || post.featuredImageAlt || post.title}
-              fill
-              sizes="180px"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          ) : (
-            <div className="h-full w-full bg-gradient-to-br from-sky-100 via-white to-indigo-100" />
-          )}
-        </div>
-        <div className="min-w-0 flex-1 space-y-1.5 py-0.5">
-          {post.category && <CategoryPill category={post.category} />}
-          <MetaRow publishedAt={post.publishedAt} viewsCount={post.viewsCount} locale={locale} />
-          <h3 className="line-clamp-2 text-[16px] font-semibold leading-snug text-neutral-900 transition-colors group-hover:text-primary-700">
-            {post.title}
-          </h3>
-          <p className="line-clamp-2 text-[13px] text-neutral-500">
-            {post.shortExcerpt || post.excerpt}
-          </p>
-          <span className="text-xs text-neutral-400 transition-colors group-hover:text-primary-600">
-            {locale === 'ar' ? '← اقرأ المزيد' : 'Read More →'}
-          </span>
-        </div>
+    <article className={`group ${dividerClass}`}>
+      <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ed-accent)]">
+        {post.category && <Kicker color={accent}>{post.category.name}</Kicker>}
+        <h3
+          className="ed-serif mt-2 line-clamp-4 transition-colors group-hover:text-[color:var(--ed-accent-ink)]"
+          style={{ fontSize: '1.1rem', lineHeight: 1.25 }}
+        >
+          {post.title}
+        </h3>
+        <div className="ed-meta mt-3">{formatDate(post.publishedAt, locale)}</div>
       </Link>
     </article>
   )
@@ -140,14 +123,14 @@ export function HeroFeaturedSection({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="grid gap-6 lg:grid-cols-[1.16fr_1fr]">
-        <FeaturedPost post={featuredPost} locale={locale} />
-        <div className="flex flex-col gap-5">
-          {sidebar.map((post) => (
-            <SidebarPost key={post.id} post={post} locale={locale} />
+      <FeaturedPost post={featuredPost} locale={locale} />
+      {sidebar.length > 0 && (
+        <div className="mt-8 grid gap-5 border-t-2 border-[var(--ed-rule-ink)] pt-6 sm:grid-cols-3 sm:gap-0">
+          {sidebar.map((post, i) => (
+            <SecondaryPost key={post.id} post={post} locale={locale} divided={i > 0} />
           ))}
         </div>
-      </div>
+      )}
     </section>
   )
 }

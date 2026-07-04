@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { CheckCircle2, Globe, Loader2, Mail, Phone, Send, ShieldCheck, User } from 'lucide-react'
+import { WhatsAppButton } from '@/components/blog/editorial/WhatsAppButton'
 
 interface InquiryFormSidebarProps {
   locale: string
@@ -73,13 +74,13 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
   // ── Success state ──────────────────────────────────────────────────────────
   if (status === 'success') {
     return (
-      <aside className="sticky top-[100px] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-[15px] bg-neutral-50 p-5 shadow-sm">
+      <aside className="sticky top-[100px] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-lg border border-[var(--ed-rule)] bg-[var(--ed-paper)] p-5">
         <div className="flex flex-col items-center gap-3 py-4 text-center">
-          <CheckCircle2 className="h-10 w-10 text-primary-600" />
-          <h2 className="text-[17px] font-black text-neutral-900">
+          <CheckCircle2 className="h-10 w-10 text-[color:var(--ed-accent)]" />
+          <h2 className="ed-serif text-lg">
             {ar ? 'تم الإرسال بنجاح!' : 'Message received!'}
           </h2>
-          <p className="text-[13px] text-neutral-500">
+          <p className="text-[13px]" style={{ color: 'var(--ed-graphite)' }}>
             {ar
               ? 'سنرد عليك خلال يوم عمل واحد.'
               : "We'll get back to you within one business day."}
@@ -92,50 +93,57 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
   // ── Form state ─────────────────────────────────────────────────────────────
   return (
     <aside
-      className="sticky top-[100px] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-[15px] bg-neutral-50 p-5 shadow-sm"
+      className="sticky top-[100px] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-lg border border-[var(--ed-rule)] bg-[var(--ed-paper)] p-5"
       dir={ar ? 'rtl' : 'ltr'}
     >
-      <h2 className="mb-1 text-[17px] font-black text-neutral-900">
+      <h2 className="ed-serif mb-1 text-lg">
         {ar ? 'احصل على استشارة مجانية' : 'Get a Free Consultation'}
       </h2>
-      <p className="mb-5 text-[13px] text-neutral-500">
+      <p className="mb-4 text-[13px]" style={{ color: 'var(--ed-graphite)' }}>
         {ar
           ? 'أخبرنا عن مشروعك وسنرد عليك خلال 24 ساعة.'
           : "Tell us about your project and we'll get back to you within 24 hours."}
       </p>
 
+      <WhatsAppButton locale={locale} fullWidth className="mb-4" />
+      <div className="mb-4 flex items-center gap-3">
+        <span className="h-px flex-1" style={{ background: 'var(--ed-rule)' }} />
+        <span className="ed-eyebrow" style={{ color: 'var(--ed-muted)' }}>{ar ? 'أو' : 'or'}</span>
+        <span className="h-px flex-1" style={{ background: 'var(--ed-rule)' }} />
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-3" noValidate>
         {/* Name */}
-        <label className="flex items-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white px-3 py-2.5 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-400/20">
-          <User className="h-4 w-4 shrink-0 text-primary-600" />
+        <label className="flex items-center gap-2 overflow-hidden rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2.5 focus-within:border-[color:var(--ed-accent)] focus-within:ring-2 focus-within:ring-[color:var(--ed-accent)]/20">
+          <User className="h-4 w-4 shrink-0 text-[color:var(--ed-muted)]" />
           <input
             type="text"
             value={form.name}
             onChange={set('name')}
             placeholder={ar ? 'الاسم الكامل' : 'Full Name'}
-            className="min-w-0 flex-1 bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:text-neutral-400"
+            className="min-w-0 flex-1 bg-transparent text-sm text-[color:var(--ed-ink)] outline-none placeholder:text-[color:var(--ed-muted)]"
           />
         </label>
 
         {/* Email */}
-        <label className="flex items-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white px-3 py-2.5 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-400/20">
-          <Mail className="h-4 w-4 shrink-0 text-primary-600" />
+        <label className="flex items-center gap-2 overflow-hidden rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2.5 focus-within:border-[color:var(--ed-accent)] focus-within:ring-2 focus-within:ring-[color:var(--ed-accent)]/20">
+          <Mail className="h-4 w-4 shrink-0 text-[color:var(--ed-muted)]" />
           <input
             type="email"
             value={form.email}
             onChange={set('email')}
             placeholder={ar ? 'البريد الإلكتروني' : 'Email Address'}
-            className="min-w-0 flex-1 bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:text-neutral-400"
+            className="min-w-0 flex-1 bg-transparent text-sm text-[color:var(--ed-ink)] outline-none placeholder:text-[color:var(--ed-muted)]"
           />
         </label>
 
         {/* Country */}
-        <label className="flex items-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white px-3 py-2.5 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-400/20">
-          <Globe className="h-4 w-4 shrink-0 text-primary-600" />
+        <label className="flex items-center gap-2 overflow-hidden rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2.5 focus-within:border-[color:var(--ed-accent)] focus-within:ring-2 focus-within:ring-[color:var(--ed-accent)]/20">
+          <Globe className="h-4 w-4 shrink-0 text-[color:var(--ed-muted)]" />
           <select
             value={form.country}
             onChange={set('country')}
-            className="min-w-0 flex-1 bg-transparent text-sm font-medium text-neutral-600 outline-none"
+            className="min-w-0 flex-1 bg-transparent text-sm text-[color:var(--ed-body)] outline-none"
           >
             <option value="">{ar ? 'اختر الدولة' : 'Select Country'}</option>
             <option value="UAE">{ar ? 'الإمارات العربية المتحدة' : 'United Arab Emirates'}</option>
@@ -154,14 +162,14 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
         </label>
 
         {/* Phone */}
-        <label className="flex items-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white px-3 py-2.5 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-400/20">
-          <Phone className="h-4 w-4 shrink-0 text-primary-600" />
+        <label className="flex items-center gap-2 overflow-hidden rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2.5 focus-within:border-[color:var(--ed-accent)] focus-within:ring-2 focus-within:ring-[color:var(--ed-accent)]/20">
+          <Phone className="h-4 w-4 shrink-0 text-[color:var(--ed-muted)]" />
           <input
             type="tel"
             value={form.phone}
             onChange={set('phone')}
             placeholder={ar ? 'رقم الهاتف' : 'Phone Number'}
-            className="min-w-0 flex-1 bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:text-neutral-400"
+            className="min-w-0 flex-1 bg-transparent text-sm text-[color:var(--ed-ink)] outline-none placeholder:text-[color:var(--ed-muted)]"
           />
         </label>
 
@@ -171,13 +179,13 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
           value={form.message}
           onChange={set('message')}
           placeholder={ar ? 'أخبرنا عن مشروعك...' : 'Tell us about your project…'}
-          className="w-full resize-none rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm font-medium text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/20"
+          className="w-full resize-none rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2.5 text-sm text-[color:var(--ed-ink)] outline-none placeholder:text-[color:var(--ed-muted)] focus:border-[color:var(--ed-accent)] focus:ring-2 focus:ring-[color:var(--ed-accent)]/20"
         />
 
         {/* NDA notice */}
-        <div className="flex items-start gap-2 rounded-lg bg-sky-50 p-3">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary-600" />
-          <p className="text-[11px] leading-relaxed text-neutral-600">
+        <div className="flex items-start gap-2 rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper-2)] p-3">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--ed-accent)]" />
+          <p className="text-[11px] leading-relaxed" style={{ color: 'var(--ed-graphite)' }}>
             {ar
               ? 'أفكارك محمية بالكامل بموجب اتفاقية سرية.'
               : 'Your ideas are fully protected under our NDA.'}
@@ -186,7 +194,7 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
 
         {/* Captcha */}
         <div className="space-y-1.5">
-          <p className="text-[12px] font-bold text-neutral-600">
+          <p className="ed-eyebrow" style={{ color: 'var(--ed-graphite)' }}>
             {ar ? 'ما هو ناتج 2 + 1؟' : 'What is 2 + 1?'}
           </p>
           <input
@@ -194,21 +202,21 @@ export function InquiryFormSidebar({ locale, articleSlug }: InquiryFormSidebarPr
             value={captcha}
             onChange={(e) => setCaptcha(e.target.value)}
             placeholder={ar ? 'إجابتك' : 'Your answer'}
-            className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-primary-400"
+            className="w-full rounded-md border border-[var(--ed-rule)] bg-[var(--ed-paper)] px-3 py-2 text-sm text-[color:var(--ed-ink)] outline-none placeholder:text-[color:var(--ed-muted)] focus:border-[color:var(--ed-accent)]"
             maxLength={2}
           />
         </div>
 
         {/* Error message */}
         {errorMsg && (
-          <p className="text-[12px] font-bold text-red-600">{errorMsg}</p>
+          <p className="text-[12px] font-semibold text-red-600">{errorMsg}</p>
         )}
 
         {/* Submit */}
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 py-3 text-sm font-black uppercase tracking-wide text-white transition hover:bg-primary-700 disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-[var(--ed-accent)] py-3 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[var(--ed-accent-ink)] disabled:opacity-60"
         >
           {status === 'submitting' ? (
             <>

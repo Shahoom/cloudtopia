@@ -1,6 +1,7 @@
 import type { BlogPost, BlogPostSummary } from '@/lib/blog/data'
 import type { TableOfContentsItem } from '@/lib/blog/utils'
 import { extractKeyTakeaways } from '@/lib/blog/utils'
+import { localePath } from '@/lib/i18n/url'
 import { ArticleViewBeacon } from './ArticleViewBeacon'
 import { AuthorBox } from './AuthorBox'
 import { BlogCTA } from './BlogCTA'
@@ -93,29 +94,31 @@ export function ArticleContent({
       : post.contentBlocks
 
   return (
-    <section className="bg-[#f8f7fb] px-4 py-14 sm:px-6 lg:px-8">
+    <section className="px-4 py-12 sm:px-6 lg:px-8">
       <ArticleViewBeacon postId={post.id} />
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[240px_minmax(0,760px)_280px]">
+      <div className="mx-auto grid max-w-[96rem] gap-x-12 gap-y-10 lg:grid-cols-[240px_minmax(0,1fr)_340px]">
         <TableOfContents items={toc} locale={locale} />
-        <article className="min-w-0 rounded-3xl border border-sky-100 bg-white p-6 shadow-sm md:p-10">
+        <article className="min-w-0">
           {post.series && (
-            <aside className="mb-10 rounded-2xl border border-primary-200 bg-primary-50/70 p-5">
-              <p className="text-xs font-black uppercase tracking-normal text-primary-700">
+            <aside className="mb-10 border-y border-[var(--ed-rule)] py-5">
+              <p className="ed-eyebrow" style={{ color: 'var(--ed-accent)' }}>
                 {locale === 'ar' ? 'جزء من سلسلة أدلة' : 'Part of a guide series'}
               </p>
-              <h2 className="mt-2 text-2xl font-black tracking-normal text-neutral-950">{post.series.title}</h2>
+              <h2 className="ed-serif mt-2" style={{ fontSize: '1.4rem' }}>
+                {post.series.title}
+              </h2>
               {post.series.description && (
-                <p className="mt-2 text-sm leading-6 text-neutral-700">{post.series.description}</p>
+                <p className="mt-2 text-sm leading-6" style={{ color: 'var(--ed-graphite)' }}>
+                  {post.series.description}
+                </p>
               )}
             </aside>
           )}
-          <KeyTakeawaysBox
-            summary={takeaways.summary}
-            items={takeaways.items}
-            locale={locale}
-          />
+
+          <KeyTakeawaysBox summary={takeaways.summary} items={takeaways.items} locale={locale} />
           <RichTextRenderer content={post.content} />
           <ContentBlockRenderer blocks={streamBlocks} relatedPostLookup={relatedPosts} locale={locale} />
+
           {post.showCTA && (
             <div className="mt-12">
               <BlogCTA
@@ -129,15 +132,30 @@ export function ArticleContent({
               />
             </div>
           )}
-          <div className="mt-12 border-t border-neutral-200 pt-8">
-            <p className="mb-4 text-sm font-black uppercase tracking-normal text-neutral-500">
-              {locale === 'ar' ? 'شارك هذا المقال' : 'Share this article'}
-            </p>
+
+          {post.tags.length > 0 && (
+            <div className="mt-14 flex flex-wrap gap-2 border-t-2 border-[var(--ed-rule-ink)] pt-5">
+              {post.tags.map((tag) => (
+                <a
+                  key={tag.id ?? tag.slug}
+                  href={localePath(locale, `/articles/tag/${tag.slug}`)}
+                  className="ed-meta rounded-full border border-[var(--ed-rule)] px-3 py-1 transition-colors hover:border-[var(--ed-accent)]"
+                >
+                  {tag.name}
+                </a>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-8">
+            <p className="ed-eyebrow mb-3">{locale === 'ar' ? 'شارك هذا المقال' : 'Share this article'}</p>
             <ShareButtons url={canonical} title={post.title} locale={locale} />
           </div>
+
           <AuthorBox author={post.author} locale={locale} />
           <PreviousNextPosts previous={previous || null} next={next || null} locale={locale} />
         </article>
+
         <InquiryFormSidebar locale={locale} />
       </div>
     </section>

@@ -22,6 +22,7 @@ const CATEGORY_NAME_AR: Record<string, string> = {
   'startup-growth': 'نمو الشركات الناشئة',
   'digital-presence': 'الحضور الرقمي',
   'digital-transformation': 'التحول الرقمي',
+  'e-commerce': 'التجارة الإلكترونية',
   'case-studies': 'دراسات الحالة',
   'guides': 'الأدلة',
 }
@@ -46,14 +47,22 @@ export function localizeCategoryName(
  * they render in English on Arabic article cards / tag pages without this.
  */
 const TAG_NAME_AR: Record<string, string> = {
+  'ai-agents': 'وكلاء الذكاء الاصطناعي',
   'ai-automation': 'أتمتة الذكاء الاصطناعي',
+  'chatbots': 'روبوتات الدردشة',
+  'cloud': 'الحوسبة السحابية',
   'conversion': 'تحسين التحويل',
   'crm': 'إدارة علاقات العملاء (CRM)',
   'custom-software': 'برمجيات مخصصة',
   'dashboards': 'لوحات المعلومات',
   'digital-transformation': 'التحول الرقمي',
+  'e-commerce': 'التجارة الإلكترونية',
+  'erp': 'تخطيط موارد المؤسسات (ERP)',
+  'hosting': 'الاستضافة',
+  'shopify': 'شوبيفاي',
   'small-business': 'الشركات الصغيرة',
   'website-strategy': 'استراتيجية المواقع',
+  'whatsapp': 'واتساب',
 }
 
 export function localizeTagName(

@@ -15,33 +15,36 @@ export function PreviousNextPosts({
   if (!previous && !next) return null
 
   return (
-    <nav className="mt-10 grid gap-4 md:grid-cols-2" aria-label={locale === 'ar' ? 'المقالات السابقة والتالية' : 'Previous and next articles'}>
+    <nav
+      className="mt-12 grid border-t-2 border-[var(--ed-rule-ink)] md:grid-cols-2 md:divide-x md:divide-[var(--ed-rule)] rtl:md:divide-x-reverse"
+      aria-label={locale === 'ar' ? 'المقالات السابقة والتالية' : 'Previous and next articles'}
+    >
       {previous ? (
         <Link
           href={localePath(locale, `/articles/${previous.slug}`)}
-          className="group rounded-3xl border border-sky-100 bg-white p-5 shadow-sm transition hover:border-primary-500 hover:shadow-lg"
+          className="group block py-6 md:pe-8"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-black text-neutral-500">
-            <ArrowLeft className="h-4 w-4 rtl:-scale-x-100" />
+          <span className="ed-eyebrow inline-flex items-center gap-2" style={{ color: 'var(--ed-muted)' }}>
+            <ArrowLeft className="h-3.5 w-3.5 rtl:-scale-x-100" />
             {locale === 'ar' ? 'السابق' : 'Previous'}
           </span>
-          <strong className="mt-2 block text-lg font-black leading-tight text-neutral-950 group-hover:text-primary-700">
+          <strong className="ed-serif mt-2 block text-lg leading-snug transition-colors group-hover:text-[color:var(--ed-accent-ink)]">
             {previous.title}
           </strong>
         </Link>
       ) : (
-        <span />
+        <span className="hidden md:block" />
       )}
       {next && (
         <Link
           href={localePath(locale, `/articles/${next.slug}`)}
-          className="group rounded-3xl border border-sky-100 bg-white p-5 text-right shadow-sm transition hover:border-primary-500 hover:shadow-lg"
+          className="group block border-t border-[var(--ed-rule)] py-6 text-end md:border-t-0 md:ps-8"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-black text-neutral-500">
+          <span className="ed-eyebrow inline-flex items-center gap-2" style={{ color: 'var(--ed-muted)' }}>
             {locale === 'ar' ? 'التالي' : 'Next'}
-            <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
+            <ArrowRight className="h-3.5 w-3.5 rtl:-scale-x-100" />
           </span>
-          <strong className="mt-2 block text-lg font-black leading-tight text-neutral-950 group-hover:text-primary-700">
+          <strong className="ed-serif mt-2 block text-lg leading-snug transition-colors group-hover:text-[color:var(--ed-accent-ink)]">
             {next.title}
           </strong>
         </Link>

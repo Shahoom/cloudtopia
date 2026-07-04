@@ -38,63 +38,77 @@ export function ContentBlockRenderer({
   )
 }
 
+const EDITORIAL_STYLE = {
+  paper: { background: 'var(--ed-paper)' },
+  paper2: { background: 'var(--ed-paper-2)' },
+  ink: { color: 'var(--ed-ink)' },
+  body: { color: 'var(--ed-body)' },
+  graphite: { color: 'var(--ed-graphite)' },
+} as const
+
 function BlockView({ block, relatedPostLookup, locale }: { block: Record<string, any>; relatedPostLookup: BlogPostSummary[]; locale: string }) {
   switch (block.blockType) {
     case 'calloutBlock':
       return (
-        <aside className="rounded-3xl border border-sky-100 bg-sky-50 p-6">
-          <div className="mb-3 flex items-center gap-3 text-primary-700">
-            <Lightbulb className="h-5 w-5" />
-            <strong className="text-sm font-black uppercase tracking-normal">{block.title || (locale === 'ar' ? 'ملاحظة CloudTopia' : 'CloudTopia note')}</strong>
+        <aside
+          className="border border-[var(--ed-rule)] border-s-2 border-s-[var(--ed-accent)] p-6"
+          style={EDITORIAL_STYLE.paper2}
+        >
+          <div className="mb-3 flex items-center gap-2.5" style={{ color: 'var(--ed-accent-ink)' }}>
+            <Lightbulb className="h-4 w-4" />
+            <span className="ed-eyebrow" style={{ color: 'var(--ed-accent-ink)' }}>
+              {block.title || (locale === 'ar' ? 'ملاحظة CloudTopia' : 'CloudTopia note')}
+            </span>
           </div>
-          <p className="text-base leading-8 text-neutral-700">{block.content}</p>
+          <p className="text-base leading-8" style={EDITORIAL_STYLE.body}>{block.content}</p>
         </aside>
       )
     case 'ctaInlineBlock':
     case 'servicePromoBlock':
       return (
-        <aside className="rounded-3xl bg-neutral-950 p-7 text-white shadow-xl shadow-sky-950/15">
-          <h3 className="text-2xl font-black tracking-normal">{block.title}</h3>
+        <aside className="rounded-xl p-7 text-white" style={{ background: 'var(--ed-ink)' }}>
+          <h3 className="ed-serif text-2xl" style={{ color: 'var(--ed-paper)' }}>{block.title}</h3>
           <p className="mt-3 max-w-2xl text-base leading-7 text-white/75">{block.description}</p>
           {block.buttonUrl && (
             <Link
               href={block.buttonUrl}
-              className="mt-6 inline-flex h-12 items-center gap-2 rounded-xl bg-white px-5 text-sm font-black text-neutral-950 transition hover:bg-sky-100"
+              className="mt-6 inline-flex h-12 items-center gap-2 rounded-lg px-5 text-sm font-semibold transition hover:opacity-90"
+              style={{ background: 'var(--ed-paper)', color: 'var(--ed-ink)' }}
             >
               {block.buttonText || (locale === 'ar' ? 'تحدث إلى CloudTopia' : 'Talk to CloudTopia')}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
             </Link>
           )}
         </aside>
       )
     case 'faqBlock':
       return (
-        <section className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
-          <h3 className="text-xl font-black tracking-normal text-neutral-950">{block.question}</h3>
-          <p className="mt-3 text-base leading-8 text-neutral-700">{block.answer}</p>
+        <section className="border border-[var(--ed-rule)] p-6" style={EDITORIAL_STYLE.paper}>
+          <h3 className="ed-serif text-xl">{block.question}</h3>
+          <p className="mt-3 text-base leading-8" style={EDITORIAL_STYLE.body}>{block.answer}</p>
         </section>
       )
     case 'comparisonTableBlock':
       return (
         <section>
-          {block.title && <h3 className="mb-4 text-2xl font-black tracking-normal text-neutral-950">{block.title}</h3>}
-          <div className="overflow-x-auto rounded-3xl border border-sky-100 bg-white">
-            <table className="min-w-full text-left text-sm">
-              <thead className="bg-[#f4f1f8] text-neutral-950">
+          {block.title && <h3 className="ed-serif mb-4 text-2xl">{block.title}</h3>}
+          <div className="overflow-x-auto border border-[var(--ed-rule)]" style={EDITORIAL_STYLE.paper}>
+            <table className="min-w-full text-start text-sm">
+              <thead className="border-b-2 border-[var(--ed-rule-ink)]">
                 <tr>
-                  <th className="px-4 py-3 font-black">{block.featureLabel || (locale === 'ar' ? 'الميزة' : 'Feature')}</th>
-                  <th className="px-4 py-3 font-black">{block.optionALabel || (locale === 'ar' ? 'الخيار الأول' : 'Option A')}</th>
-                  <th className="px-4 py-3 font-black">{block.optionBLabel || (locale === 'ar' ? 'الخيار الثاني' : 'Option B')}</th>
-                  <th className="px-4 py-3 font-black">{locale === 'ar' ? 'الأفضل' : 'Winner'}</th>
+                  <th className="ed-eyebrow px-4 py-3 text-start" style={EDITORIAL_STYLE.ink}>{block.featureLabel || (locale === 'ar' ? 'الميزة' : 'Feature')}</th>
+                  <th className="ed-eyebrow px-4 py-3 text-start" style={EDITORIAL_STYLE.ink}>{block.optionALabel || (locale === 'ar' ? 'الخيار الأول' : 'Option A')}</th>
+                  <th className="ed-eyebrow px-4 py-3 text-start" style={EDITORIAL_STYLE.ink}>{block.optionBLabel || (locale === 'ar' ? 'الخيار الثاني' : 'Option B')}</th>
+                  <th className="ed-eyebrow px-4 py-3 text-start" style={EDITORIAL_STYLE.ink}>{locale === 'ar' ? 'الأفضل' : 'Winner'}</th>
                 </tr>
               </thead>
               <tbody>
                 {(block.rows || []).map((row: any, index: number) => (
-                  <tr key={row.id || index} className="border-t border-sky-50">
-                    <td className="px-4 py-3 font-bold text-neutral-900">{row.feature}</td>
-                    <td className="px-4 py-3 text-neutral-700">{row.optionA}</td>
-                    <td className="px-4 py-3 text-neutral-700">{row.optionB}</td>
-                    <td className="px-4 py-3 font-black text-primary-700">{row.winner}</td>
+                  <tr key={row.id || index} className="border-t border-[var(--ed-rule)]">
+                    <td className="px-4 py-3 font-semibold" style={EDITORIAL_STYLE.ink}>{row.feature}</td>
+                    <td className="px-4 py-3" style={EDITORIAL_STYLE.body}>{row.optionA}</td>
+                    <td className="px-4 py-3" style={EDITORIAL_STYLE.body}>{row.optionB}</td>
+                    <td className="px-4 py-3 font-semibold" style={{ color: 'var(--ed-accent-ink)' }}>{row.winner}</td>
                   </tr>
                 ))}
               </tbody>
@@ -111,17 +125,23 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
       )
     case 'stepProcessBlock':
       return (
-        <section className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
-          {block.title && <h3 className="text-2xl font-black tracking-normal text-neutral-950">{block.title}</h3>}
-          <div className="mt-5 grid gap-4">
+        <section className="border border-[var(--ed-rule)] p-6" style={EDITORIAL_STYLE.paper}>
+          {block.title && <h3 className="ed-serif text-2xl">{block.title}</h3>}
+          <div className="mt-5 grid gap-0">
             {(block.steps || []).map((step: any, index: number) => (
-              <div key={step.id || index} className="grid gap-3 rounded-2xl bg-[#f4f1f8] p-4 sm:grid-cols-[44px_1fr]">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600 text-sm font-black text-white">
+              <div
+                key={step.id || index}
+                className="grid gap-4 border-t border-[var(--ed-rule)] py-4 first:border-t-0 first:pt-0 sm:grid-cols-[44px_1fr]"
+              >
+                <span
+                  className="ed-serif flex h-11 w-11 items-center justify-center border border-[var(--ed-rule)] text-lg"
+                  style={{ color: 'var(--ed-accent-ink)', background: 'var(--ed-paper-2)' }}
+                >
                   {index + 1}
                 </span>
                 <span>
-                  <strong className="block text-lg font-black text-neutral-950">{step.title}</strong>
-                  <span className="mt-1 block text-sm leading-6 text-neutral-600">{step.description}</span>
+                  <strong className="ed-serif block text-lg">{step.title}</strong>
+                  <span className="mt-1 block text-sm leading-6" style={EDITORIAL_STYLE.graphite}>{step.description}</span>
                 </span>
               </div>
             ))}
@@ -130,10 +150,12 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
       )
     case 'statBlock':
       return (
-        <aside className="rounded-3xl border border-sky-100 bg-white p-8 text-center shadow-sm">
-          <strong className="block text-5xl font-black text-primary-700">{block.statNumber}</strong>
-          <span className="mt-2 block text-lg font-black text-neutral-950">{block.statLabel}</span>
-          <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-neutral-600">{block.description}</p>
+        <aside className="border border-[var(--ed-rule)] p-8 text-center" style={EDITORIAL_STYLE.paper}>
+          <strong className="ed-serif block text-6xl leading-none" style={{ color: 'var(--ed-ink)' }}>
+            {block.statNumber}
+          </strong>
+          <span className="ed-eyebrow mt-3 block" style={{ color: 'var(--ed-accent-ink)' }}>{block.statLabel}</span>
+          <p className="mx-auto mt-3 max-w-xl text-base leading-7" style={EDITORIAL_STYLE.graphite}>{block.description}</p>
         </aside>
       )
     case 'imageWithCaptionBlock': {
@@ -141,18 +163,32 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
       if (!media) return null
       return (
         <figure className={block.layout === 'wide' ? 'md:-mx-10' : ''}>
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-sky-50 shadow-lg">
+          <div
+            className="relative aspect-[16/10] overflow-hidden rounded-[10px] border border-[var(--ed-rule)]"
+            style={EDITORIAL_STYLE.paper2}
+          >
             <Image src={media.url} alt={block.alt || media.alt} fill sizes="(max-width: 1024px) 100vw, 840px" className="object-cover" />
           </div>
-          {block.caption && <figcaption className="mt-3 text-center text-sm font-semibold text-neutral-500">{block.caption}</figcaption>}
+          {block.caption && (
+            <figcaption
+              className="mt-3 text-center text-sm"
+              style={{ fontFamily: 'var(--ed-serif)', fontStyle: locale === 'ar' ? 'normal' : 'italic', color: 'var(--ed-muted)' }}
+            >
+              {block.caption}
+            </figcaption>
+          )}
         </figure>
       )
     }
     case 'codeSnippetBlock':
       return (
-        <section className="overflow-hidden rounded-3xl bg-neutral-950 shadow-xl">
-          {block.filename && <div className="border-b border-white/10 px-5 py-3 text-sm font-black text-sky-200">{block.filename}</div>}
-          <pre className="overflow-x-auto p-5 text-sm leading-7 text-sky-100">
+        <section className="overflow-hidden rounded-[10px]" style={{ background: 'var(--ed-code-bg)', color: 'var(--ed-code-fg)' }}>
+          {block.filename && (
+            <div className="ed-meta border-b border-white/10 px-5 py-3 text-start" style={{ color: 'rgba(231,227,245,0.6)' }}>
+              {block.filename}
+            </div>
+          )}
+          <pre className="overflow-x-auto p-5 text-sm leading-7" style={{ color: 'var(--ed-code-fg)' }}>
             <code>{block.code}</code>
           </pre>
           {block.explanation && <p className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-white/70">{block.explanation}</p>}
@@ -160,23 +196,34 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
       )
     case 'leadMagnetBlock':
       return (
-        <aside className="rounded-3xl border border-primary-200 bg-gradient-to-br from-sky-50 to-white p-7">
-          <h3 className="text-2xl font-black tracking-normal text-neutral-950">{block.title}</h3>
-          <p className="mt-3 text-base leading-7 text-neutral-600">{block.description}</p>
-          <Link href="#newsletter" className="mt-6 inline-flex h-12 items-center rounded-xl bg-primary-600 px-5 text-sm font-black text-white">
+        <aside
+          className="border border-[var(--ed-rule)] border-s-2 border-s-[var(--ed-accent)] p-7"
+          style={EDITORIAL_STYLE.paper2}
+        >
+          <h3 className="ed-serif text-2xl">{block.title}</h3>
+          <p className="mt-3 text-base leading-7" style={EDITORIAL_STYLE.graphite}>{block.description}</p>
+          <Link
+            href="#newsletter"
+            className="mt-6 inline-flex h-12 items-center rounded-lg px-5 text-sm font-semibold text-white transition hover:opacity-90"
+            style={{ backgroundColor: 'var(--ed-ink)' }}
+          >
             {block.buttonText || (locale === 'ar' ? 'احصل على المورد' : 'Get the resource')}
           </Link>
         </aside>
       )
     case 'relatedPostsManualBlock':
       return relatedPostLookup.length ? (
-        <section className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
-          <h3 className="text-2xl font-black tracking-normal text-neutral-950">
+        <section className="border border-[var(--ed-rule)] p-6" style={EDITORIAL_STYLE.paper}>
+          <p className="ed-eyebrow mb-4">
             {locale === 'ar' ? 'مقالات ذات صلة' : 'Related reading'}
-          </h3>
-          <div className="mt-5 grid gap-3">
+          </p>
+          <div className="grid">
             {relatedPostLookup.slice(0, 3).map((post) => (
-              <Link key={post.id} href={`/articles/${post.slug}`} className="font-black text-primary-700 hover:text-primary-900">
+              <Link
+                key={post.id}
+                href={`/articles/${post.slug}`}
+                className="ed-serif border-t border-[var(--ed-rule)] py-3 text-lg transition-colors first:border-t-0 first:pt-0 hover:text-[color:var(--ed-accent-ink)]"
+              >
                 {post.title}
               </Link>
             ))}
@@ -191,11 +238,11 @@ function BlockView({ block, relatedPostLookup, locale }: { block: Record<string,
 function ListPanel({ title, items, positive = false }: { title: string; items: any[]; positive?: boolean }) {
   const Icon = positive ? Check : X
   return (
-    <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
-      <h3 className="text-2xl font-black tracking-normal text-neutral-950">{title}</h3>
+    <div className="border border-[var(--ed-rule)] p-6" style={{ background: 'var(--ed-paper)' }}>
+      <h3 className="ed-serif text-2xl">{title}</h3>
       <ul className="mt-4 space-y-3">
         {(items || []).map((item, index) => (
-          <li key={item.id || index} className="flex gap-3 text-base leading-7 text-neutral-700">
+          <li key={item.id || index} className="flex gap-3 text-base leading-7" style={{ color: 'var(--ed-body)' }}>
             <Icon className={`mt-1 h-5 w-5 flex-none ${positive ? 'text-emerald-600' : 'text-rose-600'}`} />
             {item.item}
           </li>

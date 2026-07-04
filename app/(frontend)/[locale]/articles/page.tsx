@@ -1,4 +1,3 @@
-import './insights.css'
 import type { Metadata } from 'next'
 import { AnnouncementStrip } from '@/components/blog/insights/AnnouncementStrip'
 import { CategoryNavBar } from '@/components/blog/insights/CategoryNavBar'
@@ -142,24 +141,31 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
   }))
 
   return (
-    <div className="min-h-screen bg-[#f4f1f8]">
+    <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <AnnouncementStrip locale={locale} items={announcementItems} />
 
-      <div className="bg-white">
-        <CategoryNavBar
-          categories={data.categories}
-          locale={locale}
-          activeCategorySlug={query.category}
-          search={search}
-        />
-      </div>
+      <CategoryNavBar
+        categories={data.categories}
+        locale={locale}
+        activeCategorySlug={query.category}
+        search={search}
+      />
 
-      <header className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl">{pageTitle}</h1>
-        <p className="mt-2 max-w-2xl text-base text-neutral-600">{pageTagline}</p>
+      <header className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+        <div className="border-b-2 border-[var(--ed-rule-ink)] pb-4">
+          <h1 className="ed-serif" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1.08 }}>
+            {pageTitle}
+          </h1>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed" style={{ color: 'var(--ed-graphite)' }}>
+            {pageTagline}
+          </p>
+          <p className="ed-meta mt-3">
+            {locale === 'ar' ? 'يُحدَّث أسبوعيًا · بالعربية والإنجليزية' : 'Updated weekly · EN / AR'}
+          </p>
+        </div>
       </header>
 
       {featuredPost && (
@@ -171,25 +177,23 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
       )}
 
       {data.categories.length > 0 && (
-        <div className="bg-white py-2">
-          <CategoriesGrid categories={data.categories} locale={locale} />
-        </div>
+        <CategoriesGrid categories={data.categories} locale={locale} />
       )}
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+        <div className="grid gap-10 lg:grid-cols-[1fr_260px]">
           <div>
-            <h2 className="mb-6 text-2xl font-black text-neutral-950">
+            <h2 className="ed-eyebrow mb-6 border-b-2 border-[var(--ed-rule-ink)] pb-3">
               {search ? (locale === 'ar' ? `نتائج "${search}"` : `Results for "${search}"`) : locale === 'ar' ? 'أحدث المقالات' : 'Latest Articles'}
             </h2>
             {gridPosts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-sky-200 bg-white/70 p-10 text-center">
-                <p className="text-base font-bold text-neutral-600">
+              <div className="border border-dashed border-[var(--ed-rule)] p-10 text-center">
+                <p className="ed-serif text-lg" style={{ color: 'var(--ed-graphite)' }}>
                   {locale === 'ar' ? 'لا توجد مقالات. جرب مرشح مختلف.' : 'No articles found. Try a different filter.'}
                 </p>
               </div>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2">
                 {gridPosts.map((post) => (
                   <InsightsArticleCard key={post.id} post={post} locale={locale} />
                 ))}
@@ -213,11 +217,11 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mt-4">
         <CTABanner locale={locale} />
       </div>
 
-      <section className="mx-auto max-w-7xl px-4 py-10 pb-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-14 pb-20 sm:px-6 lg:px-8">
         <BlogCTA
           locale={locale}
           title={locale === 'ar' ? 'هل أنت مستعد لبناء شيء أذكى؟' : 'Ready to build something smarter than a basic website?'}

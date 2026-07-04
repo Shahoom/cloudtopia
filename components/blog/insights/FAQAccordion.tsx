@@ -16,43 +16,41 @@ export function FAQAccordion({ items, locale }: { items: FAQItem[]; locale: stri
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mb-6">
-        <h2 className="text-[28px] font-black text-neutral-900">
+      <div className="mb-6 border-t-2 border-[var(--ed-rule-ink)] pt-4">
+        <p className="ed-eyebrow">{locale === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}</p>
+        <h2 className="ed-serif mt-2" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', lineHeight: 1.15 }}>
           {locale === 'ar' ? (
             <>
-              الأسئلة <span className="text-primary-600">الشائعة</span>
+              الأسئلة <span style={{ color: 'var(--ed-accent-ink)' }}>الشائعة</span>
             </>
           ) : (
             <>
               Frequently Asked{' '}
-              <span className="text-primary-600">Questions</span>
+              <span style={{ color: 'var(--ed-accent-ink)' }}>Questions</span>
             </>
           )}
         </h2>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm leading-7" style={{ color: 'var(--ed-graphite)' }}>
           {locale === 'ar'
             ? 'إجابات على الأسئلة الأكثر شيوعاً المتعلقة بهذا المقال.'
             : 'Find answers to the most common questions related to this article.'}
         </p>
-        <div className="mt-4 h-px w-16 bg-primary-600" />
       </div>
 
-      <div className="divide-y divide-neutral-200 overflow-hidden rounded-xl border border-neutral-200 bg-white">
+      <div className="border-t border-[var(--ed-rule)]">
         {items.map((item, i) => {
           const isOpen = openIndex === i
           return (
-            <div key={i}>
+            <div key={i} className="border-b border-[var(--ed-rule)]">
               <button
                 type="button"
                 onClick={() => toggle(i)}
-                className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left transition hover:bg-neutral-50"
+                className="flex w-full items-start justify-between gap-4 py-4 text-start transition-colors hover:text-[color:var(--ed-accent-ink)]"
                 aria-expanded={isOpen}
               >
-                <span className="text-[15px] font-bold leading-snug text-neutral-900">
-                  {item.question}
-                </span>
+                <span className="ed-serif text-[1.05rem] leading-snug">{item.question}</span>
                 <ChevronDown
-                  className={`mt-0.5 h-5 w-5 shrink-0 text-neutral-400 transition-transform duration-200 ${
+                  className={`mt-1 h-5 w-5 shrink-0 text-[color:var(--ed-muted)] transition-transform duration-200 ${
                     isOpen ? 'rotate-180' : ''
                   }`}
                 />
@@ -61,7 +59,9 @@ export function FAQAccordion({ items, locale }: { items: FAQItem[]; locale: stri
                 className="overflow-hidden transition-all duration-300 ease-in-out"
                 style={{ maxHeight: isOpen ? '400px' : '0px' }}
               >
-                <p className="px-5 pb-5 text-sm leading-7 text-neutral-600">{item.answer}</p>
+                <p className="pb-5 text-sm leading-7" style={{ color: 'var(--ed-body)' }}>
+                  {item.answer}
+                </p>
               </div>
             </div>
           )

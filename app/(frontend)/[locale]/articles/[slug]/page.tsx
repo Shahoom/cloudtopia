@@ -145,7 +145,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f1f8]">
+    <div className="min-h-screen">
       <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       {post.seo.breadcrumbSchema !== false && (

@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, Eye } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
+import { Kicker } from '@/components/blog/editorial/Kicker'
+import { TypographicCover } from '@/components/blog/editorial/TypographicCover'
+import { categoryAccent } from '@/components/blog/editorial/categoryColor'
 
 function formatDate(value: string, locale: string) {
   return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-SA' : 'en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
@@ -10,11 +12,16 @@ function formatDate(value: string, locale: string) {
 
 export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; locale: string }) {
   const href = localePath(locale, `/articles/${post.slug}`)
+  const accent = categoryAccent(post.category)
+  const viewsLabel =
+    post.viewsCount > 0
+      ? `${post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')} ${locale === 'ar' ? 'مشاهدة' : 'views'}`
+      : undefined
 
   return (
-    <article className="group overflow-hidden rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
-      <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600">
-        <div className="relative aspect-video overflow-hidden rounded-t-xl bg-sky-50">
+    <article className="group ed-card-enter border-t border-[var(--ed-rule)] pt-5 transition-transform duration-300 hover:-translate-y-0.5">
+      <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ed-accent)]">
+        <div className="relative aspect-video overflow-hidden">
           {post.coverImage?.url ? (
             <Image
               src={post.coverImage.url}
@@ -22,32 +29,34 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
               fill
               loading="lazy"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="ed-zoom object-cover"
             />
           ) : (
-            <div className="h-full w-full bg-gradient-to-br from-sky-100 via-white to-indigo-100" />
+            <TypographicCover title={post.title} category={post.category} size="card" className="absolute inset-0" />
           )}
-          <div className="pointer-events-none absolute bottom-2 right-3 text-[10px] font-black uppercase tracking-widest text-white/40 select-none">
-            CloudTopia
-          </div>
         </div>
-        <div className="p-5">
-          <h3 className="line-clamp-2 text-[17px] font-bold leading-snug text-neutral-900 transition-colors group-hover:text-primary-700">
+        <div className="pt-4">
+          {post.category && (
+            <Kicker color={accent} className="mb-2">
+              {post.category.name}
+            </Kicker>
+          )}
+          <h3
+            className="ed-serif line-clamp-2 transition-colors group-hover:text-[color:var(--ed-accent-ink)]"
+            style={{ fontSize: '1.3rem', lineHeight: 1.22 }}
+          >
             {post.title}
           </h3>
-          <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-neutral-500">
+          <p className="mt-2 line-clamp-2 text-[14px] leading-relaxed" style={{ color: 'var(--ed-graphite)' }}>
             {post.shortExcerpt || post.excerpt}
           </p>
-          <div className="mt-4 flex items-center justify-between text-[12px] font-bold text-neutral-400">
-            <span className="inline-flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              {formatDate(post.publishedAt, locale)}
-            </span>
-            {post.viewsCount > 0 && (
-              <span className="inline-flex items-center gap-1">
-                <Eye className="h-3 w-3" />
-                {post.viewsCount.toLocaleString(locale === 'ar' ? 'ar-EG' : 'en')}
-              </span>
+          <div className="ed-meta mt-4 flex items-center gap-3">
+            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>
+            {viewsLabel && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>{viewsLabel}</span>
+              </>
             )}
           </div>
         </div>

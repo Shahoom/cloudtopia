@@ -69,11 +69,7 @@ function renderNode(
     case 'linebreak':
       return <br key={key} />
     case 'paragraph':
-      return (
-        <p key={key} className="mb-7 text-lg leading-9 text-neutral-700">
-          {children}
-        </p>
-      )
+      return <p key={key}>{children}</p>
     case 'heading': {
       const title = textFromNode(node).trim()
       const tag = node.tag === 'h3' || node.tag === 'h4' ? node.tag : 'h2'
@@ -81,48 +77,34 @@ function renderNode(
       // lib/blog/utils.ts so every TOC anchor resolves. h4 (not in the TOC)
       // uses a separate counter and never perturbs the shared h2/h3 numbering.
       const id = tag === 'h4' ? getHeadingId(title, h4Counts) : getHeadingId(title, headingCounts)
-      const className =
-        tag === 'h2'
-          ? 'mb-5 mt-14 scroll-mt-28 text-3xl font-black leading-tight tracking-normal text-neutral-950 md:text-4xl'
-          : tag === 'h3'
-            ? 'mb-4 mt-10 scroll-mt-28 text-2xl font-black leading-tight tracking-normal text-neutral-950'
-            : 'mb-3 mt-8 scroll-mt-28 text-xl font-black leading-tight tracking-normal text-neutral-950'
 
       if (tag === 'h3') {
         return (
-          <h3 key={key} id={id} className={className}>
+          <h3 key={key} id={id} className="scroll-mt-28">
             {children}
           </h3>
         )
       }
       if (tag === 'h4') {
         return (
-          <h4 key={key} id={id} className={className}>
+          <h4 key={key} id={id} className="scroll-mt-28">
             {children}
           </h4>
         )
       }
       return (
-        <h2 key={key} id={id} className={className}>
+        <h2 key={key} id={id} className="scroll-mt-28">
           {children}
         </h2>
       )
     }
     case 'quote':
-      return (
-        <blockquote key={key} className="my-10 rounded-3xl border-l-4 border-primary-600 bg-sky-50 p-7 text-xl font-bold leading-9 text-neutral-800">
-          {children}
-        </blockquote>
-      )
+      return <blockquote key={key}>{children}</blockquote>
     case 'list':
       return node.tag === 'ol' || node.listType === 'number' ? (
-        <ol key={key} className="mb-8 list-decimal space-y-3 pl-7 text-lg leading-8 text-neutral-700">
-          {children}
-        </ol>
+        <ol key={key}>{children}</ol>
       ) : (
-        <ul key={key} className="mb-8 list-disc space-y-3 pl-7 text-lg leading-8 text-neutral-700">
-          {children}
-        </ul>
+        <ul key={key}>{children}</ul>
       )
     case 'listitem':
       return <li key={key}>{children}</li>
@@ -132,13 +114,13 @@ function renderNode(
       const isExternal = /^https?:\/\//.test(url)
       if (isExternal) {
         return (
-          <a key={key} href={url} target="_blank" rel="noopener noreferrer" className="font-bold text-primary-700 underline decoration-sky-200 underline-offset-4">
+          <a key={key} href={url} target="_blank" rel="noopener noreferrer">
             {children}
           </a>
         )
       }
       return (
-        <Link key={key} href={url} className="font-bold text-primary-700 underline decoration-sky-200 underline-offset-4">
+        <Link key={key} href={url}>
           {children}
         </Link>
       )
@@ -147,30 +129,30 @@ function renderNode(
       const media = mediaFromUpload(node)
       if (!media) return null
       return (
-        <figure key={key} className="my-10">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-sky-50 shadow-lg">
-            <Image src={media.url} alt={media.alt} fill sizes="(max-width: 1024px) 100vw, 760px" className="object-cover" />
+        <figure key={key}>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[10px]">
+            <Image src={media.url} alt={media.alt} fill sizes="(max-width: 1024px) 100vw, 720px" className="object-cover" />
           </div>
-          {media.alt && <figcaption className="mt-3 text-center text-sm font-semibold text-neutral-500">{media.alt}</figcaption>}
+          {media.alt && <figcaption>{media.alt}</figcaption>}
         </figure>
       )
     }
     case 'table':
       return (
-        <div key={key} className="my-10 overflow-x-auto rounded-2xl border border-neutral-200 bg-white">
-          <table className="min-w-full divide-y divide-neutral-200 text-left text-sm">{children}</table>
+        <div key={key} className="my-8 overflow-x-auto">
+          <table>{children}</table>
         </div>
       )
     case 'tablerow':
       return <tr key={key}>{children}</tr>
     case 'tablecell':
-      return <td key={key} className="border-b border-neutral-100 px-4 py-3 align-top text-neutral-700">{children}</td>
+      return <td key={key}>{children}</td>
     case 'block': {
       const fields = typeof node.fields === 'object' && node.fields ? (node.fields as any) : {}
       const code = String(fields.code || '')
       if (!code) return null
       return (
-        <pre key={key} className="my-8 overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm leading-7 text-sky-100">
+        <pre key={key}>
           <code>{code}</code>
         </pre>
       )
@@ -186,5 +168,5 @@ export function RichTextRenderer({ content }: { content: unknown }) {
   const root = content && typeof content === 'object' && 'root' in content ? (content as any).root : content
   const nodes = root && typeof root === 'object' && Array.isArray((root as LexicalNode).children) ? (root as LexicalNode).children || [] : []
 
-  return <div className="blog-article-prose">{nodes.map((node, index) => renderNode(node, index, headingCounts, h4Counts))}</div>
+  return <div className="article-prose">{nodes.map((node, index) => renderNode(node, index, headingCounts, h4Counts))}</div>
 }

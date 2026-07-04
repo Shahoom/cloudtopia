@@ -90,8 +90,8 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
 
   const nav = (
     <nav aria-label="Table of contents" className="select-none">
-      <p className="mb-3 text-[11px] font-black uppercase tracking-[1px] text-neutral-400">
-        {locale === 'ar' ? 'فهرس المحتويات' : 'Table of Contents'}
+      <p className="ed-eyebrow mb-3">
+        {locale === 'ar' ? 'في هذه الصفحة' : 'On this page'}
       </p>
       <ol className="space-y-0.5">
         {groups.map(({ item, index, children }) => {
@@ -103,11 +103,12 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
                 <button
                   type="button"
                   onClick={() => toggleH2(item.id)}
-                  className={`mt-1 flex h-5 w-6 shrink-0 items-center justify-center rounded text-[10px] font-black transition ${
-                    isActive
-                      ? 'border-l-[3px] border-primary-600 bg-primary-50 text-primary-700'
-                      : 'text-neutral-400'
-                  }`}
+                  className="mt-1 flex h-5 w-6 shrink-0 items-center justify-center text-[11px] transition"
+                  style={{
+                    fontFamily: 'var(--ed-serif)',
+                    fontWeight: 600,
+                    color: isActive ? 'var(--ed-accent)' : 'var(--ed-muted)',
+                  }}
                   aria-label={isExpanded ? (locale === 'ar' ? 'طي القسم' : 'Collapse section') : (locale === 'ar' ? 'توسيع القسم' : 'Expand section')}
                 >
                   {padNum(index)}
@@ -115,9 +116,14 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
                 <a
                   href={`#${item.id}`}
                   onClick={() => setExpandedH2s((prev) => new Set([...prev, item.id]))}
-                  className={`flex-1 py-1 text-[14px] font-medium leading-snug transition hover:text-primary-700 ${
-                    isActive ? 'text-primary-700' : 'text-neutral-600'
-                  }`}
+                  aria-current={isActive ? 'true' : undefined}
+                  className="flex-1 py-1 text-[14px] font-medium leading-snug transition"
+                  style={{
+                    color: isActive ? 'var(--ed-accent)' : 'var(--ed-graphite)',
+                    borderInlineStart: isActive ? '2px solid var(--ed-accent)' : '2px solid transparent',
+                    paddingInlineStart: '0.6rem',
+                    marginInlineStart: '-0.6rem',
+                  }}
                 >
                   {item.title}
                 </a>
@@ -125,7 +131,8 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
                   <button
                     type="button"
                     onClick={() => toggleH2(item.id)}
-                    className="mt-1.5 shrink-0 text-neutral-300 transition hover:text-neutral-500"
+                    className="mt-1.5 shrink-0 transition"
+                    style={{ color: 'var(--ed-muted)' }}
                     aria-label={locale === 'ar' ? 'تبديل الأقسام الفرعية' : 'Toggle subsections'}
                   >
                     <ChevronDown
@@ -139,14 +146,14 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
                   className="overflow-hidden transition-all duration-300"
                   style={{ maxHeight: isExpanded ? `${children.length * 36}px` : '0px' }}
                 >
-                  <ol className="ms-8 mt-0.5 space-y-0.5 border-s border-neutral-200 ps-3">
+                  <ol className="ms-8 mt-0.5 space-y-0.5 border-s ps-3" style={{ borderColor: 'var(--ed-rule)' }}>
                     {children.map(({ item: child }) => (
                       <li key={child.id}>
                         <a
                           href={`#${child.id}`}
-                          className={`block py-1 text-[13px] leading-snug transition hover:text-primary-700 ${
-                            active === child.id ? 'text-primary-700' : 'text-neutral-500'
-                          }`}
+                          aria-current={active === child.id ? 'true' : undefined}
+                          className="block py-1 text-[13px] leading-snug transition"
+                          style={{ color: active === child.id ? 'var(--ed-accent)' : 'var(--ed-muted)' }}
                         >
                           {child.title}
                         </a>
@@ -160,13 +167,13 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
         })}
       </ol>
       <div className="mt-5 space-y-1.5">
-        <p className="text-[11px] font-bold text-neutral-400">
+        <p className="ed-meta">
           {locale === 'ar' ? `${scrollPct}% مقروء · ${total} أقسام` : `${scrollPct}% read · ${total} sections`}
         </p>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100">
+        <div className="h-1 w-full overflow-hidden" style={{ backgroundColor: 'var(--ed-rule)' }}>
           <div
-            className="h-full rounded-full bg-primary-600 transition-all duration-200"
-            style={{ width: `${scrollPct}%` }}
+            className="h-full transition-all duration-200"
+            style={{ width: `${scrollPct}%`, backgroundColor: 'var(--ed-accent)' }}
           />
         </div>
       </div>
@@ -175,17 +182,17 @@ export function TableOfContents({ items, locale = 'en' }: { items: TableOfConten
 
   return (
     <>
-      <aside className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-auto rounded-2xl border border-sky-100 bg-white/90 p-5 shadow-sm backdrop-blur lg:block">
+      <aside className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-auto border-s ps-5 lg:block" style={{ borderColor: 'var(--ed-rule)' }}>
         {nav}
       </aside>
-      <aside className="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm lg:hidden">
+      <aside className="border-y py-4 lg:hidden" style={{ borderColor: 'var(--ed-rule)' }}>
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-3 text-left text-sm font-black uppercase tracking-normal text-neutral-700"
+          className="ed-eyebrow flex w-full items-center justify-between gap-3 text-start"
         >
-          {locale === 'ar' ? 'في هذا المقال' : 'In this article'}
-          <ChevronDown className={`h-4 w-4 transition ${mobileOpen ? 'rotate-180' : ''}`} />
+          {locale === 'ar' ? 'في هذه الصفحة' : 'On this page'}
+          <ChevronDown className={`h-4 w-4 transition ${mobileOpen ? 'rotate-180' : ''}`} style={{ color: 'var(--ed-graphite)' }} />
         </button>
         {mobileOpen && <div className="mt-4">{nav}</div>}
       </aside>

@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Linkedin, Twitter } from 'lucide-react'
-import { BlogGrid } from '@/components/blog/BlogGrid'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
+import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
+import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getAuthorBlogPosts, getBlogAuthor } from '@/lib/blog/data'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -89,57 +90,107 @@ export default async function ArticleAuthorPage({ params }: PageProps) {
     { name: author.name, path: `/articles/author/${author.slug}` },
   ])
 
+  const count = posts.length
+  const articlesMeta = locale === 'ar'
+    ? `${count} ${count === 1 ? 'مقالة' : 'مقالات'}`
+    : `${count} ${count === 1 ? 'article' : 'articles'}`
+
   return (
-    <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+    <div className="px-4 pb-20 pt-28 sm:px-6 lg:px-8">
       <JsonLd schema={[profilePageSchema, breadcrumbSchema]} />
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-6xl">
         <Breadcrumbs locale={locale} items={[{ label: author.name }]} />
-        <header className="mb-10 rounded-[2rem] border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">
-          <div className="grid gap-8 md:grid-cols-[140px_1fr] md:items-center">
-            <div className="relative h-32 w-32 overflow-hidden rounded-[2rem] bg-sky-50">
-              {author.image?.url ? (
-                <Image src={author.image.url} alt={author.image.alt || author.name} fill sizes="128px" className="object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-primary-600 text-3xl font-black text-white">
-                  {author.name.slice(0, 2)}
-                </div>
-              )}
-            </div>
-            <div>
-              <p className="text-sm font-black uppercase tracking-normal text-primary-700">{locale === 'ar' ? 'الكاتب' : 'Author'}</p>
-              <h1 className="mt-3 text-4xl font-black leading-tight tracking-normal text-neutral-950 md:text-6xl">{author.name}</h1>
-              {author.role && <p className="mt-2 text-lg font-bold text-neutral-500">{author.role}</p>}
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-neutral-600">{author.bio || author.shortBio}</p>
+        <header className="mt-6 mb-12 grid gap-6 border-b-2 border-[var(--ed-rule-ink)] pb-8 md:grid-cols-[112px_1fr] md:items-start md:gap-8">
+          <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[var(--ed-rule)]" style={{ background: 'var(--ed-paper-2)' }}>
+            {author.image?.url ? (
+              <Image src={author.image.url} alt={author.image.alt || author.name} fill sizes="112px" className="object-cover" />
+            ) : (
+              <div
+                className="ed-serif flex h-full w-full items-center justify-center"
+                style={{ background: 'var(--ed-paper-2)', color: 'var(--ed-accent-ink)', fontSize: '1.75rem' }}
+              >
+                {author.name.slice(0, 2)}
+              </div>
+            )}
+          </div>
+          <div className="min-w-0">
+            <div className="ed-eyebrow" style={{ marginBottom: 6 }}>{locale === 'ar' ? 'الكاتب' : 'Author'}</div>
+            <h1 className="ed-serif" style={{ fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', lineHeight: 1.12, margin: '0 0 0.35rem' }}>
+              {author.name}
+            </h1>
+            {author.role && (
+              <p className="ed-meta" style={{ marginBottom: '0.75rem' }}>{author.role}</p>
+            )}
+            {(author.bio || author.shortBio) && (
+              <p style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-graphite)', fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '46rem' }}>
+                {author.bio || author.shortBio}
+              </p>
+            )}
+            {author.expertise.length > 0 && (
               <div className="mt-5 flex flex-wrap gap-2">
                 {author.expertise.map((item) => (
-                  <span key={item} className="rounded-full bg-[#f4f1f8] px-3 py-1 text-xs font-black text-neutral-700">
+                  <span key={item} className="ed-meta rounded-full border border-[var(--ed-rule)] px-3 py-1">
                     {item}
                   </span>
                 ))}
               </div>
-              <div className="mt-5 flex gap-3">
+            )}
+            {(author.linkedinUrl || author.xUrl) && (
+              <div className="mt-5 flex gap-4">
                 {author.linkedinUrl && (
-                  <a href={author.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on LinkedIn`} className="text-neutral-500 hover:text-primary-700">
+                  <a
+                    href={author.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${author.name} on LinkedIn`}
+                    className="text-[var(--ed-graphite)] transition-colors hover:text-[var(--ed-accent)]"
+                  >
                     <Linkedin className="h-5 w-5" />
                   </a>
                 )}
                 {author.xUrl && (
-                  <a href={author.xUrl} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on X`} className="text-neutral-500 hover:text-primary-700">
+                  <a
+                    href={author.xUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${author.name} on X`}
+                    className="text-[var(--ed-graphite)] transition-colors hover:text-[var(--ed-accent)]"
+                  >
                     <Twitter className="h-5 w-5" />
                   </a>
                 )}
               </div>
-            </div>
+            )}
           </div>
         </header>
 
-        <div className="mb-8">
-          <p className="text-sm font-black uppercase tracking-normal text-primary-700">{locale === 'ar' ? 'المقالات' : 'Articles'}</p>
-          <h2 className="mt-2 text-3xl font-black tracking-normal text-neutral-950 md:text-5xl">
-            {locale === 'ar' ? `مقالات بقلم ${author.name}` : `Articles by ${author.name}`}
-          </h2>
-        </div>
-        <BlogGrid posts={posts} locale={locale} emptyTitle={locale === 'ar' ? 'لا توجد مقالات بعد' : 'No articles yet'} emptyText={locale === 'ar' ? 'ستظهر مقالات الكاتب هنا بمجرد نشرها.' : 'Published author articles will appear here.'} />
+        <SectionMasthead
+          className="mb-10"
+          as="h2"
+          eyebrow={locale === 'ar' ? 'المقالات' : 'Articles'}
+          title={locale === 'ar' ? `مقالات بقلم ${author.name}` : `Articles by ${author.name}`}
+          metaLabel={articlesMeta}
+        />
+
+        {posts.length === 0 ? (
+          <div className="border-t border-[var(--ed-rule)] py-16 text-center">
+            <h2 className="ed-serif" style={{ fontSize: '1.5rem' }}>
+              {locale === 'ar' ? 'لا توجد مقالات بعد' : 'No articles yet'}
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl" style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-graphite)', lineHeight: 1.6 }}>
+              {locale === 'ar' ? 'ستظهر مقالات الكاتب هنا بمجرد نشرها.' : 'Published author articles will appear here.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <div key={post.id} className="ed-card-enter">
+                <InsightsArticleCard post={post} locale={locale} />
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="mt-16">
           <NewsletterBox locale={locale} />
         </div>

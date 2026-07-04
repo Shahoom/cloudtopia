@@ -32,7 +32,7 @@ export function LoadMoreButton({
         type="button"
         onClick={handleClick}
         disabled={isPending}
-        className="inline-flex h-11 items-center gap-2 rounded-lg border border-neutral-300 bg-white px-8 text-sm font-bold text-neutral-700 transition hover:border-primary-400 hover:text-primary-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="ed-eyebrow inline-flex h-11 items-center gap-2 border border-[var(--ed-rule)] bg-transparent px-8 text-[color:var(--ed-graphite)] transition-colors hover:border-[color:var(--ed-accent)] hover:text-[color:var(--ed-accent)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isPending ? (
           <>

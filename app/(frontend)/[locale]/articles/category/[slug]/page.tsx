@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { BlogGrid } from '@/components/blog/BlogGrid'
+import { Search } from 'lucide-react'
 import { BlogPagination } from '@/components/blog/BlogPagination'
-import { BlogSearch } from '@/components/blog/BlogSearch'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
+import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
+import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getBlogCategories, getBlogIndexData } from '@/lib/blog/data'
 import { buildSelfHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -88,32 +89,60 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
     { name: category.name, path: `/articles/category/${category.slug}` },
   ])
 
+  const count = data.latestPosts.length
+  const metaLabel = locale === 'ar'
+    ? `${count} ${count === 1 ? 'مقالة' : 'مقالات'}`
+    : `${count} ${count === 1 ? 'article' : 'articles'}`
+  const searchLabel = locale === 'ar' ? `البحث في مقالات ${category.name}` : `Search ${category.name} articles`
+  const searchPlaceholder = locale === 'ar' ? 'ابحث عن المواقع، الذكاء الاصطناعي، الأتمتة...' : 'Search websites, AI, CRM, automation...'
+
   return (
-    <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+    <div className="px-4 pb-20 pt-28 sm:px-6 lg:px-8">
       <JsonLd schema={[collectionSchema, breadcrumbSchema]} />
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-6xl">
         <Breadcrumbs locale={locale} items={[{ label: category.name }]} />
-        <header className="mb-10 rounded-3xl border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">
-          <p className="text-sm font-black uppercase tracking-normal text-primary-700">
-            {locale === 'ar' ? 'التصنيف' : 'Category'}
-          </p>
-          <h1 className="mt-3 text-4xl font-black leading-tight tracking-normal text-neutral-950 md:text-6xl">{category.name}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-neutral-600">{category.description}</p>
-          <div className="mt-8">
-            <BlogSearch
-              action={localePath(locale, `/articles/category/${category.slug}`)}
+        <SectionMasthead
+          className="mt-6 mb-10"
+          eyebrow={locale === 'ar' ? 'التصنيف' : 'Category'}
+          title={category.name}
+          description={category.description}
+          metaLabel={metaLabel}
+        >
+          <form action={localePath(locale, `/articles/category/${category.slug}`)} className="relative mt-6 max-w-md">
+            <label htmlFor="category-search" className="sr-only">
+              {searchLabel}
+            </label>
+            <Search className="pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ed-muted)] ltr:left-1 rtl:right-1" />
+            <input
+              id="category-search"
+              name="q"
+              type="search"
               defaultValue={search}
-              label={locale === 'ar' ? `البحث في مقالات ${category.name}` : `Search ${category.name} articles`}
-              locale={locale}
+              placeholder={searchPlaceholder}
+              className="h-11 w-full border-0 border-b border-[var(--ed-rule)] bg-transparent text-sm text-[var(--ed-ink)] outline-none transition-colors placeholder:text-[var(--ed-muted)] focus:border-[var(--ed-accent)] ltr:pl-7 rtl:pr-7"
             />
+          </form>
+        </SectionMasthead>
+
+        {data.latestPosts.length === 0 ? (
+          <div className="border-t border-[var(--ed-rule)] py-16 text-center">
+            <h2 className="ed-serif" style={{ fontSize: '1.5rem' }}>
+              {locale === 'ar' ? `لا توجد مقالات في ${category.name} بعد` : `No ${category.name} articles yet`}
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl" style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-graphite)', lineHeight: 1.6 }}>
+              {locale === 'ar' ? 'ستظهر المقالات المنشورة لهذا التصنيف هنا.' : 'Published articles for this category will appear here.'}
+            </p>
           </div>
-        </header>
-        <BlogGrid
-          posts={data.latestPosts}
-          locale={locale}
-          emptyTitle={locale === 'ar' ? `لا توجد مقالات في ${category.name} بعد` : `No ${category.name} articles yet`}
-          emptyText={locale === 'ar' ? 'ستظهر المقالات المنشورة لهذا التصنيف هنا.' : 'Published articles for this category will appear here.'}
-        />
+        ) : (
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {data.latestPosts.map((post) => (
+              <div key={post.id} className="ed-card-enter">
+                <InsightsArticleCard post={post} locale={locale} />
+              </div>
+            ))}
+          </div>
+        )}
+
         <BlogPagination
           basePath={localePath(locale, `/articles/category/${category.slug}`)}
           page={data.pagination.page}

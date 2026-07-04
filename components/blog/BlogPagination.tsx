@@ -27,28 +27,27 @@ export function BlogPagination({
   if (totalPages <= 1) return null
 
   const isRTL = locale === 'ar'
+  const linkClass =
+    'inline-flex h-11 items-center gap-2 rounded-lg border border-[var(--ed-rule)] px-4 text-sm text-[color:var(--ed-graphite)] transition-colors hover:border-[var(--ed-accent)] hover:text-[color:var(--ed-accent-ink)]'
 
   return (
-    <nav className="mt-12 flex items-center justify-center gap-3" aria-label={isRTL ? 'تنقل الصفحات' : 'Articles pagination'}>
+    <nav
+      className="mt-12 flex items-center justify-center gap-4 border-t border-[var(--ed-rule)] pt-8"
+      aria-label={isRTL ? 'تنقل الصفحات' : 'Articles pagination'}
+    >
       {page > 1 && (
-        <Link
-          href={pageHref(basePath, params, page - 1)}
-          className="inline-flex h-11 items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 text-sm font-black text-neutral-700 transition hover:border-primary-300 hover:text-primary-700"
-        >
-          <ArrowLeft className="h-4 w-4" />
+        <Link href={pageHref(basePath, params, page - 1)} className={linkClass}>
+          <ArrowLeft className="h-4 w-4 rtl:-scale-x-100" />
           {isRTL ? 'السابق' : 'Previous'}
         </Link>
       )}
-      <span className="rounded-xl bg-white px-4 py-3 text-sm font-black text-neutral-600 shadow-sm">
+      <span className="ed-meta">
         {isRTL ? `صفحة ${page} من ${totalPages}` : `Page ${page} of ${totalPages}`}
       </span>
       {page < totalPages && (
-        <Link
-          href={pageHref(basePath, params, page + 1)}
-          className="inline-flex h-11 items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 text-sm font-black text-neutral-700 transition hover:border-primary-300 hover:text-primary-700"
-        >
+        <Link href={pageHref(basePath, params, page + 1)} className={linkClass}>
           {isRTL ? 'التالي' : 'Next'}
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
         </Link>
       )}
     </nav>

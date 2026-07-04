@@ -109,6 +109,52 @@ const revalidateAfterDelete: CollectionAfterDeleteHook = async ({ doc }) => {
   return doc
 }
 
+// Articles are two paired documents that share a slug across locales. When the
+// cover image (or its alt text) is set/changed on one locale, mirror it to the
+// sibling so an editor only uploads once. Runs both directions; guarded by a
+// context flag so the sibling's own afterChange doesn't mirror back (infinite
+// loop). Mirrors in the same draft/published mode as the doc being saved.
+const relId = (v: unknown): number | null => (v && typeof v === 'object' ? ((v as any).id ?? null) : ((v as any) ?? null))
+
+const mirrorCoverImage: CollectionAfterChangeHook = async ({ doc, previousDoc, req, context }) => {
+  if ((context as Record<string, unknown> | undefined)?.skipCoverMirror) return doc
+  if (!doc?.slug || !doc?.locale) return doc
+
+  const newCover = relId(doc.coverImage)
+  const newAlt = (doc.featuredImageAlt as string | null) ?? null
+  const changed = newCover !== relId(previousDoc?.coverImage) || newAlt !== ((previousDoc?.featuredImageAlt as string | null) ?? null)
+  if (!changed) return doc
+
+  const otherLocale = doc.locale === 'ar' ? 'en' : 'ar'
+  try {
+    const siblings = await req.payload.find({
+      collection: 'blog-posts' as any,
+      where: { and: [{ slug: { equals: doc.slug } }, { locale: { equals: otherLocale } }] },
+      limit: 1,
+      depth: 0,
+      draft: true,
+      overrideAccess: true,
+      req,
+    })
+    const sibling = siblings.docs[0] as any
+    if (!sibling) return doc
+    if (relId(sibling.coverImage) === newCover && ((sibling.featuredImageAlt as string | null) ?? null) === newAlt) return doc
+
+    await req.payload.update({
+      collection: 'blog-posts' as any,
+      id: sibling.id,
+      data: { coverImage: newCover, featuredImageAlt: newAlt ?? undefined },
+      draft: (doc as any)._status !== 'published',
+      overrideAccess: true,
+      req,
+      context: { skipCoverMirror: true, skipAutoTranslate: true },
+    })
+  } catch {
+    // Non-fatal: never let mirroring block the primary save.
+  }
+  return doc
+}
+
 const serviceLinksField: Field = {
   name: 'relatedServices',
   type: 'array',
@@ -145,7 +191,7 @@ export const BlogPosts: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [normalizePost],
-    afterChange: [revalidateBlogPosts],
+    afterChange: [mirrorCoverImage, revalidateBlogPosts],
     afterDelete: [revalidateAfterDelete],
   },
   fields: [

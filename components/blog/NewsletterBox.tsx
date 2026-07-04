@@ -50,26 +50,35 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
     }
   }
 
+  const fieldClass =
+    'h-12 border-0 border-b border-[var(--ed-rule)] bg-transparent px-1 text-sm text-[var(--ed-ink)] outline-none transition-colors placeholder:text-[var(--ed-muted)] focus:border-[var(--ed-accent)]'
+
   return (
-    <section className="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white p-6 shadow-xl shadow-sky-950/10 md:p-8">
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[linear-gradient(rgba(2,132,199,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(2,132,199,0.08)_1px,transparent_1px)] bg-[size:32px_32px] lg:block" />
-      <div className="relative grid gap-6 lg:grid-cols-[1fr_1.25fr] lg:items-center">
+    <section
+      className="relative overflow-hidden"
+      style={{ background: 'var(--ed-paper)', borderTop: '2px solid var(--ed-rule-ink)', paddingTop: '2rem' }}
+    >
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.25fr] lg:items-start">
         <div>
-          <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-100 text-primary-700">
-            <Mail className="h-5 w-5" />
+          <span className="ed-eyebrow inline-flex items-center gap-2" style={{ color: 'var(--ed-accent)' }}>
+            <Mail className="h-4 w-4" />
+            {ar ? 'النشرة البريدية' : 'Newsletter'}
           </span>
-          <h2 className="text-3xl font-black leading-tight tracking-normal text-neutral-950">
+          <h2 className="ed-serif mt-3" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', lineHeight: 1.16 }}>
             {ar
               ? 'احصل على رؤى النمو الرقمي في صندوق الوارد'
               : 'Get digital growth insights in your inbox'}
           </h2>
-          <p className="mt-3 text-base leading-7 text-neutral-600">
+          <p
+            className="mt-3"
+            style={{ fontFamily: 'var(--ed-sans)', fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--ed-graphite)', maxWidth: '32rem' }}
+          >
             {ar
               ? 'استقبل رؤى عملية حول مواقع الويب، الأتمتة، CRM، الذكاء الاصطناعي، والأنظمة الرقمية القابلة للتوسع.'
               : 'Receive practical insights about websites, automation, CRM, AI, and scalable digital systems.'}
           </p>
         </div>
-        <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-[1fr_1.2fr] lg:grid-cols-[1fr_1.15fr_auto]">
+        <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-[1fr_1.2fr] lg:grid-cols-[1fr_1.15fr_auto]">
           <label className="sr-only" htmlFor="newsletter-name">
             {ar ? 'الاسم' : 'Name'}
           </label>
@@ -78,7 +87,7 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
             name="name"
             type="text"
             placeholder={ar ? 'الاسم' : 'Name'}
-            className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15"
+            className={fieldClass}
           />
           <label className="sr-only" htmlFor="newsletter-email">
             {ar ? 'البريد الإلكتروني' : 'Email address'}
@@ -89,7 +98,7 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
             type="email"
             required
             placeholder="you@company.com"
-            className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15"
+            className={fieldClass}
           />
           <label className="sr-only" htmlFor="newsletter-interest">
             {ar ? 'الاهتمام' : 'Interest'}
@@ -97,7 +106,7 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
           <select
             id="newsletter-interest"
             name="interest"
-            className="h-12 rounded-xl border border-neutral-200 px-4 text-sm font-semibold outline-none transition focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15 sm:col-span-2 lg:col-span-1"
+            className={`${fieldClass} sm:col-span-2 lg:col-span-1`}
           >
             <option value="">{ar ? 'اختر اهتمامك' : 'Choose interest'}</option>
             <option value="Web Development">{ar ? 'تطوير الويب' : 'Web Development'}</option>
@@ -109,7 +118,8 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="h-12 rounded-xl bg-primary-600 px-5 text-sm font-black text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 lg:col-span-1"
+            className="ed-eyebrow h-12 px-6 text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:col-span-2 lg:col-span-1"
+            style={{ background: 'var(--ed-accent)', letterSpacing: '0.12em' }}
           >
             {status === 'loading'
               ? (ar ? 'جارٍ الاشتراك...' : 'Subscribing...')
@@ -117,15 +127,14 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
           </button>
           {message && (
             <p
-              className={`sm:col-span-2 lg:col-span-3 text-sm font-bold ${
-                status === 'success' ? 'text-emerald-700' : 'text-red-600'
-              }`}
+              className="sm:col-span-2 lg:col-span-3 text-sm"
+              style={{ fontFamily: 'var(--ed-sans)', color: status === 'success' ? 'var(--ed-accent-ink)' : '#b91c1c' }}
               role="status"
             >
               {message}
             </p>
           )}
-          <p className="text-xs font-bold text-neutral-500 sm:col-span-2 lg:col-span-3">
+          <p className="ed-meta sm:col-span-2 lg:col-span-3" style={{ textTransform: 'none', letterSpacing: '0.02em' }}>
             {ar ? 'بدون بريد مزعج. رؤى نمو رقمي مفيدة فقط.' : 'No spam. Only useful digital growth insights.'}
           </p>
         </form>

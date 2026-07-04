@@ -1,13 +1,59 @@
 import type { Metadata } from 'next'
-import { BlogFilters } from '@/components/blog/BlogFilters'
-import { BlogGrid } from '@/components/blog/BlogGrid'
+import { Search } from 'lucide-react'
 import { BlogPagination } from '@/components/blog/BlogPagination'
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { NewsletterBox } from '@/components/blog/NewsletterBox'
+import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
+import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getBlogIndexData } from '@/lib/blog/data'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
+
+const CONTENT_TYPES_EN = [
+  ['guide', 'Guides'],
+  ['article', 'Articles'],
+  ['case_study', 'Case Studies'],
+  ['comparison', 'Comparisons'],
+  ['checklist', 'Checklists'],
+] as const
+const CONTENT_TYPES_AR = [
+  ['guide', 'أدلة'],
+  ['article', 'مقالات'],
+  ['case_study', 'دراسات الحالة'],
+  ['comparison', 'مقارنات'],
+  ['checklist', 'قوائم التحقق'],
+] as const
+const SERVICE_FOCUS_EN = [
+  ['websites', 'Websites'],
+  ['web_apps', 'Web Apps'],
+  ['crm', 'CRM'],
+  ['erp', 'ERP'],
+  ['automation', 'Automation'],
+  ['ai', 'AI'],
+  ['business_systems', 'Business Systems'],
+] as const
+const SERVICE_FOCUS_AR = [
+  ['websites', 'مواقع الويب'],
+  ['web_apps', 'تطبيقات الويب'],
+  ['crm', 'CRM'],
+  ['erp', 'ERP'],
+  ['automation', 'الأتمتة'],
+  ['ai', 'الذكاء الاصطناعي'],
+  ['business_systems', 'أنظمة الأعمال'],
+] as const
+const SORT_OPTIONS_EN = [
+  ['latest', 'Latest'],
+  ['featured', 'Featured'],
+  ['popular', 'Popular'],
+  ['guides', 'Guides'],
+] as const
+const SORT_OPTIONS_AR = [
+  ['latest', 'الأحدث'],
+  ['featured', 'المميزة'],
+  ['popular', 'الأكثر شيوعاً'],
+  ['guides', 'أدلة'],
+] as const
 
 type PageProps = {
   params: Promise<{ locale: string }>
@@ -73,44 +119,120 @@ export default async function ArticleSearchPage({ params, searchParams }: PagePr
     { name: locale === 'ar' ? 'البحث' : 'Search', path: '/articles/search' },
   ])
 
+  const ar = locale === 'ar'
+  const contentTypes = ar ? CONTENT_TYPES_AR : CONTENT_TYPES_EN
+  const serviceFocus = ar ? SERVICE_FOCUS_AR : SERVICE_FOCUS_EN
+  const sortOptions = ar ? SORT_OPTIONS_AR : SORT_OPTIONS_EN
+  const count = data.latestPosts.length
+  const resultsMeta = search
+    ? ar
+      ? `${count} ${count === 1 ? 'نتيجة' : 'نتائج'} عن "${search}"`
+      : `${count} ${count === 1 ? 'result' : 'results'} for "${search}"`
+    : ar
+      ? `${count} ${count === 1 ? 'مقالة' : 'مقالات'}`
+      : `${count} ${count === 1 ? 'article' : 'articles'}`
+  const selectClass =
+    'h-11 border-0 border-b border-[var(--ed-rule)] bg-transparent text-sm text-[var(--ed-ink)] outline-none transition-colors focus:border-[var(--ed-accent)]'
+
   return (
-    <div className="min-h-screen bg-[#f4f1f8] px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+    <div className="px-4 pb-20 pt-28 sm:px-6 lg:px-8">
       <JsonLd schema={[searchSchema, breadcrumbSchema]} />
-      <div className="mx-auto max-w-7xl">
-        <Breadcrumbs locale={locale} items={[{ label: locale === 'ar' ? 'البحث' : 'Search' }]} />
-        <header className="mb-8 rounded-3xl border border-white/80 bg-white p-8 shadow-xl shadow-sky-950/10 md:p-10">
-          <p className="text-sm font-black uppercase tracking-normal text-primary-700">
-            {locale === 'ar' ? 'البحث في المقالات' : 'Search Articles'}
-          </p>
-          <h1 className="mt-3 text-4xl font-black leading-tight tracking-normal text-neutral-950 md:text-6xl">
-            {search 
-              ? (locale === 'ar' ? `نتائج البحث عن "${search}"` : `Results for "${search}"`)
-              : (locale === 'ar' ? 'البحث في مقالات CloudTopia' : 'Search CloudTopia Articles')
-            }
-          </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-neutral-600">
-            {locale === 'ar'
+      <div className="mx-auto max-w-6xl">
+        <Breadcrumbs locale={locale} items={[{ label: ar ? 'البحث' : 'Search' }]} />
+        <SectionMasthead
+          className="mt-6 mb-8"
+          eyebrow={ar ? 'البحث' : 'Search'}
+          title={
+            search
+              ? ar ? `نتائج البحث عن "${search}"` : `Results for "${search}"`
+              : ar ? 'البحث في مقالات CloudTopia' : 'Search CloudTopia Articles'
+          }
+          description={
+            ar
               ? 'اعثر على إرشادات عملية في مجالات مواقع الويب، وأنظمة الأعمال، ولوحات البيانات، والذكاء الاصطناعي، والأتمتة، وإدارة علاقات العملاء، وتكنولوجيا السحابة.'
-              : 'Find practical guidance across websites, business systems, dashboards, AI, automation, CRM, ERP, and cloud technology.'}
-          </p>
-        </header>
-        <BlogFilters
-          categories={data.categories}
-          action={localePath(locale, '/articles/search')}
-          search={search}
-          category={query.category}
-          contentType={query.contentType}
-          service={query.service}
-          sort={query.sort}
-          locale={locale}
+              : 'Find practical guidance across websites, business systems, dashboards, AI, automation, CRM, ERP, and cloud technology.'
+          }
+          metaLabel={resultsMeta}
         />
+
+        <form action={localePath(locale, '/articles/search')} className="mb-4">
+          <div className="relative">
+            <label htmlFor="insights-filter-search" className="sr-only">
+              {ar ? 'البحث في المقالات' : 'Search insights'}
+            </label>
+            <Search className="pointer-events-none absolute top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--ed-muted)] ltr:left-1 rtl:right-1" />
+            <input
+              id="insights-filter-search"
+              name="q"
+              type="search"
+              defaultValue={search}
+              placeholder={ar ? 'ابحث بالعنوان، المؤلف، الوسم...' : 'Search title, author, tag, service...'}
+              className="ed-serif h-14 w-full border-0 border-b-2 border-[var(--ed-rule-ink)] bg-transparent text-xl text-[var(--ed-ink)] outline-none transition-colors placeholder:font-normal placeholder:text-[var(--ed-muted)] focus:border-[var(--ed-accent)] ltr:pl-9 rtl:pr-9"
+            />
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end">
+            <select name="category" defaultValue={query.category || ''} className={selectClass} aria-label={ar ? 'الفئة' : 'Category'}>
+              <option value="">{ar ? 'جميع المواضيع' : 'All topics'}</option>
+              {data.categories.map((item) => (
+                <option key={item.id} value={item.slug}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <select name="contentType" defaultValue={query.contentType || ''} className={selectClass} aria-label={ar ? 'نوع المحتوى' : 'Content type'}>
+              <option value="">{ar ? 'جميع الأشكال' : 'All formats'}</option>
+              {contentTypes.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <select name="service" defaultValue={query.service || ''} className={selectClass} aria-label={ar ? 'التخصص' : 'Service focus'}>
+              <option value="">{ar ? 'جميع الخدمات' : 'All services'}</option>
+              {serviceFocus.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              className="ed-eyebrow inline-flex h-11 items-center px-6 text-white transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={{ background: 'var(--ed-accent)', letterSpacing: '0.12em' }}
+            >
+              {ar ? 'تطبيق الفلاتر' : 'Apply filters'}
+            </button>
+          </div>
+          <div className="mt-4">
+            <select name="sort" defaultValue={query.sort || 'latest'} className={`${selectClass} w-full md:w-48`} aria-label={ar ? 'الترتيب' : 'Sort'}>
+              {sortOptions.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </form>
+
         <div className="mt-10">
-          <BlogGrid
-            posts={data.latestPosts}
-            locale={locale}
-            emptyTitle={locale === 'ar' ? 'لم يتم العثور على مقالات' : 'No articles found'}
-            emptyText={locale === 'ar' ? 'جرب كلمة رئيسية أو موضوعًا أو نوع محتوى أو تركيز خدمة آخر.' : 'Try a different keyword, topic, content type, or service focus.'}
-          />
+          {data.latestPosts.length === 0 ? (
+            <div className="border-t border-[var(--ed-rule)] py-16 text-center">
+              <h2 className="ed-serif" style={{ fontSize: '1.5rem' }}>
+                {ar ? 'لم يتم العثور على مقالات' : 'No articles found'}
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl" style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-graphite)', lineHeight: 1.6 }}>
+                {ar ? 'جرب كلمة رئيسية أو موضوعًا أو نوع محتوى أو تركيز خدمة آخر.' : 'Try a different keyword, topic, content type, or service focus.'}
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {data.latestPosts.map((post) => (
+                <div key={post.id} className="ed-card-enter">
+                  <InsightsArticleCard post={post} locale={locale} />
+                </div>
+              ))}
+            </div>
+          )}
           <BlogPagination
             basePath={localePath(locale, '/articles/search')}
             page={data.pagination.page}
