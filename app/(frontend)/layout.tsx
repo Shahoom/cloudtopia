@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
-import { Cairo, Fraunces, Amiri, Hanken_Grotesk } from 'next/font/google'
+import { Cairo, Fraunces, Amiri, Hanken_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
@@ -49,6 +49,17 @@ const hanken = Hanken_Grotesk({
   subsets: ['latin'],
   variable: '--font-hanken',
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
+// Arabic UI face — drives all Arabic body + heading text via --font-arabic.
+// Swap the family here to trial a different Arabic font; globals reference the
+// generic --font-ar-ui variable so nothing else changes. Logo, tagline, and blog
+// fonts are untouched.
+const arUi = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic', 'latin'],
+  variable: '--font-ar-ui',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -165,7 +176,7 @@ export default async function FrontendLayout({
     : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable} ${hanken.variable}`}>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable} ${hanken.variable} ${arUi.variable}`}>
       <head>
         {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
         <GoogleAnalytics />

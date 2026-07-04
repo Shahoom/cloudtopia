@@ -101,7 +101,7 @@ export function Component() {
                     headline: "أنظمة برمجية وسحابية وذكاء اصطناعي مصممة للعالم العربي.",
                     subline: "مواقع إلكترونية، متاجر رقمية، تطبيقات ويب، أنظمة CRM/ERP، بنية سحابية، وتدفقات عمل مدعومة بالذكاء الاصطناعي.",
                     description:
-                        "تساعد كلاود توبيا الشركات في السعودية، الإمارات، الخليج، والعالم العربي على بناء منتجات رقمية قابلة للتوسع، تحسّن العمليات، تقلل العمل اليدوي، وتسرّع النمو.",
+                        "تساعد كلاود توبيا الشركات في عُمان، السعودية، الإمارات، والعالم العربي على بناء منتجات رقمية قابلة للتوسع، تحسّن العمليات، تقلل العمل اليدوي، وتسرّع النمو.",
                     primary: t.home?.hero?.freeConsultation || "استشارة مجانية",
                     secondary: t.home?.hero?.exploreServices || "استكشف الخدمات",
                     process: "اكتشاف | استراتيجية | تصميم | برمجة | إطلاق | تحسين SEO",
@@ -112,7 +112,7 @@ export function Component() {
                     headline: "Software, cloud, and AI systems built for the Arab world.",
                     subline: "Websites, e-commerce platforms, web apps, CRM/ERP systems, cloud infrastructure, and AI workflows.",
                     description:
-                        "CloudTopia helps businesses in Saudi Arabia, UAE, the GCC, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.",
+                        "CloudTopia helps businesses in Oman, Saudi Arabia, UAE, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.",
                     primary: t.home?.hero?.freeConsultation || "Free Consultation",
                     secondary: t.home?.hero?.exploreServices || "Explore Services",
                     process: "Discovery → Strategy → Design → Build → Launch → SEO Growth",
@@ -457,13 +457,15 @@ export function Component() {
                     </p>
 
                     <div className="mx-auto flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
-                        <Link
+                        <a
                             href={contactHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group inline-flex min-h-12 items-center justify-center gap-2 bg-[#0f172a] px-6 py-3.5 text-sm font-black text-white shadow-[0_18px_42px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0284c7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0284c7]"
                         >
                             {copy.primary}
                             <ArrowRight className={`h-4 w-4 transition-transform ${isArabic ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} aria-hidden="true" />
-                        </Link>
+                        </a>
                         <Link
                             href={servicesHref}
                             className="inline-flex min-h-12 items-center justify-center border border-slate-900/12 bg-white/58 px-6 py-3.5 text-sm font-black text-[#0f172a] shadow-[0_14px_38px_rgba(15,23,42,0.08)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/82 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0284c7]"

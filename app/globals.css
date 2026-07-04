@@ -39,9 +39,9 @@
 @import "tailwindcss/utilities";
 
 :root {
-  /* Body text: Hanken Grotesk for Latin (English), Changa for Arabic glyphs. */
-  --font-inter: var(--font-hanken), 'Changa', sans-serif;
-  --font-arabic: 'Changa', sans-serif;
+  /* Body: Hanken Grotesk for Latin (English), Tajawal for Arabic (Changa fallback). */
+  --font-inter: var(--font-hanken), var(--font-ar-ui), 'Changa', sans-serif;
+  --font-arabic: var(--font-ar-ui), 'Changa', sans-serif;
   /* Headings: Cairo (loaded via next/font in layout.tsx) */
   --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
   /* Logo keeps the brand's AgharaPro face */

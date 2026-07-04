@@ -63,7 +63,7 @@ export default async function LocaleLayout({
             tags: ['CLOUDTOPIA — DIGITAL & CLOUD TECHNOLOGIES', 'Arabic Software Company', 'Cloud AI Systems'],
             title: 'Software, cloud, and AI systems built for the Arab world.',
             titleHighlights: ['Software', 'Cloud', 'AI systems'],
-            description: 'CloudTopia helps businesses in Saudi Arabia, UAE, the GCC, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.',
+            description: 'CloudTopia helps businesses in Oman, Saudi Arabia, UAE, and the Arab world build scalable digital products that improve operations, reduce manual work, and accelerate growth.',
         }
     const chromeDictionary = {
         ...chrome.dictionary,
