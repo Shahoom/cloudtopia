@@ -5,7 +5,6 @@ import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
 import { serviceDetailSlugs } from '@/lib/seo/services'
 import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
-import { webApplicationsGroups } from '@/lib/services/web-applications'
 import { dpSubServiceSlugs, getDigitalPresenceSubService } from '@/lib/services/digital-presence-content'
 import { businessSystemsSubServiceSlugs, getBusinessSystemsSubService } from '@/lib/services/business-systems-content'
 import { subServiceHref } from '@/lib/services/sub-service-routing'
@@ -27,14 +26,12 @@ const allServiceDetailSlugs: string[] = Array.from(
     ]),
 )
 
-// Web-app pillar pages moved to their own top-level segment
-// (/web-applications/<slug>). Their href no longer starts with `/services/`, so
-// they auto-drop from structuredPillarRoutes (and thus allServiceDetailSlugs) —
-// emit them here explicitly as /web-applications/<slug>. The /web-applications
-// hub itself is a guaranteed static route below and is unaffected.
-const webApplicationPillarPaths: string[] = webApplicationsGroups.flatMap((g) =>
-    g.pillars.map((p) => `/web-applications/${p.slug}`),
-)
+// Web-app pillars now live under /services/<slug> (grouped namespace) with a
+// /services/ href, so they flow through structuredPillarRoutes ->
+// allServiceDetailSlugs above and are emitted as /services/<slug> there. They
+// are intentionally NOT emitted separately anymore (the old /web-applications/
+// <slug> URLs 301 to /services/<slug>). The bare /web-applications hub stays.
+const webApplicationPillarPaths: string[] = []
 
 // Nested sub-service URLs (/services/<parent>/<sub>) for every DP + BS sub.
 const nestedSubServicePaths: string[] = Array.from(

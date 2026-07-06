@@ -10,6 +10,7 @@ import { localizedDP } from '@/lib/services/digital-presence'
 import { getStructuredPillarBySlug, structuredPillarRoutes, legacyMainPagePillarSlugs } from '@/lib/services/structured-catalog'
 import { PillarPage } from '@/components/services/PillarPage'
 import RichPillarPage from '@/components/services/RichPillarPage'
+import WebAppPillarPage from '@/components/services/WebAppPillarPage'
 import { GetFoundPillarPage } from '@/components/services/GetFoundPillarPage'
 import { getGetFoundContent } from '@/lib/services/get-found-content'
 import { getRichPillarData, getBusinessSystemsSubService, businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
@@ -418,10 +419,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         if (pillar.href !== `/services/${serviceSlug}`) permanentRedirect(pillar.href)
         const rich = getRichPillarData(serviceSlug, locale)
         if (rich) return <RichPillarPage data={rich} locale={locale} />
-        // Web-app pillars moved to their own /web-applications/<slug> segment.
-        // Any hit on the old flat /services/<slug> URL is permanently redirected
-        // to its new home; the /web-applications/[pillar] route owns the render.
-        if (getWebappServiceContent(serviceSlug)) permanentRedirect(`/web-applications/${serviceSlug}`)
+        // Web-app pillars (SaaS/MVP, full-stack, portals, modernization, media)
+        // render inline under /services/<slug> via the shared bilingual
+        // WebAppPillarPage — the same grouped namespace as every other pillar.
+        const webapp = getWebappServiceContent(serviceSlug)
+        if (webapp) return <WebAppPillarPage slug={serviceSlug} data={webapp} locale={locale} />
         return <PillarPage pillar={pillar} locale={locale} />
     }
     // Sub-service pages now live nested under their parent pillar

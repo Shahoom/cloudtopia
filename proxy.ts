@@ -175,6 +175,19 @@ export function proxy(request: NextRequest) {
     }
 
 
+    // Web-app pillar pages moved from /web-applications/<slug> into the grouped
+    // /services/<slug> namespace — redirect the sub-paths (single 301, any
+    // locale). The bare /web-applications hub is a real page and stays put.
+    {
+        const m = cleanPath.match(/^(?:\/(en|ar))?\/web-applications\/([^/]+)$/)
+        if (m) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            url.pathname = m[1] === 'ar' ? `/ar/services/${m[2]}` : `/services/${m[2]}`
+            return NextResponse.redirect(url, { status: 301 })
+        }
+    }
+
     const seg1 = cleanPath.split('/')[1] // '', 'en', 'ar', or something else
     const isEnPrefixed = seg1 === 'en'
     const isNonEnLocale = seg1 === 'ar'

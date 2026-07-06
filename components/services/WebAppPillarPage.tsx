@@ -11,6 +11,10 @@ import { getProjectsForService } from '@/lib/services/related-projects'
 import { asWebAppLocale, type WebAppServiceContent } from '@/lib/services/webapp-service-content'
 import { getWebappFaq } from '@/lib/services/webapp-faq-content'
 import { getWebApplicationsSubServicesByPillar } from '@/lib/services/web-applications'
+import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
+import { localizedDP } from '@/lib/services/digital-presence'
+import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 
 /**
@@ -39,6 +43,25 @@ export default async function WebAppPillarPage({
     const faq = getWebappFaq(slug, locale)
     const subServices = getWebApplicationsSubServicesByPillar(slug, locale)
 
+    // Service + BreadcrumbList JSON-LD. Previously emitted by the old
+    // /web-applications/[pillar]/layout; now self-contained so the structured
+    // data travels with the page at its /services/<slug> home. FAQPage JSON-LD
+    // is emitted below.
+    const pillar = getStructuredPillarBySlug(slug)
+    const schemaPath = `/services/${slug}`
+    const pName = pillar ? localizedDP(pillar.name, locale) : isRTL ? 'تطبيقات الويب' : 'Web Applications'
+    const pDesc = pillar
+        ? localizedDP(pillar.description, locale)
+        : isRTL
+            ? 'تطبيقات ويب تفاعلية بميزات حية وبوابات ومنصات SaaS.'
+            : 'Interactive web applications with real-time features, portals, and SaaS platforms.'
+    const serviceSchema = buildServiceSchema(locale, { name: pName, description: pDesc, path: schemaPath, serviceType: 'Web Application Development' })
+    const breadcrumbSchema = buildBreadcrumbSchema(locale, [
+        { name: isRTL ? 'الرئيسية' : 'Home', path: '/' },
+        { name: isRTL ? 'الخدمات' : 'Services', path: '/services' },
+        { name: pName, path: schemaPath },
+    ])
+
     const projects: Project[] = await getProjectsForService(locale, {
         serviceSlug: slug,
         pillarSlug: 'interactive-web-applications',
@@ -58,6 +81,7 @@ export default async function WebAppPillarPage({
 
     return (
         <>
+            <JsonLd schema={[serviceSchema, breadcrumbSchema]} />
             {faqSchema ? (
                 <script
                     type="application/ld+json"
