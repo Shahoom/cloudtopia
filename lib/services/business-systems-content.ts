@@ -2,6 +2,7 @@ import type { SubServiceContent } from '@/components/services/SubServicePage'
 import type { LocalizedText } from '@/lib/seo/industries'
 import { generatedSubServices } from './business-systems-subservices'
 import { generatedSubServicesAr } from './business-systems-subservices-ar'
+import { subServiceContentArDeep } from './business-systems-subservices-ar-deep'
 import { subServiceHref } from './sub-service-routing'
 
 /**
@@ -1027,13 +1028,21 @@ export const subServiceContent: Record<string, SubServiceContent> = {
 }
 
 /**
- * Arabic translations. Entries may be PARTIAL — e.g. just `seo` + `hero` for the
- * Arabic SEO pass — and are merged field-by-field over the English entry at the
- * getter, so any untranslated field (deliver, faqs, techStack…) falls back to EN.
+ * Arabic translations, merged field-by-field over the English entry at the getter
+ * (untranslated fields fall back to EN). Built from two layers:
+ *   1. generatedSubServicesAr — the seo + hero Arabic (from the i18n pass).
+ *   2. subServiceContentArDeep — the deep Arabic (deliver / outcomes / process /
+ *      tech / industries / faqs, plus full seo+hero for odoo-erp-implementation),
+ *      merged OVER layer 1 so /ar/ sub-service pages are fully Arabic below the
+ *      hero instead of falling back to English.
  */
-export const subServiceContentAr: Record<string, Partial<SubServiceContent>> = {
-    ...generatedSubServicesAr,
-}
+export const subServiceContentAr: Record<string, Partial<SubServiceContent>> = (() => {
+    const merged: Record<string, Partial<SubServiceContent>> = { ...generatedSubServicesAr }
+    for (const slug of Object.keys(subServiceContentArDeep)) {
+        merged[slug] = { ...(merged[slug] || {}), ...subServiceContentArDeep[slug] }
+    }
+    return merged
+})()
 
 export function getBusinessSystemsSubService(slug: string, locale = 'en'): SubServiceContent | null {
     const en = subServiceContent[slug] ?? null
