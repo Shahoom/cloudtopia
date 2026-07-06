@@ -11,7 +11,6 @@ import { getProjectsForService } from '@/lib/services/related-projects'
 import { asWebAppLocale, type WebAppServiceContent } from '@/lib/services/webapp-service-content'
 import { getWebappFaq } from '@/lib/services/webapp-faq-content'
 import { getWebApplicationsSubServicesByPillar } from '@/lib/services/web-applications'
-import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 
 /**
@@ -39,7 +38,6 @@ export default async function WebAppPillarPage({
     const isRTL = locale === 'ar'
     const faq = getWebappFaq(slug, locale)
     const subServices = getWebApplicationsSubServicesByPillar(slug, locale)
-    const subServiceIcon = getStructuredPillarBySlug(slug)?.icon ?? '/icons/services/webapps.png'
 
     const projects: Project[] = await getProjectsForService(locale, {
         serviceSlug: slug,
@@ -105,7 +103,7 @@ export default async function WebAppPillarPage({
                                     href="/contact"
                                     name={s.name}
                                     desc={s.desc}
-                                    icon={subServiceIcon}
+                                    iconName={s.iconName}
                                     locale={locale}
                                 />
                             ))}

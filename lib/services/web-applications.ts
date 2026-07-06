@@ -324,18 +324,59 @@ export const webAppPillarSubServices: Record<string, { en: string; ar: string; d
 }
 
 /**
+ * Per-card lucide icon (name → resolved in SubServiceGlowCard's CARD_ICONS).
+ * Keyed by the STABLE English card name so it works across locales. Each
+ * sub-service gets its OWN meaning-specific glyph instead of the pillar's single
+ * shared PNG (which made every card on a page look identical).
+ */
+const SUBSERVICE_ICON: Record<string, string> = {
+    // Custom SaaS & MVP
+    'Minimum Viable Product (MVP) Development for Startups': 'Rocket',
+    'Software-as-a-Service (SaaS) Platform Architecture': 'Layers',
+    'Multi-Tenant Application Architecture': 'Building2',
+    'Subscription-Based Product Development (Stripe Billing)': 'CreditCard',
+    // Full-Stack Web Engineering
+    'Next.js & React Front-End Engineering': 'Code2',
+    'Node.js, Python & PHP/Laravel Back-End Engineering': 'Server',
+    'Single & Multi-Page Application Development': 'AppWindow',
+    'Progressive Web App (PWA) Development': 'Smartphone',
+    'Database Architecture & Data Modeling': 'Database',
+    'Custom API, Third-Party Integrations & Payment/SSO Setup': 'Webhook',
+    // Interactive Portals & Dashboards
+    'Custom Client & Customer Portals': 'Users',
+    'Admin Dashboards & Control Panels': 'LayoutDashboard',
+    'Data Visualization & Interactive Charting': 'BarChart3',
+    'Role-Based Access Control & Permissions': 'ShieldCheck',
+    'File Upload & Document Management Modules': 'FolderCog',
+    // App Modernization, Security & Maintenance
+    'Legacy Application Refactoring & Rewrites': 'Recycle',
+    'Monolith to Microservices Migration': 'Boxes',
+    'Web App Speed & Core Web Vitals Optimization': 'Gauge',
+    'End-to-End Automated Testing & QA': 'FlaskConical',
+    'Security Auditing & Vulnerability Patching': 'ShieldAlert',
+    'Deployment Pipelines & 24/7 Monitoring': 'Activity',
+    // Media, Entertainment & Streaming
+    'VoD & OTT Streaming Platforms': 'PlayCircle',
+    'Live Streaming & Events': 'Radio',
+    'Subscriptions, Memberships & Paywalls': 'Ticket',
+    'Media Asset Management & Transcoding': 'Film',
+    'CDN Delivery & DRM Content Protection': 'Globe',
+}
+
+/**
  * Resolve a pillar's bilingual sub-service cards for the given locale.
- * Returns `{ name, desc? }` pairs; empty array for an unknown slug.
+ * Returns `{ name, desc?, iconName? }` triples; empty array for an unknown slug.
  */
 export function getWebApplicationsSubServicesByPillar(
     slug: string,
     locale = 'en',
-): { name: string; desc?: string }[] {
+): { name: string; desc?: string; iconName?: string }[] {
     const entries = webAppPillarSubServices[slug]
     if (!entries) return []
     const loc: 'en' | 'ar' = locale === 'ar' ? 'ar' : 'en'
     return entries.map((e) => ({
         name: e[loc],
         ...(e.desc ? { desc: e.desc[loc] } : {}),
+        ...(SUBSERVICE_ICON[e.en] ? { iconName: SUBSERVICE_ICON[e.en] } : {}),
     }))
 }
