@@ -59,7 +59,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build the website and lead capture flow first, then connect the CRM and agent dashboard.',
       ar: 'نبدأ بالموقع ومسار استقبال العملاء، ثم نربط نظام CRM ولوحة الوكلاء.',
     },
-    route: '/website-development',
+    route: '/services/website-development',
   },
 
   // ── 2. Real Estate + CRM System ───────────────────────────────────────────
@@ -113,7 +113,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Launch the clinic website with booking and inquiry features, then add patient automation if needed.',
       ar: 'نطلق موقع العيادة مع ميزات الحجز والاستفسار، ثم نضيف أتمتة المرضى عند الحاجة.',
     },
-    route: '/website-development',
+    route: '/services/website-development',
   },
 
   // ── 3b. Healthcare Mobile App / Patient Portal ───────────────────────────
@@ -437,7 +437,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Design and launch the website, then add blog and CRM lead connection in phase 2.',
       ar: 'نصمم وننطلق بالموقع، ثم نضيف المدونة وربط CRM في المرحلة الثانية.',
     },
-    route: '/website-development',
+    route: '/services/website-development',
   },
 
   // ── 15. General Business Website ─────────────────────────────────────────
@@ -464,7 +464,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Design and build the website in one focused sprint, then iterate based on performance.',
       ar: 'نصمم وننشئ الموقع في سبرينت واحد مركّز، ثم نطوّره بناءً على الأداء.',
     },
-    route: '/website-development',
+    route: '/services/website-development',
   },
 
   // ── 16. Custom Web Platform (Fallback) ───────────────────────────────────

@@ -12,7 +12,7 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>
 }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    const metadata = await getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing', {
+    const metadata = await getCMSMetadata(locale, '/services/social-media-marketing', 'social-media-marketing', {
         title: socialMediaSeoFallback.titles[locale] || socialMediaSeoFallback.titles.en,
         description: socialMediaSeoFallback.descriptions[locale] || socialMediaSeoFallback.descriptions.en,
     })

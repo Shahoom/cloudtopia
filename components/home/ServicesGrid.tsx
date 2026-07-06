@@ -89,7 +89,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Business Websites', ar: 'مواقع الشركات والأعمال' },
         description: { en: 'Custom corporate websites built for outstanding speed, premium look, and Google visibility.', ar: 'موقع تعريفي للشركة لتبسيط الخدمات، وإثبات الهوية والظهور المحلي.' },
-        link: '/website-development',
+        link: '/services/website-development',
         iconName: 'Globe'
       },
       {
@@ -107,7 +107,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'E-commerce Solutions', ar: 'المتاجر الإلكترونية' },
         description: { en: 'Modern online shops with secure payments, inventory managers, and WhatsApp notifications.', ar: 'متاجر مع دفع إلكتروني، إدارة منتجات، مخزون، طلبات، وربط واتساب.' },
-        link: '/ecommerce-development',
+        link: '/services/ecommerce-development',
         iconName: 'ShoppingBag'
       },
       {
@@ -461,7 +461,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Social Media Management', ar: 'إدارة وسائل التواصل الاجتماعي' },
         description: { en: 'Auto-post updates, track brand mentions, and design multi-platform strategies.', ar: 'استراتيجية وأتمتة منصات التواصل الاجتماعي، النشر التلقائي وتتبع العلامة.' },
-        link: '/social-media-marketing',
+        link: '/services/social-media-marketing',
         iconName: 'Share2'
       },
       {

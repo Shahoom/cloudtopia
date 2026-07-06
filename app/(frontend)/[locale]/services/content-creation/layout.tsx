@@ -17,7 +17,7 @@ export const contentCreationSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/content-creation', 'content-creation', {
+    return getCMSMetadata(locale, '/services/content-creation', 'content-creation', {
         title: contentCreationSeoFallback.titles[locale] || contentCreationSeoFallback.titles.en,
         description: contentCreationSeoFallback.descriptions[locale] || contentCreationSeoFallback.descriptions.en,
     })
@@ -34,12 +34,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'Content Creation', path: '/content-creation' },
+                        { name: 'Content Creation', path: '/services/content-creation' },
                     ]),
                     buildServiceSchema(locale, {
                         name: 'Content Creation & Copywriting',
                         description: 'Bilingual Arabic + English content, blog writing, video scripts, and SEO content for Gulf brands.',
-                        path: '/content-creation',
+                        path: '/services/content-creation',
                         serviceType: 'Content Marketing',
                     }),
                     faqSchema,

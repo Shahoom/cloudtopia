@@ -409,6 +409,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const pillar = getStructuredPillarBySlug(serviceSlug)
     // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
     if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
+        // Canonical guard: a pillar's real URL is `pillar.href`. If this dynamic
+        // route was reached on a `/services/<slug>` that is NOT the pillar's
+        // canonical href — a slug≠segment case (social-media-management →
+        // /services/social-media-marketing) or a bespoke pillar whose static
+        // folder should own the URL — 301 to the canonical so search engines
+        // never see a second indexable copy.
+        if (pillar.href !== `/services/${serviceSlug}`) permanentRedirect(pillar.href)
         const rich = getRichPillarData(serviceSlug, locale)
         if (rich) return <RichPillarPage data={rich} locale={locale} />
         // Web-app pillars moved to their own /web-applications/<slug> segment.

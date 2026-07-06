@@ -42,8 +42,28 @@ export const allStructuredPillars: DPPillar[] = Object.values(structuredCatalog)
     .flat()
     .flatMap((g) => g.pillars)
 
-/** Pillars that own a /services/[slug] page (used for static params + routing). */
-export const structuredPillarRoutes = allStructuredPillars.filter((p) => p.href.startsWith('/services/'))
+/**
+ * Pillars that render via their OWN bespoke static route under
+ * `app/(frontend)/[locale]/services/<segment>/` — the flagship pages with full
+ * client-rendered content (Website Development, E-Commerce, Social Media
+ * Marketing, Content Creation). They live at `/services/<segment>` like every
+ * other pillar, but the DYNAMIC `[service]` route must not also pre-render them
+ * (the static folder owns the URL), so they are excluded from
+ * `structuredPillarRoutes` below (static params + sitemap dedupe).
+ */
+export const bespokePillarSlugs = new Set<string>([
+    'website-development',
+    'ecommerce-development',
+    'social-media-management',
+    'content-marketing-authority',
+])
+
+/** Pillars that own a /services/[slug] page rendered by the DYNAMIC [service]
+ *  route (used for static params + routing). Excludes bespoke pillars, which
+ *  have their own static folders. */
+export const structuredPillarRoutes = allStructuredPillars.filter(
+    (p) => p.href.startsWith('/services/') && !bespokePillarSlugs.has(p.slug),
+)
 
 export function getStructuredPillarBySlug(slug: string): DPPillar | null {
     return allStructuredPillars.find((p) => p.slug === slug) ?? null

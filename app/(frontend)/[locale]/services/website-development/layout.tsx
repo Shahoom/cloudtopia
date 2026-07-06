@@ -17,7 +17,7 @@ export const websiteDesignSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/website-development', 'website-design', {
+    return getCMSMetadata(locale, '/services/website-development', 'website-design', {
         title: websiteDesignSeoFallback.titles[locale] || websiteDesignSeoFallback.titles.en,
         description: websiteDesignSeoFallback.descriptions[locale] || websiteDesignSeoFallback.descriptions.en,
     })
@@ -34,12 +34,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'Website Development', path: '/website-development' },
+                        { name: 'Website Development', path: '/services/website-development' },
                     ]),
                     buildServiceSchema(locale, {
                         name: 'Website Development',
                         description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
-                        path: '/website-development',
+                        path: '/services/website-development',
                         serviceType: 'Web Development',
                     }),
                     faqSchema,

@@ -137,9 +137,9 @@ export const menuColumns: MenuColumn[] = [
     links: [
       { label: 'Website Design & Development', href: '/website-design' },
       { label: 'Landing Pages', href: '/website-design#landing-pages' },
-      { label: 'E-commerce Websites', href: '/ecommerce-development' },
+      { label: 'E-commerce Websites', href: '/services/ecommerce-development' },
       { label: 'Branding & Visual Identity', href: '/services#digital-presence' },
-      { label: 'Social Media Setup', href: '/social-media-marketing' },
+      { label: 'Social Media Setup', href: '/services/social-media-marketing' },
       { label: 'SEO-Ready Pages', href: '/services#digital-presence' },
     ],
   },
@@ -195,7 +195,7 @@ export const servicesOverview: ServiceOverview[] = [
   },
   {
     title: 'E-commerce & Product Catalogs',
-    href: '/ecommerce-development',
+    href: '/services/ecommerce-development',
     icon: 'shopping',
     description:
       'Online stores, product showcases, payment integrations, inventory-friendly structures, and conversion-focused shopping experiences.',
@@ -227,7 +227,7 @@ export const servicesOverview: ServiceOverview[] = [
   },
   {
     title: 'Social & Content Systems',
-    href: '/social-media-marketing',
+    href: '/services/social-media-marketing',
     icon: 'message',
     description:
       'Content strategy, ad creatives, lead forms, business pages, and campaigns connected to your digital presence.',
@@ -689,7 +689,7 @@ export const versionXServiceTabs: VersionXTab[] = [
     description: 'Catalogs, storefronts, payment-ready structures, analytics, and product flows for businesses selling online.',
     image: '/images/services/ecommerce-solutions/3.avif',
     bullets: ['Product catalog architecture', 'Checkout or inquiry journeys', 'Campaign-ready merchandising sections'],
-    href: '/ecommerce-development',
+    href: '/services/ecommerce-development',
   },
   {
     label: 'Web Apps',
@@ -769,7 +769,7 @@ export const seoClusters: SeoCluster[] = [
     description: 'High-intent pages for buyers comparing website, e-commerce, system, app, and AI automation options.',
     links: [
       { label: 'Website Design & Development', href: '/website-design' },
-      { label: 'E-commerce Stores', href: '/ecommerce-development' },
+      { label: 'E-commerce Stores', href: '/services/ecommerce-development' },
       { label: 'Custom Web Applications', href: '/web-applications' },
       { label: 'CRM / ERP Systems', href: '/business-systems-development' },
       { label: 'CloudTopia Labs', href: '/labs' },
@@ -849,7 +849,7 @@ export const versionXFooterColumns = [
     title: 'Services',
     links: [
       ['Website Design', '/website-design'],
-      ['E-commerce', '/ecommerce-development'],
+      ['E-commerce', '/services/ecommerce-development'],
       ['Web Applications', '/web-applications'],
       ['CRM / ERP Systems', '/business-systems-development'],
       ['CloudTopia Labs', '/labs'],

@@ -29,12 +29,12 @@ export default async function ServicesPage({
     const heroDesc = t.services?.hero?.description ?? ''
 
     const detailRoutes: Array<{ path: string; key: string }> = [
-        { path: '/website-development', key: 'Website Development' },
-        { path: '/ecommerce-development', key: 'Ecommerce Solutions' },
+        { path: '/services/website-development', key: 'Website Development' },
+        { path: '/services/ecommerce-development', key: 'Ecommerce Solutions' },
         { path: '/business-systems-development', key: 'Business Systems Development' },
         { path: '/restaurant-qr-menu', key: 'Restaurant QR Menu' },
-        { path: '/content-creation', key: 'Content Creation' },
-        { path: '/social-media-marketing', key: 'Social Media Marketing' },
+        { path: '/services/content-creation', key: 'Content Creation' },
+        { path: '/services/social-media-marketing', key: 'Social Media Marketing' },
         { path: '/web-applications', key: 'Web Applications' },
         { path: '/services/mobile-app-development', key: 'Mobile App Development' },
         { path: '/services/ios-app-development', key: 'iOS App Development' },

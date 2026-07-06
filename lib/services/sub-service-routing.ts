@@ -27,7 +27,14 @@ export function subServiceParent(pillarSlug: string): string {
     // Fall back to the raw pillarSlug if the pillar can't be resolved — keeps the
     // URL deterministic rather than throwing during static generation.
     if (!pillar) return pillarSlug
-    return pillar.href.startsWith('/services/') ? pillar.slug : pillar.href.replace(/^\//, '')
+    // The URL segment is the LAST path segment of the pillar's public href,
+    // whether it lives at /services/<seg> or (historically) a bespoke top-level
+    // page. Some pillars have a slug that differs from their segment — e.g.
+    // social-media-management → /services/social-media-marketing,
+    // content-marketing-authority → /services/content-creation — so deriving
+    // from the href (not the slug) keeps their sub-service URLs stable.
+    const seg = pillar.href.split('/').filter(Boolean).pop()
+    return seg || pillarSlug
 }
 
 /** Nested, locale-agnostic href for a sub-service page. */

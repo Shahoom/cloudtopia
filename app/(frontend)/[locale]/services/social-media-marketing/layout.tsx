@@ -17,7 +17,7 @@ export const socialMediaSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/social-media-marketing', 'social-media-marketing', {
+    return getCMSMetadata(locale, '/services/social-media-marketing', 'social-media-marketing', {
         title: socialMediaSeoFallback.titles[locale] || socialMediaSeoFallback.titles.en,
         description: socialMediaSeoFallback.descriptions[locale] || socialMediaSeoFallback.descriptions.en,
     })
@@ -34,12 +34,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'Social Media Marketing', path: '/social-media-marketing' },
+                        { name: 'Social Media Marketing', path: '/services/social-media-marketing' },
                     ]),
                     buildServiceSchema(locale, {
                         name: 'Social Media Marketing & Management',
                         description: 'Arabic-first content and paid social for Gulf audiences. TikTok, Snapchat, Instagram, Meta, YouTube.',
-                        path: '/social-media-marketing',
+                        path: '/services/social-media-marketing',
                         serviceType: 'Social Media Marketing',
                     }),
                     faqSchema,

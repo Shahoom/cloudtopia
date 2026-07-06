@@ -394,7 +394,7 @@ export const serviceDetailSlugs = Object.keys(servicesBySlug)
  * standalone exists), which is fine — both reinforce the same canonical URL.
  */
 export const categoryStandaloneRoutes: Record<string, string> = {
-    'digital-presence': '/website-development',
+    'digital-presence': '/services/website-development',
     'interactive-web-applications': '/web-applications',
     'mobile-app-development': '/web-applications',
     'business-systems-development': '/business-systems-development',
@@ -424,7 +424,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Website Design', 'تصميم المواقع'),
         description: t('Conversion-focused, bilingual business websites.', 'مواقع أعمال ثنائية اللغة تركّز على التحويل.'),
-        href: '/website-development',
+        href: '/services/website-development',
         icon: '/icons/services/Website Design & Development.png',
     },
     {
@@ -442,7 +442,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('E-commerce Solutions', 'حلول التجارة الإلكترونية'),
         description: t('Online stores built to sell.', 'متاجر إلكترونية مبنية للبيع.'),
-        href: '/ecommerce-development',
+        href: '/services/ecommerce-development',
         icon: '/icons/services/E-commerce Solutions.png',
     },
     {
@@ -454,7 +454,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Social Media Marketing', 'التسويق عبر وسائل التواصل'),
         description: t('Content, campaigns, and audience growth.', 'محتوى وحملات ونمو الجمهور.'),
-        href: '/social-media-marketing',
+        href: '/services/social-media-marketing',
         icon: '/icons/services/Social Media Management.png',
     },
     {
@@ -466,7 +466,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Content Creation', 'إنشاء المحتوى'),
         description: t('Visuals, copy, and brand assets.', 'محتوى مرئي ونصوص وأصول للعلامة.'),
-        href: '/content-creation',
+        href: '/services/content-creation',
         icon: '/icons/services/Professional Content Creation.png',
     },
 ]

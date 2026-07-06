@@ -146,20 +146,32 @@ export function proxy(request: NextRequest) {
             ? pathname.slice(0, -1)
             : pathname
 
-    // Renamed page: old /website-design → /website-development (single 301, any locale).
-    if (cleanPath === '/website-design' || cleanPath === '/ar/website-design' || cleanPath === '/en/website-design') {
-        const url = request.nextUrl.clone()
-        url.host = apexHost
-        url.pathname = cleanPath === '/ar/website-design' ? '/ar/website-development' : '/website-development'
-        return NextResponse.redirect(url, { status: 301 })
+    // Pages relocated UNDER /services/ — single 301 to the new canonical URL,
+    // any locale. The older renamed slugs (/website-design, /ecommerce-solutions)
+    // point DIRECTLY at the final /services/ URL so an old indexed URL is never
+    // sent through a redirect chain (Google's "Page with redirect" trap). Keys
+    // are locale-agnostic base paths; the /en and /ar prefixes are handled below.
+    const RELOCATED_UNDER_SERVICES: Record<string, string> = {
+        '/website-design': '/services/website-development',
+        '/website-development': '/services/website-development',
+        '/ecommerce-solutions': '/services/ecommerce-development',
+        '/ecommerce-development': '/services/ecommerce-development',
+        '/social-media-marketing': '/services/social-media-marketing',
+        '/content-creation': '/services/content-creation',
     }
-
-    // Renamed page: old /ecommerce-solutions → /ecommerce-development (single 301, any locale).
-    if (cleanPath === '/ecommerce-solutions' || cleanPath === '/ar/ecommerce-solutions' || cleanPath === '/en/ecommerce-solutions') {
-        const url = request.nextUrl.clone()
-        url.host = apexHost
-        url.pathname = cleanPath === '/ar/ecommerce-solutions' ? '/ar/ecommerce-development' : '/ecommerce-development'
-        return NextResponse.redirect(url, { status: 301 })
+    {
+        const m = cleanPath.match(/^\/(en|ar)(\/.*)?$/)
+        const locPrefix = m ? m[1] : null
+        const basePath = m ? (m[2] || '/') : cleanPath
+        const dest = RELOCATED_UNDER_SERVICES[basePath]
+        if (dest) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            // Arabic keeps its /ar prefix; /en and unprefixed both resolve to the
+            // clean (unprefixed) English URL.
+            url.pathname = locPrefix === 'ar' ? `/ar${dest}` : dest
+            return NextResponse.redirect(url, { status: 301 })
+        }
     }
 
 

@@ -53,7 +53,7 @@ export const digitalPresenceGroups: DPGroup[] = [
                     'Custom, conversion-focused websites built and owned by your business.',
                     'مواقع مخصصة تركّز على التحويل، مبنية ومملوكة لشركتك.'),
                 icon: '/icons/services/Website Design & Development.png',
-                href: '/website-development',
+                href: '/services/website-development',
                 subServices: [
                     'Corporate Website Development', 'Business Website Development', 'Landing Page Development',
                     'Real Estate Website Development', 'Educational & LMS Website Development',
@@ -69,7 +69,7 @@ export const digitalPresenceGroups: DPGroup[] = [
                     'Online stores and marketplaces built to sell, scale, and integrate.',
                     'متاجر ومنصات تجارة إلكترونية مبنية للبيع والتوسّع والتكامل.'),
                 icon: '/icons/services/E-commerce Solutions.png',
-                href: '/ecommerce-development',
+                href: '/services/ecommerce-development',
                 subServices: [
                     'Custom E-Commerce Development', 'Shopify Store Development', 'WooCommerce Store Development',
                     'Multi-Vendor Marketplace Development', 'E-Commerce Redesign & Migration',
@@ -143,7 +143,7 @@ export const digitalPresenceGroups: DPGroup[] = [
                     'Strategy, content, and community management across every channel.',
                     'استراتيجية ومحتوى وإدارة مجتمع عبر كل القنوات.'),
                 icon: '/icons/services/Social Media Management.png',
-                href: '/social-media-marketing',
+                href: '/services/social-media-marketing',
                 subServices: [
                     'Social Media Strategy & Planning', 'Content Calendar Creation',
                     'Social Media Copywriting', 'Graphic Design for Social Media',
@@ -157,7 +157,7 @@ export const digitalPresenceGroups: DPGroup[] = [
                 name: t('Content Marketing & Authority', 'تسويق المحتوى وبناء الريادة'),
                 description: t('Content that builds authority and feeds every channel and funnel.', 'محتوى يبني الريادة ويغذّي كل قناة ومسار تحويل.'),
                 icon: '/icons/services/Professional Content Creation.png',
-                href: '/content-creation',
+                href: '/services/content-creation',
                 subServices: [
                     'SEO Blog Post & Article Writing', 'Website Copywriting', 'Landing Page Copywriting',
                     'Case Study & Portfolio Writing', 'Email Newsletter Copywriting',
