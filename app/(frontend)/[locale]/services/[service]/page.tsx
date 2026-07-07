@@ -285,6 +285,7 @@ export function generateStaticParams() {
     const slugs = [...new Set([
         ...serviceDetailSlugs.filter((s) => !subSlugs.has(s)),
         ...structuredPillarRoutes.map((p) => p.slug),
+        'app-development',
     ])]
     return ['en', 'ar'].flatMap((locale) =>
         slugs.map((service) => ({
@@ -334,12 +335,13 @@ const PILLAR_SEO_OVERRIDES: Record<string, { title: { en: string; ar: string }; 
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', service: serviceSlug } = await params
-    if (serviceSlug === 'mobile-app-development') {
-        const path = '/services/mobile-app-development'
+    if (serviceSlug === 'app-development' || serviceSlug === 'mobile-app-development') {
+        const path = '/services/app-development'
         return {
-            title: locale === 'ar' ? 'تطوير تطبيقات الجوال في عُمان والخليج — iOS وAndroid' : 'Mobile App Development in Oman & the Gulf — iOS & Android',
+            // Short bare title — the layout template appends " | كلاود توبيا" / " | CloudTopia".
+            title: locale === 'ar' ? 'افضل شركة تطوير تطبيقات' : 'Best App Development Company',
             description: locale === 'ar' ? 'تطوير تطبيقات iOS وAndroid ومتعددة المنصات لأعمال الخليج — تصميم وبناء وإطلاق ونمو، عربية أولاً وجاهزة للـ RTL، مع ملكية كاملة للكود. استشارة مجانية.' : 'iOS, Android & cross-platform app development for Gulf businesses — design, build, launch, and grow. Arabic-first, RTL-ready, and fully owned by you. Free consultation.',
-            openGraph: { title: locale === 'ar' ? 'تطوير تطبيقات الجوال | كلاود توبيا' : 'Mobile App Development | CloudTopia', description: locale === 'ar' ? 'تطبيقات iOS وAndroid ومتعددة المنصات، تصميم وبناء وإطلاق ونمو.' : 'iOS, Android & cross-platform apps — design, build, launch, and grow.', url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website' },
+            openGraph: { title: locale === 'ar' ? 'تطوير التطبيقات | كلاود توبيا' : 'App Development | CloudTopia', description: locale === 'ar' ? 'تطبيقات iOS وAndroid ومتعددة المنصات، تصميم وبناء وإطلاق ونمو.' : 'iOS, Android & cross-platform apps — design, build, launch, and grow.', url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website' },
             alternates: { canonical: canonicalUrl(locale, path), languages: { en: canonicalUrl('en', path), ar: canonicalUrl('ar', path), 'x-default': canonicalUrl('en', path) } },
         }
     }
@@ -417,10 +419,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     // render below — otherwise they would fall through to the generic PillarPage.
     const getFound = getGetFoundContent(serviceSlug)
     if (getFound) return <GetFoundPillarPage content={getFound} locale={locale} />
-    // Mobile App Development — bespoke, fully-detailed pillar page. Every mobile
-    // service (iOS / Android / Cross-Platform + design, backend, QA, growth) is a
-    // sub-service surfaced on it.
-    if (serviceSlug === 'mobile-app-development') return <MobileAppPillarPage locale={locale} />
+    // App Development — bespoke pillar page (at /services/app-development). Every
+    // app service (iOS / Android / Cross-Platform + design, backend, QA, growth)
+    // is a sub-service surfaced on it. The old /services/mobile-app-development
+    // URL permanently redirects here.
+    if (serviceSlug === 'mobile-app-development') permanentRedirect(localePath(locale, '/services/app-development'))
+    if (serviceSlug === 'app-development') return <MobileAppPillarPage locale={locale} />
     const pillar = getStructuredPillarBySlug(serviceSlug)
     // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
     if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
