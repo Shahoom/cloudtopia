@@ -233,6 +233,24 @@ const _LEGACY_TABS: TabData[] = [
         description: { en: 'VoD/OTT platforms, live streaming, and creator-monetization web apps.', ar: 'منصات بث ومحتوى عند الطلب وبث مباشر وتطبيقات تحقيق دخل للصنّاع.' },
         link: '/services/web-applications/media-entertainment-streaming',
         iconName: 'Smartphone'
+      },
+      {
+        title: { en: 'Client Portals & Customer Hubs', ar: 'بوابات العملاء ومراكز المستخدمين' },
+        description: { en: 'Secure client portals, member areas, and role-based access — part of our portals & dashboards work.', ar: 'بوابات عملاء آمنة ومناطق أعضاء وصلاحيات حسب الأدوار — ضمن أعمال البوابات ولوحات التحكم.' },
+        link: '/services/web-applications/interactive-portals-dashboards',
+        iconName: 'Users'
+      },
+      {
+        title: { en: 'Progressive Web Apps (PWA)', ar: 'تطبيقات الويب التقدمية (PWA)' },
+        description: { en: 'Installable, offline-capable web apps with native-like speed — built in our full-stack engineering.', ar: 'تطبيقات ويب قابلة للتثبيت تعمل دون اتصال بسرعة شبه أصلية — ضمن هندستنا المتكاملة.' },
+        link: '/services/web-applications/full-stack-web-engineering',
+        iconName: 'Smartphone'
+      },
+      {
+        title: { en: 'SaaS Multi-Tenant & Billing', ar: 'SaaS متعدد المستأجرين والفوترة' },
+        description: { en: 'Multi-tenant architecture and subscription billing (Stripe) — part of our SaaS & MVP builds.', ar: 'بنية متعددة المستأجرين وفوترة اشتراكات (Stripe) — ضمن بناء منصات SaaS وMVP.' },
+        link: '/services/web-applications/custom-saas-mvp-development',
+        iconName: 'Rocket'
       }
     ]
   },
@@ -291,6 +309,18 @@ const _LEGACY_TABS: TabData[] = [
         title: { en: 'Supply Chain Platforms', ar: 'أنظمة سلاسل الإمداد والخدمات' },
         description: { en: 'Track vendor shipments, logistics updates, warehouse routing, and lead times.', ar: 'أنظمة إدارة سلاسل الإمداد لتتبع شحنات الموردين، التحديثات اللوجستية، وتوجيه المستودعات.' },
         link: '/services/business-management-systems',
+        iconName: 'Database'
+      },
+      {
+        title: { en: 'Workflow & Process Automation', ar: 'أتمتة سير العمل والعمليات' },
+        description: { en: 'Automate approvals, notifications, and repetitive back-office tasks across your tools.', ar: 'أتمتة الاعتمادات والإشعارات والمهام المتكررة عبر أدواتك.' },
+        link: '/services/business-process-automation',
+        iconName: 'Workflow'
+      },
+      {
+        title: { en: 'Custom ERP & CRM Platforms', ar: 'منصات ERP وCRM مخصصة' },
+        description: { en: 'End-to-end ERP and CRM built around how your business actually runs.', ar: 'أنظمة ERP وCRM متكاملة مبنية حول طريقة عمل شركتك فعلياً.' },
+        link: '/services/custom-erp-crm-solutions',
         iconName: 'Database'
       }
     ]
