@@ -193,7 +193,13 @@ export function proxy(request: NextRequest) {
     // to the existing flat service-detail page, and 301 the old flat URL to the
     // nested one (single hop, any locale).
     {
-        const APP_SUBS = ['ios-app-development', 'android-app-development', 'cross-platform-app-development']
+        const APP_SUBS = [
+            'ios-app-development', 'android-app-development', 'cross-platform-app-development',
+            'flutter-app-development', 'react-native-app-development', 'mvp-app-development',
+            'business-mobile-app-development', 'customer-app-development', 'booking-app-development',
+            'delivery-order-app-development', 'app-backend-api-development', 'app-store-launch-support',
+            'mobile-app-maintenance',
+        ]
         const nested = cleanPath.match(/^(?:\/(en|ar))?\/services\/app-development\/([a-z0-9-]+)$/)
         if (nested && APP_SUBS.includes(nested[2])) {
             const url = request.nextUrl.clone()

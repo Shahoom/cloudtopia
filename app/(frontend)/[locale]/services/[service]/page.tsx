@@ -370,9 +370,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const name = localizedServiceValue(service.name, locale)
     const description = localizedServiceValue(service.description, locale)
-    const path = `/services/${service.slug}`
+    // App Development sub-services live under the nested pillar URL; declare that
+    // as canonical (the flat slug 301s to it) so search engines index the nested
+    // path rather than the redirect source.
+    const APP_DEV_SUB_SLUGS = new Set((getServiceCategory('mobile-app-development')?.services ?? []).map((s) => s.slug))
+    const isAppDevSub = APP_DEV_SUB_SLUGS.has(service.slug)
+    const path = isAppDevSub ? `/services/app-development/${service.slug}` : `/services/${service.slug}`
     // If this is an older near-duplicate, canonicalize to the new equivalent page.
-    const canonicalPath = `/services/${WEBSITE_DUPLICATE_CANONICAL[service.slug] || service.slug}`
+    const canonicalPath = isAppDevSub ? path : `/services/${WEBSITE_DUPLICATE_CANONICAL[service.slug] || service.slug}`
     const category = getServiceCategory(service.categorySlug)
     const categoryName = category ? localizedServiceValue(category.name, locale) : locale === 'ar' ? 'خدمات كلاود توبيا' : 'CloudTopia Services'
     const title = locale === 'ar'

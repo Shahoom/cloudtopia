@@ -254,8 +254,8 @@ export function CinematicHero({
       <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
 
       <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform">
-        <div className="text-track gsap-reveal text-3d-matte text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mb-2">{tagline1}</div>
-        <div className="text-days gsap-reveal text-brand-sky text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tighter">{tagline2}</div>
+        <div className="text-track gsap-reveal text-3d-matte text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mb-2" style={{ fontFamily: "var(--font-poppins)" }}>{tagline1}</div>
+        <div className="text-days gsap-reveal text-brand-sky text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tighter" style={{ fontFamily: "var(--font-poppins)" }}>{tagline2}</div>
       </div>
 
       <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
@@ -278,7 +278,7 @@ export function CinematicHero({
           <div className="card-sheen" aria-hidden="true" />
           <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center lg:gap-8 z-10 py-6 lg:py-0">
             <div className="card-right-text gsap-reveal order-1 lg:order-3 flex justify-center lg:justify-end z-20 w-full min-w-0">
-              <div className="max-w-full truncate text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.5rem] font-black uppercase tracking-tighter text-card-silver-matte">{brandName}</div>
+              <div className="max-w-full truncate text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.5rem] font-black uppercase tracking-tighter text-card-silver-matte" style={{ fontFamily: "var(--font-poppins)" }}>{brandName}</div>
             </div>
 
             <div className="mockup-scroll-wrapper order-2 lg:order-2 relative w-full h-[380px] lg:h-[600px] flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
