@@ -135,8 +135,8 @@ export const menuColumns: MenuColumn[] = [
     description: 'Everything a business needs to look credible and convert online.',
     icon: 'globe',
     links: [
-      { label: 'Website Design & Development', href: '/website-design' },
-      { label: 'Landing Pages', href: '/website-design#landing-pages' },
+      { label: 'Website Design & Development', href: '/services/website-development' },
+      { label: 'Landing Pages', href: '/services/website-development#landing-pages' },
       { label: 'E-commerce Websites', href: '/services/ecommerce-development' },
       { label: 'Branding & Visual Identity', href: '/services#digital-presence' },
       { label: 'Social Media Setup', href: '/services/social-media-marketing' },
@@ -187,7 +187,7 @@ export const menuColumns: MenuColumn[] = [
 export const servicesOverview: ServiceOverview[] = [
   {
     title: 'Digital Presence',
-    href: '/website-design',
+    href: '/services/website-development',
     icon: 'monitor',
     description:
       'Websites, landing pages, SEO-ready pages, brand visuals, content, and social media setup for businesses that need to look professional online.',
@@ -680,7 +680,7 @@ export const versionXServiceTabs: VersionXTab[] = [
     description: 'Premium corporate sites, landing pages, SEO-ready service pages, and content structures that turn trust into action.',
     image: '/images/services/ecommerce-solutions/3.avif',
     bullets: ['Conversion-led page hierarchy', 'Arabic, English, and Turkish-ready layouts', 'Fast contact and WhatsApp paths'],
-    href: '/website-design',
+    href: '/services/website-development',
   },
   {
     label: 'E-commerce',
@@ -758,7 +758,7 @@ export const enterpriseServiceTracks: EnterpriseServiceTrack[] = [
     title: 'SEO-ready pages, content systems, analytics, and conversion paths.',
     description:
       'The website is structured as a growth asset with service pages, industry pages, blog resources, campaign landing pages, and measurement.',
-    href: '/website-design',
+    href: '/services/website-development',
     items: ['SEO Landing Pages', 'Conversion UX', 'Content Systems', 'Social Creatives', 'Analytics Setup', 'Campaign Pages'],
   },
 ]
@@ -768,7 +768,7 @@ export const seoClusters: SeoCluster[] = [
     title: 'Commercial Service Hubs',
     description: 'High-intent pages for buyers comparing website, e-commerce, system, app, and AI automation options.',
     links: [
-      { label: 'Website Design & Development', href: '/website-design' },
+      { label: 'Website Design & Development', href: '/services/website-development' },
       { label: 'E-commerce Stores', href: '/services/ecommerce-development' },
       { label: 'Custom Web Applications', href: '/web-applications' },
       { label: 'CRM / ERP Systems', href: '/business-systems-development' },
@@ -848,7 +848,7 @@ export const versionXFooterColumns = [
   {
     title: 'Services',
     links: [
-      ['Website Design', '/website-design'],
+      ['Website Design', '/services/website-development'],
       ['E-commerce', '/services/ecommerce-development'],
       ['Web Applications', '/web-applications'],
       ['CRM / ERP Systems', '/business-systems-development'],

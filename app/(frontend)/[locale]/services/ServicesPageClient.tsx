@@ -138,7 +138,7 @@ const digitalPresenceServices: ServiceCard[] = [
         icon: '/icons/services/Analytics Dashboard.png',
         gradient: 'from-amber-500 to-orange-600',
         glowColor: 'bg-lavender/50',
-        href: '/services/paid-ads-and-lead-generation',
+        href: '/services/social-media-marketing/paid-ads-and-lead-generation',
         features: ['Landing Pages', 'Lead Forms', 'WhatsApp Flow', 'Conversion Tracking'],
         featuresAr: ['صفحات هبوط', 'نماذج عملاء', 'مسار واتساب', 'تتبع التحويل'],
     },

@@ -119,7 +119,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Real Estate Web Development', ar: 'مواقع التطوير العقاري' },
         description: { en: 'Property listing pages with advanced search filters, interactive maps, and lead captures.', ar: 'تطوير مواقع عقارية مع فلاتر بحث متقدمة، خرائط تفاعلية، وقنوات تواصل.' },
-        link: '/services/real-estate-website-development',
+        link: '/services/website-development/real-estate-website-development',
         iconName: 'Home'
       },
       {
@@ -266,37 +266,37 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'CRM Systems', ar: 'أنظمة إدارة العملاء (CRM)' },
         description: { en: 'Sales pipelining, contact managers, automatic follow-ups, and customer histories.', ar: 'أنظمة مبيعات، عملاء، ومتابعات تلقائية مصممة لتسريع صفقاتك.' },
-        link: '/services/crm-development',
+        link: '/services/custom-erp-crm-solutions/crm-development',
         iconName: 'Users'
       },
       {
         title: { en: 'Inventory Management', ar: 'أنظمة إدارة المخازن' },
         description: { en: 'Real-time stock tracking, purchase orders, reorder alerts, and supplier databases.', ar: 'أنظمة تتبع المخزون اللحظي، أوامر الشراء، تنبيهات إعادة الطلب، وقواعد بيانات الموردين.' },
-        link: '/services/inventory-management-systems',
+        link: '/services/business-management-systems/inventory-management-systems',
         iconName: 'Layers'
       },
       {
         title: { en: 'Sales Management Systems', ar: 'أنظمة إدارة المبيعات' },
         description: { en: 'Lead scoring, team quotas, performance dashboards, and automated sales reporting.', ar: 'أنظمة إدارة المبيعات وتصنيف العملاء المحتملين ولوحات الأداء والتقارير التلقائية.' },
-        link: '/services/sales-management-systems',
+        link: '/services/business-management-systems/sales-management-systems',
         iconName: 'BarChart3'
       },
       {
         title: { en: 'Order Management Systems', ar: 'أنظمة إدارة الطلبات' },
         description: { en: 'Invoice generators, payment status tracking, and dispatching automation pipelines.', ar: 'أنظمة إدارة الطلبات وإصدار الفواتير وتتبع حالة الدفع وأتمتة الشحن والتسليم.' },
-        link: '/services/order-management-systems',
+        link: '/services/business-management-systems/order-management-systems',
         iconName: 'Database'
       },
       {
         title: { en: 'HR & Payroll Systems', ar: 'أنظمة الموارد البشرية والرواتب' },
         description: { en: 'Employee records, attendance tracking, leave management, and localized payroll engines.', ar: 'أنظمة إدارة الموارد البشرية والرواتب، الحضور والانصراف، وإدارة الإجازات المخصصة.' },
-        link: '/services/hr-management-systems',
+        link: '/services/business-management-systems/hr-management-systems',
         iconName: 'Users'
       },
       {
         title: { en: 'Accounting Integration', ar: 'ربط الأنظمة المحاسبية' },
         description: { en: 'Connect billing with QuickBooks, Xero, or regional ERPs for seamless finance.', ar: 'ربط الفواتير مع QuickBooks أو Xero أو أنظمة المحاسبة الإقليمية لإدارة مالية سلسة.' },
-        link: '/services/accounting-system-integration',
+        link: '/services/business-process-automation/accounting-system-integration',
         iconName: 'DollarSign'
       },
       {
@@ -455,7 +455,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Paid Ad Campaign Pages', ar: 'إعلانات مدفوعة وصفحات هبوط' },
         description: { en: 'Google Search, Meta, and LinkedIn campaign management paired with high-converting pages.', ar: 'إدارة إعلانات جوجل وفيسبوك ولينكد إن مع صفحات هبوط سريعة الاستجابة وعالية التحويل.' },
-        link: '/services/paid-ads-and-lead-generation',
+        link: '/services/social-media-marketing/paid-ads-and-lead-generation',
         iconName: 'AppWindow'
       },
       {
@@ -467,13 +467,13 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Email Automation Flows', ar: 'أتمتة مسارات البريد الإلكتروني' },
         description: { en: 'Lead nurturing, custom onboarding sequences, and weekly newsletter workflows.', ar: 'أتمتة التسويق بالبريد الإلكتروني، مسارات المتابعة للعملاء، ونشرات بريدية أسبوعية.' },
-        link: '/services/email-marketing-automation',
+        link: '/services/social-media-marketing/email-marketing-automation',
         iconName: 'Mail'
       },
       {
         title: { en: 'Lead Generation Engines', ar: 'أنظمة جذب العملاء المحتملين' },
         description: { en: 'Design calculators, audit tools, and gated content setups to capture business leads.', ar: 'أنظمة توليد عملاء محتملين تشمل حاسبات رقمية وأدوات تدقيق لجمع بيانات العملاء.' },
-        link: '/services/paid-ads-and-lead-generation',
+        link: '/services/social-media-marketing/paid-ads-and-lead-generation',
         iconName: 'Users'
       },
       {

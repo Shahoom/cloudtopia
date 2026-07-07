@@ -86,7 +86,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with core lead management, then expand to automation and reporting.',
       ar: 'نبدأ بإدارة العملاء المحتملين الأساسية، ثم نوسع إلى الأتمتة والتقارير.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 3. Healthcare Website ─────────────────────────────────────────────────
@@ -140,7 +140,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with booking, patient profiles, and clinic admin tools, then add reminders, automation, and reporting once the core flow is stable.',
       ar: 'نبدأ بالحجوزات وملفات المرضى وأدوات إدارة العيادة، ثم نضيف التذكيرات والأتمتة والتقارير بعد استقرار المسار الأساسي.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 4. Restaurant Digital Menu + Ordering ────────────────────────────────
@@ -167,7 +167,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with the digital menu and WhatsApp ordering, then add reservations and admin dashboard.',
       ar: 'نبدأ بالمنيو الرقمي والطلبات عبر واتساب، ثم نضيف الحجوزات ولوحة الإدارة.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 5. E-commerce Store ───────────────────────────────────────────────────
@@ -194,7 +194,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Launch catalog and ordering first, then add inventory management and customer analytics.',
       ar: 'نطلق الكتالوج والطلبات أولاً، ثم نضيف إدارة المخزون وتحليلات العملاء.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 6. E-commerce Operations System ──────────────────────────────────────
@@ -221,7 +221,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build core inventory and order system first, then add reporting and supplier modules.',
       ar: 'نبني نظام المخزون والطلبات الأساسي أولاً، ثم نضيف التقارير ونظام الموردين.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 7. Startup MVP Mobile App ─────────────────────────────────────────────
@@ -248,7 +248,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Design MVP screens, then build phase by phase — core features first, then secondary screens and admin.',
       ar: 'نصمم شاشات MVP، ثم نبني على مراحل — الميزات الأساسية أولاً، ثم الشاشات الثانوية ولوحة الإدارة.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 8. Professional Services CRM ─────────────────────────────────────────
@@ -275,7 +275,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build the core CRM pipeline first, then add integrations and reporting.',
       ar: 'نبني خط CRM الأساسي أولاً، ثم نضيف التكاملات والتقارير.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 9. AI Workflow Automation ─────────────────────────────────────────────
@@ -302,7 +302,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with one AI workflow — chatbot or report automation — then expand to full integration.',
       ar: 'نبدأ بسير عمل ذكاء اصطناعي واحد — شات بوت أو أتمتة تقارير — ثم نوسع إلى التكامل الكامل.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 10. Cloud Infrastructure ──────────────────────────────────────────────
@@ -329,7 +329,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Audit current setup, then migrate or build cloud infrastructure in a staged rollout.',
       ar: 'نراجع الوضع الحالي، ثم نرحّل أو نبني البنية السحابية في إطلاق مرحلي.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 11. Digital Growth / Marketing ───────────────────────────────────────
@@ -356,7 +356,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with SEO foundations and a landing page, then scale to paid campaigns and social management.',
       ar: 'نبدأ بأسس SEO وصفحة هبوط، ثم نتوسع إلى الحملات المدفوعة وإدارة السوشيال ميديا.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 12. Logistics Operations Platform ────────────────────────────────────
@@ -383,7 +383,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build booking and tracking core, then add driver mobile app and reporting in phase 2.',
       ar: 'نبني نواة الحجز والتتبع، ثم نضيف تطبيق موبايل السائق والتقارير في المرحلة الثانية.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 13. Education Platform / LMS ─────────────────────────────────────────
@@ -410,7 +410,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build core course management and student portal first, then add quizzes and payment in phase 2.',
       ar: 'نبني إدارة الدورات وبوابة الطلاب أولاً، ثم نضيف الاختبارات والدفع في المرحلة الثانية.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 14. Professional Services Website (Trust) ────────────────────────────
@@ -491,7 +491,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build core platform features first, then expand with integrations and reporting.',
       ar: 'نبني ميزات المنصة الأساسية أولاً، ثم نوسعها بالتكاملات والتقارير.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 17. CRM (Fallback) ────────────────────────────────────────────────────
@@ -518,7 +518,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with lead management and pipeline, then add automation and integrations.',
       ar: 'نبدأ بإدارة العملاء وخط المبيعات، ثم نضيف الأتمتة والتكاملات.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 18. Business Systems (Fallback) ──────────────────────────────────────
@@ -545,7 +545,7 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Build core management modules first, then add reporting and workflow automation.',
       ar: 'نبني وحدات الإدارة الأساسية أولاً، ثم نضيف التقارير وأتمتة سير العمل.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 
   // ── 19. Catch-All Fallback ────────────────────────────────────────────────
@@ -572,6 +572,6 @@ export const RECOMMENDATION_TEMPLATES: RecommendationTemplate[] = [
       en: 'Start with a discovery call, then build a phased plan: Presence → System → Automation → AI.',
       ar: 'نبدأ بمكالمة اكتشاف، ثم نبني خطة مرحلية: الحضور الرقمي → النظام → الأتمتة → الذكاء الاصطناعي.',
     },
-    route: '/services/web-applications',
+    route: '/web-applications',
   },
 ]

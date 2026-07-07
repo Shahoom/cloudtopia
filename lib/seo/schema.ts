@@ -30,7 +30,7 @@ export function buildOrganizationRef() {
 export type BreadcrumbItem = {
   /** Visible breadcrumb label, e.g. "Website Design". */
   name: string
-  /** Locale-agnostic path, e.g. "/website-design". Resolved to a canonical URL. */
+  /** Locale-agnostic path, e.g. "/services/website-development". Resolved to a canonical URL. */
   path: string
 }
 
@@ -72,7 +72,7 @@ export function buildFaqSchema(items: FaqItem[] | null | undefined) {
 export type ServiceSchemaOptions = {
   name: string
   description: string
-  /** Locale-agnostic path of the service page, e.g. "/website-design". */
+  /** Locale-agnostic path of the service page, e.g. "/services/website-development". */
   path: string
   serviceType?: string
   /** Country names served, defaults to the GCC market. */

@@ -124,7 +124,7 @@ export default async function ({ children, params }: { children: React.ReactNode
                                 {
                                     '@type': 'Offer',
                                     name: 'Website design and development',
-                                    url: canonicalUrl(locale, '/services/business-website-development'),
+                                    url: canonicalUrl(locale, '/services/website-development/business-website-development'),
                                 },
                                 {
                                     '@type': 'Offer',
@@ -139,7 +139,7 @@ export default async function ({ children, params }: { children: React.ReactNode
                                 {
                                     '@type': 'Offer',
                                     name: 'SEO and conversion systems',
-                                    url: canonicalUrl(locale, '/services/seo-optimization'),
+                                    url: canonicalUrl(locale, '/services/search-engine-optimization'),
                                 },
                             ],
                             // SD-5: `sameAs` and `contactPoint` are intentionally NOT
