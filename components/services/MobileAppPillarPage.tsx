@@ -143,25 +143,30 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
             <JsonLd schema={[serviceSchema, breadcrumbSchema]} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
+            {/* SEO: the ONE keyword-rich H1. The cinematic hero's big text is
+                decorative (and GSAP-hides until reveal), so the real semantic
+                heading lives here for crawlers. */}
+            <h1 className="sr-only">{t('App Development Company in Oman & the Gulf — iOS, Android & Cross-Platform Apps', 'شركة تطوير تطبيقات في عُمان والخليج — تطبيقات iOS وAndroid ومتعددة المنصات')}</h1>
+
             {/* ───────────────── CINEMATIC HERO ───────────────── */}
             <CinematicHero
                 brandName="CloudTopia"
-                tagline1={t('Apps people', 'تطبيقات يبقيها')}
-                tagline2={t('keep on their home screen.', 'الناس على شاشاتهم.')}
-                cardHeading={t('Design, build, launch.', 'تصميم، بناء، إطلاق.')}
-                cardDescription={t('iOS, Android, and cross-platform apps engineered end to end — fast, beautiful, and fully owned by you.', 'تطبيقات iOS وAndroid ومتعددة المنصات مهندَسة من طرف إلى طرف — سريعة وجميلة ومملوكة لك بالكامل.')}
+                tagline1={t('Apps people', 'تطبيقات تبقى')}
+                tagline2={t('keep on their home screen.', 'على شاشة عملائك.')}
+                cardHeading={t('Design, build, launch.', 'نُصمّم، نبني، ونُطلق.')}
+                cardDescription={t('iOS, Android, and cross-platform apps engineered end to end — fast, beautiful, and fully owned by you.', 'نبني تطبيقات iOS وAndroid ومتعددة المنصات من الفكرة حتى متجر التطبيقات — سريعة وأنيقة، وملكك أنت بالكامل.')}
                 metricValue={4.9}
-                metricLabel={t('App rating', 'تقييم التطبيق')}
-                ctaHeading={t('Ship your app.', 'أطلق تطبيقك.')}
-                ctaDescription={t('From idea to both app stores — iOS, Android & cross-platform, built by one team in Oman & the Gulf.', 'من الفكرة إلى المتجرين — iOS وAndroid ومتعدد المنصات، بفريق واحد في عُمان والخليج.')}
+                metricLabel={t('App rating', 'التقييم')}
+                ctaHeading={t('Ship your app.', 'لنُطلق تطبيقك.')}
+                ctaDescription={t('From idea to both app stores — iOS, Android & cross-platform, built by one team in Oman & the Gulf.', 'من الفكرة إلى App Store وGoogle Play — تطبيقات iOS وAndroid ومتعددة المنصات يبنيها فريق واحد في عُمان والخليج.')}
                 appStoreHref={L('/contact')}
                 playStoreHref={L('/contact')}
-                badge1Title={t('Top Charts', 'صدارة المتاجر')}
-                badge1Sub={t('Featured on launch', 'مميّز عند الإطلاق')}
+                badge1Title={t('Top Charts', 'الأعلى في المتجر')}
+                badge1Sub={t('Featured on launch', 'مميّز منذ الإطلاق')}
                 badge2Title={t('50k Downloads', '50 ألف تنزيل')}
-                badge2Sub={t('First quarter', 'الربع الأول')}
+                badge2Sub={t('First quarter', 'في أول ٣ أشهر')}
                 todayLabel={t('Today', 'اليوم')}
-                journeyLabel={t('Dashboard', 'اللوحة')}
+                journeyLabel={t('Dashboard', 'لوحتك')}
             />
 
             <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
