@@ -43,7 +43,7 @@ export function KeyTakeawaysBox({
         ))}
       </ul>
       <Link
-        href={localePath(locale, '/contact')}
+        href={`/api/whatsapp?locale=${locale}`}
         className="mt-5 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold text-white transition hover:opacity-90"
         style={{ backgroundColor: 'var(--ed-ink)' }}
       >

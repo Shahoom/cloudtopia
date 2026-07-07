@@ -586,7 +586,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
                   </ul>
 
                   <a
-                    href={localePath(locale, '/contact')}
+                    href={`/api/whatsapp?locale=${locale}`}
                     className={cn(
                       "block text-center px-6 py-3 rounded-xl font-bold text-sm transition-all duration-200",
                       plan.highlighted
@@ -635,7 +635,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
               {t.ctaDescription}
             </p>
             <a
-              href={localePath(locale, '/contact')}
+              href={`/api/whatsapp?locale=${locale}`}
               className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-orange-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
               {t.ctaButton}

@@ -11,7 +11,7 @@ export function SubServicesSection({
     subServices,
     locale,
     icon = '/icons/services/Website Design & Development.png',
-    href = '/contact',
+    href = '/api/whatsapp',
 }: {
     heading: string
     subServices: string[]

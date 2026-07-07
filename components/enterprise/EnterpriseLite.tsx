@@ -150,7 +150,7 @@ function Hero({ locale }: { locale: string }) {
           <h1 className="max-w-[1100px] text-balance text-[2.4rem] font-extrabold leading-[1.02] text-white sm:text-6xl lg:text-[3.45rem]">AI-Ready Digital Systems for Smarter, Faster Business Operations</h1>
           <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/78 sm:text-lg">CloudTopia builds premium websites, e-commerce, dashboards, CRM systems, and AI workflows that connect trust, leads, operations, and growth across Arabic, English, and Turkish markets.</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink locale={locale} href="/contact">Request a Quote</ButtonLink>
+            <ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Request a Quote</ButtonLink>
             <ButtonLink locale={locale} href="/services" variant="light">Book a Strategy Call</ButtonLink>
           </div>
           <p className="mt-4 max-w-2xl text-sm font-semibold text-white/58">Strategy, design, development, automation, launch, and handoff under one technical partner.</p>
@@ -358,7 +358,7 @@ function ServiceUniverse({ locale }: { locale: string }) {
               A complete view of the digital layers your business can launch now, connect next, and automate later.
             </p>
             <div className="mt-8">
-              <ButtonLink locale={locale} href="/contact" variant="light">Request a Digital Plan</ButtonLink>
+              <ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`} variant="light">Request a Digital Plan</ButtonLink>
             </div>
           </div>
           <div className="ct-stagger grid gap-5 md:grid-cols-2">
@@ -396,7 +396,7 @@ function EnterpriseServiceDirectory({ locale }: { locale: string }) {
               The structure mirrors an enterprise technology website: broad capability groups, dense internal links, clear routes, and service depth.
               The content remains CloudTopia-specific and focused on web, systems, cloud, and AI delivery.
             </p>
-            <div className="mt-8"><ButtonLink locale={locale} href="/contact" variant="light">Plan Your Service Roadmap</ButtonLink></div>
+            <div className="mt-8"><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`} variant="light">Plan Your Service Roadmap</ButtonLink></div>
           </div>
           <div className="ct-stagger grid gap-5">
             {enterpriseServiceTracks.map((track, index) => (
@@ -535,7 +535,7 @@ function DedicatedTeams({ locale }: { locale: string }) {
           <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.08em] text-[#0284c7]">Dedicated Teams</p>
           <h2 className="text-[2.2rem] font-extrabold leading-[1.08] text-[#07111f] sm:text-5xl">Tailored development teams for every challenge.</h2>
           <p className="mt-5 text-base leading-8 text-[#475569]">Build with the right mix of strategy, design, engineering, automation, and launch support around your timeline.</p>
-          <div className="mt-8"><ButtonLink locale={locale} href="/contact">Get a Dedicated Team</ButtonLink></div>
+          <div className="mt-8"><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Get a Dedicated Team</ButtonLink></div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {teams.map((team, index) => (
@@ -560,7 +560,7 @@ function ModernTeamCTA({ locale }: { locale: string }) {
             <h2 className="mt-3 text-3xl font-extrabold leading-tight text-[#07111f] md:text-5xl">Struggling to find the right team for your project?</h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-[#64748b]">Bring CloudTopia in for strategy, UX, engineering, automation, launch support, or a complete dedicated delivery squad.</p>
           </div>
-          <ButtonLink locale={locale} href="/contact">Get in Touch Now</ButtonLink>
+          <ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Get in Touch Now</ButtonLink>
         </div>
       </Container>
     </section>
@@ -844,7 +844,7 @@ function EngagementModels({ locale }: { locale: string }) {
                   </p>
                 ))}
               </div>
-              <Link href={l(locale, '/contact')} className="mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#0284c7]">
+              <Link href={`/api/whatsapp?locale=${locale}`} className="mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#0284c7]">
                 Discuss this model <ArrowRight className="h-4 w-4" />
               </Link>
             </article>
@@ -874,7 +874,7 @@ function Value({ locale }: { locale: string }) {
       <Container>
         <SectionHeader dark eyebrow="Connected Foundation" title="Maximize Business Value Through a Connected Digital Foundation" />
         <div className="ct-stagger mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{valueCards.map((card) => <article key={card.title} className="rounded-3xl border border-white/12 bg-white/10 p-6 text-white"><h3 className="text-xl font-extrabold">{card.title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{card.description}</p></article>)}</div>
-        <div className="mt-10 text-center"><ButtonLink locale={locale} href="/contact" variant="light">Talk to CloudTopia</ButtonLink></div>
+        <div className="mt-10 text-center"><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`} variant="light">Talk to CloudTopia</ButtonLink></div>
       </Container>
     </EnterpriseSection>
   )
@@ -890,7 +890,7 @@ function EnterpriseCTAInline({ locale }: { locale: string }) {
             <h2 className="mt-2 text-2xl font-extrabold text-[#07111f]">Not sure whether you need a website, CRM, app, or AI workflow first?</h2>
             <p className="mt-2 text-sm leading-7 text-[#64748b]">Share the business goal and CloudTopia will map the right first phase.</p>
           </div>
-          <ButtonLink locale={locale} href="/contact">Request a Digital Plan</ButtonLink>
+          <ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Request a Digital Plan</ButtonLink>
         </div>
       </Container>
     </section>
@@ -996,7 +996,7 @@ function FinalCTA({ locale }: { locale: string }) {
       <Container className="overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,#07111f_0%,#0f2a44_48%,#0284c7_100%)] p-8 text-white shadow-[0_28px_80px_rgba(7,17,31,0.28)] md:p-12">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div><h2 className="text-3xl font-extrabold leading-tight md:text-5xl">Let's Build the Digital System Your Business Actually Needs</h2><p className="mt-5 max-w-3xl text-base leading-8 text-white/76">Start with a website, grow into a business system, and automate the workflows that slow your team down.</p></div>
-          <div className="flex flex-col gap-3 sm:flex-row"><ButtonLink locale={locale} href="/contact" variant="light">Start a Project</ButtonLink><ButtonLink locale={locale} href="/pricing" variant="secondary">See Pricing First</ButtonLink></div>
+          <div className="flex flex-col gap-3 sm:flex-row"><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`} variant="light">Start a Project</ButtonLink><ButtonLink locale={locale} href="/pricing" variant="secondary">See Pricing First</ButtonLink></div>
         </div>
       </Container>
     </section>
@@ -1012,7 +1012,7 @@ function VisionCTA({ locale, title, subtitle }: { locale: string; title: string;
             <h2 className="text-3xl font-extrabold leading-tight md:text-5xl">{title}</h2>
             <p className="mt-4 max-w-3xl text-base leading-8 text-white/76">{subtitle}</p>
           </div>
-          <ButtonLink locale={locale} href="/contact">Contact with us</ButtonLink>
+          <ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Contact with us</ButtonLink>
         </div>
       </Container>
     </section>
@@ -1088,7 +1088,7 @@ function PageHero({ locale, eyebrow, title, subtitle, icon }: { locale: string; 
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.08em] text-sky-100 backdrop-blur"><Icon className="h-4 w-4" />{eyebrow}</p>
           <h1 className="max-w-5xl text-balance text-[2.55rem] font-extrabold leading-[1.04] text-white sm:text-6xl lg:text-[4rem]">{title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-9 text-white/76">{subtitle}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink locale={locale} href="/contact">Start a Project</ButtonLink><ButtonLink locale={locale} href="/services" variant="light">Explore Services</ButtonLink></div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`}>Start a Project</ButtonLink><ButtonLink locale={locale} href="/services" variant="light">Explore Services</ButtonLink></div>
         </div>
         <div className="ct-x-cinematic-card ct-float-medium hidden rounded-[32px] border border-white/12 p-4 backdrop-blur lg:block"><DashboardVisual /></div>
       </Container>
@@ -1134,7 +1134,7 @@ export function EnterprisePricingLite({ locale }: { locale: string }) {
     <>
       <EnterpriseAnimator />
       <PageHero locale={locale} eyebrow="Pricing" title="Clear Packages for Websites, Systems, and Digital Growth" subtitle="Use these packages as a starting point. Final scope is confirmed before development so deliverables, timeline, and ownership are clear." icon={ShieldCheck} />
-      <EnterpriseSection className="bg-white"><Container><div className="grid gap-6 lg:grid-cols-4">{pricingPackages.map((tier) => <article key={tier.name} className={`rounded-3xl border p-7 ${tier.highlighted ? 'border-[#0284c7] bg-[#e0f2fe] shadow-[0_24px_70px_rgba(2,132,199,0.16)]' : 'border-[rgba(15,23,42,0.08)] bg-white'}`}><h2 className="text-2xl font-extrabold text-[#07111f]">{tier.name}</h2><p className="mt-4 text-3xl font-extrabold text-[#0284c7]">{tier.price}</p><p className="mt-4 text-sm leading-7 text-[#475569]">{tier.description}</p><ul className="mt-6 space-y-3">{tier.features.map((feature) => <li key={feature} className="flex items-start gap-3 text-sm font-bold text-[#334155]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#16a34a]" />{feature}</li>)}</ul><ButtonLink locale={locale} href="/contact" variant={tier.highlighted ? 'primary' : 'secondary'}>Request Scope</ButtonLink></article>)}</div></Container></EnterpriseSection>
+      <EnterpriseSection className="bg-white"><Container><div className="grid gap-6 lg:grid-cols-4">{pricingPackages.map((tier) => <article key={tier.name} className={`rounded-3xl border p-7 ${tier.highlighted ? 'border-[#0284c7] bg-[#e0f2fe] shadow-[0_24px_70px_rgba(2,132,199,0.16)]' : 'border-[rgba(15,23,42,0.08)] bg-white'}`}><h2 className="text-2xl font-extrabold text-[#07111f]">{tier.name}</h2><p className="mt-4 text-3xl font-extrabold text-[#0284c7]">{tier.price}</p><p className="mt-4 text-sm leading-7 text-[#475569]">{tier.description}</p><ul className="mt-6 space-y-3">{tier.features.map((feature) => <li key={feature} className="flex items-start gap-3 text-sm font-bold text-[#334155]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#16a34a]" />{feature}</li>)}</ul><ButtonLink locale={locale} href={`/api/whatsapp?locale=${locale}`} variant={tier.highlighted ? 'primary' : 'secondary'}>Request Scope</ButtonLink></article>)}</div></Container></EnterpriseSection>
       <ProjectEstimatorStatic /><FAQ /><FinalCTA locale={locale} />
     </>
   )

@@ -448,7 +448,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Mobile Apps', 'تطبيقات الجوال'),
         description: t('iOS, Android, and cross-platform apps.', 'تطبيقات iOS وأندرويد ومتعددة المنصات.'),
-        href: '/services/mobile-app-development',
+        href: '/services/app-development',
         icon: '/icons/services/Mobile-Responsive Apps.png',
     },
     {

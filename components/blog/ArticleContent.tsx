@@ -127,7 +127,7 @@ export function ArticleContent({
                 title={cta.title}
                 text={cta.text}
                 primaryLabel={cta.primaryLabel}
-                primaryHref={post.ctaButtonUrl || '/contact'}
+                primaryHref={post.ctaButtonUrl || '/api/whatsapp'}
                 secondaryHref={post.secondaryCTAButtonUrl || '/services'}
               />
             </div>

@@ -88,7 +88,7 @@ export function PillarPage({ pillar, locale }: { pillar: DPPillar; locale: strin
                     <span className="inline-flex items-center rounded-full border border-violet-400/20 bg-violet-400/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-violet-300">{t.ctaPre}</span>
                     <h2 className="mt-5 text-3xl font-black leading-[1.1] tracking-tight text-white md:text-4xl" style={{ textWrap: 'balance' }}>{t.ctaTitle}</h2>
                     <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-violet-200/60">{t.ctaDesc}</p>
-                    <Link href={localePath(locale, '/contact')} className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-amber-500 px-9 py-4 text-base font-bold text-white shadow-lg shadow-amber-500/25 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-amber-400">
+                    <Link href={`/api/whatsapp?locale=${locale}`} className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-amber-500 px-9 py-4 text-base font-bold text-white shadow-lg shadow-amber-500/25 transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-amber-400">
                         {t.ctaBtn}
                         <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
                     </Link>

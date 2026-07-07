@@ -20,7 +20,7 @@ export type WebAppProcessContent = {
 export function WebAppProcess({
     content,
     dir = "ltr",
-    ctaHref = "/contact",
+    ctaHref = "/api/whatsapp",
 }: {
     content: WebAppProcessContent;
     dir?: "ltr" | "rtl";

@@ -706,7 +706,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
                 className="flex flex-wrap justify-center gap-4"
               >
                 <MagneticButton
-                  onClick={() => router.push(localePath(locale, '/contact'))}
+                  onClick={() => { window.location.href = `/api/whatsapp?locale=${locale}` }}
                   className="group relative px-8 py-4 bg-lavender text-neutral-900 font-bold rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/25 transition-shadow"
                 >
                   <span className="relative z-10 flex items-center gap-2">

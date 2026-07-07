@@ -175,7 +175,7 @@ export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
                                 y: -2
                             }}
                             whileTap={{ scale: 0.98 }}
-                            onClick={() => window.location.href = '/contact'}
+                            onClick={() => window.location.href = `/api/whatsapp?locale=${locale}`}
                             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-emerald-500/30 transition-all duration-500 overflow-hidden border border-emerald-400/20"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-lavender/20 via-lavender/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -224,7 +224,7 @@ export default function WebApplicationsClient({ t: pageT }: { t?: any }) {
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
-                            href={localePath(locale, '/contact')}
+                            href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {p?.cta?.button || 'Start Your Project Today'}

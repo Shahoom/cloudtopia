@@ -438,7 +438,7 @@ export default async function PricingPage({ params }: PageProps) {
                             features: expandedPlanFeatures(plan, category.title, locale),
                             popular: Boolean(plan.badge && recommendedBadgeLabels.includes(plan.badge)),
                             color: tierColor(index),
-                            href: localePath(locale, '/contact'),
+                            href: `/api/whatsapp?locale=${locale}`,
                             ctaLabel: L.cardCta,
                             showFullFeaturesLabel: L.showFullFeaturesLabel,
                         }))
@@ -489,7 +489,7 @@ export default async function PricingPage({ params }: PageProps) {
                         </div>
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                             <Link
-                                href={localePath(locale, '/contact')}
+                                href={`/api/whatsapp?locale=${locale}`}
                                 className="inline-flex items-center justify-center gap-2 border-2 border-white bg-white px-6 py-3 text-sm font-bold text-neutral-950 transition-colors hover:bg-primary-100"
                             >
                                 {L.contactCta}

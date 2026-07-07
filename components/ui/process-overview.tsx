@@ -46,7 +46,7 @@ export function ProcessOverview({
     serviceName,
     locale = "en",
     dir = "ltr",
-    ctaHref = "/contact",
+    ctaHref = "/api/whatsapp",
 }: {
     serviceName: string;
     locale?: "en" | "ar";

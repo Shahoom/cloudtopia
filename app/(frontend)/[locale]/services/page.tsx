@@ -36,11 +36,11 @@ export default async function ServicesPage({
         { path: '/services/content-creation', key: 'Content Creation' },
         { path: '/services/social-media-marketing', key: 'Social Media Marketing' },
         { path: '/web-applications', key: 'Web Applications' },
-        { path: '/services/mobile-app-development', key: 'Mobile App Development' },
-        { path: '/services/ios-app-development', key: 'iOS App Development' },
-        { path: '/services/android-app-development', key: 'Android App Development' },
-        { path: '/services/cross-platform-app-development', key: 'Cross-Platform App Development' },
-        { path: '/services/app-backend-api-development', key: 'App Backend & API Development' },
+        { path: '/services/app-development', key: 'Mobile App Development' },
+        { path: '/services/app-development/ios-app-development', key: 'iOS App Development' },
+        { path: '/services/app-development/android-app-development', key: 'Android App Development' },
+        { path: '/services/app-development/cross-platform-app-development', key: 'Cross-Platform App Development' },
+        { path: '/services/app-development/app-backend-api-development', key: 'App Backend & API Development' },
     ]
 
     return (

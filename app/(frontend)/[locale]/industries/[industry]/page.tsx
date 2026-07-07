@@ -290,7 +290,7 @@ export default async function IndustryPage({ params }: PageProps) {
                 metrics={heroMetrics}
                 modes={heroModes}
                 protocols={heroProtocols}
-                primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
+                primaryCta={{ label: L.start, href: `/api/whatsapp?locale=${locale}` }}
                 secondaryCta={{ label: L.servicesCta, href: localePath(locale, '/services') }}
                 visualCaption={name}
                 dir={isRTL ? 'rtl' : 'ltr'}
@@ -479,7 +479,7 @@ export default async function IndustryPage({ params }: PageProps) {
                     <p className="max-w-2xl text-lg leading-8 text-white/75">{L.readyDesc}</p>
                     </div>
                     <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-                        <Link href={localePath(locale, '/contact')} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-7 py-4 font-black text-eerie transition-colors duration-200 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300">
+                        <Link href={`/api/whatsapp?locale=${locale}`} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-7 py-4 font-black text-eerie transition-colors duration-200 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300">
                             {L.start}
                             <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} aria-hidden="true" />
                         </Link>

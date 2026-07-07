@@ -570,7 +570,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             features: Array.from(new Set(baseFeatures)).slice(0, 9),
             popular: index === 1,
             color: serviceTierColor(index),
-            href: localePath(locale, '/contact'),
+            href: `/api/whatsapp?locale=${locale}`,
             ctaLabel: L.packageCta,
         }
     })
@@ -667,7 +667,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     title1={websiteContent.hero[serviceLocale].title1}
                     title2={websiteContent.hero[serviceLocale].title2}
                     subtitle={websiteContent.hero[serviceLocale].subtitle}
-                    primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
+                    primaryCta={{ label: L.start, href: `/api/whatsapp?locale=${locale}` }}
                     secondaryCta={{ label: L.pricing, href: localePath(locale, '/pricing') }}
                     dir={isRTL ? 'rtl' : 'ltr'}
                 />
@@ -680,7 +680,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     metrics={heroMetrics}
                     modes={heroModes}
                     protocols={heroProtocols}
-                    primaryCta={{ label: L.start, href: localePath(locale, '/contact') }}
+                    primaryCta={{ label: L.start, href: `/api/whatsapp?locale=${locale}` }}
                     secondaryCta={{ label: L.pricing, href: localePath(locale, '/pricing') }}
                     visualCaption={categoryName}
                     dir={isRTL ? 'rtl' : 'ltr'}
@@ -697,7 +697,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
             {websiteContent ? (
                 <>
-                    <ProcessOverview serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={localePath(locale, '/contact')} />
+                    <ProcessOverview serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={`/api/whatsapp?locale=${locale}`} />
                     {websiteProjects.length > 0 ? (
                         <ProjectsShowcase
                             projects={websiteProjects}
@@ -715,7 +715,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
             {webappContent ? (
                 <>
-                    <WebAppProcess content={webappContent.process[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={localePath(locale, '/contact')} />
+                    <WebAppProcess content={webappContent.process[webappLocale]} dir={isRTL ? 'rtl' : 'ltr'} ctaHref={`/api/whatsapp?locale=${locale}`} />
                     {webappProjects.length > 0 ? (
                         <ProjectsShowcase
                             projects={webappProjects}
@@ -1027,7 +1027,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     <h2 className="mb-5 text-3xl font-black text-white md:text-5xl">{L.readyTitle}</h2>
                     <p className="mb-8 text-lg font-semibold leading-8 text-white/75">{L.readyDesc}</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-3">
-                        <Link href={localePath(locale, '/contact')} className="inline-flex items-center justify-center gap-2 bg-white px-8 py-4 font-black text-neutral-900 transition-colors hover:bg-cyan-100">
+                        <Link href={`/api/whatsapp?locale=${locale}`} className="inline-flex items-center justify-center gap-2 bg-white px-8 py-4 font-black text-neutral-900 transition-colors hover:bg-cyan-100">
                             {L.start}
                             <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                         </Link>

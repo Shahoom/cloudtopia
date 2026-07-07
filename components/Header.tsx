@@ -223,7 +223,7 @@ function AnnouncementTicker({ locale }: { locale: string }) {
         {
           text: "احصل على تدقيق مجاني لموقعك الإلكتروني — ",
           cta: "تواصل مع كلاود توبيا اليوم",
-          href: "/contact"
+          href: `/api/whatsapp?locale=${locale}`
         },
         {
           text: "مواقع، لوحات تحكم، أنظمة CRM، أتمتة، وحلول ذكاء اصطناعي للشركات النامية — ",
@@ -240,7 +240,7 @@ function AnnouncementTicker({ locale }: { locale: string }) {
         {
           text: "Get a free website audit for your business — ",
           cta: "Talk to CloudTopia today",
-          href: "/contact"
+          href: `/api/whatsapp?locale=${locale}`
         },
         {
           text: "Websites, dashboards, CRM systems, automation, and AI solutions for growing businesses — ",
@@ -445,11 +445,16 @@ export default function Header() {
 
   const cta = (cmsNavigation?.cta as { label?: string; href?: string } | undefined) || {
     label: t.nav.getStarted,
-    href: '/contact',
+    href: `/api/whatsapp?locale=${locale}`,
   }
   const ctaLabel = locale === 'ar' && (!cta.label || cta.label === 'Get Started')
     ? t.nav.getStarted
     : cta.label || t.nav.getStarted
+  // The primary CTA always opens WhatsApp (geo-selected number) instead of the
+  // /contact form — including when CMS navigation still points it at /contact.
+  const ctaHref = !cta.href || cta.href === '/contact'
+    ? `/api/whatsapp?locale=${locale}`
+    : cta.href
   const headerIsDark = isDarkSection
 
   const headerTone = isScrolled || mobileMenuOpen
@@ -530,7 +535,7 @@ export default function Header() {
           <div className="hidden items-center gap-3 xl:flex">
             <LanguageSwitcher isDark={headerIsDark} />
             <Link
-              href={l(cta.href || '/contact')}
+              href={l(ctaHref)}
               className="inline-flex h-11 items-center gap-2 rounded-md bg-slate-950 px-5 text-sm font-black !text-white shadow-sm transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
             >
               {ctaLabel}
@@ -685,7 +690,7 @@ export default function Header() {
               </div>
 
               <Link
-                href={l(cta.href || '/contact')}
+                href={l(ctaHref)}
                 onClick={() => setMobileMenuOpen(false)}
                 className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-eerie px-5 py-3.5 text-sm font-black !text-white shadow-sm transition-colors duration-200 hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
               >

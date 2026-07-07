@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
 import { industrySlugs } from '@/lib/seo/industries'
-import { serviceDetailSlugs } from '@/lib/seo/services'
+import { serviceDetailSlugs, getServiceCategory } from '@/lib/seo/services'
 import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
 import { dpSubServiceSlugs, getDigitalPresenceSubService } from '@/lib/services/digital-presence-content'
 import { businessSystemsSubServiceSlugs, getBusinessSystemsSubService } from '@/lib/services/business-systems-content'
@@ -46,6 +46,20 @@ const nestedSubServicePaths: string[] = Array.from(
             .map((s) => subServiceHref(s.pillarSlug, s.slug)),
     ]),
 )
+
+// Mobile App Development is now the /services/app-development pillar with every
+// service nested beneath it. The old flat /services/<slug> URLs 301-redirect,
+// so the sitemap must emit the nested canonical paths (and the pillar itself,
+// which otherwise would not appear at all).
+const mobileSubSlugSet = new Set<string>(
+    (getServiceCategory('mobile-app-development')?.services ?? []).map((s) => s.slug),
+)
+function serviceCanonicalPath(slug: string): string {
+    if (slug === 'mobile-app-development') return '/services/app-development'
+    if (mobileSubSlugSet.has(slug)) return `/services/app-development/${slug}`
+    return `/services/${slug}`
+}
+
 import { hasPageOgImage } from '@/lib/og/og-image'
 import { BASE_URL, canonicalUrl, buildHreflangMap } from '@/lib/i18n/url'
 import { locales } from '@/lib/i18n/config'
@@ -175,10 +189,10 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     })
 
     allServiceDetailSlugs.forEach((service) => {
-        const languages = buildHreflangMap(`/services/${service}`)
+        const languages = buildHreflangMap(serviceCanonicalPath(service))
         locales.forEach((loc) => {
             entries.push({
-                url: canonicalUrl(loc, `/services/${service}`),
+                url: canonicalUrl(loc, serviceCanonicalPath(service)),
                 lastModified: servicesMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,
@@ -389,10 +403,10 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
     })()
 
     allServiceDetailSlugs.forEach((service) => {
-        const languages = buildHreflangMap(`/services/${service}`)
+        const languages = buildHreflangMap(serviceCanonicalPath(service))
         locales.forEach((loc) => {
             sitemapEntries.push({
-                url: canonicalUrl(loc, `/services/${service}`),
+                url: canonicalUrl(loc, serviceCanonicalPath(service)),
                 lastModified: servicesDataMtime,
                 changeFrequency: 'monthly',
                 priority: 0.76,

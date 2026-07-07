@@ -96,7 +96,7 @@ export default async function WebAppPillarPage({
         features: Array.from(new Set(includedBase)).slice(0, 7),
         popular: index === 1,
         color: tierColors[index % tierColors.length],
-        href: localePath(locale, '/contact'),
+        href: `/api/whatsapp?locale=${locale}`,
         ctaLabel: isRTL ? 'حدّد نطاق الخدمة' : 'Scope this service',
     }))
 
@@ -144,7 +144,7 @@ export default async function WebAppPillarPage({
             <WebAppProcess
                 content={data.process[webappLocale]}
                 dir={isRTL ? 'rtl' : 'ltr'}
-                ctaHref={localePath(locale, '/contact')}
+                ctaHref={`/api/whatsapp?locale=${locale}`}
             />
 
             {subServices.length > 0 ? (
@@ -162,7 +162,7 @@ export default async function WebAppPillarPage({
                             {subServices.map((s) => (
                                 <SubServiceGlowCard
                                     key={s.name}
-                                    href="/contact"
+                                    href={`/api/whatsapp?locale=${locale}`}
                                     name={s.name}
                                     desc={s.desc}
                                     iconName={s.iconName}

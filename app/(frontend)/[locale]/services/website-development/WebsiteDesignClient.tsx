@@ -190,7 +190,7 @@ function WebDesignHero({ t }: { t: any }) {
               transition: { type: "spring", damping: 30, stiffness: 400 },
             }}
           >
-            <Link href={localePath(locale, '/contact')}>
+            <Link href={`/api/whatsapp?locale=${locale}`}>
               {p?.hero?.ctaStart || (isRTL ? "ابدأ مشروعك" : "Start Your Project")} <span className={`font-serif ${isRTL ? 'mr-1' : 'ml-1'}`}>{isRTL ? '←' : '→'}</span>
             </Link>
           </motion.button>

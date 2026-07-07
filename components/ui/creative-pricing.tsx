@@ -134,7 +134,7 @@ export function CreativePricing({
                   )}
 
                   <Link
-                    href={tier.href || '/contact'}
+                    href={tier.href || '/api/whatsapp'}
                     className={cn(
                       'mt-auto inline-flex h-12 items-center justify-center gap-2 rounded-md border border-slate-950 px-4 text-sm font-black transition-[background-color,transform] duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500',
                       tier.popular ? 'bg-slate-950 text-white hover:bg-sky-800' : 'bg-white text-slate-950 hover:bg-sky-50',

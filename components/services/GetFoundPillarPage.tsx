@@ -242,7 +242,7 @@ export function GetFoundPillarPage({
                     </p>
                     <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
                         <Link
-                            href={L('/contact')}
+                            href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center gap-2 rounded-full bg-amber-400 px-8 py-4 text-sm font-black text-[#070b16] transition-all duration-300 hover:bg-amber-300 hover:shadow-[0_14px_44px_-12px_rgba(245,158,11,0.6)]"
                         >
                             {isAr ? 'ابدأ الآن' : 'Get started'}

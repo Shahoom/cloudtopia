@@ -32,7 +32,7 @@ export function CTABanner({
           </p>
         </div>
         <Link
-          href={localePath(locale, '/contact')}
+          href={`/api/whatsapp?locale=${locale}`}
           className="ed-eyebrow inline-flex h-11 shrink-0 items-center gap-2 bg-[color:var(--ed-accent)] px-6 text-white transition-colors hover:bg-[color:var(--ed-accent-ink)]"
         >
           {buttonText}

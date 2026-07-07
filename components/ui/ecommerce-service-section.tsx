@@ -380,7 +380,7 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en", t: overr
               {ctaDescriptionVal}
             </p>
             <a
-              href={localePath(locale, '/contact')}
+              href={`/api/whatsapp?locale=${locale}`}
               className="inline-flex items-center gap-3 px-8 py-4 bg-lavender text-violet-600 font-bold text-lg rounded-full hover:bg-lavender transition-colors shadow-xl hover:shadow-2xl"
             >
               {ctaButtonVal}

@@ -10,6 +10,11 @@ export const BASE_URL = 'https://cloudtopia.net'
  * in one place.
  */
 export function localePath(locale: string, path: string = '/'): string {
+    // API routes, protocol links, and hash/anchor targets are never app pages,
+    // so they must never receive a locale prefix. e.g. /api/whatsapp is a geo
+    // redirect endpoint; /ar/api/whatsapp would 404. Pass them through as-is so
+    // wrapper components (ButtonLink, SubServiceGlowCard) can safely link to them.
+    if (/^(?:https?:|mailto:|tel:|#|\/\/|\/api\/)/.test(path)) return path
     const clean = path === '/' ? '' : path.startsWith('/') ? path : `/${path}`
     if (locale === defaultLocale) return clean === '' ? '/' : clean
     return `/${locale}${clean}`

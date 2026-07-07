@@ -21,7 +21,7 @@ export function BlogCTA({
   text,
   primaryLabel,
   secondaryLabel,
-  primaryHref = '/contact',
+  primaryHref = '/api/whatsapp',
   secondaryHref = '/services',
 }: BlogCTAProps) {
   const ar = locale === 'ar'

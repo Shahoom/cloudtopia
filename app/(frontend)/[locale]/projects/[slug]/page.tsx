@@ -311,7 +311,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     <h2 className="text-3xl md:text-5xl font-bold mb-5">{L.readyForYours}</h2>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
                         <Link
-                            href={localePath(locale, '/contact')}
+                            href={`/api/whatsapp?locale=${locale}`}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white text-primary-700 font-semibold hover:bg-lavender transition-colors"
                         >
                             {L.startProject}

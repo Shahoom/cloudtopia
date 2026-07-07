@@ -148,37 +148,37 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'Mobile App Development', ar: 'تطوير تطبيقات الجوال' },
         description: { en: 'Premium custom mobile apps built for outstanding performance and user engagement.', ar: 'تطوير تطبيقات جوال مخصصة ومصممة للأداء المتميز وتفاعل المستخدمين.' },
-        link: '/services/mobile-app-development',
+        link: '/services/app-development',
         iconName: 'Smartphone'
       },
       {
         title: { en: 'iOS App Development', ar: 'تطوير تطبيقات iOS' },
         description: { en: 'Native Swift apps optimized for Apple devices, adhering strictly to App Store specs.', ar: 'تطبيقات Swift أصلية ومحسنة لأجهزة آبل ومتوافقة تماماً مع شروط المتجر.' },
-        link: '/services/ios-app-development',
+        link: '/services/app-development/ios-app-development',
         iconName: 'Laptop'
       },
       {
         title: { en: 'Android App Development', ar: 'تطوير تطبيقات أندرويد' },
         description: { en: 'Native Kotlin apps optimized for diverse Android devices and Google Play compliance.', ar: 'تطبيقات Kotlin أصلية ومحسنة لأجهزة أندرويد المتنوعة ومتوافقة مع جوجل بلاي.' },
-        link: '/services/android-app-development',
+        link: '/services/app-development/android-app-development',
         iconName: 'Code2'
       },
       {
         title: { en: 'Cross-Platform App Development', ar: 'تطوير تطبيقات عابرة للمنصات' },
         description: { en: 'Single codebase apps with Flutter or React Native, saving time without losing native feel.', ar: 'تطبيقات بقاعدة كود موحدة باستخدام Flutter أو React Native لتوفير الوقت والمال.' },
-        link: '/services/cross-platform-app-development',
+        link: '/services/app-development/cross-platform-app-development',
         iconName: 'Layers'
       },
       {
         title: { en: 'MVP App Development', ar: 'تطوير تطبيقات الـ MVP' },
         description: { en: 'Rapid prototype builds focusing on core value to test markets and secure funding.', ar: 'بناء نموذج MVP سريع يركز على الميزات الأساسية لاختبار السوق وجذب المستثمرين.' },
-        link: '/services/mvp-app-development',
+        link: '/services/app-development/mvp-app-development',
         iconName: 'Zap'
       },
       {
         title: { en: 'Business App Development', ar: 'تطوير تطبيقات الأعمال' },
         description: { en: 'Internal mobile utilities for inventory tracking, field operations, and corporate communications.', ar: 'تطبيقات أعمال داخلية لتتبع المخازن، العمليات الميدانية، والاتصال المؤسسي.' },
-        link: '/services/business-mobile-app-development',
+        link: '/services/app-development/business-mobile-app-development',
         iconName: 'Briefcase'
       },
       {
@@ -190,7 +190,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'App Maintenance & Updates', ar: 'صيانة وتحديثات التطبيقات' },
         description: { en: 'Version updates, security patches, OS upgrades, and feature enhancements.', ar: 'تحديثات الإصدارات، الترقيعات الأمنية، دعم أنظمة التشغيل الجديدة، وإضافة ميزات.' },
-        link: '/services/mobile-app-maintenance',
+        link: '/services/app-development/mobile-app-maintenance',
         iconName: 'Wrench'
       }
     ]

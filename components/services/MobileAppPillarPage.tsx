@@ -123,7 +123,7 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
         features: Array.from(new Set(included)).slice(0, 7),
         popular: i === 1,
         color: tierColors[i % tierColors.length],
-        href: L('/contact'),
+        href: `/api/whatsapp?locale=${locale}`,
         ctaLabel: t('Scope my app', 'حدّد نطاق تطبيقي'),
     }))
 
@@ -164,8 +164,8 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
                 metricLabel={t('App rating', 'التقييم')}
                 ctaHeading={t('Ship your app.', 'لنُطلق تطبيقك.')}
                 ctaDescription={t('From idea to both app stores — iOS, Android & cross-platform, built by one team in Oman & the Gulf.', 'من الفكرة إلى App Store وGoogle Play — تطبيقات iOS وAndroid ومتعددة المنصات يبنيها فريق واحد في عُمان والخليج.')}
-                appStoreHref={L('/contact')}
-                playStoreHref={L('/contact')}
+                appStoreHref={`/api/whatsapp?locale=${locale}`}
+                playStoreHref={`/api/whatsapp?locale=${locale}`}
                 badge1Title={t('Top Charts', 'الأعلى في المتجر')}
                 badge1Sub={t('Featured on launch', 'مميّز منذ الإطلاق')}
                 badge2Title={t('50k Downloads', '50 ألف تنزيل')}

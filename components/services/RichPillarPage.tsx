@@ -109,7 +109,7 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
                     <p className="mx-auto mb-10 max-w-2xl text-lg text-slate-300 md:text-xl">{data.cta.description}</p>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Link
-                            href={localePath(locale, '/contact')}
+                            href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center justify-center rounded-full bg-lavender px-8 py-4 text-lg font-semibold text-slate-900 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                         >
                             {data.cta.button}

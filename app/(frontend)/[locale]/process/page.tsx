@@ -339,7 +339,7 @@ export default async function ProcessPage({ params }: PageProps) {
                                 {L.description}
                             </p>
                             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                                <Link href={localePath(locale, '/contact')} className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
+                                <Link href={`/api/whatsapp?locale=${locale}`} className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
                                     {L.primaryCta}
                                     <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                                 </Link>
@@ -448,7 +448,7 @@ export default async function ProcessPage({ params }: PageProps) {
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-3xl font-black tracking-tight text-white md:text-5xl">{L.finalTitle}</h2>
                     <p className="mt-5 text-lg leading-relaxed text-white/70">{L.finalDescription}</p>
-                    <Link href={localePath(locale, '/contact')} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
+                    <Link href={`/api/whatsapp?locale=${locale}`} className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-white px-7 py-4 text-sm font-black text-neutral-950 transition hover:bg-cyan-100">
                         {L.primaryCta}
                         <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                     </Link>

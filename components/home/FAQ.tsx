@@ -87,7 +87,7 @@ export default function FAQ() {
                             className={`flex ${isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}
                         >
                             <Link
-                                href={localePath(locale, '/contact')}
+                                href={`/api/whatsapp?locale=${locale}`}
                                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-900 transition-colors group"
                             >
                                 <MessageCircle className="w-4 h-4" />

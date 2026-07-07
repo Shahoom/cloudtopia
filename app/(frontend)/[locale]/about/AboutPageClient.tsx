@@ -494,7 +494,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
 
                                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                                         <Link
-                                            href={localePath(locale, '/contact')}
+                                            href={`/api/whatsapp?locale=${locale}`}
                                             className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:bg-cyan-100"
                                         >
                                             {operatingModel.primaryCta}
@@ -640,7 +640,7 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                     {t.about.cta.description}
                                 </p>
                                 <Link
-                                    href={localePath(locale, '/contact')}
+                                    href={`/api/whatsapp?locale=${locale}`}
                                     className="group relative inline-flex items-center gap-3 px-12 py-5 bg-blue-600 text-white rounded-2xl font-black text-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(37,99,235,0.2)]"
                                 >
                                     <span>{t.about.cta.button}</span>

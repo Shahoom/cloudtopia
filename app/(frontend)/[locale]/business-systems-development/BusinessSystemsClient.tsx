@@ -227,7 +227,7 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link
-                            href={localePath(locale, '/contact')}
+                            href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             {p?.cta?.button || 'Start Your Project Today'}
