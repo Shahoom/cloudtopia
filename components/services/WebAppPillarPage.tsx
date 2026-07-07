@@ -16,6 +16,10 @@ import { localizedDP } from '@/lib/services/digital-presence'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
+import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
+import { ContactFast } from '@/components/ui/contact-fast'
+import { getServiceCategory, localizedPackageName } from '@/lib/seo/services'
+import { Pencil, Star, Sparkles } from 'lucide-react'
 
 /**
  * Self-contained render for a structured interactive-web-application pillar.
@@ -61,6 +65,40 @@ export default async function WebAppPillarPage({
         { name: isRTL ? 'الخدمات' : 'Services', path: '/services' },
         { name: pName, path: schemaPath },
     ])
+
+    // Pricing packages + contact form — the two sections the older service-detail
+    // pages had that this pillar template was missing (this is what made the
+    // pillars feel less complete than /services/saas-mvp-development et al.).
+    // Packages come from the web-apps category; each tier's "what's included"
+    // reuses the sub-service deliverables shown above.
+    const category = getServiceCategory('interactive-web-applications')
+    const tierIcons = [
+        <Pencil key="p" className="h-6 w-6" aria-hidden="true" />,
+        <Star key="s" className="h-6 w-6" aria-hidden="true" />,
+        <Sparkles key="k" className="h-6 w-6" aria-hidden="true" />,
+    ]
+    const tierColors: PricingTier['color'][] = ['sky', 'amber', 'emerald']
+    const includedBase = [
+        ...subServices.slice(0, 4).map((s) => s.name),
+        isRTL ? 'استشارة مجانية قبل تحديد النطاق' : 'Free consultation before scope is set',
+        isRTL ? 'معاينة ديمو مجانية مخصصة لطلبك' : 'Free custom demo preview for your inquiry',
+        isRTL ? 'تسليم الكود والتوثيق والملكية' : 'Code, documentation & ownership handoff',
+    ]
+    const serviceTiers: PricingTier[] = (category?.packageNames ?? []).map((pkg, index) => ({
+        name: localizedPackageName(pkg, locale),
+        icon: tierIcons[index % tierIcons.length],
+        price: index === 2 ? (isRTL ? 'عرض مخصص' : 'Custom quote') : (isRTL ? 'نطاق ثابت' : 'Fixed scope'),
+        description: index === 0
+            ? (isRTL ? `بداية منظمة لخدمة ${pName}` : `A focused starting path for ${pName}`)
+            : index === 1
+                ? (isRTL ? 'مسار أقوى مع تكاملات ودعم إطلاق' : 'A stronger path with integrations and launch support')
+                : (isRTL ? 'تنفيذ مخصص عندما يتّسع النطاق' : 'Custom delivery when the scope grows'),
+        features: Array.from(new Set(includedBase)).slice(0, 7),
+        popular: index === 1,
+        color: tierColors[index % tierColors.length],
+        href: localePath(locale, '/contact'),
+        ctaLabel: isRTL ? 'حدّد نطاق الخدمة' : 'Scope this service',
+    }))
 
     const projects: Project[] = await getProjectsForService(locale, {
         serviceSlug: slug,
@@ -159,6 +197,19 @@ export default async function WebAppPillarPage({
                     dir={isRTL ? 'rtl' : 'ltr'}
                 />
             ) : null}
+
+            {serviceTiers.length > 0 ? (
+                <CreativePricing
+                    tag={isRTL ? 'الباقات' : 'Packages'}
+                    title={isRTL ? `${pName}: باقات هذه الخدمة` : `${pName}: Packages for this service`}
+                    description={isRTL ? 'اختر المستوى المناسب لنطاقك — كل مسار يبدأ باستشارة مجانية ومعاينة ديمو مجانية.' : 'Pick the level that matches your scope — every path starts with a free consultation and a free custom demo preview.'}
+                    tiers={serviceTiers}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                    className="bg-[#f4f1f8] py-16 md:py-20"
+                />
+            ) : null}
+
+            <ContactFast serviceName={pName} locale={webappLocale} dir={isRTL ? 'rtl' : 'ltr'} />
         </>
     )
 }
