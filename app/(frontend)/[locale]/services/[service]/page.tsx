@@ -11,6 +11,7 @@ import { getStructuredPillarBySlug, structuredPillarRoutes, legacyMainPagePillar
 import { PillarPage } from '@/components/services/PillarPage'
 import RichPillarPage from '@/components/services/RichPillarPage'
 import WebAppPillarPage from '@/components/services/WebAppPillarPage'
+import MobileAppPillarPage from '@/components/services/MobileAppPillarPage'
 import { GetFoundPillarPage } from '@/components/services/GetFoundPillarPage'
 import { getGetFoundContent } from '@/lib/services/get-found-content'
 import { getRichPillarData, getBusinessSystemsSubService, businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
@@ -333,6 +334,15 @@ const PILLAR_SEO_OVERRIDES: Record<string, { title: { en: string; ar: string }; 
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', service: serviceSlug } = await params
+    if (serviceSlug === 'mobile-app-development') {
+        const path = '/services/mobile-app-development'
+        return {
+            title: locale === 'ar' ? 'تطوير تطبيقات الجوال في عُمان والخليج — iOS وAndroid' : 'Mobile App Development in Oman & the Gulf — iOS & Android',
+            description: locale === 'ar' ? 'تطوير تطبيقات iOS وAndroid ومتعددة المنصات لأعمال الخليج — تصميم وبناء وإطلاق ونمو، عربية أولاً وجاهزة للـ RTL، مع ملكية كاملة للكود. استشارة مجانية.' : 'iOS, Android & cross-platform app development for Gulf businesses — design, build, launch, and grow. Arabic-first, RTL-ready, and fully owned by you. Free consultation.',
+            openGraph: { title: locale === 'ar' ? 'تطوير تطبيقات الجوال | كلاود توبيا' : 'Mobile App Development | CloudTopia', description: locale === 'ar' ? 'تطبيقات iOS وAndroid ومتعددة المنصات، تصميم وبناء وإطلاق ونمو.' : 'iOS, Android & cross-platform apps — design, build, launch, and grow.', url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website' },
+            alternates: { canonical: canonicalUrl(locale, path), languages: { en: canonicalUrl('en', path), ar: canonicalUrl('ar', path), 'x-default': canonicalUrl('en', path) } },
+        }
+    }
     const pillar = getStructuredPillarBySlug(serviceSlug)
     if (pillar) {
         const seoOverride = PILLAR_SEO_OVERRIDES[serviceSlug]
@@ -407,6 +417,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     // render below — otherwise they would fall through to the generic PillarPage.
     const getFound = getGetFoundContent(serviceSlug)
     if (getFound) return <GetFoundPillarPage content={getFound} locale={locale} />
+    // Mobile App Development — bespoke, fully-detailed pillar page. Every mobile
+    // service (iOS / Android / Cross-Platform + design, backend, QA, growth) is a
+    // sub-service surfaced on it.
+    if (serviceSlug === 'mobile-app-development') return <MobileAppPillarPage locale={locale} />
     const pillar = getStructuredPillarBySlug(serviceSlug)
     // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
     if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
