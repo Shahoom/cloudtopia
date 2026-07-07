@@ -188,6 +188,31 @@ export function proxy(request: NextRequest) {
         }
     }
 
+    // App Development sub-services (iOS / Android / Cross-Platform) live NESTED
+    // under the pillar: /services/app-development/<sub>. Serve them by rewriting
+    // to the existing flat service-detail page, and 301 the old flat URL to the
+    // nested one (single hop, any locale).
+    {
+        const APP_SUBS = ['ios-app-development', 'android-app-development', 'cross-platform-app-development']
+        const nested = cleanPath.match(/^(?:\/(en|ar))?\/services\/app-development\/([a-z0-9-]+)$/)
+        if (nested && APP_SUBS.includes(nested[2])) {
+            const url = request.nextUrl.clone()
+            url.pathname = `/${nested[1] || defaultLocale}/services/${nested[2]}`
+            const requestHeaders = new Headers(request.headers)
+            requestHeaders.set('x-locale', nested[1] || defaultLocale)
+            const response = NextResponse.rewrite(url, { request: { headers: requestHeaders } })
+            response.cookies.set('NEXT_LOCALE', nested[1] || defaultLocale, { path: '/', maxAge: 60 * 60 * 24 * 365 })
+            return response
+        }
+        const flat = cleanPath.match(/^(?:\/(en|ar))?\/services\/([a-z0-9-]+)$/)
+        if (flat && APP_SUBS.includes(flat[2])) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            url.pathname = flat[1] === 'ar' ? `/ar/services/app-development/${flat[2]}` : `/services/app-development/${flat[2]}`
+            return NextResponse.redirect(url, { status: 301 })
+        }
+    }
+
     const seg1 = cleanPath.split('/')[1] // '', 'en', 'ar', or something else
     const isEnPrefixed = seg1 === 'en'
     const isNonEnLocale = seg1 === 'ar'

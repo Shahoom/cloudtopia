@@ -216,7 +216,7 @@ export function CinematicHero({
         .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
 
       const scrollTl = gsap.timeline({
-        scrollTrigger: { trigger: containerRef.current, start: "top top", end: "+=5200", pin: true, scrub: 1, anticipatePin: 1 },
+        scrollTrigger: { trigger: containerRef.current, start: "top top", end: "+=3400", pin: true, scrub: 1, anticipatePin: 1 },
       });
 
       scrollTl
@@ -230,10 +230,10 @@ export function CinematicHero({
         .fromTo(".floating-badge", { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.5, stagger: 0.2 }, "-=2.0")
         .fromTo(".card-left-text", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.5")
         .fromTo(".card-right-text", { x: 50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 }, "<")
-        .to({}, { duration: 2.5 })
+        .to({}, { duration: 0.9 })
         .set(".hero-text-wrapper", { autoAlpha: 0 })
         .set(".cta-wrapper", { autoAlpha: 1 })
-        .to({}, { duration: 1.5 })
+        .to({}, { duration: 0.7 })
         .to([".mockup-scroll-wrapper", ".floating-badge", ".card-left-text", ".card-right-text"], { scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 1.2, stagger: 0.05 })
         .to(".main-card", { width: isMobile ? "92vw" : "85vw", height: isMobile ? "92vh" : "85vh", borderRadius: isMobile ? "32px" : "40px", ease: "expo.inOut", duration: 1.8 }, "pullback")
         .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
@@ -278,7 +278,7 @@ export function CinematicHero({
           <div className="card-sheen" aria-hidden="true" />
           <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center lg:gap-8 z-10 py-6 lg:py-0">
             <div className="card-right-text gsap-reveal order-1 lg:order-3 flex justify-center lg:justify-end z-20 w-full">
-              <h2 className="text-5xl md:text-[5rem] lg:text-[7rem] font-black uppercase tracking-tighter text-card-silver-matte">{brandName}</h2>
+              <h2 className="text-4xl sm:text-5xl md:text-[5rem] lg:text-[7rem] font-black uppercase tracking-tighter text-card-silver-matte">{brandName}</h2>
             </div>
 
             <div className="mockup-scroll-wrapper order-2 lg:order-2 relative w-full h-[380px] lg:h-[600px] flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
@@ -317,11 +317,11 @@ export function CinematicHero({
                   </div>
                 </div>
 
-                <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+                <div className="floating-badge absolute hidden sm:flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
                   <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-sky-500/20 to-sky-900/10 flex items-center justify-center border border-sky-400/30"><Flame className="w-4 h-4 lg:w-5 lg:h-5 text-amber-400" aria-hidden="true" /></div>
                   <div><p className="text-white text-xs lg:text-sm font-bold tracking-tight">{badge1Title}</p><p className="text-sky-200/60 text-[10px] lg:text-xs font-medium">{badge1Sub}</p></div>
                 </div>
-                <div className="floating-badge absolute flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+                <div className="floating-badge absolute hidden sm:flex bottom-12 lg:bottom-20 right-[-15px] lg:right-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
                   <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-indigo-500/20 to-indigo-900/10 flex items-center justify-center border border-indigo-400/30"><Download className="w-4 h-4 lg:w-5 lg:h-5 text-indigo-300" aria-hidden="true" /></div>
                   <div><p className="text-white text-xs lg:text-sm font-bold tracking-tight">{badge2Title}</p><p className="text-sky-200/60 text-[10px] lg:text-xs font-medium">{badge2Sub}</p></div>
                 </div>
