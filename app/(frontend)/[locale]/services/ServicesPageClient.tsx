@@ -845,6 +845,16 @@ const CATEGORY_HUB: Record<
         icon: '/icons/services/webapps.png',
         cta: { en: 'Explore the full hub', ar: 'استكشف المركز الكامل' },
     },
+    'mobile-app-development': {
+        href: '/services/app-development',
+        name: { en: 'App Development', ar: 'تطوير التطبيقات' },
+        description: {
+            en: 'The complete hub — iOS, Android & cross-platform apps, designed, built, launched, and grown by one team. Start here for the full overview.',
+            ar: 'المركز المتكامل — تطبيقات iOS وأندرويد ومتعددة المنصات، نُصمّمها ونبنيها ونُطلقها وننمّيها بفريق واحد. ابدأ من هنا للنظرة الشاملة.',
+        },
+        icon: '/icons/services/Mobile-Responsive Apps.png',
+        cta: { en: 'Explore the full hub', ar: 'استكشف المركز الكامل' },
+    },
 }
 
 function CategoryHubCard({ hub, locale }: { hub: (typeof CATEGORY_HUB)[string]; locale: string }) {

@@ -39,7 +39,7 @@ const SERVICE_CATEGORY_META = [
   { id: 'digital-presence', en: 'Digital Presence', ar: 'الحضور الرقمي', hub: '/services', Icon: Globe },
   { id: 'business-systems-development', en: 'Business Systems', ar: 'أنظمة الأعمال', hub: '/business-systems-development', Icon: Building2 },
   { id: 'interactive-web-applications', en: 'Web Applications', ar: 'تطبيقات الويب', hub: '/web-applications', Icon: Layers },
-  { id: 'mobile-app-development', en: 'Mobile Apps', ar: 'تطبيقات الجوال', hub: '/services', Icon: Smartphone },
+  { id: 'mobile-app-development', en: 'Mobile Apps', ar: 'تطبيقات الجوال', hub: '/services/app-development', Icon: Smartphone },
   { id: 'cloud-infrastructure', en: 'Cloud & Infrastructure', ar: 'السحابة والبنية التحتية', hub: '/services', Icon: Cloud },
   { id: 'ai-powered-solutions', en: 'AI Solutions', ar: 'حلول الذكاء الاصطناعي', hub: '/services', Icon: Sparkles },
 ] as const

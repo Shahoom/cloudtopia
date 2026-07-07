@@ -144,7 +144,7 @@ export default function Footer() {
       { name: processLabel, href: l('/process') },
       { name: trustLabel, href: l('/trust') },
       { name: articlesLabel, href: l('/articles') },
-      { name: t.footer.links.contactUs, href: `/api/whatsapp?locale=${locale}` },
+      { name: t.footer.links.contactUs, href: l('/contact') },
     ],
     [t.footer.legal]: [
       { name: t.footer.links.privacy, href: l('/privacy') },
