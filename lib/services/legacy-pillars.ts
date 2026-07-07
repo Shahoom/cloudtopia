@@ -36,12 +36,30 @@ function categoryToGroups(categorySlug: string, groupName: LocalizedText, taglin
     return [{ slug: `${categorySlug}-services`, tagline, name: groupName, pillars }]
 }
 
-export const mobileAppGroups = categoryToGroups(
-    'mobile-app-development',
-    { en: 'Mobile App Development', ar: 'تطوير تطبيقات الجوال' },
-    { en: 'iOS, Android & cross-platform', ar: 'iOS وأندرويد ومتعدد المنصات' },
-    '/services/app-development',
-)
+export const mobileAppGroups: DPGroup[] = (() => {
+    const groups = categoryToGroups(
+        'mobile-app-development',
+        { en: 'Mobile App Development', ar: 'تطوير تطبيقات الجوال' },
+        { en: 'iOS, Android & cross-platform', ar: 'iOS وأندرويد ومتعدد المنصات' },
+        '/services/app-development',
+    )
+    // Lead the group with an overview card linking to the MAIN pillar page
+    // (/services/app-development). Without it the group lists only the sub-
+    // services and the pillar itself is unreachable from the mega-menu and the
+    // /services grid.
+    groups[0]?.pillars.unshift({
+        slug: 'app-development',
+        name: { en: 'App Development', ar: 'تطوير التطبيقات' },
+        description: {
+            en: 'The complete app pillar — iOS, Android & cross-platform, designed, built, launched, and grown by one team.',
+            ar: 'ركيزة التطبيقات الكاملة — iOS وأندرويد ومتعدد المنصات، نُصمّمها ونبنيها ونُطلقها وننمّيها بفريق واحد.',
+        },
+        icon: CAT_ICON['mobile-app-development'],
+        href: '/services/app-development',
+        subServices: [],
+    })
+    return groups
+})()
 export const cloudInfraGroups = categoryToGroups(
     'cloud-infrastructure',
     { en: 'Cloud & Infrastructure', ar: 'السحابة والبنية التحتية' },

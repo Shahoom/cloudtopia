@@ -7,13 +7,10 @@ import { localePath } from '@/lib/i18n/url'
 import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 import { CinematicHero } from '@/components/ui/cinematic-landing-hero'
-import { ProjectsShowcase } from '@/components/ui/projects-showcase'
 import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { ContactFast } from '@/components/ui/contact-fast'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
-import { getProjectsForService } from '@/lib/services/related-projects'
-import { type Project } from '@/lib/projects'
 import { getServiceCategory, localizedPackageName } from '@/lib/seo/services'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
@@ -29,11 +26,6 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
     const loc: 'en' | 'ar' = isRTL ? 'ar' : 'en'
     const t = (en: string, ar: string) => (isRTL ? ar : en)
     const L = (p: string) => localePath(locale, p)
-
-    const projects: Project[] = await getProjectsForService(locale, {
-        serviceSlug: 'app-development',
-        pillarSlug: 'mobile-app-development',
-    })
 
     const subServices: { name: string; desc: string; icon: string; href: string }[] = [
         { name: t('iOS App Development', 'تطوير تطبيقات iOS'), desc: t('Native iPhone & iPad apps in Swift and SwiftUI — smooth, fast, App-Store-ready.', 'تطبيقات iPhone وiPad أصلية بـ Swift وSwiftUI — سلسة وسريعة وجاهزة لمتجر التطبيقات.'), icon: 'Smartphone', href: '/services/app-development/ios-app-development' },
@@ -267,18 +259,6 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
                     </div>
                 </div>
             </section>
-
-            {projects.length > 0 ? (
-                <ProjectsShowcase
-                    projects={projects}
-                    locale={loc}
-                    dir={dir}
-                    projectHref={(id) => L(`/projects/${id}`)}
-                    eyebrow={t('Our work', 'أعمالنا')}
-                    heading={t('Apps we’ve designed & shipped', 'تطبيقات صمّمناها وأطلقناها')}
-                    sub={t('Real apps we’ve built and launched to the stores for clients.', 'تطبيقات حقيقية بنيناها وأطلقناها للمتاجر لعملاء.')}
-                />
-            ) : null}
 
             <TestimonialsMarquee locale={loc} dir={dir} />
 

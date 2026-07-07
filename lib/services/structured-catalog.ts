@@ -56,6 +56,10 @@ export const bespokePillarSlugs = new Set<string>([
     'ecommerce-development',
     'social-media-management',
     'content-marketing-authority',
+    // App Development is a bespoke pillar (MobileAppPillarPage) surfaced as an
+    // overview card in the mobile catalog group; keep it out of the generic
+    // structured routes/sitemap — the [service] dispatch renders it directly.
+    'app-development',
 ])
 
 /** Pillars that own a /services/[slug] page rendered by the DYNAMIC [service]
