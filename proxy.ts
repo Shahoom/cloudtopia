@@ -175,15 +175,38 @@ export function proxy(request: NextRequest) {
     }
 
 
-    // Web-app pillar pages moved from /web-applications/<slug> into the grouped
-    // /services/<slug> namespace — redirect the sub-paths (single 301, any
-    // locale). The bare /web-applications hub is a real page and stays put.
+    // Web Applications pillars are NESTED at /services/web-applications/<pillar>;
+    // the bare /web-applications hub is a real page and stays put. Old
+    // /web-applications/<pillar> URLs go straight to the nested pillar (one hop),
+    // and the legacy flat duplicate pages 301 to their canonical nested pillar.
+    const WEB_APP_PILLARS = [
+        'custom-saas-mvp-development', 'full-stack-web-engineering', 'interactive-portals-dashboards',
+        'application-modernization-performance', 'media-entertainment-streaming',
+    ]
+    const WEBAPP_ORPHAN_REDIRECTS: Record<string, string> = {
+        'custom-web-application-development': 'full-stack-web-engineering',
+        'progressive-web-app-development': 'full-stack-web-engineering',
+        'client-portals': 'interactive-portals-dashboards',
+        'admin-dashboards': 'interactive-portals-dashboards',
+        'booking-platforms': 'interactive-portals-dashboards',
+        'internal-business-tools': 'interactive-portals-dashboards',
+        'saas-mvp-development': 'custom-saas-mvp-development',
+    }
     {
         const m = cleanPath.match(/^(?:\/(en|ar))?\/web-applications\/([^/]+)$/)
         if (m) {
             const url = request.nextUrl.clone()
             url.host = apexHost
-            url.pathname = m[1] === 'ar' ? `/ar/services/${m[2]}` : `/services/${m[2]}`
+            const dest = WEB_APP_PILLARS.includes(m[2]) ? `/services/web-applications/${m[2]}` : `/services/${m[2]}`
+            url.pathname = m[1] === 'ar' ? `/ar${dest}` : dest
+            return NextResponse.redirect(url, { status: 301 })
+        }
+        const orphan = cleanPath.match(/^(?:\/(en|ar))?\/services\/([a-z0-9-]+)$/)
+        if (orphan && WEBAPP_ORPHAN_REDIRECTS[orphan[2]]) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            const dest = `/services/web-applications/${WEBAPP_ORPHAN_REDIRECTS[orphan[2]]}`
+            url.pathname = orphan[1] === 'ar' ? `/ar${dest}` : dest
             return NextResponse.redirect(url, { status: 301 })
         }
     }

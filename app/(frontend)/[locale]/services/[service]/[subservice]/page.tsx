@@ -6,6 +6,9 @@ import { DigitalPresenceSubServicePage } from '@/components/services/DigitalPres
 import { getBusinessSystemsSubService, businessSystemsSubServiceSlugs } from '@/lib/services/business-systems-content'
 import { getDigitalPresenceSubService, dpSubServiceSlugs } from '@/lib/services/digital-presence-content'
 import { subServiceParent, findSubServiceParent } from '@/lib/services/sub-service-routing'
+import WebAppPillarPage from '@/components/services/WebAppPillarPage'
+import { getWebappServiceContent, webappServiceContent } from '@/lib/services/webapp-service-content'
+import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 
 /**
  * Nested sub-service route: /services/<service>/<subservice>.
@@ -25,13 +28,18 @@ export function generateStaticParams() {
     // One nested entry per DP sub and BS sub, keyed by its correct parent segment,
     // for both locales. `findSubServiceParent` resolves the pillar → public segment.
     const subSlugs = [...new Set([...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs])]
-    return ['en', 'ar'].flatMap((locale) =>
+    const dpBs = ['en', 'ar'].flatMap((locale) =>
         subSlugs.flatMap((subservice) => {
             const service = findSubServiceParent(subservice)
             if (!service) return []
             return [{ locale, service, subservice }]
         }),
     )
+    // Web-app pillars live nested under the web-applications hub segment.
+    const webApps = ['en', 'ar'].flatMap((locale) =>
+        Object.keys(webappServiceContent).map((subservice) => ({ locale, service: 'web-applications', subservice })),
+    )
+    return [...dpBs, ...webApps]
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -70,6 +78,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         }
     }
 
+    const webapp = getWebappServiceContent(subservice)
+    if (webapp && service === 'web-applications') {
+        const pillar = getStructuredPillarBySlug(subservice)
+        const pName = pillar ? (locale === 'ar' ? pillar.name.ar : pillar.name.en) : subservice
+        const pDesc = pillar ? (locale === 'ar' ? pillar.description.ar : pillar.description.en) : ''
+        const path = `/services/web-applications/${subservice}`
+        const brand = locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'
+        return {
+            title: pName,
+            description: pDesc,
+            openGraph: { title: `${pName} | ${brand}`, description: pDesc, url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website' },
+            alternates: {
+                canonical: canonicalUrl(locale, path),
+                languages: { en: canonicalUrl('en', path), ar: canonicalUrl('ar', path), 'x-default': canonicalUrl('en', path) },
+            },
+        }
+    }
+
     return { title: 'Service Not Found' }
 }
 
@@ -90,6 +116,14 @@ export default async function NestedSubServicePage({ params }: PageProps) {
         const parent = subServiceParent(dp.pillarSlug)
         if (service !== parent) permanentRedirect(`/services/${parent}/${subservice}`)
         return <DigitalPresenceSubServicePage content={dp} locale={locale} />
+    }
+
+    // Web-app pillars nested under /services/web-applications/<pillar>. Guard the
+    // parent segment so there is a single canonical home per pillar.
+    const webapp = getWebappServiceContent(subservice)
+    if (webapp) {
+        if (service !== 'web-applications') permanentRedirect(`/services/web-applications/${subservice}`)
+        return <WebAppPillarPage slug={subservice} data={webapp} locale={locale} />
     }
 
     notFound()

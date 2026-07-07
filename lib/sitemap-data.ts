@@ -14,6 +14,11 @@ import { countryLandingPages } from '@/lib/seo/country-landing-pages'
 // (/services/<parent>/<sub>), so they are emitted separately (see
 // nestedSubServicePaths) rather than as flat /services/<slug> URLs.
 const subServiceSlugSet = new Set<string>([...dpSubServiceSlugs, ...businessSystemsSubServiceSlugs])
+// Web Applications pillars are nested under /services/web-applications/<pillar>.
+// Their legacy flat duplicate pages (custom-web-application-development,
+// client-portals, …) 301 to the canonical pillar, so they must NOT be emitted.
+const webAppPillarSet = new Set<string>(['custom-saas-mvp-development', 'full-stack-web-engineering', 'interactive-portals-dashboards', 'application-modernization-performance', 'media-entertainment-streaming'])
+const webAppOrphanSet = new Set<string>(['custom-web-application-development', 'progressive-web-app-development', 'client-portals', 'admin-dashboards', 'booking-platforms', 'internal-business-tools', 'saas-mvp-development'])
 
 // Flat /services/<slug> pages that still render after the catalog restructure:
 // the old flat catalog (serviceDetailSlugs, minus any that became nested subs)
@@ -21,7 +26,7 @@ const subServiceSlugSet = new Set<string>([...dpSubServiceSlugs, ...businessSyst
 // than one source is emitted once.
 const allServiceDetailSlugs: string[] = Array.from(
     new Set<string>([
-        ...serviceDetailSlugs.filter((s) => !subServiceSlugSet.has(s)),
+        ...serviceDetailSlugs.filter((s) => !subServiceSlugSet.has(s) && !webAppOrphanSet.has(s)),
         ...structuredPillarRoutes.map((p) => p.slug),
     ]),
 )
@@ -57,6 +62,7 @@ const mobileSubSlugSet = new Set<string>(
 function serviceCanonicalPath(slug: string): string {
     if (slug === 'mobile-app-development') return '/services/app-development'
     if (mobileSubSlugSet.has(slug)) return `/services/app-development/${slug}`
+    if (webAppPillarSet.has(slug)) return `/services/web-applications/${slug}`
     return `/services/${slug}`
 }
 

@@ -205,52 +205,34 @@ const _LEGACY_TABS: TabData[] = [
     image: '/images/homepage/web application.jpeg',
     services: [
       {
-        title: { en: 'Custom Web Applications', ar: 'تطبيقات الويب المخصصة' },
-        description: { en: 'Interactive web applications built with Next.js, React, and robust API endpoints.', ar: 'تطوير تطبيقات ويب تفاعلية وقابلة للتوسع باستخدام Next.js و React وقواعد بيانات قوية.' },
-        link: '/services/custom-web-application-development',
-        iconName: 'Laptop'
-      },
-      {
-        title: { en: 'Client Portals', ar: 'بوابات العملاء الآمنة' },
-        description: { en: 'Secure user hubs for custom billing, file sharing, ticket tracking, and direct chat.', ar: 'بوابات عملاء آمنة للفواتير ومشاركة الملفات وتتبع التذاكر والمحادثات المباشرة.' },
-        link: '/services/client-portals',
-        iconName: 'Users'
-      },
-      {
-        title: { en: 'Admin Dashboards', ar: 'لوحات التحكم والإدارة' },
-        description: { en: 'Custom panels showing real-time metrics, user management, and operational controls.', ar: 'لوحات إدارة مخصصة تعرض مقاييس فورية، وإدارة المستخدمين، والتحكم التشغيلي.' },
-        link: '/services/admin-dashboards',
-        iconName: 'BarChart3'
-      },
-      {
-        title: { en: 'Booking Platforms', ar: 'منصات الحجز والجدولة' },
-        description: { en: 'Bespoke appointment scheduling, calendar syncs, and deposit collection engines.', ar: 'منصات حجز مواعيد مخصصة، مزامنة التقويم، وأنظمة تحصيل الدفعات المقدمة.' },
-        link: '/services/booking-platforms',
-        iconName: 'Calendar'
-      },
-      {
-        title: { en: 'SaaS MVP Development', ar: 'تطوير الـ MVP لمنصات SaaS' },
-        description: { en: 'Multitenant cloud software prototypes built quickly to test product-market fit.', ar: 'تطوير برمجيات سحابية متعددة المستأجرين (SaaS MVP) لاختبار ملاءمة المنتج للسوق.' },
-        link: '/services/saas-mvp-development',
+        title: { en: 'Custom SaaS & MVP Development', ar: 'تطوير SaaS وMVP مخصص' },
+        description: { en: 'Launch-ready SaaS products and startup MVPs — multi-tenant and billing-ready.', ar: 'منتجات SaaS وMVP جاهزة للإطلاق، متعددة المستأجرين وجاهزة للفوترة.' },
+        link: '/services/web-applications/custom-saas-mvp-development',
         iconName: 'Rocket'
       },
       {
-        title: { en: 'Progressive Web Apps (PWA)', ar: 'تطبيقات الويب التقدمية (PWA)' },
-        description: { en: 'Web apps with mobile app behaviors: offline support, installable icons, and speed.', ar: 'تطوير تطبيقات ويب تقدمية بميزات الجوال: العمل دون اتصال والسرعة الفائقة.' },
-        link: '/services/progressive-web-app-development',
-        iconName: 'Smartphone'
+        title: { en: 'Full-Stack Web Engineering', ar: 'هندسة ويب متكاملة' },
+        description: { en: 'Front-end and back-end engineering, APIs, and integrations with clean, scalable architecture.', ar: 'هندسة الواجهة الأمامية والخلفية وواجهات API والتكاملات ببنية نظيفة قابلة للتوسّع.' },
+        link: '/services/web-applications/full-stack-web-engineering',
+        iconName: 'Laptop'
       },
       {
-        title: { en: 'Internal Business Tools', ar: 'أدوات الأعمال الداخلية' },
-        description: { en: 'Tailored databases, asset managers, and custom digital forms for staff operations.', ar: 'قواعد بيانات وأدوات إدارة أصول ونماذج رقمية مخصصة لتنظيم العمل الداخلي للموظفين.' },
-        link: '/services/internal-business-tools',
-        iconName: 'Database'
+        title: { en: 'Interactive Portals & Dashboards', ar: 'بوابات ولوحات تفاعلية' },
+        description: { en: 'Client portals, admin panels, and data dashboards with role-based access.', ar: 'بوابات عملاء ولوحات إدارة وتحليلات بصلاحيات حسب الأدوار.' },
+        link: '/services/web-applications/interactive-portals-dashboards',
+        iconName: 'BarChart3'
       },
       {
-        title: { en: 'Collaborative Portals', ar: 'بوابات التعاون والمشاركة' },
-        description: { en: 'Secure spaces for team sharing, document workspaces, and department collaboration.', ar: 'مساحات آمنة لمشاركة الفريق، مساحات عمل للمستندات، والتعاون بين الأقسام.' },
-        link: '/web-applications',
+        title: { en: 'App Modernization & Maintenance', ar: 'تحديث التطبيقات والصيانة' },
+        description: { en: 'Refactor, secure, test, deploy, and monitor your web apps for the long run.', ar: 'إعادة هيكلة وتأمين واختبار ونشر ومراقبة تطبيقاتك على المدى الطويل.' },
+        link: '/services/web-applications/application-modernization-performance',
         iconName: 'Layers'
+      },
+      {
+        title: { en: 'Media, Entertainment & Streaming', ar: 'الإعلام والترفيه والبث' },
+        description: { en: 'VoD/OTT platforms, live streaming, and creator-monetization web apps.', ar: 'منصات بث ومحتوى عند الطلب وبث مباشر وتطبيقات تحقيق دخل للصنّاع.' },
+        link: '/services/web-applications/media-entertainment-streaming',
+        iconName: 'Smartphone'
       }
     ]
   },
