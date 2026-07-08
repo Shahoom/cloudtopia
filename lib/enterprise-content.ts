@@ -148,7 +148,7 @@ export const menuColumns: MenuColumn[] = [
     description: 'Interactive portals, dashboards, and SaaS-style tools.',
     icon: 'code',
     links: [
-      { label: 'Custom Web Apps', href: '/web-applications' },
+      { label: 'Custom Web Apps', href: '/services/web-applications' },
       { label: 'Dashboards', href: '/web-applications#dashboards' },
       { label: 'Client Portals', href: '/web-applications#portals' },
       { label: 'Admin Panels', href: '/web-applications#admin-panels' },
@@ -203,7 +203,7 @@ export const servicesOverview: ServiceOverview[] = [
   },
   {
     title: 'Interactive Web Applications',
-    href: '/web-applications',
+    href: '/services/web-applications',
     icon: 'code',
     description:
       'Client portals, dashboards, admin panels, internal tools, and SaaS-style platforms built around your workflow.',
@@ -698,7 +698,7 @@ export const versionXServiceTabs: VersionXTab[] = [
     description: 'Client portals, admin panels, internal tools, and MVP platforms designed around the way teams actually operate.',
     image: '/images/projects/kvaii.png',
     bullets: ['Role-based screens', 'Operational dashboards', 'API and workflow integrations'],
-    href: '/web-applications',
+    href: '/services/web-applications',
   },
   {
     label: 'CRM / ERP',
@@ -726,7 +726,7 @@ export const enterpriseServiceTracks: EnterpriseServiceTrack[] = [
     title: 'Web products, portals, dashboards, and PWA-style experiences.',
     description:
       'CloudTopia turns operational workflows into responsive web applications, admin panels, client portals, SaaS MVPs, and installable web experiences.',
-    href: '/web-applications',
+    href: '/services/web-applications',
     items: ['Custom Web Apps', 'Progressive Web Apps', 'SaaS MVPs', 'Admin Panels', 'Client Portals', 'Application Modernization'],
   },
   {
@@ -770,7 +770,7 @@ export const seoClusters: SeoCluster[] = [
     links: [
       { label: 'Website Design & Development', href: '/services/website-development' },
       { label: 'E-commerce Stores', href: '/services/ecommerce-development' },
-      { label: 'Custom Web Applications', href: '/web-applications' },
+      { label: 'Custom Web Applications', href: '/services/web-applications' },
       { label: 'CRM / ERP Systems', href: '/business-systems-development' },
       { label: 'CloudTopia Labs', href: '/labs' },
     ],
@@ -850,7 +850,7 @@ export const versionXFooterColumns = [
     links: [
       ['Website Design', '/services/website-development'],
       ['E-commerce', '/services/ecommerce-development'],
-      ['Web Applications', '/web-applications'],
+      ['Web Applications', '/services/web-applications'],
       ['CRM / ERP Systems', '/business-systems-development'],
       ['CloudTopia Labs', '/labs'],
     ],

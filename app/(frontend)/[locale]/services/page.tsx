@@ -35,7 +35,7 @@ export default async function ServicesPage({
         { path: '/restaurant-qr-menu', key: 'Restaurant QR Menu' },
         { path: '/services/content-creation', key: 'Content Creation' },
         { path: '/services/social-media-marketing', key: 'Social Media Marketing' },
-        { path: '/web-applications', key: 'Web Applications' },
+        { path: '/services/web-applications', key: 'Web Applications' },
         { path: '/services/app-development', key: 'Mobile App Development' },
         { path: '/services/app-development/ios-app-development', key: 'iOS App Development' },
         { path: '/services/app-development/android-app-development', key: 'Android App Development' },

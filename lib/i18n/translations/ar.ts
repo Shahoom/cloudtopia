@@ -221,7 +221,7 @@ export const ar = {
           iconImage: '/icons/services/Admin Dashboard.png',
           title: 'تطبيقات ويب',
           description: 'بوابات عملاء، لوحات إدارة، ومنصات SaaS ببيانات حية، صلاحيات حسب الدور، وواجهات API نظيفة.',
-          link: '/web-applications',
+          link: '/services/web-applications',
           tag: 'لوحات · بوابات · SaaS',
         },
         {

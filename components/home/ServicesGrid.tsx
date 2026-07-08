@@ -44,6 +44,9 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { getStructuredPillars } from '@/lib/services/structured-catalog'
+import { webAppPillarSubServices } from '@/lib/services/web-applications'
+import { subServiceContent, subServiceContentAr } from '@/lib/services/business-systems-content'
+import { subServiceHref } from '@/lib/services/sub-service-routing'
 
 // Map of Icon strings to Lucide components for type safety
 const IconMap: Record<string, React.ComponentType<any>> = {
@@ -184,7 +187,7 @@ const _LEGACY_TABS: TabData[] = [
       {
         title: { en: 'App UI/UX Design', ar: 'تصميم واجهات التطبيقات' },
         description: { en: 'Stunning wireframes, user journeys, and high-fidelity mobile designs built to convert.', ar: 'تصميم واجهات وتجربة مستخدم مذهلة، مخططات تفاعلية، وتصاميم جوال ممتازة.' },
-        link: '/web-applications',
+        link: '/services/web-applications',
         iconName: 'PenTool'
       },
       {
@@ -519,18 +522,50 @@ const SERVICE_TABS_META: { id: string; label: LocalizedText; description: Locali
 // Data-driven from the structured catalog: every card links to that pillar's
 // canonical href, so links stay correct as the taxonomy / URLs evolve (no more
 // hand-maintained, mismatched links).
-const TABS_DATA: TabData[] = SERVICE_TABS_META.map((meta) => ({
-  id: meta.id,
-  label: meta.label,
-  description: meta.description,
-  image: meta.image,
-  services: getStructuredPillars(meta.id).slice(0, 8).map((p) => ({
+// Sub-service teaser cards fill sparse category tabs (Business Systems has 3
+// pillars, Web Applications 5) up to a full 8-card grid. Bilingual: web-app subs
+// link to their parent pillar (they have no standalone page); BS subs link to
+// their nested sub-service page.
+function fillerSubCards(p: { slug: string; href: string; description: LocalizedText }, categoryId: string, iconName: string): ServiceItem[] {
+  if (categoryId === 'interactive-web-applications') {
+    return (webAppPillarSubServices[p.slug] || []).map((s) => ({
+      title: { en: s.en, ar: s.ar },
+      description: s.desc ?? p.description,
+      link: p.href,
+      iconName,
+    }))
+  }
+  if (categoryId === 'business-systems-development') {
+    return Object.values(subServiceContent)
+      .filter((s) => s.pillarSlug === p.slug)
+      .map((s) => ({
+        title: { en: s.hero.title, ar: subServiceContentAr[s.slug]?.hero?.title ?? s.hero.title },
+        description: p.description,
+        link: subServiceHref(s.pillarSlug, s.slug),
+        iconName,
+      }))
+  }
+  return []
+}
+
+const TABS_DATA: TabData[] = SERVICE_TABS_META.map((meta) => {
+  const pillars = getStructuredPillars(meta.id)
+  const cards: ServiceItem[] = pillars.slice(0, 8).map((p) => ({
     title: p.name,
     description: p.description,
     link: p.href,
     iconName: meta.iconName,
-  })),
-}))
+  }))
+  // Pad sparse tabs so every category shows a full grid of cards.
+  for (const p of pillars) {
+    if (cards.length >= 8) break
+    for (const sub of fillerSubCards(p, meta.id, meta.iconName)) {
+      if (cards.length >= 8) break
+      cards.push(sub)
+    }
+  }
+  return { id: meta.id, label: meta.label, description: meta.description, image: meta.image, services: cards }
+})
 
 export default function ServicesGrid() {
   const { t, locale } = useLanguage()

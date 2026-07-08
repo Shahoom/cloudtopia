@@ -124,7 +124,7 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         { path: '/restaurant-qr-menu', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/services/content-creation', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/services/social-media-marketing', priority: 0.8, changeFrequency: 'monthly' },
-        { path: '/web-applications', priority: 0.8, changeFrequency: 'monthly' },
+        { path: '/services/web-applications', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
     ]
@@ -262,7 +262,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/restaurant-qr-menu', priority: 0.8, changeFrequency: 'monthly', ogPage: 'restaurant-qr-menu' },
         { path: '/services/content-creation', priority: 0.8, changeFrequency: 'monthly', ogPage: 'content-creation' },
         { path: '/services/social-media-marketing', priority: 0.8, changeFrequency: 'monthly', ogPage: 'social-media-marketing' },
-        { path: '/web-applications', priority: 0.8, changeFrequency: 'monthly', ogPage: 'web-applications' },
+        { path: '/services/web-applications', priority: 0.8, changeFrequency: 'monthly', ogPage: 'web-applications' },
         { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
     ]
@@ -279,7 +279,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         '/restaurant-qr-menu': 'lib/i18n/translations/en.ts',
         '/services/content-creation': 'lib/i18n/translations/en.ts',
         '/services/social-media-marketing': 'lib/i18n/translations/en.ts',
-        '/web-applications': 'lib/i18n/translations/en.ts',
+        '/services/web-applications': 'lib/i18n/translations/en.ts',
     }
 
     function getLastModified(routePath: string): Date {

@@ -430,10 +430,9 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     // URL permanently redirects here.
     if (serviceSlug === 'mobile-app-development') permanentRedirect(localePath(locale, '/services/app-development'))
     if (serviceSlug === 'app-development') return <MobileAppPillarPage locale={locale} />
-    // Web Applications hub lives at /web-applications; its pillars are nested at
-    // /services/web-applications/<pillar>. The bare /services/web-applications
-    // segment redirects to the real hub.
-    if (serviceSlug === 'web-applications') permanentRedirect(localePath(locale, '/web-applications'))
+    // Web Applications hub now lives at /services/web-applications (a static
+    // folder that shadows this route); its pillars are nested at
+    // /services/web-applications/<pillar>. Nothing to redirect here.
     const pillar = getStructuredPillarBySlug(serviceSlug)
     // Mobile/Cloud/AI pillars are nav-only — keep their original ServiceDetail page.
     if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {

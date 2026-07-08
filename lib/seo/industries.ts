@@ -34,7 +34,7 @@ const commonDifferentiators = [
 const website = { label: t('Websites & Landing Pages', 'مواقع وصفحات هبوط'), href: '/services/website-development' }
 const ecommerce = { label: t('E-commerce Stores', 'متاجر إلكترونية'), href: '/services/ecommerce-development' }
 const systems = { label: t('Business Systems', 'أنظمة أعمال'), href: '/business-systems-development' }
-const apps = { label: t('Web Applications', 'تطبيقات ويب'), href: '/web-applications' }
+const apps = { label: t('Web Applications', 'تطبيقات ويب'), href: '/services/web-applications' }
 const content = { label: t('Content & Growth', 'المحتوى والنمو'), href: '/services/content-creation' }
 const social = { label: t('Social Media Marketing', 'تسويق التواصل الاجتماعي'), href: '/services/social-media-marketing' }
 

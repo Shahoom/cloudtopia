@@ -221,7 +221,7 @@ export const en = {
           iconImage: '/icons/services/Admin Dashboard.png',
           title: 'Web Applications',
           description: 'Customer portals, admin dashboards, and SaaS platforms with real-time data, role-based access, and clean APIs.',
-          link: '/web-applications',
+          link: '/services/web-applications',
           tag: 'Dashboards · Portals · SaaS',
         },
         {

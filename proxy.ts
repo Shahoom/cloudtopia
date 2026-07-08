@@ -193,6 +193,13 @@ export function proxy(request: NextRequest) {
         'saas-mvp-development': 'custom-saas-mvp-development',
     }
     {
+        const bareHub = cleanPath.match(/^(?:\/(en|ar))?\/web-applications$/)
+        if (bareHub) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            url.pathname = bareHub[1] === 'ar' ? '/ar/services/web-applications' : '/services/web-applications'
+            return NextResponse.redirect(url, { status: 301 })
+        }
         const m = cleanPath.match(/^(?:\/(en|ar))?\/web-applications\/([^/]+)$/)
         if (m) {
             const url = request.nextUrl.clone()

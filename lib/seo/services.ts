@@ -395,8 +395,8 @@ export const serviceDetailSlugs = Object.keys(servicesBySlug)
  */
 export const categoryStandaloneRoutes: Record<string, string> = {
     'digital-presence': '/services/website-development',
-    'interactive-web-applications': '/web-applications',
-    'mobile-app-development': '/web-applications',
+    'interactive-web-applications': '/services/web-applications',
+    'mobile-app-development': '/services/app-development',
     'business-systems-development': '/business-systems-development',
     'cloud-infrastructure': '/services',
     'ai-powered-solutions': '/services',
@@ -430,7 +430,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Web Applications', 'تطبيقات الويب'),
         description: t('Portals, dashboards, and SaaS platforms.', 'بوابات ولوحات تحكم ومنصات SaaS.'),
-        href: '/web-applications',
+        href: '/services/web-applications',
         icon: '/icons/services/webapps.png',
     },
     {

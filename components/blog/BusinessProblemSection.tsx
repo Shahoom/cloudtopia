@@ -12,7 +12,7 @@ const problems = [
   {
     title: 'I need a client portal or dashboard',
     text: 'Give clients or teams a secure workspace for data, requests, and reporting.',
-    href: '/web-applications',
+    href: '/services/web-applications',
     icon: Gauge,
   },
   {
@@ -30,7 +30,7 @@ const problems = [
   {
     title: 'I want to use AI in my business',
     text: 'Turn support, intake, reporting, and knowledge workflows into practical AI systems.',
-    href: '/web-applications',
+    href: '/services/web-applications',
     icon: Bot,
   },
 ]
