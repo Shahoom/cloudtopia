@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { IndustryPageShell } from '../components/industry/detail/IndustryPageShell.tsx'
 import { healthcareDefinition } from '../lib/industries/definitions/healthcare.ts'
+import { logisticsSupplyChainDefinition } from '../lib/industries/definitions/logistics-supply-chain.ts'
 import type { Locale } from '../lib/i18n/config.ts'
 import type { EffectiveIndustrySeo } from '../lib/industries/resolve-industry-seo.ts'
 import {
@@ -19,6 +20,9 @@ import {
 
 const healthcareFingerprint =
   'corridor-split|pressure-field:split-signal|journey-map:linear-route|journey-map:dual-lane|system-blueprint:stacked-layers|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|continuity-of-care'
+
+const logisticsFingerprint =
+  'route-field|journey-map:linear-route|journey-map:exception-lane|constraints:owner-register|system-blueprint:constellation|service-bridge:route-links|constraints:boundary-map|regional-fit:market-path|faq:grouped-questions|closing-cta:split-close|exception-control'
 
 function effectiveSeo(
   definition: IndustryPageDefinition,
@@ -202,4 +206,104 @@ test('Healthcare Clinical Pulse is a complete bilingual draft world', () => {
     { ok: true, errors: [] },
   )
   assertBilingualRender(healthcareDefinition)
+})
+
+test('Logistics Flow Control is a complete bilingual draft world', () => {
+  assert.equal(logisticsSupplyChainDefinition.slug, 'logistics-supply-chain')
+  assert.equal(logisticsSupplyChainDefinition.world.id, 'flow-control')
+  assert.deepEqual(logisticsSupplyChainDefinition.world.theme, {
+    canvas: '#08141F',
+    surface: '#0E2735',
+    elevatedSurface: '#143747',
+    ink: '#F0F8FC',
+    mutedInk: '#B8D3DF',
+    accent: '#10A9B6',
+    accentInk: '#08141F',
+    signal: '#E89B24',
+    line: '#577482',
+    focus: '#E89B24',
+    displayTreatment: 'technical',
+    radiusMode: 'square',
+    motifDensity: 'dense',
+    sceneTreatment: 'route-field',
+  })
+  assert.equal(logisticsSupplyChainDefinition.locales.en.hero.worldLabel, 'Flow Control')
+  assert.equal(logisticsSupplyChainDefinition.locales.ar.hero.worldLabel, 'ضبط التدفق')
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.en.hero.h1,
+    'See every handoff from order to proof of delivery.',
+  )
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.ar.hero.h1,
+    'رؤية أوضح لكل خطوة من الطلب إلى إثبات التسليم.',
+  )
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.en.hero.primaryCta.label,
+    'Map your flow and exceptions',
+  )
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.ar.hero.primaryCta.label,
+    'لنرسم تدفق العمليات والاستثناءات لديكم',
+  )
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.en.seo.title,
+    'Logistics Systems for Order-to-Delivery Visibility',
+  )
+  assert.equal(
+    logisticsSupplyChainDefinition.locales.ar.seo.title,
+    'أنظمة لوجستية من الطلب إلى إثبات التسليم',
+  )
+
+  const expectedSectionIds = [
+    'operating-route',
+    'exception-control',
+    'exception-owners',
+    'flow-system',
+    'logistics-service-paths',
+    'integration-boundaries',
+    'regional-flow-delivery',
+    'logistics-faq',
+    'logistics-consultation',
+  ]
+  for (const locale of ['en', 'ar'] as const) {
+    const page = logisticsSupplyChainDefinition.locales[locale]
+    assert.deepEqual(
+      page.sections.map((section) => section.id),
+      expectedSectionIds,
+    )
+    const copy = JSON.stringify(page)
+    assert.doesNotMatch(copy, /real-time/iu)
+    assert.doesNotMatch(copy, /\b\d+\s*(?:minutes?|mins?|%)/iu)
+    const faq = page.sections.find((section) => section.type === 'faq')
+    assert.ok(faq)
+    assert.equal(faq.items.length, 5)
+  }
+  assert.equal(
+    rhythmFingerprint(logisticsSupplyChainDefinition),
+    logisticsFingerprint,
+  )
+
+  const serviceBridge = logisticsSupplyChainDefinition.locales.en.sections.find(
+    (section) => section.type === 'service-bridge',
+  )
+  assert.ok(serviceBridge)
+  assert.deepEqual(serviceBridge.serviceIds, [
+    'business-systems-development',
+    'web-applications',
+    'website-development',
+    'ecommerce-development',
+  ])
+  assert.deepEqual(serviceBridge.relatedIndustryIds, [
+    'ecommerce-retail',
+    'retail',
+  ])
+
+  assertSemanticAnswersOnce(logisticsSupplyChainDefinition)
+  assert.deepEqual(
+    validateIndustryPageDefinition(logisticsSupplyChainDefinition, {
+      mode: 'draft',
+    }),
+    { ok: true, errors: [] },
+  )
+  assertBilingualRender(logisticsSupplyChainDefinition)
 })
