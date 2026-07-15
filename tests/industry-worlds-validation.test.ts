@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import test from 'node:test'
+import {
+  contentHash,
+  manifestContentHash,
+} from '../lib/industries/content-hash.ts'
+import { industryManifest } from '../lib/industries/manifest.ts'
 import {
   SECTION_VARIANTS,
   rhythmFingerprint,
@@ -15,6 +21,11 @@ import {
   type ReviewableIndustryContent,
   type SignatureSection,
 } from '../lib/industries/types.ts'
+import { isolateLtrToken } from '../lib/industries/text.ts'
+
+function sha256Json(value: unknown): `sha256:${string}` {
+  return `sha256:${createHash('sha256').update(JSON.stringify(value)).digest('hex')}`
+}
 
 const themeFixture = {
   canvas: '#F3FAF8',
@@ -316,5 +327,60 @@ test('rhythmFingerprint follows the exact deterministic recipe order', () => {
   assert.equal(
     rhythmFingerprint(definitionFixture),
     'corridor-split|pressure-field:split-signal|journey-map:dual-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|continuity-of-care',
+  )
+})
+
+test('isolateLtrToken wraps content with the exact FSI and PDI code points', () => {
+  const isolated = isolateLtrToken('CRM')
+
+  assert.equal(isolated, '\u2068CRM\u2069')
+  assert.deepEqual(
+    Array.from(isolated, (character) => character.codePointAt(0)),
+    [0x2068, 0x43, 0x52, 0x4d, 0x2069],
+  )
+})
+
+test('contentHash is deterministic and preserves JSON property order', () => {
+  const firstHash = contentHash(reviewableContentFixture)
+  const equivalentHash = contentHash({
+    manifest: {
+      label: reviewableContentFixture.manifest.label,
+      navSummary: reviewableContentFixture.manifest.navSummary,
+    },
+    page: reviewableContentFixture.page,
+  })
+  const reorderedHash = contentHash({
+    page: reviewableContentFixture.page,
+    manifest: reviewableContentFixture.manifest,
+  })
+
+  assert.equal(firstHash, sha256Json(reviewableContentFixture))
+  assert.equal(equivalentHash, firstHash)
+  assert.notEqual(reorderedHash, firstHash)
+  assert.match(firstHash, /^sha256:[a-f0-9]{64}$/)
+})
+
+test('manifestContentHash covers all thirteen entries in the selected locale', () => {
+  const localizedPacket = (locale: 'en' | 'ar') =>
+    Object.values(industryManifest).map(({ slug, label, navSummary }) => ({
+      slug,
+      label: label[locale],
+      navSummary: navSummary[locale],
+    }))
+
+  assert.equal(localizedPacket('en').length, 13)
+  assert.equal(
+    manifestContentHash('en', industryManifest),
+    'sha256:becf7d71a4f2ef98cf72c3aa631b4beaac7a330b734915abb1ec6046417ac584',
+  )
+  assert.equal(
+    manifestContentHash('ar', industryManifest),
+    'sha256:126ddad77040704b81870293bda13871abb896d761b9be42337066933b338610',
+  )
+  assert.equal(manifestContentHash('en', industryManifest), sha256Json(localizedPacket('en')))
+  assert.equal(manifestContentHash('ar', industryManifest), sha256Json(localizedPacket('ar')))
+  assert.notEqual(
+    manifestContentHash('en', industryManifest),
+    manifestContentHash('ar', industryManifest),
   )
 })
