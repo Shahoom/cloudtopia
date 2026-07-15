@@ -8,11 +8,13 @@ import {
 import { industryManifest } from '../lib/industries/manifest.ts'
 import {
   DRAFT_INDUSTRY_VALIDATION_CODES,
+  INDUSTRY_VALIDATION_CODES,
   IndustryPageValidationError,
   assertValidIndustryPageRegistry,
   validateIndustryPageDefinition,
   validateIndustryPageRegistry,
   type DraftIndustryValidationCode,
+  type IndustryValidationCode,
 } from '../lib/industries/validate-industry-pages.ts'
 import {
   SECTION_VARIANTS,
@@ -375,6 +377,38 @@ const expectedDraftCodes = [
   'claim-source-missing',
 ] as const satisfies readonly DraftIndustryValidationCode[]
 
+const expectedCodes = [
+  'missing-locale',
+  'localized-copy-missing',
+  'parity-drift',
+  'duplicate-localized-copy',
+  'content-too-thin',
+  'prohibited-copy',
+  'duplicate-section-id',
+  'unisolated-ltr-token',
+  'semantic-question-missing',
+  'semantic-question-duplicate',
+  'invalid-variant',
+  'release-a-signature-forbidden',
+  'signature-composition-invalid',
+  'invalid-service-id',
+  'invalid-project-id',
+  'invalid-related-industry',
+  'self-related-industry',
+  'cta-drift',
+  'missing-theme-token',
+  'contrast-failure',
+  'faq-count',
+  'service-count',
+  'missing-native-review',
+  'missing-sensitive-review',
+  'missing-manifest-review',
+  'review-hash-mismatch',
+  'claim-source-missing',
+  'claim-unapproved',
+  'claim-expired',
+] as const satisfies readonly IndustryValidationCode[]
+
 type MutableDeep<T> = T extends readonly (infer TItem)[]
   ? MutableDeep<TItem>[]
   : T extends object
@@ -472,6 +506,10 @@ function makePilotDefinition(config: PilotConfig): IndustryPageDefinition {
   const scene = definition.assets.find((asset) => asset.kind === 'authored-scene')
   assert.ok(scene && scene.kind === 'authored-scene')
   scene.id = config.scene
+
+  const ogImage = definition.assets.find((asset) => asset.kind === 'og-image')
+  assert.ok(ogImage && ogImage.kind === 'og-image')
+  ogImage.publicPath = `/og/industries/${config.slug}/en.jpg`
 
   for (const locale of ['en', 'ar'] as const) {
     const page = definition.locales[locale]
@@ -592,6 +630,133 @@ const pilotRegistry = {
   restaurants: restaurantsFixture,
 } satisfies IndustryPageRegistry
 
+const pilotDefinitions = [
+  definitionFixture,
+  logisticsFixture,
+  restaurantsFixture,
+] as const satisfies readonly IndustryPageDefinition[]
+
+function localizedReviewHash(
+  definition: IndustryPageDefinition,
+  locale: 'en' | 'ar',
+): `sha256:${string}` {
+  const entry = industryManifest[definition.slug]
+
+  return contentHash({
+    manifest: {
+      label: entry.label[locale],
+      navSummary: entry.navSummary[locale],
+    },
+    page: definition.locales[locale],
+  })
+}
+
+function makePublicationReviews(
+  definitions: readonly IndustryPageDefinition[],
+): IndustryReviewRecord[] {
+  const reviews: IndustryReviewRecord[] = []
+
+  for (const definition of definitions) {
+    reviews.push({
+      slug: definition.slug,
+      locale: 'en',
+      kind: 'editorial',
+      reviewer: 'English fixture reviewer',
+      reviewedAt: '2026-07-15',
+      contentHash: localizedReviewHash(definition, 'en'),
+    })
+    reviews.push({
+      slug: definition.slug,
+      locale: 'ar',
+      kind: 'native-arabic',
+      reviewer: 'Arabic fixture reviewer',
+      reviewedAt: '2026-07-15',
+      contentHash: localizedReviewHash(definition, 'ar'),
+    })
+
+    if (definition.slug === 'healthcare') {
+      for (const locale of ['en', 'ar'] as const) {
+        reviews.push({
+          slug: definition.slug,
+          locale,
+          kind: 'sensitive-domain',
+          reviewer: 'Healthcare fixture reviewer',
+          reviewedAt: '2026-07-15',
+          contentHash: localizedReviewHash(definition, locale),
+        })
+      }
+    }
+  }
+
+  return reviews
+}
+
+function makeManifestReviews(): IndustryManifestReviewRecord[] {
+  return [
+    {
+      locale: 'en',
+      kind: 'manifest-editorial',
+      reviewer: 'Manifest English fixture reviewer',
+      reviewedAt: '2026-07-15',
+      contentHash: manifestContentHash('en', industryManifest),
+    },
+    {
+      locale: 'ar',
+      kind: 'manifest-native-arabic',
+      reviewer: 'Manifest Arabic fixture reviewer',
+      reviewedAt: '2026-07-15',
+      contentHash: manifestContentHash('ar', industryManifest),
+    },
+  ]
+}
+
+function makePublicationOptions(
+  definitions: readonly IndustryPageDefinition[] = pilotDefinitions,
+): {
+  mode: 'publication'
+  reviews: IndustryReviewRecord[]
+  manifestReviews: IndustryManifestReviewRecord[]
+  now: Date
+  assetExists: (publicPath: string) => boolean
+  allowCustomSignature: false
+} {
+  return {
+    mode: 'publication',
+    reviews: makePublicationReviews(definitions),
+    manifestReviews: makeManifestReviews(),
+    now: new Date('2026-07-15T12:00:00.000Z'),
+    assetExists: () => true,
+    allowCustomSignature: false,
+  }
+}
+
+function expectPublicationCode(
+  code: IndustryValidationCode,
+  definition: IndustryPageDefinition,
+  options = makePublicationOptions([definition]),
+): void {
+  const result = validateIndustryPageDefinition(definition, options)
+
+  assert.equal(result.ok, false, `expected ${code}, received no errors`)
+  assert.ok(
+    result.errors.some((error) => error.code === code),
+    `expected ${code}, received ${result.errors.map((error) => error.code).join(', ')}`,
+  )
+}
+
+function definitionWithVisibleClaim(): MutableDefinition {
+  const definition = cloneDefinition()
+  const claim = structuredClone(claimFixture) as MutableDeep<IndustryClaimSource>
+  claim.locale = 'en'
+
+  const evidence = getSection(definition, 'en', 'evidence')
+  evidence.title = claim.wording
+  evidence.intro = claim.scope
+  definition.claims.push(claim)
+
+  return definition
+}
+
 test('the static world contract accepts every content-bearing section shape', () => {
   assert.deepEqual(SECTION_VARIANTS, {
     'pressure-field': ['split-signal', 'constraints-first', 'dense-ledger'],
@@ -703,6 +868,242 @@ test('draft validation exposes the exact public code set and accepts the three p
     'route-field|pressure-field:split-signal|journey-map:exception-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:owner-register|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|exception-control',
     'editorial-pass|pressure-field:split-signal|journey-map:dual-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|the-pass',
   ])
+})
+
+test('validation exposes the exact combined draft and publication code set', () => {
+  assert.deepEqual(INDUSTRY_VALIDATION_CODES, expectedCodes)
+})
+
+test('publication validation accepts exact localized page, manifest, and review hashes', () => {
+  const checkedAssets: string[] = []
+  const options = makePublicationOptions()
+  options.assetExists = (publicPath) => {
+    checkedAssets.push(publicPath)
+    return true
+  }
+
+  for (const review of options.reviews) {
+    const definition = pilotDefinitions.find(
+      (candidate) => candidate.slug === review.slug,
+    )
+    assert.ok(definition)
+    assert.equal(review.contentHash, localizedReviewHash(definition, review.locale))
+  }
+  for (const review of options.manifestReviews) {
+    assert.equal(
+      review.contentHash,
+      manifestContentHash(review.locale, industryManifest),
+    )
+  }
+
+  assert.deepEqual(
+    validateIndustryPageRegistry(pilotRegistry, options),
+    { ok: true, errors: [] },
+  )
+  assert.deepEqual(checkedAssets.sort(), [
+    '/og/industries/healthcare/en.jpg',
+    '/og/industries/logistics-supply-chain/en.jpg',
+    '/og/industries/restaurants/en.jpg',
+  ])
+  assert.doesNotThrow(() => {
+    assertValidIndustryPageRegistry(pilotRegistry, makePublicationOptions())
+  })
+})
+
+test('missing-native-review rejects every published pilot without its Arabic review', () => {
+  for (const definition of pilotDefinitions) {
+    const options = makePublicationOptions()
+    options.reviews = options.reviews.filter(
+      (review) =>
+        !(
+          review.slug === definition.slug &&
+          review.locale === 'ar' &&
+          review.kind === 'native-arabic'
+        ),
+    )
+
+    const result = validateIndustryPageRegistry(pilotRegistry, options)
+    assert.ok(result.errors.some((error) => error.code === 'missing-native-review'))
+    assert.throws(
+      () => assertValidIndustryPageRegistry(pilotRegistry, options),
+      (error) =>
+        error instanceof IndustryPageValidationError &&
+        error.errors.some((issue) => issue.code === 'missing-native-review'),
+    )
+  }
+})
+
+test('missing-sensitive-review rejects either Healthcare locale without domain review', () => {
+  for (const locale of ['en', 'ar'] as const) {
+    const options = makePublicationOptions()
+    options.reviews = options.reviews.filter(
+      (review) =>
+        !(
+          review.slug === 'healthcare' &&
+          review.locale === locale &&
+          review.kind === 'sensitive-domain'
+        ),
+    )
+
+    const result = validateIndustryPageRegistry(pilotRegistry, options)
+    assert.ok(result.errors.some((error) => error.code === 'missing-sensitive-review'))
+  }
+})
+
+test('missing-manifest-review rejects either incomplete locale review packet', () => {
+  for (const locale of ['en', 'ar'] as const) {
+    const options = makePublicationOptions()
+    options.manifestReviews = options.manifestReviews.filter(
+      (review) => review.locale !== locale,
+    )
+
+    const result = validateIndustryPageRegistry(pilotRegistry, options)
+    assert.ok(result.errors.some((error) => error.code === 'missing-manifest-review'))
+  }
+})
+
+test('review-hash-mismatch rejects stale page and complete-manifest approvals', () => {
+  const stalePageOptions = makePublicationOptions()
+  const pageReview = stalePageOptions.reviews.find(
+    (review) =>
+      review.slug === 'restaurants' &&
+      review.locale === 'en' &&
+      review.kind === 'editorial',
+  )
+  assert.ok(pageReview)
+  pageReview.contentHash = 'sha256:stale-page-review'
+
+  const staleManifestOptions = makePublicationOptions()
+  staleManifestOptions.manifestReviews[0].contentHash =
+    'sha256:stale-manifest-review'
+
+  const missingEditorialOptions = makePublicationOptions()
+  missingEditorialOptions.reviews = missingEditorialOptions.reviews.filter(
+    (review) =>
+      !(
+        review.slug === 'logistics-supply-chain' &&
+        review.locale === 'en' &&
+        review.kind === 'editorial'
+      ),
+  )
+
+  for (const options of [
+    stalePageOptions,
+    staleManifestOptions,
+    missingEditorialOptions,
+  ]) {
+    const result = validateIndustryPageRegistry(pilotRegistry, options)
+    assert.ok(result.errors.some((error) => error.code === 'review-hash-mismatch'))
+  }
+})
+
+test('publication checks OG path, dimensions, and existence without treating scenes as files', () => {
+  const validDefinition = cloneDefinition()
+  const checkedAssets: string[] = []
+  const validOptions = makePublicationOptions([
+    validDefinition as IndustryPageDefinition,
+  ])
+  validOptions.assetExists = (publicPath) => {
+    checkedAssets.push(publicPath)
+    return true
+  }
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      validDefinition as IndustryPageDefinition,
+      validOptions,
+    ),
+    { ok: true, errors: [] },
+  )
+  assert.deepEqual(checkedAssets, ['/og/industries/healthcare/en.jpg'])
+
+  for (const mutate of [
+    (definition: MutableDefinition) => {
+      const asset = definition.assets.find((candidate) => candidate.kind === 'og-image')
+      assert.ok(asset && asset.kind === 'og-image')
+      asset.publicPath = '/og/industries/restaurants/en.jpg'
+    },
+    (definition: MutableDefinition) => {
+      const asset = definition.assets.find((candidate) => candidate.kind === 'og-image')
+      assert.ok(asset && asset.kind === 'og-image')
+      asset.width = 1199 as 1200
+    },
+  ]) {
+    const definition = cloneDefinition()
+    mutate(definition)
+    expectPublicationCode(
+      'invalid-variant',
+      definition as IndustryPageDefinition,
+    )
+  }
+
+  const missingAssetDefinition = cloneDefinition()
+  const missingAssetOptions = makePublicationOptions([
+    missingAssetDefinition as IndustryPageDefinition,
+  ])
+  missingAssetOptions.assetExists = () => false
+  expectPublicationCode(
+    'invalid-variant',
+    missingAssetDefinition as IndustryPageDefinition,
+    missingAssetOptions,
+  )
+})
+
+test('publication accepts exact visible claim wording and scope through its recheck date', () => {
+  const definition = definitionWithVisibleClaim()
+  const claim = definition.claims[0]
+  claim.recheckAt = '2026-07-15'
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      makePublicationOptions([definition as IndustryPageDefinition]),
+    ),
+    { ok: true, errors: [] },
+  )
+})
+
+test('claim-source-missing rejects visible wording, scope, or locale drift', () => {
+  for (const mutate of [
+    (claim: MutableDeep<IndustryClaimSource>) => {
+      claim.wording = 'A differently worded claim.'
+    },
+    (claim: MutableDeep<IndustryClaimSource>) => {
+      claim.scope = 'A different scope.'
+    },
+    (claim: MutableDeep<IndustryClaimSource>) => {
+      claim.locale = 'ar'
+    },
+  ]) {
+    const definition = definitionWithVisibleClaim()
+    mutate(definition.claims[0])
+    expectPublicationCode(
+      'claim-source-missing',
+      definition as IndustryPageDefinition,
+    )
+  }
+})
+
+test('claim-unapproved rejects pending and rejected visible source records', () => {
+  for (const approval of ['pending', 'rejected'] as const) {
+    const definition = definitionWithVisibleClaim()
+    definition.claims[0].approval = approval
+    expectPublicationCode(
+      'claim-unapproved',
+      definition as IndustryPageDefinition,
+    )
+  }
+})
+
+test('claim-expired compares recheckAt with the injected publication date', () => {
+  const definition = definitionWithVisibleClaim()
+  definition.claims[0].recheckAt = '2026-07-14'
+
+  expectPublicationCode(
+    'claim-expired',
+    definition as IndustryPageDefinition,
+    makePublicationOptions([definition as IndustryPageDefinition]),
+  )
 })
 
 test('missing-locale rejects a definition without either complete locale object', () => {

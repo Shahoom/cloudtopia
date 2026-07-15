@@ -1,3 +1,4 @@
+import { contentHash, manifestContentHash } from './content-hash'
 import { industryManifest } from './manifest'
 import { PROJECT_IDS } from './proof-targets'
 import { CANONICAL_SERVICE_TARGETS } from './service-targets'
@@ -5,6 +6,7 @@ import {
   SECTION_VARIANTS,
   type IndustryPageDefinition,
   type IndustryPageRegistry,
+  type IndustryClaimSource,
   type IndustrySection,
   type IndustryTheme,
   type IndustryValidationOptions,
@@ -40,8 +42,43 @@ export const DRAFT_INDUSTRY_VALIDATION_CODES = [
 export type DraftIndustryValidationCode =
   (typeof DRAFT_INDUSTRY_VALIDATION_CODES)[number]
 
+export const INDUSTRY_VALIDATION_CODES = [
+  'missing-locale',
+  'localized-copy-missing',
+  'parity-drift',
+  'duplicate-localized-copy',
+  'content-too-thin',
+  'prohibited-copy',
+  'duplicate-section-id',
+  'unisolated-ltr-token',
+  'semantic-question-missing',
+  'semantic-question-duplicate',
+  'invalid-variant',
+  'release-a-signature-forbidden',
+  'signature-composition-invalid',
+  'invalid-service-id',
+  'invalid-project-id',
+  'invalid-related-industry',
+  'self-related-industry',
+  'cta-drift',
+  'missing-theme-token',
+  'contrast-failure',
+  'faq-count',
+  'service-count',
+  'missing-native-review',
+  'missing-sensitive-review',
+  'missing-manifest-review',
+  'review-hash-mismatch',
+  'claim-source-missing',
+  'claim-unapproved',
+  'claim-expired',
+] as const
+
+export type IndustryValidationCode =
+  (typeof INDUSTRY_VALIDATION_CODES)[number]
+
 export type IndustryPageValidationIssue = {
-  code: DraftIndustryValidationCode
+  code: IndustryValidationCode
   path: string
   message: string
 }
@@ -247,6 +284,88 @@ function referencedServices(page: LocalizedIndustryPage): string[] {
   return serviceIds.filter((serviceId): serviceId is string => typeof serviceId === 'string')
 }
 
+function isCompleteReviewRecord(review: {
+  reviewer: string
+  reviewedAt: string
+  contentHash: string
+}): boolean {
+  return [review.reviewer, review.reviewedAt, review.contentHash].every(
+    (value) => typeof value === 'string' && value.trim().length > 0,
+  )
+}
+
+function isCompleteClaimSource(claim: IndustryClaimSource): boolean {
+  const requiredStrings = [
+    claim.id,
+    claim.wording,
+    claim.scope,
+    claim.source,
+    claim.owner,
+    claim.reviewedAt,
+    claim.recheckAt,
+  ]
+
+  return (
+    requiredStrings.every(
+      (value) => typeof value === 'string' && value.trim().length > 0,
+    ) &&
+    (claim.locale === 'en' ||
+      claim.locale === 'ar' ||
+      claim.locale === 'both') &&
+    (claim.approval === 'approved' ||
+      claim.approval === 'rejected' ||
+      claim.approval === 'pending')
+  )
+}
+
+function validateManifestReviews(
+  options: IndustryValidationOptions,
+): IndustryPageValidationIssue[] {
+  if (options.mode !== 'publication') return []
+
+  const errors: IndustryPageValidationIssue[] = []
+  const reviews = options.manifestReviews ?? []
+
+  for (const locale of LOCALES) {
+    const expectedKind =
+      locale === 'en' ? 'manifest-editorial' : 'manifest-native-arabic'
+    const expectedHash = manifestContentHash(locale, industryManifest)
+    const requiredReviews = reviews.filter(
+      (review) => review.locale === locale && review.kind === expectedKind,
+    )
+
+    if (requiredReviews.length === 0) {
+      errors.push({
+        code: 'missing-manifest-review',
+        path: 'manifestReviews.' + locale,
+        message:
+          'Publication requires the complete ' +
+          locale +
+          ' manifest review.',
+      })
+    }
+
+    for (const [index, review] of reviews.entries()) {
+      if (review.locale !== locale) continue
+      if (
+        !isCompleteReviewRecord(review) ||
+        review.contentHash !== expectedHash
+      ) {
+        errors.push({
+          code: 'review-hash-mismatch',
+          path: 'manifestReviews.' + index,
+          message:
+            'Manifest reviews must match the complete current ' +
+            locale +
+            ' manifest-copy hash.',
+        })
+      }
+    }
+  }
+
+  return errors
+}
+
 function validateDefinition(
   definition: IndustryPageDefinition,
   options: IndustryValidationOptions,
@@ -254,7 +373,7 @@ function validateDefinition(
   const errors: IndustryPageValidationIssue[] = []
   const issueKeys = new Set<string>()
   const add = (
-    code: DraftIndustryValidationCode,
+    code: IndustryValidationCode,
     path: string,
     message: string,
   ): void => {
@@ -477,6 +596,31 @@ function validateDefinition(
       'assets.authored-scene',
       'The authored scene must match the registered hero scene.',
     )
+  }
+
+  if (options.mode === 'publication') {
+    for (const [index, asset] of (candidate.assets ?? []).entries()) {
+      if (asset.kind !== 'og-image') continue
+
+      const expectedPath =
+        '/og/industries/' + definition.slug + '/' + asset.locale + '.jpg'
+      const hasValidContract =
+        LOCALES.includes(asset.locale) &&
+        asset.publicPath === expectedPath &&
+        asset.width === 1200 &&
+        asset.height === 630
+      const exists =
+        hasValidContract &&
+        options.assetExists?.(asset.publicPath) === true
+
+      if (!hasValidContract || !exists) {
+        add(
+          'invalid-variant',
+          'assets.' + index,
+          'OG images require the canonical localized path, 1200x630 dimensions, and an existing public file.',
+        )
+      }
+    }
   }
 
   if (!options.allowCustomSignature) {
@@ -717,32 +861,127 @@ function validateDefinition(
   }
 
   for (const [index, claim] of (candidate.claims ?? []).entries()) {
-    const requiredStrings = [
-      claim.id,
-      claim.wording,
-      claim.scope,
-      claim.source,
-      claim.owner,
-      claim.reviewedAt,
-      claim.recheckAt,
-    ]
-    const structurallyComplete =
-      requiredStrings.every(
-        (value) => typeof value === 'string' && value.trim().length > 0,
-      ) &&
-      (claim.locale === 'en' ||
-        claim.locale === 'ar' ||
-        claim.locale === 'both') &&
-      (claim.approval === 'approved' ||
-        claim.approval === 'rejected' ||
-        claim.approval === 'pending')
-
-    if (!structurallyComplete) {
+    if (!isCompleteClaimSource(claim)) {
       add(
         'claim-source-missing',
         'claims.' + index,
         'Draft claim records require complete provenance fields.',
       )
+    }
+  }
+
+  if (options.mode === 'publication') {
+    const now = options.now ?? new Date()
+    const reviews = options.reviews ?? []
+    const manifestEntry = industryManifest[definition.slug]
+
+    for (const locale of LOCALES) {
+      const page = locales[locale]
+      if (!page || !manifestEntry) continue
+
+      const expectedHash = contentHash({
+        manifest: {
+          label: manifestEntry.label[locale],
+          navSummary: manifestEntry.navSummary[locale],
+        },
+        page,
+      })
+      const localizedReviews = reviews.filter(
+        (review) =>
+          review.slug === definition.slug && review.locale === locale,
+      )
+      const requiredKind = locale === 'en' ? 'editorial' : 'native-arabic'
+      const requiredReviews = localizedReviews.filter(
+        (review) => review.kind === requiredKind,
+      )
+
+      if (requiredReviews.length === 0) {
+        add(
+          locale === 'ar'
+            ? 'missing-native-review'
+            : 'review-hash-mismatch',
+          'reviews.' + locale + '.' + requiredKind,
+          locale === 'ar'
+            ? 'Publication requires a native-Arabic review for this localized page.'
+            : 'Publication requires a complete editorial review matching this localized page.',
+        )
+      }
+
+      if (
+        definition.slug === 'healthcare' &&
+        !localizedReviews.some(
+          (review) => review.kind === 'sensitive-domain',
+        )
+      ) {
+        add(
+          'missing-sensitive-review',
+          'reviews.' + locale + '.sensitive-domain',
+          'Healthcare publication requires sensitive-domain review in both locales.',
+        )
+      }
+
+      for (const [index, review] of reviews.entries()) {
+        if (
+          review.slug !== definition.slug ||
+          review.locale !== locale
+        ) {
+          continue
+        }
+
+        if (
+          !isCompleteReviewRecord(review) ||
+          review.contentHash !== expectedHash
+        ) {
+          add(
+            'review-hash-mismatch',
+            'reviews.' + index,
+            'Content reviews must match the exact localized manifest fields and page hash.',
+          )
+        }
+      }
+    }
+
+    for (const [index, claim] of (candidate.claims ?? []).entries()) {
+      if (!isCompleteClaimSource(claim)) continue
+
+      const claimLocales = claim.locale === 'both' ? LOCALES : [claim.locale]
+      const visibleClaimMatches = claimLocales.every((locale) => {
+        const page = locales[locale]
+        if (!page) return false
+
+        const visibleStrings = new Set(collectStrings(page))
+        return (
+          visibleStrings.has(claim.wording) &&
+          visibleStrings.has(claim.scope)
+        )
+      })
+
+      if (!visibleClaimMatches) {
+        add(
+          'claim-source-missing',
+          'claims.' + index,
+          'Visible claim wording, scope, and locale must exactly match its source record.',
+        )
+      }
+
+      if (claim.approval !== 'approved') {
+        add(
+          'claim-unapproved',
+          'claims.' + index + '.approval',
+          'Only approved claim-source records may be published.',
+        )
+      }
+
+      const recheckDeadline = Date.parse(
+        claim.recheckAt + 'T23:59:59.999Z',
+      )
+      if (Number.isFinite(recheckDeadline) && now.getTime() > recheckDeadline) {
+        add(
+          'claim-expired',
+          'claims.' + index + '.recheckAt',
+          'The claim source has passed its required recheck date.',
+        )
+      }
     }
   }
 
@@ -753,7 +992,10 @@ export function validateIndustryPageDefinition(
   definition: IndustryPageDefinition,
   options: IndustryValidationOptions,
 ): IndustryPageValidationResult {
-  return validationResult(validateDefinition(definition, options))
+  return validationResult([
+    ...validateDefinition(definition, options),
+    ...validateManifestReviews(options),
+  ])
 }
 
 export function validateIndustryPageRegistry(
@@ -801,6 +1043,8 @@ export function validateIndustryPageRegistry(
       }
     }
   }
+
+  errors.push(...validateManifestReviews(options))
 
   return validationResult(errors)
 }
