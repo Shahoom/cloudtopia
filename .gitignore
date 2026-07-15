@@ -92,5 +92,6 @@ next-env.d.ts
 /cloudtopia/
 /scratch/
 /blog-posts/
+/.worktrees/
 .vercel
 scratchpad/
