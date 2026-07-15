@@ -1195,6 +1195,138 @@ test('malformed localized structures return issues instead of throwing', () => {
   }
 })
 
+test('empty content-bearing arrays return their named validation issues', () => {
+  const cases: readonly [
+    string,
+    DraftIndustryValidationCode,
+    (definition: MutableDefinition) => void,
+  ][] = [
+    ['hero scene stages', 'localized-copy-missing', (definition) => {
+      definition.locales.en.hero.sceneStages = []
+    }],
+    ['pressure signals', 'localized-copy-missing', (definition) => {
+      getSection(definition, 'en', 'pressure-field').signals = []
+    }],
+    ['journey stages', 'localized-copy-missing', (definition) => {
+      getSection(definition, 'en', 'journey-map').stages = []
+    }],
+    ['journey lane stage IDs', 'localized-copy-missing', (definition) => {
+      const journey = getSection(definition, 'en', 'journey-map')
+      assert.ok(journey.lanes)
+      journey.lanes[0].stageIds = []
+    }],
+    ['blueprint layers', 'content-too-thin', (definition) => {
+      getSection(definition, 'en', 'system-blueprint').layers = []
+    }],
+    ['blueprint layer inputs', 'localized-copy-missing', (definition) => {
+      getSection(definition, 'en', 'system-blueprint').layers[0].inputs = []
+    }],
+    ['use-case steps', 'content-too-thin', (definition) => {
+      getSection(definition, 'en', 'use-case-sequence').steps = []
+    }],
+    ['annotated observations', 'localized-copy-missing', (definition) => {
+      for (const locale of ['en', 'ar'] as const) {
+        Object.assign(
+          getSection(definition, locale, 'evidence'),
+          structuredClone(annotatedEvidenceFixture),
+          {
+            answers: ['evidence-and-constraints'],
+            observations: [],
+          },
+        )
+      }
+    }],
+    ['constraint items', 'localized-copy-missing', (definition) => {
+      getSection(definition, 'en', 'constraints').items = []
+    }],
+    ['regional items', 'localized-copy-missing', (definition) => {
+      getSection(definition, 'en', 'regional-fit').items = []
+    }],
+    ['FAQ items', 'faq-count', (definition) => {
+      getSection(definition, 'en', 'faq').items = []
+    }],
+    ['semantic answers', 'semantic-question-missing', (definition) => {
+      getSection(definition, 'en', 'pressure-field').answers = []
+    }],
+    ['service IDs', 'service-count', (definition) => {
+      const bridge = getSection(definition, 'en', 'service-bridge')
+      bridge.serviceIds = []
+      bridge.serviceAnchors = []
+    }],
+    ['related industry IDs', 'localized-copy-missing', (definition) => {
+      const bridge = getSection(definition, 'en', 'service-bridge')
+      bridge.relatedIndustryIds = []
+      bridge.industryAnchors = []
+    }],
+  ]
+  const failures: string[] = []
+
+  for (const [name, code, mutate] of cases) {
+    const definition = cloneDefinition()
+    mutate(definition)
+
+    try {
+      const result = validateIndustryPageDefinition(
+        definition as IndustryPageDefinition,
+        { mode: 'draft' },
+      )
+      if (!result.errors.some((error) => error.code === code)) {
+        failures.push(
+          `${name}: expected ${code}, received ${result.errors.map((error) => error.code).join(', ') || 'no errors'}`,
+        )
+      }
+    } catch (error) {
+      failures.push(`${name}: threw ${String(error)}`)
+    }
+  }
+
+  assert.deepEqual(failures, [])
+})
+
+test('service and industry anchors bijectively match their ID arrays', () => {
+  const cases: readonly [string, (definition: MutableDefinition) => void][] = [
+    ['missing service anchors', (definition) => {
+      getSection(definition, 'en', 'service-bridge').serviceAnchors = []
+    }],
+    ['mismatched service anchor', (definition) => {
+      const bridge = getSection(definition, 'en', 'service-bridge')
+      bridge.serviceAnchors[0].serviceId = bridge.serviceIds[1]
+    }],
+    ['missing industry anchors', (definition) => {
+      getSection(definition, 'en', 'service-bridge').industryAnchors = []
+    }],
+    ['mismatched industry anchor', (definition) => {
+      const bridge = getSection(definition, 'en', 'service-bridge')
+      bridge.industryAnchors[0].industryId = bridge.relatedIndustryIds[1]
+    }],
+  ]
+  const failures: string[] = []
+
+  for (const [name, mutate] of cases) {
+    const definition = cloneDefinition()
+    mutate(definition)
+    try {
+      const result = validateIndustryPageDefinition(
+        definition as IndustryPageDefinition,
+        { mode: 'draft' },
+      )
+      if (
+        !result.errors.some(
+          (error) => error.code === 'localized-copy-missing',
+        )
+      ) {
+        failures.push(
+          `${name}: received ${result.errors.map((error) => error.code).join(', ') || 'no errors'}`,
+        )
+      }
+    } catch (error) {
+      failures.push(`${name}: threw ${String(error)}`)
+    }
+  }
+
+  assert.deepEqual(failures, [])
+})
+
 test('parity-drift rejects unstable EN and AR semantic IDs', () => {
   expectDraftCode('parity-drift', (definition) => {
     getSection(definition, 'ar', 'journey-map').stages[0].id = 'طلب-مختلف'
@@ -1291,6 +1423,30 @@ test('registry uniqueness rejects every required locale-scoped repeat', () => {
       `${name} repeat was not rejected: ${result.errors.map((error) => error.code).join(', ')}`,
     )
   }
+})
+
+test('content hash collisions report the exact independent contentHash path', () => {
+  const collision = structuredClone(
+    logisticsFixture,
+  ) as unknown as MutableDefinition
+  collision.slug = 'healthcare'
+  Object.defineProperty(collision.locales.en, 'toJSON', {
+    configurable: true,
+    enumerable: false,
+    value: () => definitionFixture.locales.en,
+  })
+
+  const result = validateIndustryPageRegistry({
+    ...pilotRegistry,
+    'logistics-supply-chain': collision as IndustryPageDefinition,
+  }, { mode: 'draft' })
+  const duplicatePaths = result.errors
+    .filter((error) => error.code === 'duplicate-localized-copy')
+    .map((error) => error.path)
+
+  assert.deepEqual(duplicatePaths, [
+    'logistics-supply-chain.locales.en.contentHash',
+  ])
 })
 
 test('content-too-thin validates the opening sentence as answer-first', () => {
@@ -1396,6 +1552,22 @@ test('semantic-question-duplicate rejects a repeated grammar answer', () => {
   })
 })
 
+test('semantic-question-duplicate protects the hero-owned sector promise', () => {
+  expectDraftCode('semantic-question-duplicate', (definition) => {
+    getSection(definition, 'en', 'pressure-field').answers.push(
+      'sector-promise' as never,
+    )
+  })
+})
+
+test('invalid-variant rejects unknown runtime semantic answers', () => {
+  expectDraftCode('invalid-variant', (definition) => {
+    getSection(definition, 'en', 'pressure-field').answers.push(
+      'unknown-question' as never,
+    )
+  })
+})
+
 test('invalid-variant rejects an unregistered standard recipe variant', () => {
   expectDraftCode('invalid-variant', (definition) => {
     getSection(definition, 'en', 'pressure-field').variant = 'generic-grid' as never
@@ -1438,6 +1610,86 @@ test('signature-composition-invalid rejects missing or duplicate recipe referenc
       definition.world.signatureComposition.sectionIds = sectionIds
     })
   }
+})
+
+test('signature-composition-invalid requires an ID and both localized names', () => {
+  const cases: readonly [string, (definition: MutableDefinition) => void][] = [
+    ['blank ID', (definition) => {
+      definition.world.signatureComposition.id = ''
+    }],
+    ['missing ID', (definition) => {
+      delete (definition.world.signatureComposition as Partial<
+        MutableDefinition['world']['signatureComposition']
+      >).id
+    }],
+    ['blank English name', (definition) => {
+      definition.world.signatureComposition.name.en = ''
+    }],
+    ['missing Arabic name', (definition) => {
+      delete (definition.world.signatureComposition.name as Partial<
+        MutableDefinition['world']['signatureComposition']['name']
+      >).ar
+    }],
+    ['missing name record', (definition) => {
+      delete (definition.world.signatureComposition as Partial<
+        MutableDefinition['world']['signatureComposition']
+      >).name
+    }],
+  ]
+  const failures: string[] = []
+
+  for (const [name, mutate] of cases) {
+    const definition = cloneDefinition()
+    mutate(definition)
+    try {
+      const result = validateIndustryPageDefinition(
+        definition as IndustryPageDefinition,
+        { mode: 'draft' },
+      )
+      if (
+        !result.errors.some(
+          (error) => error.code === 'signature-composition-invalid',
+        )
+      ) {
+        failures.push(
+          `${name}: received ${result.errors.map((error) => error.code).join(', ') || 'no errors'}`,
+        )
+      }
+    } catch (error) {
+      failures.push(`${name}: threw ${String(error)}`)
+    }
+  }
+
+  assert.deepEqual(failures, [])
+})
+
+test('invalid signature metadata cannot bypass rhythm uniqueness', () => {
+  const healthcare = cloneDefinition()
+  const logistics = structuredClone(
+    logisticsFixture,
+  ) as unknown as MutableDefinition
+  healthcare.world.signatureComposition.id = ''
+  logistics.world.heroTreatment = healthcare.world.heroTreatment
+  logistics.world.signatureComposition.id = ''
+  for (const locale of ['en', 'ar'] as const) {
+    getSection(logistics, locale, 'journey-map').variant = 'dual-lane'
+    getSection(logistics, locale, 'constraints').variant = 'boundary-map'
+  }
+
+  const result = validateIndustryPageRegistry({
+    ...pilotRegistry,
+    healthcare: healthcare as IndustryPageDefinition,
+    'logistics-supply-chain': logistics as IndustryPageDefinition,
+  }, { mode: 'draft' })
+
+  assert.ok(
+    result.errors.some(
+      (error) =>
+        error.code === 'duplicate-localized-copy' &&
+        error.path.endsWith('.rhythmFingerprint'),
+    ),
+    `invalid signatures bypassed rhythm uniqueness: ${result.errors.map((error) => `${error.code}:${error.path}`).join(', ')}`,
+  )
 })
 
 test('invalid-service-id rejects canonical services outside the industry manifest', () => {

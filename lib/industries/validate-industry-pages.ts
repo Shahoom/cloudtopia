@@ -108,6 +108,7 @@ type UnknownRecord = Record<string, unknown>
 
 const LOCALES = ['en', 'ar'] as const
 const REQUIRED_SEMANTIC_QUESTIONS = [
+  'sector-promise',
   'operating-pressure',
   'journey',
   'buildable-system',
@@ -115,6 +116,7 @@ const REQUIRED_SEMANTIC_QUESTIONS = [
   'regional-delivery',
   'decision-close',
 ] as const
+const SEMANTIC_QUESTION_SET = new Set<string>(REQUIRED_SEMANTIC_QUESTIONS)
 const PROTECTED_LTR_TOKENS = ['CRM', 'ERP', 'API', 'POS', 'TMS', 'WMS', 'SLA', 'QR']
 const THEME_TOKENS = [
   'canvas',
@@ -160,18 +162,57 @@ function hasOptionalString(value: UnknownRecord, key: string): boolean {
   return !Object.hasOwn(value, key) || isNonEmptyString(value[key])
 }
 
-function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every(isNonEmptyString)
+function isStringArray(
+  value: unknown,
+  minimumLength = 1,
+): value is string[] {
+  return (
+    Array.isArray(value) &&
+    value.length >= minimumLength &&
+    value.every(isNonEmptyString)
+  )
 }
 
 function isRecordArray(
   value: unknown,
   predicate: (item: UnknownRecord) => boolean,
+  minimumLength = 1,
 ): boolean {
   return (
     Array.isArray(value) &&
+    value.length >= minimumLength &&
     value.every((item) => isRecord(item) && predicate(item))
   )
+}
+
+function identifiersMatchAnchors(
+  identifiers: unknown,
+  anchors: unknown,
+  anchorKey: string,
+): boolean {
+  if (
+    !Array.isArray(identifiers) ||
+    !Array.isArray(anchors) ||
+    identifiers.length !== anchors.length
+  ) {
+    return false
+  }
+
+  const remaining = new Map<string, number>()
+  for (const identifier of identifiers) {
+    if (!isNonEmptyString(identifier)) return false
+    remaining.set(identifier, (remaining.get(identifier) ?? 0) + 1)
+  }
+
+  for (const anchor of anchors) {
+    if (!isRecord(anchor) || !isNonEmptyString(anchor[anchorKey])) return false
+    const identifier = anchor[anchorKey]
+    const count = remaining.get(identifier) ?? 0
+    if (count === 0) return false
+    remaining.set(identifier, count - 1)
+  }
+
+  return [...remaining.values()].every((count) => count === 0)
 }
 
 function isIndustrySectionShape(value: unknown): value is IndustrySection {
@@ -179,7 +220,7 @@ function isIndustrySectionShape(value: unknown): value is IndustrySection {
     !isRecord(value) ||
     !hasRequiredStrings(value, ['id', 'type', 'variant', 'title', 'intro']) ||
     !hasOptionalString(value, 'eyebrow') ||
-    !isStringArray(value.answers)
+    !isStringArray(value.answers, 0)
   ) {
     return false
   }
@@ -202,29 +243,47 @@ function isIndustrySectionShape(value: unknown): value is IndustrySection {
           ))
       )
     case 'system-blueprint':
-      return isRecordArray(value.layers, (layer) =>
-        hasRequiredStrings(layer, [
-          'id',
-          'label',
-          'description',
-          'handoff',
-          'outcome',
-        ]) && isStringArray(layer.inputs),
+      return isRecordArray(
+        value.layers,
+        (layer) =>
+          hasRequiredStrings(layer, [
+            'id',
+            'label',
+            'description',
+            'handoff',
+            'outcome',
+          ]) && isStringArray(layer.inputs),
+        0,
       )
     case 'use-case-sequence':
-      return isRecordArray(value.steps, (step) =>
-        hasRequiredStrings(step, ['id', 'label', 'description']) &&
-        hasOptionalString(step, 'owner'),
+      return isRecordArray(
+        value.steps,
+        (step) =>
+          hasRequiredStrings(step, ['id', 'label', 'description']) &&
+          hasOptionalString(step, 'owner'),
+        0,
       )
     case 'service-bridge':
       return (
-        isStringArray(value.serviceIds) &&
-        isRecordArray(value.serviceAnchors, (anchor) =>
-          hasRequiredStrings(anchor, ['serviceId', 'label']),
+        isStringArray(value.serviceIds, 0) &&
+        isRecordArray(
+          value.serviceAnchors,
+          (anchor) => hasRequiredStrings(anchor, ['serviceId', 'label']),
+          0,
+        ) &&
+        identifiersMatchAnchors(
+          value.serviceIds,
+          value.serviceAnchors,
+          'serviceId',
         ) &&
         isStringArray(value.relatedIndustryIds) &&
         isRecordArray(value.industryAnchors, (anchor) =>
           hasRequiredStrings(anchor, ['industryId', 'label']),
+        ) &&
+        identifiersMatchAnchors(
+          value.relatedIndustryIds,
+          value.industryAnchors,
+          'industryId',
         )
       )
     case 'evidence':
@@ -255,8 +314,10 @@ function isIndustrySectionShape(value: unknown): value is IndustrySection {
         hasRequiredStrings(item, ['id', 'label', 'description']),
       )
     case 'faq':
-      return isRecordArray(value.items, (item) =>
-        hasRequiredStrings(item, ['id', 'question', 'answer']),
+      return isRecordArray(
+        value.items,
+        (item) => hasRequiredStrings(item, ['id', 'question', 'answer']),
+        0,
       )
     case 'closing-cta':
       return (
@@ -760,9 +821,22 @@ function validateDefinition(
     const page = locales[locale]
     if (!page) continue
 
-    const answerCounts = new Map<string, number>()
+    const answerCounts = new Map<string, number>([['sector-promise', 1]])
     for (const section of sectionsFor(page)) {
-      for (const answer of section.answers) {
+      for (const [index, answer] of section.answers.entries()) {
+        if (!SEMANTIC_QUESTION_SET.has(answer)) {
+          add(
+            'invalid-variant',
+            'locales.' +
+              locale +
+              '.sections.' +
+              section.id +
+              '.answers.' +
+              index,
+            'Section answers must use a registered semantic question.',
+          )
+          continue
+        }
         answerCounts.set(answer, (answerCounts.get(answer) ?? 0) + 1)
       }
     }
@@ -775,18 +849,6 @@ function validateDefinition(
           'Every required semantic question must be answered once.',
         )
         break
-      }
-    }
-  }
-
-  for (const locale of LOCALES) {
-    const page = locales[locale]
-    if (!page) continue
-
-    const answerCounts = new Map<string, number>()
-    for (const section of sectionsFor(page)) {
-      for (const answer of section.answers) {
-        answerCounts.set(answer, (answerCounts.get(answer) ?? 0) + 1)
       }
     }
 
@@ -875,8 +937,20 @@ function validateDefinition(
     }
   }
 
-  const rawSignatureSectionIds =
-    candidate.world?.signatureComposition?.sectionIds
+  const rawSignatureComposition = candidate.world?.signatureComposition
+  const signatureComposition = isRecord(rawSignatureComposition)
+    ? rawSignatureComposition
+    : null
+  const signatureName =
+    signatureComposition && isRecord(signatureComposition.name)
+      ? signatureComposition.name
+      : null
+  const signatureMetadataIsComplete =
+    signatureComposition !== null &&
+    isNonEmptyString(signatureComposition.id) &&
+    signatureName !== null &&
+    LOCALES.every((locale) => isNonEmptyString(signatureName[locale]))
+  const rawSignatureSectionIds = signatureComposition?.sectionIds
   const signatureIdsHaveValidShape =
     Array.isArray(rawSignatureSectionIds) &&
     rawSignatureSectionIds.every(isNonEmptyString)
@@ -896,14 +970,15 @@ function validateDefinition(
       return signatureSectionIds.every((sectionId) => availableIds.has(sectionId))
     })
   if (
+    !signatureMetadataIsComplete ||
     !signatureIdsHaveValidShape ||
     !signatureIdsAreUnique ||
     !signatureIdsExist
   ) {
     add(
       'signature-composition-invalid',
-      'world.signatureComposition.sectionIds',
-      'Signature composition references must be unique existing section IDs.',
+      'world.signatureComposition',
+      'Signature composition requires an ID, both localized names, and unique existing section IDs.',
     )
   }
 
@@ -1313,15 +1388,24 @@ export function validateIndustryPageRegistry(
       world && isRecord(world.signatureComposition)
         ? world.signatureComposition
         : null
-    const hasRhythmShape =
-      isLocalizedPageShape(locales.en) &&
+    const englishPage = locales.en
+    let definitionRhythm: string | null = null
+    if (
+      isLocalizedPageShape(englishPage) &&
       world !== null &&
-      signatureComposition !== null &&
-      isNonEmptyString(world.heroTreatment) &&
-      isNonEmptyString(signatureComposition.id)
-    const definitionRhythm = hasRhythmShape
-      ? rhythmFingerprint(definition)
-      : null
+      isNonEmptyString(world.heroTreatment)
+    ) {
+      definitionRhythm =
+        signatureComposition && isNonEmptyString(signatureComposition.id)
+          ? rhythmFingerprint(definition)
+          : [
+              world.heroTreatment,
+              ...englishPage.sections.map(
+                (section) => `${section.type}:${section.variant}`,
+              ),
+              '<invalid-signature-id>',
+            ].join('|')
+    }
 
     for (const locale of LOCALES) {
       const page = locales[locale]
