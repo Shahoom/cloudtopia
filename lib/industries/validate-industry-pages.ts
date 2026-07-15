@@ -687,14 +687,17 @@ function validateDefinition(
       }
     }
 
+    const journeyMapSections = sectionsFor(page).filter(
+      (section) => section.type === 'journey-map',
+    )
     const useCaseSections = sectionsFor(page).filter(
       (section) => section.type === 'use-case-sequence',
     )
-    if (useCaseSections.length === 0) {
+    if (journeyMapSections.length === 0 && useCaseSections.length === 0) {
       add(
         'content-too-thin',
-        'locales.' + locale + '.sections.use-case-sequence',
-        'A use-case sequence with three to six steps is required.',
+        'locales.' + locale + '.sections.journey-carrier',
+        'A journey map or use-case sequence is required.',
       )
     }
     for (const section of useCaseSections) {

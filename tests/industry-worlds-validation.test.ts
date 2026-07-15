@@ -1545,10 +1545,9 @@ test('faq-count requires four to seven visible questions', () => {
   })
 })
 
-test('required content sections cannot be deleted', () => {
+test('blueprint, FAQ, and service bridge sections cannot be deleted', () => {
   const cases = [
     ['system-blueprint', 'content-too-thin'],
-    ['use-case-sequence', 'content-too-thin'],
     ['faq', 'faq-count'],
     ['service-bridge', 'service-count'],
   ] as const satisfies readonly [
@@ -1573,6 +1572,69 @@ test('required content sections cannot be deleted', () => {
       `missing ${type} did not return ${code}: ${result.errors.map((error) => error.code).join(', ')}`,
     )
   }
+})
+
+test('a journey-map-only page satisfies the journey carrier requirement', () => {
+  const definition = cloneDefinition()
+  for (const locale of ['en', 'ar'] as const) {
+    definition.locales[locale].sections = definition.locales[
+      locale
+    ].sections.filter((section) => section.type !== 'use-case-sequence')
+  }
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      { mode: 'draft' },
+    ),
+    { ok: true, errors: [] },
+  )
+})
+
+test('a use-case-only page satisfies the journey carrier requirement', () => {
+  const definition = cloneDefinition()
+  definition.world.signatureComposition.sectionIds = ['sequence']
+  for (const locale of ['en', 'ar'] as const) {
+    getSection(definition, locale, 'use-case-sequence').answers = ['journey']
+    definition.locales[locale].sections = definition.locales[
+      locale
+    ].sections.filter((section) => section.type !== 'journey-map')
+  }
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      { mode: 'draft' },
+    ),
+    { ok: true, errors: [] },
+  )
+})
+
+test('content-too-thin rejects a page without either journey carrier', () => {
+  const definition = cloneDefinition()
+  definition.world.signatureComposition.sectionIds = ['system']
+  for (const locale of ['en', 'ar'] as const) {
+    definition.locales[locale].sections = definition.locales[
+      locale
+    ].sections.filter(
+      (section) =>
+        section.type !== 'journey-map' &&
+        section.type !== 'use-case-sequence',
+    )
+  }
+
+  const result = validateIndustryPageDefinition(
+    definition as IndustryPageDefinition,
+    { mode: 'draft' },
+  )
+  assert.ok(
+    result.errors.some(
+      (error) =>
+        error.code === 'content-too-thin' &&
+        error.path.endsWith('.sections.journey-carrier'),
+    ),
+    `missing journey carrier returned ${result.errors.map((error) => `${error.code}:${error.path}`).join(', ')}`,
+  )
 })
 
 test('service-count requires two to four unique canonical services', () => {
