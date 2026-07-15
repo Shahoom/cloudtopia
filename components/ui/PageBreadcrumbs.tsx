@@ -18,15 +18,18 @@ export function PageBreadcrumbs({
   locale,
   items,
   className = '',
+  ariaLabel,
 }: {
   locale: string
   items: BreadcrumbCrumb[]
   className?: string
+  ariaLabel?: string
 }) {
   const homeLabel = locale === 'ar' ? 'الرئيسية' : 'Home'
+  const navigationLabel = ariaLabel ?? (locale === 'ar' ? 'مسار التنقل' : 'Breadcrumb')
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={navigationLabel}
       className={`flex flex-wrap items-center gap-2 text-sm font-semibold text-neutral-500 ${className}`}
     >
       <Link href={localePath(locale, '/')} className="hover:text-primary-600">
