@@ -1106,6 +1106,17 @@ test('claim-expired compares recheckAt with the injected publication date', () =
   )
 })
 
+test('claim-source-missing rejects a non-calendar recheck date', () => {
+  const definition = definitionWithVisibleClaim()
+  definition.claims[0].recheckAt = '2026-02-30'
+
+  expectPublicationCode(
+    'claim-source-missing',
+    definition as IndustryPageDefinition,
+    makePublicationOptions([definition as IndustryPageDefinition]),
+  )
+})
+
 test('missing-locale rejects a definition without either complete locale object', () => {
   expectDraftCode('missing-locale', (definition) => {
     delete (definition.locales as Partial<MutableDefinition['locales']>).ar
@@ -1116,6 +1127,72 @@ test('localized-copy-missing rejects whitespace-only visible copy', () => {
   expectDraftCode('localized-copy-missing', (definition) => {
     definition.locales.en.hero.h1 = '   '
   })
+})
+
+test('malformed localized structures return issues instead of throwing', () => {
+  const cases: readonly [
+    string,
+    (definition: MutableDefinition) => void,
+  ][] = [
+    ['missing H1', (definition) => {
+      delete (definition.locales.en.hero as Partial<
+        MutableDefinition['locales']['en']['hero']
+      >).h1
+    }],
+    ['missing primary CTA', (definition) => {
+      delete (definition.locales.en.hero as Partial<
+        MutableDefinition['locales']['en']['hero']
+      >).primaryCta
+    }],
+    ['missing sections array', (definition) => {
+      delete (definition.locales.en as Partial<
+        MutableDefinition['locales']['en']
+      >).sections
+    }],
+    ['missing section answers', (definition) => {
+      delete (definition.locales.en.sections[0] as Partial<
+        MutableDefinition['locales']['en']['sections'][number]
+      >).answers
+    }],
+    ['missing journey stages', (definition) => {
+      delete (getSection(definition, 'en', 'journey-map') as Partial<
+        MutableDeep<SectionByType<'journey-map'>>
+      >).stages
+    }],
+    ['missing layer inputs', (definition) => {
+      const layer = getSection(definition, 'en', 'system-blueprint').layers[0]
+      delete (layer as Partial<typeof layer>).inputs
+    }],
+    ['missing service anchors', (definition) => {
+      delete (getSection(definition, 'en', 'service-bridge') as Partial<
+        MutableDeep<SectionByType<'service-bridge'>>
+      >).serviceAnchors
+    }],
+    ['missing FAQ answer', (definition) => {
+      const item = getSection(definition, 'en', 'faq').items[0]
+      delete (item as Partial<typeof item>).answer
+    }],
+    ['non-object section', (definition) => {
+      definition.locales.en.sections = [null as never]
+    }],
+  ]
+
+  for (const [name, mutate] of cases) {
+    const definition = cloneDefinition()
+    mutate(definition)
+    let result: ReturnType<typeof validateIndustryPageDefinition> | undefined
+
+    assert.doesNotThrow(() => {
+      result = validateIndustryPageDefinition(
+        definition as IndustryPageDefinition,
+        { mode: 'draft' },
+      )
+    }, name)
+    assert.ok(
+      result?.errors.some((error) => error.code === 'localized-copy-missing'),
+      `${name} did not return localized-copy-missing`,
+    )
+  }
 })
 
 test('parity-drift rejects unstable EN and AR semantic IDs', () => {
@@ -1160,10 +1237,82 @@ test('duplicate-localized-copy rejects repeated FAQ questions inside one locale'
   })
 })
 
-test('content-too-thin rejects a hero introduction that does not answer first', () => {
-  expectDraftCode('content-too-thin', (definition) => {
-    definition.locales.en.hero.intro = 'What could we build?'
-  })
+test('registry uniqueness rejects every required locale-scoped repeat', () => {
+  const cases: readonly [
+    string,
+    (definition: MutableDefinition) => void,
+  ][] = [
+    ['SEO title', (definition) => {
+      definition.locales.en.seo.title = definitionFixture.locales.en.seo.title
+    }],
+    ['SEO description', (definition) => {
+      definition.locales.en.seo.description =
+        definitionFixture.locales.en.seo.description
+    }],
+    ['H1', (definition) => {
+      definition.locales.en.hero.h1 = definitionFixture.locales.en.hero.h1
+    }],
+    ['FAQ question', (definition) => {
+      getSection(definition, 'en', 'faq').items[0].question =
+        getSection(cloneDefinition(), 'en', 'faq').items[0].question
+    }],
+    ['CTA label', (definition) => {
+      const label = definitionFixture.locales.en.hero.primaryCta.label
+      definition.locales.en.hero.primaryCta.label = label
+      getSection(definition, 'en', 'closing-cta').primary.label = label
+    }],
+    ['localized content hash', (definition) => {
+      Object.assign(definition, structuredClone(definitionFixture))
+    }],
+    ['rhythm fingerprint', (definition) => {
+      definition.world.heroTreatment = definitionFixture.world.heroTreatment
+      definition.world.signatureComposition.id =
+        definitionFixture.world.signatureComposition.id
+      for (const locale of ['en', 'ar'] as const) {
+        getSection(definition, locale, 'journey-map').variant = 'dual-lane'
+        getSection(definition, locale, 'constraints').variant = 'boundary-map'
+      }
+    }],
+  ]
+
+  for (const [name, mutate] of cases) {
+    const definition = structuredClone(
+      logisticsFixture,
+    ) as unknown as MutableDefinition
+    mutate(definition)
+
+    const result = validateIndustryPageRegistry({
+      ...pilotRegistry,
+      'logistics-supply-chain': definition as IndustryPageDefinition,
+    }, { mode: 'draft' })
+
+    assert.ok(
+      result.errors.some((error) => error.code === 'duplicate-localized-copy'),
+      `${name} repeat was not rejected: ${result.errors.map((error) => error.code).join(', ')}`,
+    )
+  }
+})
+
+test('content-too-thin validates the opening sentence as answer-first', () => {
+  for (const intro of [
+    'What could we build?',
+    'What could we build? Begin with one bounded patient handoff.',
+  ]) {
+    expectDraftCode('content-too-thin', (definition) => {
+      definition.locales.en.hero.intro = intro
+    })
+  }
+
+  const answerFirst = cloneDefinition()
+  answerFirst.locales.en.hero.intro =
+    'Begin with one bounded patient handoff. What should follow next?'
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      answerFirst as IndustryPageDefinition,
+      { mode: 'draft' },
+    ),
+    { ok: true, errors: [] },
+  )
 })
 
 test('content-too-thin requires three to six blueprint layers', () => {
@@ -1194,6 +1343,20 @@ test('prohibited-copy rejects unfinished markers and generic English filler', ()
       definition.locales.en.hero.intro = copy
     })
   }
+})
+
+test('prohibited-copy permits qualified digital transformation wording', () => {
+  const definition = cloneDefinition()
+  definition.locales.en.hero.intro =
+    'A digital transformation plan bounded to one patient handoff.'
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      { mode: 'draft' },
+    ),
+    { ok: true, errors: [] },
+  )
 })
 
 test('duplicate-section-id rejects repeated recipe IDs', () => {
@@ -1380,6 +1543,36 @@ test('faq-count requires four to seven visible questions', () => {
       getSection(definition, locale, 'faq').items.splice(3)
     }
   })
+})
+
+test('required content sections cannot be deleted', () => {
+  const cases = [
+    ['system-blueprint', 'content-too-thin'],
+    ['use-case-sequence', 'content-too-thin'],
+    ['faq', 'faq-count'],
+    ['service-bridge', 'service-count'],
+  ] as const satisfies readonly [
+    IndustrySection['type'],
+    DraftIndustryValidationCode,
+  ][]
+
+  for (const [type, code] of cases) {
+    const definition = cloneDefinition()
+    for (const locale of ['en', 'ar'] as const) {
+      definition.locales[locale].sections = definition.locales[
+        locale
+      ].sections.filter((section) => section.type !== type)
+    }
+
+    const result = validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      { mode: 'draft' },
+    )
+    assert.ok(
+      result.errors.some((error) => error.code === code),
+      `missing ${type} did not return ${code}: ${result.errors.map((error) => error.code).join(', ')}`,
+    )
+  }
 })
 
 test('service-count requires two to four unique canonical services', () => {

@@ -11,6 +11,7 @@ import {
   type IndustryTheme,
   type IndustryValidationOptions,
   type LocalizedIndustryPage,
+  rhythmFingerprint,
 } from './types'
 
 export const DRAFT_INDUSTRY_VALIDATION_CODES = [
@@ -103,6 +104,7 @@ export class IndustryPageValidationError extends Error {
 }
 
 type LocaleKey = 'en' | 'ar'
+type UnknownRecord = Record<string, unknown>
 
 const LOCALES = ['en', 'ar'] as const
 const REQUIRED_SEMANTIC_QUESTIONS = [
@@ -137,6 +139,208 @@ function validationResult(
   return errors.length === 0
     ? { ok: true, errors: [] }
     : { ok: false, errors }
+}
+
+function isRecord(value: unknown): value is UnknownRecord {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0
+}
+
+function hasRequiredStrings(
+  value: UnknownRecord,
+  keys: readonly string[],
+): boolean {
+  return keys.every((key) => isNonEmptyString(value[key]))
+}
+
+function hasOptionalString(value: UnknownRecord, key: string): boolean {
+  return !Object.hasOwn(value, key) || isNonEmptyString(value[key])
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every(isNonEmptyString)
+}
+
+function isRecordArray(
+  value: unknown,
+  predicate: (item: UnknownRecord) => boolean,
+): boolean {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => isRecord(item) && predicate(item))
+  )
+}
+
+function isIndustrySectionShape(value: unknown): value is IndustrySection {
+  if (
+    !isRecord(value) ||
+    !hasRequiredStrings(value, ['id', 'type', 'variant', 'title', 'intro']) ||
+    !hasOptionalString(value, 'eyebrow') ||
+    !isStringArray(value.answers)
+  ) {
+    return false
+  }
+
+  switch (value.type) {
+    case 'pressure-field':
+      return isRecordArray(value.signals, (signal) =>
+        hasRequiredStrings(signal, ['id', 'label', 'description']),
+      )
+    case 'journey-map':
+      return (
+        isRecordArray(value.stages, (stage) =>
+          hasRequiredStrings(stage, ['id', 'label', 'description']) &&
+          hasOptionalString(stage, 'actor'),
+        ) &&
+        (!Object.hasOwn(value, 'lanes') ||
+          isRecordArray(value.lanes, (lane) =>
+            hasRequiredStrings(lane, ['id', 'label']) &&
+            isStringArray(lane.stageIds),
+          ))
+      )
+    case 'system-blueprint':
+      return isRecordArray(value.layers, (layer) =>
+        hasRequiredStrings(layer, [
+          'id',
+          'label',
+          'description',
+          'handoff',
+          'outcome',
+        ]) && isStringArray(layer.inputs),
+      )
+    case 'use-case-sequence':
+      return isRecordArray(value.steps, (step) =>
+        hasRequiredStrings(step, ['id', 'label', 'description']) &&
+        hasOptionalString(step, 'owner'),
+      )
+    case 'service-bridge':
+      return (
+        isStringArray(value.serviceIds) &&
+        isRecordArray(value.serviceAnchors, (anchor) =>
+          hasRequiredStrings(anchor, ['serviceId', 'label']),
+        ) &&
+        isStringArray(value.relatedIndustryIds) &&
+        isRecordArray(value.industryAnchors, (anchor) =>
+          hasRequiredStrings(anchor, ['industryId', 'label']),
+        )
+      )
+    case 'evidence':
+      if (value.variant === 'verified-project') {
+        return hasRequiredStrings(value, [
+          'projectId',
+          'approval',
+          'provenance',
+        ])
+      }
+      if (value.variant === 'annotated-model') {
+        return isRecordArray(value.observations, (observation) =>
+          hasRequiredStrings(observation, ['id', 'label', 'description']),
+        )
+      }
+      return true
+    case 'constraints':
+      return isRecordArray(value.items, (item) =>
+        hasRequiredStrings(item, [
+          'id',
+          'label',
+          'responsibility',
+          'dependency',
+        ]) && hasOptionalString(item, 'recovery'),
+      )
+    case 'regional-fit':
+      return isRecordArray(value.items, (item) =>
+        hasRequiredStrings(item, ['id', 'label', 'description']),
+      )
+    case 'faq':
+      return isRecordArray(value.items, (item) =>
+        hasRequiredStrings(item, ['id', 'question', 'answer']),
+      )
+    case 'closing-cta':
+      return (
+        isNonEmptyString(value.decisionCopy) &&
+        isRecord(value.primary) &&
+        hasRequiredStrings(value.primary, ['label', 'href']) &&
+        isRecord(value.secondary) &&
+        hasRequiredStrings(value.secondary, ['label', 'serviceId'])
+      )
+    case 'signature':
+      return true
+    default:
+      return true
+  }
+}
+
+function isLocalizedPageShape(
+  value: unknown,
+): value is LocalizedIndustryPage {
+  if (!isRecord(value) || !isRecord(value.seo) || !isRecord(value.hero)) {
+    return false
+  }
+
+  const hero = value.hero
+  return (
+    hasRequiredStrings(value.seo, ['title', 'description']) &&
+    isNonEmptyString(value.breadcrumbLabel) &&
+    hasRequiredStrings(hero, [
+      'worldLabel',
+      'eyebrow',
+      'h1',
+      'intro',
+      'sceneSummary',
+    ]) &&
+    isRecord(hero.primaryCta) &&
+    hasRequiredStrings(hero.primaryCta, ['label', 'href']) &&
+    isRecord(hero.secondaryCta) &&
+    hasRequiredStrings(hero.secondaryCta, ['label', 'serviceId']) &&
+    isRecordArray(hero.sceneStages, (stage) =>
+      hasRequiredStrings(stage, ['id', 'label']) &&
+      hasOptionalString(stage, 'state'),
+    ) &&
+    Array.isArray(value.sections) &&
+    value.sections.every(isIndustrySectionShape)
+  )
+}
+
+function openingSentenceIsQuestion(value: string): boolean {
+  const firstBoundary = /[.!?\u061f]/u.exec(value.trim())
+  return firstBoundary?.[0] === '?' || firstBoundary?.[0] === '\u061f'
+}
+
+function hasUnqualifiedDigitalTransformation(value: string): boolean {
+  const phrase = /\bdigital transformation\b/giu
+
+  for (const match of value.matchAll(phrase)) {
+    const trailingCopy = value.slice((match.index ?? 0) + match[0].length).trimStart()
+    const hasQualifier = /^(?:plan|programme|program|roadmap|scope|work|for|of|in|across|within|focused\s+on|bounded\s+to)\b/iu.test(
+      trailingCopy,
+    )
+    if (!hasQualifier) return true
+  }
+
+  return false
+}
+
+function calendarDateEnd(value: unknown): number | null {
+  if (typeof value !== 'string') return null
+
+  const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/u.exec(value)
+  if (!match) return null
+
+  const year = Number(match[1])
+  const month = Number(match[2])
+  const day = Number(match[3])
+  const date = new Date(0)
+  date.setUTCFullYear(year, month - 1, day)
+  date.setUTCHours(23, 59, 59, 999)
+
+  return date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
+    ? date.getTime()
+    : null
 }
 
 function collectStrings(value: unknown, strings: string[] = []): string[] {
@@ -191,25 +395,6 @@ function semanticProjection(value: unknown): unknown {
   }
 
   return Object.keys(projected).length > 0 ? projected : undefined
-}
-
-function localizedCopyFingerprint(page: LocalizedIndustryPage): string {
-  return JSON.stringify({
-    seo: [page.seo?.title, page.seo?.description],
-    breadcrumbLabel: page.breadcrumbLabel,
-    hero: [
-      page.hero?.worldLabel,
-      page.hero?.eyebrow,
-      page.hero?.h1,
-      page.hero?.intro,
-      page.hero?.sceneSummary,
-    ],
-    sections: sectionsFor(page).map((section) => [
-      section.type,
-      section.title,
-      section.intro,
-    ]),
-  })
 }
 
 function normalizeCopy(value: string): string {
@@ -294,7 +479,11 @@ function isCompleteReviewRecord(review: {
   )
 }
 
-function isCompleteClaimSource(claim: IndustryClaimSource): boolean {
+function isCompleteClaimSource(
+  claim: unknown,
+): claim is IndustryClaimSource {
+  if (!isRecord(claim)) return false
+
   const requiredStrings = [
     claim.id,
     claim.wording,
@@ -314,7 +503,9 @@ function isCompleteClaimSource(claim: IndustryClaimSource): boolean {
       claim.locale === 'both') &&
     (claim.approval === 'approved' ||
       claim.approval === 'rejected' ||
-      claim.approval === 'pending')
+      claim.approval === 'pending') &&
+    calendarDateEnd(claim.reviewedAt) !== null &&
+    calendarDateEnd(claim.recheckAt) !== null
   )
 }
 
@@ -384,35 +575,56 @@ function validateDefinition(
   }
 
   const candidate = definition as unknown as {
-    locales?: Partial<Record<LocaleKey, LocalizedIndustryPage>>
+    locales?: unknown
     world?: IndustryPageDefinition['world']
-    assets?: IndustryPageDefinition['assets']
-    claims?: IndustryPageDefinition['claims']
+    assets?: unknown
+    claims?: unknown
   }
-  const locales = candidate.locales ?? {}
+  const rawLocales = isRecord(candidate.locales) ? candidate.locales : {}
+  const locales: Partial<Record<LocaleKey, LocalizedIndustryPage>> = {}
+  const rawAssets = Array.isArray(candidate.assets) ? candidate.assets : []
+  const assets = rawAssets.filter(isRecord) as unknown as Array<
+    IndustryPageDefinition['assets'][number]
+  >
+  const claims = Array.isArray(candidate.claims) ? candidate.claims : []
 
   for (const locale of LOCALES) {
-    if (!locales[locale] || typeof locales[locale] !== 'object') {
+    const page = rawLocales[locale]
+    if (!isRecord(page)) {
       add(
         'missing-locale',
         'locales.' + locale,
         'A complete localized page is required.',
       )
+      continue
     }
-  }
 
-  for (const locale of LOCALES) {
-    const page = locales[locale]
-    if (
-      page &&
-      collectStrings(page).some((value) => value.trim().length === 0)
-    ) {
+    if (!isLocalizedPageShape(page)) {
       add(
         'localized-copy-missing',
         'locales.' + locale,
-        'Localized visible copy cannot be blank.',
+        'Every required localized object, string, and array must be complete.',
       )
+      continue
     }
+
+    locales[locale] = page
+  }
+
+  if (!Array.isArray(candidate.assets) || assets.length !== rawAssets.length) {
+    add(
+      'invalid-variant',
+      'assets',
+      'Assets must use complete authored-scene or OG-image records.',
+    )
+  }
+
+  if (!Array.isArray(candidate.claims)) {
+    add(
+      'claim-source-missing',
+      'claims',
+      'Claim sources must be provided as an array.',
+    )
   }
 
   if (locales.en && locales.ar) {
@@ -447,7 +659,7 @@ function validateDefinition(
     const page = locales[locale]
     if (!page) continue
 
-    if (/[\?\u061f]\s*$/u.test(page.hero?.intro ?? '')) {
+    if (openingSentenceIsQuestion(page.hero.intro)) {
       add(
         'content-too-thin',
         'locales.' + locale + '.hero.intro',
@@ -455,21 +667,38 @@ function validateDefinition(
       )
     }
 
-    for (const section of sectionsFor(page)) {
-      if (
-        section.type === 'system-blueprint' &&
-        (section.layers.length < 3 || section.layers.length > 6)
-      ) {
+    const blueprintSections = sectionsFor(page).filter(
+      (section) => section.type === 'system-blueprint',
+    )
+    if (blueprintSections.length === 0) {
+      add(
+        'content-too-thin',
+        'locales.' + locale + '.sections.system-blueprint',
+        'A system blueprint with three to six layers is required.',
+      )
+    }
+    for (const section of blueprintSections) {
+      if (section.layers.length < 3 || section.layers.length > 6) {
         add(
           'content-too-thin',
           'locales.' + locale + '.sections.' + section.id + '.layers',
           'A system blueprint requires three to six layers.',
         )
       }
-      if (
-        section.type === 'use-case-sequence' &&
-        (section.steps.length < 3 || section.steps.length > 6)
-      ) {
+    }
+
+    const useCaseSections = sectionsFor(page).filter(
+      (section) => section.type === 'use-case-sequence',
+    )
+    if (useCaseSections.length === 0) {
+      add(
+        'content-too-thin',
+        'locales.' + locale + '.sections.use-case-sequence',
+        'A use-case sequence with three to six steps is required.',
+      )
+    }
+    for (const section of useCaseSections) {
+      if (section.steps.length < 3 || section.steps.length > 6) {
         add(
           'content-too-thin',
           'locales.' + locale + '.sections.' + section.id + '.steps',
@@ -480,12 +709,16 @@ function validateDefinition(
   }
 
   const prohibitedCopyPattern =
-    /\b(?:todo|tbd|fixme|lorem ipsum|innovative|seamless|cutting-edge|digital transformation)\b/iu
+    /\b(?:todo|tbd|fixme|lorem ipsum|innovative|seamless|cutting-edge)\b/iu
   for (const locale of LOCALES) {
     const page = locales[locale]
     if (
       page &&
-      collectStrings(page).some((value) => prohibitedCopyPattern.test(value))
+      collectStrings(page).some(
+        (value) =>
+          prohibitedCopyPattern.test(value) ||
+          hasUnqualifiedDigitalTransformation(value),
+      )
     ) {
       add(
         'prohibited-copy',
@@ -583,7 +816,7 @@ function validateDefinition(
     }
   }
 
-  const authoredScenes = (candidate.assets ?? []).filter(
+  const authoredScenes = assets.filter(
     (asset) => asset.kind === 'authored-scene',
   )
   if (
@@ -599,7 +832,7 @@ function validateDefinition(
   }
 
   if (options.mode === 'publication') {
-    for (const [index, asset] of (candidate.assets ?? []).entries()) {
+    for (const [index, asset] of assets.entries()) {
       if (asset.kind !== 'og-image') continue
 
       const expectedPath =
@@ -639,8 +872,14 @@ function validateDefinition(
     }
   }
 
-  const signatureSectionIds =
-    candidate.world?.signatureComposition?.sectionIds ?? []
+  const rawSignatureSectionIds =
+    candidate.world?.signatureComposition?.sectionIds
+  const signatureIdsHaveValidShape =
+    Array.isArray(rawSignatureSectionIds) &&
+    rawSignatureSectionIds.every(isNonEmptyString)
+  const signatureSectionIds = signatureIdsHaveValidShape
+    ? rawSignatureSectionIds
+    : []
   const signatureIdsAreUnique =
     new Set(signatureSectionIds).size === signatureSectionIds.length
   const signatureIdsExist =
@@ -653,7 +892,11 @@ function validateDefinition(
       )
       return signatureSectionIds.every((sectionId) => availableIds.has(sectionId))
     })
-  if (!signatureIdsAreUnique || !signatureIdsExist) {
+  if (
+    !signatureIdsHaveValidShape ||
+    !signatureIdsAreUnique ||
+    !signatureIdsExist
+  ) {
     add(
       'signature-composition-invalid',
       'world.signatureComposition.sectionIds',
@@ -824,11 +1067,18 @@ function validateDefinition(
     const page = locales[locale]
     if (!page) continue
 
-    for (const section of sectionsFor(page)) {
-      if (
-        section.type === 'faq' &&
-        (section.items.length < 4 || section.items.length > 7)
-      ) {
+    const faqSections = sectionsFor(page).filter(
+      (section) => section.type === 'faq',
+    )
+    if (faqSections.length === 0) {
+      add(
+        'faq-count',
+        'locales.' + locale + '.sections.faq',
+        'A FAQ section with four to seven visible questions is required.',
+      )
+    }
+    for (const section of faqSections) {
+      if (section.items.length < 4 || section.items.length > 7) {
         add(
           'faq-count',
           'locales.' + locale + '.sections.' + section.id + '.items',
@@ -842,9 +1092,17 @@ function validateDefinition(
     const page = locales[locale]
     if (!page) continue
 
-    for (const section of sectionsFor(page)) {
-      if (section.type !== 'service-bridge') continue
-
+    const bridgeSections = sectionsFor(page).filter(
+      (section) => section.type === 'service-bridge',
+    )
+    if (bridgeSections.length === 0) {
+      add(
+        'service-count',
+        'locales.' + locale + '.sections.service-bridge',
+        'A service bridge with two to four services is required.',
+      )
+    }
+    for (const section of bridgeSections) {
       const uniqueServices = new Set(section.serviceIds)
       if (
         uniqueServices.size < 2 ||
@@ -860,7 +1118,7 @@ function validateDefinition(
     }
   }
 
-  for (const [index, claim] of (candidate.claims ?? []).entries()) {
+  for (const [index, claim] of claims.entries()) {
     if (!isCompleteClaimSource(claim)) {
       add(
         'claim-source-missing',
@@ -941,7 +1199,7 @@ function validateDefinition(
       }
     }
 
-    for (const [index, claim] of (candidate.claims ?? []).entries()) {
+    for (const [index, claim] of claims.entries()) {
       if (!isCompleteClaimSource(claim)) continue
 
       const claimLocales = claim.locale === 'both' ? LOCALES : [claim.locale]
@@ -972,10 +1230,8 @@ function validateDefinition(
         )
       }
 
-      const recheckDeadline = Date.parse(
-        claim.recheckAt + 'T23:59:59.999Z',
-      )
-      if (Number.isFinite(recheckDeadline) && now.getTime() > recheckDeadline) {
+      const recheckDeadline = calendarDateEnd(claim.recheckAt)
+      if (recheckDeadline !== null && now.getTime() > recheckDeadline) {
         add(
           'claim-expired',
           'claims.' + index + '.recheckAt',
@@ -1003,7 +1259,33 @@ export function validateIndustryPageRegistry(
   options: IndustryValidationOptions,
 ): IndustryPageValidationResult {
   const errors: IndustryPageValidationIssue[] = []
-  const fingerprints = new Map<string, string>()
+  const uniqueValues = new Map<string, string>()
+  const registerUniqueValue = (
+    field: string,
+    locale: LocaleKey,
+    value: string,
+    slug: string,
+    path: string,
+  ): void => {
+    const key = locale + '\u0000' + field + '\u0000' + value
+    const previousSlug = uniqueValues.get(key)
+    if (previousSlug && previousSlug !== slug) {
+      errors.push({
+        code: 'duplicate-localized-copy',
+        path,
+        message:
+          field +
+          ' duplicates ' +
+          previousSlug +
+          ' for locale ' +
+          locale +
+          '.',
+      })
+      return
+    }
+
+    uniqueValues.set(key, slug)
+  }
 
   for (const slug of Object.keys(industryManifest) as (keyof IndustryPageRegistry)[]) {
     const definition = registry[slug]
@@ -1016,30 +1298,108 @@ export function validateIndustryPageRegistry(
       })
     }
 
-    const locales = (
-      definition as unknown as {
-        locales?: Partial<Record<LocaleKey, LocalizedIndustryPage>>
-      }
-    ).locales
-    for (const locale of LOCALES) {
-      const page = locales?.[locale]
-      if (!page) continue
+    const rawDefinition = definition as unknown as {
+      locales?: unknown
+      world?: unknown
+    }
+    const locales = isRecord(rawDefinition.locales)
+      ? rawDefinition.locales
+      : {}
+    const world = isRecord(rawDefinition.world) ? rawDefinition.world : null
+    const signatureComposition =
+      world && isRecord(world.signatureComposition)
+        ? world.signatureComposition
+        : null
+    const hasRhythmShape =
+      isLocalizedPageShape(locales.en) &&
+      world !== null &&
+      signatureComposition !== null &&
+      isNonEmptyString(world.heroTreatment) &&
+      isNonEmptyString(signatureComposition.id)
+    const definitionRhythm = hasRhythmShape
+      ? rhythmFingerprint(definition)
+      : null
 
-      const fingerprint = locale + '\u0000' + localizedCopyFingerprint(page)
-      const previousSlug = fingerprints.get(fingerprint)
-      if (previousSlug) {
-        errors.push({
-          code: 'duplicate-localized-copy',
-          path: String(slug) + '.locales.' + locale,
-          message:
-            'Localized registry copy duplicates ' +
-            previousSlug +
-            ' for locale ' +
-            locale +
-            '.',
-        })
-      } else {
-        fingerprints.set(fingerprint, String(slug))
+    for (const locale of LOCALES) {
+      const page = locales[locale]
+      if (!isLocalizedPageShape(page)) continue
+
+      const slugPath = String(slug) + '.locales.' + locale
+      const copyValues = [
+        ['seo-title', page.seo.title, slugPath + '.seo.title'],
+        ['seo-description', page.seo.description, slugPath + '.seo.description'],
+        ['h1', page.hero.h1, slugPath + '.hero.h1'],
+      ] as const
+      for (const [field, value, path] of copyValues) {
+        registerUniqueValue(
+          field,
+          locale,
+          normalizeCopy(value),
+          String(slug),
+          path,
+        )
+      }
+
+      for (const section of sectionsFor(page)) {
+        if (section.type === 'faq') {
+          for (const [index, item] of section.items.entries()) {
+            registerUniqueValue(
+              'faq-question',
+              locale,
+              normalizeCopy(item.question),
+              String(slug),
+              slugPath + '.sections.' + section.id + '.items.' + index + '.question',
+            )
+          }
+        }
+      }
+
+      const closingSections = sectionsFor(page).filter(
+        (section) => section.type === 'closing-cta',
+      )
+      const ctaLabels = [
+        page.hero.primaryCta.label,
+        page.hero.secondaryCta.label,
+        ...closingSections.flatMap((section) => [
+          section.primary.label,
+          section.secondary.label,
+        ]),
+      ]
+      for (const [index, label] of ctaLabels.entries()) {
+        registerUniqueValue(
+          'cta-label',
+          locale,
+          normalizeCopy(label),
+          String(slug),
+          slugPath + '.ctaLabels.' + index,
+        )
+      }
+
+      const manifestEntry = industryManifest[definition.slug]
+      if (manifestEntry) {
+        registerUniqueValue(
+          'content-hash',
+          locale,
+          contentHash({
+            manifest: {
+              label: manifestEntry.label[locale],
+              navSummary: manifestEntry.navSummary[locale],
+            },
+            page,
+          }),
+          String(slug),
+          slugPath + '.contentHash',
+        )
+      }
+
+      if (definitionRhythm) {
+        registerUniqueValue(
+          'rhythm-fingerprint',
+          locale,
+          definitionRhythm,
+          String(slug),
+          slugPath + '.rhythmFingerprint',
+        )
       }
     }
   }
