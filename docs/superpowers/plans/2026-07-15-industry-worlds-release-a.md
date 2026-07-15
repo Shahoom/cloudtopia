@@ -823,7 +823,7 @@ export type EffectiveIndustrySeo = {
   title: string
   description: string
   canonical: string
-  languages: Record<'en' | 'ar' | 'x-default', string>
+  languages: Partial<Record<'en' | 'ar' | 'x-default', string>>
   index: boolean
   follow: boolean
   ogImages: ReturnType<typeof ogImagesFor>
