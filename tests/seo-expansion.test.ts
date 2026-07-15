@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import test from 'node:test'
+import type { IndustrySlug } from '../lib/industries/slugs.ts'
 import { locations, locationSlugs } from '../lib/seo/locations.ts'
 
 const targetLocationSlugs = [
@@ -32,7 +33,7 @@ const targetIndustrySlugs = [
   'professional-services',
   'logistics-supply-chain',
   'government-public-sector',
-]
+] as const satisfies readonly IndustrySlug[]
 
 test('regional SEO locations cover the target Arabic-speaking markets with keyword data', () => {
   assert.deepEqual([...locationSlugs].sort(), [...targetLocationSlugs].sort())
