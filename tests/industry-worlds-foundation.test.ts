@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import test from 'node:test'
-import { INDUSTRY_SLUGS, isIndustrySlug } from '../lib/industries/slugs.ts'
+import { industryPageRegistry } from '../lib/industries/definitions/registry.ts'
+import { getIndustryPage } from '../lib/industries/get-industry-page.ts'
+import { INDUSTRY_SLUGS, isIndustrySlug, type IndustrySlug } from '../lib/industries/slugs.ts'
 import { CANONICAL_SERVICE_TARGETS } from '../lib/industries/service-targets.ts'
 import { PROJECT_IDS } from '../lib/industries/proof-targets.ts'
 import { getIndustryManifestEntry, industryManifest } from '../lib/industries/manifest.ts'
@@ -56,4 +58,30 @@ test('the manifest remains client-safe and prose-free', () => {
   assert.doesNotMatch(source, /server-only/)
   assert.doesNotMatch(source, /definitions\//)
   assert.doesNotMatch(source, /sections\s*:/)
+})
+
+test('the staged registry resolves every known locale route to legacy and rejects unknown slugs', () => {
+  assert.deepEqual(Object.keys(industryPageRegistry), INDUSTRY_SLUGS)
+  assert.deepEqual(Object.values(industryPageRegistry), INDUSTRY_SLUGS.map(() => null))
+
+  let resolutionCount = 0
+  for (const slug of INDUSTRY_SLUGS) {
+    for (const locale of ['en', 'ar'] as const) {
+      const resolution = getIndustryPage(slug, locale)
+
+      assert.equal(resolution.kind, 'legacy')
+      assert.equal(resolution.slug, slug)
+      if (resolution.kind === 'legacy') {
+        assert.equal(resolution.legacy.slug, slug)
+        assert.equal(resolution.legacy.locale, locale)
+      }
+      resolutionCount += 1
+    }
+  }
+
+  assert.equal(resolutionCount, 26)
+  assert.throws(
+    () => getIndustryPage('unknown-sector' as IndustrySlug, 'en'),
+    /Unknown industry slug: unknown-sector/,
+  )
 })
