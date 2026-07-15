@@ -1,0 +1,1642 @@
+{
+  "fintech": {
+    "en": {
+      "name": "FinTech",
+      "heroTitle": "Secure digital products for finance, payments, and customer operations.",
+      "description": "We support finance teams with polished product websites, onboarding flows, dashboards, integrations, and explainable customer experiences.",
+      "problems": [
+        "Complex products need clearer explanation before users trust them.",
+        "Manual onboarding slows qualified leads and support teams.",
+        "Dashboards and integrations need careful access and audit thinking."
+      ],
+      "useCases": [
+        {
+          "title": "Product websites",
+          "description": "Clear positioning, pricing, FAQ, and lead capture."
+        },
+        {
+          "title": "Customer onboarding",
+          "description": "Guided forms, document collection, and status tracking."
+        },
+        {
+          "title": "Admin dashboards",
+          "description": "Role-aware views for customers, requests, and reporting."
+        },
+        {
+          "title": "Payment integrations",
+          "description": "Checkout and subscription flows aligned to local markets."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Do you handle regulated finance work?",
+          "answer": "We build the digital product surfaces and integrations while coordinating with your compliance requirements and specialist advisors."
+        },
+        {
+          "question": "Can you support Arabic onboarding?",
+          "answer": "Yes. We design bilingual flows with field labels, help text, validation, and document steps that work naturally in Arabic and English."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "E-commerce Stores",
+          "href": "/services/ecommerce-development"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-cyan-700",
+        "tint": "bg-cyan-50",
+        "workflow": "Secure onboarding",
+        "heroImage": "/images/homepage/Finance.png",
+        "heroAlt": "FinTech industry visual",
+        "sceneDescription": "Tailored digital scene for FinTech"
+      }
+    },
+    "ar": {
+      "name": "التقنية المالية",
+      "heroTitle": "منتجات رقمية آمنة للتمويل والمدفوعات وعمليات العملاء.",
+      "description": "ندعم فرق التمويل بمواقع منتجات مصقولة، مسارات انضمام، لوحات، تكاملات، وتجارب عملاء واضحة.",
+      "problems": [
+        "المنتجات المعقدة تحتاج شرحاً أوضح قبل أن يثق بها المستخدمون.",
+        "الانضمام اليدوي يبطئ العملاء المؤهلين وفرق الدعم.",
+        "اللوحات والتكاملات تحتاج تفكيراً دقيقاً في الوصول والتدقيق."
+      ],
+      "useCases": [
+        {
+          "title": "مواقع المنتجات",
+          "description": "تموضع واضح، أسعار، أسئلة، وجمع عملاء محتملين."
+        },
+        {
+          "title": "انضمام العملاء",
+          "description": "نماذج موجهة، جمع مستندات، وتتبع الحالة."
+        },
+        {
+          "title": "لوحات الإدارة",
+          "description": "عروض حسب الصلاحية للعملاء والطلبات والتقارير."
+        },
+        {
+          "title": "تكاملات الدفع",
+          "description": "مسارات دفع واشتراك متوافقة مع الأسواق المحلية."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تتعاملون مع أعمال مالية منظمة؟",
+          "answer": "نبني واجهات المنتج الرقمية والتكاملات مع التنسيق مع متطلبات الامتثال ومستشاريكم المتخصصين."
+        },
+        {
+          "question": "هل تدعمون انضماماً عربياً؟",
+          "answer": "نعم. نصمم مسارات ثنائية اللغة بعناوين حقول ونصوص مساعدة وتحقق وخطوات مستندات تعمل طبيعياً بالعربية والإنجليزية."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "متاجر إلكترونية",
+          "href": "/ar/services/ecommerce-development"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-cyan-700",
+        "tint": "bg-cyan-50",
+        "workflow": "انضمام آمن",
+        "heroImage": "/images/homepage/Finance.png",
+        "heroAlt": "التقنية المالية صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع التقنية المالية"
+      }
+    }
+  },
+  "ecommerce-retail": {
+    "en": {
+      "name": "E-commerce & Retail",
+      "heroTitle": "Commerce systems built for catalogs, checkout, inventory, and growth.",
+      "description": "CloudTopia builds online stores, retail workflows, inventory systems, and growth content for regional and global sellers.",
+      "problems": [
+        "Stores launch without local payment, tax, or delivery readiness.",
+        "Inventory, orders, and customer service live in disconnected tools.",
+        "Arabic product content is often weak or missing."
+      ],
+      "useCases": [
+        {
+          "title": "Online stores",
+          "description": "Catalog, checkout, shipping, and payment setup."
+        },
+        {
+          "title": "Inventory tools",
+          "description": "Stock tracking, reorder alerts, and operations dashboards."
+        },
+        {
+          "title": "Customer loyalty",
+          "description": "Accounts, offers, email flows, and repeat purchase journeys."
+        },
+        {
+          "title": "Retail landing pages",
+          "description": "Campaign pages for product drops, branches, and seasonal offers."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you integrate regional payment methods?",
+          "answer": "Yes. We plan checkout around your target market, currency, tax setup, and payment gateway availability."
+        },
+        {
+          "question": "Can you connect inventory?",
+          "answer": "Yes. We can connect inventory data to the storefront or build a lightweight stock system if your current tools are not ready."
+        }
+      ],
+      "services": [
+        {
+          "label": "E-commerce Stores",
+          "href": "/services/ecommerce-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Social Media Marketing",
+          "href": "/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-violet-700",
+        "tint": "bg-violet-50",
+        "workflow": "Catalog to checkout",
+        "heroImage": "/images/homepage/E-commerce.webp",
+        "heroAlt": "E-commerce & Retail industry visual",
+        "sceneDescription": "Tailored digital scene for E-commerce & Retail"
+      }
+    },
+    "ar": {
+      "name": "التجارة الإلكترونية والتجزئة",
+      "heroTitle": "أنظمة تجارة للكتالوجات والدفع والمخزون والنمو.",
+      "description": "تبني كلاود توبيا متاجر إلكترونية، سير عمل للتجزئة، أنظمة مخزون، ومحتوى نمو للبائعين إقليمياً وعالمياً.",
+      "problems": [
+        "تنطلق المتاجر دون جاهزية للدفع المحلي أو الضريبة أو التوصيل.",
+        "المخزون والطلبات وخدمة العملاء موزعة بين أدوات منفصلة.",
+        "محتوى المنتجات العربي غالباً ضعيف أو مفقود."
+      ],
+      "useCases": [
+        {
+          "title": "متاجر إلكترونية",
+          "description": "كتالوج، دفع، شحن، وإعداد مدفوعات."
+        },
+        {
+          "title": "أدوات المخزون",
+          "description": "تتبع المخزون، تنبيهات إعادة الطلب، ولوحات تشغيل."
+        },
+        {
+          "title": "ولاء العملاء",
+          "description": "حسابات، عروض، رسائل بريدية، ورحلات شراء متكررة."
+        },
+        {
+          "title": "صفحات هبوط للتجزئة",
+          "description": "صفحات حملات للمنتجات والفروع والعروض الموسمية."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تدمجون طرق دفع إقليمية؟",
+          "answer": "نعم. نخطط الدفع حسب السوق المستهدف والعملة والضريبة وتوفر بوابة الدفع."
+        },
+        {
+          "question": "هل يمكن ربط المخزون؟",
+          "answer": "نعم. يمكننا ربط بيانات المخزون بالمتجر أو بناء نظام مخزون خفيف إذا لم تكن أدواتكم جاهزة."
+        }
+      ],
+      "services": [
+        {
+          "label": "متاجر إلكترونية",
+          "href": "/ar/services/ecommerce-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تسويق التواصل الاجتماعي",
+          "href": "/ar/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-violet-700",
+        "tint": "bg-violet-50",
+        "workflow": "من الكتالوج إلى الدفع",
+        "heroImage": "/images/homepage/E-commerce.webp",
+        "heroAlt": "التجارة الإلكترونية والتجزئة صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع التجارة الإلكترونية والتجزئة"
+      }
+    }
+  },
+  "real-estate": {
+    "en": {
+      "name": "Real Estate",
+      "heroTitle": "Property platforms that turn listings into qualified conversations.",
+      "description": "We build property websites, listing portals, CRM flows, and lead capture systems for agencies, developers, and property teams.",
+      "problems": [
+        "Listings are hard to filter, compare, or trust.",
+        "Leads arrive without budget, location, or timing context.",
+        "Teams lose visibility from inquiry to viewing to offer."
+      ],
+      "useCases": [
+        {
+          "title": "Listing portals",
+          "description": "Searchable properties with maps, galleries, and inquiry flows."
+        },
+        {
+          "title": "Developer websites",
+          "description": "Project pages, brochures, floor plans, and lead forms."
+        },
+        {
+          "title": "Real estate CRM",
+          "description": "Lead stages, viewing notes, follow-ups, and agent assignment."
+        },
+        {
+          "title": "Virtual tour support",
+          "description": "Media-rich listing pages that make properties easier to inspect."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you build property filters?",
+          "answer": "Yes. We can add filters for city, community, price, bedrooms, property type, availability, and custom sales criteria."
+        },
+        {
+          "question": "Can leads go into a CRM?",
+          "answer": "Yes. We can connect forms to your existing CRM or build a focused real estate CRM around your sales process."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-emerald-700",
+        "tint": "bg-emerald-50",
+        "workflow": "Listing to lead",
+        "heroImage": "/images/homepage/Real Estate.webp",
+        "heroAlt": "Real Estate industry visual",
+        "sceneDescription": "Tailored digital scene for Real Estate"
+      }
+    },
+    "ar": {
+      "name": "العقارات",
+      "heroTitle": "منصات عقارية تحول القوائم إلى محادثات مؤهلة.",
+      "description": "نبني مواقع عقارية، بوابات قوائم، مسارات CRM، وأنظمة جمع عملاء للوكالات والمطورين وفرق العقار.",
+      "problems": [
+        "يصعب تصفية القوائم أو مقارنتها أو الوثوق بها.",
+        "تصل العملاء المحتملون دون سياق للميزانية أو الموقع أو التوقيت.",
+        "تفقد الفرق الرؤية من الاستفسار إلى المعاينة إلى العرض."
+      ],
+      "useCases": [
+        {
+          "title": "بوابات قوائم",
+          "description": "عقارات قابلة للبحث مع خرائط ومعارض ومسارات استفسار."
+        },
+        {
+          "title": "مواقع المطورين",
+          "description": "صفحات مشاريع، كتيبات، مخططات، ونماذج عملاء."
+        },
+        {
+          "title": "CRM عقاري",
+          "description": "مراحل العملاء، ملاحظات المعاينة، المتابعة، وتوزيع الوكلاء."
+        },
+        {
+          "title": "دعم الجولات الافتراضية",
+          "description": "صفحات قوائم غنية بالوسائط لتسهيل معاينة العقارات."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تبنون فلاتر للعقارات؟",
+          "answer": "نعم. نضيف فلاتر للمدينة والمنطقة والسعر والغرف والنوع والتوفر ومعايير البيع المخصصة."
+        },
+        {
+          "question": "هل يمكن إرسال العملاء إلى CRM؟",
+          "answer": "نعم. نربط النماذج بنظامكم الحالي أو نبني CRM عقاري مركز حول عملية البيع."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-emerald-700",
+        "tint": "bg-emerald-50",
+        "workflow": "من العقار إلى العميل",
+        "heroImage": "/images/homepage/Real Estate.webp",
+        "heroAlt": "العقارات صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع العقارات"
+      }
+    }
+  },
+  "education": {
+    "en": {
+      "name": "Education",
+      "heroTitle": "Learning platforms and school systems for modern education teams.",
+      "description": "CloudTopia supports schools, course creators, and training businesses with LMS platforms, enrollment flows, portals, and content systems.",
+      "problems": [
+        "Course information is scattered and hard to evaluate.",
+        "Enrollment and payment workflows are manual.",
+        "Students and parents lack a clear digital portal."
+      ],
+      "useCases": [
+        {
+          "title": "LMS platforms",
+          "description": "Lessons, progress, resources, and learner dashboards."
+        },
+        {
+          "title": "Course websites",
+          "description": "Programs, instructors, outcomes, and application flows."
+        },
+        {
+          "title": "Student portals",
+          "description": "Accounts, documents, schedules, and communication."
+        },
+        {
+          "title": "Training dashboards",
+          "description": "Operational reporting for cohorts, attendance, and completion."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you build a custom LMS?",
+          "answer": "Yes. We can build a focused LMS or a lighter portal depending on your course model, team, and launch timeline."
+        },
+        {
+          "question": "Can content be bilingual?",
+          "answer": "Yes. Arabic and English can be first-class content paths with RTL layout and localized course pages."
+        }
+      ],
+      "services": [
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-indigo-700",
+        "tint": "bg-indigo-50",
+        "workflow": "Learning flow",
+        "heroImage": "/images/homepage/Education.png",
+        "heroAlt": "Education industry visual",
+        "sceneDescription": "Tailored digital scene for Education"
+      }
+    },
+    "ar": {
+      "name": "التعليم",
+      "heroTitle": "منصات تعلم وأنظمة مدارس لفرق تعليم حديثة.",
+      "description": "تدعم كلاود توبيا المدارس وصناع الدورات وشركات التدريب بمنصات LMS، مسارات تسجيل، بوابات، وأنظمة محتوى.",
+      "problems": [
+        "معلومات الدورات متفرقة ويصعب تقييمها.",
+        "مسارات التسجيل والدفع يدوية.",
+        "الطلاب والأهالي يفتقرون إلى بوابة رقمية واضحة."
+      ],
+      "useCases": [
+        {
+          "title": "منصات LMS",
+          "description": "دروس، تقدم، موارد، ولوحات للمتعلمين."
+        },
+        {
+          "title": "مواقع الدورات",
+          "description": "برامج، مدربون، نتائج، ومسارات تقديم."
+        },
+        {
+          "title": "بوابات الطلاب",
+          "description": "حسابات، مستندات، جداول، وتواصل."
+        },
+        {
+          "title": "لوحات التدريب",
+          "description": "تقارير تشغيلية للدفعات والحضور والإكمال."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تبنون LMS مخصصاً؟",
+          "answer": "نعم. يمكننا بناء LMS مركز أو بوابة أخف حسب نموذج الدورات والفريق وجدول الإطلاق."
+        },
+        {
+          "question": "هل يمكن أن يكون المحتوى ثنائي اللغة؟",
+          "answer": "نعم. يمكن أن تكون العربية والإنجليزية مسارات محتوى أساسية مع RTL وصفحات دورات محلية."
+        }
+      ],
+      "services": [
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-indigo-700",
+        "tint": "bg-indigo-50",
+        "workflow": "مسار التعلم",
+        "heroImage": "/images/homepage/Education.png",
+        "heroAlt": "التعليم صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع التعليم"
+      }
+    }
+  },
+  "travel-hospitality": {
+    "en": {
+      "name": "Travel & Hospitality",
+      "heroTitle": "Booking, guest experience, and hospitality websites that feel easy to trust.",
+      "description": "We help hotels, restaurants, agencies, and experience providers improve booking, menus, guest communication, and campaign pages.",
+      "problems": [
+        "Guests need clearer availability, offers, and booking steps.",
+        "Menus and packages change faster than printed materials.",
+        "Campaign traffic often lands on generic pages."
+      ],
+      "useCases": [
+        {
+          "title": "Booking engines",
+          "description": "Availability, inquiry, payment, and confirmation flows."
+        },
+        {
+          "title": "Hotel websites",
+          "description": "Rooms, amenities, offers, galleries, and local SEO."
+        },
+        {
+          "title": "QR menus",
+          "description": "Digital menus with multilingual updates and table-friendly UX."
+        },
+        {
+          "title": "Campaign landing pages",
+          "description": "Offer-specific pages for seasons, events, and packages."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you build hotel booking flows?",
+          "answer": "Yes. We can build inquiry-first flows, payment-enabled booking, or connect to existing hospitality tools."
+        },
+        {
+          "question": "Can menus be updated without printing?",
+          "answer": "Yes. QR menus let your team update items, prices, languages, and availability from an admin panel."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "E-commerce Stores",
+          "href": "/services/ecommerce-development"
+        },
+        {
+          "label": "Social Media Marketing",
+          "href": "/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-amber-700",
+        "tint": "bg-amber-50",
+        "workflow": "Guest experience",
+        "heroImage": "/images/homepage/Travel.webp",
+        "heroAlt": "Travel & Hospitality industry visual",
+        "sceneDescription": "Tailored digital scene for Travel & Hospitality"
+      }
+    },
+    "ar": {
+      "name": "السفر والضيافة",
+      "heroTitle": "حجز وتجربة ضيوف ومواقع ضيافة سهلة الثقة.",
+      "description": "نساعد الفنادق والمطاعم والوكالات ومقدمي التجارب على تحسين الحجز والقوائم وتواصل الضيوف وصفحات الحملات.",
+      "problems": [
+        "الضيوف يحتاجون وضوحاً أكبر للتوفر والعروض وخطوات الحجز.",
+        "القوائم والباقات تتغير أسرع من المواد المطبوعة.",
+        "زيارات الحملات تصل غالباً إلى صفحات عامة."
+      ],
+      "useCases": [
+        {
+          "title": "محركات الحجز",
+          "description": "توفر، استفسار، دفع، وتأكيد."
+        },
+        {
+          "title": "مواقع الفنادق",
+          "description": "غرف، مرافق، عروض، معارض، وSEO محلي."
+        },
+        {
+          "title": "قوائم QR",
+          "description": "قوائم رقمية بتحديثات متعددة اللغات وتجربة مناسبة للطاولة."
+        },
+        {
+          "title": "صفحات هبوط للحملات",
+          "description": "صفحات عروض للمواسم والفعاليات والباقات."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تبنون مسارات حجز للفنادق؟",
+          "answer": "نعم. نبني مسارات استفسار أولاً، حجزاً مع دفع، أو نربط أدوات الضيافة الحالية."
+        },
+        {
+          "question": "هل يمكن تحديث القوائم دون طباعة؟",
+          "answer": "نعم. قوائم QR تتيح لفريقكم تحديث الأصناف والأسعار واللغات والتوفر من لوحة إدارة."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "متاجر إلكترونية",
+          "href": "/ar/services/ecommerce-development"
+        },
+        {
+          "label": "تسويق التواصل الاجتماعي",
+          "href": "/ar/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-amber-700",
+        "tint": "bg-amber-50",
+        "workflow": "تجربة الضيف",
+        "heroImage": "/images/homepage/Travel.webp",
+        "heroAlt": "السفر والضيافة صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع السفر والضيافة"
+      }
+    }
+  },
+  "legal-firms": {
+    "en": {
+      "name": "Legal Firms",
+      "heroTitle": "Trust-focused websites and intake systems for legal teams.",
+      "description": "CloudTopia supports legal firms with service pages, bilingual content, lead qualification, appointment flows, document intake, and organized follow-up dashboards.",
+      "problems": [
+        "Potential clients cannot quickly understand practice areas or next steps.",
+        "Sensitive inquiries need careful qualification and organized handoff.",
+        "Arabic and English legal content must sound clear, credible, and consistent."
+      ],
+      "useCases": [
+        {
+          "title": "Practice area pages",
+          "description": "Clear pages for services, eligibility, process, and FAQ."
+        },
+        {
+          "title": "Client intake forms",
+          "description": "Structured forms with case type, urgency, documents, and contact preferences."
+        },
+        {
+          "title": "Appointment flows",
+          "description": "Booking requests, calendar handoff, and consultation routing."
+        },
+        {
+          "title": "CRM follow-up",
+          "description": "Lead stages, notes, reminders, and status visibility."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you write legal service pages?",
+          "answer": "We structure and edit clear bilingual service pages, while your legal team approves final legal wording and jurisdiction-specific claims."
+        },
+        {
+          "question": "Can inquiries be routed securely?",
+          "answer": "Yes. We can create intake forms, role-aware notifications, and CRM-style tracking based on your confidentiality needs."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-slate-700",
+        "tint": "bg-slate-50",
+        "workflow": "Inquiry to consultation",
+        "heroImage": "/images/homepage/business systems.jpeg",
+        "heroAlt": "Legal Firms industry visual",
+        "sceneDescription": "Tailored digital scene for Legal Firms"
+      }
+    },
+    "ar": {
+      "name": "مكاتب المحاماة",
+      "heroTitle": "مواقع موثوقة وأنظمة استقبال عملاء لمكاتب المحاماة.",
+      "description": "تدعم كلاود توبيا مكاتب المحاماة بصفحات خدمات ومحتوى ثنائي اللغة وتأهيل عملاء وحجز مواعيد واستقبال مستندات ولوحات متابعة منظمة.",
+      "problems": [
+        "لا يستطيع العملاء المحتملون فهم مجالات الممارسة والخطوات التالية بسرعة.",
+        "الاستفسارات الحساسة تحتاج تأهيلاً دقيقاً وتسليماً منظماً.",
+        "المحتوى القانوني العربي والإنجليزي يجب أن يكون واضحاً وموثوقاً ومتسقاً."
+      ],
+      "useCases": [
+        {
+          "title": "صفحات مجالات قانونية",
+          "description": "صفحات واضحة للخدمات والأهلية والإجراءات والأسئلة."
+        },
+        {
+          "title": "نماذج استقبال العملاء",
+          "description": "نماذج منظمة لنوع القضية، الاستعجال، المستندات، وطريقة التواصل."
+        },
+        {
+          "title": "مسارات المواعيد",
+          "description": "طلبات حجز، تحويل للتقويم، وتوجيه للاستشارة."
+        },
+        {
+          "title": "متابعة CRM",
+          "description": "مراحل العملاء، ملاحظات، تذكيرات، ورؤية للحالة."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تكتبون صفحات خدمات قانونية؟",
+          "answer": "ننظم ونحرر صفحات خدمات ثنائية اللغة بوضوح، بينما يعتمد فريقكم القانوني الصياغة النهائية والادعاءات الخاصة بالاختصاص."
+        },
+        {
+          "question": "هل يمكن توجيه الاستفسارات بأمان؟",
+          "answer": "نعم. ننشئ نماذج استقبال وتنبيهات حسب الصلاحيات وتتبعاً بأسلوب CRM بناءً على احتياجات السرية لديكم."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-slate-700",
+        "tint": "bg-slate-50",
+        "workflow": "من الاستفسار إلى الاستشارة",
+        "heroImage": "/images/homepage/business systems.jpeg",
+        "heroAlt": "مكاتب المحاماة صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع مكاتب المحاماة"
+      }
+    }
+  },
+  "construction": {
+    "en": {
+      "name": "Construction",
+      "heroTitle": "Digital systems for contractors, developers, suppliers, and project teams.",
+      "description": "CloudTopia helps construction companies present projects, manage inquiries, track operations, organize suppliers, and improve documentation across teams.",
+      "problems": [
+        "Project proof, capabilities, and tender readiness are scattered across files.",
+        "Sales, site updates, suppliers, and documents are hard to track together.",
+        "Stakeholders need clearer dashboards instead of repeated status calls."
+      ],
+      "useCases": [
+        {
+          "title": "Project portfolio websites",
+          "description": "Completed work, project categories, media, certifications, and inquiry paths."
+        },
+        {
+          "title": "Tender-ready pages",
+          "description": "Capability statements, sectors served, downloadable documents, and contact flows."
+        },
+        {
+          "title": "Operations dashboards",
+          "description": "Requests, project stages, supplier tasks, documents, and reports."
+        },
+        {
+          "title": "Client portals",
+          "description": "Private updates, files, approvals, and milestone visibility."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you build a construction portfolio site?",
+          "answer": "Yes. We can structure project galleries, sectors, capability pages, forms, and SEO content for construction buyers."
+        },
+        {
+          "question": "Can dashboards track project requests?",
+          "answer": "Yes. We can build dashboards for inquiry stages, documents, suppliers, tasks, and internal reporting."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-stone-700",
+        "tint": "bg-stone-50",
+        "workflow": "Tender to delivery",
+        "heroImage": "/images/homepage/Logistics.webp",
+        "heroAlt": "Construction industry visual",
+        "sceneDescription": "Tailored digital scene for Construction"
+      }
+    },
+    "ar": {
+      "name": "المقاولات والإنشاءات",
+      "heroTitle": "أنظمة رقمية للمقاولين والمطورين والموردين وفرق المشاريع.",
+      "description": "تساعد كلاود توبيا شركات المقاولات على عرض المشاريع وإدارة الاستفسارات وتتبع التشغيل وتنظيم الموردين وتحسين التوثيق بين الفرق.",
+      "problems": [
+        "إثباتات المشاريع والقدرات وجاهزية العطاءات موزعة بين ملفات متفرقة.",
+        "يصعب تتبع المبيعات وتحديثات المواقع والموردين والمستندات معاً.",
+        "أصحاب المصلحة يحتاجون لوحات أوضح بدلاً من مكالمات حالة متكررة."
+      ],
+      "useCases": [
+        {
+          "title": "مواقع معرض المشاريع",
+          "description": "أعمال منجزة، تصنيفات مشاريع، وسائط، شهادات، ومسارات استفسار."
+        },
+        {
+          "title": "صفحات جاهزة للعطاءات",
+          "description": "ملفات قدرات، قطاعات مخدومة، مستندات قابلة للتحميل، ومسارات تواصل."
+        },
+        {
+          "title": "لوحات تشغيل",
+          "description": "طلبات، مراحل مشاريع، مهام موردين، مستندات، وتقارير."
+        },
+        {
+          "title": "بوابات العملاء",
+          "description": "تحديثات خاصة، ملفات، موافقات، ورؤية للمراحل."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تبنون موقعاً لمعرض مشاريع المقاولات؟",
+          "answer": "نعم. ننظم معارض المشاريع والقطاعات وصفحات القدرات والنماذج ومحتوى SEO لمشتري خدمات المقاولات."
+        },
+        {
+          "question": "هل يمكن للوحات متابعة طلبات المشاريع؟",
+          "answer": "نعم. نبني لوحات لمراحل الاستفسارات والمستندات والموردين والمهام والتقارير الداخلية."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-stone-700",
+        "tint": "bg-stone-50",
+        "workflow": "من العطاء إلى التسليم",
+        "heroImage": "/images/homepage/Logistics.webp",
+        "heroAlt": "المقاولات والإنشاءات صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع المقاولات والإنشاءات"
+      }
+    }
+  },
+  "retail": {
+    "en": {
+      "name": "Retail",
+      "heroTitle": "Retail websites, inventory visibility, offers, and customer journeys.",
+      "description": "CloudTopia helps retailers connect storefronts, products, inventory, offers, branches, WhatsApp, and customer follow-up in one clearer digital flow.",
+      "problems": [
+        "Products, branches, promotions, and availability are not presented consistently.",
+        "Teams manage orders and customer questions across too many channels.",
+        "Campaign pages rarely connect to inventory or follow-up workflows."
+      ],
+      "useCases": [
+        {
+          "title": "Retail product pages",
+          "description": "Products, categories, branch availability, offers, and inquiry CTAs."
+        },
+        {
+          "title": "Inventory dashboards",
+          "description": "Stock visibility, alerts, reorder notes, and branch reporting."
+        },
+        {
+          "title": "Campaign pages",
+          "description": "Seasonal launches, bundles, branch openings, and paid ad journeys."
+        },
+        {
+          "title": "Customer follow-up",
+          "description": "CRM-style lead stages, WhatsApp paths, and repeat purchase triggers."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can retail pages connect to inventory?",
+          "answer": "Yes. We can connect a storefront to inventory data or build a lightweight dashboard when existing tools are not ready."
+        },
+        {
+          "question": "Can you support branch-specific offers?",
+          "answer": "Yes. We can structure branches, local offers, landing pages, and WhatsApp routing by branch or product category."
+        }
+      ],
+      "services": [
+        {
+          "label": "E-commerce Stores",
+          "href": "/services/ecommerce-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Social Media Marketing",
+          "href": "/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-fuchsia-700",
+        "tint": "bg-fuchsia-50",
+        "workflow": "Branch to buyer",
+        "heroImage": "/images/homepage/E-commerce.jpg",
+        "heroAlt": "Retail industry visual",
+        "sceneDescription": "Tailored digital scene for Retail"
+      }
+    },
+    "ar": {
+      "name": "التجزئة",
+      "heroTitle": "مواقع تجزئة ورؤية مخزون وعروض ورحلات عملاء.",
+      "description": "تساعد كلاود توبيا متاجر التجزئة على ربط الواجهات والمنتجات والمخزون والعروض والفروع وواتساب ومتابعة العملاء في مسار رقمي أوضح.",
+      "problems": [
+        "المنتجات والفروع والعروض والتوفر لا تُعرض باتساق.",
+        "الفرق تدير الطلبات وأسئلة العملاء عبر قنوات كثيرة.",
+        "صفحات الحملات نادراً ما ترتبط بالمخزون أو مسارات المتابعة."
+      ],
+      "useCases": [
+        {
+          "title": "صفحات منتجات التجزئة",
+          "description": "منتجات، تصنيفات، توفر حسب الفرع، عروض، ودعوات تواصل."
+        },
+        {
+          "title": "لوحات مخزون",
+          "description": "رؤية المخزون، تنبيهات، ملاحظات إعادة الطلب، وتقارير الفروع."
+        },
+        {
+          "title": "صفحات حملات",
+          "description": "إطلاقات موسمية، باقات، افتتاح فروع، ورحلات إعلانات مدفوعة."
+        },
+        {
+          "title": "متابعة العملاء",
+          "description": "مراحل عملاء بأسلوب CRM، مسارات واتساب، ومحفزات شراء متكرر."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل يمكن ربط صفحات التجزئة بالمخزون؟",
+          "answer": "نعم. نربط واجهة البيع ببيانات المخزون أو نبني لوحة خفيفة عندما لا تكون الأدوات الحالية جاهزة."
+        },
+        {
+          "question": "هل تدعمون عروضاً خاصة بالفروع؟",
+          "answer": "نعم. ننظم الفروع والعروض المحلية وصفحات الهبوط وتوجيه واتساب حسب الفرع أو تصنيف المنتج."
+        }
+      ],
+      "services": [
+        {
+          "label": "متاجر إلكترونية",
+          "href": "/ar/services/ecommerce-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تسويق التواصل الاجتماعي",
+          "href": "/ar/services/social-media-marketing"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-fuchsia-700",
+        "tint": "bg-fuchsia-50",
+        "workflow": "من الفرع إلى العميل",
+        "heroImage": "/images/homepage/E-commerce.jpg",
+        "heroAlt": "التجزئة صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع التجزئة"
+      }
+    }
+  },
+  "professional-services": {
+    "en": {
+      "name": "Professional Services",
+      "heroTitle": "Digital presence and operating systems for expert-led service firms.",
+      "description": "CloudTopia helps consulting, accounting, training, engineering, and expert-led firms explain offers, capture qualified leads, automate follow-up, and operate through clearer dashboards.",
+      "problems": [
+        "Expert services are hard to compare when pages only list generic capabilities.",
+        "Inquiries arrive without enough context for a useful first reply.",
+        "Proposal, delivery, and support workflows are often manual."
+      ],
+      "useCases": [
+        {
+          "title": "Service positioning pages",
+          "description": "Clear offers, outcomes, proof points, and FAQ content for each service line."
+        },
+        {
+          "title": "Lead qualification",
+          "description": "Forms that capture budget, timeline, company type, and service need."
+        },
+        {
+          "title": "Client portals",
+          "description": "Files, tasks, milestones, approvals, and communication history."
+        },
+        {
+          "title": "Automation dashboards",
+          "description": "Follow-ups, reports, internal tasks, and decision visibility."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Can you improve service-page conversion?",
+          "answer": "Yes. We structure service pages around pain points, outcomes, proof, process, FAQ, and clear consultation CTAs."
+        },
+        {
+          "question": "Can internal workflows be automated?",
+          "answer": "Yes. We can build lightweight dashboards, CRM stages, notifications, and client portals around your service workflow."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-sky-700",
+        "tint": "bg-sky-50",
+        "workflow": "Expertise to lead",
+        "heroImage": "/images/homepage/digital presence.png",
+        "heroAlt": "Professional Services industry visual",
+        "sceneDescription": "Tailored digital scene for Professional Services"
+      }
+    },
+    "ar": {
+      "name": "الخدمات المهنية",
+      "heroTitle": "حضور رقمي وأنظمة تشغيل لشركات الخدمات المهنية.",
+      "description": "تساعد كلاود توبيا شركات الاستشارات والمحاسبة والتدريب والهندسة والخدمات المتخصصة على شرح عروضها وجمع عملاء مؤهلين وأتمتة المتابعة والتشغيل عبر لوحات أوضح.",
+      "problems": [
+        "يصعب مقارنة الخدمات المتخصصة عندما تسرد الصفحات قدرات عامة فقط.",
+        "تصل الاستفسارات دون سياق كافٍ لرد أول مفيد.",
+        "مسارات العروض والتنفيذ والدعم تكون يدوية غالباً."
+      ],
+      "useCases": [
+        {
+          "title": "صفحات تموضع الخدمة",
+          "description": "عروض واضحة، نتائج، إثباتات، وأسئلة لكل خط خدمة."
+        },
+        {
+          "title": "تأهيل العملاء",
+          "description": "نماذج تجمع الميزانية والجدول ونوع الشركة واحتياج الخدمة."
+        },
+        {
+          "title": "بوابات العملاء",
+          "description": "ملفات، مهام، مراحل، موافقات، وسجل تواصل."
+        },
+        {
+          "title": "لوحات أتمتة",
+          "description": "متابعات، تقارير، مهام داخلية، ورؤية للقرارات."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل يمكن تحسين تحويل صفحات الخدمات؟",
+          "answer": "نعم. ننظم صفحات الخدمات حول المشكلات والنتائج والإثبات وطريقة العمل والأسئلة ودعوات الاستشارة الواضحة."
+        },
+        {
+          "question": "هل يمكن أتمتة سير العمل الداخلي؟",
+          "answer": "نعم. نبني لوحات خفيفة ومراحل CRM وتنبيهات وبوابات عملاء حول طريقة تقديم الخدمة لديكم."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-sky-700",
+        "tint": "bg-sky-50",
+        "workflow": "من الخبرة إلى العميل",
+        "heroImage": "/images/homepage/digital presence.png",
+        "heroAlt": "الخدمات المهنية صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع الخدمات المهنية"
+      }
+    }
+  },
+  "government-public-sector": {
+    "en": {
+      "name": "Government & Public Sector",
+      "heroTitle": "Accessible public service portals and information systems.",
+      "description": "We support public-facing teams with multilingual websites, forms, dashboards, knowledge bases, and secure communication workflows.",
+      "problems": [
+        "Residents and businesses cannot easily find the right service path.",
+        "Forms and requests depend on manual routing.",
+        "Accessibility and multilingual clarity are often inconsistent."
+      ],
+      "useCases": [
+        {
+          "title": "Citizen service portals",
+          "description": "Service discovery, forms, status updates, and documents."
+        },
+        {
+          "title": "Public websites",
+          "description": "Accessible content, announcements, resources, and multilingual pages."
+        },
+        {
+          "title": "Internal dashboards",
+          "description": "Request queues, reporting, and department coordination."
+        },
+        {
+          "title": "Knowledge bases",
+          "description": "Searchable help content for residents, teams, and partners."
+        }
+      ],
+      "differentiators": [
+        "Fixed scope and fixed price before development starts.",
+        "Arabic and English delivery with RTL-aware interfaces.",
+        "Client ownership of code, accounts, content, and data."
+      ],
+      "faqs": [
+        {
+          "question": "Do you build accessible public websites?",
+          "answer": "Yes. We design clear navigation, readable content, keyboard-friendly interfaces, and multilingual page structures."
+        },
+        {
+          "question": "Can workflows stay modular?",
+          "answer": "Yes. We prefer modular service flows so departments can launch the highest-priority paths first and expand later."
+        }
+      ],
+      "services": [
+        {
+          "label": "Websites & Landing Pages",
+          "href": "/services/website-development"
+        },
+        {
+          "label": "Web Applications",
+          "href": "/services/web-applications"
+        },
+        {
+          "label": "Business Systems",
+          "href": "/services/business-systems-development"
+        },
+        {
+          "label": "Content & Growth",
+          "href": "/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/saudi-arabia",
+        "/united-arab-emirates",
+        "/oman",
+        "/qatar",
+        "/kuwait",
+        "/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=en",
+        "secondary": "/services"
+      },
+      "visual": {
+        "accent": "text-slate-700",
+        "tint": "bg-slate-50",
+        "workflow": "Public service path",
+        "heroImage": "/images/homepage/cloud & infrastructure.webp",
+        "heroAlt": "Government & Public Sector industry visual",
+        "sceneDescription": "Tailored digital scene for Government & Public Sector"
+      }
+    },
+    "ar": {
+      "name": "الحكومة والقطاع العام",
+      "heroTitle": "بوابات خدمات عامة وأنظمة معلومات سهلة الوصول.",
+      "description": "ندعم الفرق الموجهة للجمهور بمواقع متعددة اللغات ونماذج ولوحات وقواعد معرفة ومسارات تواصل آمنة.",
+      "problems": [
+        "لا يستطيع السكان والشركات العثور بسهولة على مسار الخدمة الصحيح.",
+        "النماذج والطلبات تعتمد على التوجيه اليدوي.",
+        "إمكانية الوصول والوضوح متعدد اللغات غالباً غير متسقين."
+      ],
+      "useCases": [
+        {
+          "title": "بوابات خدمات المواطنين",
+          "description": "اكتشاف الخدمات، نماذج، تحديثات حالة، ومستندات."
+        },
+        {
+          "title": "مواقع عامة",
+          "description": "محتوى سهل الوصول، إعلانات، موارد، وصفحات متعددة اللغات."
+        },
+        {
+          "title": "لوحات داخلية",
+          "description": "قوائم طلبات، تقارير، وتنسيق بين الأقسام."
+        },
+        {
+          "title": "قواعد معرفة",
+          "description": "محتوى مساعدة قابل للبحث للسكان والفرق والشركاء."
+        }
+      ],
+      "differentiators": [
+        "نطاق وسعر ثابتان قبل بدء التطوير.",
+        "تنفيذ بالعربية والإنجليزية مع واجهات تراعي RTL.",
+        "ملكية كاملة للعميل للكود والحسابات والمحتوى والبيانات."
+      ],
+      "faqs": [
+        {
+          "question": "هل تبنون مواقع عامة سهلة الوصول؟",
+          "answer": "نعم. نصمم تنقلاً واضحاً ومحتوى مقروءاً وواجهات ملائمة للوحة المفاتيح وبنى صفحات متعددة اللغات."
+        },
+        {
+          "question": "هل يمكن أن تبقى مسارات العمل معيارية؟",
+          "answer": "نعم. نفضل مسارات خدمات معيارية حتى تطلق الأقسام المسارات ذات الأولوية أولاً ثم تتوسع لاحقاً."
+        }
+      ],
+      "services": [
+        {
+          "label": "مواقع وصفحات هبوط",
+          "href": "/ar/services/website-development"
+        },
+        {
+          "label": "تطبيقات ويب",
+          "href": "/ar/services/web-applications"
+        },
+        {
+          "label": "أنظمة أعمال",
+          "href": "/ar/services/business-systems-development"
+        },
+        {
+          "label": "المحتوى والنمو",
+          "href": "/ar/services/content-creation"
+        }
+      ],
+      "marketHrefs": [
+        "/ar/saudi-arabia",
+        "/ar/united-arab-emirates",
+        "/ar/oman",
+        "/ar/qatar",
+        "/ar/kuwait",
+        "/ar/bahrain"
+      ],
+      "ctaDestinations": {
+        "primary": "/api/whatsapp?locale=ar",
+        "secondary": "/ar/services"
+      },
+      "visual": {
+        "accent": "text-slate-700",
+        "tint": "bg-slate-50",
+        "workflow": "مسار الخدمة العامة",
+        "heroImage": "/images/homepage/cloud & infrastructure.webp",
+        "heroAlt": "الحكومة والقطاع العام صورة قطاعية",
+        "sceneDescription": "مشهد رقمي مخصص لقطاع الحكومة والقطاع العام"
+      }
+    }
+  }
+}
