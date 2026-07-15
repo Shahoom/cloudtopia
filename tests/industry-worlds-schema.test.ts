@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { buildIndustryJsonLd } from '../lib/industries/build-industry-schema.ts'
 import { mergeIndustrySeoPair } from '../lib/industries/resolve-industry-seo.ts'
+import type { CanonicalServiceId } from '../lib/industries/service-targets.ts'
 import { ORGANIZATION_ID } from '../lib/seo/schema.ts'
 
 const pair = mergeIndustrySeoPair({
@@ -28,6 +29,24 @@ function nodeById(graph: ReturnType<typeof buildIndustryJsonLd>, id: string) {
   const node = graph['@graph'].find((candidate) => candidate['@id'] === id)
   assert.ok(node, `Missing graph node ${id}`)
   return node as Record<string, any>
+}
+
+function buildGraphWithService(
+  locale: 'en' | 'ar',
+  id: CanonicalServiceId,
+  href: string,
+) {
+  return buildIndustryJsonLd({
+    locale,
+    seo: pair[locale],
+    name: locale === 'ar' ? 'أنظمة الرعاية الصحية' : 'Healthcare systems',
+    description: locale === 'ar' ? 'وصف ظاهر.' : 'Visible description.',
+    breadcrumbLabels: locale === 'ar'
+      ? { home: 'الرئيسية', industries: 'القطاعات', current: 'الرعاية الصحية' }
+      : { home: 'Home', industries: 'Industries', current: 'Healthcare' },
+    services: [{ id, label: locale === 'ar' ? 'تطوير المواقع' : 'Website development', href }],
+    faqs: [],
+  })
 }
 
 test('the Arabic graph is connected, localized, and identical to visible service and FAQ data', () => {
@@ -127,6 +146,81 @@ test('the Arabic graph is connected, localized, and identical to visible service
   assert.doesNotMatch(serialized, /MedicalBusiness|LegalService|FinancialService|GovernmentService|Physician/)
   assert.doesNotMatch(serialized, /reviewer|authors?/i)
   assert.doesNotMatch(serialized, /SEO-only/)
+})
+
+test('schema service targets reject unsafe URL shapes instead of serializing them', () => {
+  const invalidHrefs = [
+    ['off-origin', 'https://attacker.example/services/website-development'],
+    ['protocol-relative', '//cloudtopia.net/services/website-development'],
+    ['javascript', 'javascript:alert(1)'],
+    ['data', 'data:text/html,unsafe'],
+    ['empty', ''],
+    ['parse failure', 'https://[broken'],
+    ['same-site absolute', 'https://cloudtopia.net/services/website-development'],
+    ['query', '/services/website-development?source=schema'],
+    ['fragment', '/services/website-development#details'],
+    ['trailing slash', '/services/website-development/'],
+  ] as const
+
+  for (const [name, href] of invalidHrefs) {
+    assert.throws(
+      () => buildGraphWithService('en', 'website-development', href),
+      (error) =>
+        error instanceof Error &&
+        /Invalid industry schema service target/.test(error.message) &&
+        error.message.includes('website-development') &&
+        error.message.includes('/services/website-development'),
+      name,
+    )
+  }
+})
+
+test('schema service targets reject EN and AR ID/path mismatches', () => {
+  const mismatches = [
+    {
+      name: 'EN cross-ID path',
+      locale: 'en' as const,
+      id: 'website-development' as const,
+      href: '/services/web-applications',
+    },
+    {
+      name: 'EN Arabic path',
+      locale: 'en' as const,
+      id: 'website-development' as const,
+      href: '/ar/services/website-development',
+    },
+    {
+      name: 'AR unlocalized path',
+      locale: 'ar' as const,
+      id: 'website-development' as const,
+      href: '/services/website-development',
+    },
+    {
+      name: 'AR cross-ID path',
+      locale: 'ar' as const,
+      id: 'website-development' as const,
+      href: '/ar/services/web-applications',
+    },
+  ]
+
+  for (const mismatch of mismatches) {
+    assert.throws(
+      () => buildGraphWithService(mismatch.locale, mismatch.id, mismatch.href),
+      new RegExp(
+        `Invalid industry schema service target.*${mismatch.id}.*${mismatch.locale}`,
+      ),
+      mismatch.name,
+    )
+  }
+
+  assert.throws(
+    () => buildGraphWithService(
+      'en',
+      'unknown-service' as CanonicalServiceId,
+      '/services/website-development',
+    ),
+    /Unknown industry schema service ID: unknown-service/,
+  )
 })
 
 test('the graph omits FAQ and unvalidated or impossible modification dates', () => {

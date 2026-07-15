@@ -1,6 +1,9 @@
 import type { Locale } from '@/lib/i18n/config'
-import { canonicalUrl } from '@/lib/i18n/url'
-import type { CanonicalServiceId } from '@/lib/industries/service-targets'
+import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import {
+  CANONICAL_SERVICE_TARGETS,
+  type CanonicalServiceId,
+} from '@/lib/industries/service-targets'
 import type {
   IndustryPageDefinition,
   IndustryReviewRecord,
@@ -40,12 +43,25 @@ function isCalendarDate(value: unknown): value is `${number}-${number}-${number}
   return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value
 }
 
-function absoluteVisibleHref(href: string): string {
-  try {
-    return new URL(href, new URL(ORGANIZATION_ID).origin).toString()
-  } catch {
-    return href
+function canonicalVisibleServiceUrl(
+  locale: Locale,
+  id: CanonicalServiceId,
+  href: string,
+): string {
+  const canonicalTarget = CANONICAL_SERVICE_TARGETS[id]
+  if (!canonicalTarget) {
+    throw new Error(`Unknown industry schema service ID: ${id}`)
   }
+
+  const expectedHref = localePath(locale, canonicalTarget)
+  if (href !== expectedHref) {
+    throw new Error(
+      `Invalid industry schema service target ${id} for ${locale}: ` +
+      `expected ${expectedHref}, received ${JSON.stringify(href)}.`,
+    )
+  }
+
+  return canonicalUrl(locale, canonicalTarget)
 }
 
 export function buildIndustryJsonLd(
@@ -120,7 +136,11 @@ export function buildIndustryJsonLd(
                 '@type': 'Service',
                 identifier: visibleService.id,
                 name: visibleService.label,
-                url: absoluteVisibleHref(visibleService.href),
+                url: canonicalVisibleServiceUrl(
+                  input.locale,
+                  visibleService.id,
+                  visibleService.href,
+                ),
               },
             })),
           },
