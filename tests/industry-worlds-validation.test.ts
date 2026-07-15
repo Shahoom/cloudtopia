@@ -7,6 +7,14 @@ import {
 } from '../lib/industries/content-hash.ts'
 import { industryManifest } from '../lib/industries/manifest.ts'
 import {
+  DRAFT_INDUSTRY_VALIDATION_CODES,
+  IndustryPageValidationError,
+  assertValidIndustryPageRegistry,
+  validateIndustryPageDefinition,
+  validateIndustryPageRegistry,
+  type DraftIndustryValidationCode,
+} from '../lib/industries/validate-industry-pages.ts'
+import {
   SECTION_VARIANTS,
   rhythmFingerprint,
   type AnnotatedModelEvidenceSection,
@@ -71,14 +79,32 @@ const sectionsFixture = [
     answers: ['buildable-system'],
     title: 'System',
     intro: 'A buildable system boundary.',
-    layers: [{
-      id: 'experience',
-      label: 'Experience',
-      description: 'The public-facing layer.',
-      inputs: ['Approved content'],
-      handoff: 'Qualified request',
-      outcome: 'Clear next step',
-    }],
+    layers: [
+      {
+        id: 'experience',
+        label: 'Experience',
+        description: 'The public-facing layer.',
+        inputs: ['Approved content'],
+        handoff: 'Qualified request',
+        outcome: 'Clear next step',
+      },
+      {
+        id: 'workflow',
+        label: 'Workflow',
+        description: 'The operating team accepts the qualified request.',
+        inputs: ['Qualified request'],
+        handoff: 'Owned work item',
+        outcome: 'Visible responsibility',
+      },
+      {
+        id: 'reporting',
+        label: 'Reporting',
+        description: 'A shared status keeps the next decision visible.',
+        inputs: ['Owned work item'],
+        handoff: 'Reviewed status',
+        outcome: 'Clear follow-up',
+      },
+    ],
   },
   {
     id: 'sequence',
@@ -87,7 +113,11 @@ const sectionsFixture = [
     answers: [],
     title: 'Sequence',
     intro: 'A concrete operating sequence.',
-    steps: [{ id: 'accept', label: 'Accept', description: 'Accept the request.', owner: 'Operator' }],
+    steps: [
+      { id: 'accept', label: 'Accept', description: 'Accept the request.', owner: 'Operator' },
+      { id: 'assign', label: 'Assign', description: 'Assign a responsible owner.', owner: 'Coordinator' },
+      { id: 'resolve', label: 'Resolve', description: 'Resolve and record the next step.', owner: 'Specialist' },
+    ],
   },
   {
     id: 'services',
@@ -149,7 +179,12 @@ const sectionsFixture = [
     answers: [],
     title: 'Questions',
     intro: 'Decision questions answered directly.',
-    items: [{ id: 'start', question: 'Where do we begin?', answer: 'Begin with one journey.' }],
+    items: [
+      { id: 'start', question: 'Where do we begin?', answer: 'Begin with one journey.' },
+      { id: 'scope', question: 'What belongs in the first scope?', answer: 'Include the smallest complete handoff.' },
+      { id: 'owners', question: 'Who needs to participate?', answer: 'Include the people who own each decision.' },
+      { id: 'measure', question: 'How is progress reviewed?', answer: 'Review visible states and agreed outcomes.' },
+    ],
   },
   {
     id: 'close',
@@ -159,10 +194,22 @@ const sectionsFixture = [
     title: 'Plan the next step',
     intro: 'Choose a bounded starting point.',
     decisionCopy: 'Map one journey and its handoffs.',
-    primary: { label: 'Map the journey', href: '/api/whatsapp?locale=en' },
+    primary: { label: 'Map the patient journey', href: '/api/whatsapp?locale=en' },
     secondary: { label: 'Explore web applications', serviceId: 'web-applications' },
   },
 ] as const satisfies readonly IndustrySection[]
+
+const arabicSectionsFixture = structuredClone(sectionsFixture).map((section) => {
+  if (section.type !== 'closing-cta') return section
+
+  return {
+    ...section,
+    primary: {
+      label: 'لنرسم رحلة المريض',
+      href: '/api/whatsapp?locale=ar',
+    },
+  }
+}) satisfies readonly IndustrySection[]
 
 const annotatedEvidenceFixture = {
   id: 'annotated-evidence',
@@ -238,7 +285,7 @@ const definitionFixture = {
         sceneSummary: 'مسار هادئ يوضح انتقال العمل بين المريض والفريق.',
         sceneStages: [{ id: 'request', label: 'الطلب', state: 'جاهز' }],
       },
-      sections: sectionsFixture,
+      sections: arabicSectionsFixture,
     },
   },
 } as const satisfies IndustryPageDefinition
@@ -301,6 +348,249 @@ const reviewableContentFixture = {
   manifest: { label: 'Healthcare', navSummary: 'Patient journeys and clinic workflows.' },
   page: definitionFixture.locales.en,
 } as const satisfies ReviewableIndustryContent
+
+const expectedDraftCodes = [
+  'missing-locale',
+  'localized-copy-missing',
+  'parity-drift',
+  'duplicate-localized-copy',
+  'content-too-thin',
+  'prohibited-copy',
+  'duplicate-section-id',
+  'unisolated-ltr-token',
+  'semantic-question-missing',
+  'semantic-question-duplicate',
+  'invalid-variant',
+  'release-a-signature-forbidden',
+  'signature-composition-invalid',
+  'invalid-service-id',
+  'invalid-project-id',
+  'invalid-related-industry',
+  'self-related-industry',
+  'cta-drift',
+  'missing-theme-token',
+  'contrast-failure',
+  'faq-count',
+  'service-count',
+  'claim-source-missing',
+] as const satisfies readonly DraftIndustryValidationCode[]
+
+type MutableDeep<T> = T extends readonly (infer TItem)[]
+  ? MutableDeep<TItem>[]
+  : T extends object
+    ? { -readonly [TKey in keyof T]: MutableDeep<T[TKey]> }
+    : T
+
+type MutableDefinition = MutableDeep<IndustryPageDefinition>
+type SectionByType<TType extends IndustrySection['type']> = Extract<
+  IndustrySection,
+  { type: TType }
+>
+
+function cloneDefinition(): MutableDefinition {
+  return structuredClone(definitionFixture) as unknown as MutableDefinition
+}
+
+function getSection<TType extends IndustrySection['type']>(
+  definition: MutableDefinition,
+  locale: 'en' | 'ar',
+  type: TType,
+): MutableDeep<SectionByType<TType>> {
+  const section = definition.locales[locale].sections.find(
+    (candidate) => candidate.type === type,
+  )
+
+  assert.ok(section, `fixture is missing ${locale} ${type}`)
+  return section as MutableDeep<SectionByType<TType>>
+}
+
+function expectDraftCode(
+  code: DraftIndustryValidationCode,
+  mutate: (definition: MutableDefinition) => void,
+): void {
+  const definition = cloneDefinition()
+  mutate(definition)
+
+  const result = validateIndustryPageDefinition(
+    definition as IndustryPageDefinition,
+    { mode: 'draft' },
+  )
+
+  assert.equal(result.ok, false, `expected ${code}, received no errors`)
+  assert.ok(
+    result.errors.some((error) => error.code === code),
+    `expected ${code}, received ${result.errors.map((error) => error.code).join(', ')}`,
+  )
+}
+
+type PilotConfig = {
+  slug: 'logistics-supply-chain' | 'restaurants'
+  scene: 'logistics-flow' | 'restaurant-pass'
+  heroTreatment: 'route-field' | 'editorial-pass'
+  signatureId: 'exception-control' | 'the-pass'
+  signatureName: Record<'en' | 'ar', string>
+  signatureSectionIds: readonly string[]
+  relatedIndustryIds: readonly [IndustryPageDefinition['slug'], IndustryPageDefinition['slug']]
+  serviceIds: readonly [
+    IndustryPageDefinition['locales']['en']['hero']['secondaryCta']['serviceId'],
+    IndustryPageDefinition['locales']['en']['hero']['secondaryCta']['serviceId'],
+  ]
+  displayTreatment: IndustryTheme['displayTreatment']
+  radiusMode: IndustryTheme['radiusMode']
+  motifDensity: IndustryTheme['motifDensity']
+  sceneTreatment: IndustryTheme['sceneTreatment']
+  copy: Record<
+    'en' | 'ar',
+    {
+      seoTitle: string
+      seoDescription: string
+      h1: string
+      primaryCta: string
+      secondaryCta: string
+      faqPrefix: string
+    }
+  >
+}
+
+function makePilotDefinition(config: PilotConfig): IndustryPageDefinition {
+  const definition = cloneDefinition()
+  definition.slug = config.slug
+  definition.contentVersion = `${config.slug}-fixture-v1`
+  definition.world.id = `${config.slug}-world`
+  definition.world.heroScene = config.scene
+  definition.world.heroTreatment = config.heroTreatment
+  definition.world.signatureComposition = {
+    id: config.signatureId,
+    name: { ...config.signatureName },
+    sectionIds: [...config.signatureSectionIds],
+  }
+  definition.world.theme.displayTreatment = config.displayTreatment
+  definition.world.theme.radiusMode = config.radiusMode
+  definition.world.theme.motifDensity = config.motifDensity
+  definition.world.theme.sceneTreatment = config.sceneTreatment
+
+  const scene = definition.assets.find((asset) => asset.kind === 'authored-scene')
+  assert.ok(scene && scene.kind === 'authored-scene')
+  scene.id = config.scene
+
+  for (const locale of ['en', 'ar'] as const) {
+    const page = definition.locales[locale]
+    const copy = config.copy[locale]
+    page.seo.title = copy.seoTitle
+    page.seo.description = copy.seoDescription
+    page.hero.h1 = copy.h1
+    page.hero.primaryCta.label = copy.primaryCta
+    page.hero.secondaryCta = {
+      label: copy.secondaryCta,
+      serviceId: config.serviceIds[0],
+    }
+
+    const close = getSection(definition, locale, 'closing-cta')
+    close.primary.label = copy.primaryCta
+    close.secondary = {
+      label: copy.secondaryCta,
+      serviceId: config.serviceIds[0],
+    }
+
+    const bridge = getSection(definition, locale, 'service-bridge')
+    bridge.serviceIds = [...config.serviceIds]
+    bridge.serviceAnchors = config.serviceIds.map((serviceId, index) => ({
+      serviceId,
+      label: `${copy.secondaryCta} ${index + 1}`,
+    }))
+    bridge.relatedIndustryIds = [...config.relatedIndustryIds]
+    bridge.industryAnchors = config.relatedIndustryIds.map((industryId, index) => ({
+      industryId,
+      label: `${config.slug} related ${index + 1}`,
+    }))
+
+    const faq = getSection(definition, locale, 'faq')
+    faq.items.forEach((item, index) => {
+      item.question = `${copy.faqPrefix} ${index + 1}?`
+    })
+  }
+
+  if (config.slug === 'logistics-supply-chain') {
+    for (const locale of ['en', 'ar'] as const) {
+      getSection(definition, locale, 'journey-map').variant = 'exception-lane'
+      getSection(definition, locale, 'constraints').variant = 'owner-register'
+    }
+  }
+
+  return definition as IndustryPageDefinition
+}
+
+const logisticsFixture = makePilotDefinition({
+  slug: 'logistics-supply-chain',
+  scene: 'logistics-flow',
+  heroTreatment: 'route-field',
+  signatureId: 'exception-control',
+  signatureName: { en: 'Exception control', ar: 'ضبط الاستثناءات' },
+  signatureSectionIds: ['journey', 'constraints'],
+  relatedIndustryIds: ['ecommerce-retail', 'retail'],
+  serviceIds: ['business-systems-development', 'web-applications'],
+  displayTreatment: 'technical',
+  radiusMode: 'square',
+  motifDensity: 'dense',
+  sceneTreatment: 'route-field',
+  copy: {
+    en: {
+      seoTitle: 'Logistics flow systems',
+      seoDescription: 'A concrete logistics flow and exception-control description.',
+      h1: 'See every handoff from order to delivery proof.',
+      primaryCta: 'Map the logistics flow',
+      secondaryCta: 'Explore logistics systems',
+      faqPrefix: 'Logistics decision question',
+    },
+    ar: {
+      seoTitle: 'أنظمة تدفق الخدمات اللوجستية',
+      seoDescription: 'وصف واضح لتدفق الخدمات اللوجستية وضبط الاستثناءات.',
+      h1: 'رؤية أوضح لكل خطوة من الطلب إلى إثبات التسليم.',
+      primaryCta: 'لنرسم تدفق العمليات',
+      secondaryCta: 'استكشف أنظمة الخدمات اللوجستية',
+      faqPrefix: 'سؤال قرار لوجستي',
+    },
+  },
+})
+
+const restaurantsFixture = makePilotDefinition({
+  slug: 'restaurants',
+  scene: 'restaurant-pass',
+  heroTreatment: 'editorial-pass',
+  signatureId: 'the-pass',
+  signatureName: { en: 'The pass', ar: 'خط التمرير' },
+  signatureSectionIds: ['sequence'],
+  relatedIndustryIds: ['retail', 'travel-hospitality'],
+  serviceIds: ['restaurant-qr-menu', 'website-development'],
+  displayTreatment: 'editorial',
+  radiusMode: 'cut',
+  motifDensity: 'medium',
+  sceneTreatment: 'service-pass',
+  copy: {
+    en: {
+      seoTitle: 'Restaurant service systems',
+      seoDescription: 'A concrete restaurant order and service-pass description.',
+      h1: 'Keep every order moving from choice to service.',
+      primaryCta: 'Map the restaurant service flow',
+      secondaryCta: 'Explore restaurant menu systems',
+      faqPrefix: 'Restaurant decision question',
+    },
+    ar: {
+      seoTitle: 'أنظمة تشغيل المطاعم',
+      seoDescription: 'وصف واضح لمسار الطلب والخدمة في المطاعم.',
+      h1: 'حافظ على تدفق كل طلب من الاختيار إلى التقديم.',
+      primaryCta: 'لنرسم مسار خدمة المطعم',
+      secondaryCta: 'استكشف أنظمة قوائم المطاعم',
+      faqPrefix: 'سؤال قرار للمطعم',
+    },
+  },
+})
+
+const pilotRegistry = {
+  ...registryFixture,
+  'logistics-supply-chain': logisticsFixture,
+  restaurants: restaurantsFixture,
+} satisfies IndustryPageRegistry
 
 test('the static world contract accepts every content-bearing section shape', () => {
   assert.deepEqual(SECTION_VARIANTS, {
@@ -382,5 +672,357 @@ test('manifestContentHash covers all thirteen entries in the selected locale', (
   assert.notEqual(
     manifestContentHash('en', industryManifest),
     manifestContentHash('ar', industryManifest),
+  )
+})
+
+test('draft validation exposes the exact public code set and accepts the three pilots', () => {
+  assert.deepEqual(DRAFT_INDUSTRY_VALIDATION_CODES, expectedDraftCodes)
+
+  for (const definition of [definitionFixture, logisticsFixture, restaurantsFixture]) {
+    assert.deepEqual(
+      validateIndustryPageDefinition(definition, { mode: 'draft' }),
+      { ok: true, errors: [] },
+    )
+  }
+
+  const registryResult = validateIndustryPageRegistry(pilotRegistry, { mode: 'draft' })
+  assert.deepEqual(registryResult, { ok: true, errors: [] })
+  assert.doesNotThrow(() => {
+    assertValidIndustryPageRegistry(pilotRegistry, { mode: 'draft' })
+  })
+
+  const fingerprints = [
+    rhythmFingerprint(definitionFixture),
+    rhythmFingerprint(logisticsFixture),
+    rhythmFingerprint(restaurantsFixture),
+  ]
+  assert.equal(new Set(fingerprints).size, 3)
+  assert.ok(fingerprints.every((fingerprint) => !fingerprint.includes('signature:')))
+  assert.deepEqual(fingerprints, [
+    'corridor-split|pressure-field:split-signal|journey-map:dual-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|continuity-of-care',
+    'route-field|pressure-field:split-signal|journey-map:exception-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:owner-register|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|exception-control',
+    'editorial-pass|pressure-field:split-signal|journey-map:dual-lane|system-blueprint:stacked-layers|use-case-sequence:timed-pass|service-bridge:capability-stack|evidence:verified-project|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|the-pass',
+  ])
+})
+
+test('missing-locale rejects a definition without either complete locale object', () => {
+  expectDraftCode('missing-locale', (definition) => {
+    delete (definition.locales as Partial<MutableDefinition['locales']>).ar
+  })
+})
+
+test('localized-copy-missing rejects whitespace-only visible copy', () => {
+  expectDraftCode('localized-copy-missing', (definition) => {
+    definition.locales.en.hero.h1 = '   '
+  })
+})
+
+test('parity-drift rejects unstable EN and AR semantic IDs', () => {
+  expectDraftCode('parity-drift', (definition) => {
+    getSection(definition, 'ar', 'journey-map').stages[0].id = 'طلب-مختلف'
+  })
+})
+
+test('duplicate-localized-copy rejects repeated per-locale registry content', () => {
+  const duplicate = cloneDefinition()
+  duplicate.slug = 'fintech'
+  for (const locale of ['en', 'ar'] as const) {
+    const bridge = getSection(duplicate, locale, 'service-bridge')
+    bridge.relatedIndustryIds = ['professional-services', 'government-public-sector']
+    bridge.industryAnchors = [
+      { industryId: 'professional-services', label: 'Professional services' },
+      { industryId: 'government-public-sector', label: 'Public sector' },
+    ]
+  }
+
+  const result = validateIndustryPageRegistry({
+    ...registryFixture,
+    fintech: duplicate as IndustryPageDefinition,
+  }, { mode: 'draft' })
+
+  assert.equal(result.ok, false)
+  assert.ok(result.errors.some((error) => error.code === 'duplicate-localized-copy'))
+  assert.throws(
+    () => assertValidIndustryPageRegistry({
+      ...registryFixture,
+      fintech: duplicate as IndustryPageDefinition,
+    }, { mode: 'draft' }),
+    (error) => error instanceof IndustryPageValidationError &&
+      error.errors.some((issue) => issue.code === 'duplicate-localized-copy'),
+  )
+})
+
+test('duplicate-localized-copy rejects repeated FAQ questions inside one locale', () => {
+  expectDraftCode('duplicate-localized-copy', (definition) => {
+    const faq = getSection(definition, 'en', 'faq')
+    faq.items[1].question = faq.items[0].question
+  })
+})
+
+test('content-too-thin rejects a hero introduction that does not answer first', () => {
+  expectDraftCode('content-too-thin', (definition) => {
+    definition.locales.en.hero.intro = 'What could we build?'
+  })
+})
+
+test('content-too-thin requires three to six blueprint layers', () => {
+  expectDraftCode('content-too-thin', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      getSection(definition, locale, 'system-blueprint').layers.splice(2)
+    }
+  })
+})
+
+test('content-too-thin requires three to six use-case steps', () => {
+  expectDraftCode('content-too-thin', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      getSection(definition, locale, 'use-case-sequence').steps.splice(2)
+    }
+  })
+})
+
+test('prohibited-copy rejects unfinished markers and generic English filler', () => {
+  for (const copy of [
+    'TODO: replace this sentence.',
+    'An innovative operating experience.',
+    'A seamless operating experience.',
+    'A cutting-edge operating experience.',
+    'We deliver digital transformation.',
+  ]) {
+    expectDraftCode('prohibited-copy', (definition) => {
+      definition.locales.en.hero.intro = copy
+    })
+  }
+})
+
+test('duplicate-section-id rejects repeated recipe IDs', () => {
+  expectDraftCode('duplicate-section-id', (definition) => {
+    definition.locales.en.sections[1].id = definition.locales.en.sections[0].id
+  })
+})
+
+test('unisolated-ltr-token rejects each bare protected token in Arabic copy', () => {
+  for (const token of ['CRM', 'ERP', 'API', 'POS', 'TMS', 'WMS', 'SLA', 'QR']) {
+    expectDraftCode('unisolated-ltr-token', (definition) => {
+      definition.locales.ar.hero.intro = `نربط ${token} بمسار عمل واضح للفريق.`
+    })
+  }
+})
+
+test('isolated protected tokens remain valid in Arabic copy', () => {
+  const definition = cloneDefinition()
+  definition.locales.ar.hero.intro =
+    `نربط ${isolateLtrToken('CRM')} بمسار عمل واضح للفريق.`
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(definition as IndustryPageDefinition, { mode: 'draft' }),
+    { ok: true, errors: [] },
+  )
+})
+
+test('semantic-question-missing rejects an omitted grammar answer', () => {
+  expectDraftCode('semantic-question-missing', (definition) => {
+    getSection(definition, 'en', 'pressure-field').answers = []
+  })
+})
+
+test('semantic-question-duplicate rejects a repeated grammar answer', () => {
+  expectDraftCode('semantic-question-duplicate', (definition) => {
+    getSection(definition, 'en', 'journey-map').answers.push('operating-pressure')
+  })
+})
+
+test('invalid-variant rejects an unregistered standard recipe variant', () => {
+  expectDraftCode('invalid-variant', (definition) => {
+    getSection(definition, 'en', 'pressure-field').variant = 'generic-grid' as never
+  })
+})
+
+test('invalid-variant rejects an authored scene that does not match the registered hero scene', () => {
+  expectDraftCode('invalid-variant', (definition) => {
+    const scene = definition.assets.find((asset) => asset.kind === 'authored-scene')
+    assert.ok(scene && scene.kind === 'authored-scene')
+    scene.id = 'logistics-flow'
+  })
+})
+
+test('draft authored scenes never require a raster existence lookup', () => {
+  assert.deepEqual(
+    validateIndustryPageDefinition(definitionFixture, {
+      mode: 'draft',
+      assetExists: () => {
+        throw new Error('draft authored scenes must not query the filesystem')
+      },
+    }),
+    { ok: true, errors: [] },
+  )
+})
+
+test('release-a-signature-forbidden rejects custom signature recipe entries', () => {
+  expectDraftCode('release-a-signature-forbidden', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      definition.locales[locale].sections.push(
+        structuredClone(signatureFixture) as unknown as MutableDeep<SignatureSection>,
+      )
+    }
+  })
+})
+
+test('signature-composition-invalid rejects missing or duplicate recipe references', () => {
+  for (const sectionIds of [['absent-section'], ['journey', 'journey']]) {
+    expectDraftCode('signature-composition-invalid', (definition) => {
+      definition.world.signatureComposition.sectionIds = sectionIds
+    })
+  }
+})
+
+test('invalid-service-id rejects canonical services outside the industry manifest', () => {
+  expectDraftCode('invalid-service-id', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      const bridge = getSection(definition, locale, 'service-bridge')
+      bridge.serviceIds[0] = 'restaurant-qr-menu'
+      bridge.serviceAnchors[0].serviceId = 'restaurant-qr-menu'
+    }
+  })
+})
+
+test('invalid-project-id rejects evidence outside the project registry', () => {
+  expectDraftCode('invalid-project-id', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      const evidence = getSection(definition, locale, 'evidence')
+      assert.equal(evidence.variant, 'verified-project')
+      evidence.projectId = 'missing-project' as never
+    }
+  })
+})
+
+test('invalid-related-industry rejects relationships outside manifest adjacency', () => {
+  expectDraftCode('invalid-related-industry', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      const bridge = getSection(definition, locale, 'service-bridge')
+      bridge.relatedIndustryIds[0] = 'restaurants'
+      bridge.industryAnchors[0].industryId = 'restaurants'
+    }
+  })
+})
+
+test('self-related-industry rejects a page linking to its own slug', () => {
+  expectDraftCode('self-related-industry', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      const bridge = getSection(definition, locale, 'service-bridge')
+      bridge.relatedIndustryIds[0] = definition.slug
+      bridge.industryAnchors[0].industryId = definition.slug
+    }
+  })
+})
+
+test('cta-drift rejects locale destinations or final-close intent changes', () => {
+  for (const mutate of [
+    (definition: MutableDefinition) => {
+      definition.locales.en.hero.primaryCta.href = '/api/whatsapp?locale=ar'
+    },
+    (definition: MutableDefinition) => {
+      getSection(definition, 'en', 'closing-cta').primary.label = 'Start a generic project'
+    },
+  ]) {
+    expectDraftCode('cta-drift', mutate)
+  }
+})
+
+test('missing-theme-token requires all fourteen authored theme tokens', async (context) => {
+  const tokens = [
+    'canvas',
+    'surface',
+    'elevatedSurface',
+    'ink',
+    'mutedInk',
+    'accent',
+    'accentInk',
+    'signal',
+    'line',
+    'focus',
+    'displayTreatment',
+    'radiusMode',
+    'motifDensity',
+    'sceneTreatment',
+  ] as const satisfies readonly (keyof IndustryTheme)[]
+
+  for (const token of tokens) {
+    await context.test(token, () => {
+      expectDraftCode('missing-theme-token', (definition) => {
+        delete (definition.world.theme as Partial<MutableDeep<IndustryTheme>>)[token]
+      })
+    })
+  }
+})
+
+test('contrast-failure checks text pairs and the composite focus indicator', () => {
+  for (const mutate of [
+    (definition: MutableDefinition) => {
+      definition.world.theme.ink = definition.world.theme.canvas
+    },
+    (definition: MutableDefinition) => {
+      definition.world.theme.accentInk = definition.world.theme.accent
+    },
+    (definition: MutableDefinition) => {
+      definition.world.theme.focus = '#F3FAF8'
+      definition.world.theme.ink = '#F3FAF8'
+    },
+  ]) {
+    expectDraftCode('contrast-failure', mutate)
+  }
+})
+
+test('faq-count requires four to seven visible questions', () => {
+  expectDraftCode('faq-count', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      getSection(definition, locale, 'faq').items.splice(3)
+    }
+  })
+})
+
+test('service-count requires two to four unique canonical services', () => {
+  expectDraftCode('service-count', (definition) => {
+    for (const locale of ['en', 'ar'] as const) {
+      const bridge = getSection(definition, locale, 'service-bridge')
+      bridge.serviceIds.splice(1)
+      bridge.serviceAnchors.splice(1)
+    }
+  })
+})
+
+test('claim-source-missing rejects structurally incomplete draft claim records', () => {
+  expectDraftCode('claim-source-missing', (definition) => {
+    definition.claims.push({
+      id: 'draft-claim',
+      locale: 'both',
+      wording: 'A draft claim with a bounded scope.',
+      scope: 'Fixture only.',
+      source: 'Fixture source.',
+      owner: '',
+      approval: 'pending',
+      reviewedAt: '2026-07-15',
+      recheckAt: '2027-07-15',
+    })
+  })
+})
+
+test('draft validation accepts a complete pending claim without publication approval checks', () => {
+  const definition = cloneDefinition()
+  definition.claims.push({
+    id: 'draft-claim',
+    locale: 'both',
+    wording: 'A draft claim with a bounded scope.',
+    scope: 'Fixture only.',
+    source: 'Fixture source.',
+    owner: 'Fixture owner.',
+    approval: 'pending',
+    reviewedAt: '2026-07-15',
+    recheckAt: '2027-07-15',
+  })
+
+  assert.deepEqual(
+    validateIndustryPageDefinition(definition as IndustryPageDefinition, { mode: 'draft' }),
+    { ok: true, errors: [] },
   )
 })
