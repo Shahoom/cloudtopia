@@ -1,0 +1,152 @@
+import type { Locale } from '@/lib/i18n/config'
+import { canonicalUrl } from '@/lib/i18n/url'
+import type { CanonicalServiceId } from '@/lib/industries/service-targets'
+import type {
+  IndustryPageDefinition,
+  IndustryReviewRecord,
+} from '@/lib/industries/types'
+import type { EffectiveIndustrySeo } from '@/lib/industries/resolve-industry-seo'
+import { ORGANIZATION_ID } from '@/lib/seo/schema'
+
+type IndustryJsonLdNode = Record<string, unknown> & { '@id': string }
+
+export type IndustryJsonLdGraph = {
+  '@context': 'https://schema.org'
+  '@graph': IndustryJsonLdNode[]
+}
+
+export type BuildIndustryJsonLdInput = {
+  locale: Locale
+  seo: EffectiveIndustrySeo
+  name: string
+  description: string
+  breadcrumbLabels: { home: string; industries: string; current: string }
+  services: readonly {
+    id: CanonicalServiceId
+    label: string
+    href: string
+  }[]
+  faqs: readonly { question: string; answer: string }[]
+  validatedDateModified?:
+    | IndustryPageDefinition['updatedAt']
+    | IndustryReviewRecord['reviewedAt']
+}
+
+function isCalendarDate(value: unknown): value is `${number}-${number}-${number}` {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false
+  }
+  const parsed = new Date(`${value}T00:00:00.000Z`)
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value
+}
+
+function absoluteVisibleHref(href: string): string {
+  try {
+    return new URL(href, new URL(ORGANIZATION_ID).origin).toString()
+  } catch {
+    return href
+  }
+}
+
+export function buildIndustryJsonLd(
+  input: BuildIndustryJsonLdInput,
+): IndustryJsonLdGraph {
+  const canonical = input.seo.canonical
+  const webPageId = `${canonical}#webpage`
+  const breadcrumbsId = `${canonical}#breadcrumbs`
+  const serviceId = `${canonical}#service`
+  const faqId = `${canonical}#faq`
+  const organization = { '@id': ORGANIZATION_ID }
+  const hasFaqs = input.faqs.length > 0
+
+  const webPage: IndustryJsonLdNode = {
+    '@type': 'WebPage',
+    '@id': webPageId,
+    url: canonical,
+    name: input.name,
+    description: input.description,
+    inLanguage: input.locale,
+    publisher: organization,
+    breadcrumb: { '@id': breadcrumbsId },
+    mainEntity: hasFaqs
+      ? [{ '@id': serviceId }, { '@id': faqId }]
+      : { '@id': serviceId },
+    ...(isCalendarDate(input.validatedDateModified)
+      ? { dateModified: input.validatedDateModified }
+      : {}),
+  }
+
+  const breadcrumbs: IndustryJsonLdNode = {
+    '@type': 'BreadcrumbList',
+    '@id': breadcrumbsId,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: input.breadcrumbLabels.home,
+        item: canonicalUrl(input.locale, '/'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: input.breadcrumbLabels.industries,
+        item: canonicalUrl(input.locale, '/industries'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: input.breadcrumbLabels.current,
+        item: canonical,
+      },
+    ],
+  }
+
+  const service: IndustryJsonLdNode = {
+    '@type': 'Service',
+    '@id': serviceId,
+    url: canonical,
+    name: input.name,
+    description: input.description,
+    provider: organization,
+    isPartOf: { '@id': webPageId },
+    ...(input.services.length > 0
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: input.locale === 'ar' ? 'الخدمات المرتبطة' : 'Related services',
+            itemListElement: input.services.map((visibleService) => ({
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                identifier: visibleService.id,
+                name: visibleService.label,
+                url: absoluteVisibleHref(visibleService.href),
+              },
+            })),
+          },
+        }
+      : {}),
+  }
+
+  const graph: IndustryJsonLdNode[] = [webPage, breadcrumbs, service]
+  if (hasFaqs) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': faqId,
+      isPartOf: { '@id': webPageId },
+      mainEntity: input.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    })
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  }
+}
