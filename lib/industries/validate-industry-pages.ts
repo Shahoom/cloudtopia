@@ -1215,6 +1215,20 @@ function validateDefinition(
       const page = locales[locale]
       if (!page || !manifestEntry) continue
 
+      for (const [sectionIndex, section] of sectionsFor(page).entries()) {
+        if (
+          section.type === 'evidence' &&
+          section.variant === 'verified-project' &&
+          section.approval !== 'approved'
+        ) {
+          add(
+            'claim-unapproved',
+            'locales.' + locale + '.sections.' + sectionIndex + '.approval',
+            'Only approved verified-project evidence may be published.',
+          )
+        }
+      }
+
       const expectedHash = contentHash({
         manifest: {
           label: manifestEntry.label[locale],

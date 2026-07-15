@@ -14,6 +14,7 @@ import type { EffectiveIndustrySeo } from '../lib/industries/resolve-industry-se
 import type {
   IndustryPageDefinition,
   IndustrySceneId,
+  IndustrySection,
   IndustryTheme,
 } from '../lib/industries/types.ts'
 
@@ -55,6 +56,261 @@ const sections = [
     ],
   },
 ] as const
+
+type SectionOf<TType extends IndustrySection['type']> = Extract<
+  IndustrySection,
+  { type: TType }
+>
+
+const pressureVariantFixtures = (
+  ['split-signal', 'constraints-first', 'dense-ledger'] as const
+).map((variant): SectionOf<'pressure-field'> => ({
+  id: `pressure-${variant}`,
+  type: 'pressure-field',
+  variant,
+  answers: ['operating-pressure'],
+  eyebrow: 'Operating pressure',
+  title: `Pressure ${variant}`,
+  intro: `Pressure introduction for ${variant}.`,
+  signals: [
+    {
+      id: 'signal-alpha',
+      label: 'Signal alpha',
+      description: 'A visible pressure signal with an explicit boundary.',
+    },
+  ],
+}))
+
+const journeyVariantFixtures = (
+  ['linear-route', 'dual-lane', 'exception-lane'] as const
+).map((variant): SectionOf<'journey-map'> => ({
+  id: `journey-${variant}`,
+  type: 'journey-map',
+  variant,
+  answers: ['journey'],
+  eyebrow: 'Operating journey',
+  title: `Journey ${variant}`,
+  intro: `Journey introduction for ${variant}.`,
+  stages: [
+    {
+      id: 'stage-request',
+      label: 'Request accepted',
+      description: 'The request enters an owned route.',
+      actor: 'Coordinator',
+    },
+    {
+      id: 'stage-resolution',
+      label: 'Next step recorded',
+      description: 'The next responsibility remains visible.',
+      actor: 'Operator',
+    },
+  ],
+  ...(variant === 'linear-route'
+    ? {}
+    : {
+        lanes: [
+          {
+            id: 'lane-primary',
+            label: 'Primary lane',
+            stageIds: ['stage-request'],
+          },
+          {
+            id: 'lane-control',
+            label: 'Control lane',
+            stageIds: ['stage-resolution'],
+          },
+        ],
+      }),
+}))
+
+const systemVariantFixtures = (
+  ['stacked-layers', 'constellation', 'service-line'] as const
+).map((variant): SectionOf<'system-blueprint'> => ({
+  id: `system-${variant}`,
+  type: 'system-blueprint',
+  variant,
+  answers: ['buildable-system'],
+  eyebrow: 'System boundary',
+  title: `System ${variant}`,
+  intro: `System introduction for ${variant}.`,
+  layers: [
+    {
+      id: 'layer-experience',
+      label: 'Experience layer',
+      description: 'The public experience creates a qualified request.',
+      inputs: ['Approved content'],
+      handoff: 'Qualified request',
+      outcome: 'Visible next step',
+    },
+  ],
+}))
+
+const useCaseVariantFixtures = (
+  ['numbered-flow', 'operating-matrix', 'timed-pass'] as const
+).map((variant): SectionOf<'use-case-sequence'> => ({
+  id: `sequence-${variant}`,
+  type: 'use-case-sequence',
+  variant,
+  answers: ['journey'],
+  eyebrow: 'Service sequence',
+  title: `Sequence ${variant}`,
+  intro: `Sequence introduction for ${variant}.`,
+  steps: [
+    {
+      id: 'step-accept',
+      label: 'Accept the request',
+      description: 'A named operator accepts the next action.',
+      owner: 'Service owner',
+    },
+  ],
+}))
+
+const serviceBridgeVariantFixtures = (
+  ['route-links', 'capability-stack'] as const
+).map((variant): SectionOf<'service-bridge'> => ({
+  id: `services-${variant}`,
+  type: 'service-bridge',
+  variant,
+  answers: [],
+  eyebrow: 'Build routes',
+  title: `Services ${variant}`,
+  intro: `Service introduction for ${variant}.`,
+  serviceIds: ['web-applications', 'website-development'],
+  serviceAnchors: [
+    { serviceId: 'web-applications', label: 'Healthcare web applications' },
+    { serviceId: 'website-development', label: 'Healthcare websites' },
+  ],
+  relatedIndustryIds: ['education', 'government-public-sector'],
+  industryAnchors: [
+    { industryId: 'education', label: 'Education systems' },
+    {
+      industryId: 'government-public-sector',
+      label: 'Public-sector services',
+    },
+  ],
+}))
+
+const evidenceVariantFixtures = [
+  {
+    id: 'evidence-verified-project',
+    type: 'evidence',
+    variant: 'verified-project',
+    answers: ['evidence-and-constraints'],
+    title: 'Evidence record',
+    intro: 'Exact repository evidence fields.',
+    projectId: 'kvaii-logistics',
+    approval: 'approved',
+    provenance: 'CloudTopia project repository',
+  },
+  {
+    id: 'evidence-annotated-model',
+    type: 'evidence',
+    variant: 'annotated-model',
+    answers: ['evidence-and-constraints'],
+    title: 'Annotated operating model',
+    intro: 'Annotations describe the model without claiming proof.',
+    observations: [
+      {
+        id: 'observation-handoff',
+        label: 'Named handoff',
+        description: 'A named owner accepts the next step.',
+      },
+    ],
+  },
+] as const satisfies readonly SectionOf<'evidence'>[]
+
+const constraintsVariantFixtures = (
+  ['boundary-map', 'owner-register'] as const
+).map((variant): SectionOf<'constraints'> => ({
+  id: `constraints-${variant}`,
+  type: 'constraints',
+  variant,
+  answers: ['evidence-and-constraints'],
+  eyebrow: 'Explicit boundaries',
+  title: `Constraints ${variant}`,
+  intro: `Constraint introduction for ${variant}.`,
+  items: [
+    {
+      id: 'constraint-content',
+      label: 'Content ownership',
+      responsibility: 'The operator approves domain content.',
+      dependency: 'A named content owner.',
+      recovery: 'Return the item for review.',
+    },
+  ],
+}))
+
+const regionalVariantFixtures = (
+  ['bilingual-operations', 'market-path'] as const
+).map((variant): SectionOf<'regional-fit'> => ({
+  id: `regional-${variant}`,
+  type: 'regional-fit',
+  variant,
+  answers: ['regional-delivery'],
+  eyebrow: 'Regional delivery',
+  title: `Regional ${variant}`,
+  intro: `Regional introduction for ${variant}.`,
+  items: [
+    {
+      id: 'regional-language',
+      label: 'Bilingual operations',
+      description: 'English and Arabic content have named owners.',
+    },
+  ],
+}))
+
+const faqVariantFixtures = (
+  ['editorial-list', 'grouped-questions'] as const
+).map((variant): SectionOf<'faq'> => ({
+  id: `faq-${variant}`,
+  type: 'faq',
+  variant,
+  answers: [],
+  eyebrow: 'Decision questions',
+  title: `FAQ ${variant}`,
+  intro: `FAQ introduction for ${variant}.`,
+  items: [
+    {
+      id: 'faq-start',
+      question: 'Where should the work begin?',
+      answer: 'Begin with one complete operating journey.',
+    },
+  ],
+}))
+
+const closingVariantFixtures = (
+  ['framed-close', 'split-close'] as const
+).map((variant): SectionOf<'closing-cta'> => ({
+  id: `close-${variant}`,
+  type: 'closing-cta',
+  variant,
+  answers: ['decision-close'],
+  eyebrow: 'Next decision',
+  title: `Close ${variant}`,
+  intro: `Closing introduction for ${variant}.`,
+  decisionCopy: 'Map one complete journey and its handoffs.',
+  primary: {
+    label: 'Map the patient journey',
+    href: '/api/whatsapp?locale=en',
+  },
+  secondary: {
+    label: 'Explore web applications',
+    serviceId: 'web-applications',
+  },
+}))
+
+const standardVariantFixtures = [
+  ...pressureVariantFixtures,
+  ...journeyVariantFixtures,
+  ...systemVariantFixtures,
+  ...useCaseVariantFixtures,
+  ...serviceBridgeVariantFixtures,
+  ...evidenceVariantFixtures,
+  ...constraintsVariantFixtures,
+  ...regionalVariantFixtures,
+  ...faqVariantFixtures,
+  ...closingVariantFixtures,
+] as const satisfies readonly IndustrySection[]
 
 const definition = {
   slug: 'healthcare',
@@ -154,12 +410,309 @@ const schema = {
   '@graph': [{ '@type': 'WebPage', name: seo.title }],
 }
 
+const englishSeo = {
+  ...seo,
+  locale: 'en',
+  title: definition.locales.en.seo.title,
+  description: definition.locales.en.seo.description,
+  canonical: 'https://cloudtopia.net/industries/healthcare',
+} satisfies EffectiveIndustrySeo
+
+function definitionWithEnglishSections(
+  nextSections: readonly IndustrySection[],
+): IndustryPageDefinition {
+  return {
+    ...definition,
+    locales: {
+      ...definition.locales,
+      en: {
+        ...definition.locales.en,
+        sections: nextSections,
+      },
+    },
+  }
+}
+
+function renderEnglishSections(nextSections: readonly IndustrySection[]): string {
+  return renderToStaticMarkup(
+    <IndustryPageShell
+      locale="en"
+      definition={definitionWithEnglishSections(nextSections)}
+      seo={englishSeo}
+      schema={schema}
+    />,
+  )
+}
+
+function concreteSectionCopy(section: IndustrySection): string {
+  switch (section.type) {
+    case 'pressure-field':
+      return section.signals[0]?.description ?? ''
+    case 'journey-map':
+      return section.stages[0]?.description ?? ''
+    case 'system-blueprint':
+      return section.layers[0]?.handoff ?? ''
+    case 'use-case-sequence':
+      return section.steps[0]?.description ?? ''
+    case 'service-bridge':
+      return section.serviceAnchors[0]?.label ?? ''
+    case 'evidence':
+      return section.variant === 'verified-project'
+        ? section.provenance
+        : section.observations[0]?.description ?? ''
+    case 'constraints':
+      return section.items[0]?.responsibility ?? ''
+    case 'regional-fit':
+      return section.items[0]?.description ?? ''
+    case 'faq':
+      return section.items[0]?.answer ?? ''
+    case 'closing-cta':
+      return section.decisionCopy
+    case 'signature':
+      return section.intro
+    default: {
+      const exhaustive: never = section
+      return exhaustive
+    }
+  }
+}
+
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function decodeHtml(value: string): string {
   return value
     .replaceAll('&quot;', '"')
     .replaceAll('&#x27;', "'")
     .replaceAll('&amp;', '&')
 }
+
+for (const section of standardVariantFixtures) {
+  test(`${section.type}:${section.variant} renders its complete semantic section`, () => {
+    const html = renderEnglishSections([section])
+    const sectionOpenTag = html.match(
+      new RegExp(`<section[^>]*id="${escapeRegex(section.id)}"[^>]*>`),
+    )?.[0]
+
+    assert.ok(sectionOpenTag)
+    assert.match(sectionOpenTag, /data-industry="healthcare"/)
+    assert.match(sectionOpenTag, /data-locale="en"/)
+    assert.match(
+      html,
+      new RegExp(`<h2[^>]*>${escapeRegex(section.title)}<\\/h2>`),
+    )
+    assert.match(html, new RegExp(escapeRegex(section.intro)))
+    assert.match(
+      html,
+      new RegExp(`data-section-type="${escapeRegex(section.type)}"`),
+    )
+    assert.match(
+      html,
+      new RegExp(`data-section-variant="${escapeRegex(section.variant)}"`),
+    )
+    assert.match(html, new RegExp(escapeRegex(concreteSectionCopy(section))))
+  })
+}
+
+function fixtureFor(
+  type: IndustrySection['type'],
+  variant: string,
+): IndustrySection {
+  const fixture = standardVariantFixtures.find(
+    (section) => section.type === type && section.variant === variant,
+  )
+  assert.ok(fixture, `missing fixture for ${type}:${variant}`)
+  return fixture
+}
+
+const releaseARecipes = {
+  healthcare: [
+    ['pressure-field', 'split-signal'],
+    ['journey-map', 'linear-route'],
+    ['journey-map', 'dual-lane'],
+    ['system-blueprint', 'stacked-layers'],
+    ['service-bridge', 'capability-stack'],
+    ['constraints', 'boundary-map'],
+    ['regional-fit', 'bilingual-operations'],
+    ['faq', 'editorial-list'],
+    ['closing-cta', 'framed-close'],
+  ],
+  logistics: [
+    ['journey-map', 'linear-route'],
+    ['journey-map', 'exception-lane'],
+    ['constraints', 'owner-register'],
+    ['system-blueprint', 'constellation'],
+    ['service-bridge', 'route-links'],
+    ['constraints', 'boundary-map'],
+    ['regional-fit', 'market-path'],
+    ['faq', 'grouped-questions'],
+    ['closing-cta', 'split-close'],
+  ],
+  restaurants: [
+    ['pressure-field', 'split-signal'],
+    ['use-case-sequence', 'timed-pass'],
+    ['pressure-field', 'dense-ledger'],
+    ['system-blueprint', 'service-line'],
+    ['service-bridge', 'capability-stack'],
+    ['constraints', 'boundary-map'],
+    ['regional-fit', 'bilingual-operations'],
+    ['faq', 'editorial-list'],
+    ['closing-cta', 'framed-close'],
+  ],
+} as const satisfies Record<
+  string,
+  readonly (readonly [IndustrySection['type'], string])[]
+>
+
+for (const [pilot, recipeEntries] of Object.entries(releaseARecipes)) {
+  test(`${pilot} preserves its full Release A recipe and coordinate order`, () => {
+    const recipe = recipeEntries.map(([type, variant]) =>
+      fixtureFor(type, variant),
+    )
+    const html = renderEnglishSections(recipe)
+    let previousSectionIndex = -1
+    let previousCoordinateIndex = -1
+
+    for (const section of recipe) {
+      const sectionNeedle = `id="${section.id}"`
+      const coordinateNeedle = `data-coordinate="${section.id}"`
+      const sectionIndex = html.indexOf(sectionNeedle)
+      const coordinateIndex = html.indexOf(coordinateNeedle)
+
+      assert.equal(html.split(sectionNeedle).length - 1, 1)
+      assert.ok(sectionIndex > previousSectionIndex)
+      assert.ok(coordinateIndex > previousCoordinateIndex)
+      previousSectionIndex = sectionIndex
+      previousCoordinateIndex = coordinateIndex
+    }
+  })
+}
+
+test('journey lane membership follows canonical stage order', () => {
+  const journey = {
+    ...journeyVariantFixtures[1],
+    lanes: [
+      {
+        id: 'lane-reversed-reference',
+        label: 'Referenced lane',
+        stageIds: ['stage-resolution', 'stage-request'],
+      },
+    ],
+  } as const satisfies SectionOf<'journey-map'>
+  const html = renderEnglishSections([journey])
+  const laneStart = html.indexOf('data-lane="lane-reversed-reference"')
+  const laneEnd = html.indexOf('</section>', laneStart)
+  const laneHtml = html.slice(laneStart, laneEnd)
+
+  assert.ok(laneHtml.indexOf('Request accepted') < laneHtml.indexOf('Next step recorded'))
+})
+
+test('service bridges expose localized canonical routes and the post-system consultation', () => {
+  const html = renderEnglishSections([serviceBridgeVariantFixtures[0]])
+
+  assert.match(html, /href="\/services\/web-applications"/)
+  assert.match(html, /href="\/industries\/education"/)
+  assert.match(html, /href="\/api\/whatsapp\?locale=en"/)
+  assert.match(html, /data-cta-location="post-system"/)
+  assert.match(html, /data-cta-intent="industry-consultation"/)
+})
+
+test('FAQ questions and answers remain visible in static HTML', () => {
+  const html = renderEnglishSections([faqVariantFixtures[0]])
+
+  assert.match(html, />Where should the work begin\?</)
+  assert.match(html, />Begin with one complete operating journey\.</)
+  assert.doesNotMatch(html, /<details\b/)
+})
+
+test('closing actions expose deterministic location and intent analytics', () => {
+  const html = renderEnglishSections([closingVariantFixtures[0]])
+
+  assert.equal((html.match(/data-cta-location="closing"/g) || []).length, 2)
+  assert.match(html, /data-cta-intent="industry-consultation"/)
+  assert.match(html, /data-cta-intent="service:web-applications"/)
+})
+
+test('unapproved verified-project proof is omitted from content and coordinates', () => {
+  const approved = evidenceVariantFixtures[0]
+  const pending = {
+    ...approved,
+    id: 'evidence-pending',
+    title: 'Pending proof must stay hidden',
+    provenance: 'Pending provenance must stay hidden',
+    approval: 'pending',
+  } as const satisfies SectionOf<'evidence'>
+  const rejected = {
+    ...approved,
+    id: 'evidence-rejected',
+    title: 'Rejected proof must stay hidden',
+    provenance: 'Rejected provenance must stay hidden',
+    approval: 'rejected',
+  } as const satisfies SectionOf<'evidence'>
+  const html = renderEnglishSections([approved, pending, rejected])
+
+  assert.match(html, /href="#evidence-verified-project"/)
+  assert.match(html, /CloudTopia project repository/)
+  assert.doesNotMatch(html, /evidence-pending/)
+  assert.doesNotMatch(html, /Pending proof must stay hidden/)
+  assert.doesNotMatch(html, /Pending provenance must stay hidden/)
+  assert.doesNotMatch(html, /evidence-rejected/)
+  assert.doesNotMatch(html, /Rejected proof must stay hidden/)
+  assert.doesNotMatch(html, /Rejected provenance must stay hidden/)
+})
+
+test('the empty Release A signature boundary fails explicitly', () => {
+  const signature = {
+    id: 'custom-signature',
+    type: 'signature',
+    variant: 'custom-composition',
+    answers: [],
+    title: 'Custom signature',
+    intro: 'A custom signature cannot render in Release A.',
+  } as const satisfies SectionOf<'signature'>
+
+  assert.throws(
+    () => renderEnglishSections([signature]),
+    /Unregistered industry signature section: custom-signature/,
+  )
+})
+
+test('Release A variants have controlled CSS treatments', () => {
+  const css = readFileSync(
+    'components/industry/detail/industry-detail.module.css',
+    'utf8',
+  )
+  const releaseAVariants = [
+    'split-signal',
+    'dense-ledger',
+    'linear-route',
+    'dual-lane',
+    'exception-lane',
+    'stacked-layers',
+    'constellation',
+    'service-line',
+    'timed-pass',
+    'route-links',
+    'capability-stack',
+    'boundary-map',
+    'owner-register',
+    'bilingual-operations',
+    'market-path',
+    'editorial-list',
+    'grouped-questions',
+    'framed-close',
+    'split-close',
+  ] as const
+
+  for (const variant of releaseAVariants) {
+    assert.match(
+      css,
+      new RegExp(`\\[data-section-variant=['"]${variant}['"]\\]`),
+      `missing controlled treatment for ${variant}`,
+    )
+  }
+})
 
 test('the world shell is an RTL, HTML-first document region with stable coordinates', () => {
   const html = renderToStaticMarkup(
@@ -168,11 +721,7 @@ test('the world shell is an RTL, HTML-first document region with stable coordina
       definition={definition}
       seo={seo}
       schema={schema}
-    >
-      <section id="clinic-system" aria-labelledby="clinic-system-title">
-        <h2 id="clinic-system-title">نظام العيادة</h2>
-      </section>
-    </IndustryPageShell>,
+    />,
   )
 
   assert.equal((html.match(/<main\b/g) || []).length, 0)
@@ -183,6 +732,7 @@ test('the world shell is an RTL, HTML-first document region with stable coordina
   assert.match(html, /data-locale="ar"/)
   assert.match(html, /href="#industry-world-content"/)
   assert.match(html, /id="industry-world-content"/)
+  assert.match(html, /<h2[^>]*>نظام العيادة<\/h2>/)
   assert.match(html, /--iw-canvas:#F3FAF8/)
   assert.match(html, /--iw-focus:#E86262/)
   assert.doesNotMatch(html, /--iw-focus-companion:/)
@@ -338,6 +888,17 @@ test('world shell sources preserve server, semantic, motion, and CSS constraints
     'components/industry/detail/IndustryPageShell.tsx',
     'components/industry/detail/IndustryHero.tsx',
     'components/industry/detail/IndustryRelatedLinks.tsx',
+    'components/industry/detail/IndustrySectionRenderer.tsx',
+    'components/industry/detail/sections/PressureFieldSection.tsx',
+    'components/industry/detail/sections/JourneyMapSection.tsx',
+    'components/industry/detail/sections/SystemBlueprintSection.tsx',
+    'components/industry/detail/sections/UseCaseSequenceSection.tsx',
+    'components/industry/detail/sections/ServiceBridgeSection.tsx',
+    'components/industry/detail/sections/EvidenceSection.tsx',
+    'components/industry/detail/sections/ConstraintsSection.tsx',
+    'components/industry/detail/sections/RegionalFitSection.tsx',
+    'components/industry/detail/sections/FaqSection.tsx',
+    'components/industry/detail/sections/ClosingCtaSection.tsx',
     'components/industry/detail/scenes/HeroSceneRenderer.tsx',
     'components/industry/detail/scenes/HealthcarePulseScene.tsx',
     'components/industry/detail/scenes/LogisticsFlowScene.tsx',

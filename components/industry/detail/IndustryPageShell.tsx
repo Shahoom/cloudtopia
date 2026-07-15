@@ -1,16 +1,17 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties } from 'react'
 
 import { JsonLd } from '@/components/seo/JsonLd'
 import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { localeDirection, type Locale } from '@/lib/i18n/config'
 import { localePath } from '@/lib/i18n/url'
 import type { EffectiveIndustrySeo } from '@/lib/industries/resolve-industry-seo'
-import type {
-  IndustryPageDefinition,
-  IndustryTheme,
-} from '@/lib/industries/types'
+import type { IndustryPageDefinition, IndustryTheme } from '@/lib/industries/types'
 
 import { IndustryHero } from './IndustryHero'
+import {
+  IndustrySectionRenderer,
+  shouldRenderIndustrySection,
+} from './IndustrySectionRenderer'
 import styles from './industry-detail.module.css'
 
 type IndustryThemeStyle = CSSProperties & Record<`--iw-${string}`, string>
@@ -35,7 +36,6 @@ export type IndustryPageShellProps = {
   definition: IndustryPageDefinition
   seo: EffectiveIndustrySeo
   schema: unknown | unknown[]
-  children?: ReactNode
 }
 
 type Coordinate = {
@@ -94,11 +94,11 @@ export function IndustryPageShell({
   definition,
   seo,
   schema,
-  children,
 }: IndustryPageShellProps) {
   const page = definition.locales[locale]
   const theme = definition.world.theme
-  const coordinates = page.sections.map(({ id, title }) => ({ id, label: title }))
+  const visibleSections = page.sections.filter(shouldRenderIndustrySection)
+  const coordinates = visibleSections.map(({ id, title }) => ({ id, label: title }))
   const labels = locale === 'ar'
     ? {
         skip: 'تخطَّ إلى محتوى القطاع',
@@ -171,7 +171,15 @@ export function IndustryPageShell({
           className={styles.coordinateRail}
         />
         <div id="industry-world-content" className={styles.worldContent} tabIndex={-1}>
-          {children}
+          {visibleSections.map((section) => (
+            <IndustrySectionRenderer
+              key={section.id}
+              section={section}
+              locale={locale}
+              industrySlug={definition.slug}
+              primaryCta={page.hero.primaryCta}
+            />
+          ))}
         </div>
       </div>
     </div>

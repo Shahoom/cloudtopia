@@ -1095,6 +1095,32 @@ test('claim-unapproved rejects pending and rejected visible source records', () 
   }
 })
 
+test('claim-unapproved rejects unapproved verified-project evidence only for publication', () => {
+  for (const approval of ['pending', 'rejected'] as const) {
+    const definition = cloneDefinition()
+
+    for (const locale of ['en', 'ar'] as const) {
+      const evidence = getSection(definition, locale, 'evidence')
+      assert.equal(evidence.variant, 'verified-project')
+      evidence.approval = approval
+    }
+
+    const draft = validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      { mode: 'draft' },
+    )
+    assert.equal(
+      draft.errors.some((error) => error.code === 'claim-unapproved'),
+      false,
+    )
+
+    expectPublicationCode(
+      'claim-unapproved',
+      definition as IndustryPageDefinition,
+    )
+  }
+})
+
 test('claim-expired compares recheckAt with the injected publication date', () => {
   const definition = definitionWithVisibleClaim()
   definition.claims[0].recheckAt = '2026-07-14'
