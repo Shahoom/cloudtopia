@@ -6,23 +6,45 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { IndustryPageShell } from '../components/industry/detail/IndustryPageShell.tsx'
 import { healthcareDefinition } from '../lib/industries/definitions/healthcare.ts'
 import { logisticsSupplyChainDefinition } from '../lib/industries/definitions/logistics-supply-chain.ts'
+import { restaurantsDefinition } from '../lib/industries/definitions/restaurants.ts'
 import type { Locale } from '../lib/i18n/config.ts'
 import type { EffectiveIndustrySeo } from '../lib/industries/resolve-industry-seo.ts'
 import {
   validateIndustryPageDefinition,
+  validateIndustryPageRegistry,
 } from '../lib/industries/validate-industry-pages.ts'
 import {
   rhythmFingerprint,
   type IndustryPageDefinition,
+  type IndustryPageRegistry,
   type IndustrySemanticQuestion,
   type IndustrySection,
 } from '../lib/industries/types.ts'
+
+const releaseADraftRegistry = {
+  healthcare: healthcareDefinition,
+  fintech: null,
+  'ecommerce-retail': null,
+  'real-estate': null,
+  education: null,
+  'travel-hospitality': null,
+  restaurants: restaurantsDefinition,
+  'legal-firms': null,
+  construction: null,
+  retail: null,
+  'professional-services': null,
+  'logistics-supply-chain': logisticsSupplyChainDefinition,
+  'government-public-sector': null,
+} as const satisfies IndustryPageRegistry
 
 const healthcareFingerprint =
   'corridor-split|pressure-field:split-signal|journey-map:linear-route|journey-map:dual-lane|system-blueprint:stacked-layers|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|continuity-of-care'
 
 const logisticsFingerprint =
   'route-field|journey-map:linear-route|journey-map:exception-lane|constraints:owner-register|system-blueprint:constellation|service-bridge:route-links|constraints:boundary-map|regional-fit:market-path|faq:grouped-questions|closing-cta:split-close|exception-control'
+
+const restaurantsFingerprint =
+  'editorial-pass|pressure-field:split-signal|use-case-sequence:timed-pass|pressure-field:dense-ledger|system-blueprint:service-line|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|the-pass'
 
 function effectiveSeo(
   definition: IndustryPageDefinition,
@@ -306,4 +328,106 @@ test('Logistics Flow Control is a complete bilingual draft world', () => {
     { ok: true, errors: [] },
   )
   assertBilingualRender(logisticsSupplyChainDefinition)
+})
+
+test('Restaurants Service Rhythm is a complete bilingual draft world', () => {
+  assert.equal(restaurantsDefinition.slug, 'restaurants')
+  assert.equal(restaurantsDefinition.world.id, 'service-rhythm')
+  assert.deepEqual(restaurantsDefinition.world.theme, {
+    canvas: '#161616',
+    surface: '#211D19',
+    elevatedSurface: '#2E2720',
+    ink: '#FFF6E3',
+    mutedInk: '#D5C9B3',
+    accent: '#E89A13',
+    accentInk: '#161616',
+    signal: '#D94736',
+    line: '#756B5C',
+    focus: '#E89A13',
+    displayTreatment: 'editorial',
+    radiusMode: 'cut',
+    motifDensity: 'medium',
+    sceneTreatment: 'service-pass',
+  })
+  assert.equal(restaurantsDefinition.locales.en.hero.worldLabel, 'Service Rhythm')
+  assert.equal(restaurantsDefinition.locales.ar.hero.worldLabel, 'إيقاع الخدمة')
+  assert.equal(
+    restaurantsDefinition.locales.en.hero.h1,
+    'Give every order a smoother rhythm.',
+  )
+  assert.equal(
+    restaurantsDefinition.locales.ar.hero.h1,
+    'امنح كل طلب إيقاعاً أكثر سلاسة.',
+  )
+  assert.equal(
+    restaurantsDefinition.locales.en.hero.primaryCta.label,
+    'Tune your service journey',
+  )
+  assert.equal(
+    restaurantsDefinition.locales.ar.hero.primaryCta.label,
+    'اضبطوا إيقاع تجربة ضيوفكم',
+  )
+  assert.equal(
+    restaurantsDefinition.locales.en.seo.title,
+    'Restaurant Digital Systems for Every Order',
+  )
+  assert.equal(
+    restaurantsDefinition.locales.ar.seo.title,
+    'أنظمة رقمية للمطاعم ولكل طلب',
+  )
+
+  const expectedSectionIds = [
+    'menu-appetite',
+    'the-pass',
+    'timing-branch-pressure',
+    'restaurant-system',
+    'restaurant-service-paths',
+    'operator-owned-boundaries',
+    'regional-guest-delivery',
+    'restaurants-faq',
+    'restaurants-consultation',
+  ]
+  for (const locale of ['en', 'ar'] as const) {
+    const page = restaurantsDefinition.locales[locale]
+    assert.deepEqual(
+      page.sections.map((section) => section.id),
+      expectedSectionIds,
+    )
+    const copy = JSON.stringify(page)
+    assert.doesNotMatch(copy, /\b\d+\s*(?:minutes?|mins?|%)/iu)
+    assert.doesNotMatch(copy, /\b(?:instant|real-time)\b/iu)
+    const faq = page.sections.find((section) => section.type === 'faq')
+    assert.ok(faq)
+    assert.equal(faq.items.length, 5)
+  }
+  assert.equal(rhythmFingerprint(restaurantsDefinition), restaurantsFingerprint)
+
+  const serviceBridge = restaurantsDefinition.locales.en.sections.find(
+    (section) => section.type === 'service-bridge',
+  )
+  assert.ok(serviceBridge)
+  assert.deepEqual(serviceBridge.serviceIds, [
+    'restaurant-qr-menu',
+    'website-development',
+    'ecommerce-development',
+    'social-media-marketing',
+  ])
+  assert.deepEqual(serviceBridge.relatedIndustryIds, [
+    'retail',
+    'travel-hospitality',
+  ])
+
+  assertSemanticAnswersOnce(restaurantsDefinition)
+  assert.deepEqual(
+    validateIndustryPageDefinition(restaurantsDefinition, { mode: 'draft' }),
+    { ok: true, errors: [] },
+  )
+  assertBilingualRender(restaurantsDefinition)
+})
+
+test('the three Release A pilots form a unique draft registry', () => {
+  assert.deepEqual(
+    validateIndustryPageRegistry(releaseADraftRegistry, { mode: 'draft' }),
+    { ok: true, errors: [] },
+  )
 })
