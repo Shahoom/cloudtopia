@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-15
 
-**Status:** Approved concept; written specification pending review
+**Status:** Approved on 2026-07-15; Release A implementation planning authorized
 
 **Routes:** `/industries/[industry]` and `/ar/industries/[industry]`
 
