@@ -900,11 +900,17 @@ git commit -m "feat(industries): resolve atomic localized SEO"
 - Create: `components/industry/detail/scenes/industry-scenes.module.css`
 - Create: `tests/helpers/register-css-modules.mjs`
 - Create: `tests/industry-worlds-render.test.tsx`
+- Modify: `components/ui/PageBreadcrumbs.tsx`
 
 **Interfaces:**
 
 - Consumes: reviewed localized page data, theme tokens, manifest links, `PageBreadcrumbs`, `localePath`, and effective SEO/schema.
 - Produces: an HTML-first `<IndustryPageShell>`, one `<IndustryHero>`, ordinary coordinate anchors, typed related links, and three semantic scene renderers.
+
+**Controller integration resolutions:**
+
+- Extend `PageBreadcrumbs` with an optional `ariaLabel` and a locale-derived default (`Breadcrumb` / `مسار التنقل`) while preserving every existing visible crumb and call site. The shell passes or receives the Arabic semantic label and the render test asserts it.
+- Preserve the repository's Node `>=20.9.0` support. The test-only CSS helper may use synchronous `registerHooks` when available, but must fall back to `node:module.register` with an equivalent loader module on Node 20.9–22.14. Do not raise the engine floor merely for the test harness.
 
 - [ ] **Step 1: Write failing server-rendering and accessibility assertions**
 
@@ -933,12 +939,12 @@ Expected: FAIL.
 
 - [ ] **Step 3: Add a test-only CSS-module loader**
 
-Node cannot import CSS Modules directly. Register a synchronous Node 22 loader used only by server-render tests:
+Node cannot import CSS Modules directly. Register the synchronous hook below when `registerHooks` exists; otherwise register an equivalent `resolve`/`load` module through `node:module.register`, which is available at the repository's Node 20.9 floor. The helper is used only by server-render tests:
 
 ```js
-import { registerHooks } from 'node:module'
+import * as nodeModule from 'node:module'
 
-registerHooks({
+const hooks = {
   resolve(specifier, context, nextResolve) {
     if (specifier.endsWith('.css')) {
       return { url: new URL(specifier, context.parentURL).href, shortCircuit: true }
@@ -955,7 +961,13 @@ registerHooks({
     }
     return nextLoad(url, context)
   },
-})
+}
+
+if (typeof nodeModule.registerHooks === 'function') {
+  nodeModule.registerHooks(hooks)
+} else {
+  // Register an equivalent data-URL loader through nodeModule.register.
+}
 ```
 
 This helper never enters production code.
