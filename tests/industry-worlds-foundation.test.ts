@@ -60,26 +60,46 @@ test('the manifest remains client-safe and prose-free', () => {
   assert.doesNotMatch(source, /sections\s*:/)
 })
 
-test('the staged registry resolves every known locale route to legacy and rejects unknown slugs', () => {
+test('the staged registry resolves three worlds and ten legacy industries in both locales', () => {
   assert.deepEqual(Object.keys(industryPageRegistry), INDUSTRY_SLUGS)
-  assert.deepEqual(Object.values(industryPageRegistry), INDUSTRY_SLUGS.map(() => null))
+  const worldSlugs = new Set<IndustrySlug>([
+    'healthcare',
+    'logistics-supply-chain',
+    'restaurants',
+  ])
+  assert.deepEqual(
+    Object.entries(industryPageRegistry)
+      .filter(([, definition]) => definition !== null)
+      .map(([slug]) => slug)
+      .sort(),
+    [...worldSlugs].sort(),
+  )
 
-  let resolutionCount = 0
+  let worldCount = 0
+  let legacyCount = 0
   for (const slug of INDUSTRY_SLUGS) {
     for (const locale of ['en', 'ar'] as const) {
       const resolution = getIndustryPage(slug, locale)
 
-      assert.equal(resolution.kind, 'legacy')
       assert.equal(resolution.slug, slug)
-      if (resolution.kind === 'legacy') {
+      if (worldSlugs.has(slug)) {
+        assert.equal(resolution.kind, 'world')
+        if (resolution.kind === 'world') {
+          assert.equal(resolution.definition.slug, slug)
+        }
+        worldCount += 1
+      } else {
+        assert.equal(resolution.kind, 'legacy')
+        if (resolution.kind !== 'legacy') continue
         assert.equal(resolution.legacy.slug, slug)
         assert.equal(resolution.legacy.locale, locale)
+        legacyCount += 1
       }
-      resolutionCount += 1
     }
   }
 
-  assert.equal(resolutionCount, 26)
+  assert.equal(worldCount, 6)
+  assert.equal(legacyCount, 20)
   assert.throws(
     () => getIndustryPage('unknown-sector' as IndustrySlug, 'en'),
     /Unknown industry slug: unknown-sector/,

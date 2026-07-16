@@ -380,7 +380,7 @@ test('pricing route turns the public pricing source into a conversion page', () 
   assert.match(sitemapSource, /path: '\/pricing'/, 'Sitemap should include the pricing page')
 })
 
-test('service and industry detail pages use tailored modern hero imagery', () => {
+test('service and industry detail pages use their tailored hero systems', () => {
   const serviceDetailSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/[service]/page.tsx'), 'utf8')
   const industryDetailSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/industries/[industry]/page.tsx'), 'utf8')
   const heroModernPath = path.join(process.cwd(), 'components/ui/hero-modern.tsx')
@@ -388,7 +388,8 @@ test('service and industry detail pages use tailored modern hero imagery', () =>
   assert.equal(existsSync(heroModernPath), true, 'Shared modern hero component should exist under components/ui')
   assert.match(serviceDetailSource, /HeroOrbitDeck/, 'Sub-service pages should use the modern hero component')
   assert.match(serviceDetailSource, /heroImageForService/, 'Sub-service pages should select tailored service imagery')
-  assert.match(industryDetailSource, /HeroOrbitDeck/, 'Industry pages should use the modern hero component')
-  assert.match(industryDetailSource, /industryHeroImage/, 'Industry pages should select tailored industry imagery')
+  assert.match(industryDetailSource, /IndustryPageShell/, 'Registered industries should use the authored world shell')
+  assert.match(industryDetailSource, /LegacyIndustryPage/, 'Unmigrated industries should retain the legacy renderer')
+  assert.doesNotMatch(industryDetailSource, /industryHeroImage/, 'The route should not own industry imagery')
   assert.match(readFileSync(heroModernPath, 'utf8'), /showcaseImage/, 'Modern hero should include a named visual image slot')
 })

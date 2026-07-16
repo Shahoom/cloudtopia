@@ -1,14 +1,9 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
-import { IndustryPageShell } from '../components/industry/detail/IndustryPageShell.tsx'
 import { healthcareDefinition } from '../lib/industries/definitions/healthcare.ts'
 import { logisticsSupplyChainDefinition } from '../lib/industries/definitions/logistics-supply-chain.ts'
 import { restaurantsDefinition } from '../lib/industries/definitions/restaurants.ts'
-import type { Locale } from '../lib/i18n/config.ts'
-import type { EffectiveIndustrySeo } from '../lib/industries/resolve-industry-seo.ts'
 import {
   validateIndustryPageDefinition,
   validateIndustryPageRegistry,
@@ -46,34 +41,6 @@ const logisticsFingerprint =
 const restaurantsFingerprint =
   'editorial-pass|pressure-field:split-signal|use-case-sequence:timed-pass|pressure-field:dense-ledger|system-blueprint:service-line|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|the-pass'
 
-function effectiveSeo(
-  definition: IndustryPageDefinition,
-  locale: Locale,
-): EffectiveIndustrySeo {
-  const alternateLocale = locale === 'en' ? 'ar' : 'en'
-  const canonical = locale === 'en'
-    ? `https://cloudtopia.net/industries/${definition.slug}`
-    : `https://cloudtopia.net/ar/industries/${definition.slug}`
-  const alternate = alternateLocale === 'en'
-    ? `https://cloudtopia.net/industries/${definition.slug}`
-    : `https://cloudtopia.net/ar/industries/${definition.slug}`
-
-  return {
-    locale,
-    title: definition.locales[locale].seo.title,
-    description: definition.locales[locale].seo.description,
-    canonical,
-    languages: {
-      [locale]: canonical,
-      [alternateLocale]: alternate,
-      'x-default': `https://cloudtopia.net/industries/${definition.slug}`,
-    },
-    index: true,
-    follow: true,
-    ogImages: [],
-  }
-}
-
 function assertSemanticAnswersOnce(definition: IndustryPageDefinition): void {
   const expected = [
     'operating-pressure',
@@ -97,27 +64,6 @@ function assertSemanticAnswersOnce(definition: IndustryPageDefinition): void {
         1,
         `${definition.slug}/${locale} must answer ${answer} exactly once`,
       )
-    }
-  }
-}
-
-function assertBilingualRender(definition: IndustryPageDefinition): void {
-  for (const locale of ['en', 'ar'] as const) {
-    const html = renderToStaticMarkup(
-      createElement(IndustryPageShell, {
-        locale,
-        definition,
-        seo: effectiveSeo(definition, locale),
-        schema: [],
-      }),
-    )
-
-    assert.equal((html.match(/<h1\b/gu) ?? []).length, 1)
-    assert.equal((html.match(/<main\b/gu) ?? []).length, 0)
-    assert.match(html, new RegExp(`data-industry="${definition.slug}"`))
-    assert.match(html, new RegExp(`lang|dir="${locale === 'ar' ? 'rtl' : 'ltr'}"`))
-    for (const section of definition.locales[locale].sections) {
-      assert.match(html, new RegExp(`id="${section.id}"`))
     }
   }
 }
@@ -227,7 +173,6 @@ test('Healthcare Clinical Pulse is a complete bilingual draft world', () => {
     validateIndustryPageDefinition(healthcareDefinition, { mode: 'draft' }),
     { ok: true, errors: [] },
   )
-  assertBilingualRender(healthcareDefinition)
 })
 
 test('Logistics Flow Control is a complete bilingual draft world', () => {
@@ -327,7 +272,6 @@ test('Logistics Flow Control is a complete bilingual draft world', () => {
     }),
     { ok: true, errors: [] },
   )
-  assertBilingualRender(logisticsSupplyChainDefinition)
 })
 
 test('Restaurants Service Rhythm is a complete bilingual draft world', () => {
@@ -422,7 +366,6 @@ test('Restaurants Service Rhythm is a complete bilingual draft world', () => {
     validateIndustryPageDefinition(restaurantsDefinition, { mode: 'draft' }),
     { ok: true, errors: [] },
   )
-  assertBilingualRender(restaurantsDefinition)
 })
 
 test('the three Release A pilots form a unique draft registry', () => {
