@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { healthcareLandingCopy } from '@/components/industry/healthcare/healthcare-content'
 import { canonicalUrl } from '@/lib/i18n/url'
 import { healthcareDefinition } from '@/lib/industries/definitions/healthcare'
+import { industryPageMarkdown } from '@/lib/industries/industry-markdown'
 import { CANONICAL_SERVICE_TARGETS } from '@/lib/industries/service-targets'
+import { isIndustrySlug } from '@/lib/industries/slugs'
 import {
   BASE_URL,
   COMPANY,
@@ -35,11 +37,14 @@ export function GET(request: NextRequest) {
   const canonicalPath = normalized || '/'
   const canonical = canonicalUrl(locale, canonicalPath)
 
+  const industryMatch = normalized.match(/^\/industries\/([a-z0-9-]+)$/)
   const markdown = isHome
     ? homepageMarkdown()
     : normalized === '/industries/healthcare'
       ? healthcarePageMarkdown(locale, canonical)
-      : pageMarkdown(normalized, canonical)
+      : industryMatch && isIndustrySlug(industryMatch[1])
+        ? industryPageMarkdown(industryMatch[1], locale, canonical)
+        : pageMarkdown(normalized, canonical)
 
   return new NextResponse(markdown, {
     status: 200,

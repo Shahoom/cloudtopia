@@ -7,7 +7,7 @@ import { INDUSTRY_SLUGS } from '../lib/industries/slugs.ts'
 import { canonicalUrl } from '../lib/i18n/url.ts'
 import { buildSitemapEntries } from '../lib/sitemap-data.ts'
 
-test('the sitemap publishes healthcare as one bilingual pair and excludes remaining draft worlds', () => {
+test('the sitemap publishes each published world as one bilingual pair and excludes draft worlds', () => {
   const entries = buildSitemapEntries()
   const urls = new Set(entries.map((entry) => entry.url))
 
@@ -21,7 +21,9 @@ test('the sitemap publishes healthcare as one bilingual pair and excludes remain
     for (const url of localizedUrls) {
       assert.equal(
         urls.has(url),
-        resolution.kind === 'legacy' || slug === 'healthcare',
+        resolution.kind === 'legacy' ||
+          (resolution.kind === 'world' &&
+            resolution.definition.publicationStatus === 'published'),
         `${slug} must match its publication status`,
       )
     }

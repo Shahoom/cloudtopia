@@ -1,0 +1,1682 @@
+/*
+ * FinTech "Industry World" — ports the Paynext (Peterdraw) look & animations.
+ * Palette expressed as rgb() channel custom props so opacity variants stay
+ * exact. Deep-violet accent (#46208f) on light, faint-violet surfaces; dark
+ * gradient (#1c0e3f -> #4925a5) drives the hero, workflow, and CTA bands.
+ * RTL via logical properties + [dir='rtl'] overrides. Every animation is
+ * neutralised under prefers-reduced-motion (kill switch at the end).
+ */
+.page {
+  --fin-accent: 70 32 143; /* #46208f */
+  --fin-accent-strong: 73 37 165; /* #4925a5 */
+  --fin-ink: 17 14 52; /* #110e34 */
+  --fin-ink-deep: 28 14 63; /* #1c0e3f */
+  --fin-body: 85 96 118; /* #556076 — darkened from template #677489 for AA */
+  --fin-line: 205 213 224; /* #cdd5e0 */
+  --fin-surface: 255 255 255;
+  --fin-gray: 248 250 252; /* #f8fafc */
+  --fin-gray-2: 245 243 254; /* #f5f3fe */
+  --fin-tint: 236 233 252; /* #ece9fc */
+  --fin-lilac: 193 182 248; /* #c1b6f8 workflow fill */
+  --fin-lilac-strong: 163 140 243; /* #a38cf3 active icon */
+  --fin-white: 255 255 255;
+  --fin-shadow: 52 20 139; /* violet card shadow tint */
+  --fin-motion-standard: 400ms;
+  --fin-motion-accordion: 260ms;
+  --fin-cta-bg: url('/images/industries/fintech/cta_bg.webp');
+
+  background: rgb(var(--fin-surface));
+  color: rgb(var(--fin-body));
+  font-family: var(--font-hanken), var(--font-inter), sans-serif;
+  overflow: clip;
+  text-align: start;
+}
+
+.page[dir='rtl'] {
+  font-family: var(--font-arabic), var(--font-cairo), sans-serif;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page p {
+  margin-block: 0;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4 {
+  color: rgb(var(--fin-ink));
+  font-family: var(--font-hanken), var(--font-inter), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.page[dir='rtl'] h1,
+.page[dir='rtl'] h2,
+.page[dir='rtl'] h3,
+.page[dir='rtl'] h4 {
+  font-family: var(--font-arabic), var(--font-cairo), sans-serif;
+  letter-spacing: 0;
+}
+
+.page p {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- Skip link */
+.skipLink {
+  background: rgb(var(--fin-ink));
+  border-radius: 0 0 12px 12px;
+  color: #fff;
+  inset-block-start: 0;
+  inset-inline-start: 1.5rem;
+  padding: 0.8rem 1rem;
+  position: fixed;
+  transform: translateY(-150%);
+  transition: transform 180ms ease;
+  z-index: 1000;
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.srOnly {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* --------------------------------------------------------------- Breadcrumb */
+.breadcrumbFrame {
+  background: rgb(var(--fin-gray-2));
+  padding: 1.25rem clamp(1rem, 4vw, 4rem) 0;
+  position: relative;
+  z-index: 5;
+}
+
+.breadcrumb {
+  margin-inline: auto;
+  max-width: 1320px;
+}
+
+/* --------------------------------------------------------- Reveal (WOW-like) */
+.reveal {
+  will-change: opacity, transform;
+}
+
+.reveal[data-reveal='out'] {
+  opacity: 0;
+  transition: none;
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='up'] {
+  transform: translateY(42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='down'] {
+  transform: translateY(-42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='left'] {
+  transform: translateX(-42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='right'] {
+  transform: translateX(42px);
+}
+
+.page[dir='rtl'] .reveal[data-reveal='out'][data-reveal-variant='left'] {
+  transform: translateX(42px);
+}
+
+.page[dir='rtl'] .reveal[data-reveal='out'][data-reveal-variant='right'] {
+  transform: translateX(-42px);
+}
+
+.reveal[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 800ms ease,
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Optional staggered children when a container reveals. Children are visible by
+   default (idle/no-JS); only the JS-applied "out" state hides them, so nothing
+   is ever permanently hidden without JavaScript. */
+.reveal[data-reveal-stagger='true'] > * {
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* A stagger container never fades as a block — only its children animate. */
+.reveal[data-reveal-stagger='true'][data-reveal='out'] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='out'] > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > * {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(3) {
+  transition-delay: 180ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(4) {
+  transition-delay: 270ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(5) {
+  transition-delay: 360ms;
+}
+
+/* ----------------------------------------------------------------- Buttons */
+.button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 1.6em;
+  display: inline-flex;
+  font-size: 0.98rem;
+  font-weight: 600;
+  gap: 0.7rem;
+  justify-content: center;
+  line-height: 1.5em;
+  min-height: 52px;
+  overflow: hidden;
+  padding: 0.85rem 1.6rem;
+  position: relative;
+  text-shadow: 0 50px 0 currentColor;
+  transition:
+    color var(--fin-motion-standard) ease,
+    background-color 0.8s ease,
+    border-color var(--fin-motion-standard) ease,
+    box-shadow var(--fin-motion-standard) ease,
+    transform 0.8s ease;
+}
+
+/* .cs_btn text-swap: the label glyph slides up 50px, the duplicate (drawn via
+   text-shadow 50px below) rises into its place. */
+.button > span {
+  display: inline-block;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.button:hover > span,
+.button:focus-visible > span {
+  transform: translateY(-50px);
+}
+
+.page .buttonPrimary {
+  background: linear-gradient(1deg, rgb(var(--fin-ink-deep)) -8%, rgb(var(--fin-accent-strong)) 57%);
+  color: #fff;
+}
+
+.page .buttonLight {
+  background: rgb(var(--fin-white));
+  color: rgb(var(--fin-ink));
+}
+
+.page .buttonLight:hover,
+.page .buttonLight:focus-visible {
+  background: rgb(255 255 255 / 85%);
+}
+
+.page .buttonSecondary {
+  background: rgb(var(--fin-surface));
+  border-color: rgb(var(--fin-line));
+  color: rgb(var(--fin-ink));
+}
+
+.page .buttonSecondary:hover,
+.page .buttonSecondary:focus-visible {
+  border-color: rgb(var(--fin-accent) / 45%);
+}
+
+.button > svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.buttonBlock {
+  width: 100%;
+}
+
+/* Focus rings — shared across every interactive element */
+.button:focus-visible,
+.textLink:focus-visible,
+.serviceCard:focus-visible,
+.valueCard:focus-visible,
+.pricingTab:focus-visible,
+.pricingBtn:focus-visible,
+.contextualServiceLink:focus-visible,
+.faqItem summary:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgb(var(--fin-accent));
+}
+
+/* On dark bands invert the ring layering so it stays visible */
+.workflowSection .textLink:focus-visible,
+.ctaCard .button:focus-visible {
+  outline-color: rgb(var(--fin-ink-deep));
+  box-shadow: 0 0 0 6px #fff;
+}
+
+.button,
+.serviceCard,
+.valueCard,
+.pricingTab,
+.pricingBtn,
+.faqItem summary,
+.textLink,
+.contextualServiceLink {
+  -webkit-tap-highlight-color: rgb(var(--fin-accent) / 18%);
+  touch-action: manipulation;
+}
+
+/* ---------------------------------------------------------------- ArrowPair */
+.arrowPair {
+  display: inline-grid;
+  height: 1.1rem;
+  overflow: hidden;
+  place-items: center;
+  width: 1.1rem;
+}
+
+.arrowPair svg {
+  grid-area: 1 / 1;
+  height: 1rem;
+  transition: transform var(--fin-motion-standard) ease;
+  width: 1rem;
+}
+
+.arrowPair svg:last-child {
+  transform: translate(-140%, 140%);
+}
+
+.page[dir='rtl'] .arrowPair svg:last-child {
+  transform: translate(140%, 140%);
+}
+
+.button:hover .arrowPair svg:first-child,
+.button:focus-visible .arrowPair svg:first-child,
+.textLink:hover .arrowPair svg:first-child,
+.serviceCard:hover .arrowPair svg:first-child {
+  transform: translate(140%, -140%);
+}
+
+.page[dir='rtl'] .button:hover .arrowPair svg:first-child,
+.page[dir='rtl'] .button:focus-visible .arrowPair svg:first-child,
+.page[dir='rtl'] .textLink:hover .arrowPair svg:first-child,
+.page[dir='rtl'] .serviceCard:hover .arrowPair svg:first-child {
+  transform: translate(-140%, -140%);
+}
+
+.button:hover .arrowPair svg:last-child,
+.button:focus-visible .arrowPair svg:last-child,
+.textLink:hover .arrowPair svg:last-child,
+.serviceCard:hover .arrowPair svg:last-child {
+  transform: translate(0);
+}
+
+/* -------------------------------------------------------------------- Hero */
+.hero {
+  background:
+    radial-gradient(circle at 80% 12%, rgb(var(--fin-accent-strong) / 55%), transparent 42%),
+    linear-gradient(1deg, rgb(var(--fin-ink-deep)) -8%, rgb(var(--fin-accent-strong)) 57%);
+  color: rgb(255 255 255 / 82%);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  background-image: radial-gradient(rgb(255 255 255 / 8%) 1px, transparent 1px);
+  background-size: 26px 26px;
+  content: '';
+  inset: 0;
+  mask-image: linear-gradient(90deg, #000, transparent 72%);
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.page[dir='rtl'] .hero::after {
+  mask-image: linear-gradient(-90deg, #000, transparent 72%);
+}
+
+.heroInner {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(7rem, 11vw, 10.25rem) clamp(1.25rem, 4vw, 4rem) clamp(4rem, 6vw, 6rem);
+  position: relative;
+}
+
+.heroCopy {
+  max-width: 660px;
+  position: relative;
+  z-index: 3;
+}
+
+.heroEyebrow,
+.eyebrow,
+.eyebrowLight {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 600;
+  gap: 0.5rem;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 1.1rem;
+}
+
+.heroEyebrow {
+  background: rgb(255 255 255 / 10%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%);
+  color: #fff;
+}
+
+.heroEyebrow svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.heroCopy h1 {
+  color: #fff;
+  font-size: clamp(2.9rem, 5.6vw, 4.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  margin-block: 1.5rem 1.4rem;
+}
+
+.page[dir='rtl'] .heroCopy h1 {
+  letter-spacing: 0;
+  line-height: 1.18;
+}
+
+.heroIntro {
+  color: rgb(255 255 255 / 82%);
+  font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-block-start: 2.1rem;
+}
+
+.heroTrust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.6rem;
+  list-style: none;
+  margin: 3.4rem 0 0;
+  padding: 0;
+}
+
+.heroTrustLabel {
+  color: rgb(255 255 255 / 62%);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-block-end: 0.9rem;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.page[dir='rtl'] .heroTrustLabel {
+  letter-spacing: 0;
+}
+
+.heroTrust li {
+  align-items: center;
+  color: rgb(255 255 255 / 88%);
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 600;
+  gap: 0.5rem;
+}
+
+.heroTrust li svg {
+  color: #fff;
+  height: 1.05rem;
+  width: 1.05rem;
+}
+
+/* Hero layered thumbnail cluster (parallax targets are the sm cards) */
+.heroVisual {
+  align-self: center;
+  min-height: 420px;
+  position: relative;
+  z-index: 2;
+}
+
+.heroThumb {
+  aspect-ratio: 450 / 702;
+  inset-inline-end: 0;
+  margin-inline: auto;
+  max-width: 340px;
+  position: relative;
+  width: 78%;
+}
+
+.heroThumbLg {
+  border-radius: 18px;
+  box-shadow: 0 40px 80px rgb(0 0 0 / 32%);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.heroThumbLg img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.heroThumbSm1,
+.heroThumbSm2 {
+  position: absolute;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  z-index: 3;
+}
+
+.heroThumbSm1 {
+  inset-block-start: 12%;
+  inset-inline-start: -34%;
+  width: 62%;
+}
+
+.heroThumbSm2 {
+  inset-block-end: 6%;
+  inset-inline-end: -32%;
+  width: 60%;
+}
+
+.heroThumbSm1 img,
+.heroThumbSm2 img {
+  border-radius: 14px;
+  box-shadow: 0 24px 50px rgb(0 0 0 / 30%);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------ Content shell */
+.content {
+  outline: none;
+  scroll-margin-top: 6rem;
+}
+
+.content:focus-visible {
+  outline: 3px solid rgb(var(--fin-accent));
+  outline-offset: -3px;
+}
+
+.section {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.sectionGray {
+  background: rgb(var(--fin-gray-2));
+}
+
+.sectionHeadingCentered {
+  margin-inline: auto;
+  max-width: 760px;
+  text-align: center;
+}
+
+.sectionHeadingSplit {
+  align-items: end;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+}
+
+.eyebrow,
+.eyebrowLight {
+  font-weight: 700;
+}
+
+.eyebrow {
+  background: rgb(var(--fin-gray-2));
+  color: rgb(var(--fin-accent));
+}
+
+.sectionGray .eyebrow,
+.pricingSection .eyebrow {
+  background: rgb(var(--fin-surface));
+}
+
+.eyebrowLight {
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+}
+
+.sectionHeadingCentered h2,
+.sectionHeadingSplit h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.1;
+  margin-block: 1rem 1rem;
+}
+
+.page[dir='rtl'] .sectionHeadingCentered h2,
+.page[dir='rtl'] .sectionHeadingSplit h2 {
+  line-height: 1.3;
+}
+
+.sectionHeadingSplit h2 {
+  margin-block-end: 0;
+}
+
+.sectionIntro {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.sectionHeadingCentered .sectionIntro {
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------- Feature mosaics */
+.featureMosaic {
+  display: grid;
+  gap: 24px;
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 992px) {
+  .featureMosaic {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  /* Services (3 cards): three equal columns */
+  .serviceMosaic .featureCard {
+    grid-column: auto / span 4;
+  }
+
+  /* Features (5 cards): 4/4/4 then 6/6 */
+  .featuresMosaic .featureCard {
+    grid-column: auto / span 4;
+  }
+
+  .featuresMosaic .featureCard:nth-child(4),
+  .featuresMosaic .featureCard:nth-child(5) {
+    grid-column: auto / span 6;
+  }
+}
+
+.featureCard {
+  align-items: center;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow: hidden;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  position: relative;
+}
+
+.serviceMosaic .featureCard {
+  background: rgb(var(--fin-gray));
+}
+
+.featuresMosaic .featureCard {
+  background: rgb(var(--fin-surface));
+  border: 1px solid rgb(var(--fin-line) / 55%);
+}
+
+/* alternate cards stack image-first for rhythm */
+.featureCard[data-flip='true'] {
+  flex-direction: column-reverse;
+}
+
+.featureCardText {
+  max-width: 470px;
+  text-align: center;
+}
+
+.featureCardText h3 {
+  font-size: 1.4rem;
+  margin-block-end: 0.75rem;
+}
+
+.featureCardText p {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.featureCardThumb {
+  max-width: 470px;
+  position: relative;
+  width: 100%;
+}
+
+.featureCardThumb img {
+  border-radius: 12px;
+  box-shadow: 21px 28px 66px 0 rgb(var(--fin-shadow) / 11%);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.page[dir='rtl'] .featureCardThumb img {
+  box-shadow: -21px 28px 66px 0 rgb(var(--fin-shadow) / 11%);
+}
+
+.featureAccent {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  inset-block-start: -28px;
+  inset-inline-end: -14px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Services card 3: tilted violet backing shape */
+.serviceMosaic .featureCard:nth-child(3) .featureCardThumb::before {
+  background-color: rgb(var(--fin-tint));
+  border-radius: 12px;
+  content: '';
+  height: 100%;
+  inset-block-start: -12px;
+  inset-inline-start: 0;
+  position: absolute;
+  transform: rotate(-4.47deg);
+  width: 100%;
+}
+
+.page[dir='rtl'] .serviceMosaic .featureCard:nth-child(3) .featureCardThumb::before {
+  transform: rotate(4.47deg);
+}
+
+.serviceMosaic .featureCard:nth-child(3) .featureCardThumb img {
+  position: relative;
+  z-index: 2;
+}
+
+/* Features card 4: three layered strips */
+.featureCardStack {
+  display: flex;
+  flex-direction: column-reverse;
+  max-width: 470px;
+  width: 100%;
+}
+
+.featureCardStack .featureCardStackItem {
+  position: relative;
+}
+
+.featureCardStack .featureCardStackItem img {
+  border-radius: 10px;
+  box-shadow: 12px 18px 44px 0 rgb(var(--fin-shadow) / 12%);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.featureCardStack .featureCardStackItem:nth-child(3) {
+  margin-block-end: -22px;
+  padding-inline: 9%;
+}
+
+.featureCardStack .featureCardStackItem:nth-child(2) {
+  margin-block-end: -22px;
+  padding-inline: 4.2%;
+  z-index: 2;
+}
+
+.featureCardStack .featureCardStackItem:nth-child(1) {
+  z-index: 3;
+}
+
+/* ------------------------------------------------------------- Workflow band */
+.workflowSection {
+  background:
+    linear-gradient(1deg, rgb(var(--fin-ink-deep) / 96%) -8%, rgb(var(--fin-accent-strong) / 94%) 57%),
+    center / cover no-repeat var(--fin-cta-bg, none);
+  color: rgb(255 255 255 / 82%);
+  overflow: hidden;
+  position: relative;
+}
+
+.workflowInner {
+  align-items: center;
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.workflowCopy h2 {
+  color: #fff;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.1;
+  margin-block: 1rem 1.1rem;
+}
+
+.page[dir='rtl'] .workflowCopy h2 {
+  line-height: 1.3;
+}
+
+.workflowCopy p {
+  color: rgb(255 255 255 / 80%);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+.workflowSteps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 8px;
+}
+
+.workflowStep {
+  padding-block-end: 52px;
+  padding-inline-start: 64px;
+  position: relative;
+}
+
+.workflowStep:last-child {
+  padding-block-end: 0;
+}
+
+/* connector: track (::after) + progress fill (::before) */
+.workflowStep::before,
+.workflowStep::after {
+  content: '';
+  inset-block-start: 0;
+  inset-inline-start: 17px;
+  position: absolute;
+  width: 8px;
+}
+
+.workflowStep::after {
+  background-color: rgb(255 255 255 / 22%);
+  height: 100%;
+}
+
+.workflowStep::before {
+  background-color: rgb(var(--fin-lilac));
+  height: 0%;
+  z-index: 1;
+}
+
+.workflowStep[data-active='true']::before {
+  height: 100%;
+  transition: height 2s ease;
+}
+
+.workflowStep:last-child::before,
+.workflowStep:last-child::after {
+  display: none;
+}
+
+.workflowStepIcon {
+  align-items: center;
+  background-color: rgb(var(--fin-white));
+  border-radius: 50%;
+  color: rgb(var(--fin-accent));
+  display: flex;
+  height: 42px;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  justify-content: center;
+  position: absolute;
+  width: 42px;
+  z-index: 2;
+}
+
+.workflowStepIcon svg {
+  height: 1.15rem;
+  width: 1.15rem;
+}
+
+.workflowStep[data-active='true'] .workflowStepIcon {
+  animation: fintechJump 0.3s cubic-bezier(0.5, 2.2, 0.7, 0.7) alternate;
+  background-color: rgb(var(--fin-lilac-strong));
+  color: #fff;
+}
+
+.workflowStepText h3 {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-block-end: 0.5rem;
+}
+
+.workflowStepText p {
+  color: rgb(255 255 255 / 76%);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@keyframes fintechJump {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.25);
+  }
+}
+
+/* --------------------------------------------------------------- Stats band */
+.statsSection {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.statsBand {
+  background: rgb(var(--fin-gray-2));
+  border-radius: 20px;
+  padding: clamp(2.5rem, 4vw, 3.25rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.statsGrid {
+  display: grid;
+  gap: 2rem 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-content: space-around;
+}
+
+.statTile {
+  text-align: center;
+}
+
+.statValue {
+  align-items: baseline;
+  color: rgb(var(--fin-ink));
+  display: flex;
+  font-size: clamp(2.6rem, 4vw, 3.5rem);
+  font-weight: 700;
+  gap: 2px;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.statValue span[data-fixed] {
+  color: rgb(var(--fin-accent));
+}
+
+.statLabel {
+  color: rgb(var(--fin-body));
+  font-size: 0.98rem;
+  line-height: 1.5;
+  margin-block-start: 0.85rem;
+}
+
+.statsNote {
+  color: rgb(var(--fin-body));
+  font-size: 0.82rem;
+  margin-block-start: 1.75rem;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------- Value cards */
+.valuesGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.valueCard {
+  border: 1px solid rgb(var(--fin-line) / 70%);
+  border-radius: 24px;
+  padding: 1.75rem;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.valueCard:hover {
+  box-shadow: 0 50px 30px -40px rgb(var(--fin-shadow) / 18%);
+  transform: translateY(-8px);
+}
+
+.valueIcon {
+  align-items: center;
+  background: rgb(var(--fin-gray-2));
+  border-radius: 50%;
+  color: rgb(var(--fin-accent));
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  margin-block-end: 1.4rem;
+  width: 56px;
+}
+
+.valueIcon svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.valueCard h3 {
+  font-size: 1.25rem;
+  margin-block-end: 0.75rem;
+}
+
+.valueCard p {
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------- Approach (vision/miss) */
+.approachRow {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Each row is wrapped in its own reveal element, so they are not adjacent
+   siblings — give every row top spacing (and a gap from the eyebrow). */
+.approachRow {
+  margin-block-start: clamp(3rem, 5vw, 5rem);
+}
+
+.approachRow[data-flip='true'] .approachMedia {
+  order: 2;
+}
+
+.approachMedia {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.approachMedia img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.approachBadge {
+  background: rgb(var(--fin-gray-2));
+  border-radius: 999px;
+  color: rgb(var(--fin-accent));
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.45rem 1.1rem;
+}
+
+.approachCopy h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.12;
+  margin-block: 1.1rem 1.1rem;
+}
+
+.page[dir='rtl'] .approachCopy h2 {
+  line-height: 1.3;
+}
+
+.approachCopy p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------------------------ Pricing */
+.pricingTabs {
+  margin-block-start: 2.5rem;
+}
+
+.pricingTabList {
+  align-items: center;
+  background: rgb(var(--fin-surface));
+  border-radius: 50px;
+  display: inline-flex;
+  gap: 6px;
+  margin-inline: auto;
+  padding: 8px;
+}
+
+.pricingTabListWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.pricingTab {
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  color: rgb(var(--fin-body));
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.55rem 2.2rem;
+  transition:
+    color var(--fin-motion-standard) ease,
+    background var(--fin-motion-standard) ease;
+}
+
+.pricingTab:hover {
+  color: rgb(var(--fin-accent));
+}
+
+.pricingTab[aria-selected='true'] {
+  background: linear-gradient(60deg, rgb(var(--fin-ink-deep)) 19%, rgb(90 64 154 / 70%) 86%);
+  color: #fff;
+}
+
+.pricingPanels {
+  margin-block-start: clamp(2.5rem, 4vw, 3.25rem);
+}
+
+.pricingPanel {
+  animation: fintechFade var(--fin-motion-standard) ease;
+}
+
+@keyframes fintechFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.pricingGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.priceCard {
+  background: rgb(var(--fin-surface));
+  border: 1px solid rgb(var(--fin-line) / 70%);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.priceCardPopular {
+  background: linear-gradient(1deg, rgb(var(--fin-ink-deep)) -8%, rgb(var(--fin-accent-strong)) 57%);
+  border-color: transparent;
+  color: #fff;
+}
+
+.priceCardPopular h3,
+.priceCardPopular .priceMeta {
+  color: #fff;
+}
+
+.priceHead {
+  border-block-end: 1px solid rgb(var(--fin-line) / 70%);
+  margin-block-end: 1.5rem;
+  padding-block-end: 1.25rem;
+}
+
+.priceCardPopular .priceHead {
+  border-block-end-color: rgb(255 255 255 / 22%);
+}
+
+.priceHeadTop {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.priceCard h3 {
+  font-size: 1.4rem;
+}
+
+.priceMeta {
+  color: rgb(var(--fin-body));
+  font-size: 0.92rem;
+  margin-block-start: 0.5rem;
+}
+
+.offerBadge {
+  background: rgb(var(--fin-gray-2));
+  border-radius: 8px;
+  color: rgb(var(--fin-accent));
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  white-space: nowrap;
+}
+
+.priceCardPopular .offerBadge {
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+}
+
+.priceFeatures {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+
+.priceFeatures li {
+  display: grid;
+  font-size: 0.98rem;
+  gap: 0.75rem;
+  grid-template-columns: 28px 1fr;
+  line-height: 1.45;
+}
+
+.priceFeatureIcon {
+  align-items: center;
+  background: rgb(var(--fin-gray-2));
+  border-radius: 50%;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  height: 28px;
+  justify-content: center;
+  width: 28px;
+}
+
+.priceFeatureIcon svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.priceCardPopular .priceFeatureIcon {
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+}
+
+.pricingBtn {
+  align-items: center;
+  border: 1px solid rgb(var(--fin-line));
+  border-radius: 1.6em;
+  color: rgb(var(--fin-ink));
+  display: inline-flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-block-start: auto;
+  overflow: hidden;
+  padding: 0.75rem 1.4rem;
+  position: relative;
+  text-shadow: 0 50px 0 currentColor;
+  transition:
+    background 0.8s ease,
+    border-color var(--fin-motion-standard) ease,
+    transform 0.8s ease;
+}
+
+.pricingBtn > span {
+  display: inline-block;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.pricingBtn:hover,
+.pricingBtn:focus-visible {
+  transform: translateY(-2px);
+}
+
+.pricingBtn:hover > span,
+.pricingBtn:focus-visible > span {
+  transform: translateY(-50px);
+}
+
+.priceCardPopular .pricingBtn {
+  background: #fff;
+  border-color: #fff;
+  color: rgb(var(--fin-ink));
+}
+
+.pricingFootnote {
+  color: rgb(var(--fin-body));
+  font-size: 0.9rem;
+  margin-block-start: 2rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------- Service paths */
+.servicePathGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.serviceCard {
+  align-items: center;
+  border: 1px solid rgb(var(--fin-line) / 70%);
+  border-radius: 16px;
+  display: grid;
+  gap: 0.4rem 1.1rem;
+  grid-template-columns: auto 1fr auto;
+  min-height: 140px;
+  overflow: hidden;
+  padding: 1.6rem;
+  position: relative;
+  transition:
+    border-color var(--fin-motion-standard) ease,
+    box-shadow var(--fin-motion-standard) ease,
+    transform var(--fin-motion-standard) ease;
+}
+
+.serviceCard::before {
+  background: rgb(var(--fin-accent));
+  content: '';
+  inset-block: 0;
+  inset-inline-start: 0;
+  position: absolute;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--fin-motion-standard) ease;
+  width: 4px;
+}
+
+.serviceCard:hover {
+  border-color: rgb(var(--fin-accent) / 40%);
+  box-shadow: 0 24px 50px rgb(var(--fin-shadow) / 12%);
+  transform: translateY(-5px);
+}
+
+.serviceCard:hover::before {
+  transform: scaleY(1);
+}
+
+.serviceCard > span:first-child {
+  color: rgb(var(--fin-accent));
+  font-size: 0.75rem;
+  font-weight: 800;
+  grid-row: 1 / span 2;
+}
+
+.serviceCard h3 {
+  font-size: 1.25rem;
+}
+
+.serviceCard p {
+  color: rgb(var(--fin-body));
+  font-size: 0.82rem;
+}
+
+.serviceCard .arrowPair {
+  color: rgb(var(--fin-accent));
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.contextualServiceLink {
+  align-items: center;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  margin-block-start: 1.75rem;
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--fin-accent) / 30%);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35rem;
+}
+
+.contextualServiceLink:hover {
+  text-decoration-color: currentColor;
+}
+
+.textLink {
+  align-items: center;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.6rem;
+  margin-block-start: 1.75rem;
+}
+
+.workflowSection .textLink {
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------- FAQ */
+.faqSection {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+
+.faqHeading {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+}
+
+.faqHeading h2 {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  line-height: 1.12;
+  margin-block: 1rem 1rem;
+}
+
+.page[dir='rtl'] .faqHeading h2 {
+  line-height: 1.3;
+}
+
+.faqList {
+  border-block-start: 1px solid rgb(var(--fin-line));
+}
+
+.faqItem {
+  border-block-end: 1px solid rgb(var(--fin-line));
+  interpolate-size: allow-keywords;
+}
+
+.faqItem::details-content {
+  block-size: 0;
+  content-visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    block-size var(--fin-motion-accordion) ease,
+    content-visibility var(--fin-motion-accordion) allow-discrete,
+    opacity var(--fin-motion-accordion) ease;
+}
+
+.faqItem[open]::details-content {
+  block-size: auto;
+  content-visibility: visible;
+  opacity: 1;
+}
+
+.faqItem summary {
+  align-items: center;
+  color: rgb(var(--fin-ink));
+  cursor: pointer;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: auto 1fr auto;
+  list-style: none;
+  min-height: 92px;
+  padding: 1.3rem 0;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary > span:first-child {
+  color: rgb(var(--fin-accent));
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.faqItem summary strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.faqItem summary svg {
+  height: 1.15rem;
+  transition:
+    color var(--fin-motion-accordion) ease,
+    transform var(--fin-motion-accordion) ease;
+  width: 1.15rem;
+}
+
+.faqItem[open] summary svg {
+  color: rgb(var(--fin-accent));
+  transform: rotate(180deg);
+}
+
+.faqAnswer {
+  overflow: clip;
+}
+
+.faqAnswer p {
+  line-height: 1.75;
+  max-width: 760px;
+  padding: 0 3rem 1.7rem;
+}
+
+.page[dir='rtl'] .faqAnswer p {
+  padding-inline: 3rem 0;
+}
+
+/* -------------------------------------------------------------- Closing CTA */
+.ctaScrollWrap {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.ctaCard {
+  background:
+    linear-gradient(1deg, rgb(var(--fin-ink-deep) / 96%) -8%, rgb(var(--fin-accent-strong) / 94%) 57%),
+    center / cover no-repeat var(--fin-cta-bg, none);
+  border-radius: 32px;
+  color: rgb(255 255 255 / 82%);
+  overflow: hidden;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+  position: relative;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.ctaInner {
+  margin-inline: auto;
+  max-width: 720px;
+  text-align: center;
+}
+
+.ctaInner .eyebrowLight {
+  margin-block-end: 1.25rem;
+}
+
+.ctaInner h2 {
+  color: #fff;
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-block-end: 1.1rem;
+}
+
+.page[dir='rtl'] .ctaInner h2 {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.ctaInner p {
+  color: rgb(255 255 255 / 82%);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-block-end: 2rem;
+}
+
+/* ============================================================== Responsive */
+@media (max-width: 991px) {
+  .heroInner,
+  .workflowInner,
+  .faqSection {
+    grid-template-columns: 1fr;
+  }
+
+  .heroVisual {
+    margin-block-start: 1rem;
+    min-height: 0;
+  }
+
+  .heroThumb {
+    max-width: 300px;
+  }
+
+  .sectionHeadingSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .valuesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .approachRow {
+    grid-template-columns: 1fr;
+  }
+
+  .approachRow[data-flip='true'] .approachMedia {
+    order: 0;
+  }
+
+  .approachCopy {
+    order: 2;
+  }
+
+  .pricingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .servicePathGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqHeading {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .featureMosaic {
+    grid-template-columns: 1fr !important;
+  }
+
+  .featureCard[data-flip='true'] {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 575px) {
+  .heroActions,
+  .heroActions .button {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .heroActions .button {
+    justify-content: space-between;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricingTab {
+    padding-inline: 1.4rem;
+  }
+
+  .heroThumbSm1 {
+    inset-inline-start: -8%;
+  }
+
+  .heroThumbSm2 {
+    inset-inline-end: -8%;
+  }
+
+  .faqAnswer p {
+    padding-inline: 0;
+  }
+
+  .page[dir='rtl'] .faqAnswer p {
+    padding-inline: 0;
+  }
+
+  .ctaCard {
+    border-radius: 20px;
+  }
+}
+
+/* ============================================= Reduced-motion kill switch */
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    scroll-behavior: auto;
+  }
+
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Reveals must never leave content hidden when motion is reduced */
+  .reveal,
+  .reveal[data-reveal='out'],
+  .reveal[data-reveal-stagger='true'] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Workflow connector snaps full so the sequence stays legible */
+  .workflowStep[data-active='true']::before {
+    height: 100%;
+  }
+}

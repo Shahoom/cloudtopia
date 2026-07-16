@@ -1,12 +1,12 @@
 import 'server-only'
 
+import { fintechDefinition } from '@/lib/industries/definitions/fintech'
 import { healthcareDefinition } from '@/lib/industries/definitions/healthcare'
 import { logisticsSupplyChainDefinition } from '@/lib/industries/definitions/logistics-supply-chain'
 import {
   constructionDefinition,
   ecommerceRetailDefinition,
   educationDefinition,
-  fintechDefinition,
   governmentPublicSectorDefinition,
   legalFirmsDefinition,
   professionalServicesDefinition,

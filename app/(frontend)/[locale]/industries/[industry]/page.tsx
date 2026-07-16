@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 
 import { IndustryPageShell } from '@/components/industry/detail/IndustryPageShell'
@@ -17,9 +18,35 @@ import {
 } from '@/lib/industries/resolve-industry-seo'
 import { CANONICAL_SERVICE_TARGETS } from '@/lib/industries/service-targets'
 import { INDUSTRY_SLUGS, isIndustrySlug, type IndustrySlug } from '@/lib/industries/slugs'
+import type { IndustryPageDefinition } from '@/lib/industries/types'
 
 type PageProps = {
   params: Promise<{ locale: string; industry: string }>
+}
+
+type WorldPageProps = {
+  locale: Locale
+  definition: IndustryPageDefinition
+  seo: EffectiveIndustrySeo
+  schema: unknown
+}
+
+/**
+ * Industry Worlds that have "graduated" to a hand-authored, template-ported
+ * presentation (vs. the generic IndustryPageShell). Add a slug here to route it
+ * to its bespoke component; every entry shares the WorldPageProps contract.
+ */
+const WORLD_COMPONENTS: Partial<
+  Record<IndustrySlug, () => Promise<(props: WorldPageProps) => ReactNode>>
+> = {
+  healthcare: () =>
+    import('@/components/industry/healthcare/HealthcareIndustryPage').then(
+      (m) => m.HealthcareIndustryPage,
+    ),
+  fintech: () =>
+    import('@/components/industry/fintech/FintechIndustryPage').then(
+      (m) => m.FintechIndustryPage,
+    ),
 }
 
 export const dynamicParams = false
@@ -180,13 +207,12 @@ export default async function IndustryPage({ params }: PageProps) {
   )
 
   if (route.resolution.kind === 'world') {
-    if (route.slug === 'healthcare') {
-      const { HealthcareIndustryPage } = await import(
-        '@/components/industry/healthcare/HealthcareIndustryPage'
-      )
+    const loadWorld = WORLD_COMPONENTS[route.slug]
+    if (loadWorld) {
+      const WorldPage = await loadWorld()
 
       return (
-        <HealthcareIndustryPage
+        <WorldPage
           locale={route.locale}
           definition={route.resolution.definition}
           seo={route.seo}

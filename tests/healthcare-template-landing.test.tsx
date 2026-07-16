@@ -51,7 +51,11 @@ test('healthcare uses a dedicated bilingual ProHealth-derived industry presentat
 
   const routeSource = readFileSync(routePath, 'utf8')
   assert.match(routeSource, /HealthcareIndustryPage/u)
-  assert.match(routeSource, /route\.slug === 'healthcare'/u)
+  assert.match(routeSource, /WORLD_COMPONENTS/u)
+  assert.match(
+    routeSource,
+    /healthcare:\s*\(\)\s*=>\s*import\([^)]*HealthcareIndustryPage/u,
+  )
 
   const { HealthcareIndustryPage } = await import(
     '../components/industry/healthcare/HealthcareIndustryPage.tsx'
