@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import test from 'node:test'
+import type { IndustrySlug } from '../lib/industries/slugs.ts'
 import { locations, locationSlugs } from '../lib/seo/locations.ts'
 
 const targetLocationSlugs = [
@@ -32,7 +33,7 @@ const targetIndustrySlugs = [
   'professional-services',
   'logistics-supply-chain',
   'government-public-sector',
-]
+] as const satisfies readonly IndustrySlug[]
 
 test('regional SEO locations cover the target Arabic-speaking markets with keyword data', () => {
   assert.deepEqual([...locationSlugs].sort(), [...targetLocationSlugs].sort())
@@ -103,11 +104,12 @@ test('phase 2 and 3 landing page templates surface the expanded SEO content', ()
   assert.match(industryIndexSource, /content\.proof/, 'Industry hub should surface enterprise proof points')
   assert.match(industryContentSource, /guideIntro/, 'Industry hub should include an answer-first transformation guide')
   assert.match(industryCardsSource, /serviceLinks/, 'Industry hub index should expose relevant services')
-  assert.match(industryPageSource, /getIndustry/, 'Industry route should read from industry SEO data')
-  assert.match(industryPageSource, /serviceLinks/, 'Industry route should render related service links')
-  assert.match(industryPageSource, /buildBreadcrumbSchema|BreadcrumbList/, 'Industry route should emit breadcrumb schema')
-  assert.match(industryPageSource, /marketLinks/, 'Industry route should cross-link relevant market pages')
-  assert.match(industryPageSource, /industryFeatures/, 'Industry route should render SEO-focused feature sections')
+  assert.match(industryPageSource, /getIndustryPage/, 'Industry route should use the closed world resolver')
+  assert.match(industryPageSource, /IndustryPageShell/, 'Industry route should render registered world pages')
+  assert.match(industryPageSource, /buildIndustryMetadata/, 'Industry route should use centralized metadata')
+  assert.match(industryPageSource, /buildIndustryJsonLd/, 'Industry route should use connected industry schema')
+  assert.match(industryPageSource, /export const dynamicParams = false/, 'Industry route should close dynamic slugs')
+  assert.doesNotMatch(industryPageSource, /industryFeatures|marketLinks/, 'Industry route should not own generic page-copy arrays')
   assert.match(marketsIndexSource, /ItemList/, 'Markets hub should emit ItemList schema')
   assert.match(marketsIndexSource, /BreadcrumbList/, 'Markets hub should emit breadcrumb schema')
   assert.match(marketsIndexSource, /countryLandingPages/, 'Markets hub should render country landing data')

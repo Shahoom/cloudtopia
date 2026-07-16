@@ -659,6 +659,11 @@ git commit -m "feat(industries): define world content contracts"
 - Consumes: existing `IndustryData`, visual mapping, countries, localized URL helpers, and `HeroOrbitDeck`.
 - Produces: `LegacyIndustryViewModel`, `adaptLegacyIndustry(locale, industry)`, and `<LegacyIndustryPage locale viewModel />`.
 
+**Binding SEO-audit amendments:**
+
+- The adapter also consumes the lightweight manifest entry and projects the localized hub plus both manifest-defined adjacent industries as crawlable anchors. The renderer must expose the hub, every configured service, both adjacent industries, all six market links, and both CTAs without redesigning the frozen legacy presentation.
+- Add the hero image path and localized hero alt/scene description to the parity projection. The focused test must confirm the local asset exists, has stable non-zero dimensions, and renders nonempty locale-appropriate alternative text.
+
 - [ ] **Step 1: Capture a failing parity projection before moving JSX**
 
 The fixture stores, for ten fallback slugs × two locales: name, hero title, description, ordered problems, use cases, differentiators, FAQ pairs, service labels/hrefs, market hrefs, and CTA destinations. The focused test must also assert:
@@ -778,6 +783,13 @@ git commit -m "feat(industries): add staged world resolver"
 - Consumes: `getCMSPage`, `getSeoOverride`, definition/legacy fallback SEO, `canonicalUrl`, `buildHreflangMap`, `stripBrandSuffix`, `ogImagesFor`, and the canonical Organization ID.
 - Produces: pure `mergeIndustrySeoPair`, cached `resolveIndustrySeoPair`, `buildIndustryMetadata`, and `buildIndustryJsonLd`.
 
+**Binding SEO-audit amendments:**
+
+- Release A accepts only the exact self-route pair `https://cloudtopia.net/industries/<slug>` and `https://cloudtopia.net/ar/industries/<slug>`. Reject credentials, ports, query strings, fragments, trailing-slash variants, `/en`, identical or locale-swapped URLs, another industry slug, and arbitrary path changes. A future relocation requires a typed alias plus a tested single-hop permanent redirect; arbitrary CMS relocation is out of scope.
+- Treat indexability as a bilingual pair contract: if either effective locale requests `noIndex`, both locales emit `noindex`, the pair advertises no hreflang cluster, and neither canonical enters the sitemap. Test EN-only, AR-only, both, and neither inputs.
+- Resolve all 26 effective localized routes and enforce locale-scoped uniqueness of canonical, title, description, and H1 after every CMS layer. Cross-slug CMS collisions fail the publication gate.
+- Emit localized `openGraph.locale` plus inverse `alternateLocale`. Add the canonical Organization as `WebPage.publisher` and reuse only verified definition/review dates as `WebPage.dateModified`; never fabricate a date or expose internal reviewers as authors.
+
 - [ ] **Step 1: Write the failing precedence and URL-atomicity matrix**
 
 Use pure fixtures for these cases:
@@ -786,10 +798,10 @@ Use pure fixtures for these cases:
 2. Pages title/description/noindex override;
 3. route SEO title/description/robots override;
 4. title ending in `| CloudTopia` or `| كلاود توبيا` is normalized;
-5. complete EN/AR canonical override updates canonical, OG URL, hreflang, x-default, and schema IDs;
+5. a complete exact self-route EN/AR canonical pair updates canonical, OG URL, hreflang, x-default, and schema IDs;
 6. one-locale canonical override is rejected and the base pair remains active;
 7. a CMS fetch failure falls back to code-owned values;
-8. `noIndex` controls both metadata robots and sitemap eligibility;
+8. `noIndex` is pair-atomic and controls both locales' metadata robots, hreflang eligibility, and sitemap eligibility;
 9. Open Graph and Twitter title/description/image values match the effective locale copy;
 10. no metadata builder emits `/en/` canonicals or a `keywords` field.
 
@@ -811,7 +823,7 @@ export type EffectiveIndustrySeo = {
   title: string
   description: string
   canonical: string
-  languages: Record<'en' | 'ar' | 'x-default', string>
+  languages: Partial<Record<'en' | 'ar' | 'x-default', string>>
   index: boolean
   follow: boolean
   ogImages: ReturnType<typeof ogImagesFor>
@@ -834,7 +846,7 @@ Normalize source fields explicitly:
 | Published Pages SEO JSON | `title`, `description`, `canonicalUrl` or `canonical`, `noindex` or `noIndex`, `nofollow` or `noFollow`, `ogImage` |
 | SeoOverrides | `metaTitle`, `metaDescription`, `canonicalUrl`, `noIndex`, `noFollow` |
 
-Reject empty values, non-HTTPS canonical values, a canonical on only one locale, and canonical pairs outside the site's allowed `https://cloudtopia.net` origin. Valid paired overrides may change the localized path, but English remains the `x-default`. Apply route title/description/robots fields even when that route's invalid or incomplete canonical field is ignored.
+Reject empty values, non-HTTPS canonical values, a canonical on only one locale, and canonical pairs outside the site's allowed `https://cloudtopia.net` origin. Valid paired overrides must equal the exact registered localized route pair, and English remains the `x-default`. Apply route title/description fields even when that route's invalid or incomplete canonical field is ignored. Resolve robots pair-atomically: either both pages remain indexable with reciprocal alternates, or both emit `noindex` without an advertised hreflang cluster.
 
 - [ ] **Step 4: Emit one connected localized graph**
 
@@ -888,11 +900,17 @@ git commit -m "feat(industries): resolve atomic localized SEO"
 - Create: `components/industry/detail/scenes/industry-scenes.module.css`
 - Create: `tests/helpers/register-css-modules.mjs`
 - Create: `tests/industry-worlds-render.test.tsx`
+- Modify: `components/ui/PageBreadcrumbs.tsx`
 
 **Interfaces:**
 
 - Consumes: reviewed localized page data, theme tokens, manifest links, `PageBreadcrumbs`, `localePath`, and effective SEO/schema.
 - Produces: an HTML-first `<IndustryPageShell>`, one `<IndustryHero>`, ordinary coordinate anchors, typed related links, and three semantic scene renderers.
+
+**Controller integration resolutions:**
+
+- Extend `PageBreadcrumbs` with an optional `ariaLabel` and a locale-derived default (`Breadcrumb` / `مسار التنقل`) while preserving every existing visible crumb and call site. The shell passes or receives the Arabic semantic label and the render test asserts it.
+- Preserve the repository's Node `>=20.9.0` support. The test-only CSS helper may use synchronous `registerHooks` when available, but must fall back to `node:module.register` with an equivalent loader module on Node 20.9–22.14. Do not raise the engine floor merely for the test harness.
 
 - [ ] **Step 1: Write failing server-rendering and accessibility assertions**
 
@@ -921,12 +939,12 @@ Expected: FAIL.
 
 - [ ] **Step 3: Add a test-only CSS-module loader**
 
-Node cannot import CSS Modules directly. Register a synchronous Node 22 loader used only by server-render tests:
+Node cannot import CSS Modules directly. Register the synchronous hook below when `registerHooks` exists; otherwise register an equivalent `resolve`/`load` module through `node:module.register`, which is available at the repository's Node 20.9 floor. The helper is used only by server-render tests:
 
 ```js
-import { registerHooks } from 'node:module'
+import * as nodeModule from 'node:module'
 
-registerHooks({
+const hooks = {
   resolve(specifier, context, nextResolve) {
     if (specifier.endsWith('.css')) {
       return { url: new URL(specifier, context.parentURL).href, shortCircuit: true }
@@ -943,7 +961,13 @@ registerHooks({
     }
     return nextLoad(url, context)
   },
-})
+}
+
+if (typeof nodeModule.registerHooks === 'function') {
+  nodeModule.registerHooks(hooks)
+} else {
+  // Register an equivalent data-URL loader through nodeModule.register.
+}
 ```
 
 This helper never enters production code.
@@ -1599,13 +1623,19 @@ git commit -m "refactor(industries): route worlds through staged renderer"
 - Consumes: effective SEO pairs, manifest records, reviewed dates/content updates, Sharp, pathname, and shared Markdown routing.
 - Produces: verified localized OG resolution, atomic sitemap entries, unknown-industry Markdown 404s, reliable sticky-header contrast after client navigation, and a corrected Restaurants homepage link.
 
+**Binding SEO-audit amendments:**
+
+- Before generic CMS sitemap rows are mapped, exclude every recognized `industries/<IndustrySlug>` row. Insert resolver-owned entries keyed by final effective URL and assert uniqueness across the complete production sitemap, including colliding Pages fixtures, noindex pairs, canonical inputs, and missing dates.
+- Canonicalize host, `/en`, trailing slash, and legacy aliases before Markdown content negotiation. HTML and Markdown must share one status policy: canonical variants return 200, aliases make one query-preserving 301, and unknown canonical paths return 404.
+
 - [ ] **Step 1: Write failing asset, sitemap, and discovery tests**
 
 Assert:
 
 - pilot metadata resolves its own localized image/alt text and legacy pages resolve `industries/default/<locale>.jpg` with localized alt text, never nonexistent `/images/og-image.jpg`;
 - default sitemap has 26 unique industry entries, reciprocal alternates, and no fabricated `lastModified` for legacy definitions;
-- an effective noindex pair removes only the affected canonical entry, and a paired canonical override changes sitemap URLs atomically;
+- an effective noindex pair removes both localized entries and all advertised alternates; only the exact registered canonical pair is accepted;
+- colliding published CMS Page rows cannot survive beside resolver-owned industry entries, and the complete sitemap has one entry per final URL with no fabricated date;
 - unknown `/industries/...` Markdown requests return 404, while known paths return the matching localized manifest name, summary, canonical, and service/related links;
 - Header's dark-section observer reruns on pathname changes;
 - Header and Footer import the lightweight manifest and do not import legacy/full page prose;
@@ -1689,6 +1719,12 @@ git commit -m "feat(industries): complete release A discovery bridge"
 
 **Required skills during execution:** `web-design-guidelines`, `vercel:agent-browser`, `vercel:agent-browser-verify`, `superpowers:systematic-debugging` for any failure, and `superpowers:verification-before-completion` before success claims.
 
+**Binding SEO-audit amendments:**
+
+- Add an HTML/Markdown HTTP matrix covering unprefixed English, `/ar`, `/en`, trailing slash, `www`, valid slugs, unknown slugs, and query preservation. Every emitted canonical must return 200 and self-canonicalize; aliases must be one-hop permanent redirects.
+- Add an all-26 rendered-content gate for nonempty substantial industry-specific copy, locale-scoped title/description/H1/canonical uniqueness, no placeholder/undefined text, and a conservative pairwise-similarity ceiling calibrated to the captured legacy baseline.
+- Add explicit intent-boundary assertions for E-commerce & Online Retail versus Retail using the approved ownership/exclusion vocabulary; these are regression guards, not ranking guarantees.
+
 - [ ] **Step 1: Add browser tooling as development-only dependencies**
 
 Run:
@@ -1717,6 +1753,8 @@ Add scripts:
 - a non-baseline smoke screenshot artifact for every one of those 26 routes, retained with the browser report for review;
 - one unknown English and one unknown Arabic industry URL return 404 rather than generic content;
 - every route's JSON-LD script parses and every advertised Open Graph image returns HTTP 200 with an image MIME type and 1200×630 dimensions;
+- every canonical/hreflang target returns HTTP 200, self-canonicalizes, and belongs to a reciprocal indexable pair; HTML and Markdown aliases satisfy the shared one-hop redirect matrix;
+- all 26 effective localized routes have unique canonical/title/description/H1 values, substantial industry-specific text, no placeholder output, and stay below the calibrated content-similarity ceiling;
 - 320, 360, 390, 768, 1024, and 1440 widths for all six pilot locale routes;
 - one main, one H1, correct `dir`, no horizontal overflow, and all coordinate/service/industry/CTA anchors visible;
 - keyboard focus order and 44×44 minimum primary controls;

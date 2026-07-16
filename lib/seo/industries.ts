@@ -1,3 +1,5 @@
+import { INDUSTRY_SLUGS, isIndustrySlug, type IndustrySlug } from '@/lib/industries/slugs'
+
 export type LocaleKey = 'en' | 'ar'
 
 export type LocalizedText = Record<LocaleKey, string>
@@ -38,7 +40,7 @@ const apps = { label: t('Web Applications', 'تطبيقات ويب'), href: '/se
 const content = { label: t('Content & Growth', 'المحتوى والنمو'), href: '/services/content-creation' }
 const social = { label: t('Social Media Marketing', 'تسويق التواصل الاجتماعي'), href: '/services/social-media-marketing' }
 
-export const industries: Record<string, IndustryData> = {
+export const industries = {
     healthcare: {
         slug: 'healthcare',
         name: t('Healthcare', 'الرعاية الصحية'),
@@ -338,12 +340,12 @@ export const industries: Record<string, IndustryData> = {
             { question: t('Can workflows stay modular?', 'هل يمكن أن تبقى مسارات العمل معيارية؟'), answer: t('Yes. We prefer modular service flows so departments can launch the highest-priority paths first and expand later.', 'نعم. نفضل مسارات خدمات معيارية حتى تطلق الأقسام المسارات ذات الأولوية أولاً ثم تتوسع لاحقاً.') },
         ],
     },
-}
+} satisfies Record<IndustrySlug, IndustryData>
 
-export const industrySlugs = Object.keys(industries)
+export const industrySlugs: readonly IndustrySlug[] = INDUSTRY_SLUGS
 
 export function getIndustry(slug: string): IndustryData | null {
-    return industries[slug] || null
+    return isIndustrySlug(slug) ? industries[slug] : null
 }
 
 export function localizedValue(value: LocalizedText, locale: string): string {
