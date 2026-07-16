@@ -230,7 +230,7 @@
 }
 
 .heroIntro {
-  color: #536f82;
+  color: #46606e;
   font-size: clamp(1.05rem, 1.4vw, 1.28rem);
   line-height: 1.75;
   max-width: 680px;
@@ -301,6 +301,8 @@
 .carouselControls button:focus-visible,
 .serviceCard:focus-visible,
 .contextualServiceLink:focus-visible,
+.systemStripAction:focus-visible,
+.textLink:focus-visible,
 .faqItem summary:focus-visible {
   box-shadow: 0 0 0 6px var(--health-blue-deep);
   outline: 3px solid #fff;
@@ -855,7 +857,7 @@
   background:
     radial-gradient(circle at 88% 0%, rgb(80 162 226 / 18%), transparent 35%),
     var(--health-blue-dark);
-  color: rgb(255 255 255 / 69%);
+  color: rgb(255 255 255 / 82%);
   overflow: hidden;
   position: relative;
 }
@@ -1022,7 +1024,7 @@
 }
 
 .carouselControls > span {
-  color: rgb(255 255 255 / 55%);
+  color: rgb(255 255 255 / 72%);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -1561,6 +1563,12 @@
   overflow: hidden;
   padding: clamp(3rem, 7vw, 6rem);
   position: relative;
+}
+
+/* Mirror the gradient in RTL so Arabic text (right-aligned) sits on the
+   darker end and keeps AA contrast (LTR text sits on the dark end at 112deg). */
+.page[dir='rtl'] .consultationSection {
+  background: linear-gradient(248deg, rgb(39 71 96 / 97%), rgb(43 111 172 / 92%));
 }
 
 .consultationSection > div:not(.consultationPulse) {

@@ -158,6 +158,7 @@ export function HealthcareIndustryPage({
                 rel="noopener noreferrer"
               >
                 <span>{copy.clinicTopiaAction}</span>
+                <span className={styles.srOnly}>{copy.newTab}</span>
                 <ArrowPair locale={locale} />
               </a>
             </div>
@@ -184,7 +185,6 @@ export function HealthcareIndustryPage({
               alt={copy.heroNurseAlt}
               width={412}
               height={721}
-              priority
               sizes="(max-width: 900px) 46vw, 22vw"
             />
           </div>
@@ -203,7 +203,7 @@ export function HealthcareIndustryPage({
           href="https://clinic.cloudtopia.net"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={copy.clinicTopiaActionLabel}
+          aria-label={`${copy.clinicTopiaActionLabel} ${copy.newTab}`}
         >
           <ExternalLink aria-hidden="true" />
         </a>
@@ -222,7 +222,7 @@ export function HealthcareIndustryPage({
                 className={styles.principleCard}
                 data-featured={index === 1 ? 'true' : 'false'}
                 href={principle.href}
-                key={principle.title}
+                key={principle.id}
               >
                 <span className={styles.principleIcon} aria-hidden="true">
                   {index === 2 ? <ShieldCheck /> : <CircleDot />}
@@ -246,7 +246,7 @@ export function HealthcareIndustryPage({
               />
             </div>
             <div className={styles.rotatingSeal} aria-hidden="true">
-              <span>{locale === 'ar' ? 'وضوح • ملكية • استمرارية' : 'Clarity • ownership • continuity'}</span>
+              <span>{copy.sealMotto}</span>
               <CheckCircle2 />
             </div>
           </div>
@@ -282,6 +282,7 @@ export function HealthcareIndustryPage({
             <HealthcareCapabilityCarousel
               cards={capabilityCards}
               direction={direction}
+              regionLabel={copy.carouselRegionLabel}
               previousLabel={copy.carouselPrevious}
               nextLabel={copy.carouselNext}
             />
@@ -308,6 +309,7 @@ export function HealthcareIndustryPage({
               rel="noopener noreferrer"
             >
               <span>{copy.clinicTopiaActionLabel}</span>
+              <span className={styles.srOnly}>{copy.newTab}</span>
               <ExternalLink aria-hidden="true" />
               <ArrowPair locale={locale} />
             </a>
@@ -328,8 +330,8 @@ export function HealthcareIndustryPage({
               </div>
               <div className={styles.dashboardBody}>
                 <div>
-                  <small>{locale === 'ar' ? 'اليوم' : 'Today'}</small>
-                  <strong>{locale === 'ar' ? 'تشغيل العيادة' : 'Clinic operations'}</strong>
+                  <small>{copy.dashboardToday}</small>
+                  <strong>{copy.dashboardClinicOps}</strong>
                 </div>
                 <span className={styles.dashboardPulse} aria-hidden="true" />
                 <div className={styles.dashboardBars} aria-hidden="true">

@@ -146,6 +146,21 @@ test('healthcare carousel orders every wrap without an empty tail', async () => 
   assert.equal(wrapCarouselIndex(cards.length, cards.length), 0)
   assert.deepEqual(orderCarouselCards(cards, 5), ['06', '01', '02', '03', '04', '05'])
   assert.deepEqual(orderCarouselCards(cards, 0), cards)
+
+  // Invariant: the track always holds all N cards for any start index (incl.
+  // out-of-range), so no gap ("empty tail") can appear even when the visible
+  // window equals the card count. Verify across every wrap position.
+  const sorted = [...cards].sort()
+  for (let start = -cards.length; start <= cards.length * 2; start += 1) {
+    const ordered = orderCarouselCards(cards, start)
+    assert.equal(ordered.length, cards.length, `start ${start} must keep a full window`)
+    assert.deepEqual([...ordered].sort(), sorted, `start ${start} must contain every card`)
+    assert.equal(
+      ordered[0],
+      cards[wrapCarouselIndex(start, cards.length)],
+      `start ${start} must lead with the active card`,
+    )
+  }
 })
 
 test('healthcare CTA colors outrank the page-level link color', () => {

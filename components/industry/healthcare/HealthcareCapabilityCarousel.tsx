@@ -20,6 +20,7 @@ export type HealthcareCapabilityCard = {
 type HealthcareCapabilityCarouselProps = {
   cards: readonly HealthcareCapabilityCard[]
   direction: 'ltr' | 'rtl'
+  regionLabel: string
   previousLabel: string
   nextLabel: string
 }
@@ -36,6 +37,10 @@ export function wrapCarouselIndex(index: number, length: number) {
   return ((index % length) + length) % length
 }
 
+// Rotating the full deck (not a windowed slice) guarantees the track always
+// renders all N cards, so the sliding transform can never expose an empty tail
+// — even at the widest breakpoint where the visible window could equal N (there
+// the prev/next controls are hidden via CSS, so that slide can't be triggered).
 export function orderCarouselCards<T>(cards: readonly T[], startIndex: number): T[] {
   if (cards.length === 0) return []
   const wrappedIndex = wrapCarouselIndex(startIndex, cards.length)
@@ -45,6 +50,7 @@ export function orderCarouselCards<T>(cards: readonly T[], startIndex: number): 
 export function HealthcareCapabilityCarousel({
   cards,
   direction,
+  regionLabel,
   previousLabel,
   nextLabel,
 }: HealthcareCapabilityCarouselProps) {
@@ -100,7 +106,12 @@ export function HealthcareCapabilityCarousel({
   }
 
   return (
-    <div className={styles.capabilityCarousel} data-carousel-direction={direction}>
+    <div
+      className={styles.capabilityCarousel}
+      data-carousel-direction={direction}
+      aria-roledescription="carousel"
+      aria-label={regionLabel}
+    >
       <p className={styles.srOnly} aria-live="polite" aria-atomic="true">
         {activeCard
           ? `${String(startIndex + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}: ${activeCard.label}`
@@ -117,6 +128,9 @@ export function HealthcareCapabilityCarousel({
             <article
               className={styles.capabilityCard}
               data-active={cardIndex === 0 ? 'true' : 'false'}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${card.marker}: ${card.label}`}
               key={card.id}
             >
               <span className={styles.capabilityMarker} aria-hidden="true">
