@@ -285,7 +285,7 @@ export const homeIndustrySlides: HomeIndustrySlide[] = [
       { title: t('Promotions engine', 'محرك العروض'), description: t('Campaign pages for seasonal and social offers.', 'صفحات حملات للعروض الموسمية والاجتماعية.') },
       { title: t('Customer retention', 'احتفاظ العملاء'), description: t('Capture repeat orders and follow-up opportunities.', 'جمع الطلبات المتكررة وفرص المتابعة.') },
     ],
-    exploreHref: '/industries/travel-hospitality',
+    exploreHref: '/industries/restaurants',
     caseStudiesHref: '/projects',
     visual: {
       label: t('Restaurant order flow', 'مسار طلبات المطعم'),

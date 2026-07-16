@@ -7,6 +7,12 @@ const nextConfig = {
   compress: true,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
 
+  // Keep Turbopack anchored to this checkout. Without an explicit root, a
+  // parent lockfile can make local worktrees compile from the wrong directory.
+  turbopack: {
+    root: process.cwd(),
+  },
+
   async headers() {
     return [
       {

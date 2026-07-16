@@ -2,7 +2,10 @@ import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
 import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
-import { industrySlugs } from '@/lib/seo/industries'
+import {
+    buildBaseIndustrySitemapEntries,
+    isResolverOwnedIndustryCmsSlug,
+} from '@/lib/industries/sitemap'
 import { serviceDetailSlugs, getServiceCategory } from '@/lib/seo/services'
 import { structuredPillarRoutes } from '@/lib/services/structured-catalog'
 import { dpSubServiceSlugs, getDigitalPresenceSubService } from '@/lib/services/digital-presence-content'
@@ -78,7 +81,11 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     const entries = pages
         // `labs` is a stale CMS Pages row with no matching route — it 404s, so
         // keep it out of the sitemap alongside the other non-page slugs.
-        .filter((page: any) => supportedLocales.has(page.locale) && !['blog', 'locations', 'labs'].includes(page.slug))
+        .filter((page: any) =>
+            supportedLocales.has(page.locale) &&
+            !['blog', 'locations', 'labs'].includes(page.slug) &&
+            !isResolverOwnedIndustryCmsSlug(page.slug),
+        )
         .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
     // Stable, recent lastmod for the code-defined data-driven pages. This was
@@ -94,7 +101,6 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     const stableLastmod = cmsLatest.getTime() > 0 ? cmsLatest : new Date()
     const lastModified = stableLastmod
     const servicesMtime = stableLastmod
-    const industriesMtime = stableLastmod
     const countriesMtime = stableLastmod
     // Core static + bespoke service-landing routes that must always be present in
     // the sitemap, regardless of whether a matching CMS Pages row exists. Each is
@@ -180,18 +186,7 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         })
     })
 
-    industrySlugs.forEach((industry) => {
-        const languages = buildHreflangMap(`/industries/${industry}`)
-        locales.forEach((loc) => {
-            entries.push({
-                url: canonicalUrl(loc, `/industries/${industry}`),
-                lastModified: industriesMtime,
-                changeFrequency: 'monthly',
-                priority: 0.78,
-                alternates: { languages },
-            })
-        })
-    })
+    entries.push(...buildBaseIndustrySitemapEntries())
 
     allServiceDetailSlugs.forEach((service) => {
         const languages = buildHreflangMap(serviceCanonicalPath(service))
@@ -380,26 +375,7 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         })
     })
 
-    const industriesDataMtime = (() => {
-        try {
-            const p = path.join(/*turbopackIgnore: true*/ process.cwd(), 'lib/seo/industries.ts')
-            if (fs.existsSync(p)) return fs.statSync(p).mtime
-        } catch { /* ignore */ }
-        return new Date()
-    })()
-
-    industrySlugs.forEach((industry) => {
-        const languages = buildHreflangMap(`/industries/${industry}`)
-        locales.forEach((loc) => {
-            sitemapEntries.push({
-                url: canonicalUrl(loc, `/industries/${industry}`),
-                lastModified: industriesDataMtime,
-                changeFrequency: 'monthly',
-                priority: 0.78,
-                alternates: { languages },
-            })
-        })
-    })
+    sitemapEntries.push(...buildBaseIndustrySitemapEntries())
 
     const servicesDataMtime = (() => {
         try {

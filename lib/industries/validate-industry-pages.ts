@@ -2,6 +2,7 @@ import { contentHash, manifestContentHash } from './content-hash'
 import { industryManifest } from './manifest'
 import { PROJECT_IDS } from './proof-targets'
 import { CANONICAL_SERVICE_TARGETS } from './service-targets'
+import { requiresSensitiveDomainReview } from './slugs'
 import {
   SECTION_VARIANTS,
   type IndustryPageDefinition,
@@ -1258,7 +1259,7 @@ function validateDefinition(
       }
 
       if (
-        definition.slug === 'healthcare' &&
+        requiresSensitiveDomainReview(definition.slug) &&
         !localizedReviews.some(
           (review) => review.kind === 'sensitive-domain',
         )
@@ -1266,7 +1267,7 @@ function validateDefinition(
         add(
           'missing-sensitive-review',
           'reviews.' + locale + '.sensitive-domain',
-          'Healthcare publication requires sensitive-domain review in both locales.',
+          'Sensitive-domain industry publication requires domain review in both locales.',
         )
       }
 

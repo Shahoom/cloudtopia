@@ -39,3 +39,11 @@ test('home industry slider exposes the required bilingual categories', () => {
     )
   }
 })
+
+test('home industry slides link travel and restaurants to their matching worlds', () => {
+  const travel = homeIndustrySlides.find((industry) => industry.id === 'travel')
+  const restaurants = homeIndustrySlides.find((industry) => industry.id === 'restaurants')
+
+  assert.equal(travel?.exploreHref, '/industries/travel-hospitality')
+  assert.equal(restaurants?.exploreHref, '/industries/restaurants')
+})

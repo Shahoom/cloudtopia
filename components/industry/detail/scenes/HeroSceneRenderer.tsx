@@ -2,6 +2,7 @@ import type { Locale } from '@/lib/i18n/config'
 import type { IndustrySceneId } from '@/lib/industries/types'
 
 import { HealthcarePulseScene } from './HealthcarePulseScene'
+import { IndustryWorldScene } from './IndustryWorldScene'
 import { LogisticsFlowScene } from './LogisticsFlowScene'
 import { RestaurantPassScene } from './RestaurantPassScene'
 
@@ -30,6 +31,17 @@ export function HeroSceneRenderer({
       return <LogisticsFlowScene {...sceneProps} />
     case 'restaurant-pass':
       return <RestaurantPassScene {...sceneProps} />
+    case 'fintech-ledger':
+    case 'ecommerce-catalog':
+    case 'real-estate-registry':
+    case 'education-constellation':
+    case 'travel-itinerary':
+    case 'legal-docket':
+    case 'construction-sequence':
+    case 'retail-pulse':
+    case 'expertise-architecture':
+    case 'public-service-standard':
+      return <IndustryWorldScene sceneId={sceneId} {...sceneProps} />
     default: {
       const exhaustiveScene: never = sceneId
       return exhaustiveScene

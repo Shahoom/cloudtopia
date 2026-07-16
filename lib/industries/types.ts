@@ -244,6 +244,16 @@ export type IndustrySceneId =
   | 'healthcare-pulse'
   | 'logistics-flow'
   | 'restaurant-pass'
+  | 'fintech-ledger'
+  | 'ecommerce-catalog'
+  | 'real-estate-registry'
+  | 'education-constellation'
+  | 'travel-itinerary'
+  | 'legal-docket'
+  | 'construction-sequence'
+  | 'retail-pulse'
+  | 'expertise-architecture'
+  | 'public-service-standard'
 
 export type IndustryAsset =
   | { kind: 'authored-scene'; id: IndustrySceneId }

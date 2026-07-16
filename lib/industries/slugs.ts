@@ -6,7 +6,24 @@ export const INDUSTRY_SLUGS = [
 
 export type IndustrySlug = (typeof INDUSTRY_SLUGS)[number]
 
+export const SENSITIVE_DOMAIN_INDUSTRY_SLUGS = [
+  'healthcare',
+  'fintech',
+  'legal-firms',
+  'government-public-sector',
+] as const satisfies readonly IndustrySlug[]
+
+const sensitiveDomainIndustrySlugs = new Set<IndustrySlug>(
+  SENSITIVE_DOMAIN_INDUSTRY_SLUGS,
+)
+
 export function isIndustrySlug(value: unknown): value is IndustrySlug {
   return typeof value === 'string' &&
     (INDUSTRY_SLUGS as readonly string[]).includes(value)
+}
+
+export function requiresSensitiveDomainReview(
+  slug: IndustrySlug,
+): boolean {
+  return sensitiveDomainIndustrySlugs.has(slug)
 }

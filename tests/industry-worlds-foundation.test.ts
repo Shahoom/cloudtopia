@@ -7,6 +7,7 @@ import { INDUSTRY_SLUGS, isIndustrySlug, type IndustrySlug } from '../lib/indust
 import { CANONICAL_SERVICE_TARGETS } from '../lib/industries/service-targets.ts'
 import { PROJECT_IDS } from '../lib/industries/proof-targets.ts'
 import { getIndustryManifestEntry, industryManifest } from '../lib/industries/manifest.ts'
+import { validateIndustryPageRegistry } from '../lib/industries/validate-industry-pages.ts'
 
 test('industry taxonomy is closed and lightweight', () => {
   assert.deepEqual(INDUSTRY_SLUGS, [
@@ -60,48 +61,40 @@ test('the manifest remains client-safe and prose-free', () => {
   assert.doesNotMatch(source, /sections\s*:/)
 })
 
-test('the staged registry resolves three worlds and ten legacy industries in both locales', () => {
+test('the completed registry resolves every industry as a bilingual world', () => {
   assert.deepEqual(Object.keys(industryPageRegistry), INDUSTRY_SLUGS)
-  const worldSlugs = new Set<IndustrySlug>([
-    'healthcare',
-    'logistics-supply-chain',
-    'restaurants',
-  ])
   assert.deepEqual(
     Object.entries(industryPageRegistry)
       .filter(([, definition]) => definition !== null)
       .map(([slug]) => slug)
       .sort(),
-    [...worldSlugs].sort(),
+    [...INDUSTRY_SLUGS].sort(),
   )
 
   let worldCount = 0
-  let legacyCount = 0
   for (const slug of INDUSTRY_SLUGS) {
     for (const locale of ['en', 'ar'] as const) {
       const resolution = getIndustryPage(slug, locale)
 
       assert.equal(resolution.slug, slug)
-      if (worldSlugs.has(slug)) {
-        assert.equal(resolution.kind, 'world')
-        if (resolution.kind === 'world') {
-          assert.equal(resolution.definition.slug, slug)
-        }
-        worldCount += 1
-      } else {
-        assert.equal(resolution.kind, 'legacy')
-        if (resolution.kind !== 'legacy') continue
-        assert.equal(resolution.legacy.slug, slug)
-        assert.equal(resolution.legacy.locale, locale)
-        legacyCount += 1
+      assert.equal(resolution.kind, 'world')
+      if (resolution.kind === 'world') {
+        assert.equal(resolution.definition.slug, slug)
       }
+      worldCount += 1
     }
   }
 
-  assert.equal(worldCount, 6)
-  assert.equal(legacyCount, 20)
+  assert.equal(worldCount, 26)
   assert.throws(
     () => getIndustryPage('unknown-sector' as IndustrySlug, 'en'),
     /Unknown industry slug: unknown-sector/,
+  )
+})
+
+test('all thirteen bilingual worlds satisfy the complete draft contract together', () => {
+  assert.deepEqual(
+    validateIndustryPageRegistry(industryPageRegistry, { mode: 'draft' }),
+    { ok: true, errors: [] },
   )
 })

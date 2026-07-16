@@ -72,12 +72,12 @@ test('industry SEO data covers enterprise target verticals with routable content
   }
 })
 
-test('sitemap includes localized location and industry landing pages', () => {
+test('sitemap includes locations and routes industries through publication eligibility', () => {
   const sitemapSource = readFileSync(path.join(process.cwd(), 'lib/sitemap-data.ts'), 'utf8')
 
   assert.match(sitemapSource, /countryLandingPages/, 'Country pages should be data-driven in the sitemap')
-  assert.match(sitemapSource, /industrySlugs/, 'Industry pages should be data-driven in the sitemap')
-  assert.match(sitemapSource, /\/industries\/\$\{industry\}/, 'Industry URLs should be generated for each localized sitemap')
+  assert.match(sitemapSource, /buildBaseIndustrySitemapEntries/, 'Industry pages should use resolver-owned sitemap eligibility')
+  assert.match(sitemapSource, /isResolverOwnedIndustryCmsSlug/, 'CMS industry rows must not bypass resolver-owned eligibility')
   assert.doesNotMatch(sitemapSource, /\/locations\/\$\{country\}/, 'Legacy location country URLs should not be generated')
 })
 

@@ -933,20 +933,39 @@ test('missing-native-review rejects every published pilot without its Arabic rev
   }
 })
 
-test('missing-sensitive-review rejects either Healthcare locale without domain review', () => {
-  for (const locale of ['en', 'ar'] as const) {
-    const options = makePublicationOptions()
+test('missing-sensitive-review rejects both locales for every sensitive industry', () => {
+  const sensitiveSlugs = [
+    'healthcare',
+    'fintech',
+    'legal-firms',
+    'government-public-sector',
+  ] as const
+
+  for (const slug of sensitiveSlugs) {
+    const definition = cloneDefinition()
+    definition.slug = slug
+    const options = makePublicationOptions([
+      definition as IndustryPageDefinition,
+    ])
     options.reviews = options.reviews.filter(
-      (review) =>
-        !(
-          review.slug === 'healthcare' &&
-          review.locale === locale &&
-          review.kind === 'sensitive-domain'
-        ),
+      (review) => review.kind !== 'sensitive-domain',
     )
 
-    const result = validateIndustryPageRegistry(pilotRegistry, options)
-    assert.ok(result.errors.some((error) => error.code === 'missing-sensitive-review'))
+    const result = validateIndustryPageDefinition(
+      definition as IndustryPageDefinition,
+      options,
+    )
+
+    for (const locale of ['en', 'ar'] as const) {
+      assert.ok(
+        result.errors.some(
+          (error) =>
+            error.code === 'missing-sensitive-review' &&
+            error.path === `reviews.${locale}.sensitive-domain`,
+        ),
+        `${slug}/${locale} must require sensitive-domain review`,
+      )
+    }
   }
 })
 

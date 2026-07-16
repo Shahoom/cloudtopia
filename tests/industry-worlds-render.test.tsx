@@ -813,6 +813,16 @@ for (const [sceneId, sceneNumber] of [
   ['healthcare-pulse', '01'],
   ['logistics-flow', '02'],
   ['restaurant-pass', '03'],
+  ['fintech-ledger', '04'],
+  ['ecommerce-catalog', '05'],
+  ['real-estate-registry', '06'],
+  ['education-constellation', '07'],
+  ['travel-itinerary', '08'],
+  ['legal-docket', '09'],
+  ['construction-sequence', '10'],
+  ['retail-pulse', '11'],
+  ['expertise-architecture', '12'],
+  ['public-service-standard', '13'],
 ] as const satisfies readonly (readonly [IndustrySceneId, string])[]) {
   test(`${sceneId} renders a visible semantic process`, () => {
     const html = renderToStaticMarkup(

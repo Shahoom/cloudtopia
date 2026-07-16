@@ -7,6 +7,7 @@ import { localePath } from '@/lib/i18n/url'
 import { buildIndustryJsonLd } from '@/lib/industries/build-industry-schema'
 import { getIndustryPage, type IndustryPageResolution } from '@/lib/industries/get-industry-page'
 import { getIndustryManifestEntry } from '@/lib/industries/manifest'
+import { isIndustryResolutionPublicationReady } from '@/lib/industries/sitemap'
 import {
   buildIndustryMetadata,
   resolveIndustrySeoPair,
@@ -39,7 +40,7 @@ function seoDefaultsFor(
       description: page.seo.description,
       // The new world is visible for design review immediately. It remains
       // noindex until the real editorial records and reviewed OG art exist.
-      index: false,
+      index: isIndustryResolutionPublicationReady(resolution),
       follow: true,
     }
   }
@@ -47,7 +48,7 @@ function seoDefaultsFor(
   return {
     title: resolution.legacy.seo.title,
     description: resolution.legacy.seo.description,
-    index: true,
+    index: isIndustryResolutionPublicationReady(resolution),
     follow: true,
   }
 }
@@ -56,7 +57,7 @@ function draftSafeSeo(
   resolution: IndustryPageResolution,
   seo: EffectiveIndustrySeo,
 ): EffectiveIndustrySeo {
-  if (resolution.kind === 'legacy') return seo
+  if (isIndustryResolutionPublicationReady(resolution)) return seo
 
   return {
     ...seo,
