@@ -19,14 +19,28 @@ export function categoryAccent(category: CategoryLike): string {
   return '#0284c7'
 }
 
-// A quiet decorative glyph for typographic covers, chosen by topic.
-export function categoryGlyph(category: CategoryLike): LucideIcon {
+export type CategoryGlyphName = 'sparkles' | 'shopping' | 'globe' | 'workflow' | 'cloud' | 'cpu' | 'newspaper'
+
+export const categoryGlyphs: Readonly<Record<CategoryGlyphName, LucideIcon>> = {
+  sparkles: Sparkles,
+  shopping: ShoppingBag,
+  globe: Globe,
+  workflow: Workflow,
+  cloud: Cloud,
+  cpu: Cpu,
+  newspaper: Newspaper,
+}
+
+// A quiet decorative glyph key for typographic covers, chosen by topic. The
+// caller resolves the key through the module-level map so React sees a stable
+// component identity instead of a component type returned during render.
+export function categoryGlyphName(category: CategoryLike): CategoryGlyphName {
   const k = key(category)
-  if (k.includes('ai') || k.includes('automation') || k.includes('intellig')) return Sparkles
-  if (k.includes('commerce') || k.includes('ecom') || k.includes('shop') || k.includes('store')) return ShoppingBag
-  if (k.includes('web') || k.includes('design') || k.includes('site')) return Globe
-  if (k.includes('system') || k.includes('crm') || k.includes('erp') || k.includes('app')) return Workflow
-  if (k.includes('cloud') || k.includes('host') || k.includes('infra')) return Cloud
-  if (k.includes('dev') || k.includes('code') || k.includes('engineer')) return Cpu
-  return Newspaper
+  if (k.includes('ai') || k.includes('automation') || k.includes('intellig')) return 'sparkles'
+  if (k.includes('commerce') || k.includes('ecom') || k.includes('shop') || k.includes('store')) return 'shopping'
+  if (k.includes('web') || k.includes('design') || k.includes('site')) return 'globe'
+  if (k.includes('system') || k.includes('crm') || k.includes('erp') || k.includes('app')) return 'workflow'
+  if (k.includes('cloud') || k.includes('host') || k.includes('infra')) return 'cloud'
+  if (k.includes('dev') || k.includes('code') || k.includes('engineer')) return 'cpu'
+  return 'newspaper'
 }

@@ -1,4 +1,4 @@
-import { categoryAccent, categoryGlyph } from './categoryColor'
+import { categoryAccent, categoryGlyphName, categoryGlyphs } from './categoryColor'
 
 type CategoryLike = { name?: string | null; slug?: string | null; color?: string | null } | null | undefined
 type Size = 'hero' | 'lead' | 'card' | 'thumb'
@@ -26,7 +26,7 @@ export function TypographicCover({
   className?: string
 }) {
   const color = categoryAccent(category)
-  const Glyph = categoryGlyph(category)
+  const Glyph = categoryGlyphs[categoryGlyphName(category)]
   const s = SIZES[size]
 
   return (

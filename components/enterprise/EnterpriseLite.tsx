@@ -50,7 +50,7 @@ import {
   type FaqItem,
   type ServicePageContent,
 } from '@/lib/enterprise-content'
-import { getEnterpriseIcon } from '@/components/enterprise/icon-map'
+import { enterpriseIcons } from '@/components/enterprise/icon-map'
 import EnterpriseAnimator from '@/components/enterprise/EnterpriseAnimator'
 
 type Locale = 'en' | 'ar' | 'tr'
@@ -87,7 +87,7 @@ function SectionHeader({ eyebrow, title, subtitle, dark = false }: { eyebrow?: s
 }
 
 function IconBox({ icon, dark = false }: { icon: string | LucideIcon; dark?: boolean }) {
-  const Icon = typeof icon === 'string' ? getEnterpriseIcon(icon) : icon
+  const Icon = typeof icon === 'string' ? (enterpriseIcons[icon] ?? Sparkles) : icon
   return <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${dark ? 'bg-white/10 text-sky-200' : 'bg-[#e0f2fe] text-[#0284c7]'}`}><Icon className="h-6 w-6" /></div>
 }
 
@@ -1080,7 +1080,7 @@ export function EnterpriseHomeLite({ blogPosts, locale }: { blogPosts: BlogPostM
 }
 
 function PageHero({ locale, eyebrow, title, subtitle, icon }: { locale: string; eyebrow: string; title: string; subtitle: string; icon: string | LucideIcon }) {
-  const Icon = typeof icon === 'string' ? getEnterpriseIcon(icon) : icon
+  const Icon = typeof icon === 'string' ? (enterpriseIcons[icon] ?? Sparkles) : icon
   return (
     <section dir="ltr" className="ct-x-hero relative overflow-hidden px-4 pb-20 pt-36 text-white sm:px-6 md:pb-28 md:pt-40 lg:px-8">
       <Container className="relative grid items-center gap-10 lg:grid-cols-[1fr_0.55fr]">

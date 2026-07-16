@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
+import Link from 'next/link'
 import { Columns, Download, List, Languages, Plus, RefreshCw, Search, Send, Trash2, Upload } from 'lucide-react'
 import type { ArticleRow, Category, SortKey, Status } from './types.ts'
 import { STATUS_LABELS, STATUS_ORDER } from './types.ts'
@@ -123,8 +124,8 @@ export function ArticlesWorkspace() {
           <p style={{ margin: '3px 0 0', fontSize: 13, color: 'var(--theme-elevation-500)' }}>{total} articles</p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <a href="/admin/collections/blog-posts/create" style={ghost()}><Upload size={16} /> Import MDX</a>
-          <a href="/admin/collections/blog-posts/create" style={primary()}><Plus size={16} /> New article</a>
+          <Link href="/admin/collections/blog-posts/create" style={ghost()}><Upload size={16} /> Import MDX</Link>
+          <Link href="/admin/collections/blog-posts/create" style={primary()}><Plus size={16} /> New article</Link>
         </div>
       </div>
 

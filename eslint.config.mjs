@@ -4,6 +4,8 @@ const config = [
   {
     ignores: [
       '.next/**',
+      '.worktrees/**',
+      '.superpowers/**',
       'node_modules/**',
       'payload-types.ts',
       'public/uploads/**',

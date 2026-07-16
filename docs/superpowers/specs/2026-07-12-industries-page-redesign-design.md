@@ -1,8 +1,8 @@
 # Industries Page Redesign Design
 
-**Date:** 2026-07-12  
-**Route:** `/[locale]/industries`  
-**Locales:** English and Arabic  
+**Date:** 2026-07-12
+**Route:** `/[locale]/industries`
+**Locales:** English and Arabic
 **Approved direction:** CloudTopia Precision Industry Network (visual direction G)
 
 ## Objective

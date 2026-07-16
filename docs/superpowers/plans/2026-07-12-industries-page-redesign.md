@@ -66,7 +66,7 @@ test('industries hub content is complete in English and Arabic', async () => {
 
 - [ ] **Step 2: Run the test and verify the module is missing**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: FAIL because `lib/seo/industries-page.ts` does not exist.
 
 - [ ] **Step 3: Implement the typed bilingual content module**
@@ -104,7 +104,7 @@ Use `industrySlugs.map` to generate exactly 13 localized `IndustriesPageItem` va
 
 - [ ] **Step 4: Run the focused test**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: PASS for the content-contract test.
 
 - [ ] **Step 5: Commit the content contract**
@@ -143,7 +143,7 @@ test('industries route owns localized metadata and schema', () => {
 
 - [ ] **Step 2: Run the focused test and confirm failure**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: FAIL because the route lacks the complete schema graph and social metadata.
 
 - [ ] **Step 3: Replace metadata generation and build the schema graph**
@@ -158,7 +158,7 @@ The server route resolves locale, loads `IndustriesPageContent`, renders `PageBr
 
 - [ ] **Step 5: Run route/SEO tests and TypeScript**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`
 Expected: PASS.
 
 - [ ] **Step 6: Commit route SEO**
@@ -195,7 +195,7 @@ test('industry network uses semantic controls and localized routes', () => {
 
 - [ ] **Step 2: Run the test and confirm missing components**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: FAIL because the component files do not exist.
 
 - [ ] **Step 3: Implement `IndustryNetwork`**
@@ -208,7 +208,7 @@ Initialize `selectedSlug` to `healthcare`. Derive the selected item from `conten
 
 - [ ] **Step 5: Run tests and TypeScript**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`
 Expected: PASS.
 
 - [ ] **Step 6: Commit the network experience**
@@ -249,7 +249,7 @@ test('workbench and index expose all industries and service paths', () => {
 
 - [ ] **Step 2: Run the focused test and confirm failure**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: FAIL because workbench and index components do not exist.
 
 - [ ] **Step 3: Implement `IndustryWorkbench`**
@@ -266,7 +266,7 @@ Keep network and workbench selection synchronized when the selected industry is 
 
 - [ ] **Step 6: Run tests and TypeScript**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit`
 Expected: PASS.
 
 - [ ] **Step 7: Commit the workbench and index**
@@ -310,7 +310,7 @@ test('industries styling implements precision palette, RTL leading, and reduced 
 
 - [ ] **Step 2: Run the focused test and confirm failure**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts`
 Expected: FAIL because the CSS module does not exist.
 
 - [ ] **Step 3: Implement the page variables and layout**
@@ -327,7 +327,7 @@ Add node entrance, connection-path, preview, ticker, and section-reveal classes.
 
 - [ ] **Step 6: Run tests, TypeScript, and diff checks**
 
-Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit && git diff --check`  
+Run: `node --test --import tsx tests/industries-page-redesign.test.ts && npx tsc --noEmit && git diff --check`
 Expected: PASS.
 
 - [ ] **Step 7: Commit styling**
@@ -373,7 +373,7 @@ Expected: TypeScript and production build PASS; all localized routes are generat
 
 - [ ] **Step 3: Start a free local development port**
 
-Run: `npx next dev --webpack --hostname 0.0.0.0 --port 3002`  
+Run: `npx next dev --webpack --hostname 0.0.0.0 --port 3002`
 Expected: server reports Ready and both `/industries` and `/ar/industries` return HTTP 200.
 
 - [ ] **Step 4: Verify desktop English and Arabic in the browser**

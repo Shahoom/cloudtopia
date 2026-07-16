@@ -93,5 +93,7 @@ next-env.d.ts
 /scratch/
 /blog-posts/
 /.worktrees/
+/.superpowers/
+/.wip-enterprise-lite/
 .vercel
 scratchpad/

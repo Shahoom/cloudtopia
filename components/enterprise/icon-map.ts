@@ -24,7 +24,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-const icons: Record<string, LucideIcon> = {
+export const enterpriseIcons: Readonly<Record<string, LucideIcon>> = {
   bot: Bot,
   building: Building2,
   calendar: CalendarClock,
@@ -48,8 +48,3 @@ const icons: Record<string, LucideIcon> = {
   store: Store,
   workflow: Workflow,
 }
-
-export function getEnterpriseIcon(key: string): LucideIcon {
-  return icons[key] || Sparkles
-}
-

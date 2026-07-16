@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { BlogCategory } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
-import { categoryAccent, categoryGlyph } from '@/components/blog/editorial/categoryColor'
+import { categoryAccent, categoryGlyphName, categoryGlyphs } from '@/components/blog/editorial/categoryColor'
 
 export function CategoriesGrid({
   categories,
@@ -21,7 +21,7 @@ export function CategoriesGrid({
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {visible.map((cat) => {
           const accent = categoryAccent(cat)
-          const Glyph = categoryGlyph(cat)
+          const Glyph = categoryGlyphs[categoryGlyphName(cat)]
           return (
             <Link
               key={cat.id}
