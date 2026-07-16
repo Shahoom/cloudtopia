@@ -43,7 +43,13 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
   const last7 = isoDaysAgo(now, 7)
   const prev7 = isoDaysAgo(now, 14)
   const next7 = new Date(now + 7 * DAY).toISOString()
-  const leadCollections = ['solution-finder-leads', 'ai-chat-leads', 'contact-inquiries']
+  const leadCollections = [
+    'solution-finder-leads',
+    'ai-chat-leads',
+    'contact-inquiries',
+    'clinictopia-leads',
+    'hasm-erp-leads',
+  ]
 
   const [leads7, leadsPrev7, convo7, convoPrev7, drafts, scheduled] = await Promise.all([
     Promise.all(leadCollections.map((c) => safeCount(payload, c, { createdAt: { greater_than: last7 } }))).then((a) => a.reduce((x, y) => x + y, 0)),
@@ -180,6 +186,22 @@ async function buildRecentFeed(payload: any): Promise<ActivityItem[]> {
   } catch {
     /* skip */
   }
+  try {
+    const hasm = await payload.find({ collection: 'hasm-erp-leads', sort: '-createdAt', limit: 4, depth: 0, overrideAccess: true })
+    for (const d of hasm.docs || []) {
+      items.push({
+        id: String(d.id),
+        kind: 'hasm-demo',
+        title: `${d.name || 'Hasm lead'}`,
+        subtitle: `${d.email || d.phone || 'Demo access'} · Hasm ERP`,
+        badge: 'Hasm',
+        at: d.createdAt,
+        href: `/admin/collections/hasm-erp-leads/${d.id}`,
+      })
+    }
+  } catch {
+    /* skip */
+  }
   return items.filter((i) => i.at).sort((a, b) => (a.at < b.at ? 1 : -1)).slice(0, 6)
 }
 
@@ -191,13 +213,15 @@ async function buildActivityByDay(payload: any, now: number): Promise<DayCount[]
     const end = new Date(start.getTime() + DAY)
     const label = start.toLocaleDateString('en-US', { weekday: 'short' })
     const window = { and: [{ createdAt: { greater_than_equal: start.toISOString() } }, { createdAt: { less_than: end.toISOString() } }] }
-    const [conversations, sf, ac, ci] = await Promise.all([
+    const [conversations, sf, ac, ci, clinic, hasm] = await Promise.all([
       safeCount(payload, 'ai-chat-conversations', window),
       safeCount(payload, 'solution-finder-leads', window),
       safeCount(payload, 'ai-chat-leads', window),
       safeCount(payload, 'contact-inquiries', window),
+      safeCount(payload, 'clinictopia-leads', window),
+      safeCount(payload, 'hasm-erp-leads', window),
     ])
-    days.push({ day: label, conversations, leads: sf + ac + ci })
+    days.push({ day: label, conversations, leads: sf + ac + ci + clinic + hasm })
   }
   return days
 }

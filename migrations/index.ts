@@ -18,6 +18,9 @@ import * as migration_20260614_140000_add_ip_address from './20260614_140000_add
 import * as migration_20260623_120000_add_clinictopia_leads from './20260623_120000_add_clinictopia_leads';
 import * as migration_20260624_120000_fix_blog_version_array_id_default from './20260624_120000_fix_blog_version_array_id_default';
 import * as migration_20260630_120000_add_related_service_slugs from './20260630_120000_add_related_service_slugs';
+import * as migration_20260715_120000_add_hasm_erp_leads from './20260715_120000_add_hasm_erp_leads';
+import * as migration_20260715_123000_secure_public_tables from './20260715_123000_secure_public_tables';
+import * as migration_20260715_124500_secure_legacy_demo_capture from './20260715_124500_secure_legacy_demo_capture';
 
 export const migrations = [
   {
@@ -119,5 +122,20 @@ export const migrations = [
     up: migration_20260630_120000_add_related_service_slugs.up,
     down: migration_20260630_120000_add_related_service_slugs.down,
     name: '20260630_120000_add_related_service_slugs'
+  },
+  {
+    up: migration_20260715_120000_add_hasm_erp_leads.up,
+    down: migration_20260715_120000_add_hasm_erp_leads.down,
+    name: '20260715_120000_add_hasm_erp_leads'
+  },
+  {
+    up: migration_20260715_123000_secure_public_tables.up,
+    down: migration_20260715_123000_secure_public_tables.down,
+    name: '20260715_123000_secure_public_tables'
+  },
+  {
+    up: migration_20260715_124500_secure_legacy_demo_capture.up,
+    down: migration_20260715_124500_secure_legacy_demo_capture.down,
+    name: '20260715_124500_secure_legacy_demo_capture'
   },
 ];

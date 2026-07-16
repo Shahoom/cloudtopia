@@ -8,6 +8,7 @@ import {
   Mail,
   MessageSquare,
   Plus,
+  Scale,
   Server,
   Target,
   TrendingDown,
@@ -33,6 +34,7 @@ const kindIcon: Record<ActivityItem['kind'], typeof Target> = {
   'solution-finder': Target,
   chatbot: MessageSquare,
   contact: Mail,
+  'hasm-demo': Scale,
 }
 
 export async function CommandCenter() {

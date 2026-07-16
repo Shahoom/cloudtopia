@@ -1,0 +1,87 @@
+import type { CollectionConfig } from 'payload'
+import { adminOnly } from './blogAccess.ts'
+
+export const HasmERPLeads: CollectionConfig = {
+  slug: 'hasm-erp-leads',
+  lockDocuments: false,
+  admin: {
+    group: 'CRM',
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'email', 'phone', 'status', 'ipAddress', 'createdAt'],
+    description: 'Qualified demo-access leads from legal.cloudtopia.net.',
+  },
+  access: {
+    read: adminOnly,
+    create: adminOnly,
+    update: adminOnly,
+    delete: adminOnly,
+  },
+  fields: [
+    { name: 'name', type: 'text', required: true },
+    { name: 'email', type: 'email', required: true, index: true },
+    { name: 'phone', type: 'text', required: true },
+    {
+      name: 'ipAddress',
+      type: 'text',
+      admin: { readOnly: true, description: 'Captured at the Cloudtopia edge; never accepted from the browser body.' },
+    },
+    {
+      name: 'language',
+      type: 'select',
+      required: true,
+      defaultValue: 'ar',
+      options: [
+        { label: 'Arabic', value: 'ar' },
+        { label: 'English', value: 'en' },
+      ],
+    },
+    { name: 'timezone', type: 'text', admin: { readOnly: true } },
+    { name: 'screen', type: 'text', admin: { readOnly: true } },
+    { name: 'userAgent', type: 'textarea', admin: { readOnly: true } },
+    { name: 'acceptLanguage', type: 'text', admin: { readOnly: true } },
+    { name: 'pageUrl', type: 'text', admin: { readOnly: true } },
+    { name: 'referrer', type: 'text', admin: { readOnly: true } },
+    { name: 'utmSource', type: 'text', admin: { readOnly: true } },
+    { name: 'utmMedium', type: 'text', admin: { readOnly: true } },
+    { name: 'utmCampaign', type: 'text', admin: { readOnly: true } },
+    { name: 'utmTerm', type: 'text', admin: { readOnly: true } },
+    { name: 'utmContent', type: 'text', admin: { readOnly: true } },
+    {
+      name: 'consentAt',
+      type: 'date',
+      required: true,
+      admin: { readOnly: true, date: { pickerAppearance: 'dayAndTime' } },
+    },
+    { name: 'consentVersion', type: 'text', required: true, admin: { readOnly: true } },
+    {
+      name: 'submissionId',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+      admin: { readOnly: true },
+    },
+    { name: 'source', type: 'text', required: true, defaultValue: 'hasm-public-demo' },
+    { name: 'product', type: 'text', required: true, defaultValue: 'Hasm ERP' },
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'new',
+      options: [
+        { label: 'New', value: 'new' },
+        { label: 'Contacted', value: 'contacted' },
+        { label: 'Qualified', value: 'qualified' },
+        { label: 'Won', value: 'won' },
+        { label: 'Lost', value: 'lost' },
+      ],
+    },
+    { name: 'notes', type: 'textarea', admin: { description: 'Internal CRM notes.' } },
+    {
+      name: 'createdAt',
+      type: 'date',
+      defaultValue: () => new Date().toISOString(),
+      admin: { date: { pickerAppearance: 'dayAndTime' } },
+    },
+  ],
+}

@@ -25,6 +25,7 @@ import { SiteContent } from './collections/SiteContent.ts'
 import { SeoOverrides } from './collections/SeoOverrides.ts'
 import { SolutionFinderLeads } from './collections/SolutionFinderLeads.ts'
 import { ClinicTopiaLeads } from './collections/ClinicTopiaLeads.ts'
+import { HasmERPLeads } from './collections/HasmERPLeads.ts'
 import { Users } from './collections/Users.ts'
 import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
 import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
@@ -124,6 +125,7 @@ export default buildConfig({
     SolutionFinderLeads,
     ContactInquiries,
     ClinicTopiaLeads,
+    HasmERPLeads,
     Media,
     Authors,
     BlogCategories,

@@ -1,7 +1,7 @@
 export type DeltaDirection = 'up' | 'down' | 'flat'
 export type Delta = { pct: number; direction: DeltaDirection }
 export type Kpi = { label: string; value: string; delta?: Delta; hint?: string }
-export type ActivityKind = 'solution-finder' | 'chatbot' | 'contact'
+export type ActivityKind = 'solution-finder' | 'chatbot' | 'contact' | 'hasm-demo'
 export type ActivityItem = {
   id: string
   kind: ActivityKind
