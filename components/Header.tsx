@@ -493,7 +493,7 @@ export default function Header() {
                 </span>
               </span>
             ) : (
-              <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
+              <span className="hidden min-w-0 flex-col leading-none min-[430px]:flex">
                 <span className={`font-logo text-xl font-black sm:text-2xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
                   <>Cloud<span className="text-sky-600">Topia</span></>
                 </span>

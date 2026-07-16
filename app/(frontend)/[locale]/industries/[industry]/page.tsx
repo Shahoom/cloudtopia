@@ -179,6 +179,21 @@ export default async function IndustryPage({ params }: PageProps) {
   )
 
   if (route.resolution.kind === 'world') {
+    if (route.slug === 'healthcare') {
+      const { HealthcareIndustryPage } = await import(
+        '@/components/industry/healthcare/HealthcareIndustryPage'
+      )
+
+      return (
+        <HealthcareIndustryPage
+          locale={route.locale}
+          definition={route.resolution.definition}
+          seo={route.seo}
+          schema={schema}
+        />
+      )
+    }
+
     return (
       <IndustryPageShell
         locale={route.locale}
