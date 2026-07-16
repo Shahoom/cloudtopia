@@ -1,4 +1,5 @@
 import { canonicalUrl } from '@/lib/i18n/url'
+import { categoryFrontDoor } from '@/lib/seo/services'
 
 export default async function ServicesLayout({ children, params }: { children: React.ReactNode, params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
@@ -52,8 +53,8 @@ export default async function ServicesLayout({ children, params }: { children: R
                         numberOfItems: i.items.length,
                         itemListElement: [
                             'digital-presence',
-                            'business-systems',
-                            'web-applications',
+                            'business-systems-development',
+                            'interactive-web-applications',
                             'mobile-app-development',
                             'cloud-infrastructure',
                             'ai-powered-solutions',
@@ -61,7 +62,7 @@ export default async function ServicesLayout({ children, params }: { children: R
                             '@type': 'ListItem',
                             position: index + 1,
                             name: i.items[index],
-                            url: `${canonicalUrl(l, '/services')}#${id}`,
+                            url: canonicalUrl(l, categoryFrontDoor(id)),
                         })),
                     }),
                 }}

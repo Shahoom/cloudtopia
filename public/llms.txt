@@ -29,166 +29,156 @@ Delivery is **CMMI-aligned**: clear requirements, quality-review gates, version 
 
 ---
 
-## Services — 7 categories, 69 sub-services
+## Services — 6 categories, 126 canonical service pages
 
-CloudTopia organizes its offering into 7 service categories. Each sub-service is delivered with the same fixed-scope, bilingual, ownership-first approach. Browse all services at https://cloudtopia.net/services.
+CloudTopia organizes its offering into 6 service categories. Each service page is delivered with the same fixed-scope, bilingual, ownership-first approach. Browse all services at https://cloudtopia.net/services.
 
-Standalone service category landing pages:
-- Website Design & Development — https://cloudtopia.net/website-design
-- E-Commerce Solutions — https://cloudtopia.net/ecommerce-solutions
-- Business Systems Development — https://cloudtopia.net/business-systems-development
-- Web Applications — https://cloudtopia.net/web-applications
+Canonical service hubs:
+- Digital Presence hub — https://cloudtopia.net/services/digital-presence
+- Website Development — https://cloudtopia.net/services/website-development
+- E-Commerce Development — https://cloudtopia.net/services/ecommerce-development
+- Business Systems Development — https://cloudtopia.net/services/business-systems-development
+- Web Applications — https://cloudtopia.net/services/web-applications
+- App Development — https://cloudtopia.net/services/app-development
 - Restaurant QR Menu Systems — https://cloudtopia.net/restaurant-qr-menu
-- Social Media Marketing — https://cloudtopia.net/social-media-marketing
-- Content Creation — https://cloudtopia.net/content-creation
+- Social Media Marketing — https://cloudtopia.net/services/social-media-marketing
+- Content Creation — https://cloudtopia.net/services/content-creation
 
-Every individual sub-service also has a detail page at `https://cloudtopia.net/services/<slug>`.
+Canonical service categories:
+- Digital Presence — websites, e-commerce, SEO, AEO/GEO, social media, content, UI/UX, branding, and owned digital assets.
+- Interactive Web Applications — SaaS/MVP builds, full-stack engineering, portals, dashboards, modernization, and streaming platforms.
+- App Development — iOS, Android, cross-platform, Flutter, React Native, app backends, launch support, and maintenance.
+- Business Systems Development — CRM, ERP, business management systems, workflow automation, integrations, and operational dashboards.
+- Cloud & Infrastructure — hosting, migration, deployment, databases, backups, security, performance, and scalable architecture.
+- AI-Powered Solutions — AI chatbots, assistants, automation, reporting dashboards, customer support, ML, and NLP.
 
-### 1. Digital Presence
-Websites, stores, content, and maintenance for companies that need a credible online presence.
-- Business Website Development — professional, conversion-focused company websites
-- Landing Page Design — single-offer, single-campaign pages built to convert
-- Corporate Website Design — multi-page brand and corporate sites
-- E-commerce Website Development — Gulf-ready online stores with local payments
-- Portfolio Websites — work, projects, and showcase sites for studios and professionals
-- Real Estate Website Development — listing portals and property sites
-- Restaurant Website Development — menus, locations, ordering, and local SEO
-- Educational Website Development — schools, courses, and training sites
-- Website Redesign — modernizing and re-platforming existing sites
-- Website Maintenance — ongoing updates, fixes, and care
-
-### 2. Interactive Web Applications
-Custom portals, dashboards, SaaS MVPs, booking tools, and mobile-ready application experiences.
-- Custom Web Application Development — bespoke web apps around real workflows
-- Client Portals — secure customer-facing files, tasks, and updates
-- Admin Dashboards — operational reporting and management views
-- Booking Platforms — availability, inquiry, payment, and confirmation flows
-- Internal Business Tools — lightweight internal apps for teams
-- SaaS MVP Development — first shippable version of a SaaS product
-- Progressive Web App Development — installable, app-like web experiences
-- Mobile App Development — app-style products delivered for mobile-first teams
-
-### 3. Mobile App Development
-iOS, Android, cross-platform, PWA, customer, staff, booking, delivery, and app-backend services for mobile-first businesses.
-- iOS App Development — native iPhone/iPad apps
-- Android App Development — native Android apps
-- Cross-Platform App Development — one codebase across iOS and Android
-- Flutter App Development — Flutter-based mobile products
-- React Native App Development — React Native mobile products
-- MVP App Development — focused first-version mobile MVPs
-- Business Mobile App Development — internal and operational mobile apps
-- Customer App Development — customer-facing mobile experiences
-- Booking App Development — appointment and reservation apps
-- Delivery & Order App Development — ordering, delivery, and dispatch apps
-- App Backend & API Development — secure backends and APIs for apps
-- App Store Launch Support — App Store / Play Store submission and launch
-- Mobile App Maintenance — ongoing mobile updates and support
-
-### 4. Business Systems Development
-CRM, ERP, workflow automation, inventory, sales, HR, finance, and API systems built around operations.
-- CRM Development — custom CRM and sales operating systems
-- Inventory Management Systems — stock tracking, alerts, and reporting
-- Sales Management Systems — pipelines, quotes, and sales operations
-- Order Management Systems — orders, fulfillment, and status tracking
-- HR Management Systems — staff, attendance, and HR workflows
-- Accounting System Integration — connecting finance and accounting tools
-- Workflow Automation — automating repeatable internal processes
-- Business Process Automation — end-to-end operational automation
-- Supply Chain Management Systems — logistics, suppliers, and supply flows
-- Custom API Development & Integration — APIs and integrations between systems
-
-### 5. Cloud & Infrastructure
-Hosting, migration, deployment, database, backup, security, performance, and scalable cloud architecture.
-- Cloud Hosting Setup — managed, reliable cloud hosting
-- Cloud Migration — moving systems and data to the cloud
-- Server Deployment — provisioning and deploying servers
-- DevOps Support — CI/CD, pipelines, and operations support
-- Database Setup — designing and provisioning databases
-- Backup and Security — backups, hardening, and protection
-- Performance Optimization — speed, Core Web Vitals, and tuning
-- Scalable Cloud Architecture — architecture that grows with traffic
-- Hybrid Cloud Solutions — mixed on-prem and cloud setups
-- Cloud Cost Optimization — reducing and controlling cloud spend
-
-### 6. AI-Powered Solutions
-AI assistants, automation, chatbots, content systems, reporting dashboards, NLP, and machine learning support.
-- AI Chatbots — conversational assistants for sites and support
-- AI Business Assistants — internal AI assistants for teams
-- AI Automation — AI-driven process automation
-- AI Content Systems — assisted content production pipelines
-- AI CRM Assistants — AI layered onto CRM workflows
-- AI Website Analyzer — automated site analysis tooling
-- AI Reporting Dashboards — AI-assisted reporting and insights
-- AI-Powered Customer Support — automated support experiences
-- Machine Learning Model Development — custom ML models
-- Natural Language Processing Solutions — NLP-based features
-
-### 7. Digital Growth Support
-SEO, social, paid landing pages, content systems, lead generation, CRO, email automation, and brand support.
-- Social Media Management — strategy, content, and community
-- Paid Ads Landing Pages — high-intent pages for paid campaigns
-- Brand Identity — visual identity and brand systems
-- SEO Optimization — technical and content SEO
-- Content Systems — repeatable, scalable content production
-- Lead Generation Systems — capture and qualification systems
-- Conversion Rate Optimization — improving on-page conversion
-- Email Marketing Automation — lifecycle and nurture automation
+The generated index below lists canonical service, pillar, and sub-service pages. English is unprefixed; Arabic uses the same path with `/ar` in front.
 
 <!-- SERVICES:START (regenerated by scripts/generate-llms.ts — do not edit by hand) -->
-## Service detail pages (69)
+## Service detail pages (126)
 
-Every sub-service has its own detail page at `https://cloudtopia.net/services/<slug>` (Arabic at `/ar/services/<slug>`):
+Service URLs below use their canonical public path. English is unprefixed; Arabic adds `/ar` before the same path.
 
 ### Digital Presence
-- Business Website Development — https://cloudtopia.net/services/business-website-development
-- Landing Page Design — https://cloudtopia.net/services/landing-page-design
-- Corporate Website Design — https://cloudtopia.net/services/corporate-website-design
-- E-commerce Website Development — https://cloudtopia.net/services/ecommerce-website-development
-- Portfolio Websites — https://cloudtopia.net/services/portfolio-websites
-- Real Estate Website Development — https://cloudtopia.net/services/real-estate-website-development
-- Restaurant Website Development — https://cloudtopia.net/services/restaurant-website-development
-- Educational Website Development — https://cloudtopia.net/services/educational-website-development
-- Website Redesign — https://cloudtopia.net/services/website-redesign
-- Website Maintenance — https://cloudtopia.net/services/website-maintenance
+Category hub: https://cloudtopia.net/services/digital-presence
+- UI/UX Design & Branding — https://cloudtopia.net/services/ui-ux-design-branding
+- Search Engine Optimization (SEO) — https://cloudtopia.net/services/search-engine-optimization
+- Answer Engine Optimization (AEO) — https://cloudtopia.net/services/answer-engine-optimization
+- Generative Engine Optimization (GEO) — https://cloudtopia.net/services/generative-engine-optimization
+- Business Website Development — https://cloudtopia.net/services/website-development/business-website-development
+- Real Estate Website Development — https://cloudtopia.net/services/website-development/real-estate-website-development
+- B2B Wholesale Portal Development — https://cloudtopia.net/services/ecommerce-development/b2b-wholesale-portal-development
+- Brand Strategy & Positioning — https://cloudtopia.net/services/ui-ux-design-branding/brand-strategy-and-positioning
+- Case Study & Portfolio Writing — https://cloudtopia.net/services/content-creation/case-study-and-portfolio-writing
+- Community Management & Engagement — https://cloudtopia.net/services/social-media-marketing/community-management-and-engagement
+- Content Calendar Creation — https://cloudtopia.net/services/social-media-marketing/content-calendar-creation
+- Corporate Rebranding Strategy — https://cloudtopia.net/services/ui-ux-design-branding/corporate-rebranding-strategy
+- Corporate Website Development — https://cloudtopia.net/services/website-development/corporate-website-development
+- Custom E-Commerce Development — https://cloudtopia.net/services/ecommerce-development/custom-e-commerce-development
+- E-Commerce Redesign & Migration — https://cloudtopia.net/services/ecommerce-development/e-commerce-redesign-and-migration
+- E-Commerce SEO — https://cloudtopia.net/services/search-engine-optimization/e-commerce-seo
+- Educational & LMS Website Development — https://cloudtopia.net/services/website-development/educational-and-lms-website-development
+- Email Marketing Automation — https://cloudtopia.net/services/social-media-marketing/email-marketing-automation
+- Email Newsletter Copywriting — https://cloudtopia.net/services/content-creation/email-newsletter-copywriting
+- Franchise & Multi-Location SEO — https://cloudtopia.net/services/search-engine-optimization/franchise-and-multi-location-seo
+- Google Business Profile Optimization — https://cloudtopia.net/services/search-engine-optimization/google-business-profile-optimization
+- Graphic Design for Social Media — https://cloudtopia.net/services/social-media-marketing/graphic-design-for-social-media
+- Healthcare & Medical Website Development — https://cloudtopia.net/services/website-development/healthcare-and-medical-website-development
+- Image & Video SEO — https://cloudtopia.net/services/search-engine-optimization/image-and-video-seo
+- Influencer Outreach & Management — https://cloudtopia.net/services/social-media-marketing/influencer-outreach-and-management
+- Keyword Research & Strategy — https://cloudtopia.net/services/search-engine-optimization/keyword-research-and-strategy
+- Landing Page Copywriting — https://cloudtopia.net/services/content-creation/landing-page-copywriting
+- Landing Page Development — https://cloudtopia.net/services/website-development/landing-page-development
+- LinkedIn B2B Personal Branding — https://cloudtopia.net/services/social-media-marketing/linkedin-b2b-personal-branding
+- Local & Global SEO Strategy — https://cloudtopia.net/services/search-engine-optimization/local-and-global-seo-strategy
+- Local Map Ranking Strategies — https://cloudtopia.net/services/search-engine-optimization/local-map-ranking-strategies
+- Logo & Visual Identity Design — https://cloudtopia.net/services/ui-ux-design-branding/logo-and-visual-identity-design
+- Mobile & Web App Interface Design — https://cloudtopia.net/services/ui-ux-design-branding/mobile-and-web-app-interface-design
+- Motion Graphics & Web Animations — https://cloudtopia.net/services/ui-ux-design-branding/motion-graphics-and-web-animations
+- Multi-Vendor Marketplace Development — https://cloudtopia.net/services/ecommerce-development/multi-vendor-marketplace-development
+- Multilingual & International SEO — https://cloudtopia.net/services/search-engine-optimization/multilingual-and-international-seo
+- Near Me Search Optimization — https://cloudtopia.net/services/search-engine-optimization/near-me-search-optimization
+- Off-Page SEO & Link Building — https://cloudtopia.net/services/search-engine-optimization/off-page-seo-and-link-building
+- On-Page SEO Optimization — https://cloudtopia.net/services/search-engine-optimization/on-page-seo-optimization
+- Paid Ads & Lead Generation — https://cloudtopia.net/services/social-media-marketing/paid-ads-and-lead-generation
+- Payment Gateway Integration — https://cloudtopia.net/services/ecommerce-development/payment-gateway-integration
+- POS Integration for Online Stores — https://cloudtopia.net/services/ecommerce-development/pos-integration
+- Restaurant & Hospitality Website Development — https://cloudtopia.net/services/website-development/restaurant-and-hospitality-website-development
+- SEO Audits & Competitor Analysis — https://cloudtopia.net/services/search-engine-optimization/seo-audits-and-competitor-analysis
+- SEO Blog Post & Article Writing — https://cloudtopia.net/services/content-creation/seo-blog-post-and-article-writing
+- Shopify Store Development — https://cloudtopia.net/services/ecommerce-development/shopify-store-development
+- Short-Form Video Editing — https://cloudtopia.net/services/social-media-marketing/short-form-video-editing
+- Social Media Analytics & Reporting — https://cloudtopia.net/services/social-media-marketing/social-media-analytics-and-reporting
+- Social Media Copywriting — https://cloudtopia.net/services/social-media-marketing/social-media-copywriting
+- Social Media Kit & Assets Design — https://cloudtopia.net/services/ui-ux-design-branding/social-media-kit-and-assets-design
+- Social Media Strategy & Planning — https://cloudtopia.net/services/social-media-marketing/social-media-strategy-and-planning
+- Technical SEO & Indexing — https://cloudtopia.net/services/search-engine-optimization/technical-seo-and-indexing
+- UI/UX Design & Testing — https://cloudtopia.net/services/ui-ux-design-branding/ui-ux-design-and-testing
+- Voice Search Optimization — https://cloudtopia.net/services/search-engine-optimization/voice-search-optimization
+- Web Hosting & Security Management — https://cloudtopia.net/services/website-development/web-hosting-and-security-management
+- Website Copywriting — https://cloudtopia.net/services/content-creation/website-copywriting
+- Website Maintenance & Support — https://cloudtopia.net/services/website-development/website-maintenance-and-support
+- Website Redesign & Modernization — https://cloudtopia.net/services/website-development/website-redesign-and-modernization
+- Website Speed & Performance Optimization — https://cloudtopia.net/services/website-development/website-speed-and-performance-optimization
+- WooCommerce Store Development — https://cloudtopia.net/services/ecommerce-development/woocommerce-store-development
 
 ### Interactive Web Applications
-- Custom Web Application Development — https://cloudtopia.net/services/custom-web-application-development
-- Client Portals — https://cloudtopia.net/services/client-portals
-- Admin Dashboards — https://cloudtopia.net/services/admin-dashboards
-- Booking Platforms — https://cloudtopia.net/services/booking-platforms
-- Internal Business Tools — https://cloudtopia.net/services/internal-business-tools
-- SaaS MVP Development — https://cloudtopia.net/services/saas-mvp-development
-- Progressive Web App Development — https://cloudtopia.net/services/progressive-web-app-development
-- Mobile App Development — https://cloudtopia.net/services/mobile-app-development
+Category hub: https://cloudtopia.net/services/web-applications
+- Custom SaaS & MVP Development — https://cloudtopia.net/services/web-applications/custom-saas-mvp-development
+- Full-Stack Web Engineering — https://cloudtopia.net/services/web-applications/full-stack-web-engineering
+- Interactive Portals & Dashboards — https://cloudtopia.net/services/web-applications/interactive-portals-dashboards
+- App Modernization, Security & Maintenance — https://cloudtopia.net/services/web-applications/application-modernization-performance
+- Media, Entertainment & Streaming — https://cloudtopia.net/services/web-applications/media-entertainment-streaming
 
 ### Mobile App Development
-- iOS App Development — https://cloudtopia.net/services/ios-app-development
-- Android App Development — https://cloudtopia.net/services/android-app-development
-- Cross-Platform App Development — https://cloudtopia.net/services/cross-platform-app-development
-- Flutter App Development — https://cloudtopia.net/services/flutter-app-development
-- React Native App Development — https://cloudtopia.net/services/react-native-app-development
-- MVP App Development — https://cloudtopia.net/services/mvp-app-development
-- Business Mobile App Development — https://cloudtopia.net/services/business-mobile-app-development
-- Customer App Development — https://cloudtopia.net/services/customer-app-development
-- Booking App Development — https://cloudtopia.net/services/booking-app-development
-- Delivery & Order App Development — https://cloudtopia.net/services/delivery-order-app-development
-- App Backend & API Development — https://cloudtopia.net/services/app-backend-api-development
-- App Store Launch Support — https://cloudtopia.net/services/app-store-launch-support
-- Mobile App Maintenance — https://cloudtopia.net/services/mobile-app-maintenance
+Category hub: https://cloudtopia.net/services/app-development
+- iOS App Development — https://cloudtopia.net/services/app-development/ios-app-development
+- Android App Development — https://cloudtopia.net/services/app-development/android-app-development
+- Cross-Platform App Development — https://cloudtopia.net/services/app-development/cross-platform-app-development
+- Flutter App Development — https://cloudtopia.net/services/app-development/flutter-app-development
+- React Native App Development — https://cloudtopia.net/services/app-development/react-native-app-development
+- MVP App Development — https://cloudtopia.net/services/app-development/mvp-app-development
+- Business Mobile App Development — https://cloudtopia.net/services/app-development/business-mobile-app-development
+- Customer App Development — https://cloudtopia.net/services/app-development/customer-app-development
+- Booking App Development — https://cloudtopia.net/services/app-development/booking-app-development
+- Delivery & Order App Development — https://cloudtopia.net/services/app-development/delivery-order-app-development
+- App Backend & API Development — https://cloudtopia.net/services/app-development/app-backend-api-development
+- App Store Launch Support — https://cloudtopia.net/services/app-development/app-store-launch-support
+- Mobile App Maintenance — https://cloudtopia.net/services/app-development/mobile-app-maintenance
+- App Development — https://cloudtopia.net/services/app-development
 
 ### Business Systems Development
-- CRM Development — https://cloudtopia.net/services/crm-development
-- Inventory Management Systems — https://cloudtopia.net/services/inventory-management-systems
-- Sales Management Systems — https://cloudtopia.net/services/sales-management-systems
-- Order Management Systems — https://cloudtopia.net/services/order-management-systems
-- HR Management Systems — https://cloudtopia.net/services/hr-management-systems
-- Accounting System Integration — https://cloudtopia.net/services/accounting-system-integration
-- Workflow Automation — https://cloudtopia.net/services/workflow-automation
-- Business Process Automation — https://cloudtopia.net/services/business-process-automation
-- Supply Chain Management Systems — https://cloudtopia.net/services/supply-chain-management-systems
-- Custom API Development & Integration — https://cloudtopia.net/services/custom-api-development
+Category hub: https://cloudtopia.net/services/business-systems-development
+- Business Management Systems — https://cloudtopia.net/services/business-management-systems
+- Business Process Automation (BPA) — https://cloudtopia.net/services/business-process-automation
+- Custom ERP & CRM Solutions — https://cloudtopia.net/services/custom-erp-crm-solutions
+- Accounting Integration — https://cloudtopia.net/services/business-process-automation/accounting-system-integration
+- Invoicing & Reminder Automation — https://cloudtopia.net/services/business-process-automation/automated-invoicing-payment-reminders
+- Quote & Proposal Automation — https://cloudtopia.net/services/business-process-automation/automated-proposal-quotation-generation
+- CRM Development — https://cloudtopia.net/services/custom-erp-crm-solutions/crm-development
+- Cross-Platform API Syncing — https://cloudtopia.net/services/business-process-automation/cross-platform-api-integration
+- Custom API Development & Integration — https://cloudtopia.net/services/business-process-automation/custom-api-development
+- Support & Ticketing System — https://cloudtopia.net/services/custom-erp-crm-solutions/customer-support-ticketing-systems
+- E-Commerce ERP Sync — https://cloudtopia.net/services/custom-erp-crm-solutions/ecommerce-erp-synchronization
+- Onboarding & Offboarding Automation — https://cloudtopia.net/services/business-process-automation/employee-onboarding-automation
+- E-Signature & Contract Automation — https://cloudtopia.net/services/business-process-automation/esignature-contract-management
+- HR Management Systems — https://cloudtopia.net/services/business-management-systems/hr-management-systems
+- Inventory Management Systems — https://cloudtopia.net/services/business-management-systems/inventory-management-systems
+- Lead Management & Distribution — https://cloudtopia.net/services/custom-erp-crm-solutions/lead-management-distribution
+- Legacy System Migration — https://cloudtopia.net/services/custom-erp-crm-solutions/legacy-system-migration
+- Multi-Branch Operations System — https://cloudtopia.net/services/custom-erp-crm-solutions/multi-branch-operations-management
+- Order Management System — https://cloudtopia.net/services/business-management-systems/order-management-systems
+- PO Approval Workflows — https://cloudtopia.net/services/business-process-automation/purchase-order-approval-workflows
+- RBAC & Security Policies — https://cloudtopia.net/services/custom-erp-crm-solutions/role-based-access-control
+- Sales CRM Pipeline Architecture — https://cloudtopia.net/services/custom-erp-crm-solutions/sales-crm-pipeline-architecture
+- Sales Follow-Up Automation — https://cloudtopia.net/services/business-process-automation/sales-followup-drip-automation
+- Sales Management System — https://cloudtopia.net/services/business-management-systems/sales-management-systems
+- WhatsApp Lead Capture & Routing — https://cloudtopia.net/services/business-process-automation/whatsapp-crm-lead-capture
+- Workflow Automation — https://cloudtopia.net/services/business-process-automation/workflow-automation
+- Odoo ERP Implementation — https://cloudtopia.net/services/custom-erp-crm-solutions/odoo-erp-implementation
 
 ### Cloud & Infrastructure
+Category hub: https://cloudtopia.net/services
 - Cloud Hosting Setup — https://cloudtopia.net/services/cloud-hosting-setup
 - Cloud Migration — https://cloudtopia.net/services/cloud-migration
 - Server Deployment — https://cloudtopia.net/services/server-deployment
@@ -201,6 +191,7 @@ Every sub-service has its own detail page at `https://cloudtopia.net/services/<s
 - Cloud Cost Optimization — https://cloudtopia.net/services/cloud-cost-optimization
 
 ### AI-Powered Solutions
+Category hub: https://cloudtopia.net/services
 - AI Chatbots — https://cloudtopia.net/services/ai-chatbots
 - AI Business Assistants — https://cloudtopia.net/services/ai-business-assistants
 - AI Automation — https://cloudtopia.net/services/ai-automation
@@ -211,16 +202,6 @@ Every sub-service has its own detail page at `https://cloudtopia.net/services/<s
 - AI-Powered Customer Support — https://cloudtopia.net/services/ai-powered-customer-support
 - Machine Learning Model Development — https://cloudtopia.net/services/machine-learning-model-development
 - Natural Language Processing Solutions — https://cloudtopia.net/services/natural-language-processing-solutions
-
-### Digital Growth Support
-- Social Media Management — https://cloudtopia.net/services/social-media-management
-- Paid Ads Landing Pages — https://cloudtopia.net/services/paid-ads-landing-pages
-- Brand Identity — https://cloudtopia.net/services/brand-identity
-- SEO Optimization — https://cloudtopia.net/services/seo-optimization
-- Content Systems — https://cloudtopia.net/services/content-systems
-- Lead Generation Systems — https://cloudtopia.net/services/lead-generation-systems
-- Conversion Rate Optimization — https://cloudtopia.net/services/conversion-rate-optimization
-- Email Marketing Automation — https://cloudtopia.net/services/email-marketing-automation
 <!-- SERVICES:END -->
 
 ---
@@ -426,70 +407,33 @@ Arabic equivalents of every page above are available at the same path under `/ar
 ---
 
 <!-- ARTICLES:START (regenerated by scripts/generate-llms.ts — do not edit by hand) -->
-## Articles — English (23 published)
+## Articles — English (5 published)
 
 All English articles live at `https://cloudtopia.net/articles/<slug>`.
 
-- The Blueprint for High-Converting Business Websites in 2026 — https://cloudtopia.net/articles/the-blueprint-for-high-converting-business-websites-in-2026
-  Stop losing leads to outdated design. Learn the anatomy of a modern, fast, and high-converting business website that turns visitors into clients.
-- Why Custom CRM Systems Outperform Out-of-the-Box Solutions — https://cloudtopia.net/articles/why-custom-crm-systems-outperform-out-of-the-box-solutions
-  Off-the-shelf CRMs force you to adapt your business to their software. A custom CRM adapts the software to your business. Here is why custom is winning.
-- Automating the Boring Stuff: AI Workflows for Small Teams — https://cloudtopia.net/articles/automating-the-boring-stuff-ai-workflows-for-small-teams
-  Your team is spending hours on repetitive tasks. Discover how practical AI automation can handle data entry, lead scoring, and customer support.
-- From Monolith to Microservices: Scaling Your Cloud Architecture — https://cloudtopia.net/articles/from-monolith-to-microservices-scaling-your-cloud-architecture
-  When your user base explodes, your infrastructure must keep up. A guide to modernizing your cloud architecture for resilience and infinite scale.
-- The Ultimate Guide to E-commerce Performance: Why Milliseconds Cost Millions — https://cloudtopia.net/articles/the-ultimate-guide-to-e-commerce-performance-why-milliseconds-cost-millions
-  In e-commerce, speed is money. Learn how modern tech stacks and optimized assets can drastically improve your online store revenue.
-- Building Client Portals: How to Keep Your Customers Connected — https://cloudtopia.net/articles/building-client-portals-how-to-keep-your-customers-connected
-  Stop relying on email threads and spreadsheets. A custom client portal centralizes communication, builds trust, and makes your business look premium.
-- Search Engine Optimization in the Age of AI: What Still Works — https://cloudtopia.net/articles/search-engine-optimization-in-the-age-of-ai-what-still-works
-  AI is changing how people search, but the core principles of SEO remain. Discover how to rank your business in a landscape dominated by AI Overviews.
-- Web Security 101: How to Protect Your Customers Data — https://cloudtopia.net/articles/web-security-101-how-to-protect-your-customers-data
-  Data breaches destroy businesses. Learn the fundamental security measures every custom web application and website must have in 2026.
-- How to Choose Between Shopify and Custom E-commerce — https://cloudtopia.net/articles/how-to-choose-between-shopify-and-custom-e-commerce
-  Debating between a hosted platform like Shopify and a fully custom e-commerce build? Here is how to decide based on your scale, budget, and operational needs.
-- Why Small Businesses Need a Design System — https://cloudtopia.net/articles/why-small-businesses-need-a-design-system
-  Design systems aren’t just for tech giants. Discover how a unified design language can speed up your marketing and make your brand look premium.
-- The True ROI of Workflow Automation — https://cloudtopia.net/articles/the-true-roi-of-workflow-automation
-  Automation sounds expensive until you calculate the cost of manual errors and wasted hours. Here is how to measure the return on investment for business automation.
-- Accessibility in Web Design: Not Just a Legal Requirement — https://cloudtopia.net/articles/accessibility-in-web-design-not-just-a-legal-requirement
-  Making your website accessible to everyone is good ethics, good SEO, and good business. Here is how to approach accessibility in modern web development.
-- Top 5 Mistakes in B2B Lead Generation Websites — https://cloudtopia.net/articles/top-5-mistakes-in-b2b-lead-generation-websites
-  Is your B2B website generating traffic but no leads? You might be making one of these five critical conversion mistakes.
-- What to Expect During a Custom Software Build — https://cloudtopia.net/articles/what-to-expect-during-a-custom-software-build
-  Demystifying the process of building custom web applications and business systems. A step-by-step guide to how professional agencies work.
-- Scaling Operations: When Spreadsheets Are No Longer Enough — https://cloudtopia.net/articles/scaling-operations-when-spreadsheets-are-no-longer-enough
-  Spreadsheets are the ultimate startup tool, but they eventually become a bottleneck. Learn how to recognize when it’s time to upgrade to a real database.
-- Why Your Business Needs More Than an Instagram Page — https://cloudtopia.net/articles/why-your-business-needs-more-than-an-instagram-page
-  Social platforms can create attention, but serious growth needs a website and system layer your business actually owns.
-- Website vs Web Application: What Should Your Company Build? — https://cloudtopia.net/articles/website-vs-web-application-what-should-your-company-build
-  A practical decision framework for choosing between a marketing website, a web app, or a hybrid platform.
-- How CRM Systems Help Small Businesses Grow — https://cloudtopia.net/articles/how-crm-systems-help-small-businesses-grow
-  A CRM is not just a contact list. It is a repeatable sales operating system for teams that do not want leads slipping away.
-- AI Automation Ideas for Startups and Service Businesses — https://cloudtopia.net/articles/ai-automation-ideas-for-startups-and-service-businesses
-  Five realistic AI automation use cases that reduce busywork without turning your operations into a science project.
-- What Makes a Website Actually Convert Visitors into Clients? — https://cloudtopia.net/articles/what-makes-a-website-actually-convert-visitors-into-clients
-  A premium design helps, but conversion comes from clarity, trust, speed, and a path that matches how buyers make decisions.
-- How Business Dashboards Help Founders Make Better Decisions — https://cloudtopia.net/articles/how-business-dashboards-help-founders-make-better-decisions
-  Dashboards help founders see sales, operations, support, and financial signals in one place before small issues become expensive.
-- The Difference Between a Normal Website and a Scalable Digital System — https://cloudtopia.net/articles/the-difference-between-a-normal-website-and-a-scalable-digital-system
-  A normal website explains your company. A scalable digital system connects marketing, workflows, data, and operations.
-- How CloudTopia Builds Digital Systems for Modern Companies — https://cloudtopia.net/articles/how-cloudtopia-builds-digital-systems-for-modern-companies
-  A behind-the-scenes look at how CloudTopia plans, designs, and ships websites, dashboards, automations, and AI-powered systems.
+- Best Website Design Practices for RTL Arabic Layouts in 2026 — https://cloudtopia.net/articles/best-website-design-practices-for-rtl-arabic-layouts-in-2026
+  Designing an Arabic website requires a thoughtful approach to RTL layouts. This guide outlines best practices to ensure your site feels native to Arabic speakers.
+- Why Gulf Businesses Need a Real Website, Not Just an Instagram Page — https://cloudtopia.net/articles/why-gulf-businesses-need-a-website-not-just-an-instagram-page
+  Gulf businesses are at risk if they rely solely on Instagram. A dedicated website is essential for credibility, control, and customer conversion.
+- How to Build a Bilingual Arabic-English Website — https://cloudtopia.net/articles/how-to-build-a-bilingual-arabic-english-website
+  Building a bilingual Arabic-English website involves careful planning and execution to avoid common pitfalls. This guide outlines essential architectural decisions and best practices for successful implementation.
+- WordPress vs Next.js: Which is Better for Arabic Business Websites? — https://cloudtopia.net/articles/wordpress-vs-next-js-arabic-business-websites
+  This article compares WordPress and Next.js for building Arabic business websites, focusing on performance, content management, and security.
+- How Much Does a Business Website Cost in Saudi Arabia in 2026? — https://cloudtopia.net/articles/how-much-does-a-business-website-cost-in-saudi-arabia-in-2026
+  This guide breaks down the costs of business websites in Saudi Arabia, explaining what drives pricing and how to avoid unnecessary expenses.
 
 ## Articles — Arabic (5 published)
 
 All Arabic articles live at `https://cloudtopia.net/ar/articles/<slug>`.
 
-- المخطط الأساسي لمواقع الشركات عالية التحويل في عام 2026 — https://cloudtopia.net/ar/articles/2026
-  توقف عن خسارة العملاء المحتملين بسبب التصميم القديم. تعرف على هيكل موقع الشركة الحديث والسريع والذي يحول الزوار إلى عملاء.
-- أمن الويب 101: كيف تحمي بيانات عملائك — https://cloudtopia.net/ar/articles/101
-  اختراق البيانات يدمر الشركات. تعلم التدابير الأمنية الأساسية التي يجب أن يتوفر عليها كل تطبيق ويب مخصص في عام 2026.
-- لماذا تحتاج الشركات الصغيرة إلى نظام تصميم (Design System) — https://cloudtopia.net/ar/articles/design-system
-  أنظمة التصميم ليست فقط لعمالقة التكنولوجيا. اكتشف كيف يمكن للغة تصميم موحدة أن تسرع التسويق الخاص بك.
-- أهم 5 أخطاء في مواقع جذب عملاء B2B — https://cloudtopia.net/ar/articles/5-b2b
-  هل يولد موقع B2B الخاص بك زيارات ولكن لا يوجد عملاء محتملون؟ قد ترتكب أحد أخطاء التحويل الخمسة هذه.
-- توسيع العمليات: عندما لا تعد جداول البيانات كافية — https://cloudtopia.net/ar/articles/untitled
-  جداول البيانات هي أداة بدء التشغيل المثلى، لكنها تصبح عنق زجاجة. تعرف على كيفية إدراك الوقت المناسب للترقية إلى قاعدة بيانات حقيقية.
+- أفضل ممارسات تصميم المواقع العربية RTL في 2026 — https://cloudtopia.net/ar/articles/best-website-design-practices-for-rtl-arabic-layouts-in-2026
+  تصميم موقع عربي ليس مجرد تصميم موقع وقلبه. يجب أن تأخذ RTL بالحسبان من أول رسم تخطيطي.
+- لماذا يحتاج عملك في الخليج لموقع إلكتروني حقيقي — https://cloudtopia.net/ar/articles/why-gulf-businesses-need-a-website-not-just-an-instagram-page
+  إن الاعتماد على إنستغرام كحضورك الرقمي الأساسي يعد من الأخطاء الشائعة. الموقع الإلكتروني هو الأصل الذي تملكه فعلًا.
+- كيف تبني موقعًا ثنائي اللغة عربي-إنجليزي — https://cloudtopia.net/ar/articles/how-to-build-a-bilingual-arabic-english-website
+  بناء موقع إلكتروني ثنائي اللغة يبدو بسيطًا، لكن الأخطاء الشائعة قد تكلف الشركات الكثير. هذا الدليل يوضح كيفية تجنب تلك الأخطاء.
+- ووردبريس أم Next.js: أيهما أفضل لمواقع الشركات العربية؟ — https://cloudtopia.net/ar/articles/wordpress-vs-next-js-for-arab-websites
+  تتنافس ووردبريس و Next.js كخيارات لبناء المواقع العربية. كل منهما له مزايا وعيوب حسب احتياجات المشروع.
+- كم تكلفة تصميم موقع إلكتروني للشركات في السعودية 2026؟ — https://cloudtopia.net/ar/articles/how-much-does-a-business-website-cost-in-saudi-arabia-in-2026
+  استكشف تكلفة تصميم المواقع الإلكترونية في السعودية لعام 2026. تعرف على الأسعار لكل نوع من المواقع وكيفية تجنب الدفع الزائد.
 <!-- ARTICLES:END -->
-

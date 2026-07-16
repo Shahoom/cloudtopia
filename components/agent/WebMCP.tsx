@@ -49,7 +49,7 @@ function buildTools(): WebMcpTool[] {
     },
     {
       name: 'list_services',
-      description: "List CloudTopia's 7 service categories with summaries and key offerings. Optionally filter by keyword.",
+      description: "List CloudTopia's 6 service categories with summaries and key offerings. Optionally filter by keyword.",
       inputSchema: {
         type: 'object',
         properties: { keyword: { type: 'string', description: 'Optional keyword filter, e.g. "ecommerce", "AI", "cloud".' } },

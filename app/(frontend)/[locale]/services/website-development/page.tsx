@@ -4,7 +4,7 @@ import { canonicalUrl } from '@/lib/i18n/url'
 import WebsiteDesignClient from './WebsiteDesignClient'
 import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { websiteDesignSeoFallback } from './layout'
+import { websiteDesignSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

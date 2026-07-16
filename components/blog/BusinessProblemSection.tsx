@@ -18,7 +18,7 @@ const problems = [
   {
     title: 'I need CRM or ERP system',
     text: 'Centralize leads, customers, operations, approvals, finance, and inventory flows.',
-    href: '/business-systems-development',
+    href: '/services/business-systems-development',
     icon: Briefcase,
   },
   {

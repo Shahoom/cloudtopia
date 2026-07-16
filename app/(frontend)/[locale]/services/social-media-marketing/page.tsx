@@ -3,7 +3,7 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import SocialMediaClient from './SocialMediaClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { socialMediaSeoFallback } from './layout'
+import { socialMediaSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

@@ -82,6 +82,10 @@ test('sitemap includes canonical country landing pages with regional hreflang an
   assert.match(sitemapSource, /hreflangArabic/, 'Arabic regional hreflang should be used')
   assert.match(sitemapSource, /country\.englishUrl/, 'English canonical URLs should be emitted')
   assert.match(sitemapSource, /country\.arabicUrl/, 'Arabic canonical URLs should be emitted')
-  assert.match(sitemapSource, /\['blog', 'locations'\]/, 'CMS locations pages should be excluded from the sitemap')
+  assert.match(
+    sitemapSource,
+    /\['blog', 'locations', 'labs'\]/,
+    'CMS-only and stale page records should be excluded from the sitemap',
+  )
   assert.doesNotMatch(sitemapSource, /\/locations\/\$\{country\}/, 'Legacy location country URLs should not be emitted')
 })

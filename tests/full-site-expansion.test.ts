@@ -75,6 +75,9 @@ const targetServiceSlugs = [
   'email-marketing-automation',
 ]
 
+const bilingualLanguageSchemaPattern =
+  /availableLanguage:\s*\[\s*\{\s*'@type': 'Language', name: 'English', alternateName: 'en'\s*\},\s*\{\s*'@type': 'Language', name: 'Arabic', alternateName: 'ar'\s*\},\s*\]/s
+
 test('full service taxonomy covers the requested service expansion', async () => {
   const { serviceDetailSlugs, serviceCategories, servicesBySlug } = await import('../lib/seo/services.ts')
 
@@ -145,8 +148,8 @@ test('active site locale model is English and Arabic only', async () => {
   assert.match(llmsSource, /Service detail pages/, 'llms.txt should expose the expanded service detail landing pages to AI crawlers')
   assert.match(llmsSource, /\/industries\/healthcare/, 'llms.txt should include industry landing pages')
   assert.match(llmsSource, /https:\/\/cloudtopia\.net\/saudi-arabia/, 'llms.txt should include canonical regional market pages')
-  assert.match(llmsSource, /\/services\/business-website-development/, 'llms.txt should include service detail pages')
-  assert.match(llmsSource, /\/services\/ios-app-development/, 'llms.txt should include mobile app service detail pages')
+  assert.match(llmsSource, /\/services\/website-development\/business-website-development/, 'llms.txt should include nested website service detail pages')
+  assert.match(llmsSource, /\/services\/app-development\/ios-app-development/, 'llms.txt should include nested mobile app service detail pages')
   assert.doesNotMatch(ogImageSource, /services\/tr\.jpg|Turkish|Turkey|Turkiye|Türkiye/, 'OG image examples should not reference Turkish assets')
   assert.match(englishDictionarySource, /value: '6', label: 'Countries served'/, 'English dictionary should reflect the six active Gulf markets')
   assert.match(arabicDictionarySource, /value: '6', label: 'دول نخدمها'/, 'Arabic dictionary should reflect the six active Gulf markets')
@@ -181,7 +184,7 @@ test('service detail pages and sitemap are wired for expanded service routes', (
   assert.match(servicesPageSource, /\/services\/\$\{service\.slug\}/, 'Service taxonomy links should route to service detail pages')
 
   assert.match(sitemapSource, /serviceDetailSlugs/, 'Sitemap should import service detail slugs')
-  assert.match(sitemapSource, /\/services\/\$\{service\}/, 'Sitemap should generate localized service detail URLs')
+  assert.match(sitemapSource, /serviceCanonicalPath\(service\)/, 'Sitemap should generate localized canonical service detail URLs')
   assert.match(sitemapSource, /path: '\/industries'/, 'Sitemap should include the industry hub')
   assert.match(sitemapSource, /path: '\/markets'/, 'Sitemap should include the markets hub')
   assert.match(pagesCollectionSource, /programmaticLanding/, 'Payload pages should expose generated landing-page override fields')
@@ -195,7 +198,7 @@ test('header stays focused while footer exposes expanded services industries and
   const footerSource = readFileSync(path.join(process.cwd(), 'components/Footer.tsx'), 'utf8')
 
   assert.match(headerSource, /MegaMenu/, 'Header should include mega-menu discovery')
-  assert.match(headerSource, /serviceCategories/, 'Header should use service taxonomy')
+  assert.match(headerSource, /getStructuredPillars/, 'Header should use the structured service taxonomy')
   assert.match(headerSource, /industrySlugs/, 'Header should use industry taxonomy')
   assert.match(headerSource, /projectsLabel/, 'Header should expose Projects as a top-level tab')
   assert.match(headerSource, /pricingLabel/, 'Header should expose Pricing as a top-level tab')
@@ -225,9 +228,9 @@ test('metadata uses buyer-intent service package titles and Arabic brand spellin
   const { ar } = await import('../lib/i18n/translations/ar.ts')
   const localeLayoutSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/layout.tsx'), 'utf8')
   const servicesPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/page.tsx'), 'utf8')
-  const websiteDesignPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/website-design/page.tsx'), 'utf8')
-  const ecommercePageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/ecommerce-solutions/page.tsx'), 'utf8')
-  const contentPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/content-creation/page.tsx'), 'utf8')
+  const websiteDevelopmentPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/website-development/page.tsx'), 'utf8')
+  const ecommercePageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/ecommerce-development/page.tsx'), 'utf8')
+  const contentPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/services/content-creation/page.tsx'), 'utf8')
 
   assert.equal(buildPageSEO('en', 'services', en).title, 'Service Packages')
   assert.equal(buildPageSEO('ar', 'services', ar).title, 'باقات الخدمات')
@@ -236,7 +239,7 @@ test('metadata uses buyer-intent service package titles and Arabic brand spellin
   assert.equal(buildPageSEO('en', 'content-creation', en).title, 'Best Company for Professional Content Creation')
   assert.match(buildPageSEO('ar', 'website-design', ar).title, /أفضل شركة/)
   assert.match(servicesPageSource, /Service Packages/, 'Services route should use the service package tab title')
-  assert.match(websiteDesignPageSource, /Best Website Design & Development Company/, 'Dedicated website-design route should use the buyer-intent tab title')
+  assert.match(websiteDevelopmentPageSource, /Best Website Development Company/, 'Dedicated website-development service route should use the buyer-intent tab title')
   assert.match(ecommercePageSource, /Best E-Commerce Solutions Company/, 'Dedicated ecommerce route should use the buyer-intent tab title')
   assert.match(contentPageSource, /Best Company for Professional Content Creation/, 'Dedicated content route should use the buyer-intent tab title')
   assert.match(localeLayoutSource, /template: `%s \| \$\{brandName\}`/, 'Localized layout should use a locale-aware title template')
@@ -296,7 +299,7 @@ test('about page explains the enterprise operating model and buyer proof paths',
   assert.match(aboutLayoutSource, /AboutPage/, 'About route should emit AboutPage structured data')
   assert.match(aboutLayoutSource, /hasPart/, 'About schema should expose key buyer proof page relationships')
   assert.match(aboutLayoutSource, /makesOffer/, 'About schema should connect the organization to service offers')
-  assert.match(aboutLayoutSource, /availableLanguage: \['English', 'Arabic'\]/, 'About schema should advertise English and Arabic only')
+  assert.match(aboutLayoutSource, bilingualLanguageSchemaPattern, 'About schema should advertise English and Arabic only')
 })
 
 test('trust center gives enterprise buyers security ownership and procurement proof', () => {
@@ -312,7 +315,7 @@ test('trust center gives enterprise buyers security ownership and procurement pr
   assert.match(trustSource, /Client-owned handoff/, 'Trust page should explain ownership handoff')
   assert.match(trustSource, /FAQPage/, 'Trust page should emit FAQ structured data')
   assert.match(trustSource, /ItemList/, 'Trust page should emit verification path structured data')
-  assert.match(trustSource, /availableLanguage: \['English', 'Arabic'\]/, 'Trust schema should advertise English and Arabic only')
+  assert.match(trustSource, bilingualLanguageSchemaPattern, 'Trust schema should advertise English and Arabic only')
   assert.match(trustSource, /\/pricing/, 'Trust page should link to pricing')
   assert.match(trustSource, /\/projects/, 'Trust page should link to project proof')
   assert.match(trustSource, /\/services/, 'Trust page should link to service scope')
@@ -340,7 +343,7 @@ test('process page explains delivery governance sign-off and handoff', () => {
   assert.match(processSource, /HowTo/, 'Process page should emit HowTo structured data')
   assert.match(processSource, /FAQPage/, 'Process page should emit FAQ structured data')
   assert.match(processSource, /BreadcrumbList/, 'Process page should emit breadcrumb structured data')
-  assert.match(processSource, /availableLanguage: \['English', 'Arabic'\]/, 'Process schema should advertise English and Arabic only')
+  assert.match(processSource, bilingualLanguageSchemaPattern, 'Process schema should advertise English and Arabic only')
   assert.match(processSource, /\/pricing/, 'Process page should link to pricing')
   assert.match(processSource, /\/trust/, 'Process page should link to trust')
   assert.match(processSource, /\/projects/, 'Process page should link to projects')

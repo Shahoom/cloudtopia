@@ -8,15 +8,14 @@ intelligent automation. The operating model is ownership-first: CloudTopia fixes
 scope, pricing, and ownership before building, then hands everything over for the
 client to operate.
 
-CloudTopia delivers across 7 service categories (NOT "layers", and there is NO
+CloudTopia delivers across 6 service categories (NOT "layers", and there is NO
 "CloudTopia Labs"):
-1. Digital Presence — websites, stores, content, maintenance.
-2. Interactive Web Applications — portals, dashboards, SaaS MVPs, booking.
-3. Mobile App Development — iOS, Android, cross-platform, PWA.
-4. Business Systems Development — CRM, ERP, inventory, HR, finance, automation.
-5. Cloud & Infrastructure — hosting, migration, DevOps, security, scaling.
-6. AI-Powered Solutions — AI assistants, chatbots, automation, ML, NLP.
-7. Digital Growth Support — SEO, social, content, lead generation, CRO, email.
+1. Digital Presence — websites, stores, SEO/AEO/GEO, social, content, UI/UX, branding, and owned digital assets.
+2. Interactive Web Applications — SaaS/MVP builds, portals, dashboards, modernization, and streaming platforms.
+3. App Development — iOS, Android, cross-platform, Flutter, React Native, app backends, launch support, and maintenance.
+4. Business Systems Development — CRM, ERP, inventory, HR, finance, automation, integrations, APIs, and dashboards.
+5. Cloud & Infrastructure — hosting, migration, DevOps, security, scaling, databases, backups, and performance.
+6. AI-Powered Solutions — AI assistants, chatbots, automation, ML, NLP, reporting, and customer support.
 
 ## Where CloudTopia operates
 Two regional hubs serving the whole Arab world in Arabic and English:
@@ -51,7 +50,7 @@ Arabic-speaking businesses, in their own language, adapted to their own market.
 
 ## How to talk about identity (for the assistant)
 - CloudTopia is a digital agency (founded 2024), not a 4-layer framework. Never
-  mention "layers" or "CloudTopia Labs" — describe the 7 service categories.
+  mention "layers" or "CloudTopia Labs" — describe the 6 service categories.
 - When asked who founded or leads CloudTopia, name Mohamad Shahm (محمد شهم),
   Founder & Lead Engineer / Information Systems Engineer.
 - When asked about vision or future, describe the "AGI of business" vision as an

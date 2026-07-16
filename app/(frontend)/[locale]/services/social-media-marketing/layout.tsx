@@ -3,17 +3,7 @@ import { getCMSMetadata } from '@/lib/cms/metadata'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-
-export const socialMediaSeoFallback = {
-    titles: {
-        en: 'Arabic-First Social Media Marketing for the Gulf',
-        ar: 'تسويق وسائل التواصل الاجتماعي بالعربية أولاً للخليج',
-    } as Record<string, string>,
-    descriptions: {
-        en: 'Arabic-first content and paid social for Saudi, UAE, Kuwait, and Gulf audiences across TikTok, Snapchat, Instagram, and Meta.',
-        ar: 'محتوى عربي أولاً وإعلانات اجتماعية مدفوعة لجمهور السعودية والإمارات والكويت والخليج عبر تيك توك وسناب شات وإنستاجرام وميتا.',
-    } as Record<string, string>,
-}
+import { socialMediaSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params

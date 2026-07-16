@@ -83,6 +83,8 @@ test('sitemap includes localized location and industry landing pages', () => {
 test('phase 2 and 3 landing page templates surface the expanded SEO content', () => {
   const industryIndexPath = path.join(process.cwd(), 'app/(frontend)/[locale]/industries/page.tsx')
   const industryPagePath = path.join(process.cwd(), 'app/(frontend)/[locale]/industries/[industry]/page.tsx')
+  const industryContentPath = path.join(process.cwd(), 'lib/seo/industries-page.ts')
+  const industryCardsPath = path.join(process.cwd(), 'components/industries/IndustriesIndex.tsx')
   const marketsIndexPath = path.join(process.cwd(), 'app/(country-landing)/[locale]/markets/page.tsx')
   const countryPagePath = path.join(process.cwd(), 'app/(country-landing)/[locale]/[country]/page.tsx')
 
@@ -92,12 +94,15 @@ test('phase 2 and 3 landing page templates surface the expanded SEO content', ()
 
   const industryIndexSource = readFileSync(industryIndexPath, 'utf8')
   const industryPageSource = readFileSync(industryPagePath, 'utf8')
+  const industryContentSource = readFileSync(industryContentPath, 'utf8')
+  const industryCardsSource = readFileSync(industryCardsPath, 'utf8')
   const marketsIndexSource = readFileSync(marketsIndexPath, 'utf8')
   const countryPageSource = readFileSync(countryPagePath, 'utf8')
 
-  assert.match(industryIndexSource, /answerTitle/, 'Industry hub should include an answer-engine summary block')
-  assert.match(industryIndexSource, /proofItems/, 'Industry hub should surface enterprise proof points')
-  assert.match(industryIndexSource, /serviceLinks/, 'Industry hub cards should expose relevant services')
+  assert.match(industryIndexSource, /FAQPage/, 'Industry hub should emit visible answer-engine FAQ schema')
+  assert.match(industryIndexSource, /content\.proof/, 'Industry hub should surface enterprise proof points')
+  assert.match(industryContentSource, /guideIntro/, 'Industry hub should include an answer-first transformation guide')
+  assert.match(industryCardsSource, /serviceLinks/, 'Industry hub index should expose relevant services')
   assert.match(industryPageSource, /getIndustry/, 'Industry route should read from industry SEO data')
   assert.match(industryPageSource, /serviceLinks/, 'Industry route should render related service links')
   assert.match(industryPageSource, /buildBreadcrumbSchema|BreadcrumbList/, 'Industry route should emit breadcrumb schema')

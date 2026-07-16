@@ -277,13 +277,39 @@ function whatsappHref(serviceName: string, locale: string) {
     return `https://wa.me/96895886393?text=${encodeURIComponent(text)}`
 }
 
+const WEBAPP_ORPHAN_REDIRECTS: Record<string, string> = {
+    'custom-web-application-development': '/services/web-applications/full-stack-web-engineering',
+    'progressive-web-app-development': '/services/web-applications/full-stack-web-engineering',
+    'client-portals': '/services/web-applications/interactive-portals-dashboards',
+    'admin-dashboards': '/services/web-applications/interactive-portals-dashboards',
+    'booking-platforms': '/services/web-applications/interactive-portals-dashboards',
+    'internal-business-tools': '/services/web-applications/interactive-portals-dashboards',
+    'saas-mvp-development': '/services/web-applications/custom-saas-mvp-development',
+}
+
+const WEBSITE_FAMILY_ORPHAN_REDIRECTS: Record<string, string> = {
+    'website-redesign': '/services/website-development',
+    'corporate-website-design': '/services/website-development',
+    'landing-page-design': '/services/website-development',
+    'portfolio-websites': '/services/website-development',
+    'educational-website-development': '/services/website-development',
+    'restaurant-website-development': '/services/website-development',
+    'website-maintenance': '/services/website-development',
+    'ecommerce-website-development': '/services/ecommerce-development',
+}
+
+const redirectedFlatServiceSlugs = new Set<string>([
+    ...Object.keys(WEBAPP_ORPHAN_REDIRECTS),
+    ...Object.keys(WEBSITE_FAMILY_ORPHAN_REDIRECTS),
+])
+
 export function generateStaticParams() {
     // DP + BS sub-services are nested now (/services/<parent>/<sub>) and owned by
     // the [subservice] route, so exclude their slugs here — this flat route only
     // pre-renders pillar pages and the remaining flat service-detail pages.
     const subSlugs = new Set<string>([...businessSystemsSubServiceSlugs, ...dpSubServiceSlugs])
     const slugs = [...new Set([
-        ...serviceDetailSlugs.filter((s) => !subSlugs.has(s)),
+        ...serviceDetailSlugs.filter((s) => !subSlugs.has(s) && !redirectedFlatServiceSlugs.has(s)),
         ...structuredPillarRoutes.map((p) => p.slug),
         'app-development',
     ])]
@@ -296,20 +322,6 @@ export function generateStaticParams() {
 }
 
 import { applySeoOverride } from '@/lib/cms/route-seo'
-
-// Near-duplicate website services: the older bespoke pages and the new Digital
-// Presence catalog cover the same offering under different slugs. Both URLs stay
-// live, but the older page declares the new page as its canonical so search
-// engines consolidate ranking signals (no duplicate-content penalty).
-const WEBSITE_DUPLICATE_CANONICAL: Record<string, string> = {
-    'portfolio-websites': 'portfolio-website-development',
-    'corporate-website-design': 'corporate-website-development',
-    'landing-page-design': 'landing-page-development',
-    'restaurant-website-development': 'restaurant-and-hospitality-website-development',
-    'educational-website-development': 'educational-and-lms-website-development',
-    'website-redesign': 'website-redesign-and-modernization',
-    'website-maintenance': 'website-maintenance-and-support',
-}
 
 // Per-slug SEO overrides for structured pillars — richer, keyword-led titles and
 // descriptions than the plain pillar name/description (used for the flagship
@@ -350,7 +362,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         const seoOverride = PILLAR_SEO_OVERRIDES[serviceSlug]
         const pName = seoOverride ? (locale === 'ar' ? seoOverride.title.ar : seoOverride.title.en) : localizedDP(pillar.name, locale)
         const pDesc = seoOverride ? (locale === 'ar' ? seoOverride.description.ar : seoOverride.description.en) : localizedDP(pillar.description, locale)
-        const pPath = `/services/${pillar.slug}`
+        const pPath = pillar.href
         const brand = locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'
         return {
             // Bare title — the layout's `%s | CloudTopia` template appends the brand once.
@@ -377,7 +389,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const isAppDevSub = APP_DEV_SUB_SLUGS.has(service.slug)
     const path = isAppDevSub ? `/services/app-development/${service.slug}` : `/services/${service.slug}`
     // If this is an older near-duplicate, canonicalize to the new equivalent page.
-    const canonicalPath = isAppDevSub ? path : `/services/${WEBSITE_DUPLICATE_CANONICAL[service.slug] || service.slug}`
+    const canonicalPath = isAppDevSub
+        ? path
+        : WEBSITE_FAMILY_ORPHAN_REDIRECTS[service.slug] || WEBAPP_ORPHAN_REDIRECTS[service.slug] || `/services/${service.slug}`
     const category = getServiceCategory(service.categorySlug)
     const categoryName = category ? localizedServiceValue(category.name, locale) : locale === 'ar' ? 'خدمات كلاود توبيا' : 'CloudTopia Services'
     const title = locale === 'ar'
@@ -419,6 +433,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServiceDetailPage({ params }: PageProps) {
     const { locale = 'en', service: serviceSlug } = await params
+    const orphanRedirect = WEBSITE_FAMILY_ORPHAN_REDIRECTS[serviceSlug] || WEBAPP_ORPHAN_REDIRECTS[serviceSlug]
+    if (orphanRedirect) permanentRedirect(localePath(locale, orphanRedirect))
+
     // "Get Found" trio (SEO/AEO/GEO) share a bespoke pillar design. They are
     // structured pillars, so this branch MUST precede the getStructuredPillarBySlug
     // render below — otherwise they would fall through to the generic PillarPage.
@@ -468,6 +485,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const isRTL = locale === 'ar'
     const serviceName = localizedServiceValue(service.name, locale)
     const categoryName = category ? localizedServiceValue(category.name, locale) : ''
+    const appDevSubSlugs = new Set((getServiceCategory('mobile-app-development')?.services ?? []).map((s) => s.slug))
+    const isAppDevSub = appDevSubSlugs.has(service.slug)
+    const path = isAppDevSub ? `/services/app-development/${service.slug}` : `/services/${service.slug}`
+    const canonicalServicePath = isAppDevSub ? path : `/services/${service.slug}`
     const relatedServices = (category?.services || [])
         .filter((candidate) => candidate.slug !== service.slug)
         .slice(0, 4)
@@ -610,7 +631,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         description: localizedServiceValue(service.description, locale),
         serviceType: categoryName,
         provider: buildOrganizationRef(),
-        url: canonicalUrl(locale, `/services/${service.slug}`),
+        url: canonicalUrl(locale, canonicalServicePath),
         areaServed: marketLinks.map((country) => ({ '@type': 'Country', name: locale === 'ar' ? country.countryNameArabic : country.countryNameEnglish })),
         // SD-4: package tiers have no per-package price number in the source data,
         // so each Offer carries name + availability only. A bare/undefined price
@@ -627,7 +648,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         '@type': 'WebPage',
         name: serviceName,
         description: localizedServiceValue(service.description, locale),
-        url: canonicalUrl(locale, `/services/${service.slug}`),
+        url: canonicalUrl(locale, canonicalServicePath),
         inLanguage: isRTL ? 'ar' : 'en',
         mainEntity: { '@type': 'Service', name: serviceName },
     }
@@ -638,7 +659,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
             { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
-            { '@type': 'ListItem', position: 3, name: serviceName, item: canonicalUrl(locale, `/services/${service.slug}`) },
+            { '@type': 'ListItem', position: 3, name: serviceName, item: canonicalUrl(locale, canonicalServicePath) },
         ],
     }
 

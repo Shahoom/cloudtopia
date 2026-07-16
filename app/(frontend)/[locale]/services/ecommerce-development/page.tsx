@@ -4,7 +4,7 @@ import { canonicalUrl } from '@/lib/i18n/url'
 import EcommerceSolutionsClient from './EcommerceSolutionsClient'
 import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { ecommerceSolutionsSeoFallback } from './layout'
+import { ecommerceSolutionsSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

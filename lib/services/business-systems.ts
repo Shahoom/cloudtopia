@@ -44,12 +44,15 @@ export const businessSystemsGroups: DPGroup[] = [
                 icon: '/icons/services/Admin Dashboard.png',
                 href: '/services/business-process-automation',
                 subServices: [
+                    'Workflow Automation',
                     'WhatsApp-to-CRM Lead Capture & Routing Setup',
                     'Automated Proposal, Quotation & PDF Generation',
                     'Automated Invoicing & Payment Reminder Workflows',
+                    'Accounting System Integration',
                     'Sales Follow-Up & Drip Campaign Automation',
                     'Purchase Order & Manager Approval Workflows',
                     'Cross-Platform API Syncing (Connecting Website, CRM & Accounting)',
+                    'Custom API Development',
                     'Electronic Signature (E-Sign) & Contract Management Automation',
                     'Automated Employee Onboarding & Offboarding Flows',
                 ],
@@ -63,6 +66,7 @@ export const businessSystemsGroups: DPGroup[] = [
                 icon: '/icons/services/CRM System.png',
                 href: '/services/custom-erp-crm-solutions',
                 subServices: [
+                    'CRM Development',
                     'Odoo ERP Implementation, Setup & Customization',
                     'Sales CRM Pipeline Architecture & Optimization',
                     'Legacy Spreadsheet & Outdated System Migration',

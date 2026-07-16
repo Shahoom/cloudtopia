@@ -27,6 +27,6 @@ operate there, and thrive there.
 - API catalog: https://cloudtopia.net/.well-known/api-catalog
 
 ## Related skills
-- `browse-services` — explore the 7 service categories
+- `browse-services` — explore the 6 service categories
 - `get-pricing` — pricing model and documents
 - `contact-cloudtopia` — reach the right regional team

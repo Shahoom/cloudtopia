@@ -17,12 +17,12 @@ const SKILLS: Array<{ name: string; description: string; sha256: string }> = [
   {
     name: 'company-overview',
     description: 'Understand what CloudTopia is, who runs it, where it operates, and where to get authoritative machine-readable context.',
-    sha256: 'e3001e18f4463b020d1fbcc0e9238cc59fe7c04760af6f12b6e6071898d6f9e5',
+    sha256: '5935abe972b61dea074cc19f5ec31ff29cbf411da4001fa620dcfa67786f9b51',
   },
   {
     name: 'browse-services',
-    description: "Explore CloudTopia's 7 service categories and their offerings to match a client need to the right service.",
-    sha256: 'ab5f4b71432264f4fd6ae02a6a7764f00b8dcd38cccda01da6cffb4f0b9e5f4e',
+    description: "Explore CloudTopia's 6 service categories and their offerings to match a client need to the right service.",
+    sha256: '44250f4fc0881b2f97ece803f139e8e785b51d5684931c6583bca33665f7a0f4',
   },
   {
     name: 'get-pricing',

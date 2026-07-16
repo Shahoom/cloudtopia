@@ -161,12 +161,12 @@ export const menuColumns: MenuColumn[] = [
     description: 'Operational software for sales, inventory, reporting, and teams.',
     icon: 'database',
     links: [
-      { label: 'CRM Systems', href: '/business-systems-development#crm' },
-      { label: 'ERP Systems', href: '/business-systems-development#erp' },
-      { label: 'Inventory Management', href: '/business-systems-development#inventory' },
-      { label: 'Sales Management', href: '/business-systems-development#sales' },
-      { label: 'Booking Systems', href: '/business-systems-development#booking' },
-      { label: 'Operations Dashboards', href: '/business-systems-development#dashboards' },
+      { label: 'CRM Systems', href: '/services/business-systems-development#crm' },
+      { label: 'ERP Systems', href: '/services/business-systems-development#erp' },
+      { label: 'Inventory Management', href: '/services/business-systems-development#inventory' },
+      { label: 'Sales Management', href: '/services/business-systems-development#sales' },
+      { label: 'Booking Systems', href: '/services/business-systems-development#booking' },
+      { label: 'Operations Dashboards', href: '/services/business-systems-development#dashboards' },
     ],
   },
   {
@@ -211,7 +211,7 @@ export const servicesOverview: ServiceOverview[] = [
   },
   {
     title: 'Business Systems / CRM / ERP',
-    href: '/business-systems-development',
+    href: '/services/business-systems-development',
     icon: 'settings',
     description:
       'Sales tracking, inventory management, booking systems, customer databases, reporting, and operational automation.',
@@ -707,7 +707,7 @@ export const versionXServiceTabs: VersionXTab[] = [
     description: 'Customer records, sales tracking, inventory flows, booking systems, and reports connected into one operational layer.',
     image: '/images/services/business-systems-development/CRM System.webp',
     bullets: ['Pipeline and record management', 'Inventory and booking flows', 'Reports that show what changed'],
-    href: '/business-systems-development',
+    href: '/services/business-systems-development',
   },
   {
     label: 'AI Labs',
@@ -742,7 +742,7 @@ export const enterpriseServiceTracks: EnterpriseServiceTrack[] = [
     title: 'CRM, ERP, booking, inventory, sales, and reporting systems.',
     description:
       'For teams outgrowing spreadsheets, CloudTopia designs connected systems that organize customers, stock, bookings, approvals, tasks, and reports.',
-    href: '/business-systems-development',
+    href: '/services/business-systems-development',
     items: ['CRM Systems', 'ERP Modules', 'Inventory Management', 'Booking Systems', 'Sales Pipelines', 'Quality & Testing'],
   },
   {
@@ -771,7 +771,7 @@ export const seoClusters: SeoCluster[] = [
       { label: 'Website Design & Development', href: '/services/website-development' },
       { label: 'E-commerce Stores', href: '/services/ecommerce-development' },
       { label: 'Custom Web Applications', href: '/services/web-applications' },
-      { label: 'CRM / ERP Systems', href: '/business-systems-development' },
+      { label: 'CRM / ERP Systems', href: '/services/business-systems-development' },
       { label: 'CloudTopia Labs', href: '/labs' },
     ],
   },
@@ -851,7 +851,7 @@ export const versionXFooterColumns = [
       ['Website Design', '/services/website-development'],
       ['E-commerce', '/services/ecommerce-development'],
       ['Web Applications', '/services/web-applications'],
-      ['CRM / ERP Systems', '/business-systems-development'],
+      ['CRM / ERP Systems', '/services/business-systems-development'],
       ['CloudTopia Labs', '/labs'],
     ],
   },

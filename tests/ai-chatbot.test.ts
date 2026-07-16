@@ -88,7 +88,7 @@ test('adds site-generated country and service knowledge from SEO data', async ()
 test('includes location-only country knowledge when no landing page exists', async () => {
   const knowledge = await retrieveKnowledge({
     latestMessage: 'We need an ecommerce website in Egypt with local payments',
-    pageUrl: '/services/ecommerce-website-development',
+    pageUrl: '/services/ecommerce-development',
   })
 
   assert.match(knowledge, /Egypt/)

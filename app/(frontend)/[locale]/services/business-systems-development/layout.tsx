@@ -17,7 +17,7 @@ export const businessSystemsSeoFallback = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
-    return getCMSMetadata(locale, '/business-systems-development', 'business-systems-development', {
+    return getCMSMetadata(locale, '/services/business-systems-development', 'business-systems-development', {
         title: businessSystemsSeoFallback.titles[locale] || businessSystemsSeoFallback.titles.en,
         description: businessSystemsSeoFallback.descriptions[locale] || businessSystemsSeoFallback.descriptions.en,
     })
@@ -34,12 +34,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                     buildBreadcrumbSchema(locale, [
                         { name: 'Home', path: '/' },
                         { name: 'Services', path: '/services' },
-                        { name: 'Business Systems Development', path: '/business-systems-development' },
+                        { name: 'Business Systems Development', path: '/services/business-systems-development' },
                     ]),
                     buildServiceSchema(locale, {
                         name: 'Custom Business Systems Development',
                         description: 'Custom CRM, inventory, POS, HR, and booking systems built around Gulf business workflows.',
-                        path: '/business-systems-development',
+                        path: '/services/business-systems-development',
                         serviceType: 'Business Software Development',
                     }),
                     faqSchema,

@@ -158,6 +158,7 @@ export function proxy(request: NextRequest) {
         '/ecommerce-development': '/services/ecommerce-development',
         '/social-media-marketing': '/services/social-media-marketing',
         '/content-creation': '/services/content-creation',
+        '/business-systems-development': '/services/business-systems-development',
     }
     {
         const m = cleanPath.match(/^\/(en|ar)(\/.*)?$/)
@@ -170,6 +171,30 @@ export function proxy(request: NextRequest) {
             // Arabic keeps its /ar prefix; /en and unprefixed both resolve to the
             // clean (unprefixed) English URL.
             url.pathname = locPrefix === 'ar' ? `/ar${dest}` : dest
+            return NextResponse.redirect(url, { status: 301 })
+        }
+    }
+
+    // Website-family duplicate service URLs are absorbed into the richer
+    // Digital Presence pillars. Keep them redirect-only so crawlers see one
+    // canonical home per website/e-commerce intent.
+    const WEBSITE_FAMILY_ORPHAN_REDIRECTS: Record<string, string> = {
+        'website-redesign': '/services/website-development',
+        'corporate-website-design': '/services/website-development',
+        'landing-page-design': '/services/website-development',
+        'portfolio-websites': '/services/website-development',
+        'educational-website-development': '/services/website-development',
+        'restaurant-website-development': '/services/website-development',
+        'website-maintenance': '/services/website-development',
+        'ecommerce-website-development': '/services/ecommerce-development',
+    }
+    {
+        const orphan = cleanPath.match(/^(?:\/(en|ar))?\/services\/([a-z0-9-]+)$/)
+        const dest = orphan ? WEBSITE_FAMILY_ORPHAN_REDIRECTS[orphan[2]] : null
+        if (orphan && dest) {
+            const url = request.nextUrl.clone()
+            url.host = apexHost
+            url.pathname = orphan[1] === 'ar' ? `/ar${dest}` : dest
             return NextResponse.redirect(url, { status: 301 })
         }
     }

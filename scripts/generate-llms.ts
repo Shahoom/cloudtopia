@@ -20,6 +20,10 @@ import { fileURLToPath } from 'node:url'
 import { Client } from 'pg'
 import { getDatabaseUrl, databaseRequiresSsl } from '../lib/cms/env.ts'
 import { serviceDetailSlugs, servicesBySlug, serviceCategories, localizedServiceValue } from '../lib/seo/services.ts'
+import { dpSubServiceSlugs, getDigitalPresenceSubService } from '../lib/services/digital-presence-content.ts'
+import { businessSystemsSubServiceSlugs, getBusinessSystemsSubService } from '../lib/services/business-systems-content.ts'
+import { structuredCatalog, structuredPillarRoutes } from '../lib/services/structured-catalog.ts'
+import { subServiceHref } from '../lib/services/sub-service-routing.ts'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const LLMS_PATH = path.resolve(__dirname, '../public/llms.txt')
@@ -30,7 +34,121 @@ const SERVICES_END = '<!-- SERVICES:END -->'
 
 const BASE = 'https://cloudtopia.net'
 
+const categoryHubPaths: Record<string, string> = {
+  'digital-presence': '/services/digital-presence',
+  'interactive-web-applications': '/services/web-applications',
+  'mobile-app-development': '/services/app-development',
+  'business-systems-development': '/services/business-systems-development',
+  'cloud-infrastructure': '/services',
+  'ai-powered-solutions': '/services',
+}
+
 type Post = { title: string; slug: string; excerpt: string | null; locale: string }
+type ServiceIndexEntry = {
+  key: string
+  name: string
+  path: string
+  categorySlug: string
+}
+
+const webAppOrphanRedirects = new Set([
+  'custom-web-application-development',
+  'progressive-web-app-development',
+  'client-portals',
+  'admin-dashboards',
+  'booking-platforms',
+  'internal-business-tools',
+  'saas-mvp-development',
+])
+
+const websiteFamilyOrphans = new Set([
+  'website-redesign',
+  'corporate-website-design',
+  'landing-page-design',
+  'portfolio-websites',
+  'educational-website-development',
+  'restaurant-website-development',
+  'website-maintenance',
+  'ecommerce-website-development',
+])
+
+const mobileSubSlugs = new Set(
+  (serviceCategories.find((category) => category.slug === 'mobile-app-development')?.services ?? []).map((service) => service.slug),
+)
+
+const structuredPillarCategory = new Map<string, string>()
+for (const [categorySlug, groups] of Object.entries(structuredCatalog)) {
+  for (const group of groups) {
+    for (const pillar of group.pillars) structuredPillarCategory.set(pillar.slug, categorySlug)
+  }
+}
+
+function serviceCanonicalPath(slug: string): { path: string; categorySlug: string; name: string } | null {
+  if (webAppOrphanRedirects.has(slug) || websiteFamilyOrphans.has(slug)) return null
+  if (slug === 'mobile-app-development') {
+    return { path: '/services/app-development', categorySlug: 'mobile-app-development', name: 'App Development' }
+  }
+  if (mobileSubSlugs.has(slug)) {
+    const service = servicesBySlug[slug]
+    return { path: `/services/app-development/${slug}`, categorySlug: 'mobile-app-development', name: localizedServiceValue(service.name, 'en') }
+  }
+
+  const businessSub = getBusinessSystemsSubService(slug)
+  if (businessSub) return { path: subServiceHref(businessSub.pillarSlug, businessSub.slug), categorySlug: 'business-systems-development', name: businessSub.service }
+
+  const digitalPresenceSub = getDigitalPresenceSubService(slug)
+  if (digitalPresenceSub) return { path: subServiceHref(digitalPresenceSub.pillarSlug, digitalPresenceSub.slug), categorySlug: 'digital-presence', name: digitalPresenceSub.service }
+
+  const service = servicesBySlug[slug]
+  if (!service) return null
+  return { path: `/services/${slug}`, categorySlug: service.categorySlug, name: localizedServiceValue(service.name, 'en') }
+}
+
+function serviceIndexEntries(): ServiceIndexEntry[] {
+  const entries: ServiceIndexEntry[] = []
+  const seenPaths = new Set<string>()
+  const add = (entry: ServiceIndexEntry | null) => {
+    if (!entry || seenPaths.has(entry.path)) return
+    seenPaths.add(entry.path)
+    entries.push(entry)
+  }
+
+  for (const pillar of structuredPillarRoutes) {
+    add({
+      key: `pillar:${pillar.slug}`,
+      name: localizedServiceValue(pillar.name, 'en'),
+      path: pillar.href,
+      categorySlug: structuredPillarCategory.get(pillar.slug) ?? 'digital-presence',
+    })
+  }
+
+  for (const slug of serviceDetailSlugs) {
+    const canonical = serviceCanonicalPath(slug)
+    add(canonical ? { key: `service:${slug}`, ...canonical } : null)
+  }
+
+  for (const slug of dpSubServiceSlugs) {
+    const sub = getDigitalPresenceSubService(slug)
+    add(sub ? {
+      key: `dp-sub:${slug}`,
+      name: sub.service,
+      path: subServiceHref(sub.pillarSlug, sub.slug),
+      categorySlug: 'digital-presence',
+    } : null)
+  }
+
+  for (const slug of businessSystemsSubServiceSlugs) {
+    const sub = getBusinessSystemsSubService(slug)
+    add(sub ? {
+      key: `bs-sub:${slug}`,
+      name: sub.service,
+      path: subServiceHref(sub.pillarSlug, sub.slug),
+      categorySlug: 'business-systems-development',
+    } : null)
+  }
+
+  return entries
+}
 
 // Replace the inner content between a start/end marker pair, keeping the
 // markers themselves. Throws if either marker is missing so we never clobber
@@ -46,22 +164,24 @@ function replaceBlock(content: string, start: string, end: string, inner: string
   return `${before}${start}\n${inner}\n${end}${after}`
 }
 
-// Build the full /services/<slug> detail-page index from the static service
-// taxonomy so AI crawlers can enumerate every one of the 69 sub-service pages.
-// Grouped by the 7 categories; ordered by serviceDetailSlugs within each.
+// Build the canonical services index from the static service taxonomy. Legacy
+// duplicate URLs are skipped, and nested service families emit their nested
+// canonical paths rather than old flat /services/<slug> URLs.
 function buildServicesBlock(): string {
   const lines: string[] = []
-  lines.push(`## Service detail pages (${serviceDetailSlugs.length})`)
+  const canonicalEntries = serviceIndexEntries()
+
+  lines.push(`## Service detail pages (${canonicalEntries.length})`)
   lines.push('')
-  lines.push('Every sub-service has its own detail page at `https://cloudtopia.net/services/<slug>` (Arabic at `/ar/services/<slug>`):')
+  lines.push('Service URLs below use their canonical public path. English is unprefixed; Arabic adds `/ar` before the same path.')
   lines.push('')
   for (const category of serviceCategories) {
-    const slugs = serviceDetailSlugs.filter((slug) => servicesBySlug[slug]?.categorySlug === category.slug)
-    if (slugs.length === 0) continue
+    const entries = canonicalEntries.filter((entry) => entry.categorySlug === category.slug)
+    if (entries.length === 0) continue
     lines.push(`### ${localizedServiceValue(category.name, 'en')}`)
-    for (const slug of slugs) {
-      const name = localizedServiceValue(servicesBySlug[slug].name, 'en')
-      lines.push(`- ${name} — ${BASE}/services/${slug}`)
+    lines.push(`Category hub: ${BASE}${categoryHubPaths[category.slug] ?? '/services'}`)
+    for (const { name, path } of entries) {
+      lines.push(`- ${name} — ${BASE}${path}`)
     }
     lines.push('')
   }

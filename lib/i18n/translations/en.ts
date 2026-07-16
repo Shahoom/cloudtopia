@@ -214,7 +214,7 @@ export const en = {
           iconImage: '/icons/services/CRM System.png',
           title: 'Custom Business Systems',
           description: 'CRMs, inventory, booking, and workflow systems built around how your business actually operates — not a generic template you have to work around.',
-          link: '/business-systems-development',
+          link: '/services/business-systems-development',
           tag: 'CRM · Inventory · Booking',
         },
         {

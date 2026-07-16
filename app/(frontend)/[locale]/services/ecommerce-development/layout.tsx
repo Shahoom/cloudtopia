@@ -3,17 +3,7 @@ import { getCMSMetadata } from '@/lib/cms/metadata'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-
-export const ecommerceSolutionsSeoFallback = {
-    titles: {
-        en: 'Gulf E-Commerce — Mada, Apple Pay, Tabby, Tamara',
-        ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
-    } as Record<string, string>,
-    descriptions: {
-        en: 'Online stores with Gulf payment gateways, ZATCA e-invoicing, bilingual checkout, and clear package scope.',
-        ar: 'متاجر إلكترونية مع بوابات دفع خليجية، فوترة ZATCA، دفع ثنائي اللغة، ونطاق باقة واضح.',
-    } as Record<string, string>,
-}
+import { ecommerceSolutionsSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params

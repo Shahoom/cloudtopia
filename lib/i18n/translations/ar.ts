@@ -214,7 +214,7 @@ export const ar = {
           iconImage: '/icons/services/CRM System.png',
           title: 'أنظمة أعمال مخصصة',
           description: 'أنظمة CRM، مخزون، حجوزات، وسير عمل مبنية على طريقة عملك الفعلية — وليست قوالب عامة تضطر للتكيّف معها.',
-          link: '/business-systems-development',
+          link: '/services/business-systems-development',
           tag: 'CRM · مخزون · حجوزات',
         },
         {

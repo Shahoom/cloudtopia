@@ -3,17 +3,7 @@ import { getCMSMetadata } from '@/lib/cms/metadata'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-
-export const contentCreationSeoFallback = {
-    titles: {
-        en: 'Bilingual Content Creation — Arabic + English',
-        ar: 'إنشاء محتوى ثنائي اللغة — عربي وإنجليزي',
-    } as Record<string, string>,
-    descriptions: {
-        en: 'Original Arabic + English content: blogs, social, video scripts, newsletters, and SEO articles. Native-written, not machine translated.',
-        ar: 'محتوى عربي + إنجليزي أصيل: مدوّنات، اجتماعي، سكربتات فيديو، نشرات، ومقالات SEO. مكتوب بأقلام أصيلة.',
-    } as Record<string, string>,
-}
+import { contentCreationSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params

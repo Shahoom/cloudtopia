@@ -156,7 +156,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/CRM System.png',
         gradient: 'from-purple-500 to-purple-700',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Lead Tracking', 'Pipeline Mgmt', 'Marketing Auto', 'Insightful Reports'],
         featuresAr: ['إدارة العملاء', 'مسار المبيعات', 'أتمتة التسويق', 'تقارير ذكية'],
     },
@@ -170,7 +170,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/Booking System.png',
         gradient: 'from-pink-500 to-pink-600',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Real-time Sync', 'Online Payment', 'Reminders', 'Calendar Mgmt'],
         featuresAr: ['مزامنة فورية', 'دفع إلكتروني', 'تذكيرات', 'إدارة التقويم'],
     },
@@ -184,7 +184,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/Inventory Management.png',
         gradient: 'from-emerald-500 to-emerald-600',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Multi-warehouse', 'Auto-Reordering', 'Stock Alerts', 'Movement Sync'],
         featuresAr: ['مستودعات متعددة', 'إعادة طلب تلقائي', 'تنبيهات المخزون', 'مزامنة الحركة'],
     },
@@ -198,7 +198,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/systems.png',
         gradient: 'from-blue-600 to-indigo-700',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Financial Control', 'Supply Chain', 'HR Integration', 'Business Intelligence'],
         featuresAr: ['الرقابة المالية', 'سلسلة التوريد', 'تكامل الموارد البشرية', 'ذكاء الأعمال'],
     },
@@ -212,7 +212,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/HR Management.png',
         gradient: 'from-teal-500 to-teal-600',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Payroll Mgmt', 'Shift Scheduling', 'Performance Metrics', 'Self Service Portal'],
         featuresAr: ['إدارة الرواتب', 'جدولة الورديات', 'مقاييس الأداء', 'بوابة الخدمة الذاتية'],
     },
@@ -226,7 +226,7 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/Admin Dashboard.png',
         gradient: 'from-slate-600 to-slate-800',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['Case Mgmt', 'Doc Automation', 'Billing & Invoicing', 'Conflict Checks'],
         featuresAr: ['إدارة القضايا', 'أتمتة المستندات', 'الفواتير', 'فحص التعارض'],
     },
@@ -240,282 +240,9 @@ const businessSystemsServices: ServiceCard[] = [
         icon: '/icons/services/Customer Portal.png',
         gradient: 'from-blue-400 to-blue-600',
         glowColor: 'bg-lavender/50',
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         features: ['EHR/EMR Support', 'Patient Portal', 'Claims Mgmt', 'Lab Integration'],
         featuresAr: ['سجلات طبية إلكترونية', 'بوابة المرضى', 'إدارة المطالبات', 'تكامل المختبر'],
-    },
-]
-
-// Web Applications Services
-const webApplicationsServices: ServiceCard[] = [
-    {
-        name: 'SaaS Platforms',
-        nameAr: 'منصات SaaS',
-        tagline: 'Scalable Cloud Software',
-        taglineAr: 'برمجيات سحابية قابلة للتوسع',
-        description: 'Multi-tenant SaaS applications with subscription billing and analytics.',
-        descriptionAr: 'تطبيقات SaaS متعددة المستأجرين مع فواتير الاشتراك والتحليلات.',
-        icon: '/icons/services/Admin Dashboard.png',
-        gradient: 'from-purple-500 to-purple-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/web-applications',
-        features: ['Multi-tenant', 'Subscription Billing', 'API Access', 'Analytics'],
-        featuresAr: ['متعدد المستأجرين', 'فواتير الاشتراك', 'واجهة API', 'تحليلات'],
-    },
-    {
-        name: 'E-commerce Platforms',
-        nameAr: 'منصات التجارة الإلكترونية',
-        tagline: 'Complete Commerce Solutions',
-        taglineAr: 'حلول تجارة متكاملة',
-        description: 'Full-featured e-commerce platforms with payment integration and order management.',
-        descriptionAr: 'منصات تجارة إلكترونية متكاملة مع تكامل الدفع وإدارة الطلبات.',
-        icon: '/icons/services/E-commerce Solutions.png',
-        gradient: 'from-teal-500 to-teal-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/ecommerce-development',
-        features: ['Product Management', 'Secure Payments', 'Order Tracking', 'Multi-vendor'],
-        featuresAr: ['إدارة المنتجات', 'دفع آمن', 'تتبع الطلبات', 'متعدد البائعين'],
-    },
-    {
-        name: 'Customer Portals',
-        nameAr: 'بوابات العملاء',
-        tagline: 'Secure Client Access',
-        taglineAr: 'وصول آمن للعملاء',
-        description: 'Custom client portals for account management and document access.',
-        descriptionAr: 'بوابات عملاء مخصصة لإدارة الحسابات والوصول للمستندات.',
-        icon: '/icons/services/Customer Portal.png',
-        gradient: 'from-cyan-500 to-cyan-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/web-applications',
-        features: ['Secure Login', 'Profile Management', 'Document Access', 'Support Chat'],
-        featuresAr: ['تسجيل دخول آمن', 'إدارة الملف', 'الوصول للمستندات', 'دردشة الدعم'],
-    },
-    {
-        name: 'Booking Platforms',
-        nameAr: 'منصات الحجز',
-        tagline: 'Online Reservation Systems',
-        taglineAr: 'أنظمة الحجز عبر الإنترنت',
-        description: 'Professional booking platforms for hotels, clinics, and service businesses.',
-        descriptionAr: 'منصات حجز احترافية للفنادق والعيادات وشركات الخدمات.',
-        icon: '/icons/services/Booking Platform.png',
-        gradient: 'from-pink-500 to-pink-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/web-applications',
-        features: ['Real-time Availability', 'Online Payments', 'SMS Reminders', 'Calendar Sync'],
-        featuresAr: ['التوفر الفوري', 'الدفع الإلكتروني', 'تذكيرات SMS', 'مزامنة التقويم'],
-    },
-    {
-        name: 'Mobile-Responsive Apps',
-        nameAr: 'تطبيقات متجاوبة للجوال',
-        tagline: 'Apps That Work Everywhere',
-        taglineAr: 'تطبيقات تعمل في كل مكان',
-        description: 'Progressive web applications that work seamlessly on any device.',
-        descriptionAr: 'تطبيقات ويب تقدمية تعمل بسلاسة على أي جهاز.',
-        icon: '/icons/services/Mobile-Responsive Apps.png',
-        gradient: 'from-blue-500 to-blue-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/web-applications',
-        features: ['PWA Ready', 'Offline Support', 'Push Notifications', 'App-like UX'],
-        featuresAr: ['جاهز لـ PWA', 'دعم بدون اتصال', 'إشعارات فورية', 'تجربة تطبيق'],
-    },
-    {
-        name: 'Real-time Chat Systems',
-        nameAr: 'أنظمة الدردشة الفورية',
-        tagline: 'Instant Communication',
-        taglineAr: 'تواصل فوري',
-        description: 'Real-time chat and messaging systems for customer support and team collaboration.',
-        descriptionAr: 'أنظمة دردشة ومراسلة فورية لدعم العملاء وتعاون الفريق.',
-        icon: '/icons/services/Real-time Chat System.png',
-        gradient: 'from-cyan-500 to-cyan-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/web-applications',
-        features: ['Real-time Messaging', 'File Sharing', 'Group Chats', 'Message History'],
-        featuresAr: ['رسائل فورية', 'مشاركة الملفات', 'محادثات جماعية', 'سجل الرسائل'],
-    },
-]
-
-const mobileAppServices: ServiceCard[] = [
-    {
-        name: 'iOS App Development',
-        nameAr: 'تطوير تطبيقات iOS',
-        tagline: 'Premium Apple Apps',
-        taglineAr: 'تطبيقات Apple احترافية',
-        description: 'Native iPhone and iPad apps with refined UX, secure data flows, and App Store-ready launch support.',
-        descriptionAr: 'تطبيقات iPhone وiPad أصلية بتجربة مصقولة، تدفق بيانات آمن، ودعم إطلاق جاهز لمتجر Apple.',
-        icon: '/icons/services/Mobile-Responsive Apps.png',
-        gradient: 'from-slate-800 via-sky-600 to-cyan-400',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/ios-app-development',
-        features: ['Swift-ready UX', 'Secure Login', 'App Store Path', 'Analytics Events'],
-        featuresAr: ['UX مناسب لـ Swift', 'دخول آمن', 'مسار App Store', 'أحداث تحليلية'],
-    },
-    {
-        name: 'Android App Development',
-        nameAr: 'تطوير تطبيقات أندرويد',
-        tagline: 'Google Play Ready',
-        taglineAr: 'جاهز لـ Google Play',
-        description: 'Android applications optimized for regional device variety, performance, permissions, and store compliance.',
-        descriptionAr: 'تطبيقات أندرويد محسّنة لتنوع الأجهزة في المنطقة، الأداء، الصلاحيات، ومتطلبات المتجر.',
-        icon: '/icons/services/Mobile-Responsive Apps.png',
-        gradient: 'from-emerald-600 via-sky-500 to-cyan-400',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/android-app-development',
-        features: ['Kotlin-ready Build', 'Device Testing', 'Push Alerts', 'Play Console'],
-        featuresAr: ['بناء مناسب لـ Kotlin', 'اختبار أجهزة', 'تنبيهات فورية', 'Play Console'],
-    },
-    {
-        name: 'Cross-Platform App Development',
-        nameAr: 'تطوير تطبيقات متعددة المنصات',
-        tagline: 'One Product, Two Stores',
-        taglineAr: 'منتج واحد لمتجرين',
-        description: 'iOS and Android apps from one product system, connected to dashboards, payments, booking, or CRM.',
-        descriptionAr: 'تطبيقات iOS وAndroid من نظام منتج واحد، مرتبطة بلوحات الإدارة أو الدفع أو الحجز أو CRM.',
-        icon: '/icons/services/webapps.png',
-        gradient: 'from-indigo-600 via-sky-500 to-cyan-400',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/cross-platform-app-development',
-        features: ['iOS + Android', 'Shared Codebase', 'Admin Dashboard', 'API Integration'],
-        featuresAr: ['iOS + Android', 'كود مشترك', 'لوحة إدارة', 'ربط API'],
-    },
-    {
-        name: 'Flutter App Development',
-        nameAr: 'تطوير تطبيقات Flutter',
-        tagline: 'Fast Cross-Platform UI',
-        taglineAr: 'واجهات سريعة متعددة المنصات',
-        description: 'Flutter apps for customer journeys, commerce, bookings, portals, and operational mobile tools.',
-        descriptionAr: 'تطبيقات Flutter لرحلات العملاء، التجارة، الحجوزات، البوابات، وأدوات التشغيل عبر الجوال.',
-        icon: '/icons/services/webapps.png',
-        gradient: 'from-sky-600 via-cyan-500 to-blue-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/flutter-app-development',
-        features: ['Flutter UI', 'Fast Iteration', 'Firebase/Backend', 'Store Launch'],
-        featuresAr: ['واجهة Flutter', 'تطوير سريع', 'Firebase/خلفية', 'إطلاق المتاجر'],
-    },
-    {
-        name: 'React Native App Development',
-        nameAr: 'تطوير تطبيقات React Native',
-        tagline: 'Native Feel, Web Logic',
-        taglineAr: 'إحساس أصلي بمنطق ويب',
-        description: 'React Native apps for teams that want mobile apps connected to existing React, APIs, and dashboards.',
-        descriptionAr: 'تطبيقات React Native للفرق التي تحتاج تطبيقات جوال مرتبطة بـ React وواجهات API ولوحات حالية.',
-        icon: '/icons/services/webapps.png',
-        gradient: 'from-violet-600 via-indigo-500 to-sky-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/react-native-app-development',
-        features: ['React Native', 'Shared Logic', 'Native Modules', 'API Layer'],
-        featuresAr: ['React Native', 'منطق مشترك', 'وحدات أصلية', 'طبقة API'],
-    },
-    {
-        name: 'MVP App Development',
-        nameAr: 'تطوير تطبيقات MVP',
-        tagline: 'Validate Before Scaling',
-        taglineAr: 'اختبار قبل التوسع',
-        description: 'A focused app version that proves the core workflow before committing to a larger product roadmap.',
-        descriptionAr: 'نسخة تطبيق مركزة تثبت سير العمل الأساسي قبل الالتزام بخارطة منتج أكبر.',
-        icon: '/icons/services/Analytics Dashboard.png',
-        gradient: 'from-amber-500 via-sky-500 to-indigo-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/mvp-app-development',
-        features: ['Core Flow', 'Clickable Demo', 'Lean Backend', 'Launch Metrics'],
-        featuresAr: ['المسار الأساسي', 'ديمو قابل للتفاعل', 'خلفية خفيفة', 'مؤشرات إطلاق'],
-    },
-    {
-        name: 'Business Mobile App Development',
-        nameAr: 'تطوير تطبيقات الأعمال للجوال',
-        tagline: 'Operations In Your Pocket',
-        taglineAr: 'تشغيل الأعمال من الجوال',
-        description: 'Mobile tools for field teams, managers, approvals, inventory checks, reporting, and daily operations.',
-        descriptionAr: 'أدوات جوال للفرق الميدانية، المدراء، الموافقات، فحص المخزون، التقارير، والتشغيل اليومي.',
-        icon: '/icons/services/Admin Dashboard.png',
-        gradient: 'from-slate-700 via-indigo-500 to-sky-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/business-mobile-app-development',
-        features: ['Team Roles', 'Approvals', 'Reports', 'CRM/ERP Links'],
-        featuresAr: ['صلاحيات فريق', 'موافقات', 'تقارير', 'ربط CRM/ERP'],
-    },
-    {
-        name: 'Customer App Development',
-        nameAr: 'تطوير تطبيقات العملاء',
-        tagline: 'Better Customer Access',
-        taglineAr: 'وصول أفضل للعملاء',
-        description: 'Customer-facing apps for accounts, orders, bookings, loyalty, notifications, documents, and support.',
-        descriptionAr: 'تطبيقات للعملاء للحسابات، الطلبات، الحجوزات، الولاء، الإشعارات، المستندات، والدعم.',
-        icon: '/icons/services/Customer Portal.png',
-        gradient: 'from-cyan-600 via-sky-500 to-indigo-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/customer-app-development',
-        features: ['Customer Login', 'Orders/Bookings', 'Loyalty', 'Support Flow'],
-        featuresAr: ['دخول العملاء', 'طلبات/حجوزات', 'ولاء', 'مسار دعم'],
-    },
-    {
-        name: 'Booking App Development',
-        nameAr: 'تطوير تطبيقات الحجز',
-        tagline: 'Appointments Without Friction',
-        taglineAr: 'حجوزات بدون تعقيد',
-        description: 'Mobile booking apps for clinics, salons, hospitality, consultants, classes, and appointment-based services.',
-        descriptionAr: 'تطبيقات حجز للعيادات، الصالونات، الضيافة، الاستشارات، الدروس، والخدمات المعتمدة على المواعيد.',
-        icon: '/icons/services/Booking System.png',
-        gradient: 'from-pink-500 via-sky-500 to-indigo-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/booking-app-development',
-        features: ['Calendar Flow', 'Payments', 'Reminders', 'Staff Dashboard'],
-        featuresAr: ['تقويم حجز', 'مدفوعات', 'تذكيرات', 'لوحة موظفين'],
-    },
-    {
-        name: 'Delivery & Order App Development',
-        nameAr: 'تطوير تطبيقات الطلبات والتوصيل',
-        tagline: 'Orders, Tracking, Dispatch',
-        taglineAr: 'طلبات وتتبع وتوزيع',
-        description: 'Order and delivery apps for restaurants, stores, drivers, branch teams, and customer notifications.',
-        descriptionAr: 'تطبيقات طلبات وتوصيل للمطاعم والمتاجر والسائقين والفرق الفرعية وإشعارات العملاء.',
-        icon: '/icons/services/E-commerce Solutions.png',
-        gradient: 'from-orange-500 via-sky-500 to-cyan-500',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/delivery-order-app-development',
-        features: ['Order Flow', 'Driver View', 'Tracking', 'Branch Dashboard'],
-        featuresAr: ['مسار طلبات', 'واجهة سائق', 'تتبع', 'لوحة فرع'],
-    },
-    {
-        name: 'App Backend & API Development',
-        nameAr: 'تطوير خلفيات وواجهات API للتطبيقات',
-        tagline: 'The System Behind The App',
-        taglineAr: 'النظام خلف التطبيق',
-        description: 'Secure app backends, APIs, databases, dashboards, notifications, payments, and cloud deployment.',
-        descriptionAr: 'خلفيات تطبيق آمنة، API، قواعد بيانات، لوحات إدارة، إشعارات، مدفوعات، ونشر سحابي.',
-        icon: '/icons/services/systems.png',
-        gradient: 'from-blue-700 via-sky-500 to-emerald-400',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/app-backend-api-development',
-        features: ['API Design', 'Database', 'Cloud Deploy', 'Security Rules'],
-        featuresAr: ['تصميم API', 'قاعدة بيانات', 'نشر سحابي', 'قواعد أمان'],
-    },
-    {
-        name: 'App Store Launch Support',
-        nameAr: 'دعم إطلاق التطبيقات في المتاجر',
-        tagline: 'From Build To Store',
-        taglineAr: 'من البناء إلى المتجر',
-        description: 'App listing assets, release checklist, review preparation, analytics setup, and post-launch handoff.',
-        descriptionAr: 'أصول صفحة التطبيق، قائمة فحص الإطلاق، تجهيز المراجعة، إعداد التحليلات، وتسليم ما بعد الإطلاق.',
-        icon: '/icons/services/webapps.png',
-        gradient: 'from-indigo-700 via-sky-500 to-amber-400',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/app-store-launch-support',
-        features: ['Store Listing', 'Release Checklist', 'Analytics', 'Launch Handoff'],
-        featuresAr: ['صفحة المتجر', 'قائمة إطلاق', 'تحليلات', 'تسليم إطلاق'],
-    },
-    {
-        name: 'Mobile App Maintenance',
-        nameAr: 'صيانة تطبيقات الجوال',
-        tagline: 'Keep The App Healthy',
-        taglineAr: 'استقرار مستمر للتطبيق',
-        description: 'Version updates, bug fixing, store compliance, performance checks, monitoring, and feature iteration.',
-        descriptionAr: 'تحديثات إصدارات، إصلاح أخطاء، توافق المتاجر، فحص أداء، مراقبة، وتطوير ميزات مستمر.',
-        icon: '/icons/services/Analytics Dashboard.png',
-        gradient: 'from-emerald-600 via-sky-500 to-slate-600',
-        glowColor: 'bg-lavender/50',
-        href: '/services/app-development/mobile-app-maintenance',
-        features: ['Version Updates', 'Bug Fixes', 'Monitoring', 'Feature Iteration'],
-        featuresAr: ['تحديثات', 'إصلاح أخطاء', 'مراقبة', 'تطوير ميزات'],
     },
 ]
 
@@ -670,7 +397,7 @@ const categories = [
         icon: '/icons/services/webapps.png',
         gradient: 'from-emerald-600 via-emerald-400 to-cyan-400',
         accentColor: 'from-emerald-400 to-cyan-400',
-        services: webApplicationsServices,
+        services: [],
     },
     {
         id: 'mobile-app-development',
@@ -681,7 +408,7 @@ const categories = [
         icon: '/icons/services/Mobile-Responsive Apps.png',
         gradient: 'from-indigo-600 via-sky-500 to-cyan-400',
         accentColor: 'from-indigo-400 to-sky-400',
-        services: mobileAppServices,
+        services: [],
     },
     {
         id: 'cloud-infrastructure',
@@ -825,8 +552,18 @@ const CATEGORY_HUB: Record<
     string,
     { href: string; name: LocalizedText; description: LocalizedText; icon: string; cta: LocalizedText }
 > = {
+    'digital-presence': {
+        href: '/services/digital-presence',
+        name: { en: 'Digital Presence', ar: 'الحضور الرقمي' },
+        description: {
+            en: 'The complete hub — website, store, brand, search visibility, social media, and content working as one connected system for business growth.',
+            ar: 'المركز المتكامل — الموقع والمتجر والهوية والظهور في البحث والتواصل الاجتماعي والمحتوى ضمن منظومة واحدة مترابطة لنمو الأعمال.',
+        },
+        icon: '/icons/services/digitalpresence.png',
+        cta: { en: 'Explore the full hub', ar: 'استكشف المركز الكامل' },
+    },
     'business-systems-development': {
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         name: { en: 'Business Systems Development', ar: 'تطوير أنظمة الأعمال' },
         description: {
             en: 'The complete hub — ERP, CRM, process automation, and management systems, engineered around how your business actually runs. Start here for the full picture.',
@@ -857,11 +594,23 @@ const CATEGORY_HUB: Record<
     },
 }
 
-function CategoryHubCard({ hub, locale }: { hub: (typeof CATEGORY_HUB)[string]; locale: string }) {
+function CategoryHubCard({
+    categoryId,
+    hub,
+    locale,
+}: {
+    categoryId: string
+    hub: (typeof CATEGORY_HUB)[string]
+    locale: string
+}) {
     const name = localizedDP(hub.name, locale)
     const description = localizedDP(hub.description, locale)
+    const pillarCount = getStructuredPillars(categoryId).length
+    const isArabic = locale === 'ar'
+
     return (
         <motion.div
+            data-category-hub={categoryId}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -870,19 +619,37 @@ function CategoryHubCard({ hub, locale }: { hub: (typeof CATEGORY_HUB)[string]; 
             <Link
                 href={localePath(locale, hub.href)}
                 aria-label={name}
-                className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-sky-200/70 bg-gradient-to-br from-sky-50 via-white to-indigo-50/50 p-5 shadow-sm shadow-sky-100/60 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-100/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 sm:flex-row sm:items-center"
+                className="relative isolate grid min-h-52 overflow-hidden rounded-lg border border-blue-950 bg-[#0b3b8f] p-6 text-white shadow-xl shadow-blue-950/15 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-2xl hover:shadow-blue-950/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center sm:gap-6 md:p-8"
             >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white shadow-sm">
-                    <Image src={hub.icon} alt="" aria-hidden="true" width={30} height={30} className="h-[30px] w-[30px] object-contain" />
+                <span className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-sky-300" aria-hidden="true" />
+                <span className="pointer-events-none absolute -bottom-10 -end-6 h-28 w-28 border border-white/15 bg-white/5" aria-hidden="true" />
+                <span className="pointer-events-none absolute end-24 top-6 h-10 w-10 border border-[#fda29b]/50 bg-[#fda29b]/10" aria-hidden="true" />
+
+                <div className="relative z-10 mb-5 flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-white/25 bg-white shadow-lg shadow-blue-950/25 sm:mb-0">
+                    <Image src={hub.icon} alt="" aria-hidden="true" width={34} height={34} className="h-[34px] w-[34px] object-contain" />
                 </div>
-                <div className="min-w-0 flex-1">
-                    <div className="mb-1 flex items-center gap-2">
-                        <span className="rounded-full bg-sky-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{locale === 'ar' ? 'الرئيسي' : 'Main hub'}</span>
-                        <h3 className="truncate text-base font-black tracking-tight text-slate-900 md:text-lg">{name}</h3>
+
+                <div className="relative z-10 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <span className={cn(
+                            'border border-sky-200/35 bg-sky-300/15 px-2.5 py-1 text-[10px] font-black text-sky-100',
+                            isArabic ? 'tracking-normal' : 'uppercase tracking-[0.16em]',
+                        )}>
+                            {isArabic ? 'مركز الفئة الرئيسي' : 'Main category hub'}
+                        </span>
+                        <span className="text-[11px] font-bold text-blue-100/75">
+                            {pillarCount} {isArabic ? 'خدمات رئيسية' : 'core services'}
+                        </span>
                     </div>
-                    <p className="text-[13px] leading-relaxed text-slate-600">{description}</p>
+                    <h3 className={cn('mt-4 text-balance text-2xl font-black text-white md:text-3xl', isArabic ? 'leading-[1.45]' : 'leading-tight')}>
+                        {name}
+                    </h3>
+                    <p className={cn('mt-3 max-w-3xl text-pretty text-sm text-blue-100/85', isArabic ? 'leading-8' : 'leading-6')}>
+                        {description}
+                    </p>
                 </div>
-                <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg bg-sky-600 px-3.5 py-2 text-[13px] font-bold text-white transition-colors group-hover:bg-sky-700 sm:self-center">
+
+                <span className="relative z-10 mt-6 inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-md border border-white bg-white px-4 py-3 text-[13px] font-black text-blue-950 transition-[background-color,color,transform] group-hover:bg-sky-100 group-hover:text-blue-900 sm:mt-0 sm:self-center">
                     {localizedDP(hub.cta, locale)}
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
                 </span>
@@ -896,7 +663,7 @@ function StructuredCategoryGroups({ categoryId, locale }: { categoryId: string; 
     const hub = CATEGORY_HUB[categoryId]
     return (
         <div className="space-y-10">
-            {hub && <CategoryHubCard hub={hub} locale={locale} />}
+            {hub && <CategoryHubCard categoryId={categoryId} hub={hub} locale={locale} />}
             {groups.map((group) => (
                 <section key={group.slug} aria-label={localizedDP(group.name, locale)}>
                     <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-sky-600/80">{localizedDP(group.tagline, locale)}</p>

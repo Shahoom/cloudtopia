@@ -268,6 +268,10 @@ export default async function ProcessPage({ params }: PageProps) {
         description: L.metaDescription,
         url: canonicalUrl(locale, '/process'),
         inLanguage: locale === 'ar' ? 'ar' : 'en',
+        availableLanguage: [
+            { '@type': 'Language', name: 'English', alternateName: 'en' },
+            { '@type': 'Language', name: 'Arabic', alternateName: 'ar' },
+        ],
         isPartOf: { '@type': 'WebSite', '@id': 'https://cloudtopia.net/#website' },
         about: {
             '@type': 'Service',

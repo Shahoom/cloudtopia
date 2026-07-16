@@ -49,10 +49,10 @@ export default async function WebAppPillarPage({
 
     // Service + BreadcrumbList JSON-LD. Previously emitted by the old
     // /web-applications/[pillar]/layout; now self-contained so the structured
-    // data travels with the page at its /services/<slug> home. FAQPage JSON-LD
-    // is emitted below.
+    // data travels with the page at its /services/web-applications/<slug> home.
+    // FAQPage JSON-LD is emitted below.
     const pillar = getStructuredPillarBySlug(slug)
-    const schemaPath = `/services/${slug}`
+    const schemaPath = `/services/web-applications/${slug}`
     const pName = pillar ? localizedDP(pillar.name, locale) : isRTL ? 'تطبيقات الويب' : 'Web Applications'
     const pDesc = pillar
         ? localizedDP(pillar.description, locale)

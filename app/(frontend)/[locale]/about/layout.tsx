@@ -129,12 +129,12 @@ export default async function ({ children, params }: { children: React.ReactNode
                                 {
                                     '@type': 'Offer',
                                     name: 'E-commerce development',
-                                    url: canonicalUrl(locale, '/services/ecommerce-website-development'),
+                                    url: canonicalUrl(locale, '/services/ecommerce-development'),
                                 },
                                 {
                                     '@type': 'Offer',
                                     name: 'Custom business systems',
-                                    url: canonicalUrl(locale, '/services/internal-business-tools'),
+                                    url: canonicalUrl(locale, '/services/web-applications/interactive-portals-dashboards'),
                                 },
                                 {
                                     '@type': 'Offer',

@@ -4,7 +4,7 @@ import { canonicalUrl } from '@/lib/i18n/url'
 import ContentCreationClient from './ContentCreationClient'
 import { ServiceFAQSection } from '@/components/services/ServiceFAQSection'
 import { getCMSMetadata } from '@/lib/cms/metadata'
-import { contentCreationSeoFallback } from './layout'
+import { contentCreationSeoFallback } from '@/lib/services/service-page-seo-fallbacks'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

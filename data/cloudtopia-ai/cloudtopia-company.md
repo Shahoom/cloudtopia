@@ -21,14 +21,13 @@ Two regional hubs serving the entire Arab world in Arabic and English:
 - Oman hub — Oman and the Gulf (Saudi Arabia, UAE, Qatar, Kuwait, Bahrain).
 Also serves Egypt and the wider Arab region.
 
-## What CloudTopia does (7 service categories)
-1. Digital Presence — websites, stores, content, maintenance.
-2. Interactive Web Applications — portals, dashboards, SaaS MVPs, booking.
-3. Mobile App Development — iOS, Android, cross-platform, PWA.
-4. Business Systems Development — CRM, ERP, inventory, HR, finance, automation, APIs.
-5. Cloud & Infrastructure — hosting, migration, DevOps, security, scaling.
-6. AI-Powered Solutions — AI assistants, chatbots, automation, ML, NLP.
-7. Digital Growth Support — SEO, social, content, lead gen, CRO, email, brand.
+## What CloudTopia does (6 service categories)
+1. Digital Presence — websites, stores, SEO/AEO/GEO, social, content, UI/UX, branding, and owned digital assets.
+2. Interactive Web Applications — SaaS/MVP builds, portals, dashboards, modernization, and streaming platforms.
+3. App Development — iOS, Android, cross-platform, Flutter, React Native, app backends, launch support, and maintenance.
+4. Business Systems Development — CRM, ERP, inventory, HR, finance, automation, integrations, APIs, and dashboards.
+5. Cloud & Infrastructure — hosting, migration, DevOps, security, scaling, databases, backups, and performance.
+6. AI-Powered Solutions — AI assistants, chatbots, automation, ML, NLP, reporting, and customer support.
 (There is NO "CloudTopia Labs" service.)
 
 ## How CloudTopia works (operating model)

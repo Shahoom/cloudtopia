@@ -36,8 +36,8 @@ import { localizedDP } from '@/lib/services/digital-presence'
 // truth) so the menu always matches the /services hub + correct pillar URLs
 // (incl. web-apps under /web-applications).
 const SERVICE_CATEGORY_META = [
-  { id: 'digital-presence', en: 'Digital Presence', ar: 'الحضور الرقمي', hub: '/services', Icon: Globe },
-  { id: 'business-systems-development', en: 'Business Systems', ar: 'أنظمة الأعمال', hub: '/business-systems-development', Icon: Building2 },
+  { id: 'digital-presence', en: 'Digital Presence', ar: 'الحضور الرقمي', hub: '/services/digital-presence', Icon: Globe },
+  { id: 'business-systems-development', en: 'Business Systems', ar: 'أنظمة الأعمال', hub: '/services/business-systems-development', Icon: Building2 },
   { id: 'interactive-web-applications', en: 'Web Applications', ar: 'تطبيقات الويب', hub: '/services/web-applications', Icon: Layers },
   { id: 'mobile-app-development', en: 'Mobile Apps', ar: 'تطبيقات الجوال', hub: '/services/app-development', Icon: Smartphone },
   { id: 'cloud-infrastructure', en: 'Cloud & Infrastructure', ar: 'السحابة والبنية التحتية', hub: '/services', Icon: Cloud },
@@ -295,15 +295,15 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
     <div className="border-b border-white/10 bg-eerie py-2 text-white shadow-sm" dir={dir}>
       <div className="container mx-auto flex items-center justify-between gap-3 px-4">
         {/* Left Spacer to Center Ticker on Desktop */}
-        <div className="hidden sm:block flex-1 shrink-0" />
+        <div className="hidden lg:block flex-1 shrink-0" />
         
         {/* Center: Ticker */}
-        <div className="flex min-w-0 flex-1 justify-center text-center sm:mx-auto sm:max-w-2xl sm:shrink-0 sm:flex-none">
+        <div className="flex min-w-0 flex-1 justify-center text-center lg:mx-auto lg:max-w-2xl lg:shrink-0 lg:flex-none">
           <AnnouncementTicker locale={locale} />
         </div>
         
         {/* Right Side: Quick Brand Logo Links */}
-        <div className="hidden sm:flex flex-1 items-center justify-end gap-2.5 shrink-0 select-none">
+        <div className="hidden lg:flex flex-1 items-center justify-end gap-2.5 shrink-0 select-none">
           {/* Instagram Logo */}
           <a 
             href="https://instagram.com/thecloudtopia" 

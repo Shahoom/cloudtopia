@@ -72,7 +72,7 @@ const TOOLS: Tool[] = [
   {
     name: 'list_services',
     description:
-      'List CloudTopia\'s 7 service categories with a summary and key offerings for each. Optionally filter by a keyword.',
+      'List CloudTopia\'s 6 service categories with a summary and key offerings for each. Optionally filter by a keyword.',
     inputSchema: {
       type: 'object',
       properties: {

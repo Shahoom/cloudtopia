@@ -1,68 +1,89 @@
 # CloudTopia Services
 
-CloudTopia organizes its work into 7 service categories (there is NO "Labs"
+CloudTopia organizes its work into 6 service categories (there is NO "Labs"
 category — AI is delivered under "AI-Powered Solutions"). Services are modular:
 clients pick what they need, with no forced bundles.
 
+Canonical service hubs:
+- Services catalog: /services
+- Digital Presence: /services/digital-presence
+- Website Development: /services/website-development
+- E-Commerce Development: /services/ecommerce-development
+- Business Systems Development: /services/business-systems-development
+- Web Applications: /services/web-applications
+- App Development: /services/app-development
+- Restaurant QR Menu Systems: /restaurant-qr-menu
+- Social Media Marketing: /services/social-media-marketing
+- Content Creation: /services/content-creation
+
 ## 1. Digital Presence (الحضور الرقمي)
-Websites, stores, content, and maintenance for a credible online presence.
-Services:
-- Business Website Development
-- Landing Page Design
-- Corporate Website Design
-- E-commerce Website Development
-- Portfolio Websites
-- Real Estate Website Development
-- Restaurant Website Development
-- Educational Website Development
-- Website Redesign
-- Website Maintenance
+Websites, stores, SEO/AEO/GEO, social media, content, UI/UX, branding, and owned
+digital assets for a credible online presence.
+Canonical hub: /services/digital-presence
+Examples:
+- Website Development
+- E-Commerce Development
+- Search Engine Optimization (SEO)
+- Answer Engine Optimization (AEO)
+- Generative Engine Optimization (GEO)
+- Social Media Marketing
+- Content Creation
+- UI/UX Design & Branding
+- Restaurant QR Menu Systems
 
 Featured: Gulf e-commerce stores with Mada, Apple Pay, Tabby/Tamara (BNPL), and
-ZATCA e-invoicing. Restaurant QR menu systems (bilingual QR ordering & payment).
+ZATCA e-invoicing; bilingual Arabic + English websites; and restaurant QR menu
+systems with bilingual ordering and payment paths.
 
 ## 2. Interactive Web Applications (تطبيقات ويب تفاعلية)
-Custom portals, dashboards, SaaS MVPs, and booking tools.
-Services:
-- Custom Web Application Development
-- Client Portals
-- Admin Dashboards
-- Booking Platforms
-- Internal Business Tools
-- SaaS MVP Development
-- Progressive Web App (PWA) Development
+Custom web apps, SaaS/MVP builds, portals, dashboards, modernization, and media
+platforms.
+Examples:
+- Custom SaaS & MVP Development
+- Full-Stack Web Engineering
+- Interactive Portals & Dashboards
+- App Modernization, Security & Maintenance
+- Media, Entertainment & Streaming
 
-## 3. Mobile App Development (تطوير تطبيقات الجوال)
-iOS, Android, cross-platform, and PWA apps for mobile-first businesses.
-Services:
+## 3. App Development (تطوير التطبيقات)
+iOS, Android, cross-platform, Flutter, React Native, app backends, launch support,
+and maintenance for mobile-first businesses.
+Examples:
 - iOS App Development
 - Android App Development
 - Cross-Platform App Development
 - Flutter App Development
 - React Native App Development
 - MVP App Development
-- Business / Customer / Booking / Delivery & Order apps
+- Business Mobile App Development
+- Customer App Development
+- Booking App Development
+- Delivery & Order App Development
 - App Backend & API Development
 - App Store Launch Support
 - Mobile App Maintenance
 
 ## 4. Business Systems Development (تطوير أنظمة الأعمال)
-CRM, ERP, and automation built around operations.
-Services:
+CRM, ERP, business management systems, workflow automation, integrations, APIs,
+and operational dashboards built around real company workflows.
+Examples:
+- Business Management Systems
+- Business Process Automation
+- Custom ERP & CRM Solutions
 - CRM Development
+- Odoo ERP Implementation, Setup & Customization
 - Inventory Management Systems
+- HR Management Systems
 - Sales Management Systems
 - Order Management Systems
-- HR Management Systems
 - Accounting System Integration
 - Workflow Automation
-- Business Process Automation
-- Supply Chain Management Systems
-- Custom API Development & Integration
+- Custom API Development
 
 ## 5. Cloud & Infrastructure (السحابة والبنية التحتية)
-Hosting, migration, security, and scalable cloud architecture.
-Services:
+Hosting, migration, security, databases, backups, DevOps, performance, and
+scalable cloud architecture.
+Examples:
 - Cloud Hosting Setup
 - Cloud Migration
 - Server Deployment
@@ -75,8 +96,9 @@ Services:
 - Cloud Cost Optimization
 
 ## 6. AI-Powered Solutions (حلول مدعومة بالذكاء الاصطناعي)
-Practical AI that cuts repetitive work. (This is the real AI category — not "Labs".)
-Services:
+Practical AI that cuts repetitive work. This is the real AI category — not
+"Labs".
+Examples:
 - AI Chatbots
 - AI Business Assistants
 - AI Automation
@@ -87,18 +109,6 @@ Services:
 - AI-Powered Customer Support
 - Machine Learning Model Development
 - Natural Language Processing (NLP) Solutions
-
-## 7. Digital Growth Support (دعم النمو الرقمي)
-SEO, social, content, and conversion — Arabic-first for the Gulf.
-Services:
-- Social Media Management
-- Paid Ads Landing Pages
-- Brand Identity
-- SEO Optimization
-- Content Systems
-- Lead Generation Systems
-- Conversion Rate Optimization
-- Email Marketing Automation
 
 ## Industries served
 E-commerce & retail, restaurants & hospitality, real estate, healthcare,

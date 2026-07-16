@@ -62,7 +62,7 @@ const labels = {
                 title: 'Sell products or accept payments',
                 fit: 'Best for stores, checkout, subscriptions, payment gateways, catalogs, and regional commerce.',
                 path: 'Start with E-commerce or Payment Gateway Integration depending on whether the storefront already exists.',
-                href: '/services/ecommerce-website-development',
+                href: '/services/ecommerce-development',
             },
             {
                 title: 'Run operations with less manual work',
@@ -120,7 +120,7 @@ const labels = {
                 title: 'بيع المنتجات أو قبول المدفوعات',
                 fit: 'مناسب للمتاجر والدفع والاشتراكات وبوابات الدفع والكتالوجات والتجارة الإقليمية.',
                 path: 'ابدأ بتطوير متجر إلكتروني أو تكامل بوابات الدفع حسب وجود المتجر الحالي.',
-                href: '/services/ecommerce-website-development',
+                href: '/services/ecommerce-development',
             },
             {
                 title: 'تشغيل العمليات بعمل يدوي أقل',

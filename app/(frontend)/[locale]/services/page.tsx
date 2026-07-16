@@ -31,7 +31,7 @@ export default async function ServicesPage({
     const detailRoutes: Array<{ path: string; key: string }> = [
         { path: '/services/website-development', key: 'Website Development' },
         { path: '/services/ecommerce-development', key: 'Ecommerce Solutions' },
-        { path: '/business-systems-development', key: 'Business Systems Development' },
+        { path: '/services/business-systems-development', key: 'Business Systems Development' },
         { path: '/restaurant-qr-menu', key: 'Restaurant QR Menu' },
         { path: '/services/content-creation', key: 'Content Creation' },
         { path: '/services/social-media-marketing', key: 'Social Media Marketing' },

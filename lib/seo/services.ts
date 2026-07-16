@@ -389,15 +389,13 @@ export const serviceDetailSlugs = Object.keys(servicesBySlug)
  * ai-powered-solutions) point at the /services hub itself — NOT a `/services#id`
  * fragment, which no longer resolves to a section after the catalog restructure
  * (those categories render as grouped pillar cards with their own ids, and a bare
- * `#category` anchor 404s as a dead in-page target). Note interactive-web-applications
- * and mobile-app-development deliberately share /web-applications (no mobile
- * standalone exists), which is fine — both reinforce the same canonical URL.
+ * `#category` anchor 404s as a dead in-page target).
  */
 export const categoryStandaloneRoutes: Record<string, string> = {
     'digital-presence': '/services/website-development',
     'interactive-web-applications': '/services/web-applications',
     'mobile-app-development': '/services/app-development',
-    'business-systems-development': '/business-systems-development',
+    'business-systems-development': '/services/business-systems-development',
     'cloud-infrastructure': '/services',
     'ai-powered-solutions': '/services',
 }
@@ -436,7 +434,7 @@ export const featuredPages: FeaturedPage[] = [
     {
         title: t('Business Systems', 'أنظمة الأعمال'),
         description: t('CRM, ERP, and workflow automation.', 'أنظمة CRM وERP وأتمتة سير العمل.'),
-        href: '/business-systems-development',
+        href: '/services/business-systems-development',
         icon: '/icons/services/systems.png',
     },
     {

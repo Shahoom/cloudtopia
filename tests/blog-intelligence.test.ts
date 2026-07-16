@@ -52,7 +52,7 @@ test('calculateBlogContentScores rewards complete editorial posts', () => {
     content: lexicalContent,
     contentBlocks: blocks,
     tags: ['Dashboards', 'Business Systems'],
-    internalLinks: ['/services', '/business-systems-development'],
+    internalLinks: ['/services', '/services/business-systems-development'],
   })
 
   assert.equal(result.wordCount, 422)
