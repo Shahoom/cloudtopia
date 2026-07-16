@@ -35,8 +35,12 @@ function seo(locale: Locale): EffectiveIndustrySeo {
     canonical: locale === 'ar'
       ? 'https://cloudtopia.net/ar/industries/healthcare'
       : 'https://cloudtopia.net/industries/healthcare',
-    languages: {},
-    index: false,
+    languages: {
+      en: 'https://cloudtopia.net/industries/healthcare',
+      ar: 'https://cloudtopia.net/ar/industries/healthcare',
+      'x-default': 'https://cloudtopia.net/industries/healthcare',
+    },
+    index: true,
     follow: true,
     ogImages: [],
   }
@@ -62,9 +66,16 @@ test('healthcare uses a dedicated bilingual ProHealth-derived industry presentat
     }))
 
     assert.match(html, /data-healthcare-template="prohealth-v1"/u)
+    assert.match(html, /data-indexable="true"/u)
     assert.match(html, new RegExp(`dir="${locale === 'ar' ? 'rtl' : 'ltr'}"`, 'u'))
     assert.ok(html.includes(healthcareDefinition.locales[locale].hero.h1))
     assert.match(html, /href="https:\/\/clinic\.cloudtopia\.net"/u)
+    assert.match(
+      html,
+      locale === 'ar'
+        ? /href="\/ar\/services\/website-development\/healthcare-and-medical-website-development"/u
+        : /href="\/services\/website-development\/healthcare-and-medical-website-development"/u,
+    )
     assert.match(html, /target="_blank"/u)
     assert.match(html, /rel="noreferrer noopener"|rel="noopener noreferrer"/u)
   }

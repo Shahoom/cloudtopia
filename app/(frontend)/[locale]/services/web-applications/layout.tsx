@@ -3,17 +3,7 @@ import { getCMSMetadata } from '@/lib/cms/metadata'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-
-export const webApplicationsSeoFallback = {
-    titles: {
-        en: 'Custom Web Applications & SaaS Development',
-        ar: 'تطوير تطبيقات ويب مخصصة ومنصات SaaS',
-    } as Record<string, string>,
-    descriptions: {
-        en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React with real-time features and bilingual UI.',
-        ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact مع ميزات حية وواجهة ثنائية اللغة.',
-    } as Record<string, string>,
-}
+import { webApplicationsSeoFallback } from './seo-fallback'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
@@ -23,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     })
 }
 
-export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+export default async function WebApplicationsLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
     const faqSchema = await buildFAQSchema('web-applications', locale)
 

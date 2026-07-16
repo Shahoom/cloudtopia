@@ -68,7 +68,7 @@ function assertSemanticAnswersOnce(definition: IndustryPageDefinition): void {
   }
 }
 
-test('Healthcare Clinical Pulse is a complete bilingual draft world', () => {
+test('Healthcare Clinical Pulse is a complete bilingual published world', () => {
   assert.equal(healthcareDefinition.slug, 'healthcare')
   assert.equal(healthcareDefinition.world.id, 'clinical-pulse')
   assert.deepEqual(healthcareDefinition.world.theme, {
@@ -91,11 +91,11 @@ test('Healthcare Clinical Pulse is a complete bilingual draft world', () => {
   assert.equal(healthcareDefinition.locales.ar.hero.worldLabel, 'نبض الرعاية')
   assert.equal(
     healthcareDefinition.locales.en.hero.h1,
-    'Digital care that moves with the patient.',
+    'Healthcare digital systems that move with the patient.',
   )
   assert.equal(
     healthcareDefinition.locales.ar.hero.h1,
-    'رعاية رقمية تواكب المريض في كل خطوة.',
+    'أنظمة الرعاية الصحية الرقمية التي تواكب المريض.',
   )
   assert.equal(
     healthcareDefinition.locales.en.hero.primaryCta.label,
@@ -107,7 +107,7 @@ test('Healthcare Clinical Pulse is a complete bilingual draft world', () => {
   )
   assert.equal(
     healthcareDefinition.locales.en.seo.title,
-    'Healthcare Digital Systems for Patient Journeys',
+    'Healthcare Digital Systems & Patient Journeys',
   )
   assert.equal(
     healthcareDefinition.locales.ar.seo.title,

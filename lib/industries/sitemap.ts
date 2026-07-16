@@ -3,7 +3,7 @@ import 'server-only'
 import type { MetadataRoute } from 'next'
 
 import { locales } from '@/lib/i18n/config'
-import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { BASE_URL, buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import {
   getIndustryPage,
   type IndustryPageResolution,
@@ -12,15 +12,17 @@ import { getIndustryManifestEntry } from '@/lib/industries/manifest'
 import { INDUSTRY_SLUGS, isIndustrySlug } from '@/lib/industries/slugs'
 
 /**
- * Legacy pages are already published. Registering a new world only makes its
- * design previewable; it does not make that world publication-ready. This is
- * the shared fail-closed decision used by route metadata and sitemap output
- * until real review records and verified localized OG assets are wired in.
+ * Legacy pages are already published. New worlds fail closed until their
+ * definition is explicitly marked published after content and asset review.
+ * This shared decision keeps route metadata and sitemap output atomic.
  */
 export function isIndustryResolutionPublicationReady(
   resolution: IndustryPageResolution,
 ): boolean {
-  return resolution.kind === 'legacy'
+  return (
+    resolution.kind === 'legacy' ||
+    resolution.definition.publicationStatus === 'published'
+  )
 }
 
 export function isResolverOwnedIndustryCmsSlug(value: unknown): boolean {
@@ -43,11 +45,24 @@ export function buildBaseIndustrySitemapEntries(): MetadataRoute.Sitemap {
 
     const languages = buildHreflangMap(manifest.route)
     for (const locale of locales) {
+      const resolution = resolutions[locales.indexOf(locale)]
+      const ogImage = resolution.kind === 'world'
+        ? resolution.definition.assets.find(
+            (asset) => asset.kind === 'og-image' && asset.locale === locale,
+          )
+        : undefined
+
       entries.push({
         url: canonicalUrl(locale, manifest.route),
+        ...(resolution.kind === 'world' && resolution.definition.updatedAt
+          ? { lastModified: new Date(`${resolution.definition.updatedAt}T00:00:00.000Z`) }
+          : {}),
         changeFrequency: 'monthly',
         priority: 0.78,
         alternates: { languages },
+        ...(ogImage?.kind === 'og-image'
+          ? { images: [`${BASE_URL}${ogImage.publicPath}`] }
+          : {}),
       })
     }
   }

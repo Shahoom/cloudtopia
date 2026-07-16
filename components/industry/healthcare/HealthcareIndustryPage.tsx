@@ -430,6 +430,16 @@ export function HealthcareIndustryPage({
               </Link>
             ))}
           </div>
+          <Link
+            className={styles.contextualServiceLink}
+            href={localePath(
+              locale,
+              '/services/website-development/healthcare-and-medical-website-development',
+            )}
+          >
+            {copy.healthcareWebsiteAction}
+            <ArrowPair locale={locale} />
+          </Link>
         </section>
 
         <section className={styles.consultationSection} data-header-theme="dark">

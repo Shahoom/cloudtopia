@@ -59,7 +59,17 @@ test('code-owned defaults produce one exact bilingual metadata pair', () => {
   const metadata = buildIndustryMetadata(pair.en)
   assert.equal(metadata.title, defaults.en.title)
   assert.equal(metadata.description, defaults.en.description)
-  assert.deepEqual(metadata.robots, { index: true, follow: true })
+  assert.deepEqual(metadata.robots, {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  })
   assert.equal(metadata.alternates?.canonical, baseCanonicals.en)
   assert.deepEqual(metadata.alternates?.languages, pair.en.languages)
   assert.equal(metadata.openGraph?.title, pair.en.title)
@@ -213,10 +223,24 @@ test('noIndex is pair-atomic for EN-only, AR-only, both, and neither', () => {
     assert.deepEqual(buildIndustryMetadata(pair.en).robots, {
       index: scenario.index,
       follow: true,
+      googleBot: {
+        index: scenario.index,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     })
     assert.deepEqual(buildIndustryMetadata(pair.ar).robots, {
       index: scenario.index,
       follow: false,
+      googleBot: {
+        index: scenario.index,
+        follow: false,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     })
   }
 })

@@ -3,17 +3,7 @@ import { getCMSMetadata } from '@/lib/cms/metadata'
 import { buildFAQSchema } from '@/lib/seo/service-faqs'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-
-export const businessSystemsSeoFallback = {
-    titles: {
-        en: 'Custom Business Systems & CRM Development',
-        ar: 'تطوير أنظمة أعمال وCRM مخصصة',
-    } as Record<string, string>,
-    descriptions: {
-        en: 'Custom CRM, inventory, POS, HR, and booking systems built for Gulf workflows with bilingual handoff.',
-        ar: 'أنظمة CRM ومخزون وPOS وHR وحجوزات مخصصة لسير عمل الخليج مع تسليم ثنائي اللغة.',
-    } as Record<string, string>,
-}
+import { businessSystemsSeoFallback } from './seo-fallback'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale = 'en' } = await params
@@ -23,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     })
 }
 
-export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+export default async function BusinessSystemsLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
     const faqSchema = await buildFAQSchema('business-systems-development', locale)
 

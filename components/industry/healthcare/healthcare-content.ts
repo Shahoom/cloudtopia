@@ -30,6 +30,7 @@ type HealthcareLandingCopy = {
   trustLabel: string
   servicesLabel: string
   learnMore: string
+  healthcareWebsiteAction: string
   faqLabel: string
   consultationLabel: string
   heroDoctorAlt: string
@@ -117,6 +118,7 @@ export const healthcareLandingCopy = {
     trustLabel: 'Trust and operating boundaries',
     servicesLabel: 'Paths to implementation',
     learnMore: 'Explore this capability',
+    healthcareWebsiteAction: 'Explore healthcare and medical website development',
     faqLabel: 'Decision questions',
     consultationLabel: 'Healthcare systems consultation',
     heroDoctorAlt: 'Doctor representing connected healthcare systems',
@@ -202,6 +204,7 @@ export const healthcareLandingCopy = {
     trustLabel: 'الثقة وحدود التشغيل',
     servicesLabel: 'مسارات التنفيذ',
     learnMore: 'استكشف هذه القدرة',
+    healthcareWebsiteAction: 'استكشف تطوير مواقع الرعاية الصحية والمواقع الطبية',
     faqLabel: 'أسئلة القرار',
     consultationLabel: 'استشارة أنظمة الرعاية الصحية',
     heroDoctorAlt: 'طبيب يمثل أنظمة رعاية صحية مترابطة',

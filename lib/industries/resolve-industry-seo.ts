@@ -34,6 +34,32 @@ export type EffectiveIndustrySeo = {
 
 export type ResolvedIndustrySeoPair = Record<Locale, EffectiveIndustrySeo>
 
+export function applyIndustryPublicationPolicy(
+  slug: IndustrySlug,
+  publicationReady: boolean,
+  seo: EffectiveIndustrySeo,
+): EffectiveIndustrySeo {
+  if (!publicationReady) {
+    return {
+      ...seo,
+      index: false,
+      languages: {},
+    }
+  }
+
+  const hreflang = buildHreflangMap(`/industries/${slug}`)
+
+  return {
+    ...seo,
+    index: true,
+    languages: {
+      en: hreflang.en,
+      ar: hreflang.ar,
+      'x-default': hreflang['x-default'],
+    },
+  }
+}
+
 export type IndustrySeoPairInput = {
   slug: IndustrySlug
   defaults: Readonly<Record<Locale, IndustrySeoDefaults>>
@@ -255,6 +281,7 @@ export function mergeIndustrySeoPair(
         page: `industries/${input.slug}`,
         locale: 'en',
         override: localized.en.ogImage,
+        alt: localized.en.title,
       }),
     },
     ar: {
@@ -269,6 +296,7 @@ export function mergeIndustrySeoPair(
         page: `industries/${input.slug}`,
         locale: 'ar',
         override: localized.ar.ogImage,
+        alt: localized.ar.title,
       }),
     },
   }
@@ -327,7 +355,17 @@ export function buildIndustryMetadata(seo: EffectiveIndustrySeo): Metadata {
   return {
     title: seo.title,
     description: seo.description,
-    robots: { index: seo.index, follow: seo.follow },
+    robots: {
+      index: seo.index,
+      follow: seo.follow,
+      googleBot: {
+        index: seo.index,
+        follow: seo.follow,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: seo.canonical,
       languages: seo.languages,

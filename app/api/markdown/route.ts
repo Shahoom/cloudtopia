@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { healthcareLandingCopy } from '@/components/industry/healthcare/healthcare-content'
+import { canonicalUrl } from '@/lib/i18n/url'
+import { healthcareDefinition } from '@/lib/industries/definitions/healthcare'
+import { CANONICAL_SERVICE_TARGETS } from '@/lib/industries/service-targets'
 import {
   BASE_URL,
   COMPANY,
@@ -22,12 +26,20 @@ export const dynamic = 'force-dynamic'
  */
 export function GET(request: NextRequest) {
   const rawPath = request.headers.get('x-md-path') || '/'
-  const locale: 'en' | 'ar' = rawPath === '/ar' || rawPath.startsWith('/ar/') ? 'ar' : 'en'
-  const normalized = stripLocale(rawPath)
+  const requestPath = rawPath.length > 1 && rawPath.endsWith('/')
+    ? rawPath.slice(0, -1)
+    : rawPath
+  const locale: 'en' | 'ar' = requestPath === '/ar' || requestPath.startsWith('/ar/') ? 'ar' : 'en'
+  const normalized = stripLocale(requestPath)
   const isHome = normalized === '/' || normalized === ''
+  const canonicalPath = normalized || '/'
+  const canonical = canonicalUrl(locale, canonicalPath)
 
-  const markdown = isHome ? homepageMarkdown() : pageMarkdown(normalized, rawPath)
-  const canonical = `${BASE_URL}${rawPath === '/en' ? '/' : rawPath}`
+  const markdown = isHome
+    ? homepageMarkdown()
+    : normalized === '/industries/healthcare'
+      ? healthcarePageMarkdown(locale, canonical)
+      : pageMarkdown(normalized, canonical)
 
   return new NextResponse(markdown, {
     status: 200,
@@ -36,10 +48,138 @@ export function GET(request: NextRequest) {
       'Vary': 'Accept',
       'x-markdown-tokens': String(Math.ceil(markdown.length / 4)),
       'Link': `<${canonical}>; rel="canonical"`,
+      'Content-Location': canonical,
       'Cache-Control': 'public, max-age=300, s-maxage=3600',
       'Access-Control-Allow-Origin': '*',
     },
   })
+}
+
+function healthcarePageMarkdown(locale: 'en' | 'ar', canonical: string): string {
+  const page = healthcareDefinition.locales[locale]
+  const copy = healthcareLandingCopy[locale]
+  const continuity = page.sections.find(
+    (section) => section.id === 'continuity-of-care' && section.type === 'journey-map',
+  )
+  const boundaries = page.sections.find(
+    (section) => section.id === 'privacy-role-boundaries' && section.type === 'constraints',
+  )
+  const services = page.sections.find(
+    (section) => section.id === 'healthcare-service-paths' && section.type === 'service-bridge',
+  )
+  const faq = page.sections.find(
+    (section) => section.id === 'healthcare-faq' && section.type === 'faq',
+  )
+
+  const labels = locale === 'ar'
+    ? {
+        canonical: 'الصفحة الأساسية',
+        overview: 'ما الذي تحتاجه تجربة الرعاية الصحية',
+        capabilities: 'قدرات المنصة المترابطة',
+        clinicTopia: 'كلينيك توبيا لإدارة العيادات',
+        actor: 'المسؤول',
+        services: 'مسارات التنفيذ',
+        contact: 'ابدأ مشروعاً في قطاع الرعاية الصحية',
+      }
+    : {
+        canonical: 'Canonical page',
+        overview: 'What a dependable healthcare experience needs',
+        capabilities: 'Connected platform capabilities',
+        clinicTopia: 'ClinicTopia clinic management system',
+        actor: 'Owner',
+        services: 'Implementation paths',
+        contact: 'Start a healthcare systems project',
+      }
+
+  const principles = copy.principles
+    .map((principle) => `- **${principle.title}:** ${principle.description}`)
+    .join('\n')
+  const clinicCapabilities = copy.clinicTopiaCapabilities
+    .map((capability) => `- ${capability}`)
+    .join('\n')
+  const journey = continuity?.type === 'journey-map'
+    ? continuity.stages
+        .map((stage, index) =>
+          `${index + 1}. **${stage.label}** — ${stage.description}${stage.actor ? ` *(${labels.actor}: ${stage.actor})*` : ''}`,
+        )
+        .join('\n')
+    : ''
+  const trust = boundaries?.type === 'constraints'
+    ? boundaries.items
+        .map((item) => `- **${item.label}:** ${item.responsibility} ${item.dependency}`)
+        .join('\n')
+    : ''
+  const serviceLinks = services?.type === 'service-bridge'
+    ? services.serviceAnchors
+        .map((service) =>
+          `- [${service.label}](${canonicalUrl(locale, CANONICAL_SERVICE_TARGETS[service.serviceId])})`,
+        )
+        .join('\n')
+    : ''
+  const questions = faq?.type === 'faq'
+    ? faq.items
+        .map((item) => `### ${item.question}\n${item.answer}`)
+        .join('\n\n')
+    : ''
+
+  return `# ${page.hero.h1}
+
+> ${page.hero.intro}
+
+- **${labels.canonical}:** ${canonical}
+- **${locale === 'ar' ? 'اللغة' : 'Language'}:** ${locale === 'ar' ? 'العربية' : 'English'}
+- **${locale === 'ar' ? 'آخر تحديث' : 'Last updated'}:** ${healthcareDefinition.updatedAt}
+
+## ${labels.overview}
+
+${copy.principlesIntro}
+
+${principles}
+
+## ${labels.capabilities}
+
+${copy.capabilitiesIntro}
+
+- ${copy.securePortal.label}: ${copy.securePortal.description}
+${services?.type === 'service-bridge' ? services.serviceAnchors.map((service) => `- ${service.label}`).join('\n') : ''}
+
+## ${labels.clinicTopia}
+
+${copy.clinicTopiaIntro}
+
+${clinicCapabilities}
+
+- **${locale === 'ar' ? 'الرابط' : 'Product'}:** https://clinic.cloudtopia.net
+
+## ${copy.journeyLabel}
+
+${continuity?.intro ?? ''}
+
+${journey}
+
+## ${copy.trustLabel}
+
+${boundaries?.intro ?? ''}
+
+${trust}
+
+## ${labels.services}
+
+${services?.intro ?? ''}
+
+${serviceLinks}
+
+- [${copy.healthcareWebsiteAction}](${canonicalUrl(locale, '/services/website-development/healthcare-and-medical-website-development')})
+
+## ${copy.faqLabel}
+
+${questions}
+
+## ${labels.contact}
+
+- ${locale === 'ar' ? 'البريد الإلكتروني' : 'Email'}: ${CONTACTS.email}
+- ${locale === 'ar' ? 'الموقع' : 'Website'}: ${BASE_URL}
+`
 }
 
 function stripLocale(path: string): string {
@@ -104,9 +244,8 @@ ${whatsapp}
 `
 }
 
-function pageMarkdown(normalized: string, rawPath: string): string {
+function pageMarkdown(normalized: string, canonical: string): string {
   const title = titleFromPath(normalized)
-  const canonical = `${BASE_URL}${rawPath}`
   return `# ${title} — ${COMPANY.name}
 
 ${COMPANY.description}

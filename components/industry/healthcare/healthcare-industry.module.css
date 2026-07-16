@@ -300,6 +300,7 @@
 .principleCard:focus-visible,
 .carouselControls button:focus-visible,
 .serviceCard:focus-visible,
+.contextualServiceLink:focus-visible,
 .faqItem summary:focus-visible {
   box-shadow: 0 0 0 6px var(--health-blue-deep);
   outline: 3px solid #fff;
@@ -310,6 +311,7 @@
 .carouselControls button,
 .faqItem summary,
 .serviceCard,
+.contextualServiceLink,
 .systemStripAction,
 .textLink {
   -webkit-tap-highlight-color: rgb(43 111 172 / 18%);
@@ -1520,6 +1522,29 @@
   color: var(--health-blue);
   grid-column: 3;
   grid-row: 1 / span 2;
+}
+
+.contextualServiceLink {
+  align-items: center;
+  color: var(--health-blue-dark);
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  gap: 0.55rem;
+  margin-block-start: 1.6rem;
+  text-decoration: underline;
+  text-decoration-color: rgb(43 111 172 / 28%);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35rem;
+}
+
+.contextualServiceLink:hover {
+  color: var(--health-blue);
+  text-decoration-color: currentColor;
+}
+
+.contextualServiceLink .arrowPair {
+  color: currentColor;
 }
 
 .consultationSection {

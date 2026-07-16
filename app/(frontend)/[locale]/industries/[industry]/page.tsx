@@ -9,6 +9,7 @@ import { getIndustryPage, type IndustryPageResolution } from '@/lib/industries/g
 import { getIndustryManifestEntry } from '@/lib/industries/manifest'
 import { isIndustryResolutionPublicationReady } from '@/lib/industries/sitemap'
 import {
+  applyIndustryPublicationPolicy,
   buildIndustryMetadata,
   resolveIndustrySeoPair,
   type EffectiveIndustrySeo,
@@ -38,8 +39,8 @@ function seoDefaultsFor(
     return {
       title: page.seo.title,
       description: page.seo.description,
-      // The new world is visible for design review immediately. It remains
-      // noindex until the real editorial records and reviewed OG art exist.
+      // Worlds are previewable immediately but stay noindex until their
+      // definition is explicitly published with reviewed localized assets.
       index: isIndustryResolutionPublicationReady(resolution),
       follow: true,
     }
@@ -53,17 +54,15 @@ function seoDefaultsFor(
   }
 }
 
-function draftSafeSeo(
+function publicationSafeSeo(
   resolution: IndustryPageResolution,
   seo: EffectiveIndustrySeo,
 ): EffectiveIndustrySeo {
-  if (isIndustryResolutionPublicationReady(resolution)) return seo
-
-  return {
-    ...seo,
-    index: false,
-    languages: {},
-  }
+  return applyIndustryPublicationPolicy(
+    resolution.slug,
+    isIndustryResolutionPublicationReady(resolution),
+    seo,
+  )
 }
 
 async function resolveRoute(
@@ -86,7 +85,7 @@ async function resolveRoute(
     locale,
     slug,
     resolution: localizedResolution,
-    seo: draftSafeSeo(localizedResolution, seoPair[locale]),
+    seo: publicationSafeSeo(localizedResolution, seoPair[locale]),
   }
 }
 
@@ -159,6 +158,8 @@ function buildRouteSchema(
     },
     services: visible.services,
     faqs: visible.faqs,
+    validatedDateModified:
+      resolution.kind === 'world' ? resolution.definition.updatedAt : undefined,
   })
 }
 

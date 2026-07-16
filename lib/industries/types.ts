@@ -346,6 +346,7 @@ export type IndustryClaimSource = {
 export type IndustryPageDefinition = {
   slug: IndustrySlug
   contentVersion: string
+  publicationStatus?: 'draft' | 'published'
   updatedAt?: `${number}-${number}-${number}`
   world: {
     id: string

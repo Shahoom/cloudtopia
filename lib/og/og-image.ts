@@ -54,6 +54,8 @@ export type OgImageInput = {
      * the post's own cover image as the OG image.
      */
     override?: string
+    /** Localized, human-readable description for social preview accessibility. */
+    alt?: string
     /**
      * If true, the resolver returns null (no OG image emitted). Use for
      * pages explicitly opted out — currently the blog index and about page.
@@ -76,13 +78,14 @@ export function getOgImage({
     page,
     locale,
     override,
+    alt,
     omit,
 }: OgImageInput): OgImageResult | null {
     if (omit) return null
 
     if (override) {
         const url = override.startsWith('http') ? override : `${BASE_URL}${override}`
-        return { url, alt: page, width: 1200, height: 630 }
+        return { url, alt: alt ?? page, width: 1200, height: 630 }
     }
 
     const candidates = [
@@ -101,7 +104,7 @@ export function getOgImage({
         if (publicFileExists(candidate)) {
             return {
                 url: `${BASE_URL}${candidate}`,
-                alt: page,
+                alt: alt ?? page,
                 width: 1200,
                 height: 630,
             }
@@ -110,7 +113,7 @@ export function getOgImage({
 
     return {
         url: `${BASE_URL}${LEGACY_FALLBACK}`,
-        alt: page,
+        alt: alt ?? page,
         width: 1200,
         height: 630,
     }

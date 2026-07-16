@@ -7,7 +7,7 @@ import { INDUSTRY_SLUGS } from '../lib/industries/slugs.ts'
 import { canonicalUrl } from '../lib/i18n/url.ts'
 import { buildSitemapEntries } from '../lib/sitemap-data.ts'
 
-test('the sitemap excludes each registered draft world as one atomic locale pair', () => {
+test('the sitemap publishes healthcare as one bilingual pair and excludes remaining draft worlds', () => {
   const entries = buildSitemapEntries()
   const urls = new Set(entries.map((entry) => entry.url))
 
@@ -21,10 +21,28 @@ test('the sitemap excludes each registered draft world as one atomic locale pair
     for (const url of localizedUrls) {
       assert.equal(
         urls.has(url),
-        resolution.kind === 'legacy',
-        `${slug} must be absent while its world route is draft/noindex`,
+        resolution.kind === 'legacy' || slug === 'healthcare',
+        `${slug} must match its publication status`,
       )
     }
+  }
+
+  const healthcareEntries = entries.filter((entry) =>
+    entry.url.endsWith('/industries/healthcare'),
+  )
+  assert.equal(healthcareEntries.length, 2)
+  for (const entry of healthcareEntries) {
+    assert.deepEqual(entry.alternates?.languages, {
+      en: 'https://cloudtopia.net/industries/healthcare',
+      ar: 'https://cloudtopia.net/ar/industries/healthcare',
+      'x-default': 'https://cloudtopia.net/industries/healthcare',
+    })
+    assert.deepEqual(entry.images, [
+      entry.url.includes('/ar/')
+        ? 'https://cloudtopia.net/og/industries/healthcare/ar.jpg'
+        : 'https://cloudtopia.net/og/industries/healthcare/en.jpg',
+    ])
+    assert.equal(new Date(entry.lastModified as string).toISOString().slice(0, 10), '2026-07-16')
   }
 })
 

@@ -2,7 +2,8 @@ import type { IndustryPageDefinition } from '@/lib/industries/types'
 
 export const healthcareDefinition = {
   slug: 'healthcare',
-  contentVersion: 'release-a-draft-1',
+  contentVersion: 'release-a-published-1',
+  publicationStatus: 'published',
   updatedAt: '2026-07-16',
   world: {
     id: 'clinical-pulse',
@@ -54,17 +55,17 @@ export const healthcareDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Healthcare Digital Systems for Patient Journeys',
+        title: 'Healthcare Digital Systems & Patient Journeys',
         description:
-          'Plan patient-facing websites, booking journeys, portals, and clinic workflows around clear roles, approved information, and visible handoffs.',
+          'CloudTopia designs bilingual healthcare websites, patient booking journeys, clinic-governed portals, and workflow systems for connected, role-aware care.',
       },
       breadcrumbLabel: 'Healthcare',
       hero: {
         worldLabel: 'Clinical Pulse',
         eyebrow: 'Healthcare systems',
-        h1: 'Digital care that moves with the patient.',
+        h1: 'Healthcare digital systems that move with the patient.',
         intro:
-          'A connected patient journey makes each next step, responsible team, and information boundary easier to understand—from discovery and booking through the visit and follow-up.',
+          'CloudTopia designs bilingual healthcare digital systems that connect patient-facing websites, appointment booking, clinic-governed portals, and workflow operations—from discovery and booking through the visit and follow-up.',
         primaryCta: {
           label: 'Map your patient journey',
           href: '/api/whatsapp?locale=en',
@@ -472,15 +473,15 @@ export const healthcareDefinition = {
       seo: {
         title: 'حلول رقمية للرعاية الصحية ورحلة المريض',
         description:
-          'خططوا لمواقع الرعاية والحجز والبوابات وسير عمل العيادات حول أدوار واضحة ومعلومات معتمدة وتسليمات مرئية بين الفرق.',
+          'تصمم كلاود توبيا مواقع رعاية صحية ثنائية اللغة، ورحلات حجز المرضى، والبوابات الآمنة، وأنظمة تشغيل العيادات لرعاية مترابطة واضحة المسؤوليات.',
       },
       breadcrumbLabel: 'الرعاية الصحية',
       hero: {
         worldLabel: 'نبض الرعاية',
         eyebrow: 'أنظمة الرعاية الصحية',
-        h1: 'رعاية رقمية تواكب المريض في كل خطوة.',
+        h1: 'أنظمة الرعاية الصحية الرقمية التي تواكب المريض.',
         intro:
-          'تجعل رحلة المريض المترابطة الخطوة التالية والفريق المسؤول وحدود المعلومات أكثر وضوحاً، من اكتشاف الخدمة والحجز إلى الزيارة والمتابعة.',
+          'تصمم كلاود توبيا أنظمة رعاية صحية رقمية ثنائية اللغة تربط مواقع المرضى وحجز المواعيد والبوابات الآمنة وسير عمل العيادات، من اكتشاف الخدمة والحجز إلى الزيارة والمتابعة.',
         primaryCta: {
           label: 'لنرسم رحلة المريض لديكم',
           href: '/api/whatsapp?locale=ar',
