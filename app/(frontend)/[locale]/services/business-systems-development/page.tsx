@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import BusinessSystemsClient from './BusinessSystemsClient'
@@ -46,6 +47,7 @@ export default async function BusinessSystemsDevelopmentPage({
             </div>
             <BusinessSystemsClient t={t} />
             <ServiceFAQSection slug="business-systems-development" locale={locale} />
+            <SearchKeywordsSection path="/services/business-systems-development" locale={locale} />
         </>
     )
 }

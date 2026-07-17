@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import EcommerceSolutionsClient from './EcommerceSolutionsClient'
@@ -50,6 +51,7 @@ export default async function EcommerceSolutionsPage({
             </div>
             <EcommerceSolutionsClient t={t} />
             <ServiceFAQSection slug="ecommerce-solutions" locale={locale} />
+            <SearchKeywordsSection path="/services/ecommerce-development" locale={locale} />
         </>
     )
 }

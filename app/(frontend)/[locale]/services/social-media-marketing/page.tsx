@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import SocialMediaClient from './SocialMediaClient'
@@ -44,6 +45,7 @@ export default async function SocialMediaMarketingPage({
                 </p>
             </div>
             <SocialMediaClient t={t} />
+            <SearchKeywordsSection path="/services/social-media-marketing" locale={locale} />
         </>
     )
 }

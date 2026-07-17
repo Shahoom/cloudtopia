@@ -79,9 +79,9 @@ export const realEstateDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Real-Estate & PropTech Engineering — Listing, CRM & Portal Systems',
+        title: 'Real Estate & PropTech Software: Listings & CRM',
         description:
-          'CloudTopia engineers bilingual real-estate systems: property listing and search platforms, agent and agency portals, property-management and tenant portals, plus virtual-tour, booking, lead-capture, map, and integration layers.',
+          'CloudTopia engineers bilingual real-estate systems: property listing and search platforms, agent and tenant portals, virtual tours, booking, lead capture, and maps.',
       },
       breadcrumbLabel: 'Real Estate',
       hero: {
@@ -492,9 +492,9 @@ export const realEstateDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة أنظمة العقارات والتقنية العقارية — منصات العرض والبوابات وإدارة العملاء',
+        title: 'أنظمة العقارات: منصات عرض وبوابات وإدارة عملاء',
         description:
-          'تهندس كلاود توبيا أنظمة عقارية ثنائية اللغة: منصات عرض وبحث عن العقارات، وبوابات للوسطاء والوكالات، وبوابات لإدارة العقارات والمستأجرين، مع طبقات الجولات الافتراضية والحجز والتقاط العملاء والخرائط والتكامل.',
+          'تبني كلاود توبيا أنظمة عقارية ثنائية اللغة: منصات عرض وبحث عن العقارات، وبوابات للوسطاء والمستأجرين، وجولات افتراضية، وحجوزات، والتقاط عملاء محتملين، وخرائط تفاعلية.',
       },
       breadcrumbLabel: 'العقارات',
       hero: {

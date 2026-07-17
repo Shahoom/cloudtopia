@@ -11,9 +11,12 @@ import type { RichPillarData } from '@/lib/services/business-systems-content'
 import { getBusinessSystemsSubServicesByPillar } from '@/lib/services/business-systems-content'
 import { getDigitalPresenceSubServicesByPillar } from '@/lib/services/digital-presence-content'
 
-const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then((m) => m.HeroParallax), { ssr: false })
-const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then((m) => m.HeroModern), { ssr: false })
-const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then((m) => m.HorizontalScrollCards), { ssr: false })
+// NOTE: no `ssr: false` here — these heroes are SSR-safe (browser APIs live in
+// effects/handlers only), and server-rendering them is what puts the pillar's
+// copy and sub-service links in the initial HTML for crawlers (AEO/SEO).
+const HeroParallax = dynamic(() => import('@/components/ui/hero-parallax').then((m) => m.HeroParallax))
+const HeroModern = dynamic(() => import('@/components/ui/hero-modern').then((m) => m.HeroModern))
+const HorizontalScrollCards = dynamic(() => import('@/components/ui/horizontal-scroll-cards').then((m) => m.HorizontalScrollCards))
 
 /**
  * Rich pillar "main page" — reuses the /business-systems-development design
@@ -58,7 +61,7 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
         <div className="min-h-screen bg-lavender" dir={dir}>
             <SeoH1>{data.hero.title} — CloudTopia</SeoH1>
 
-            <HeroParallax products={data.products} title={data.hero.title} description={data.hero.description} isRTL={isRTL} />
+            <HeroParallax products={data.products} title={data.hero.title} description={data.hero.description} isRTL={isRTL} headingLevel="p" />
 
             <HorizontalScrollCards
                 cards={cards}
@@ -71,6 +74,7 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
             />
 
             <HeroModern
+                headingLevel="p"
                 badge={o.badge}
                 title={o.title}
                 description={o.description}
@@ -91,6 +95,52 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
                 labelCustomSolutions={isRTL ? 'حلول مخصصة' : 'Custom Solutions'}
                 labelApproach={isRTL ? 'نهجنا' : 'Our Approach'}
             />
+
+            {/* Service directory — server-rendered links to EVERY sub-service in this
+                pillar. The moving cards above only link to sub-services whose names
+                fuzzy-match, so this block is what guarantees each sub-service page is
+                reachable from crawlable HTML in both locales. */}
+            {pillarSubs.length > 0 && (
+                <section className="bg-eerie py-16 text-white md:py-24" data-header-theme="dark">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-200">
+                            {isRTL ? 'دليل الخدمات' : 'Service directory'}
+                        </p>
+                        <h2 className="mt-3 text-3xl font-black tracking-tight text-white md:text-4xl">
+                            {isRTL ? 'استكشف كل خدمة بالتفصيل' : 'Explore each service in depth'}
+                        </h2>
+                        <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-white/60 md:text-lg">
+                            {isRTL
+                                ? 'لكل خدمة أدناه صفحة مخصصة توضح نطاق العمل والمخرجات وخطوات التنفيذ.'
+                                : 'Every service below has a dedicated page detailing the scope, deliverables, and delivery process.'}
+                        </p>
+                        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {pillarSubs.map((sub) => (
+                                <li key={sub.href} className="h-full">
+                                    <Link
+                                        href={localePath(locale, sub.href)}
+                                        className="group flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.06] p-5 transition-colors duration-300 hover:border-cyan-200/40 hover:bg-white/10"
+                                    >
+                                        <span className="flex items-start justify-between gap-3">
+                                            <span className="text-base font-black leading-6 text-white">{sub.name}</span>
+                                            <svg
+                                                className="mt-1 h-4 w-4 shrink-0 text-cyan-200/80 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </span>
+                                        <span className="mt-3 text-sm font-semibold leading-6 text-white/60">{sub.desc}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </section>
+            )}
 
             {/* Final CTA — same treatment as the business-systems-development page */}
             <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-20 md:py-28">

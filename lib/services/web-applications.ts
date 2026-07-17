@@ -11,6 +11,36 @@ import type { DPGroup } from './digital-presence'
 
 const t = (en: string, ar: string) => ({ en, ar })
 
+/**
+ * Dedicated meta descriptions for the web-app pillar pages at
+ * /services/web-applications/<pillar> (140–165 chars, EN + AR). Each pillar's
+ * `description` below is a short UI card blurb (~50–95 chars) and previously
+ * doubled as the meta description — too thin for SERPs. Consumed via
+ * `structuredPillarSeoDescription()` in `@/lib/seo/services`.
+ */
+export const webAppPillarSeoDescriptions: Record<string, { en: string; ar: string }> = {
+    'custom-saas-mvp-development': {
+        en: 'SaaS and MVP development for startups in the Gulf — multi-tenant architecture, Stripe billing, and a launch-ready product your team fully owns. Free consultation.',
+        ar: 'تطوير منصات SaaS ومنتجات MVP للشركات الناشئة في الخليج — بنية متعددة المستأجرين وفوترة Stripe ومنتج جاهز للإطلاق يملكه فريقك بالكامل. استشارة مجانية.',
+    },
+    'full-stack-web-engineering': {
+        en: 'Full-stack web engineering with Next.js, React, Node.js, and Laravel — APIs, integrations, and scalable architecture delivered by one accountable Gulf team.',
+        ar: 'هندسة ويب متكاملة بـ Next.js وReact وNode.js وLaravel — واجهات API وتكاملات وبنية قابلة للتوسع من فريق خليجي واحد مسؤول أمامك. استشارة مجانية.',
+    },
+    'interactive-portals-dashboards': {
+        en: 'Client portals, admin dashboards, and data visualization with role-based access — secure, bilingual interfaces your Gulf team and customers actually use.',
+        ar: 'بوابات عملاء ولوحات إدارة وتصوير بيانات بصلاحيات حسب الأدوار — واجهات آمنة ثنائية اللغة يستخدمها فريقك وعملاؤك فعلاً في الخليج. استشارة مجانية.',
+    },
+    'application-modernization-performance': {
+        en: 'Web app modernization, security, and maintenance — refactoring, Core Web Vitals optimization, testing, and 24/7 monitoring that keep your platform reliable.',
+        ar: 'تحديث تطبيقات الويب وأمانها وصيانتها — إعادة هيكلة وتحسين Core Web Vitals واختبارات آلية ومراقبة على مدار الساعة لتبقى منصتك موثوقة. استشارة مجانية.',
+    },
+    'media-entertainment-streaming': {
+        en: 'VoD, OTT, and live streaming platforms for the Gulf — subscriptions, paywalls, transcoding, CDN delivery, and DRM protection built into one owned platform.',
+        ar: 'منصات بث VoD وOTT وبث مباشر للخليج — اشتراكات وجدران دفع وتحويل ترميز وتوصيل CDN وحماية DRM في منصة واحدة تملكها شركتك بالكامل. استشارة مجانية.',
+    },
+}
+
 export const webApplicationsGroups: DPGroup[] = [
     {
         slug: 'core-web-app-development',

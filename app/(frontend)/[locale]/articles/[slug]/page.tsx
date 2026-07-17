@@ -6,7 +6,7 @@ import { FAQAccordion } from '@/components/blog/insights/FAQAccordion'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { extractFAQSchemaItems } from '@/lib/blog/intelligence'
-import { getArticleToc, getBlogPost, getPreviousNextPosts, getRelatedBlogPosts } from '@/lib/blog/data'
+import { getArticleToc, getBlogPost, getPreviousNextPosts, getPublishedBlogPosts, getRelatedBlogPosts } from '@/lib/blog/data'
 import { buildHreflangMap, canonicalUrl, stripBrandSuffix } from '@/lib/i18n/url'
 
 type PageProps = {
@@ -36,6 +36,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = absoluteUrl(post.seo.ogImage?.url || post.coverImage?.url)
   const twitterImage = absoluteUrl(post.seo.twitterImage?.url || post.seo.ogImage?.url || post.coverImage?.url)
 
+  // Hreflang hardening: only advertise the alternate-locale URL when a twin
+  // post is actually published under the SAME slug in the other locale —
+  // otherwise the alternate 404s. Single-locale posts advertise self +
+  // x-default (pointing at self, the only URL that resolves).
+  const otherLocale = locale === 'ar' ? 'en' : 'ar'
+  const twinExists = (await getPublishedBlogPosts(otherLocale)).some((p) => p.slug === post.slug)
+  const selfUrl = canonicalUrl(locale, `/articles/${post.slug}`)
+  const languages = twinExists
+    ? buildHreflangMap(`/articles/${post.slug}`)
+    : { [locale]: selfUrl, 'x-default': selfUrl }
+
   return {
     title: documentTitle,
     description,
@@ -46,6 +57,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.seo.ogDescription || description,
       url: canonical,
       type: 'article',
+      // Page-level openGraph shallow-merges over the layout's, dropping its
+      // og:locale — restate it here. Only claim an alternate locale when the
+      // twin post actually exists.
+      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+      ...(twinExists ? { alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA' } : {}),
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: post.author?.name ? [post.author.name] : ['CloudTopia'],
@@ -61,7 +77,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     alternates: {
       canonical,
-      languages: buildHreflangMap(`/articles/${post.slug}`),
+      languages,
       types: {
         'application/rss+xml': [{ url: canonicalUrl(locale, '/articles/rss.xml'), title: 'CloudTopia Articles' }],
       },

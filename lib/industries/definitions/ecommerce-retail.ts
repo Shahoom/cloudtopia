@@ -81,9 +81,9 @@ export const ecommerceRetailDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'E-commerce & Retail Platform Engineering — Storefronts to POS',
+        title: 'E-commerce & Retail Software: Storefront to POS',
         description:
-          'CloudTopia engineers bilingual commerce & retail systems: storefronts and PWAs, product catalog and search, checkout and payments, inventory and POS, order management, and omnichannel and marketplace integrations.',
+          'CloudTopia engineers bilingual commerce systems: storefronts, product catalog and search, checkout and payments, inventory and POS, and marketplace integrations.',
       },
       breadcrumbLabel: 'E-commerce & Retail',
       hero: {
@@ -481,9 +481,9 @@ export const ecommerceRetailDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة منصات التجارة الإلكترونية والتجزئة — من المتجر إلى نقاط البيع',
+        title: 'أنظمة التجارة الإلكترونية من المتجر إلى نقاط البيع',
         description:
-          'تهندس كلاود توبيا أنظمة تجارة إلكترونية وتجزئة ثنائية اللغة: متاجر وتطبيقات ويب تقدمية، وكتالوج منتجات وبحث، ودفع وسداد، ومخزون ونقاط بيع، وإدارة طلبات، وتكاملات متعددة القنوات والأسواق.',
+          'تبني كلاود توبيا أنظمة تجارة إلكترونية وتجزئة ثنائية اللغة: متاجر إلكترونية، وكتالوج منتجات وبحث، ودفع إلكتروني، ومخزون ونقاط بيع، وتكاملات مع الأسواق.',
       },
       breadcrumbLabel: 'التجارة الإلكترونية والتجزئة',
       hero: {

@@ -18,9 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     const socialTitle = isArabic
         ? 'كلاود توبيا | شركة برمجيات وحلول سحابية وذكاء اصطناعي عربية'
         : 'CloudTopia | Arabic Software, Cloud & AI Company'
+    // TM-11: kept within the ~165-char snippet budget (was 196/184).
     const description = isArabic
-        ? 'كلاود توبيا شركة عربية للبرمجيات والحلول السحابية والذكاء الاصطناعي، تبني مواقع SEO، متاجر إلكترونية، أنظمة CRM/ERP، بنية سحابية، تطبيقات، وأتمتة ذكية للشركات في الخليج والعالم العربي.'
-        : 'CloudTopia is an Arabic software, cloud and AI company building SEO websites, e-commerce platforms, CRM/ERP systems, cloud infrastructure, mobile apps and AI automation for the GCC and Arab world.'
+        ? 'كلاود توبيا شركة عربية للبرمجيات والسحابة والذكاء الاصطناعي، تبني مواقع SEO، متاجر إلكترونية، أنظمة CRM/ERP، تطبيقات، وأتمتة ذكية للشركات في الخليج والعالم العربي.'
+        : 'CloudTopia is an Arabic software, cloud and AI company building SEO websites, e-commerce, CRM/ERP systems, mobile apps and AI automation for the GCC and Arab world.'
 
     return {
         ...metadata,

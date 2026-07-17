@@ -88,6 +88,13 @@ export interface HeroGeometricProps {
     secondaryCta?: HeroCta;
     dir?: "ltr" | "rtl";
     className?: string;
+    /**
+     * Element rendered for the hero heading. Defaults to "h1" for pages where
+     * this is the only hero. Pass "p" when the page already has its own <h1>
+     * (e.g. DP sub-service pages lead with SubServiceContactHero's h1) so the
+     * page keeps exactly one H1 while the design stays identical.
+     */
+    headingLevel?: "h1" | "p";
 }
 
 function HeroGeometric({
@@ -99,7 +106,9 @@ function HeroGeometric({
     secondaryCta,
     dir = "ltr",
     className,
+    headingLevel = "h1",
 }: HeroGeometricProps) {
+    const HeadingTag = headingLevel;
     const isRTL = dir === "rtl";
     const rootRef = useRef<HTMLDivElement>(null);
     const glowRef = useRef<HTMLDivElement>(null);
@@ -270,7 +279,7 @@ function HeroGeometric({
                         </div>
                     ) : null}
 
-                    <h1
+                    <HeadingTag
                         className="ct-hero-rise text-balance text-4xl font-black tracking-tight sm:text-6xl md:text-7xl mb-6 md:mb-8 leading-[1.05]"
                         style={{ animationDelay: "0.15s" }}
                     >
@@ -281,7 +290,7 @@ function HeroGeometric({
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#6366f1]">
                             {title2}
                         </span>
-                    </h1>
+                    </HeadingTag>
 
                     {subtitle ? (
                         <p

@@ -79,9 +79,9 @@ export const logisticsSupplyChainDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Logistics & Supply-Chain Systems — TMS, WMS, Tracking & Control Towers',
+        title: 'Logistics & Supply-Chain Software: TMS & WMS',
         description:
-          'CloudTopia engineers bilingual logistics and supply-chain systems: order and inventory, warehouse (WMS) and transport (TMS) management, fleet and route optimization, shipment tracking and visibility, and control-tower dashboards.',
+          'CloudTopia engineers bilingual logistics systems: order and inventory, warehouse and transport management, route optimization, shipment tracking, and control towers.',
       },
       breadcrumbLabel: 'Logistics & Supply Chain',
       hero: {
@@ -492,9 +492,9 @@ export const logisticsSupplyChainDefinition = {
     },
     ar: {
       seo: {
-        title: 'أنظمة اللوجستيات وسلاسل الإمداد — إدارة النقل والمستودعات والتتبع وأبراج التحكم',
+        title: 'أنظمة اللوجستيات وسلاسل الإمداد والتتبع',
         description:
-          'تهندس كلاود توبيا أنظمة لوجستيات وسلاسل إمداد ثنائية اللغة: الطلبات والمخزون، وإدارة المستودعات والنقل، وتحسين الأسطول والمسارات، وتتبع الشحنات ورؤيتها، ولوحات أبراج التحكم.',
+          'تبني كلاود توبيا أنظمة لوجستيات وسلاسل إمداد ثنائية اللغة: إدارة الطلبات والمخزون والمستودعات والنقل، وتحسين مسارات الأسطول، وتتبع الشحنات، ولوحات تحكم مركزية.',
       },
       breadcrumbLabel: 'اللوجستيات وسلاسل الإمداد',
       hero: {

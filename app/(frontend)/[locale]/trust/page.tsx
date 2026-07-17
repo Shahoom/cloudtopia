@@ -11,6 +11,7 @@ import {
     ShieldCheck,
 } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
     params: Promise<{ locale: string }>
@@ -19,7 +20,8 @@ type PageProps = {
 const content = {
     en: {
         metaTitle: 'Trust Center — Security & Code Ownership',
-        metaDescription: 'CloudTopia trust center for enterprise buyers: fixed scope, code ownership, account handoff, bilingual Arabic + English delivery, privacy, security, and procurement-ready project governance.',
+        // TM-11: kept within the ~165-char snippet budget (was 190).
+        metaDescription: 'CloudTopia trust center for enterprise buyers: fixed scope, code ownership, account handoff, bilingual Arabic and English delivery, security, and project governance.',
         badge: 'Trust center',
         title: 'Enterprise delivery without hidden ownership risk.',
         description: 'CloudTopia helps buyers reduce digital project risk before production starts. We document scope, pricing, account ownership, access, handoff, and support expectations so teams can approve work with fewer unknowns.',
@@ -258,6 +260,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title: `${L.metaTitle} | CloudTopia`,
             description: L.metaDescription,
             url: canonicalUrl(locale, '/trust'),
+            // Page-level openGraph shallow-merges over the layout's, dropping
+            // its og:locale — restate it here.
+            locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+            alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+            // OG-4: resolver falls back to the brand default until a
+            // public/og/trust/ asset ships.
+            images: ogImagesFor({ page: 'trust', locale }),
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${L.metaTitle} | CloudTopia`,
+            description: L.metaDescription,
+            images: ogImagesFor({ page: 'trust', locale }).map((image) => image.url),
         },
     }
 

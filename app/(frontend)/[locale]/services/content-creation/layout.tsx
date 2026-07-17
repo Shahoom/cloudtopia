@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('content-creation', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function ({ children, params }: { children: React.ReactNode
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Content Creation', path: '/services/content-creation' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'صناعة المحتوى' : 'Content Creation', path: '/services/content-creation' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'Content Creation & Copywriting',
-                        description: 'Bilingual Arabic + English content, blog writing, video scripts, and SEO content for Gulf brands.',
-                        path: '/services/content-creation',
-                        serviceType: 'Content Marketing',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'صناعة المحتوى وكتابة النصوص التسويقية' : 'Content Creation & Copywriting',
+                            description: isArabic
+                                ? 'محتوى ثنائي اللغة بالعربية والإنجليزية للعلامات التجارية في الخليج: مقالات ومدونات، نصوص فيديو، ومحتوى مُحسَّن لمحركات البحث.'
+                                : 'Bilingual Arabic + English content, blog writing, video scripts, and SEO content for Gulf brands.',
+                            path: '/services/content-creation',
+                            serviceType: isArabic ? 'التسويق بالمحتوى' : 'Content Marketing',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

@@ -215,50 +215,9 @@ export function ServiceExplanationSection({ isRTL = false, locale = "en" }: Serv
         </TextBlockAnimation>
       </footer>
 
-      {/* Schema.org structured data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": locale === 'ar' ? "تصميم وتطوير المواقع الإلكترونية" : "Professional Web Design & Development Services",
-            "name": locale === 'ar' ? "خدمات تصميم المواقع - كلاود توبيا" : "Web Design Services - CloudTopia",
-            "description": t.pitchDescription,
-            "provider": {
-              "@type": "Organization",
-              "@id": "https://cloudtopia.net/#organization",
-              "name": "CloudTopia",
-              "url": "https://cloudtopia.net"
-            },
-            "areaServed": [
-              { "@type": "Country", "name": "Saudi Arabia" },
-              { "@type": "Country", "name": "United Arab Emirates" },
-              { "@type": "Country", "name": "Qatar" },
-              { "@type": "Country", "name": "Kuwait" },
-              { "@type": "Country", "name": "Bahrain" },
-              { "@type": "Country", "name": "Oman" }
-            ],
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": locale === 'ar' ? "خدمات تصميم وتطوير المواقع" : "Web Design & Development Services",
-              "itemListElement": t.features.map((feature: any, index: number) => ({
-                "@type": "Offer",
-                "position": index + 1,
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": feature.title,
-                  "description": feature.description
-                }
-              }))
-            },
-            "audience": {
-              "@type": "BusinessAudience",
-              "audienceType": "Small and Medium Businesses, Enterprises, Startups"
-            }
-          })
-        }}
-      />
+      {/* Service JSON-LD intentionally omitted here: the services layout emits
+          the canonical Service node — a second hardcoded one conflicted with it
+          (and was English-only on AR pages). */}
     </section>
   )
 }

@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function BusinessSystemsLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('business-systems-development', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function BusinessSystemsLayout({ children, params }: { chil
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Business Systems Development', path: '/services/business-systems-development' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'تطوير أنظمة الأعمال' : 'Business Systems Development', path: '/services/business-systems-development' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'Custom Business Systems Development',
-                        description: 'Custom CRM, inventory, POS, HR, and booking systems built around Gulf business workflows.',
-                        path: '/services/business-systems-development',
-                        serviceType: 'Business Software Development',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'تطوير أنظمة الأعمال المخصصة' : 'Custom Business Systems Development',
+                            description: isArabic
+                                ? 'أنظمة مخصصة لإدارة علاقات العملاء والمخزون ونقاط البيع والموارد البشرية والحجوزات، مصمّمة حول سير عمل الشركات في الخليج.'
+                                : 'Custom CRM, inventory, POS, HR, and booking systems built around Gulf business workflows.',
+                            path: '/services/business-systems-development',
+                            serviceType: isArabic ? 'تطوير برمجيات الأعمال' : 'Business Software Development',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

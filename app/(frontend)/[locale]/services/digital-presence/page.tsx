@@ -1,4 +1,5 @@
 import { DigitalPresenceLanding } from '@/components/services/digital-presence/DigitalPresenceLanding'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import { getDigitalPresenceLanding } from '@/lib/services/digital-presence-landing'
 
 type PageProps = {
@@ -7,5 +8,10 @@ type PageProps = {
 
 export default async function DigitalPresencePage({ params }: PageProps) {
   const { locale = 'en' } = await params
-  return <DigitalPresenceLanding content={getDigitalPresenceLanding(locale)} />
+  return (
+    <>
+      <DigitalPresenceLanding content={getDigitalPresenceLanding(locale)} />
+      <SearchKeywordsSection path="/services/digital-presence" locale={locale} />
+    </>
+  )
 }

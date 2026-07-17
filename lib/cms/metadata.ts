@@ -45,14 +45,21 @@ export async function getCMSMetadata(
   // Strip any existing " | CloudTopia" so the layout template adds exactly one
   // brand; when no title source exists, fall back to the localized brand line via
   // `title.absolute` instead of the bare "CloudTopia" (which double-branded).
-  const rawTitle = seo.title || bundle.page?.title || fallback?.title
+  // Real CMS records (editor-entered) outrank code fallbacks; synthesized SEO
+  // (invented from dictionary copy when no CMS record exists) must NOT — it
+  // produced titleized-slug og:titles and footer taglines as descriptions.
+  const synthesized = Boolean(seo.synthesized)
+  const rawTitle = synthesized
+    ? fallback?.title || seo.title || bundle.page?.title
+    : seo.title || bundle.page?.title || fallback?.title
   const cleanTitle = rawTitle ? stripBrandSuffix(String(rawTitle)) : ''
   const brandLine = brandTitles[locale] || brandTitles.en
   const metadataTitle: Metadata['title'] = cleanTitle ? cleanTitle : { absolute: brandLine }
   const ogTitle = cleanTitle || brandLine
   const description = String(
-    seo.description ||
-      fallback?.description ||
+    (synthesized
+      ? fallback?.description || seo.description
+      : seo.description || fallback?.description) ||
       bundle.dictionary.footer?.description ||
       defaultDescriptions[locale] ||
       defaultDescriptions.en,

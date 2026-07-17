@@ -37,6 +37,12 @@ export type HeroOrbitDeckProps = {
   eyebrow: string
   title: string
   description: string
+  /**
+   * Element for the big heading. Defaults to 'h1' (app-development uses the
+   * deck as its only hero). RichPillarPage passes 'p' — it stacks two hero
+   * components plus an sr-only SeoH1, and a page must have exactly one h1.
+   */
+  headingLevel?: 'h1' | 'p'
   image: HeroModernImage
   metrics: HeroModernMetric[]
   modes: HeroModernMode[]
@@ -55,6 +61,7 @@ export type HeroOrbitDeckProps = {
 }
 
 type HeroModernLegacyProps = {
+  headingLevel?: 'h1' | 'p'
   badge?: string
   title?: string
   description?: string
@@ -164,9 +171,11 @@ export default function HeroOrbitDeck({
   protocolsBadge = 'Indexed',
   dir = 'ltr',
   className,
+  headingLevel = 'h1',
 }: HeroOrbitDeckProps) {
   const [visible, setVisible] = useState(false)
   const [modeIndex, setModeIndex] = useState(0)
+  const HeadingTag = headingLevel
   const sectionRef = useRef<HTMLElement>(null)
   const isRTL = dir === 'rtl'
 
@@ -251,9 +260,9 @@ export default function HeroOrbitDeck({
                 {eyebrow}
               </span>
             </div>
-            <h1 className="max-w-5xl text-4xl font-black leading-[1.04] tracking-normal text-white text-balance md:text-6xl lg:text-7xl">
+            <HeadingTag className="max-w-5xl text-4xl font-black leading-[1.04] tracking-normal text-white text-balance md:text-6xl lg:text-7xl">
               {title}
-            </h1>
+            </HeadingTag>
             <p className="mt-7 max-w-3xl text-lg font-semibold leading-8 text-white/70 md:text-xl">
               {description}
             </p>
@@ -493,10 +502,12 @@ function HeroModern({
   labelAvailable,
   labelCustomSolutions,
   labelApproach,
+  headingLevel = 'h1',
 }: HeroModernLegacyProps) {
   return (
     <HeroOrbitDeck
       eyebrow={badge}
+      headingLevel={headingLevel}
       title={title}
       description={description}
       image={{

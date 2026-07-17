@@ -1,5 +1,16 @@
 # robots.txt for CloudTopia
 # https://cloudtopia.net
+#
+# RFC 9309 group precedence: a crawler obeys ONLY the single most specific
+# User-agent group that matches it and ignores every other group. A named
+# "Allow: /"-only group therefore ERASES the /api/ + /admin Disallows for that
+# bot — so search and AI-answer crawlers (Googlebot, Bingbot's siblings, GPTBot,
+# OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User,
+# PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, Amazonbot,
+# meta-externalagent, DuckDuckBot, YandexBot, Baiduspider, …) are deliberately
+# NOT named here. They all fall through to the * group below and inherit the
+# full rule set; they remain welcome to crawl and cite the site. Named groups
+# exist only where policy genuinely differs, and each carries the full rule set.
 
 User-agent: *
 # Content-Signal (contentsignals.org / draft-romm-aipref-contentsignals) — search
@@ -18,100 +29,18 @@ Disallow: /admin
 # Cloudflare-internal paths (e.g. /cdn-cgi/l/email-protection) are not site pages.
 Disallow: /cdn-cgi/
 
-Sitemap: https://cloudtopia.net/sitemap.xml
-
-# RSS feed (also linked via <link rel="alternate" type="application/rss+xml"> in <head>)
-# https://cloudtopia.net/articles/rss.xml  ·  https://cloudtopia.net/ar/articles/rss.xml
-
-# AI agent context files
-# llms.txt: https://cloudtopia.net/llms.txt
-# Pricing (machine-readable): https://cloudtopia.net/pricing.md
-# Pricing (Arabic): https://cloudtopia.net/pricing.ar.md
-
-# ── Search Engines ─────────────────────────────────────────────
-# Note: Googlebot ignores Crawl-delay; setting it in the User-agent: *
-# block signalled to Google that the site is slow/limited and was
-# correlated with reduced crawl frequency. Per-bot rules below — apply
-# Crawl-delay only to bots that respect it (Bing, Yandex).
-User-agent: Googlebot
-Allow: /
-
+# ── Bing (also serves Microsoft Copilot) ───────────────────────
+# Kept as a named group ONLY because Bingbot honours Crawl-delay (Googlebot
+# ignores it, and setting it in * correlated with reduced Google crawl
+# frequency). Since this group REPLACES * for Bingbot rather than extending
+# it, the full Allow/Disallow set is repeated here.
 User-agent: Bingbot
 Allow: /
+Allow: /api/media/
+Disallow: /api/
+Disallow: /admin
+Disallow: /cdn-cgi/
 Crawl-delay: 1
-
-User-agent: Slurp
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-# ── AI Search & Citation Engines (index + cite — allowed) ──────
-# These bots surface CloudTopia in AI answers and can cite the site,
-# so they are explicitly allowed. They are pointed at the canonical
-# machine-readable context file: https://cloudtopia.net/llms.txt
-
-# OpenAI — ChatGPT search, browsing & answer engine
-User-agent: GPTBot
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-# Anthropic — Claude search, citation & user-initiated fetch
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-SearchBot
-Allow: /
-
-User-agent: Claude-User
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-# Perplexity — index + user-initiated answer fetch
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
-Allow: /
-
-# Google Gemini & AI Overviews
-User-agent: Google-Extended
-Allow: /
-
-# Apple Intelligence / Apple AI training & search
-User-agent: Applebot-Extended
-Allow: /
-
-# Amazon (Alexa / answer products)
-User-agent: Amazonbot
-Allow: /
-
-# Meta AI
-User-agent: meta-externalagent
-Allow: /
-
-User-agent: FacebookBot
-Allow: /
-
-# Microsoft Copilot (uses Bingbot already listed above)
-User-agent: Cohere-ai
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
 
 # ── Training-only scrapers (no citation value — blocked) ────────
 # CCBot (Common Crawl) feeds model training datasets without driving
@@ -134,3 +63,13 @@ Disallow: /
 
 User-agent: BLEXBot
 Disallow: /
+
+Sitemap: https://cloudtopia.net/sitemap.xml
+
+# RSS feed (also linked via <link rel="alternate" type="application/rss+xml"> in <head>)
+# https://cloudtopia.net/articles/rss.xml  ·  https://cloudtopia.net/ar/articles/rss.xml
+
+# AI agent context files
+# llms.txt: https://cloudtopia.net/llms.txt
+# Pricing (machine-readable): https://cloudtopia.net/pricing.md
+# Pricing (Arabic): https://cloudtopia.net/pricing.ar.md

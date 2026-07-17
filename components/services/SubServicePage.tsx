@@ -229,7 +229,7 @@ export function SubServicePage({ content, locale }: { content: SubServiceContent
             </section>
 
             {/* Plain-language overview */}
-            <ServiceOverview service={c.service} pillarName={c.pillarName} locale={locale} />
+            <ServiceOverview service={c.service} pillarName={c.pillarName} locale={locale} definition={c.hero.subtitle} />
 
             {/* ── Aurora-backed content ────────────────────────────────── */}
             <AuroraBackground showRadialGradient className="!h-auto !min-h-0 bg-lavender">

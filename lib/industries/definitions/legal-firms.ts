@@ -77,9 +77,9 @@ export const legalFirmsDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Legal & Law-Firm System Engineering — Matters, Portals & Docs',
+        title: 'Legal & Law-Firm Software: Matters & Portals',
         description:
-          'CloudTopia engineers bilingual legal systems: case and matter management, secure client portals, document automation and e-signature, intake and conflict checks, and billing—built around your firm’s confidentiality and conflict rules.',
+          'CloudTopia engineers bilingual legal systems: case and matter management, secure client portals, document automation and e-signature, conflict checks, and billing.',
       },
       breadcrumbLabel: 'Legal & Law Firms',
       hero: {
@@ -490,9 +490,9 @@ export const legalFirmsDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة أنظمة المكاتب القانونية — القضايا والبوابات والمستندات',
+        title: 'أنظمة المكاتب القانونية: قضايا وبوابات ومستندات',
         description:
-          'تهندس كلاود توبيا أنظمة قانونية ثنائية اللغة: إدارة القضايا والملفات، وبوابات عملاء آمنة، وأتمتة المستندات والتوقيع الإلكتروني، واستقبال العملاء وفحص تعارض المصالح، والفوترة—مبنية حول قواعد السرية وتعارض المصالح التي يعتمدها مكتبكم.',
+          'تبني كلاود توبيا أنظمة قانونية ثنائية اللغة: إدارة القضايا والملفات، وبوابات عملاء آمنة، وأتمتة المستندات والتوقيع الإلكتروني، وفحص تعارض المصالح، والفوترة.',
       },
       breadcrumbLabel: 'المكاتب القانونية',
       hero: {

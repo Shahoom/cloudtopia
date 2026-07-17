@@ -227,7 +227,7 @@ Tier-range summary (matches pricing.md exactly; all amounts are USD entry points
 
 ---
 
-## Industries served (13)
+## Industries served (12)
 
 CloudTopia publishes a dedicated industry landing page (English + Arabic) for each sector, describing the typical problems, use cases, and recommended services.
 
@@ -240,7 +240,6 @@ CloudTopia publishes a dedicated industry landing page (English + Arabic) for ea
 - Restaurants — https://cloudtopia.net/industries/restaurants
 - Legal Firms — https://cloudtopia.net/industries/legal-firms
 - Construction — https://cloudtopia.net/industries/construction
-- Retail — https://cloudtopia.net/industries/retail
 - Professional Services — https://cloudtopia.net/industries/professional-services
 - Logistics & Supply Chain — https://cloudtopia.net/industries/logistics-supply-chain
 - Government & Public Sector — https://cloudtopia.net/industries/government-public-sector

@@ -46,7 +46,7 @@ type Props = {
 }
 
 const services = [
-    { slug: 'business-website-development', icon: Globe2, ar: ['تصميم وتطوير مواقع الشركات', 'مواقع احترافية سريعة تعكس الثقة وتحوّل الزوار إلى طلبات.'], en: ['Company website design & development', 'Fast, professional websites that build trust and turn visitors into inquiries.'] },
+    { slug: 'website-development', icon: Globe2, ar: ['تصميم وتطوير مواقع الشركات', 'مواقع احترافية سريعة تعكس الثقة وتحوّل الزوار إلى طلبات.'], en: ['Company website design & development', 'Fast, professional websites that build trust and turn visitors into inquiries.'] },
     { slug: 'landing-page-design', icon: Sparkles, ar: ['صفحات هبوط وحملات تسويقية', 'صفحات مركزة للعروض والإعلانات وقياس نتائج الحملات.'], en: ['Landing pages & campaign funnels', 'Focused pages for offers, ads, and campaign performance tracking.'] },
     { slug: 'custom-web-application-development', icon: LayoutDashboard, ar: ['تطبيقات ويب ولوحات تحكم', 'تجارب تفاعلية لإدارة البيانات والطلبات والفِرق.'], en: ['Web applications & dashboards', 'Interactive tools for managing data, orders, and teams.'] },
     { slug: 'mobile-app-development', icon: Code2, ar: ['تطوير تطبيقات الجوال', 'تطبيقات مخصصة للجوال وتجارب ويب تقدمية تناسب العملاء والفرق.'], en: ['Mobile app development', 'Custom mobile apps and progressive web app experiences for customers and teams.'] },
@@ -57,7 +57,7 @@ const services = [
     { slug: 'database-setup', icon: LayoutDashboard, ar: ['إعداد قواعد البيانات وترحيلها', 'تنظيم البيانات، تنظيف الجداول، وربطها بلوحات وأنظمة الشركة.'], en: ['Database setup & migration', 'Structure data, clean tables, and connect them to company systems and dashboards.'] },
     { slug: 'ai-powered-customer-support', icon: MessageCircle, ar: ['خدمة عملاء بالذكاء الاصطناعي', 'ردود أولية، تصنيف استفسارات، وتحويل المحادثات المهمة للفريق.'], en: ['AI customer care', 'First replies, inquiry classification, and handoff for important conversations.'] },
     { slug: 'ai-automation', icon: Bot, ar: ['حلول ذكاء اصطناعي وأتمتة', 'أتمتة المهام المتكررة وربط الأدوات وتحسين سرعة التشغيل.'], en: ['AI automation solutions', 'Automate repetitive tasks, connect tools, and improve operating speed.'] },
-    { slug: 'seo-optimization', icon: Search, ar: ['تحسين الظهور في البحث', 'بنية صفحات ومحتوى وأسئلة شائعة تساعد العملاء على العثور عليك.'], en: ['Local SEO optimization', 'Content structure and schema designed for local market search intent.'] },
+    { slug: 'search-engine-optimization', icon: Search, ar: ['تحسين الظهور في البحث', 'بنية صفحات ومحتوى وأسئلة شائعة تساعد العملاء على العثور عليك.'], en: ['Local SEO optimization', 'Content structure and schema designed for local market search intent.'] },
 ]
 
 const advancedServices = [
@@ -65,7 +65,7 @@ const advancedServices = [
     { slug: 'ai-powered-customer-support', icon: MessageCircle, ar: ['خدمة عملاء ذكية', 'ردود أولية، تصنيف استفسارات، وتحويل الطلبات المهمة للفريق.'], en: ['AI customer care', 'First replies, inquiry classification, and handoff for important requests.'] },
     { slug: 'ai-business-assistants', icon: Sparkles, ar: ['مساعد أعمال ذكي', 'مساعد داخلي للإدارة، المبيعات، خدمة العملاء، أو متابعة الطلبات.'], en: ['AI business assistant', 'Internal assistants for operations, sales, customer care, or order follow-up.'] },
     { slug: 'ai-reporting-dashboards', icon: LayoutDashboard, ar: ['تقارير ذكية ولوحات AI', 'لوحات تجمع الأرقام وتساعد الإدارة على قراءة الأداء والطلبات والعملاء.'], en: ['AI reporting dashboards', 'Dashboards that collect numbers and help management read performance, orders, and customers.'] },
-    { slug: 'seo-optimization', icon: Search, ar: ['تحسين الظهور في إجابات AI', 'صفحات منظمة بأسئلة وأجوبة واضحة تساعد محركات البحث والذكاء الاصطناعي على فهم خدماتك.'], en: ['AI answer visibility', 'Structured pages with clear answers for search engines and AI assistants.'] },
+    { slug: 'search-engine-optimization', icon: Search, ar: ['تحسين الظهور في إجابات AI', 'صفحات منظمة بأسئلة وأجوبة واضحة تساعد محركات البحث والذكاء الاصطناعي على فهم خدماتك.'], en: ['AI answer visibility', 'Structured pages with clear answers for search engines and AI assistants.'] },
     { slug: 'custom-api-development', icon: Workflow, ar: ['ربط الأنظمة والتطبيقات', 'ربط CRM، ERP، نماذج الموقع، المدفوعات، والتنبيهات حسب سير العمل.'], en: ['System integrations', 'Connect CRM, ERP, website forms, payments, and notifications around your workflow.'] },
     { slug: 'cloud-migration', icon: Cloud, ar: ['ترحيل إلى السحابة', 'نقل المواقع، التطبيقات، الملفات، وقواعد البيانات مع تقليل التعطّل.'], en: ['Cloud migration', 'Move websites, apps, files, and databases while reducing downtime.'] },
     { slug: 'database-setup', icon: Factory, ar: ['ترحيل وتنظيم البيانات', 'تنظيف البيانات، إعادة ترتيب الجداول، وربطها بالأنظمة والتقارير.'], en: ['Data migration and structuring', 'Clean data, restructure tables, and connect them to systems and reports.'] },
@@ -192,7 +192,7 @@ function Eyebrow({ children, tone = 'dark' }: { children: React.ReactNode; tone?
 
 function serviceTitle(slug: string, countryName: string, locale: CountryLocale) {
     const ar: Record<string, string> = {
-        'business-website-development': `تصميم مواقع شركات في ${countryName}`,
+        'website-development': `تصميم مواقع شركات في ${countryName}`,
         'landing-page-design': `تصميم صفحات هبوط في ${countryName}`,
         'custom-web-application-development': `تطوير تطبيقات ويب في ${countryName}`,
         'mobile-app-development': `تطوير تطبيقات جوال في ${countryName}`,
@@ -203,10 +203,10 @@ function serviceTitle(slug: string, countryName: string, locale: CountryLocale) 
         'database-setup': `إعداد قواعد بيانات للشركات في ${countryName}`,
         'ai-powered-customer-support': `خدمة عملاء بالذكاء الاصطناعي في ${countryName}`,
         'ai-automation': `أتمتة أعمال بالذكاء الاصطناعي في ${countryName}`,
-        'seo-optimization': `تحسين ظهور الشركات في Google وAI في ${countryName}`,
+        'search-engine-optimization': `تحسين ظهور الشركات في Google وAI في ${countryName}`,
     }
     const en: Record<string, string> = {
-        'business-website-development': `Business Website Development In ${countryName}`,
+        'website-development': `Business Website Development In ${countryName}`,
         'landing-page-design': `Landing Page Design In ${countryName}`,
         'custom-web-application-development': `Web App Development In ${countryName}`,
         'mobile-app-development': `Mobile App Development In ${countryName}`,
@@ -217,7 +217,7 @@ function serviceTitle(slug: string, countryName: string, locale: CountryLocale) 
         'database-setup': `Database Setup For Companies In ${countryName}`,
         'ai-powered-customer-support': `AI Customer Care In ${countryName}`,
         'ai-automation': `AI Business Automation In ${countryName}`,
-        'seo-optimization': `Google & AI Search Visibility In ${countryName}`,
+        'search-engine-optimization': `Google & AI Search Visibility In ${countryName}`,
     }
     return (locale === 'ar' ? ar[slug] : en[slug]) || ''
 }

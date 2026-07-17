@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function WebApplicationsLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('web-applications', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function WebApplicationsLayout({ children, params }: { chil
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Web Applications', path: '/services/web-applications' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'تطبيقات الويب' : 'Web Applications', path: '/services/web-applications' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'Custom Web Applications Development',
-                        description: 'Interactive web applications with real-time features, portals, and SaaS platforms.',
-                        path: '/services/web-applications',
-                        serviceType: 'Web Application Development',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'تطوير تطبيقات الويب المخصصة' : 'Custom Web Applications Development',
+                            description: isArabic
+                                ? 'تطبيقات ويب تفاعلية بميزات تعمل في الوقت الفعلي، وبوابات إلكترونية، ومنصات SaaS مبنية وفق احتياجات عملك.'
+                                : 'Interactive web applications with real-time features, portals, and SaaS platforms.',
+                            path: '/services/web-applications',
+                            serviceType: isArabic ? 'تطوير تطبيقات الويب' : 'Web Application Development',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

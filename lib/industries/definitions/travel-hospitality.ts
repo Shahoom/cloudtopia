@@ -80,9 +80,9 @@ export const travelHospitalityDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Travel & Hospitality Platform Engineering — Booking, PMS & Guest Apps',
+        title: 'Travel & Hospitality Software: Booking & PMS',
         description:
-          'CloudTopia engineers bilingual travel and hospitality systems: booking engines, property, tour, and package management, itinerary builders, channel-manager integrations, and guest portals — from inspiration through the stay and the return.',
+          'CloudTopia engineers bilingual travel and hospitality systems: booking engines, property and tour management, channel-manager integrations, and guest portals.',
       },
       breadcrumbLabel: 'Travel & Hospitality',
       hero: {
@@ -493,9 +493,9 @@ export const travelHospitalityDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة منصات السفر والضيافة — الحجز وإدارة المنشآت وتطبيقات الضيوف',
+        title: 'أنظمة السفر والضيافة: حجوزات وإدارة منشآت',
         description:
-          'تهندس كلاود توبيا أنظمة سفر وضيافة ثنائية اللغة: محركات حجز، وإدارة منشآت وجولات وباقات، وبُناة مسارات رحلات، وتكاملات مع مديري القنوات، وبوابات ضيوف — من الإلهام حتى الإقامة والعودة.',
+          'تبني كلاود توبيا أنظمة سفر وضيافة ثنائية اللغة: محركات حجز، وإدارة منشآت وجولات وباقات، وبُناة مسارات رحلات، وتكاملات مع مديري القنوات، وبوابات للضيوف.',
       },
       breadcrumbLabel: 'السفر والضيافة',
       hero: {

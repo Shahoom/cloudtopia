@@ -933,9 +933,9 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
+                    <h2 className="font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
                       {project.title}
-                    </h3>
+                    </h2>
                     <p className="text-sm text-neutral-600 mb-4 line-clamp-2">
                       {project.solution}
                     </p>

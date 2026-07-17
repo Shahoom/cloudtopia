@@ -5,6 +5,7 @@ import path from 'node:path'
 import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Pencil, Sparkles, Star } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { buildOrganizationRef } from '@/lib/seo/schema'
+import { ogImagesFor } from '@/lib/og/og-image'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 
 type PageProps = {
@@ -311,11 +312,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: canonicalUrl(locale, '/pricing'),
             siteName: 'CloudTopia',
             type: 'website',
+            // Page-level openGraph shallow-merges over the layout's, dropping
+            // its og:locale — restate it here.
+            locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+            alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+            images: ogImagesFor({ page: 'pricing', locale }),
         },
         twitter: {
             title: socialTitle,
             description,
             card: 'summary_large_image',
+            images: ogImagesFor({ page: 'pricing', locale }).map((image) => image.url),
         },
         alternates: {
             canonical: canonicalUrl(locale, '/pricing'),

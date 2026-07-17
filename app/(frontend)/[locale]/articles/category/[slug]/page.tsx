@@ -7,13 +7,73 @@ import { NewsletterBox } from '@/components/blog/NewsletterBox'
 import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
 import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getBlogCategories, getBlogIndexData } from '@/lib/blog/data'
-import { buildSelfHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
+import { buildHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
   searchParams: Promise<{ q?: string; page?: string }>
+}
+
+// TM-08: the CMS category rows (and their seo.metaTitle/metaDescription) are
+// English-only, so honoring them on /ar published English metadata on Arabic
+// pages. Arabic titles/descriptions are written fresh per slug here — the CMS
+// seo fields are only honored when locale === 'en'.
+const AR_CATEGORY_META: Record<string, { title: string; description: string }> = {
+  'web-development': {
+    title: 'مقالات تطوير الويب والمواقع',
+    description: 'مقالات عملية في تطوير الويب: بناء مواقع سريعة وآمنة، اختيار التقنيات المناسبة، وتحسين الأداء وتجربة الاستخدام لمواقع الشركات في الخليج والعالم العربي.',
+  },
+  'website-strategy': {
+    title: 'مقالات استراتيجية المواقع',
+    description: 'كيف تحوّل موقعك إلى أداة نمو حقيقية؟ مقالات في استراتيجية المواقع تغطي التخطيط، بنية الصفحات، تحسين الظهور في نتائج البحث، ومسارات التحويل لمواقع الشركات العربية.',
+  },
+  'business-systems': {
+    title: 'مقالات أنظمة الأعمال',
+    description: 'مقالات حول أنظمة الأعمال الرقمية: لوحات التحكم، البوابات، إدارة العمليات، وربط الأدوات في نظام واحد يقلل العمل اليدوي ويرفع كفاءة التشغيل في شركتك خطوة بخطوة.',
+  },
+  'automation': {
+    title: 'مقالات الأتمتة وسير العمل',
+    description: 'أدلة عملية في أتمتة الأعمال: بناء مسارات عمل ذكية، ربط الأنظمة والتطبيقات ببعضها، وتقليل المهام المتكررة حتى يتفرغ فريقك للعمل الذي يصنع الفرق الحقيقي لشركتك.',
+  },
+  'ai-solutions': {
+    title: 'مقالات حلول الذكاء الاصطناعي',
+    description: 'مقالات في توظيف الذكاء الاصطناعي للأعمال: المساعدات الذكية، روبوتات المحادثة، تحليل البيانات، وحالات استخدام واقعية تناسب الشركات في الخليج والعالم العربي.',
+  },
+  'cloud-technology': {
+    title: 'مقالات تقنيات السحابة',
+    description: 'مقالات حول الحوسبة السحابية للشركات: الاستضافة، البنية التحتية، الأمان، والتكاليف، مع إرشادات عملية تساعدك على الانتقال إلى السحابة بثقة ودون تعطيل لأعمالك.',
+  },
+  'crm-erp': {
+    title: 'مقالات أنظمة CRM و ERP',
+    description: 'كل ما تحتاج معرفته عن أنظمة CRM وERP: اختيار النظام المناسب، إدارة علاقات العملاء، تخطيط الموارد، والتكامل مع أدواتك الحالية لتشغيل أكثر تنظيماً وربحية.',
+  },
+  'startup-growth': {
+    title: 'مقالات نمو الشركات الناشئة',
+    description: 'مقالات لمؤسسي الشركات الناشئة في العالم العربي: بناء المنتج الأول، إطلاق الموقع، اكتساب العملاء، وأدوات النمو الرقمي التي تساعدك على التوسع بميزانية مدروسة.',
+  },
+  'digital-presence': {
+    title: 'مقالات الحضور الرقمي',
+    description: 'مقالات في بناء حضور رقمي قوي لشركتك: الموقع، الظهور في جوجل، الهوية الرقمية، وقنوات التواصل، بخطوات عملية تعزز ثقة عملائك في السوق الخليجي والعربي.',
+  },
+  'digital-transformation': {
+    title: 'مقالات التحول الرقمي',
+    description: 'مقالات في التحول الرقمي للشركات: رقمنة العمليات، اختيار الأنظمة المناسبة، إدارة التغيير، وقصص تطبيق واقعية تساعدك على اتخاذ قرارات تقنية أوضح وأسرع.',
+  },
+  'e-commerce': {
+    title: 'مقالات التجارة الإلكترونية',
+    description: 'مقالات في التجارة الإلكترونية: إطلاق المتجر، بوابات الدفع المحلية، الشحن، وتحسين تجربة الشراء ومعدلات التحويل للمتاجر العاملة في الخليج والعالم العربي.',
+  },
+  'case-studies': {
+    title: 'دراسات حالة ومشاريع عملاء',
+    description: 'دراسات حالة من مشاريع كلاود توبيا: التحدي الذي واجهه العميل، الحل الذي بنيناه، وما تحقق من نتائج، لتأخذ صورة واقعية عن طريقة عملنا قبل بدء مشروعك القادم.',
+  },
+  'guides': {
+    title: 'أدلة عملية خطوة بخطوة',
+    description: 'أدلة عملية خطوة بخطوة من كلاود توبيا تغطي المواقع، المتاجر الإلكترونية، الأنظمة، والذكاء الاصطناعي، بلغة واضحة تساعدك على التنفيذ حتى لو لم تكن متخصصاً تقنياً.',
+  },
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -25,8 +85,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // No hardcoded brand in the fallback — the layout's `%s | CloudTopia`
   // template adds it once; stripBrandSuffix guards a CMS metaTitle that already
   // includes the brand. (Was producing "… | CloudTopia Articles | CloudTopia".)
-  const title = stripBrandSuffix(category.seo?.metaTitle || `${category.name} ${locale === 'ar' ? 'المقالات' : 'Articles'}`)
-  const description = category.seo?.metaDescription || category.description
+  // CMS seo fields are English-only, so they only apply on the English locale;
+  // Arabic uses the hand-written AR_CATEGORY_META map above (category.name is
+  // already localized by the data layer for the generic fallback).
+  const arMeta = locale === 'ar' ? AR_CATEGORY_META[category.slug] : undefined
+  const title = locale === 'ar'
+    ? (arMeta?.title || `مقالات ${category.name}`)
+    : stripBrandSuffix(category.seo?.metaTitle || `${category.name} Articles`)
+  const description = locale === 'ar'
+    ? (arMeta?.description || `مقالات ${category.name} من كلاود توبيا: أدلة عملية ورؤى تساعد الشركات في الخليج والعالم العربي على النمو الرقمي.`)
+    : (category.seo?.metaDescription || category.description)
 
   return {
     title,
@@ -37,12 +105,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       url: canonicalUrl(locale, `/articles/category/${category.slug}`),
       type: 'website',
+      // Page-level openGraph shallow-merges over the layout's, dropping its
+      // og:locale — restate it here.
+      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+      alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+      images: ogImagesFor({ page: 'articles', locale }),
     },
     alternates: {
       canonical: category.seo?.canonicalUrl || canonicalUrl(locale, `/articles/category/${category.slug}`),
-      // Self + x-default only — Arabic article taxonomy pages don't exist, so an
-      // `ar` alternate would 404.
-      languages: buildSelfHreflangMap(locale, `/articles/category/${category.slug}`),
+      // Category slugs are shared across locales and both EN/AR taxonomy pages
+      // resolve, so advertise the full en/ar/x-default set.
+      languages: buildHreflangMap(`/articles/category/${category.slug}`),
     },
   }
 }

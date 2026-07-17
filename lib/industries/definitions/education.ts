@@ -79,9 +79,9 @@ export const educationDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Education Platform Engineering — LMS, Enrollment & Assessment',
+        title: 'Education Software: LMS, Enrollment & Assessment',
         description:
-          'CloudTopia engineers bilingual education systems: learning management platforms, student and teacher portals, enrollment and admissions, assessment and grading, virtual classrooms, and admin dashboards.',
+          'CloudTopia engineers bilingual education systems: learning management platforms, student and teacher portals, enrollment, assessment, and admin dashboards.',
       },
       breadcrumbLabel: 'Education',
       hero: {
@@ -501,7 +501,7 @@ export const educationDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة منصات التعليم — أنظمة التعلّم والتسجيل والتقييم',
+        title: 'أنظمة التعليم: إدارة التعلّم والتسجيل والتقييم',
         description:
           'تهندس كلاود توبيا أنظمة تعليم ثنائية اللغة: منصات إدارة تعلّم، وبوابات للطلاب والمعلمين، وتسجيل وقبول، وتقييم ورصد درجات، وفصول افتراضية، ولوحات إدارة.',
       },

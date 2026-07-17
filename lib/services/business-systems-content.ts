@@ -954,7 +954,7 @@ export const subServiceContent: Record<string, SubServiceContent> = {
         seo: {
             title: 'Odoo ERP Implementation, Setup & Customization | CloudTopia',
             description:
-                'CloudTopia implements and customizes Odoo ERP around your operations — sales, inventory, accounting, purchasing, and HR in one owned system. Free consultation and demo preview.',
+                'CloudTopia implements and customizes Odoo ERP around your operations — sales, inventory, accounting, purchasing, and HR in one owned system. Free consultation.',
         },
         hero: {
             eyebrow: 'Custom ERP & CRM',

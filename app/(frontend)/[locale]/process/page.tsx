@@ -16,6 +16,7 @@ import {
     ShieldCheck,
 } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { ogImagesFor } from '@/lib/og/og-image'
 import HowWeWork from '@/components/home/HowWeWork'
 
 type PageProps = {
@@ -250,6 +251,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title: `${L.metaTitle} | CloudTopia`,
             description: L.metaDescription,
             url: canonicalUrl(locale, '/process'),
+            // Page-level openGraph shallow-merges over the layout's, dropping
+            // its og:locale — restate it here.
+            locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+            alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+            // OG-4: resolver falls back to the brand default until a
+            // public/og/process/ asset ships.
+            images: ogImagesFor({ page: 'process', locale }),
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${L.metaTitle} | CloudTopia`,
+            description: L.metaDescription,
+            images: ogImagesFor({ page: 'process', locale }).map((image) => image.url),
         },
     }
 

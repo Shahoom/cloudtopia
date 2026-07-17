@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
-import { buildOrganizationRef } from '@/lib/seo/schema'
-import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs } from '@/lib/seo/services'
+import { buildOrganizationRef, buildServiceSchema } from '@/lib/seo/schema'
+import { getService, getServiceCategory, localizedPackageName, localizedServiceFeatures, localizedServiceOutcomes, localizedServiceValue, serviceDetailSlugs, structuredPillarSeoDescription } from '@/lib/seo/services'
 import { localizedDP } from '@/lib/services/digital-presence'
 import { getStructuredPillarBySlug, structuredPillarRoutes, legacyMainPagePillarSlugs } from '@/lib/services/structured-catalog'
 import { PillarPage } from '@/components/services/PillarPage'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import RichPillarPage from '@/components/services/RichPillarPage'
 import WebAppPillarPage from '@/components/services/WebAppPillarPage'
 import MobileAppPillarPage from '@/components/services/MobileAppPillarPage'
@@ -327,21 +328,23 @@ import { applySeoOverride } from '@/lib/cms/route-seo'
 // descriptions than the plain pillar name/description (used for the flagship
 // design + Get-Found pillars). Other pillars fall back to name/description.
 const PILLAR_SEO_OVERRIDES: Record<string, { title: { en: string; ar: string }; description: { en: string; ar: string } }> = {
+    // Bare titles must stay ≤52 chars — the layout appends " | CloudTopia"
+    // (+13) and SERPs truncate near 65. Descriptions 140–165 chars.
     'ui-ux-design-branding': {
-        title: { en: 'UI/UX Design & Branding Services in Oman & the Gulf', ar: 'خدمات تصميم واجهات المستخدم والهوية البصرية في عُمان والخليج' },
-        description: { en: 'Premium UI/UX design and brand identity for Gulf businesses — logo, design systems, motion, and user-tested web & mobile interfaces, bilingual Arabic + English. Free consultation.', ar: 'تصميم واجهات وهوية بصرية راقية لشركات الخليج — شعار وأنظمة تصميم وموشن وواجهات ويب وجوال مختبَرة مع المستخدمين، بالعربية والإنجليزية. استشارة مجانية.' },
+        title: { en: 'UI/UX Design & Branding in Oman & the Gulf', ar: 'تصميم الواجهات والهوية البصرية في عُمان والخليج' },
+        description: { en: 'Premium UI/UX design and brand identity for Gulf businesses — logos, design systems, and user-tested web & mobile interfaces in Arabic + English. Free consultation.', ar: 'تصميم واجهات وهوية بصرية راقية لشركات الخليج — شعار وأنظمة تصميم وواجهات ويب وجوال مختبَرة مع المستخدمين، بالعربية والإنجليزية. استشارة مجانية.' },
     },
     'search-engine-optimization': {
-        title: { en: 'SEO Services in Oman & the Gulf — Rank Higher, Earn Organic Traffic', ar: 'خدمات تحسين محركات البحث SEO في عُمان والخليج' },
-        description: { en: 'Technical, on-page, and off-page SEO that earns durable organic traffic across the Gulf — bilingual Arabic + English keyword strategy, audits, and link building. Free consultation.', ar: 'تحسين تقني وعلى الصفحة وخارجها يجلب زيارات عضوية مستدامة عبر الخليج — استراتيجية كلمات ثنائية اللغة وتدقيق وبناء روابط موثوقة. استشارة مجانية.' },
+        title: { en: 'SEO Services in Oman & the Gulf', ar: 'خدمات تحسين محركات البحث SEO في عُمان والخليج' },
+        description: { en: 'Technical, on-page, and off-page SEO that earns durable organic traffic across the Gulf — bilingual keyword strategy, audits, and link building. Free consultation.', ar: 'تحسين تقني وعلى الصفحة وخارجها يجلب زيارات عضوية مستدامة عبر الخليج — استراتيجية كلمات ثنائية اللغة وتدقيق وبناء روابط موثوقة. استشارة مجانية.' },
     },
     'answer-engine-optimization': {
-        title: { en: 'Answer Engine Optimization (AEO) — Get Cited by AI Answers', ar: 'تحسين محركات الإجابة (AEO) — كن مصدر إجابات الذكاء الاصطناعي' },
-        description: { en: 'Get your brand cited by AI answer engines — ChatGPT, Perplexity, and Google AI Overviews. Structured content, schema, and authority built to own the direct answer. Bilingual AR + EN.', ar: 'اجعل علامتك مصدراً تستشهد به محركات الإجابة بالذكاء الاصطناعي — ChatGPT وPerplexity ونظرات Google AI. محتوى منظّم وبيانات مهيكلة وموثوقية لامتلاك الإجابة المباشرة. بالعربية والإنجليزية.' },
+        title: { en: 'Answer Engine Optimization (AEO) Services', ar: 'خدمات تحسين محركات الإجابة AEO' },
+        description: { en: 'Get your brand cited by AI answer engines — ChatGPT, Perplexity, and Google AI Overviews. Structured content, schema, and authority that own the direct answer.', ar: 'اجعل علامتك مصدراً تستشهد به محركات الإجابة بالذكاء الاصطناعي — ChatGPT وPerplexity ونظرات Google AI. محتوى منظّم وبيانات مهيكلة لامتلاك الإجابة المباشرة.' },
     },
     'generative-engine-optimization': {
-        title: { en: 'Generative Engine Optimization (GEO) — Surface Inside AI Results', ar: 'تحسين المحركات التوليدية (GEO) — اظهر داخل نتائج الذكاء الاصطناعي' },
-        description: { en: 'Optimize your brand to be recommended inside generative-AI results, so AI assistants surface you when buyers ask. Entity, content, and authority strategy — bilingual AR + EN.', ar: 'هيّئ علامتك لتُرشَّح داخل نتائج الذكاء الاصطناعي التوليدي، ليقترحك المساعدون الأذكياء حين يسأل المشترون. استراتيجية كيان ومحتوى وموثوقية — بالعربية والإنجليزية.' },
+        title: { en: 'Generative Engine Optimization (GEO) Services', ar: 'خدمات تحسين المحركات التوليدية GEO' },
+        description: { en: 'Optimize your brand to be recommended inside generative-AI results, so AI assistants surface you when buyers ask. Entity, content, and authority strategy.', ar: 'هيّئ علامتك لتُرشَّح داخل نتائج الذكاء الاصطناعي التوليدي، ليقترحك المساعدون الأذكياء حين يسأل المشترون. استراتيجية كيان ومحتوى وموثوقية.' },
     },
 }
 
@@ -353,7 +356,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             // Short bare title — the layout template appends " | كلاود توبيا" / " | CloudTopia".
             title: locale === 'ar' ? 'افضل شركة تطوير تطبيقات' : 'Best App Development Company',
             description: locale === 'ar' ? 'تطوير تطبيقات iOS وAndroid ومتعددة المنصات لأعمال الخليج — تصميم وبناء وإطلاق ونمو، عربية أولاً وجاهزة للـ RTL، مع ملكية كاملة للكود. استشارة مجانية.' : 'iOS, Android & cross-platform app development for Gulf businesses — design, build, launch, and grow. Arabic-first, RTL-ready, and fully owned by you. Free consultation.',
-            openGraph: { title: locale === 'ar' ? 'تطوير التطبيقات | كلاود توبيا' : 'App Development | CloudTopia', description: locale === 'ar' ? 'تطبيقات iOS وAndroid ومتعددة المنصات، تصميم وبناء وإطلاق ونمو.' : 'iOS, Android & cross-platform apps — design, build, launch, and grow.', url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website' },
+            openGraph: { title: locale === 'ar' ? 'تطوير التطبيقات | كلاود توبيا' : 'App Development | CloudTopia', description: locale === 'ar' ? 'تطبيقات iOS وAndroid ومتعددة المنصات، تصميم وبناء وإطلاق ونمو.' : 'iOS, Android & cross-platform apps — design, build, launch, and grow.', url: canonicalUrl(locale, path), siteName: 'CloudTopia', type: 'website', images: ogImagesFor({ page: 'services/app-development', locale }), locale: locale === 'ar' ? 'ar_SA' : 'en_US', alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA' },
             alternates: { canonical: canonicalUrl(locale, path), languages: { en: canonicalUrl('en', path), ar: canonicalUrl('ar', path), 'x-default': canonicalUrl('en', path) } },
         }
     }
@@ -361,14 +364,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (pillar) {
         const seoOverride = PILLAR_SEO_OVERRIDES[serviceSlug]
         const pName = seoOverride ? (locale === 'ar' ? seoOverride.title.ar : seoOverride.title.en) : localizedDP(pillar.name, locale)
-        const pDesc = seoOverride ? (locale === 'ar' ? seoOverride.description.ar : seoOverride.description.en) : localizedDP(pillar.description, locale)
+        // Description precedence: explicit override → dedicated pillar SEO
+        // description (140–165ch) → UI card blurb as last resort.
+        const pDesc = seoOverride
+            ? (locale === 'ar' ? seoOverride.description.ar : seoOverride.description.en)
+            : structuredPillarSeoDescription(serviceSlug, locale) ?? localizedDP(pillar.description, locale)
         const pPath = pillar.href
         const brand = locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'
+        const pillarImages = ogImagesFor({ page: `services/${serviceSlug}`, locale })
+        const ogLocale = locale === 'ar' ? 'ar_SA' : 'en_US'
+        const ogAlternate = locale === 'ar' ? 'en_US' : 'ar_SA'
         return {
             // Bare title — the layout's `%s | CloudTopia` template appends the brand once.
             title: pName,
             description: pDesc,
-            openGraph: { title: `${pName} | ${brand}`, description: pDesc, url: canonicalUrl(locale, pPath), siteName: 'CloudTopia', type: 'website' },
+            openGraph: { title: `${pName} | ${brand}`, description: pDesc, url: canonicalUrl(locale, pPath), siteName: 'CloudTopia', type: 'website', images: pillarImages, locale: ogLocale, alternateLocale: ogAlternate },
+            twitter: { card: 'summary_large_image', title: `${pName} | ${brand}`, description: pDesc, images: pillarImages.map((image) => image.url) },
             alternates: {
                 canonical: canonicalUrl(locale, pPath),
                 languages: { en: canonicalUrl('en', pPath), ar: canonicalUrl('ar', pPath), 'x-default': canonicalUrl('en', pPath) },
@@ -411,6 +422,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             siteName: 'CloudTopia',
             type: 'website',
             images,
+            locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+            alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
         },
         twitter: {
             card: 'summary_large_image',
@@ -436,17 +449,26 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const orphanRedirect = WEBSITE_FAMILY_ORPHAN_REDIRECTS[serviceSlug] || WEBAPP_ORPHAN_REDIRECTS[serviceSlug]
     if (orphanRedirect) permanentRedirect(localePath(locale, orphanRedirect))
 
+    // Closing "what people search for" band — appended after whichever template
+    // renders, so every pillar variant gets it without touching the templates.
+    const withKeywords = (page: React.ReactNode, path: string) => (
+        <>
+            {page}
+            <SearchKeywordsSection path={path} locale={locale} />
+        </>
+    )
+
     // "Get Found" trio (SEO/AEO/GEO) share a bespoke pillar design. They are
     // structured pillars, so this branch MUST precede the getStructuredPillarBySlug
     // render below — otherwise they would fall through to the generic PillarPage.
     const getFound = getGetFoundContent(serviceSlug)
-    if (getFound) return <GetFoundPillarPage content={getFound} locale={locale} />
+    if (getFound) return withKeywords(<GetFoundPillarPage content={getFound} locale={locale} />, `/services/${serviceSlug}`)
     // App Development — bespoke pillar page (at /services/app-development). Every
     // app service (iOS / Android / Cross-Platform + design, backend, QA, growth)
     // is a sub-service surfaced on it. The old /services/mobile-app-development
     // URL permanently redirects here.
     if (serviceSlug === 'mobile-app-development') permanentRedirect(localePath(locale, '/services/app-development'))
-    if (serviceSlug === 'app-development') return <MobileAppPillarPage locale={locale} />
+    if (serviceSlug === 'app-development') return withKeywords(<MobileAppPillarPage locale={locale} />, '/services/app-development')
     // Web Applications hub now lives at /services/web-applications (a static
     // folder that shadows this route); its pillars are nested at
     // /services/web-applications/<pillar>. Nothing to redirect here.
@@ -461,13 +483,31 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         // never see a second indexable copy.
         if (pillar.href !== `/services/${serviceSlug}`) permanentRedirect(pillar.href)
         const rich = getRichPillarData(serviceSlug, locale)
-        if (rich) return <RichPillarPage data={rich} locale={locale} />
+        if (rich) {
+            // RichPillarPage renders no page-level JSON-LD of its own — emit the
+            // Service node here (every other pillar template already has one).
+            const richServiceSchema = buildServiceSchema(locale, {
+                name: localizedDP(pillar.name, locale),
+                description: structuredPillarSeoDescription(serviceSlug, locale) ?? localizedDP(pillar.description, locale),
+                path: `/services/${serviceSlug}`,
+            })
+            return withKeywords(
+                <>
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(richServiceSchema) }}
+                    />
+                    <RichPillarPage data={rich} locale={locale} />
+                </>,
+                `/services/${serviceSlug}`,
+            )
+        }
         // Web-app pillars (SaaS/MVP, full-stack, portals, modernization, media)
         // render inline under /services/<slug> via the shared bilingual
         // WebAppPillarPage — the same grouped namespace as every other pillar.
         const webapp = getWebappServiceContent(serviceSlug)
-        if (webapp) return <WebAppPillarPage slug={serviceSlug} data={webapp} locale={locale} />
-        return <PillarPage pillar={pillar} locale={locale} />
+        if (webapp) return withKeywords(<WebAppPillarPage slug={serviceSlug} data={webapp} locale={locale} />, `/services/${serviceSlug}`)
+        return withKeywords(<PillarPage pillar={pillar} locale={locale} />, `/services/${serviceSlug}`)
     }
     // Sub-service pages now live nested under their parent pillar
     // (/services/<parent>/<sub>). Any hit on the old flat /services/<sub> URL is
@@ -489,9 +529,16 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const isAppDevSub = appDevSubSlugs.has(service.slug)
     const path = isAppDevSub ? `/services/app-development/${service.slug}` : `/services/${service.slug}`
     const canonicalServicePath = isAppDevSub ? path : `/services/${service.slug}`
-    const relatedServices = (category?.services || [])
-        .filter((candidate) => candidate.slug !== service.slug)
-        .slice(0, 4)
+    // Circular pick starting after the current service, so every service in the
+    // category receives inbound "related" links — a fixed .slice(0, 4) left
+    // services at position ≥6 in the larger categories as sitemap-only orphans.
+    const categoryServices = category?.services || []
+    const selfIndex = categoryServices.findIndex((candidate) => candidate.slug === service.slug)
+    const relatedServices = (
+        selfIndex >= 0
+            ? [...categoryServices.slice(selfIndex + 1), ...categoryServices.slice(0, selfIndex)]
+            : categoryServices.filter((candidate) => candidate.slug !== service.slug)
+    ).slice(0, 4)
     const shortAnswer = isRTL
         ? `${serviceName} من كلاود توبيا هو مسار تنفيذ محدد النطاق للشركات التي تحتاج نتيجة قابلة للإطلاق، محتوى عربي وإنجليزي، ملكية كاملة، وتكاملات عملية دون حزمة مبالغ فيها.`
         : `${serviceName} from CloudTopia is a scoped delivery path for companies that need a launch-ready outcome, Arabic and English content, full ownership, and practical integrations without an oversized package.`
@@ -657,8 +704,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-            { '@type': 'ListItem', position: 2, name: 'Services', item: canonicalUrl(locale, '/services') },
+            { '@type': 'ListItem', position: 1, name: isRTL ? 'الرئيسية' : 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: isRTL ? 'الخدمات' : 'Services', item: canonicalUrl(locale, '/services') },
             { '@type': 'ListItem', position: 3, name: serviceName, item: canonicalUrl(locale, canonicalServicePath) },
         ],
     }
@@ -1071,6 +1118,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             {(websiteContent || webappContent) ? (
                 <ContactFast serviceName={serviceName} locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} />
             ) : null}
+
+            <SearchKeywordsSection path={canonicalServicePath} locale={locale} />
         </main>
     )
 }

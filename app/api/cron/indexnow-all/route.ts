@@ -9,13 +9,21 @@ const KEY_LOCATION = `https://${HOST}/${KEY}.txt`
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow'
 
 /**
- * Cron-triggered IndexNow batch submitter. Posts every URL from the
- * sitemap to api.indexnow.org so Bing + Yandex (and Google partners
- * that consume the IndexNow feed) re-crawl content within minutes
- * instead of waiting for organic crawl. Wired to a daily Vercel Cron
- * in vercel.json. Vercel auto-injects `Authorization: Bearer
+ * Cron-triggered IndexNow batch submitter. Posts recently changed URLs
+ * from the sitemap to api.indexnow.org so Bing + Yandex (and Google
+ * partners that consume the IndexNow feed) re-crawl content within
+ * minutes instead of waiting for organic crawl. Wired to a daily Vercel
+ * Cron in vercel.json. Vercel auto-injects `Authorization: Bearer
  * $CRON_SECRET` when CRON_SECRET is set in the project env.
+ *
+ * By default only URLs whose sitemap lastModified falls within the last
+ * ~25h are submitted (the daily delta, with an hour of cron-jitter
+ * slack) — resubmitting all ~380 unchanged URLs every day reads as spam
+ * to IndexNow. Pass `?full=1` for a deliberate full resubmit (e.g.
+ * after a domain-wide change or an IndexNow key rotation).
  */
+const RECENT_WINDOW_MS = 25 * 60 * 60 * 1000
+
 export async function GET(req: Request) {
     // Fail CLOSED: if CRON_SECRET is unset OR the Authorization header does not
     // match, reject. Never allow this endpoint to be triggered by anyone simply
@@ -26,7 +34,15 @@ export async function GET(req: Request) {
         return Response.json({ error: 'unauthorized' }, { status: 401 })
     }
 
+    const full = new URL(req.url).searchParams.get('full') === '1'
+    const cutoff = Date.now() - RECENT_WINDOW_MS
     const urls = (await buildSitemapEntriesFromCMS())
+        .filter((e) => {
+            if (full) return true
+            if (!e.lastModified) return false
+            const d = new Date(e.lastModified)
+            return !isNaN(d.getTime()) && d.getTime() >= cutoff
+        })
         .map((e) => (typeof e.url === 'string' ? e.url : String(e.url)))
         .filter((u) => u.startsWith(`https://${HOST}`))
 
@@ -55,5 +71,5 @@ export async function GET(req: Request) {
         }
     }
 
-    return Response.json({ total: urls.length, batches })
+    return Response.json({ mode: full ? 'full' : 'recent', total: urls.length, batches })
 }

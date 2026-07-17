@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
+import { buildServiceSchema } from '@/lib/seo/schema'
 import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
@@ -8,6 +9,13 @@ import { ContactLeadForm } from '@/components/services/ContactLeadForm'
 import { PillarSubServicesGrid } from '@/components/services/PillarSubServicesGrid'
 import { localizedDP } from '@/lib/services/digital-presence'
 import type { GetFoundContent } from '@/lib/services/get-found-content'
+
+/** schema.org serviceType per Get Found pillar, localized (JSONLD-5). */
+const GET_FOUND_SERVICE_TYPES: Record<string, { en: string; ar: string }> = {
+    'search-engine-optimization': { en: 'Search Engine Optimization', ar: 'تحسين محركات البحث' },
+    'answer-engine-optimization': { en: 'Answer Engine Optimization', ar: 'تحسين محركات الإجابة' },
+    'generative-engine-optimization': { en: 'Generative Engine Optimization', ar: 'تحسين المحركات التوليدية' },
+}
 
 /**
  * Shared premium design for the "Get Found" pillar trio (SEO / AEO / GEO).
@@ -41,6 +49,12 @@ export function GetFoundPillarPage({
     const pillarName = pillar ? localizedDP(pillar.name, locale) : loc(content.hero.title)
     const hasSubServices = (pillar?.subServices.length ?? 0) > 0
 
+    // LINK-08: the Get Found trio cross-links each other (self excluded) so
+    // SEO ↔ AEO ↔ GEO are always one click apart for visitors and crawlers.
+    const relatedPillars = Object.entries(GET_FOUND_SERVICE_TYPES)
+        .filter(([slug]) => slug !== content.slug)
+        .map(([slug, name]) => ({ slug, name }))
+
     const heroTitle = loc(content.hero.title)
     const heroSubtitle = loc(content.hero.subtitle)
     const heroBadge = loc(content.hero.badge)
@@ -65,11 +79,21 @@ export function GetFoundPillarPage({
             { '@type': 'ListItem', position: 3, name: pillarName, item: canonicalUrl(locale, `/services/${content.slug}`) },
         ],
     }
+    const serviceSchema = {
+        ...buildServiceSchema(locale, {
+            name: pillarName,
+            description: heroSubtitle,
+            path: `/services/${content.slug}`,
+            serviceType: loc(GET_FOUND_SERVICE_TYPES[content.slug] ?? { en: pillarName, ar: pillarName }),
+        }),
+        inLanguage: isAr ? 'ar' : 'en',
+    }
 
     return (
         <main dir={dir} className="relative min-h-screen bg-[#f4f1f8]">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
             {/* Hero — dark conversion hero with the CMS lead form (matches the
                 sub-service hero family, scaled up for a pillar). */}
@@ -213,6 +237,29 @@ export function GetFoundPillarPage({
                                 <p className="mt-2.5 text-sm leading-relaxed text-slate-600">{loc(step.detail)}</p>
                             </article>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Related pillars — small cross-link row within the Get Found trio. */}
+            <section dir={dir} className="bg-white pb-16 md:pb-24">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-[#f4f1f8] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                        <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0369a1]">
+                            {isAr ? 'خدمات ذات صلة' : 'Related services'}
+                        </p>
+                        <div className="flex flex-wrap gap-2.5">
+                            {relatedPillars.map((rel) => (
+                                <Link
+                                    key={rel.slug}
+                                    href={L(`/services/${rel.slug}`)}
+                                    className="group inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition-colors duration-200 hover:border-sky-300 hover:text-sky-800"
+                                >
+                                    {loc(rel.name)}
+                                    <ArrowRight className="h-3.5 w-3.5 opacity-50 transition-opacity duration-200 group-hover:opacity-100 rtl:rotate-180" aria-hidden="true" />
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

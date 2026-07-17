@@ -84,9 +84,9 @@ export const governmentPublicSectorDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Government & Public-Sector Engineering — Citizen Portals & E-Gov',
+        title: 'Government Software: Citizen Portals & E-Gov',
         description:
-          'CloudTopia engineers bilingual, accessibility-first government systems: citizen-service portals, e-gov and permit/licensing, case management, secure identity, and the security and compliance layers around them.',
+          'CloudTopia engineers bilingual, accessibility-first government systems: citizen-service portals, e-gov permits and licensing, case management, and secure identity.',
       },
       breadcrumbLabel: 'Government & Public Sector',
       hero: {
@@ -437,9 +437,9 @@ export const governmentPublicSectorDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة الأنظمة الحكومية والقطاع العام — بوابات المواطن والحكومة الرقمية',
+        title: 'أنظمة حكومية رقمية وبوابات خدمة المواطن',
         description:
-          'تهندس كلاود توبيا أنظمة حكومية ثنائية اللغة تعطي سهولة الوصول أولوية: بوابات خدمة المواطن، والحكومة الرقمية والتصاريح والتراخيص، وإدارة المعاملات، والهوية الآمنة، مع طبقات الأمان والامتثال المحيطة بها.',
+          'تبني كلاود توبيا أنظمة حكومية ثنائية اللغة سهلة الوصول: بوابات خدمة المواطن، والتصاريح والتراخيص الرقمية، وإدارة المعاملات، والهوية الرقمية الآمنة، بامتثال كامل.',
       },
       breadcrumbLabel: 'الحكومة والقطاع العام',
       hero: {

@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('social-media-marketing', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function ({ children, params }: { children: React.ReactNode
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Social Media Marketing', path: '/services/social-media-marketing' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'التسويق عبر وسائل التواصل الاجتماعي' : 'Social Media Marketing', path: '/services/social-media-marketing' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'Social Media Marketing & Management',
-                        description: 'Arabic-first content and paid social for Gulf audiences. TikTok, Snapchat, Instagram, Meta, YouTube.',
-                        path: '/services/social-media-marketing',
-                        serviceType: 'Social Media Marketing',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'التسويق عبر وسائل التواصل الاجتماعي وإدارة الحسابات' : 'Social Media Marketing & Management',
+                            description: isArabic
+                                ? 'محتوى عربي أولاً وحملات ممولة موجّهة لجمهور الخليج على تيك توك وسناب شات وإنستغرام وميتا ويوتيوب.'
+                                : 'Arabic-first content and paid social for Gulf audiences. TikTok, Snapchat, Instagram, Meta, YouTube.',
+                            path: '/services/social-media-marketing',
+                            serviceType: isArabic ? 'التسويق عبر وسائل التواصل الاجتماعي' : 'Social Media Marketing',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

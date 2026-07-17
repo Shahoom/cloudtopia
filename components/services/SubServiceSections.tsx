@@ -11,8 +11,33 @@ const pick = (b: Bi, isAr: boolean) => (isAr ? b.ar : b.en)
  * sub-service templates.
  */
 
-/** Plain-language intro framed by the service + its pillar. */
-export function ServiceOverview({ service, pillarName, locale }: { service: string; pillarName: string; locale: string }) {
+/**
+ * Compose an entity-first definition sentence ("<Service> from CloudTopia …")
+ * from the page's hero subtitle, so the overview opens with copy specific to
+ * this service. Subtitles open in several registers (noun phrase, imperative,
+ * "We build …"), so the joins adapt rather than concatenate blindly.
+ */
+function composeDefinition(service: string, definition: string, isAr: boolean): string {
+    const text = definition.trim()
+    if (isAr) {
+        // One idiomatic Arabic frame that reads naturally ahead of any register —
+        // imperative, noun phrase, or first-person — instead of copying English word order.
+        return `خدمة ${service} من كلاودتوبيا تقوم على فكرة واضحة: ${text}`
+    }
+    // "A/An/The …" subtitles join as a clean "X is …" definition; every other
+    // opening (imperatives, "We build …", scene-setters) reads naturally after a lead-in.
+    if (/^(an?|the)\s/i.test(text)) {
+        return `${service} from CloudTopia is ${text.charAt(0).toLowerCase()}${text.slice(1)}`
+    }
+    return `${service} from CloudTopia comes down to this: ${text}`
+}
+
+/**
+ * Plain-language intro framed by the service + its pillar. When `definition`
+ * (the page's hero subtitle) is provided, it leads the section as a
+ * service-specific definition paragraph — the prime answer-engine extract.
+ */
+export function ServiceOverview({ service, pillarName, locale, definition }: { service: string; pillarName: string; locale: string; definition?: string }) {
     const isAr = locale === 'ar'
     return (
         <section dir={isAr ? 'rtl' : 'ltr'} className="bg-white px-4 py-16 sm:px-6 md:py-20 lg:px-8">
@@ -24,6 +49,11 @@ export function ServiceOverview({ service, pillarName, locale }: { service: stri
                     {isAr ? 'باختصار، ما الذي نقدّمه' : 'What this is, in plain terms'}
                 </h2>
                 <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-sky-400" aria-hidden="true" />
+                {definition && (
+                    <p className="mt-6 text-lg leading-relaxed text-slate-600">
+                        {composeDefinition(service, definition, isAr)}
+                    </p>
+                )}
                 <p className="mt-6 text-lg leading-relaxed text-slate-600">
                     {isAr
                         ? `${service} من كلاودتوبيا مبني حول عملك — لا قالب جاهز للجميع. ضمن خدمات ${pillarName}، نركّز على ما يحرّك أهدافك فعلاً: نتيجة تملكها بالكامل، بالعربية والإنجليزية، بنطاق واضح ودون مفاجآت.`

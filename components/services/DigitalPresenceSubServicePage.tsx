@@ -108,9 +108,10 @@ export async function DigitalPresenceSubServicePage({ content, locale }: { conte
                 subtitle={c.hero.subtitle}
                 locale={locale}
             />
-            {showGeometricHero && <HeroGeometric badge={c.hero.badge} title1={c.hero.title1} title2={c.hero.title2} subtitle={c.hero.subtitle} />}
+            {/* headingLevel="p": SubServiceContactHero above already renders the page's single <h1>. */}
+            {showGeometricHero && <HeroGeometric badge={c.hero.badge} title1={c.hero.title1} title2={c.hero.title2} subtitle={c.hero.subtitle} headingLevel="p" />}
 
-            <ServiceOverview service={c.service} pillarName={c.pillarName} locale={locale} />
+            <ServiceOverview service={c.service} pillarName={c.pillarName} locale={locale} definition={c.hero.subtitle} />
 
             <FeaturesBento content={c.features} dir={dir} />
 

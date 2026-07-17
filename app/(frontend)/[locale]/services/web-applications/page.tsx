@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import WebApplicationsClient from './WebApplicationsClient'
@@ -46,6 +47,7 @@ export default async function WebApplicationsPage({
             </div>
             <WebApplicationsClient t={t} />
             <ServiceFAQSection slug="web-applications" locale={locale} />
+            <SearchKeywordsSection path="/services/web-applications" locale={locale} />
         </>
     )
 }

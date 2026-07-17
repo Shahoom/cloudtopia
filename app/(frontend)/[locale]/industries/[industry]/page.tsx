@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 
 import { IndustryPageShell } from '@/components/industry/detail/IndustryPageShell'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import { isLocale, locales, type Locale } from '@/lib/i18n/config'
 import { localePath } from '@/lib/i18n/url'
 import { buildIndustryJsonLd } from '@/lib/industries/build-industry-schema'
@@ -246,28 +247,40 @@ export default async function IndustryPage({ params }: PageProps) {
     route.seo,
   )
 
+  // Closing "what people search for" band — appended after every world/shell
+  // render so all industry pages get it without touching the bespoke worlds.
+  const keywords = (
+    <SearchKeywordsSection path={`/industries/${route.slug}`} locale={route.locale} />
+  )
+
   if (route.resolution.kind === 'world') {
     const loadWorld = WORLD_COMPONENTS[route.slug]
     if (loadWorld) {
       const WorldPage = await loadWorld()
 
       return (
-        <WorldPage
+        <>
+          <WorldPage
+            locale={route.locale}
+            definition={route.resolution.definition}
+            seo={route.seo}
+            schema={schema}
+          />
+          {keywords}
+        </>
+      )
+    }
+
+    return (
+      <>
+        <IndustryPageShell
           locale={route.locale}
           definition={route.resolution.definition}
           seo={route.seo}
           schema={schema}
         />
-      )
-    }
-
-    return (
-      <IndustryPageShell
-        locale={route.locale}
-        definition={route.resolution.definition}
-        seo={route.seo}
-        schema={schema}
-      />
+        {keywords}
+      </>
     )
   }
 
@@ -276,10 +289,13 @@ export default async function IndustryPage({ params }: PageProps) {
   )
 
   return (
-    <LegacyIndustryPage
-      locale={route.locale}
-      viewModel={route.resolution.legacy}
-      schema={schema}
-    />
+    <>
+      <LegacyIndustryPage
+        locale={route.locale}
+        viewModel={route.resolution.legacy}
+        schema={schema}
+      />
+      {keywords}
+    </>
   )
 }

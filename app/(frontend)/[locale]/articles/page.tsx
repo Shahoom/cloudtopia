@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const meta = await getCMSMetadata(locale, '/articles', 'articles', {
     title:
       locale === 'ar'
-        ? 'مقالات كلاود توبيا | أدلة الويب والأنظمة والذكاء الاصطناعي'
-        : 'CloudTopia Articles | Web, Systems & AI Guides',
+        ? 'مقالات وأدلة الويب والأنظمة والذكاء الاصطناعي'
+        : 'Articles: Web, Systems & AI Guides',
     description:
       locale === 'ar'
         ? 'رؤى وأدلة عملية من كلاود توبيا حول تصميم المواقع، التجارة الإلكترونية، الأنظمة المخصصة، الأتمتة، والذكاء الاصطناعي للشركات.'

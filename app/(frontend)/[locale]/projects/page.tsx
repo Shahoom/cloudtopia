@@ -119,6 +119,19 @@ export default async function ProjectsPage({
             url: 'https://cloudtopia.net',
         },
     }
+    // JSONLD-6: moved here from projects/layout.tsx (where it leaked onto all
+    // 16 project detail pages) so it renders only on the listing.
+    const breadcrumbNames = locale === 'ar'
+        ? { home: 'الرئيسية', projects: 'المشاريع' }
+        : { home: 'Home', projects: 'Projects' }
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: breadcrumbNames.home, item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: breadcrumbNames.projects, item: canonicalUrl(locale, '/projects') },
+        ],
+    }
     const projectsFaqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
@@ -159,6 +172,10 @@ export default async function ProjectsPage({
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsFaqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
             <div className="sr-only" aria-hidden="false">
                 <p>{heroTitle} {heroHighlight}</p>

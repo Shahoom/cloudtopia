@@ -15,7 +15,9 @@ export const HeroParallax = ({
     title,
     description,
     isRTL = false,
+    headingLevel = 'h1',
 }: {
+    headingLevel?: 'h1' | 'p';
     products: {
         title: string;
         link?: string;
@@ -68,7 +70,7 @@ export const HeroParallax = ({
             ref={ref}
             className="h-[120vh] md:h-[180vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
         >
-            <Header title={title} description={description} isRTL={isRTL} />
+            <Header title={title} description={description} isRTL={isRTL} headingLevel={headingLevel} />
             <motion.div
                 style={{
                     rotateX,
@@ -110,10 +112,11 @@ export const HeroParallax = ({
     );
 };
 
-export const Header = ({ title, description, isRTL = false }: { title?: string; description?: string; isRTL?: boolean }) => {
+export const Header = ({ title, description, isRTL = false, headingLevel = 'h1' }: { title?: string; description?: string; isRTL?: boolean; headingLevel?: 'h1' | 'p' }) => {
+    const MotionHeading = headingLevel === 'p' ? motion.p : motion.h1
     return (
         <div className={`max-w-7xl relative mx-auto py-10 md:py-20 px-4 w-full left-0 top-0 ${isRTL ? 'text-right' : 'text-left'}`}>
-            <motion.h1
+            <MotionHeading
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -124,7 +127,7 @@ export const Header = ({ title, description, isRTL = false }: { title?: string; 
                         The Ultimate <br />development studio
                     </>
                 )}
-            </motion.h1>
+            </MotionHeading>
             <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

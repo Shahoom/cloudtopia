@@ -21,9 +21,10 @@ export async function generateMetadata({
     const title = isArabic
         ? 'كلاود توبيا | شركة برمجيات وحلول سحابية وذكاء اصطناعي عربية'
         : 'CloudTopia | Arabic Software, Cloud & AI Company'
+    // 140–165 chars — longer truncates in SERPs (the hero keeps the full line).
     const description = isArabic
-        ? 'كلاود توبيا شركة عربية للبرمجيات والحلول السحابية والذكاء الاصطناعي، تبني مواقع SEO، متاجر إلكترونية، أنظمة CRM/ERP، بنية سحابية، تطبيقات، وأتمتة ذكية للشركات في الخليج والعالم العربي.'
-        : 'CloudTopia is an Arabic software, cloud and AI company building SEO websites, e-commerce platforms, CRM/ERP systems, cloud infrastructure, mobile apps and AI automation for the GCC and Arab world.'
+        ? 'كلاود توبيا شركة عربية للبرمجيات والسحابة والذكاء الاصطناعي — مواقع SEO ومتاجر إلكترونية وأنظمة CRM/ERP وتطبيقات وأتمتة ذكية لشركات الخليج والعالم العربي.'
+        : 'CloudTopia — Arabic software, cloud & AI company building SEO websites, e-commerce, CRM/ERP systems, apps and AI automation for the GCC and Arab world.'
     // The homepage title already contains the brand, so emit it as `absolute` to
     // bypass the layout's "%s | CloudTopia" template (which doubled it to
     // "CloudTopia | … | CloudTopia"). Spreading `meta` keeps the canonical URL and

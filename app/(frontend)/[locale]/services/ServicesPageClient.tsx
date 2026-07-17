@@ -682,6 +682,44 @@ function StructuredCategoryGroups({ categoryId, locale }: { categoryId: string; 
     )
 }
 
+/**
+ * SEO + accessibility index of the full catalog. The tabbed catalog above only
+ * mounts ONE category panel at a time, so without this block the server-rendered
+ * HTML contains links for just the initially-active category — crawlers never
+ * reach the other categories' pillar pages. This nav keeps every category's hub
+ * and pillar links present in the SSR DOM; `sr-only` removes it visually without
+ * removing it from the document, so the visible tabbed design is unchanged and
+ * screen-reader users get a direct index of all services.
+ */
+function AllServicesIndexNav({ locale }: { locale: string }) {
+    const isArabic = locale === 'ar'
+    return (
+        <nav className="sr-only" aria-label={isArabic ? 'جميع الخدمات حسب الفئة' : 'All services by category'}>
+            {categories.map((category) => {
+                const hub = CATEGORY_HUB[category.id]
+                const pillars = getStructuredPillars(category.id)
+                return (
+                    <React.Fragment key={category.id}>
+                        <h3>{isArabic ? category.nameAr : category.name}</h3>
+                        <ul>
+                            {hub && (
+                                <li>
+                                    <Link href={localePath(locale, hub.href)}>{localizedDP(hub.name, locale)}</Link>
+                                </li>
+                            )}
+                            {pillars.map((pillar) => (
+                                <li key={pillar.slug}>
+                                    <Link href={localePath(locale, pillar.href)}>{localizedDP(pillar.name, locale)}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </React.Fragment>
+                )
+            })}
+        </nav>
+    )
+}
+
 export default function ServicesPageClient({ t: pageT }: { t?: any }) {
     const { dir, locale, t: contextT } = useLanguage()
     const t = pageT || contextT
@@ -923,6 +961,8 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                             )}
                         </div>
                     </div>
+
+                    <AllServicesIndexNav locale={locale as string} />
                 </div>
             </div>
 

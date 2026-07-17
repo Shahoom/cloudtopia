@@ -8,6 +8,7 @@ import {
     countryWhatsappUrl,
     type CountryLocale,
 } from '@/lib/seo/country-landing-pages'
+import { localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
@@ -26,9 +27,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const isArabic = locale === 'ar'
     const title = isArabic ? 'أفضل شركة برمجيات في العالم العربي | كلاود توبيا' : 'Best Software Company in the Arab World | CloudTopia'
+    // TM-11: kept within the ~165-char snippet budget (was 237/195).
     const description = isArabic
-        ? 'كلاود توبيا شركة برمجيات رائدة في العالم العربي. نبني مواقع ومتاجر إلكترونية وأنظمة CRM وERP وتطبيقات وحلول ذكاء اصطناعي للشركات في الخليج ومصر وبلاد الشام، بخبرة محلية ودعم بالعربية والإنجليزية.'
-        : 'CloudTopia is a leading software company across the Arab world. We build websites, online stores, CRM, ERP, web apps, and AI solutions for businesses in the Gulf, Egypt, and the Levant — with local expertise and Arabic + English support.'
+        ? 'كلاود توبيا شركة برمجيات رائدة في العالم العربي، تبني المواقع والمتاجر الإلكترونية وأنظمة CRM وERP وتطبيقات الويب وحلول الذكاء الاصطناعي بدعم عربي وإنجليزي.'
+        : 'CloudTopia is a leading software company in the Arab world, building websites, online stores, CRM, ERP, web apps and AI solutions with Arabic and English support.'
     const canonical = isArabic ? 'https://cloudtopia.net/ar/markets' : 'https://cloudtopia.net/markets'
     const images = ogImagesFor({ page: 'markets', locale })
 
@@ -45,6 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             siteName: 'CloudTopia',
             type: 'website',
             images,
+            locale: isArabic ? 'ar_SA' : 'en_US',
+            alternateLocale: isArabic ? 'en_US' : 'ar_SA',
         },
         twitter: {
             card: 'summary_large_image',
@@ -78,6 +82,18 @@ export default async function MarketsPage({ params }: PageProps) {
     const proofItems = isArabic
         ? ['أسعار محلية بعملتك', 'فريق يفهم سوقك المحلي', 'تواصل مباشر وسريع عبر واتساب']
         : ['Local pricing in your currency', 'A team that knows your market', 'Fast, direct WhatsApp contact']
+    // LINK-06: /markets was a dead-end hub (country links only). This band gives
+    // crawlers and visitors a path back into the main site: services pillars,
+    // industries, projects, and contact. Mirrors the CountryLandingPage footer.
+    const siteLinks: { href: string; label: string }[] = [
+        { href: '/services', label: isArabic ? 'الخدمات' : 'Services' },
+        { href: '/services/digital-presence', label: isArabic ? 'الحضور الرقمي' : 'Digital Presence' },
+        { href: '/services/business-systems-development', label: isArabic ? 'أنظمة الأعمال' : 'Business Systems' },
+        { href: '/services/web-applications', label: isArabic ? 'تطبيقات الويب' : 'Web Applications' },
+        { href: '/industries', label: isArabic ? 'القطاعات' : 'Industries' },
+        { href: '/projects', label: isArabic ? 'الأعمال' : 'Projects' },
+        { href: '/contact', label: isArabic ? 'تواصل معنا' : 'Contact' },
+    ]
 
     const itemListSchema = {
         '@context': 'https://schema.org',
@@ -265,6 +281,23 @@ export default async function MarketsPage({ params }: PageProps) {
                     </Link>
                 </div>
             </section>
+
+            <footer className="border-t border-neutral-950 bg-white px-4 py-8 sm:px-6 lg:px-8">
+                <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm font-black text-neutral-600 md:flex-row md:items-center md:justify-between">
+                    <p>{isArabic ? 'استكشف كلاود توبيا' : 'Explore CloudTopia'}</p>
+                    <nav aria-label={isArabic ? 'روابط الموقع الرئيسي' : 'Main site links'} className="flex flex-wrap gap-x-4 gap-y-2">
+                        {siteLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={localePath(locale, link.href)}
+                                className="transition-colors duration-200 hover:text-neutral-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </nav>
+                </div>
+            </footer>
         </main>
     )
 }

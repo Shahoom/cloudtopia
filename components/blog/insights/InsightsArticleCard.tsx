@@ -41,12 +41,12 @@ export function InsightsArticleCard({ post, locale }: { post: BlogPostSummary; l
               {post.category.name}
             </Kicker>
           )}
-          <h3
+          <h2
             className="ed-serif line-clamp-2 transition-colors group-hover:text-[color:var(--ed-accent-ink)]"
             style={{ fontSize: '1.3rem', lineHeight: 1.22 }}
           >
             {post.title}
-          </h3>
+          </h2>
           <p className="mt-2 line-clamp-2 text-[14px] leading-relaxed" style={{ color: 'var(--ed-graphite)' }}>
             {post.shortExcerpt || post.excerpt}
           </p>

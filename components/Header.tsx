@@ -60,10 +60,12 @@ function MenuPanel({
   children,
   tone = 'light',
   width = 'w-[min(1320px,calc(100vw-2rem))]',
+  hidden = false,
 }: {
   children: React.ReactNode
   tone?: 'light' | 'dark'
   width?: string
+  hidden?: boolean
 }) {
   // Solid (non-glass) surface on purpose: a backdrop-filter here would break
   // because the sticky header becomes a backdrop-filter ancestor once scrolled
@@ -74,7 +76,7 @@ function MenuPanel({
       ? 'border-white/10 bg-[#0a0e1a] text-white shadow-[0_28px_80px_rgba(0,0,0,0.55)]'
       : 'border-slate-200 bg-white text-eerie shadow-[0_28px_80px_rgba(27,27,35,0.18)]'
   return (
-    <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3`}>
+    <div className={`absolute left-1/2 top-full ${width} -translate-x-1/2 pt-3${hidden ? ' hidden' : ''}`}>
       <div className={`relative flex max-h-[calc(100vh-6rem)] flex-col overflow-hidden rounded-2xl border ${surface}`}>
         <div className="overflow-y-auto p-4">
           {children}
@@ -84,7 +86,7 @@ function MenuPanel({
   )
 }
 
-function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: string; onClose: () => void }) {
+function MegaMenu({ type, locale, active, onClose }: { type: MegaMenuType; locale: string; active: boolean; onClose: () => void }) {
   const l = (path: string) => localePath(locale, path)
 
   if (type === 'services') {
@@ -102,7 +104,7 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
     const cats = headerServiceCategories(locale)
 
     return (
-      <MenuPanel>
+      <MenuPanel hidden={!active}>
         <div className="mb-4 grid gap-4 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
@@ -172,7 +174,7 @@ function MegaMenu({ type, locale, onClose }: { type: MegaMenuType; locale: strin
       }
 
     return (
-      <MenuPanel>
+      <MenuPanel hidden={!active}>
         <div className="mb-3 grid gap-4 border-b border-slate-200 pb-3 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <p className="text-2xl font-black leading-none text-eerie">{copy.title}</p>
@@ -528,7 +530,14 @@ export default function Header() {
                   )
                 })}
               </div>
-              {activeMegaMenu && <MegaMenu type={activeMegaMenu} locale={locale} onClose={() => setActiveMegaMenu(null)} />}
+              {/* LINK-07: both panels stay mounted so their pillar/industry
+                  links exist in the SSR HTML for crawlers. Visibility is CSS-
+                  gated (display:none via `hidden`) instead of conditional
+                  mounting — a hidden panel receives no pointer events and is
+                  out of the a11y tree, so hover/focus/Escape/scroll behavior
+                  is unchanged. */}
+              <MegaMenu type="services" active={activeMegaMenu === 'services'} locale={locale} onClose={() => setActiveMegaMenu(null)} />
+              <MegaMenu type="industries" active={activeMegaMenu === 'industries'} locale={locale} onClose={() => setActiveMegaMenu(null)} />
             </div>
           </div>
 

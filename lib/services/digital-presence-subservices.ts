@@ -755,7 +755,7 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
     "pillarName": "Social Media Management (SMM)",
     "seo": {
       "title": "Email Marketing Automation | CloudTopia",
-      "description": "Automated email flows, newsletters, and lifecycle campaigns for businesses in Oman and the GCC — bilingual, segmented, and built on a platform you own. Book a free consultation and preview."
+      "description": "Automated email flows, newsletters, and lifecycle campaigns for Oman and GCC businesses — bilingual, segmented, and on a platform you own. Free consultation."
     },
     "hero": {
       "badge": "Email Marketing Automation",
@@ -2139,7 +2139,7 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
     "pillarName": "Social Media Management (SMM)",
     "seo": {
       "title": "Paid Ads & Lead Generation | CloudTopia",
-      "description": "Paid advertising and lead generation on Google, Meta, and LinkedIn for businesses in Oman and the GCC — bilingual campaigns, tracked conversions, and accounts you own. Book a free consultation."
+      "description": "Paid ads and lead generation on Google, Meta, and LinkedIn for Oman & GCC businesses — bilingual campaigns, tracked conversions, accounts you own. Free consultation."
     },
     "hero": {
       "badge": "Paid Ads & Lead Generation",
@@ -2323,7 +2323,7 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
     "pillarName": "Website Development",
     "seo": {
       "title": "Real Estate Website Development | CloudTopia",
-      "description": "Property and real estate websites for developers and agencies in Oman and the GCC — searchable listings, multilingual, and 100% owned by you. Book a free consultation and preview."
+      "description": "Property and real estate websites for developers and agencies in Oman and the GCC — searchable listings, multilingual, and 100% owned by you. Free consultation."
     },
     "hero": {
       "badge": "Real Estate Websites",
@@ -3003,7 +3003,7 @@ export const generatedDPSubServices: Record<string, DPSubServiceContent> = {
     "pillarName": "UI/UX Design & Branding",
     "seo": {
       "title": "UI/UX Design & Testing | CloudTopia",
-      "description": "Interface design, UX wireframing, and usability testing for websites and apps in Oman and the GCC — research-led, bilingual, and validated with real users. Book a free consultation and preview."
+      "description": "UI design, UX wireframing, and usability testing for websites and apps in Oman and the GCC — research-led, bilingual, validated with real users. Free consultation."
     },
     "hero": {
       "badge": "UI/UX Design & Testing",

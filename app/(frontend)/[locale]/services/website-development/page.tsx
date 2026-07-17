@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import WebsiteDesignClient from './WebsiteDesignClient'
@@ -38,7 +39,10 @@ export default async function WebsiteDesignPage({
     return (
         <>
             <div className="sr-only" aria-hidden="false">
-                <p>{title}</p>
+                {/* Single page H1: clean server-rendered text. The visible animated
+                    heading (WebDesignHero) is intentionally NOT an h1 — its rotating
+                    words crawl as garbled concatenated text. */}
+                <h1>{title}</h1>
                 {desc && <p>{desc}</p>}
                 <p>
                     <a href={canonicalUrl(locale, '/contact')}>Start Your Project</a>
@@ -46,6 +50,7 @@ export default async function WebsiteDesignPage({
             </div>
             <WebsiteDesignClient t={t} />
             <ServiceFAQSection slug="website-design" locale={locale} />
+            <SearchKeywordsSection path="/services/website-development" locale={locale} />
         </>
     )
 }

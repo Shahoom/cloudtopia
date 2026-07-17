@@ -44,48 +44,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     }
 }
 
-export default async function ProjectsLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
-    const { locale = 'en' } = await params
-    const breadcrumbNames: Record<string, { home: string; projects: string }> = {
-        en: { home: 'Home', projects: 'Projects' },
-        ar: { home: 'الرئيسية', projects: 'المشاريع' },
-    }
-    const names = breadcrumbNames[locale] || breadcrumbNames.en
-
-    return (
-        <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: names.home, item: canonicalUrl(locale, '/') },
-                            { '@type': 'ListItem', position: 2, name: names.projects, item: canonicalUrl(locale, '/projects') },
-                        ],
-                    }),
-                }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'CollectionPage',
-                        name: 'CloudTopia Projects Portfolio',
-                        description: 'Explore our portfolio of successful digital transformation projects.',
-                        url: canonicalUrl(locale, '/projects'),
-                        inLanguage: locale === 'ar' ? 'ar' : 'en',
-                        mainEntity: {
-                            '@type': 'Organization',
-                            name: 'CloudTopia',
-                            url: 'https://cloudtopia.net',
-                        },
-                    }),
-                }}
-            />
-            {children}
-        </>
-    )
+// JSONLD-6: this layout wraps the 16 project detail pages too, so the 2-item
+// BreadcrumbList and listing CollectionPage that used to render here leaked
+// onto every detail page. The breadcrumb moved to projects/page.tsx (the
+// listing already emits its own localized CollectionPage there).
+export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
+    return <>{children}</>
 }

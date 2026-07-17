@@ -1,4 +1,6 @@
 import type { LocaleKey, LocalizedText } from './industries'
+import { businessSystemsPillarSeoDescriptions } from '@/lib/services/business-systems'
+import { webAppPillarSeoDescriptions } from '@/lib/services/web-applications'
 
 export type ServiceDetail = {
     slug: string
@@ -221,6 +223,65 @@ const arabicServiceNames: Record<string, string> = {
     'email-marketing-automation': 'أتمتة التسويق بالبريد الإلكتروني',
 }
 
+// Per-slug meta descriptions for the 13 Mobile App Development sub-services.
+// The old single shared template rendered 171–209ch near-duplicate descriptions
+// across every /services/app-development/* page; each slug now leads with its
+// own differentiator (platform, use-case, or deliverable). 140–165 chars each.
+const mobileAppServiceDescriptions: Record<string, { en: string; ar: string }> = {
+    'ios-app-development': {
+        en: 'Native iOS app development in Swift for iPhone and iPad — App Store-ready builds with Arabic-first, RTL-ready UX and full code ownership for Gulf businesses.',
+        ar: 'تطوير تطبيقات iOS أصلية بلغة Swift لأجهزة iPhone وiPad — إصدارات جاهزة لمتجر App Store بتجربة عربية أولاً وملكية كاملة للكود لشركات الخليج. استشارة مجانية.',
+    },
+    'android-app-development': {
+        en: 'Android app development in Kotlin for phones and tablets — Google Play-ready releases with bilingual Arabic + English UX and a backend your team fully owns.',
+        ar: 'تطوير تطبيقات أندرويد بلغة Kotlin للهواتف والأجهزة اللوحية — إصدارات جاهزة لمتجر Google Play بتجربة ثنائية اللغة وخلفية يملكها فريقك بالكامل.',
+    },
+    'cross-platform-app-development': {
+        en: 'Cross-platform app development — one codebase shipping to iOS and Android at once, cutting cost and time to market for Gulf businesses without losing quality.',
+        ar: 'تطوير تطبيقات متعددة المنصات — كود واحد يصل إلى iOS وأندرويد معاً، يخفّض التكلفة ويسرّع الإطلاق لشركات الخليج دون التنازل عن الجودة. احجز استشارتك المجانية.',
+    },
+    'flutter-app-development': {
+        en: 'Flutter app development — a single Dart codebase delivering near-native speed and pixel-perfect Arabic RTL interfaces on iOS and Android, fully owned by you.',
+        ar: 'تطوير تطبيقات Flutter — كود Dart واحد يقدّم أداءً قريباً من الأصلي وواجهات عربية RTL متقنة على iOS وأندرويد، بملكية كاملة لشركتك. استشارة مجانية.',
+    },
+    'react-native-app-development': {
+        en: 'React Native app development — shared JavaScript codebase for iOS and Android that your web team can extend, with native performance where it matters.',
+        ar: 'تطوير تطبيقات React Native — كود JavaScript مشترك لنظامي iOS وأندرويد يستطيع فريق الويب لديك تطويره، بأداء أصلي حيث يهم الأداء. احجز استشارتك المجانية.',
+    },
+    'mvp-app-development': {
+        en: 'MVP app development for startups — validate your idea with a focused, launch-ready mobile product in weeks, built to scale into a full app without a rewrite.',
+        ar: 'تطوير تطبيقات MVP للشركات الناشئة — اختبر فكرتك بمنتج جوال مركّز جاهز للإطلاق خلال أسابيع، مبني ليتوسع إلى تطبيق كامل دون إعادة كتابة. استشارة مجانية.',
+    },
+    'business-mobile-app-development': {
+        en: 'Business mobile apps for staff and operations — field teams, approvals, and internal workflows on one secure app connected to your systems and dashboards.',
+        ar: 'تطبيقات جوال للأعمال والموظفين والعمليات — فرق ميدانية وموافقات وسير عمل داخلي في تطبيق آمن واحد متصل بأنظمتك ولوحات المتابعة لديك. احجز استشارتك المجانية.',
+    },
+    'customer-app-development': {
+        en: 'Customer app development — self-service, loyalty, and ordering experiences that keep your brand on Gulf customers’ phones, in Arabic and English.',
+        ar: 'تطوير تطبيقات العملاء — تجارب خدمة ذاتية وولاء وطلبات تُبقي علامتك حاضرة على هواتف عملائك في الخليج، بالعربية والإنجليزية وبملكية كاملة. استشارة مجانية.',
+    },
+    'booking-app-development': {
+        en: 'Booking app development — appointments, schedules, reminders, and payments in one mobile flow for clinics, salons, and service businesses across the Gulf.',
+        ar: 'تطوير تطبيقات الحجز — مواعيد وجداول وتذكيرات ومدفوعات في مسار جوال واحد للعيادات والصالونات وشركات الخدمات في مختلف أنحاء الخليج. احجز استشارتك المجانية.',
+    },
+    'delivery-order-app-development': {
+        en: 'Delivery and order app development — customer ordering, driver tracking, and dispatch dashboards working as one system for restaurants and retail in the Gulf.',
+        ar: 'تطوير تطبيقات الطلبات والتوصيل — طلبات العملاء وتتبع السائقين ولوحات إسناد المهام تعمل كنظام واحد للمطاعم وقطاع التجزئة في الخليج. استشارة مجانية.',
+    },
+    'app-backend-api-development': {
+        en: 'App backend and API development — secure authentication, databases, and cloud infrastructure that keep your mobile app fast, stable, and ready to scale.',
+        ar: 'تطوير خلفيات التطبيقات وواجهات API — مصادقة آمنة وقواعد بيانات وبنية سحابية تُبقي تطبيقك سريعاً ومستقراً وجاهزاً للتوسع مع نمو أعمالك. احجز استشارتك المجانية.',
+    },
+    'app-store-launch-support': {
+        en: 'App store launch support — listings, screenshots, review compliance, and ASO for the App Store and Google Play so your app ships smoothly and gets found.',
+        ar: 'دعم إطلاق التطبيقات في المتاجر — صفحات العرض والصور والامتثال لمتطلبات المراجعة وتحسين الظهور ASO في App Store وGoogle Play ليصل تطبيقك بسلاسة.',
+    },
+    'mobile-app-maintenance': {
+        en: 'Mobile app maintenance — OS updates, bug fixes, monitoring, and performance tuning that keep your iOS and Android apps stable long after launch day.',
+        ar: 'صيانة تطبيقات الجوال — تحديثات أنظمة التشغيل وإصلاح الأخطاء والمراقبة وتحسين الأداء لتبقى تطبيقات iOS وأندرويد لديك مستقرة بعد الإطلاق بوقت طويل.',
+    },
+}
+
 function makeService(categorySlug: string, slug: string, englishName: string): ServiceDetail {
     const category = categoryCopy[categorySlug]
     const arabicName = arabicServiceNames[slug] || englishName
@@ -295,11 +356,13 @@ function makeService(categorySlug: string, slug: string, englishName: string): S
         name: t(englishName, arabicName),
         description: t(
             isMobileAppService
-                ? `${englishName} from CloudTopia gives companies a premium mobile product path with app UX, backend architecture, Arabic-first experience, integrations, launch support, and long-term ownership.`
+                ? (mobileAppServiceDescriptions[slug]?.en
+                    ?? `${englishName} from CloudTopia — Arabic-first mobile delivery covering app UX, backend, integrations, launch support, and full long-term ownership.`)
                 : (descByCategory[categorySlug]?.en
                     ?? `${englishName} from CloudTopia — fixed-scope, bilingual Arabic + English delivery with practical milestones, clear ownership, and long-term support.`),
             isMobileAppService
-                ? `خدمة ${arabicName} من كلاود توبيا تمنح الشركات مسار تطبيق جوال احترافي يشمل تجربة المستخدم، بنية الخلفية، دعم العربية، التكاملات، الإطلاق، وملكية طويلة الأمد.`
+                ? (mobileAppServiceDescriptions[slug]?.ar
+                    ?? `خدمة ${arabicName} من كلاود توبيا — تسليم تطبيقات جوال عربية أولاً يشمل تجربة الاستخدام والخلفية والتكاملات والإطلاق وملكية كاملة طويلة الأمد.`)
                 : (descByCategory[categorySlug]?.ar
                     ?? `خدمة ${arabicName} من كلاود توبيا — تسليم ثنائي اللغة بنطاق محدد ومراحل عملية وملكية واضحة ودعم طويل الأمد.`)),
         features: defaultFeatures,
@@ -612,6 +675,24 @@ const arabicOutcomeSetsByCategory: Record<string, string[]> = {
         'ظهور أقوى في البحث والقنوات الرقمية',
         'نمو رقمي قابل للقياس والتطوير',
     ],
+}
+
+/**
+ * Dedicated 140–165ch meta descriptions for structured pillars whose UI card
+ * blurb (~50–100 chars) previously doubled as the meta description (Business
+ * Systems pillars + web-app sub-pillars). Route metadata should try this before
+ * falling back to `pillar.description`:
+ *   `structuredPillarSeoDescription(slug, locale) ?? localizedDP(pillar.description, locale)`
+ */
+const structuredPillarSeoDescriptions: Record<string, { en: string; ar: string }> = {
+    ...businessSystemsPillarSeoDescriptions,
+    ...webAppPillarSeoDescriptions,
+}
+
+export function structuredPillarSeoDescription(slug: string, locale: string): string | null {
+    const entry = structuredPillarSeoDescriptions[slug]
+    if (!entry) return null
+    return locale === 'ar' ? entry.ar : entry.en
 }
 
 export function localizedPackageName(packageName: string, locale: string): string {

@@ -6,9 +6,10 @@ import { Breadcrumbs } from '@/components/blog/Breadcrumbs'
 import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
 import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getBlogIndexData, getBlogTags } from '@/lib/blog/data'
-import { buildSelfHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
+import { buildHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -24,9 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // No hardcoded brand — the layout template adds "| CloudTopia" once (the EN
   // fallback used to bake it in, doubling the suffix).
   const title = stripBrandSuffix(locale === 'ar' ? `وسم ${tag.name} | المقالات` : `${tag.name} Articles`)
+  // TM-11: the old one-liner ("CloudTopia articles tagged with X.") was far
+  // below the snippet budget — expanded to a natural 120-160ch description
+  // that still names the tag.
   const description = locale === 'ar'
-    ? `مقالات CloudTopia الموسومة بـ ${tag.name}.`
-    : `CloudTopia articles tagged with ${tag.name}.`
+    ? `مقالات كلاود توبيا تحت وسم ${tag.name}: أدلة عملية ورؤى حول المواقع والأنظمة والأتمتة والذكاء الاصطناعي للشركات في الخليج والعالم العربي.`
+    : `CloudTopia articles tagged ${tag.name} — practical guides on websites, systems, automation and AI for businesses in the GCC and Arab world.`
 
   return {
     title,
@@ -36,11 +40,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       url: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
       type: 'website',
+      // Page-level openGraph shallow-merges over the layout's, dropping its
+      // og:locale — restate it here.
+      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+      alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+      images: ogImagesFor({ page: 'articles', locale }),
     },
     alternates: {
       canonical: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
-      // Self + x-default only — no Arabic tag pages exist to alternate to.
-      languages: buildSelfHreflangMap(locale, `/articles/tag/${tag.slug}`),
+      // Tag slugs are shared across locales and both EN/AR tag pages resolve,
+      // so advertise the full en/ar/x-default set.
+      languages: buildHreflangMap(`/articles/tag/${tag.slug}`),
     },
   }
 }

@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('ecommerce-solutions', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function ({ children, params }: { children: React.ReactNode
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'E-Commerce Solutions', path: '/services/ecommerce-development' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'تطوير المتاجر الإلكترونية' : 'E-Commerce Solutions', path: '/services/ecommerce-development' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'E-Commerce Solutions & Online Stores',
-                        description: 'Full e-commerce stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA e-invoicing, and Arabic + English checkout.',
-                        path: '/services/ecommerce-development',
-                        serviceType: 'E-Commerce Development',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'حلول التجارة الإلكترونية وتطوير المتاجر' : 'E-Commerce Solutions & Online Stores',
+                            description: isArabic
+                                ? 'متاجر إلكترونية متكاملة تدعم مدى وApple Pay وSTC Pay وتابي وتمارا، مع فوترة إلكترونية متوافقة مع هيئة الزكاة والضريبة والجمارك (ZATCA) وتجربة شراء بالعربية والإنجليزية.'
+                                : 'Full e-commerce stores with Mada, Apple Pay, STC Pay, Tabby, Tamara, ZATCA e-invoicing, and Arabic + English checkout.',
+                            path: '/services/ecommerce-development',
+                            serviceType: isArabic ? 'تطوير التجارة الإلكترونية' : 'E-Commerce Development',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

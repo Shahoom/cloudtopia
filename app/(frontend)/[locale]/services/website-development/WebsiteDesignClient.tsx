@@ -129,7 +129,10 @@ function WebDesignHero({ t }: { t: any }) {
       </Floating>
 
       <div className="flex flex-col justify-center items-center w-[250px] sm:w-[300px] md:w-[500px] lg:w-[700px] z-50 pointer-events-auto">
-        <motion.h1
+        {/* Deliberately a div, not h1: the rotating words would crawl as garbled
+            concatenated text. The page's sr-only server-rendered <h1> (page.tsx)
+            is the single clean H1. */}
+        <motion.div
           className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-center w-full justify-center items-center flex-col flex whitespace-pre leading-tight font-bold tracking-tight space-y-1 md:space-y-4"
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
@@ -158,7 +161,7 @@ function WebDesignHero({ t }: { t: any }) {
               />
             </motion.span>
           </LayoutGroup>
-        </motion.h1>
+        </motion.div>
 
         <motion.p
           className="text-lg sm:text-lg md:text-xl lg:text-2xl text-center text-slate-600 pt-4 sm:pt-8 md:pt-10 lg:pt-12 max-w-2xl"

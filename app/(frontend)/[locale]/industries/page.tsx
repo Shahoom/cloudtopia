@@ -8,6 +8,7 @@ import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { IndustriesExperience } from '@/components/industries/IndustriesExperience'
 import { IndustriesIndex } from '@/components/industries/IndustriesIndex'
 import { buildOrganizationRef } from '@/lib/seo/schema'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import { getIndustriesPageContent } from '@/lib/seo/industries-page'
 import styles from '@/components/industries/industries-page.module.css'
 
@@ -208,6 +209,8 @@ export default async function IndustriesPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      <SearchKeywordsSection path="/industries" locale={locale} />
     </div>
   )
 }

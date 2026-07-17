@@ -5,11 +5,6 @@ export default async function ServicesLayout({ children, params }: { children: R
     const { locale = 'en' } = await params
     const l = locale ?? 'en'
 
-    const breadcrumbNames: Record<string, { home: string, services: string }> = {
-        en: { home: 'Home', services: 'Services' },
-        ar: { home: 'الرئيسية', services: 'خدماتنا' },
-    }
-
     const itemListContent: Record<string, { name: string, desc: string, items: string[] }> = {
         en: {
             name: 'CloudTopia Digital Services',
@@ -23,24 +18,10 @@ export default async function ServicesLayout({ children, params }: { children: R
         },
     }
 
-    const b = breadcrumbNames[l] || breadcrumbNames.en
     const i = itemListContent[l] || itemListContent.en
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            { '@type': 'ListItem', position: 1, name: b.home, item: canonicalUrl(l, '/') },
-                            { '@type': 'ListItem', position: 2, name: b.services, item: canonicalUrl(l, '/services') },
-                        ],
-                    }),
-                }}
-            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

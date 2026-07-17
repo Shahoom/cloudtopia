@@ -79,9 +79,9 @@ export const professionalServicesDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Professional-Services Systems — Client Portals, Projects & Billing',
+        title: 'Professional-Services Software & Client Portals',
         description:
-          'CloudTopia engineers bilingual professional-services systems: client and engagement portals, project and resource management, time and billing, proposal and CRM pipelines, and knowledge bases — from first enquiry through delivery and reporting.',
+          'CloudTopia engineers bilingual professional-services systems: client portals, project and resource management, time and billing, CRM pipelines, and knowledge bases.',
       },
       breadcrumbLabel: 'Professional Services',
       hero: {
@@ -492,9 +492,9 @@ export const professionalServicesDefinition = {
     },
     ar: {
       seo: {
-        title: 'أنظمة الخدمات المهنية — بوابات العملاء والمشاريع والفوترة',
+        title: 'أنظمة الخدمات المهنية: بوابات ومشاريع وفوترة',
         description:
-          'تهندس كلاود توبيا أنظمة خدمات مهنية ثنائية اللغة: بوابات عملاء وارتباطات، وإدارة مشاريع وموارد، وتتبع وقت وفوترة، ومسارات مقترحات وإدارة علاقات، وقواعد معرفة—من أول استفسار حتى التنفيذ والتقرير.',
+          'تبني كلاود توبيا أنظمة خدمات مهنية ثنائية اللغة: بوابات عملاء، وإدارة مشاريع وموارد، وتتبع الوقت والفوترة، ومسارات مقترحات وإدارة علاقات، وقواعد معرفية.',
       },
       breadcrumbLabel: 'الخدمات المهنية',
       hero: {

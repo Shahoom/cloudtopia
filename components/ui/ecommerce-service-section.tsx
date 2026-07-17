@@ -241,6 +241,9 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en", t: overr
   const t = overrideT || staticT
   const Arrow = isRTL ? ArrowLeft : ArrowRight
 
+  const badgeVal = t?.badge || staticT.badge
+  const heroTitleVal = t?.heroTitle || staticT.heroTitle
+  const heroHighlightVal = t?.heroHighlight || staticT.heroHighlight
   const heroDescriptionVal = t?.heroDescription || staticT.heroDescription
   const featuresTitleVal = t?.featuresTitle || staticT.featuresTitle
   const featuresSubtitleVal = t?.featuresSubtitle || staticT.featuresSubtitle
@@ -265,24 +268,25 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en", t: overr
         <div className="max-w-5xl mx-auto text-center">
           <AnimatedSection>
             <span className="inline-block px-4 py-2 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-600 mb-6">
-              {t.badge}
+              {badgeVal}
             </span>
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            {/* Page-level h1 for /ecommerce-solutions. Other section
-                titles in the parent page (in the .map() loop) are h2. */}
-            <h1 id="ecommerce-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
-              {t.heroTitle}{" "}
+            {/* Deliberately a <p>, not <h1>: the page (ecommerce-development/page.tsx)
+                already server-renders the single populated <h1>. Other section
+                titles below are h2. */}
+            <p id="ecommerce-service-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
+              {heroTitleVal}{" "}
               <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
-                {t.heroHighlight}
+                {heroHighlightVal}
               </span>
-            </h1>
+            </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              {t.heroDescription}
+              {heroDescriptionVal}
             </p>
           </AnimatedSection>
         </div>
@@ -390,56 +394,9 @@ export function EcommerceServiceSection({ isRTL = false, locale = "en", t: overr
         </div>
       </div>
 
-      {/* Schema.org structured data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": isRTL ? "تطوير التجارة الإلكترونية والمتاجر الإلكترونية" : "E-Commerce Development & Online Store Solutions",
-            "name": isRTL ? "خدمات التجارة الإلكترونية - كلاود توبيا" : "E-Commerce Solutions - CloudTopia",
-            "description": heroDescriptionVal,
-            "provider": {
-              "@type": "Organization",
-              "@id": "https://cloudtopia.net/#organization",
-              "name": "CloudTopia",
-              "url": "https://cloudtopia.net"
-            },
-            "areaServed": [
-              { "@type": "Country", "name": "Saudi Arabia" },
-              { "@type": "Country", "name": "United Arab Emirates" },
-              { "@type": "Country", "name": "Qatar" },
-              { "@type": "Country", "name": "Kuwait" },
-              { "@type": "Country", "name": "Bahrain" },
-              { "@type": "Country", "name": "Oman" },
-              { "@type": "Country", "name": "Egypt" },
-              { "@type": "Country", "name": "Jordan" }
-            ],
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": isRTL ? "خدمات تطوير التجارة الإلكترونية" : "E-Commerce Development Services",
-              "itemListElement": featuresVal.map((feature: any, index: number) => ({
-                "@type": "Offer",
-                "position": index + 1,
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": feature.title,
-                  "description": feature.description
-                }
-              }))
-            },
-            "audience": {
-              "@type": "BusinessAudience",
-              "audienceType": "Retailers, Wholesalers, D2C Brands, B2B Companies, Startups, SMEs, Enterprises"
-            },
-            "potentialAction": {
-              "@type": "ContactAction",
-              "target": "https://cloudtopia.net/contact"
-            }
-          })
-        }}
-      />
+      {/* Service JSON-LD intentionally omitted here: the services layout emits
+          the canonical Service node — a second hardcoded one conflicted with it
+          (and was English-only on AR pages). */}
     </section>
   )
 }

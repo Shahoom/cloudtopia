@@ -11,6 +11,27 @@ import type { DPGroup } from './digital-presence'
 
 const t = (en: string, ar: string) => ({ en, ar })
 
+/**
+ * Dedicated meta descriptions for the Business Systems pillar pages (140–165
+ * chars, EN + AR). The pillar `description` above each card is a short UI blurb
+ * (~50–100 chars) and previously doubled as the meta description — too thin for
+ * SERPs. Consumed via `structuredPillarSeoDescription()` in `@/lib/seo/services`.
+ */
+export const businessSystemsPillarSeoDescriptions: Record<string, { en: string; ar: string }> = {
+    'business-management-systems': {
+        en: 'Custom order, sales, HR, and inventory management systems for Gulf businesses — one connected operational backbone, bilingual and fully owned by your team.',
+        ar: 'أنظمة مخصصة لإدارة الطلبات والمبيعات والموارد البشرية والمخزون لشركات الخليج — عمود تشغيلي واحد مترابط ثنائي اللغة يملكه فريقك بالكامل. استشارة مجانية.',
+    },
+    'business-process-automation': {
+        en: 'Business process automation for Gulf companies — proposals, invoicing, approvals, and follow-ups run themselves across your tools, connected by APIs you own.',
+        ar: 'أتمتة عمليات الأعمال لشركات الخليج — العروض والفواتير والموافقات والمتابعات تسير تلقائياً عبر أدواتك بتكاملات API تملكها شركتك بالكامل. استشارة مجانية.',
+    },
+    'custom-erp-crm-solutions': {
+        en: 'Custom ERP and CRM systems built around how your Gulf business actually operates — Odoo implementation, sales pipelines, and migrations, fully owned by you.',
+        ar: 'أنظمة ERP وCRM مخصصة تُبنى حول طريقة عمل شركتك الفعلية — تنفيذ Odoo وخطوط مبيعات وترحيل الأنظمة القديمة بملكية كاملة لفريقك. استشارة مجانية.',
+    },
+}
+
 export const businessSystemsGroups: DPGroup[] = [
     {
         slug: 'operational-efficiency',

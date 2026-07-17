@@ -74,9 +74,9 @@ export const fintechDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'FinTech Platform Engineering — Payments, Banking & Ledgers',
+        title: 'FinTech Software: Payments, Banking & Ledgers',
         description:
-          'CloudTopia engineers bilingual fintech systems: payment and wallet platforms, core banking and ledgers, lending engines, plus the security, integration, and observability layers around them.',
+          'CloudTopia engineers bilingual fintech systems: payment and wallet platforms, core banking and ledgers, lending engines, plus security and integration layers.',
       },
       breadcrumbLabel: 'FinTech',
       hero: {
@@ -487,7 +487,7 @@ export const fintechDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة منصات التقنية المالية — المدفوعات والبنوك ودفاتر الأستاذ',
+        title: 'أنظمة التقنية المالية: مدفوعات وبنوك ومحافظ',
         description:
           'تهندس كلاود توبيا أنظمة تقنية مالية ثنائية اللغة: منصات مدفوعات ومحافظ، وبنوك أساسية ودفاتر أستاذ، ومحركات إقراض، مع طبقات الأمان والتكامل والمراقبة المحيطة بها.',
       },

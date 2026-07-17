@@ -73,6 +73,22 @@ import { locales } from '@/lib/i18n/config'
 import { getPublishedCMSPages, pageToSitemapEntry } from '@/lib/cms/content'
 import { getBlogSitemapEntries } from '@/lib/blog/data'
 
+// CMS Pages rows whose TOP-LEVEL public URL (/<slug>, /ar/<slug>) 301s to a
+// /services/* canonical (proxy.ts: RELOCATED_UNDER_SERVICES + the bare
+// /web-applications hub redirect). Emitting them puts redirecting URLs in the
+// sitemap, so they are dropped; the /services/* canonical targets are still
+// emitted via guaranteedStaticRoutes + allServiceDetailSlugs below.
+const redirectedTopLevelCmsSlugs = [
+    'website-design',
+    'website-development',
+    'ecommerce-solutions',
+    'ecommerce-development',
+    'web-applications',
+    'content-creation',
+    'social-media-marketing',
+    'business-systems-development',
+]
+
 export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitemap> {
     const pages = await getPublishedCMSPages()
     if (pages.length === 0) return buildSitemapEntries()
@@ -80,28 +96,59 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
     const supportedLocales = new Set<string>(locales)
     const entries = pages
         // `labs` is a stale CMS Pages row with no matching route — it 404s, so
-        // keep it out of the sitemap alongside the other non-page slugs.
+        // keep it out of the sitemap alongside the other non-page slugs and the
+        // top-level legacy slugs that 301 into /services/*.
         .filter((page: any) =>
             supportedLocales.has(page.locale) &&
-            !['blog', 'locations', 'labs'].includes(page.slug) &&
+            !['blog', 'locations', 'labs', ...redirectedTopLevelCmsSlugs].includes(page.slug) &&
             !isResolverOwnedIndustryCmsSlug(page.slug),
         )
         .map(pageToSitemapEntry)
     const projectIds = await getAllProjectIdsFromCMS()
-    // Stable, recent lastmod for the code-defined data-driven pages. This was
-    // `new Date()` per request, which stamped every URL with the fetch time on
-    // each crawl and taught Google to distrust the freshness signal. File mtimes
-    // are no good either — Vercel's traced source files report a fixed 2018
-    // mtime — so use the newest CMS content date: real, recent, and only moves
-    // when content actually changes.
+    // Stable, recent lastmod for CMS-driven sections. This was `new Date()`
+    // per request, which stamped every URL with the fetch time on each crawl
+    // and taught Google to distrust the freshness signal.
     const cmsLatest = entries.reduce((m: Date, e) => {
         const d = e.lastModified ? new Date(e.lastModified) : null
         return d && !isNaN(d.getTime()) && d > m ? d : m
     }, new Date(0))
     const stableLastmod = cmsLatest.getTime() > 0 ? cmsLatest : new Date()
-    const lastModified = stableLastmod
-    const servicesMtime = stableLastmod
-    const countriesMtime = stableLastmod
+    // Per-SECTION lastmod for the code-defined pages, so a blog edit no longer
+    // bumps every service/country URL. Prefer the content module's real mtime;
+    // on Vercel traced source files report a fixed 2018 mtime, so anything
+    // before the floor is discarded and a hand-maintained constant is used
+    // instead. Bump the constant when that section's content module changes —
+    // a stable, honest per-section date beats a globally moving one.
+    const MTIME_FLOOR = Date.parse('2024-01-01T00:00:00Z')
+    const contentMtime = (fallback: Date, ...relPaths: string[]): Date => {
+        let newest: Date | null = null
+        for (const rel of relPaths) {
+            try {
+                const p = path.join(/*turbopackIgnore: true*/ process.cwd(), rel)
+                if (!fs.existsSync(p)) continue
+                const m = fs.statSync(p).mtime
+                if (m.getTime() < MTIME_FLOOR) continue
+                if (!newest || m > newest) newest = m
+            } catch { /* ignore */ }
+        }
+        return newest ?? fallback
+    }
+    const lastModified = contentMtime(
+        new Date('2026-07-09T00:00:00Z'),
+        'lib/i18n/translations/en.ts',
+        'lib/i18n/translations/ar.ts',
+    )
+    const servicesMtime = contentMtime(
+        new Date('2026-07-09T00:00:00Z'),
+        'lib/seo/services.ts',
+        'lib/services/structured-catalog.ts',
+        'lib/services/digital-presence-content.ts',
+        'lib/services/business-systems-content.ts',
+    )
+    const countriesMtime = contentMtime(
+        new Date('2026-07-17T00:00:00Z'),
+        'lib/seo/country-landing-pages.ts',
+    )
     // Core static + bespoke service-landing routes that must always be present in
     // the sitemap, regardless of whether a matching CMS Pages row exists. Each is
     // dedup-guarded below so it never duplicates an entry already produced from CMS
@@ -154,7 +201,9 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         locales.forEach((loc) => {
             entries.push({
                 url: canonicalUrl(loc, `/projects/${projectId}`),
-                lastModified,
+                // Projects are CMS rows, so their section tracks the newest CMS
+                // content date rather than a code-module mtime.
+                lastModified: stableLastmod,
                 changeFrequency: 'monthly',
                 priority: 0.8,
                 alternates: { languages },

@@ -328,7 +328,10 @@ export async function getPageBundle(locale: Locale, slug = '/') {
     settings: buildSiteSettings(dictionary),
     page,
     projects,
-    seo: page?.seo || buildPageSEO(locale, slug, dictionary),
+    // `synthesized` marks SEO invented from dictionary/hero copy (no real CMS
+    // page record) so metadata.ts can rank a page's explicit code fallback
+    // above it — synthesized values must never beat hand-written ones.
+    seo: page?.seo || { ...buildPageSEO(locale, slug, dictionary), synthesized: true },
   }
 }
 
@@ -355,25 +358,51 @@ export const getPublishedCMSPages = unstable_cache(getPublishedCMSPagesUncached,
 })
 
 /**
+ * Intended crawl signals for CMS-backed CORE routes. When one of these routes
+ * has a published CMS Pages row, the row wins the sitemap dedup guard in
+ * lib/sitemap-data.ts and the guaranteedStaticRoutes value is skipped — so the
+ * intended priority/changefreq must be applied HERE, not just there. Keep this
+ * map in sync with guaranteedStaticRoutes.
+ */
+const coreRouteSitemapMeta: Record<
+  string,
+  { priority: number; changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never' }
+> = {
+  services: { priority: 0.9, changeFrequency: 'monthly' },
+  industries: { priority: 0.86, changeFrequency: 'monthly' },
+  markets: { priority: 0.86, changeFrequency: 'monthly' },
+  pricing: { priority: 0.9, changeFrequency: 'weekly' },
+  projects: { priority: 0.8, changeFrequency: 'weekly' },
+  process: { priority: 0.76, changeFrequency: 'monthly' },
+  trust: { priority: 0.74, changeFrequency: 'monthly' },
+  about: { priority: 0.7, changeFrequency: 'monthly' },
+  contact: { priority: 0.7, changeFrequency: 'yearly' },
+  privacy: { priority: 0.3, changeFrequency: 'yearly' },
+  terms: { priority: 0.3, changeFrequency: 'yearly' },
+}
+
+/**
  * Maps a published CMS page row to a sitemap entry.
  *
- * SEO-3: redirect-only / duplicate slugs (currently `blog` and `locations`,
- * with `articles`/`insights`/`markets` reserved for future CMS pages) are
- * filtered OUT by the caller (lib/sitemap-data.ts) BEFORE this runs, so they
- * never reach here. Keep that exclusion list in sync if new redirect slugs are
- * added.
+ * SEO-3: redirect-only / duplicate slugs (`blog`, `locations`, `labs`, and the
+ * legacy top-level slugs that 301 into /services/* — see
+ * redirectedTopLevelCmsSlugs) are filtered OUT by the caller
+ * (lib/sitemap-data.ts) BEFORE this runs, so they never reach here. Keep that
+ * exclusion list in sync if new redirect slugs are added.
  */
 export function pageToSitemapEntry(page: any): MetadataRoute.Sitemap[number] {
   const slug = normalizePageSlug(page.slug)
   const path = slug === '/' ? '/' : `/${slug}`
   const seo = page.seo || {}
   // SEO-5: the `blog` slug is excluded upstream, so the old
-  // `slug === 'blog' ? 0.4 : 0.8` branch was unreachable — simplified to root/non-root.
+  // `slug === 'blog' ? 0.4 : 0.8` branch was unreachable — simplified to
+  // root / core-route map / non-root default.
+  const core = coreRouteSitemapMeta[slug]
   return {
     url: canonicalUrl(page.locale, path),
     lastModified: page.updatedAt ? new Date(page.updatedAt) : new Date(),
-    changeFrequency: slug === '/' ? 'weekly' : 'monthly',
-    priority: slug === '/' ? 1 : 0.8,
+    changeFrequency: slug === '/' ? 'weekly' : core?.changeFrequency ?? 'monthly',
+    priority: slug === '/' ? 1 : core?.priority ?? 0.8,
     alternates: {
       languages: {
         en: canonicalUrl('en', path),

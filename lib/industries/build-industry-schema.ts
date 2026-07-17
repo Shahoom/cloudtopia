@@ -35,6 +35,20 @@ export type BuildIndustryJsonLdInput = {
     | IndustryReviewRecord['reviewedAt']
 }
 
+/**
+ * GCC countries served, mirroring DEFAULT_AREA_SERVED in lib/seo/schema.ts
+ * (not exported there — keep the English names in sync). Arabic names follow
+ * lib/seo/locations.ts.
+ */
+const AREA_SERVED: readonly { en: string; ar: string }[] = [
+  { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
+  { en: 'United Arab Emirates', ar: 'الإمارات العربية المتحدة' },
+  { en: 'Kuwait', ar: 'الكويت' },
+  { en: 'Qatar', ar: 'قطر' },
+  { en: 'Bahrain', ar: 'البحرين' },
+  { en: 'Oman', ar: 'عُمان' },
+]
+
 function isCalendarDate(value: unknown): value is `${number}-${number}-${number}` {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return false
@@ -124,7 +138,14 @@ export function buildIndustryJsonLd(
     name: input.name,
     description: input.description,
     provider: organization,
-    isPartOf: { '@id': webPageId },
+    serviceType:
+      input.locale === 'ar'
+        ? `تطوير برمجيات لقطاع ${input.breadcrumbLabels.current}`
+        : `${input.breadcrumbLabels.current} software development`,
+    areaServed: AREA_SERVED.map((country) => ({
+      '@type': 'Country',
+      name: input.locale === 'ar' ? country.ar : country.en,
+    })),
     ...(input.services.length > 0
       ? {
           hasOfferCatalog: {

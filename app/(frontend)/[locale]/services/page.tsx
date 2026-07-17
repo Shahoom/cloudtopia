@@ -3,6 +3,8 @@ import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import ServicesPageClient from './ServicesPageClient'
 import { getCMSMetadata } from '@/lib/cms/metadata'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
+import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -43,8 +45,19 @@ export default async function ServicesPage({
         { path: '/services/app-development/app-backend-api-development', key: 'App Backend & API Development' },
     ]
 
+    // The services layout no longer emits a BreadcrumbList (it duplicated every
+    // detail page's own trail) — the hub renders its 2-item trail here instead.
+    const breadcrumbSchema = buildBreadcrumbSchema(locale, [
+        { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
+        { name: locale === 'ar' ? 'الخدمات' : 'Services', path: '/services' },
+    ])
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
             <div className="sr-only" aria-hidden="false">
                 <h1>{heroTitle}</h1>
                 <p>{heroDesc}</p>
@@ -57,6 +70,7 @@ export default async function ServicesPage({
                 </ul>
             </div>
             <ServicesPageClient t={t} />
+            <SearchKeywordsSection path="/services" locale={locale} />
         </>
     )
 }

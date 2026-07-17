@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { SearchKeywordsSection } from '@/components/seo/SearchKeywordsSection'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import ContentCreationClient from './ContentCreationClient'
@@ -46,6 +47,7 @@ export default async function ContentCreationPage({
             </div>
             <ContentCreationClient t={t} />
             <ServiceFAQSection slug="content-creation" locale={locale} />
+            <SearchKeywordsSection path="/services/content-creation" locale={locale} />
         </>
     )
 }

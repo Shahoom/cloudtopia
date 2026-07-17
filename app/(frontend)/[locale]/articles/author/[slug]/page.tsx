@@ -7,9 +7,10 @@ import { NewsletterBox } from '@/components/blog/NewsletterBox'
 import { SectionMasthead } from '@/components/blog/editorial/SectionMasthead'
 import { InsightsArticleCard } from '@/components/blog/insights/InsightsArticleCard'
 import { getAuthorBlogPosts, getBlogAuthor } from '@/lib/blog/data'
-import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
+import { buildHreflangMap, canonicalUrl, stripBrandSuffix } from '@/lib/i18n/url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildOrganizationRef } from '@/lib/seo/schema'
+import { ogImagesFor } from '@/lib/og/og-image'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -20,13 +21,37 @@ function absoluteUrl(url?: string | null) {
   return url.startsWith('http') ? url : canonicalUrl('en', url)
 }
 
+/**
+ * TM-10: the full author bio can run well past the ~160-char snippet budget.
+ * Cap the fallback description near `max`, preferring a sentence boundary and
+ * falling back to a word boundary + ellipsis.
+ */
+function truncateDescription(text: string, max = 160): string {
+  if (text.length <= max + 5) return text
+  const slice = text.slice(0, max)
+  const sentenceEnd = Math.max(
+    slice.lastIndexOf('. '),
+    slice.lastIndexOf('! '),
+    slice.lastIndexOf('? '),
+    slice.lastIndexOf('؟ '),
+  )
+  if (sentenceEnd > 60) return slice.slice(0, sentenceEnd + 1)
+  const wordEnd = slice.lastIndexOf(' ')
+  return `${slice.slice(0, wordEnd > 0 ? wordEnd : max)}…`
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale = 'en', slug } = await params
   const author = await getBlogAuthor(locale, slug)
   if (!author) return { title: 'Author Not Found' }
 
-  const title = author.seo?.metaTitle || `${author.name} | CloudTopia ${locale === 'ar' ? 'المقالات' : 'Articles'}`
-  const description = author.seo?.metaDescription || author.shortBio || author.bio
+  // TM-10: no hardcoded brand in the fallback — the layout's `%s | CloudTopia`
+  // template adds the brand once (the old fallback stacked
+  // "X | CloudTopia Articles | CloudTopia").
+  const title = stripBrandSuffix(author.seo?.metaTitle || author.name)
+  const description = author.seo?.metaDescription
+    || truncateDescription(author.shortBio || author.bio || '')
+    || undefined
   const image = absoluteUrl(author.seo?.ogImage?.url || author.image?.url)
 
   return {
@@ -38,7 +63,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       url: canonicalUrl(locale, `/articles/author/${author.slug}`),
       type: 'profile',
-      images: image ? [{ url: image, alt: author.name }] : undefined,
+      // Page-level openGraph shallow-merges over the layout's, dropping its
+      // og:locale — restate it here.
+      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
+      alternateLocale: locale === 'ar' ? 'en_US' : 'ar_SA',
+      images: image ? [{ url: image, alt: author.name }] : ogImagesFor({ page: 'articles', locale }),
     },
     alternates: {
       canonical: canonicalUrl(locale, `/articles/author/${author.slug}`),

@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
+    const isArabic = locale === 'ar'
     const faqSchema = await buildFAQSchema('website-design', locale)
 
     return (
@@ -22,16 +23,21 @@ export default async function ({ children, params }: { children: React.ReactNode
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Website Development', path: '/services/website-development' },
+                        { name: isArabic ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isArabic ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isArabic ? 'تطوير المواقع' : 'Website Development', path: '/services/website-development' },
                     ]),
-                    buildServiceSchema(locale, {
-                        name: 'Website Development',
-                        description: 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
-                        path: '/services/website-development',
-                        serviceType: 'Web Development',
-                    }),
+                    {
+                        ...buildServiceSchema(locale, {
+                            name: isArabic ? 'تطوير المواقع الإلكترونية' : 'Website Development',
+                            description: isArabic
+                                ? 'مواقع إلكترونية ثنائية اللغة بالعربية والإنجليزية لشركات الخليج، سريعة الأداء، متقنة الاتجاه من اليمين إلى اليسار، وجاهزة لتصدّر نتائج البحث.'
+                                : 'Bilingual Arabic + English websites for Gulf businesses. RTL-correct, SEO-ready, fast.',
+                            path: '/services/website-development',
+                            serviceType: isArabic ? 'تطوير المواقع' : 'Web Development',
+                        }),
+                        inLanguage: isArabic ? 'ar' : 'en',
+                    },
                     faqSchema,
                 ]}
             />

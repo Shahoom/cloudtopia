@@ -77,9 +77,9 @@ export const constructionDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Construction Technology Engineering — Project, Field & Asset Systems',
+        title: 'Construction Project & Field Management Systems',
         description:
-          'CloudTopia engineers bilingual construction systems: project & bid management, field and site apps, BIM and document control, asset and equipment tracking, and client portals — with every decision owned, dated, and traceable.',
+          'CloudTopia engineers bilingual construction systems: project and bid management, field and site apps, BIM document control, asset tracking, and client portals.',
       },
       breadcrumbLabel: 'Construction',
       hero: {
@@ -490,9 +490,9 @@ export const constructionDefinition = {
     },
     ar: {
       seo: {
-        title: 'هندسة تقنيات الإنشاء — أنظمة المشاريع والموقع والأصول',
+        title: 'أنظمة إدارة مشاريع البناء والمواقع والأصول',
         description:
-          'تهندس كلاود توبيا أنظمة إنشاء ثنائية اللغة: إدارة المشاريع والمناقصات، وتطبيقات الموقع الميدانية، والتحكم في المستندات ونمذجة معلومات البناء، وتتبع الأصول والمعدات، وبوابات العملاء — مع بقاء كل قرار مملوكاً ومؤرخاً وقابلاً للتتبع.',
+          'تبني كلاود توبيا أنظمة إنشاءات ثنائية اللغة: إدارة المشاريع والمناقصات، وتطبيقات ميدانية للمواقع، وضبط المستندات، وتتبع الأصول والمعدات، وبوابات للعملاء.',
       },
       breadcrumbLabel: 'الإنشاء',
       hero: {

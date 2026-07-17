@@ -68,9 +68,12 @@ export function DynamicTextSlider({
   return (
     <div className="w-full min-h-screen bg-lavender dark:bg-eerie text-white flex flex-col items-center justify-center text-center p-4 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-5xl">
-        <h1 className="font-bold tracking-tighter text-5xl text-eerie dark:text-white md:text-7xl">
+        {/* Deliberately a <p>, not <h1>: this only ever holds the title prefix
+            (e.g. "Professional") — the keyword half renders inside the slider —
+            so the page's full-text server-rendered <h1> stays the single H1. */}
+        <p className="font-bold tracking-tighter text-5xl text-eerie dark:text-white md:text-7xl">
           {title}
-        </h1>
+        </p>
         
         {/* Hidden copy for width‑measurement. Font size must match the visible text in the slider. */}
         <span

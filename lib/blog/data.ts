@@ -1077,14 +1077,43 @@ export function getArticleToc(post: BlogPost) {
 export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
 
-  for (const locale of locales) {
-    const [posts, categories, tags, authors] = await Promise.all([
-      getPublishedBlogPosts(locale),
-      getBlogCategories(locale),
-      getBlogTags(locale),
-      getBlogAuthors(locale),
-    ])
+  const perLocale = await Promise.all(
+    locales.map(async (locale) => {
+      const [posts, categories, tags, authors] = await Promise.all([
+        getPublishedBlogPosts(locale),
+        getBlogCategories(locale),
+        getBlogTags(locale),
+        getBlogAuthors(locale),
+      ])
+      return { locale, posts, categories, tags, authors }
+    }),
+  )
 
+  // Taxonomy slugs that actually render per locale (postCount > 0). A
+  // category/tag page only earns full reciprocal hreflang alternates when
+  // EVERY locale has posts under that slug; otherwise the alternate would
+  // point at an empty/404 listing.
+  // Post slugs present per locale. Unlike taxonomy pages (which resolve for any
+  // locale off the shared English set), a post is a per-locale row — so a slug
+  // with no twin in the other locale 404s there, and its sitemap entry must not
+  // advertise that locale as an alternate.
+  const postSlugsByLocale = new Map(
+    perLocale.map(({ locale, posts }) => [locale, new Set(posts.map((p) => p.slug))]),
+  )
+  const categorySlugsByLocale = new Map(
+    perLocale.map(({ locale, categories }) => [
+      locale,
+      new Set(categories.filter((c) => c.postCount > 0).map((c) => c.slug)),
+    ]),
+  )
+  const tagSlugsByLocale = new Map(
+    perLocale.map(({ locale, tags }) => [
+      locale,
+      new Set(tags.filter((t) => t.postCount > 0).map((t) => t.slug)),
+    ]),
+  )
+
+  for (const { locale, posts, categories, tags, authors } of perLocale) {
     // Stable lastmod for the listing + taxonomy: the newest post date in this
     // locale, not `new Date()` (which churned the timestamp on every crawl and
     // made Google distrust the freshness signal).
@@ -1103,12 +1132,20 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
     })
 
     posts.forEach((post) => {
+      const postPath = `/articles/${post.slug}`
+      // Only advertise the other locale when the twin post actually exists,
+      // otherwise the alternate points at a 404 (posts are per-locale rows).
+      const inAllLocales = locales.every((loc) => postSlugsByLocale.get(loc)?.has(post.slug))
       entries.push({
-        url: canonicalUrl(locale, `/articles/${post.slug}`),
+        url: canonicalUrl(locale, postPath),
         lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
         changeFrequency: 'monthly',
         priority: post.pinned || post.featured ? 0.8 : 0.7,
-        alternates: { languages: buildHreflangMap(`/articles/${post.slug}`) },
+        alternates: {
+          languages: inAllLocales
+            ? buildHreflangMap(postPath)
+            : { [locale]: canonicalUrl(locale, postPath), 'x-default': canonicalUrl(locale, postPath) },
+        },
         ...(post.coverImage?.url && {
           images: [post.coverImage.url.startsWith('http') ? post.coverImage.url : canonicalUrl('en', post.coverImage.url)],
         }),
@@ -1119,14 +1156,20 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       .filter((category) => category.postCount > 0)
       .forEach((category) => {
         const taxPath = `/articles/category/${category.slug}`
+        // Full reciprocal alternates only when the slug has posts in every
+        // locale (matches how posts/authors are emitted); otherwise the page
+        // only exists in this locale, so alternate to itself.
+        const inAllLocales = locales.every((loc) => categorySlugsByLocale.get(loc)?.has(category.slug))
         entries.push({
           url: canonicalUrl(locale, taxPath),
           lastModified: freshness,
           changeFrequency: 'weekly',
           priority: 0.65,
-          // Arabic article taxonomy pages don't exist yet, so a buildHreflangMap
-          // `ar` alternate would point at a 404. Emit self + x-default only.
-          alternates: { languages: { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl('en', taxPath) } },
+          alternates: {
+            languages: inAllLocales
+              ? buildHreflangMap(taxPath)
+              : { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl(locale, taxPath) },
+          },
         })
       })
 
@@ -1134,13 +1177,17 @@ export async function getBlogSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       .filter((tag) => tag.postCount > 0)
       .forEach((tag) => {
         const taxPath = `/articles/tag/${tag.slug}`
+        const inAllLocales = locales.every((loc) => tagSlugsByLocale.get(loc)?.has(tag.slug))
         entries.push({
           url: canonicalUrl(locale, taxPath),
           lastModified: freshness,
           changeFrequency: 'monthly',
           priority: 0.55,
-          // Self + x-default only — no Arabic tag pages exist to alternate to.
-          alternates: { languages: { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl('en', taxPath) } },
+          alternates: {
+            languages: inAllLocales
+              ? buildHreflangMap(taxPath)
+              : { [locale]: canonicalUrl(locale, taxPath), 'x-default': canonicalUrl(locale, taxPath) },
+          },
         })
       })
 
