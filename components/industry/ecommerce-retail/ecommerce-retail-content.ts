@@ -10,6 +10,12 @@ import type { Locale } from '@/lib/i18n/config'
  * paths, owned handoffs) — never fabricated sales, GMV, or client-outcome
  * metrics. Prices, stock, and product data belong to the operator, never to
  * this page.
+ *
+ * Imagery: the licensed photo set deliberately carries the omnichannel story
+ * this merged world exists to tell — physical retail (hero 1, commerce panel)
+ * and online fulfilment (hero 2, operations panel). Alt text describes the
+ * scene only; it never names a brand, product, or price. `width`/`height` are
+ * the real pixel dimensions of the files on disk.
  */
 
 type EcommerceHeroSlide = {
@@ -39,6 +45,11 @@ type EcommercePanel = {
   eyebrow: string
   title: string
   subtitle: string
+  /** Panel media header. Real photo, real pixel dimensions. */
+  image: string
+  imageAlt: string
+  width: number
+  height: number
   items: readonly string[]
 }
 
@@ -130,13 +141,21 @@ type EcommerceContent = {
   ctaTitle: string
   ctaSubtitle: string
   ctaButton: string
+  /** The CTA band keeps `hero-warm.jpg`: an abstract blur sitting under a
+   *  near-opaque brand duotone, where it reads as texture only. It carries no
+   *  information a reader could miss, so it stays genuinely decorative (''). */
   ctaImageAlt: string
 
   newTab: string
 }
 
-const HERO_WARM = '/images/industries/ecommerce-retail/hero-warm.jpg'
-const BAND_COOL = '/images/industries/ecommerce-retail/band-cool.jpg'
+/* Licensed photography. Dimensions verified against the files on disk.
+ * Physical retail: RETAIL_FLOOR (1800×1350), BOUTIQUE_SHELVES (1800×1201).
+ * Online fulfilment: FULFILMENT_FLOOR (1800×1200), STOCK_AISLE (1800×1198). */
+const RETAIL_FLOOR = '/images/industries/ecommerce-retail/ecommerce-retail-1.jpg'
+const FULFILMENT_FLOOR = '/images/industries/ecommerce-retail/ecommerce-retail-2.jpg'
+const STOCK_AISLE = '/images/industries/ecommerce-retail/ecommerce-retail-3.jpg'
+const BOUTIQUE_SHELVES = '/images/industries/ecommerce-retail/ecommerce-retail-4.jpg'
 
 export const ecommerceRetailLandingCopy = {
   en: {
@@ -155,16 +174,18 @@ export const ecommerceRetailLandingCopy = {
         kicker: 'Storefronts & headless commerce',
         title: 'We build the commerce and retail stack behind the buy button.',
         text: 'Fast, bilingual storefronts and PWAs with catalog, search, and a checkout that reads one reconciled source of truth.',
-        image: HERO_WARM,
-        imageAlt: '',
+        image: RETAIL_FLOOR,
+        imageAlt:
+          'A bright, modern retail store floor: clothing rails, a central display table, and a shopper browsing the merchandise.',
       },
       {
         id: 'omnichannel',
         kicker: 'Inventory, POS & omnichannel',
         title: 'One reconciled record across web, marketplace, and store.',
         text: 'Inventory, order management, and point of sale that keep availability and fulfillment consistent on every channel a customer touches.',
-        image: BAND_COOL,
-        imageAlt: '',
+        image: FULFILMENT_FLOOR,
+        imageAlt:
+          'A fulfilment warehouse aisle lined with tall pallet racking, staff crossing the floor in motion blur.',
       },
     ],
 
@@ -247,6 +268,11 @@ export const ecommerceRetailLandingCopy = {
         eyebrow: 'Customer-facing',
         title: 'Commerce platforms',
         subtitle: 'Everything the shopper touches, from first search to a confirmed order.',
+        image: BOUTIQUE_SHELVES,
+        imageAlt:
+          'A boutique display table and shelves styled with folded garments, bags, and shoes under pendant lighting.',
+        width: 1800,
+        height: 1201,
         items: [
           'Headless & composable storefronts',
           'Shopify, Medusa & custom builds',
@@ -259,6 +285,11 @@ export const ecommerceRetailLandingCopy = {
         eyebrow: 'Behind the store',
         title: 'Retail operations',
         subtitle: 'Everything the operator runs so availability, orders, and fulfillment stay true.',
+        image: STOCK_AISLE,
+        imageAlt:
+          'Two warehouse staff walking a stock aisle between blue racking, one holding a barcode scanner and the other a clipboard.',
+        width: 1800,
+        height: 1198,
         items: [
           'Point of sale (POS) & in-store',
           'Inventory & warehouse',
@@ -427,16 +458,18 @@ export const ecommerceRetailLandingCopy = {
         kicker: 'المتاجر والتجارة عديمة الرأس',
         title: 'نبني منظومة التجارة والتجزئة خلف زر الشراء.',
         text: 'متاجر وتطبيقات ويب تقدمية سريعة ثنائية اللغة، بكتالوج وبحث ودفع يقرأ مصدر حقيقة واحداً مطابَقاً.',
-        image: HERO_WARM,
-        imageAlt: '',
+        image: RETAIL_FLOOR,
+        imageAlt:
+          'صالة متجر تجزئة حديثة جيدة الإضاءة: قضبان ملابس وطاولة عرض مركزية ومتسوّقة تتصفّح المعروضات.',
       },
       {
         id: 'omnichannel',
         kicker: 'المخزون ونقاط البيع وتعدد القنوات',
         title: 'سجل واحد مطابَق عبر الويب والسوق والمتجر.',
         text: 'مخزون وإدارة طلبات ونقطة بيع تُبقي التوفر والتجهيز متسقاً على كل قناة يلمسها العميل.',
-        image: BAND_COOL,
-        imageAlt: '',
+        image: FULFILMENT_FLOOR,
+        imageAlt:
+          'ممر في مستودع تجهيز الطلبات تصطف على جانبيه رفوف منصات عالية، وموظفون يعبرون الصالة بحركة ضبابية.',
       },
     ],
 
@@ -519,6 +552,11 @@ export const ecommerceRetailLandingCopy = {
         eyebrow: 'تواجه العميل',
         title: 'منصات التجارة',
         subtitle: 'كل ما يلمسه المتسوق، من أول بحث إلى طلب مؤكد.',
+        image: BOUTIQUE_SHELVES,
+        imageAlt:
+          'طاولة عرض ورفوف في متجر بوتيك مرتّبة بملابس مطوية وحقائب وأحذية تحت إضاءة معلّقة.',
+        width: 1800,
+        height: 1201,
         items: [
           'متاجر عديمة الرأس ومركّبة',
           'Shopify وMedusa وحلول مخصصة',
@@ -531,6 +569,11 @@ export const ecommerceRetailLandingCopy = {
         eyebrow: 'خلف المتجر',
         title: 'عمليات التجزئة',
         subtitle: 'كل ما يديره المشغل ليبقى التوفر والطلبات والتجهيز صحيحاً.',
+        image: STOCK_AISLE,
+        imageAlt:
+          'موظفتان تسيران في ممر مخزون بين رفوف زرقاء، إحداهما تحمل ماسح باركود والأخرى تحمل حافظة أوراق.',
+        width: 1800,
+        height: 1198,
         items: [
           'نقطة البيع وداخل المتجر',
           'المخزون والمستودع',

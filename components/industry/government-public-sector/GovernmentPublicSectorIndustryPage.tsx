@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   Accessibility,
@@ -234,6 +235,15 @@ export function GovernmentPublicSectorIndustryPage({
             </GovReveal>
             <GovReveal variant="right">
               <div className={styles.practicePanel}>
+                <Image
+                  className={styles.practicePanelImg}
+                  src={copy.practicePhoto.image}
+                  alt={copy.practicePhoto.alt}
+                  width={copy.practicePhoto.width}
+                  height={copy.practicePhoto.height}
+                  sizes="(max-width: 991px) 92vw, 42vw"
+                />
+                <span className={styles.practicePanelScrim} aria-hidden="true" />
                 <p className={styles.practicePanelEyebrow}>{copy.practicePanelEyebrow}</p>
                 <p className={styles.practicePanelStatement}>{copy.practicePanelStatement}</p>
                 <p className={styles.practicePanelNote}>{copy.practicePanelNote}</p>

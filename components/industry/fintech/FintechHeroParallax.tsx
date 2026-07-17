@@ -1,21 +1,18 @@
 'use client'
 
-import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 
 import styles from './fintech-industry.module.css'
 
-type HeroImage = {
-  src: string
-  alt: string
-  width: number
-  height: number
-}
-
 type FintechHeroParallaxProps = {
-  large: HeroImage
-  small1: HeroImage
-  small2: HeroImage
+  /**
+   * The three cluster cards. These are server-rendered mock components handed
+   * in as nodes — this wrapper only positions and animates them, so none of
+   * their markup is pulled into the client bundle.
+   */
+  large: ReactNode
+  small1: ReactNode
+  small2: ReactNode
   direction: 'ltr' | 'rtl'
 }
 
@@ -131,33 +128,12 @@ export function FintechHeroParallax({
 
   return (
     <div className={styles.heroThumb} ref={heroRef}>
-      <div className={styles.heroThumbLg}>
-        <Image
-          src={large.src}
-          alt={large.alt}
-          width={large.width}
-          height={large.height}
-          priority
-          sizes="(max-width: 991px) 78vw, 26vw"
-        />
+      <div className={styles.heroThumbLg}>{large}</div>
+      <div className={styles.heroThumbSm1} ref={sm1Ref}>
+        {small1}
       </div>
-      <div className={styles.heroThumbSm1} ref={sm1Ref} aria-hidden="true">
-        <Image
-          src={small1.src}
-          alt=""
-          width={small1.width}
-          height={small1.height}
-          sizes="(max-width: 991px) 48vw, 16vw"
-        />
-      </div>
-      <div className={styles.heroThumbSm2} ref={sm2Ref} aria-hidden="true">
-        <Image
-          src={small2.src}
-          alt=""
-          width={small2.width}
-          height={small2.height}
-          sizes="(max-width: 991px) 48vw, 16vw"
-        />
+      <div className={styles.heroThumbSm2} ref={sm2Ref}>
+        {small2}
       </div>
     </div>
   )

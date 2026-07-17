@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useId, useRef, useState, type ComponentType } from 'react'
 import { ChevronLeft, ChevronRight, Fingerprint, LayoutGrid, RefreshCw } from 'lucide-react'
 
@@ -10,6 +11,10 @@ type GovHeroSlide = {
   kicker: string
   title: string
   description: string
+  image: string
+  alt: string
+  width: number
+  height: number
 }
 
 type GovHeroCarouselProps = {
@@ -35,6 +40,11 @@ const SLIDE_ICONS: readonly ComponentType<{ 'aria-hidden'?: boolean }>[] = [
  * autoplay never starts and every slide is shown stacked (CSS), so no content
  * is trapped off-frame; the controls are hidden because they are not needed.
  * RTL-aware: the prev/next arrows advance in the reading direction.
+ *
+ * Each slide is backed by a licensed civic-architecture photo under a navy
+ * scrim (.carouselSlideScrim) that keeps every slide label at WCAG AA or better
+ * even over the brightest part of a photo. Only slide 1 is `priority` — it is
+ * the hero/LCP image; the other two must not compete for the preload budget.
  */
 export function GovHeroCarousel({
   slides,
@@ -138,6 +148,16 @@ export function GovHeroCarousel({
               data-active={isActive ? 'true' : 'false'}
               aria-hidden={reduced ? undefined : index === active ? undefined : 'true'}
             >
+              <Image
+                className={styles.carouselSlideImg}
+                src={slide.image}
+                alt={slide.alt}
+                width={slide.width}
+                height={slide.height}
+                sizes="(max-width: 991px) 92vw, 46vw"
+                priority={index === 0}
+              />
+              <span className={styles.carouselSlideScrim} aria-hidden="true" />
               <span className={styles.carouselSlideIcon} aria-hidden="true">
                 <Icon aria-hidden={true} />
               </span>

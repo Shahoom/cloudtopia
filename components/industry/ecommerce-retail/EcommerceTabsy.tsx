@@ -22,8 +22,12 @@ type EcommerceTabsyProps = {
  * for keyboard users, focusing) a discipline link cross-fades the full-bleed
  * background layer and swaps the overlaid headline via a `current` state.
  *
- * The template applied product photos as layer backgrounds; here we only ship
- * genuine imagery, so each layer is a palette-driven gradient (abstract, not a
+ * The template applied a distinct product photo per layer. These six
+ * disciplines have no honest photo apiece: the licensed set is four
+ * retail/fulfilment scenes — all already carrying the hero and the flagship
+ * panels — and none of them depicts "payments" or "loyalty". Backing two tabs
+ * with the same file would also make the signature cross-fade visibly do
+ * nothing. So each layer stays a palette-driven gradient (abstract, not a
  * fabricated product shot). The cross-fade is a CSS opacity transition that the
  * reduced-motion kill switch neutralises to an instant swap.
  *

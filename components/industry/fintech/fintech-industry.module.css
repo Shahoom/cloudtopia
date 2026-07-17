@@ -516,9 +516,9 @@
   z-index: 2;
 }
 
-.heroThumbLg img {
-  display: block;
-  height: auto;
+.heroThumbLg .mock {
+  border-radius: 0; /* the wrapper already clips to its own radius */
+  box-shadow: none;
   width: 100%;
 }
 
@@ -542,12 +542,10 @@
   width: 60%;
 }
 
-.heroThumbSm1 img,
-.heroThumbSm2 img {
+.heroThumbSm1 .mock,
+.heroThumbSm2 .mock {
   border-radius: 14px;
   box-shadow: 0 24px 50px rgb(0 0 0 / 30%);
-  display: block;
-  height: auto;
   width: 100%;
 }
 
@@ -704,15 +702,13 @@
   width: 100%;
 }
 
-.featureCardThumb img {
+.featureCardThumb .mock {
   border-radius: 12px;
   box-shadow: 21px 28px 66px 0 rgb(var(--fin-shadow) / 11%);
-  display: block;
-  height: auto;
   width: 100%;
 }
 
-.page[dir='rtl'] .featureCardThumb img {
+.page[dir='rtl'] .featureCardThumb .mock {
   box-shadow: -21px 28px 66px 0 rgb(var(--fin-shadow) / 11%);
 }
 
@@ -743,7 +739,7 @@
   transform: rotate(4.47deg);
 }
 
-.serviceMosaic .featureCard:nth-child(3) .featureCardThumb img {
+.serviceMosaic .featureCard:nth-child(3) .featureCardThumb .mock {
   position: relative;
   z-index: 2;
 }
@@ -760,12 +756,14 @@
   position: relative;
 }
 
-.featureCardStack .featureCardStackItem img {
+.featureCardStack .featureCardStackItem .mock {
   border-radius: 10px;
   box-shadow: 12px 18px 44px 0 rgb(var(--fin-shadow) / 12%);
-  display: block;
-  height: auto;
   width: 100%;
+}
+
+.page[dir='rtl'] .featureCardStack .featureCardStackItem .mock {
+  box-shadow: -12px 18px 44px 0 rgb(var(--fin-shadow) / 12%);
 }
 
 .featureCardStack .featureCardStackItem:nth-child(3) {
@@ -1044,9 +1042,8 @@
   overflow: hidden;
 }
 
-.approachMedia img {
-  display: block;
-  height: auto;
+.approachMedia .mock {
+  border-radius: 0; /* the wrapper already clips to its own radius */
   width: 100%;
 }
 
@@ -1542,6 +1539,739 @@
   font-size: 1.1rem;
   line-height: 1.7;
   margin-block-end: 2rem;
+}
+
+/* ====================================================== Product-UI mockups */
+/*
+ * Hand-built stand-ins for the Paynext template's gray dimension placeholders.
+ *
+ * SCALING CONTRACT: `.mock` sets `container-type: inline-size` and carries the
+ * aspect ratio of the image it replaced (inline, per mock). Every dimension
+ * BELOW this point is expressed in `cqw` — percent of the mock's own width — so
+ * a mock scales exactly like the `<img>` it replaced. Get the proportions right
+ * once and they hold at every breakpoint, which is what keeps the hero cluster,
+ * both mosaics, and the layered stack in their original shape.
+ *
+ * Note `.mock` itself must not use `cqw`: an element can't query the container
+ * it establishes, so its own cq units would escape to an ancestor. Only its
+ * descendants may.
+ */
+.mock {
+  background: rgb(var(--fin-surface));
+  border: 1px solid rgb(var(--fin-line) / 55%);
+  border-radius: 12px;
+  color: rgb(var(--fin-body));
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.mockDark {
+  background: linear-gradient(1deg, rgb(var(--fin-ink-deep)) -8%, rgb(var(--fin-accent-strong)) 57%);
+  border-color: transparent;
+  color: rgb(255 255 255 / 82%);
+}
+
+/* ------------------------------------------------------------ mock chrome */
+.mockChrome {
+  align-items: center;
+  background: rgb(var(--fin-gray));
+  border-block-end: 1px solid rgb(var(--fin-line) / 55%);
+  display: flex;
+  flex: none;
+  gap: 1.3cqw;
+  padding: 2.6cqw 3.4cqw;
+}
+
+.mockDot {
+  background: rgb(var(--fin-line));
+  block-size: 1.7cqw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 1.7cqw;
+}
+
+.mockDot:first-child {
+  background: rgb(var(--fin-lilac-strong));
+}
+
+.mockChromeTitle {
+  align-items: center;
+  color: rgb(var(--fin-ink));
+  display: flex;
+  font-size: 3.1cqw;
+  font-weight: 700;
+  gap: 1.2cqw;
+  margin-inline-start: 1.8cqw;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mockChromeIcon {
+  align-items: center;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  flex: none;
+}
+
+.mockChromeIcon svg {
+  block-size: 3.4cqw;
+  inline-size: 3.4cqw;
+}
+
+/* -------------------------------------------------------------- mock body */
+.mockBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2.6cqw;
+  justify-content: space-between;
+  min-block-size: 0;
+  padding: 3.4cqw;
+}
+
+.mockBodyDark {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2.6cqw;
+  min-block-size: 0;
+  padding: 4cqw;
+}
+
+/* ------------------------------------------------------------ primitives */
+/* A redacted value: stands in for data without ever asserting a figure. */
+.mockBar {
+  background: rgb(var(--fin-line) / 75%);
+  block-size: 1.5cqw;
+  border-radius: 999px;
+  display: block;
+  flex: none;
+}
+
+.mockBarStrong {
+  background: rgb(var(--fin-lilac) / 85%);
+  block-size: 2cqw;
+}
+
+.mockDark .mockBar {
+  background: rgb(255 255 255 / 30%);
+}
+
+.mockPill {
+  align-items: center;
+  background: rgb(var(--fin-tint));
+  border-radius: 999px;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  flex: none;
+  font-size: 2.4cqw;
+  font-weight: 700;
+  gap: 1cqw;
+  padding: 0.9cqw 2cqw;
+  white-space: nowrap;
+}
+
+.mockPillDot {
+  background: rgb(var(--fin-accent));
+  block-size: 1.4cqw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 1.4cqw;
+}
+
+.mockPillMuted {
+  background: rgb(var(--fin-gray));
+  color: rgb(var(--fin-body));
+}
+
+.mockPillMuted .mockPillDot {
+  background: rgb(var(--fin-body) / 60%);
+}
+
+.mockSectionLabel {
+  align-items: center;
+  color: rgb(var(--fin-ink));
+  display: flex;
+  flex: none;
+  font-size: 3cqw;
+  font-weight: 700;
+  gap: 1.4cqw;
+}
+
+.mockSectionLabel svg {
+  block-size: 3.4cqw;
+  color: rgb(var(--fin-accent));
+  flex: none;
+  inline-size: 3.4cqw;
+}
+
+.mockDark .mockSectionLabel {
+  color: #fff;
+}
+
+.mockDark .mockSectionLabel svg {
+  color: rgb(var(--fin-lilac));
+}
+
+/* -------------------------------------------------------------- mock rows */
+.mockRows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2cqw;
+  justify-content: center;
+  min-block-size: 0;
+}
+
+.mockRow {
+  align-items: center;
+  background: rgb(var(--fin-gray));
+  border-radius: 2.2cqw;
+  display: flex;
+  gap: 2cqw;
+  padding: 2.2cqw 2.6cqw;
+}
+
+/* Tall frames (the portrait wallet, the handoff panel) would otherwise leave
+   their rows bunched in the middle — let the rows share the height instead. */
+.mockRowsGrow .mockRow {
+  flex: 1;
+}
+
+.mockRowsFooter {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: 2cqw;
+  justify-content: space-between;
+}
+
+.mockRowIcon {
+  align-items: center;
+  background: rgb(var(--fin-tint));
+  block-size: 6cqw;
+  border-radius: 50%;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  flex: none;
+  inline-size: 6cqw;
+  justify-content: center;
+}
+
+.mockRowIcon svg {
+  block-size: 3cqw;
+  inline-size: 3cqw;
+}
+
+/* in/out arrows point along the reading axis — mirror them in RTL */
+.page[dir='rtl'] .mockRowIcon svg {
+  transform: scaleX(-1);
+}
+
+.mockRowMain {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.2cqw;
+  min-inline-size: 0;
+}
+
+.mockRowLabel {
+  color: rgb(var(--fin-ink));
+  font-size: 2.7cqw;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mockRowAmount {
+  color: rgb(var(--fin-ink));
+  flex: none;
+  font-size: 3cqw;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.mockRowTick {
+  align-items: center;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  flex: none;
+}
+
+.mockRowTick svg {
+  block-size: 3.2cqw;
+  inline-size: 3.2cqw;
+}
+
+/* Dr / Cr side tag */
+.mockSide {
+  background: rgb(var(--fin-tint));
+  border-radius: 0.8cqw;
+  color: rgb(var(--fin-accent));
+  flex: none;
+  font-size: 2.2cqw;
+  font-weight: 800;
+  min-inline-size: 8cqw;
+  padding: 1cqw 1.4cqw;
+  text-align: center;
+}
+
+/* --------------------------------------------------------- card face mock */
+.mockCardFace {
+  background: linear-gradient(1deg, rgb(var(--fin-ink-deep)) -8%, rgb(var(--fin-accent-strong)) 57%);
+  border-radius: 3cqw;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 1.6cqw;
+  overflow: hidden;
+  padding: 3.4cqw;
+  position: relative;
+}
+
+.mockCardFace::after {
+  background-image: radial-gradient(rgb(255 255 255 / 12%) 1px, transparent 1px);
+  background-size: 3cqw 3cqw;
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.mockCardTop {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.mockCardLabel {
+  color: rgb(255 255 255 / 82%);
+  font-size: 2.5cqw;
+  font-weight: 600;
+}
+
+/* brand-neutral chip — deliberately not any real card network's mark */
+.mockCardChip {
+  background: linear-gradient(135deg, rgb(255 255 255 / 85%), rgb(255 255 255 / 45%));
+  block-size: 4cqw;
+  border-radius: 1cqw;
+  flex: none;
+  inline-size: 6cqw;
+}
+
+.mockCardAmount {
+  color: #fff;
+  font-size: 7cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.mockCardNumber {
+  color: rgb(255 255 255 / 82%);
+  font-size: 3cqw;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  position: relative;
+  z-index: 1;
+}
+
+/* masked value on a light surface (security panel) */
+.mockMaskLine {
+  color: rgb(var(--fin-body));
+  font-size: 2.8cqw;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.mockCheckoutFoot {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: 2cqw;
+  justify-content: space-between;
+}
+
+.mockCta {
+  align-items: center;
+  background: rgb(var(--fin-accent));
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 2.8cqw;
+  font-weight: 700;
+  gap: 1.2cqw;
+  padding: 1.8cqw 4cqw;
+}
+
+.mockCta svg {
+  block-size: 3cqw;
+  inline-size: 3cqw;
+}
+
+/* -------------------------------------------- hero: confirmation + spark */
+.mockConfirm {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2.6cqw;
+  justify-content: center;
+  padding: 6cqw;
+  text-align: center;
+}
+
+.mockConfirmIcon {
+  align-items: center;
+  background: rgb(var(--fin-tint));
+  block-size: 16cqw;
+  border-radius: 50%;
+  color: rgb(var(--fin-accent));
+  display: inline-flex;
+  flex: none;
+  inline-size: 16cqw;
+  justify-content: center;
+}
+
+.mockConfirmIcon svg {
+  block-size: 9cqw;
+  inline-size: 9cqw;
+}
+
+.mockConfirmLabel {
+  color: rgb(var(--fin-ink));
+  font-size: 5.2cqw;
+  font-weight: 700;
+}
+
+.mockConfirmAmount {
+  color: rgb(var(--fin-accent));
+  font-size: 8cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+/* the hero minis render ~210px wide — scale their chrome up to stay legible */
+.mockConfirm .mockPill {
+  font-size: 4cqw;
+  gap: 1.6cqw;
+  padding: 1.4cqw 3cqw;
+}
+
+.mockConfirm .mockPillDot {
+  block-size: 2.4cqw;
+  inline-size: 2.4cqw;
+}
+
+.mockSpark {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3cqw;
+  padding: 5cqw;
+}
+
+.mockSpark .mockSectionLabel {
+  font-size: 4.6cqw;
+}
+
+.mockSpark .mockSectionLabel svg {
+  block-size: 5cqw;
+  inline-size: 5cqw;
+}
+
+.mockSpark .mockBar {
+  block-size: 2.4cqw;
+}
+
+/* ------------------------------------------------------------ mock charts */
+/* Unlabelled by design: a shape carries no claim. */
+.mockChart {
+  align-items: flex-end;
+  display: flex;
+  flex: 1;
+  gap: 1.6cqw;
+  min-block-size: 0;
+}
+
+.mockChartBar {
+  background: linear-gradient(180deg, rgb(var(--fin-accent)), rgb(var(--fin-lilac)));
+  border-radius: 1cqw 1cqw 0.4cqw 0.4cqw;
+  flex: 1;
+}
+
+.mockArea {
+  display: block;
+  flex: 1;
+  inline-size: 100%;
+  min-block-size: 0;
+}
+
+.mockAreaFill {
+  fill: rgb(var(--fin-lilac) / 45%);
+}
+
+.mockAreaLine {
+  fill: none;
+  stroke: rgb(var(--fin-accent));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  /* keeps the stroke even despite preserveAspectRatio="none" */
+  vector-effect: non-scaling-stroke;
+}
+
+/* the series reads start → end; mirror it so it still rises toward the end */
+.page[dir='rtl'] .mockArea {
+  transform: scaleX(-1);
+}
+
+/* ------------------------------------------------------------- mock tiles */
+.mockTiles {
+  display: flex;
+  flex: none;
+  gap: 2cqw;
+}
+
+.mockTile {
+  background: rgb(var(--fin-gray));
+  border-radius: 2cqw;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.4cqw;
+  min-inline-size: 0;
+  padding: 2.2cqw;
+}
+
+.mockTileLabel {
+  color: rgb(var(--fin-body));
+  font-size: 2.4cqw;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mockNode {
+  align-items: center;
+  background: rgb(var(--fin-gray));
+  border-radius: 2cqw;
+  display: flex;
+  flex: 1;
+  gap: 1.4cqw;
+  min-inline-size: 0;
+  padding: 2cqw;
+}
+
+.mockNode svg {
+  block-size: 3cqw;
+  color: rgb(var(--fin-accent));
+  flex: none;
+  inline-size: 3cqw;
+}
+
+/* --------------------------------------------------------- security panel */
+.mockShield {
+  align-items: center;
+  background: rgb(var(--fin-gray-2));
+  border: 1px solid rgb(var(--fin-tint));
+  border-radius: 2.4cqw;
+  display: flex;
+  flex: none;
+  gap: 2.4cqw;
+  padding: 3cqw;
+}
+
+.mockShieldIcon {
+  align-items: center;
+  background: rgb(var(--fin-accent));
+  block-size: 8cqw;
+  border-radius: 2cqw;
+  color: #fff;
+  display: inline-flex;
+  flex: none;
+  inline-size: 8cqw;
+  justify-content: center;
+}
+
+.mockShieldIcon svg {
+  block-size: 4cqw;
+  inline-size: 4cqw;
+}
+
+.mockShieldText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1cqw;
+  min-inline-size: 0;
+}
+
+.mockTimeline {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 1.6cqw;
+}
+
+.mockTimelineItem {
+  align-items: center;
+  display: flex;
+  gap: 2cqw;
+}
+
+.mockTimelineItem::before {
+  background: rgb(var(--fin-lilac-strong));
+  block-size: 1.4cqw;
+  border-radius: 50%;
+  content: '';
+  flex: none;
+  inline-size: 1.4cqw;
+}
+
+/* ----------------------------------------------------- API endpoint strips */
+.mockStrip {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 2cqw;
+  padding-inline: 3cqw;
+}
+
+.mockEndpoint {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 2cqw;
+  min-inline-size: 0;
+}
+
+.mockMethod {
+  background: rgb(var(--fin-accent));
+  border-radius: 0.8cqw;
+  color: #fff;
+  flex: none;
+  font-size: 2.2cqw;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.8cqw 1.6cqw;
+}
+
+/* Endpoint paths are ASCII and identical in both locales — pin them LTR so
+   they don't reorder inside the RTL page. */
+.mockCode {
+  color: rgb(var(--fin-ink));
+  direction: ltr;
+  flex: none;
+  font-family: ui-monospace, sfmono-regular, menlo, consolas, monospace;
+  font-size: 2.6cqw;
+  font-weight: 600;
+  unicode-bidi: isolate;
+}
+
+.mockEndpointBar {
+  display: block;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+/* ---------------------------------------------------- platform layer stack */
+.mockLayerStack {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  /* reversed so the first (widest) layer sits at the bottom as the foundation */
+  flex-direction: column-reverse;
+  gap: 1.6cqw;
+  justify-content: center;
+  min-block-size: 0;
+}
+
+.mockLayer {
+  align-items: center;
+  background: rgb(255 255 255 / 12%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 1.8cqw;
+  display: flex;
+  gap: 2cqw;
+  padding: 2cqw 2.4cqw;
+}
+
+.mockLayerIcon {
+  align-items: center;
+  background: rgb(var(--fin-lilac) / 32%);
+  block-size: 5.4cqw;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  flex: none;
+  inline-size: 5.4cqw;
+  justify-content: center;
+}
+
+.mockLayerIcon svg {
+  block-size: 2.8cqw;
+  inline-size: 2.8cqw;
+}
+
+.mockLayerLabel {
+  color: #fff;
+  flex: 1;
+  font-size: 2.6cqw;
+  font-weight: 600;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------- handoff panel */
+.mockHandoffHead {
+  display: flex;
+  flex: none;
+  gap: 6cqw;
+  justify-content: flex-end;
+  padding-inline: 2.6cqw;
+}
+
+.mockHandoffCol {
+  color: rgb(var(--fin-body));
+  font-size: 2.2cqw;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .mockHandoffCol {
+  letter-spacing: 0;
+}
+
+.mockOwner {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: 1.2cqw;
+  inline-size: 22%;
+}
+
+.mockOwner svg {
+  block-size: 3cqw;
+  color: rgb(var(--fin-accent));
+  flex: none;
+  inline-size: 3cqw;
 }
 
 /* ============================================================== Responsive */

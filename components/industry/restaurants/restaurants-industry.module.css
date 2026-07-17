@@ -370,14 +370,48 @@
 }
 
 /* -------------------------------------------------------------------- Hero */
+/*
+ * Photo backdrop stack (all inside .hero's `isolation: isolate` context, so the
+ * negative z-indices stay local and paint above .hero's own background):
+ *   -3  .heroPhoto    — the licensed kitchen shot, object-fit: cover
+ *   -2  .hero::before — navy scrim, THE contrast guarantee
+ *   -1  .hero::after  — the original dot texture
+ *    1+ content
+ * The scrim (88%→80% navy) is what keeps every text layer AA. Measured against
+ * a pure-white backdrop pixel (the pathological case — the photo's actual 99.5th
+ * percentile is rgb(210,200,174), so real values run better) at the weaker 80%
+ * end: white h1 9.7:1, intro 7.1:1, trust label 6.2:1, and the tightest text on
+ * the page — the device-mock title over its own 6% white panel — 5.3:1.
+ * The AA floor for that device title is a ~75% scrim, so 80% is the practical
+ * limit: thinning further to show more photo breaks it. Re-run the check if the
+ * low-opacity whites below are ever lowered.
+ */
 .hero {
-  background:
-    radial-gradient(circle at 82% 16%, rgb(var(--rt-green) / 42%), transparent 46%),
-    linear-gradient(160deg, rgb(var(--rt-navy)) 8%, rgb(var(--rt-navy-deep)) 92%);
+  background: rgb(var(--rt-navy-deep));
   color: rgb(255 255 255 / 84%);
   isolation: isolate;
   overflow: hidden;
   position: relative;
+}
+
+.heroPhoto {
+  block-size: 100%;
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  z-index: -3;
+}
+
+.hero::before {
+  background:
+    radial-gradient(circle at 82% 16%, rgb(var(--rt-green) / 42%), transparent 46%),
+    linear-gradient(160deg, rgb(var(--rt-navy) / 88%) 8%, rgb(var(--rt-navy-deep) / 80%) 92%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -2;
 }
 
 .hero::after {
@@ -602,8 +636,10 @@
   padding: 0;
 }
 
+/* 62% → 74%: 0.72rem uppercase at 0.14em tracking is the smallest text on the
+   hero, and it now sits over a photo. Buys margin over the AA floor. */
 .heroTrustLabel {
-  color: rgb(255 255 255 / 62%);
+  color: rgb(255 255 255 / 74%);
   display: block;
   font-size: 0.72rem;
   font-weight: 700;
@@ -666,8 +702,13 @@
   background: rgb(var(--rt-amber));
 }
 
+/* 60% → 74%: the device panel is only 6% white, so this small (0.78rem) text is
+   effectively sitting on the scrimmed photo rather than on a panel. It is the
+   tightest contrast on the page — 5.3:1 against the photo's brightest possible
+   pixel, where staying at 60% would have measured 4.1:1 and failed AA outright.
+   Keep it >= 74%. */
 .heroDeviceTitle {
-  color: rgb(255 255 255 / 60%);
+  color: rgb(255 255 255 / 74%);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -729,8 +770,9 @@
   width: 0.8rem;
 }
 
+/* 68% → 78%: small (0.85rem) body text over the scrimmed photo. */
 .heroDeviceNote {
-  color: rgb(255 255 255 / 68%);
+  color: rgb(255 255 255 / 78%);
   font-size: 0.85rem;
   line-height: 1.55;
   margin-block-start: 1.1rem;
@@ -1092,6 +1134,18 @@
   padding: clamp(2rem, 4vw, 2.75rem);
 }
 
+/* Framed inside the navy panel — no text sits on it, so it needs no scrim and
+   can stay at full strength. Cropped 3:2 → 16:10 to keep the panel roughly
+   level with the copy column beside it. */
+.aboutPhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  display: block;
+  inline-size: 100%;
+  margin-block-end: clamp(1.75rem, 3vw, 2.25rem);
+  object-fit: cover;
+}
+
 .aboutStats {
   display: grid;
   gap: 1.75rem;
@@ -1139,10 +1193,32 @@
   margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
 }
 
+/* Wraps the tablist + showcase photo. The photo must NOT live inside the
+   element carrying `role="tablist"` (that role only permits `role="tab"`
+   children), hence this extra column box. */
+.tabsAside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .tabList {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+/* Grows to absorb the aside's leftover height next to the taller panel.
+   flex-basis MUST be 0, not auto: on a replaced element `auto` resolves to the
+   file's intrinsic height (1193px), which would blow the row out before
+   shrinking. From 0 it simply takes what the tab list leaves, with a floor. */
+.tabsPhoto {
+  border-radius: 14px;
+  display: block;
+  flex: 1 1 0;
+  inline-size: 100%;
+  min-block-size: 180px;
+  object-fit: cover;
 }
 
 .tabButton {
@@ -1674,15 +1750,40 @@
   padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 4vw, 4rem);
 }
 
+/* Same photo-behind-scrim stack as the hero: base colour, photo at -2, the
+   original gradient re-cast as a translucent 88%→80% scrim at -1.
+   `overflow: hidden` + the radius clip the photo to the card. Measured at the
+   weaker 80% end over a pure-white pixel: white h2 9.7:1, the 84% subtitle
+   7.3:1, eyebrow-on-16%-white 5.6:1 — all clear AA. */
 .ctaCard {
-  background:
-    radial-gradient(circle at 82% 12%, rgb(var(--rt-green) / 40%), transparent 44%),
-    linear-gradient(160deg, rgb(var(--rt-navy)) 8%, rgb(var(--rt-navy-deep)) 92%);
+  background: rgb(var(--rt-navy-deep));
   border-radius: 28px;
   color: rgb(255 255 255 / 84%);
+  isolation: isolate;
   overflow: hidden;
   padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+  position: relative;
   text-align: center;
+}
+
+.ctaPhoto {
+  block-size: 100%;
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  z-index: -2;
+}
+
+.ctaCard::before {
+  background:
+    radial-gradient(circle at 82% 12%, rgb(var(--rt-green) / 40%), transparent 44%),
+    linear-gradient(160deg, rgb(var(--rt-navy) / 88%) 8%, rgb(var(--rt-navy-deep) / 80%) 92%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .ctaCard .eyebrowLight {
@@ -1739,6 +1840,29 @@
 
   .heroVisual {
     margin-block-start: 1rem;
+  }
+
+  /* Collapse the aside box so the tablist, panel, and photo all become items of
+     .tabsLayout and can be re-ordered: the photo drops below the panel so the
+     tabs stay directly adjacent to the panel they control. */
+  .tabsAside {
+    display: contents;
+  }
+
+  .tabList {
+    order: 1;
+  }
+
+  .tabPanels {
+    order: 2;
+  }
+
+  /* No flex parent once .tabsAside collapses — aspect-ratio governs instead. */
+  .tabsPhoto {
+    aspect-ratio: 16 / 9;
+    block-size: auto;
+    min-block-size: 0;
+    order: 3;
   }
 }
 

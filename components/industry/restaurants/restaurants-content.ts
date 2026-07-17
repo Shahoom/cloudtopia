@@ -10,6 +10,12 @@ import type { Locale } from '@/lib/i18n/config'
  * (online ordering, digital menus, POS, delivery/logistics, reservations,
  * loyalty). It is NOT a restaurant. Stats describe the approach and this page —
  * never fabricated covers, ratings, prices, or client outcomes.
+ *
+ * Photography: licensed venue/kitchen stock (see the CREDITS.md beside the
+ * files). The alt text stays purely descriptive of what is in the frame — these
+ * are NOT photographs of CloudTopia clients or builds, so alt must not imply
+ * one. The closing-CTA backdrop is atmosphere behind its own heading and is
+ * marked decorative (alt="") at the call site rather than given a string here.
  */
 
 export type RestaurantsHeroPillar = {
@@ -69,6 +75,7 @@ type RestaurantsContent = {
   heroTrustLabel: string
   heroTrust: readonly string[]
   heroPillars: readonly RestaurantsHeroPillar[]
+  heroImageAlt: string
 
   categoryEyebrow: string
   categoryTitle: string
@@ -89,12 +96,14 @@ type RestaurantsContent = {
   aboutPoints: readonly RestaurantsFeature[]
   aboutStatsNote: string
   aboutStats: readonly RestaurantsStat[]
+  aboutImageAlt: string
 
   tabsEyebrow: string
   tabsTitle: string
   tabsIntro: string
   tabsLabel: string
   tabs: readonly RestaurantsTab[]
+  tabsImageAlt: string
 
   processEyebrow: string
   processTitle: string
@@ -173,6 +182,8 @@ export const restaurantsLandingCopy = {
         deviceRows: ['Consent recorded', 'Reward eligible', 'Follow-up queued'],
       },
     ],
+    heroImageAlt:
+      'An open restaurant kitchen seen from the dining room, with herb planters and a chalkboard alongside it',
 
     categoryEyebrow: 'What we build',
     categoryTitle: 'One platform, every part of the service journey',
@@ -242,6 +253,8 @@ export const restaurantsLandingCopy = {
       { id: 'capabilities', value: 8, label: 'Connected capabilities we deliver' },
       { id: 'languages', value: 2, label: 'Operating languages, built in from day one' },
     ],
+    aboutImageAlt:
+      'The dining room of a full-service restaurant, with wood-slat walls and a warm gold ceiling',
 
     tabsEyebrow: 'Platform modules',
     tabsTitle: 'Pick a capability, see what CloudTopia builds',
@@ -298,6 +311,8 @@ export const restaurantsLandingCopy = {
         ],
       },
     ],
+    tabsImageAlt:
+      'A restaurant dining room with a deep green wall, timber-framed windows, and a long table laid for service',
 
     processEyebrow: 'How we work',
     processTitle: 'From first branch to a platform that scales',
@@ -433,6 +448,8 @@ export const restaurantsLandingCopy = {
         deviceRows: ['تم تسجيل الموافقة', 'مؤهل للمكافأة', 'المتابعة في قائمة الانتظار'],
       },
     ],
+    heroImageAlt:
+      'مطبخ مطعم مفتوح يُرى من صالة الطعام، مع أحواض أعشاب ولوح طباشير إلى جانبه',
 
     categoryEyebrow: 'ما الذي نبنيه',
     categoryTitle: 'منصة واحدة لكل جزء من رحلة الخدمة',
@@ -502,6 +519,8 @@ export const restaurantsLandingCopy = {
       { id: 'capabilities', value: 8, label: 'قدرات مترابطة نقدمها' },
       { id: 'languages', value: 2, label: 'لغتا تشغيل مدمجتان منذ اليوم الأول' },
     ],
+    aboutImageAlt:
+      'صالة طعام في مطعم بخدمة كاملة، بجدران من شرائح خشبية وسقف ذهبي دافئ',
 
     tabsEyebrow: 'وحدات المنصة',
     tabsTitle: 'اختاروا قدرة، وشاهدوا ما تبنيه كلاود توبيا',
@@ -558,6 +577,8 @@ export const restaurantsLandingCopy = {
         ],
       },
     ],
+    tabsImageAlt:
+      'صالة طعام في مطعم بجدار أخضر داكن ونوافذ بإطارات خشبية وطاولة طويلة مجهّزة للخدمة',
 
     processEyebrow: 'كيف نعمل',
     processTitle: 'من الفرع الأول إلى منصة تتوسّع',

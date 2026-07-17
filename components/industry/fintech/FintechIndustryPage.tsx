@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import type { ComponentType } from 'react'
 import Link from 'next/link'
 import {
   ArrowUpLeft,
@@ -26,11 +26,33 @@ import type {
 
 import { FintechCounters } from './FintechCounters'
 import { FintechHeroParallax } from './FintechHeroParallax'
+import {
+  FintechAnalyticsMock,
+  FintechApiStackMock,
+  FintechCheckoutMock,
+  FintechConfirmMock,
+  FintechCreditMock,
+  FintechEventsMock,
+  FintechHandoffMock,
+  FintechLayersMock,
+  FintechLedgerMock,
+  FintechScaleMock,
+  FintechSecurityMock,
+  FintechSparkMock,
+  FintechWalletMock,
+  type MockProps,
+} from './FintechMockups'
 import { FintechPricingTabs } from './FintechPricingTabs'
 import { FintechReveal } from './FintechReveal'
 import { FintechScrollZoomCta } from './FintechScrollZoomCta'
 import { FintechWorkflow } from './FintechWorkflow'
-import { fintechLandingCopy, type FintechFeatureCard } from './fintech-content'
+import {
+  fintechLandingCopy,
+  type FintechApproachId,
+  type FintechFeatureCard,
+  type FintechFeatureId,
+  type FintechServiceId,
+} from './fintech-content'
 import styles from './fintech-industry.module.css'
 
 type FintechIndustryPageProps = {
@@ -63,6 +85,30 @@ function ArrowPair({ locale }: { locale: Locale }) {
 }
 
 const VALUE_ICONS = [ShieldCheck, Gauge, Layers, Eye] as const
+
+/**
+ * Card id → hand-built product-UI mock. Keyed by the id unions from
+ * fintech-content, so a card without a mock (or a mock without a card) fails
+ * the build rather than rendering a hole.
+ */
+const SERVICE_MOCKS = {
+  payments: FintechCheckoutMock,
+  'core-banking': FintechLedgerMock,
+  lending: FintechCreditMock,
+} satisfies Record<FintechServiceId, ComponentType<MockProps>>
+
+const FEATURE_MOCKS = {
+  security: FintechSecurityMock,
+  analytics: FintechAnalyticsMock,
+  scalability: FintechScaleMock,
+  integrations: FintechApiStackMock,
+  observability: FintechEventsMock,
+} satisfies Record<FintechFeatureId, ComponentType<MockProps>>
+
+const APPROACH_MOCKS = {
+  'security-first': FintechLayersMock,
+  'compliance-ready': FintechHandoffMock,
+} satisfies Record<FintechApproachId, ComponentType<MockProps>>
 
 export function FintechIndustryPage({
   locale,
@@ -140,26 +186,13 @@ export function FintechIndustryPage({
           </div>
 
           <div className={styles.heroVisual}>
+            {/* The mocks are static server-rendered markup passed through the
+                client parallax wrapper, so they cost no client JS themselves. */}
             <FintechHeroParallax
               direction={direction}
-              large={{
-                src: '/images/industries/fintech/hero_lg.webp',
-                alt: copy.heroImageAlt,
-                width: 450,
-                height: 702,
-              }}
-              small1={{
-                src: '/images/industries/fintech/hero_sm_1.webp',
-                alt: copy.heroThumbOneAlt,
-                width: 259,
-                height: 219,
-              }}
-              small2={{
-                src: '/images/industries/fintech/hero_sm_2.webp',
-                alt: copy.heroThumbTwoAlt,
-                width: 247,
-                height: 219,
-              }}
+              large={<FintechWalletMock locale={locale} />}
+              small1={<FintechConfirmMock locale={locale} />}
+              small2={<FintechSparkMock locale={locale} />}
             />
           </div>
         </div>
@@ -178,23 +211,20 @@ export function FintechIndustryPage({
             variant="up"
             stagger
           >
-            {copy.services.map((card) => (
-              <div className={styles.featureCard} key={card.id}>
-                <div className={styles.featureCardText}>
-                  <h3>{card.title}</h3>
-                  <p>{card.subtitle}</p>
+            {copy.services.map((card) => {
+              const Mock = SERVICE_MOCKS[card.id]
+              return (
+                <div className={styles.featureCard} key={card.id}>
+                  <div className={styles.featureCardText}>
+                    <h3>{card.title}</h3>
+                    <p>{card.subtitle}</p>
+                  </div>
+                  <div className={styles.featureCardThumb}>
+                    <Mock locale={locale} />
+                  </div>
                 </div>
-                <div className={styles.featureCardThumb}>
-                  <Image
-                    src={card.image}
-                    alt=""
-                    width={card.width}
-                    height={card.height}
-                    sizes="(max-width: 991px) 90vw, 30vw"
-                  />
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </FintechReveal>
         </section>
 
@@ -212,6 +242,7 @@ export function FintechIndustryPage({
           >
             {(copy.features as readonly FintechFeatureCard[]).map((card, index) => {
               const flip = index % 2 === 1
+              const Mock = FEATURE_MOCKS[card.id]
               return (
                 <div
                   className={styles.featureCard}
@@ -222,29 +253,13 @@ export function FintechIndustryPage({
                     <h3>{card.title}</h3>
                     <p>{card.subtitle}</p>
                   </div>
-                  {card.layout === 'stack' && card.stack ? (
-                    <div className={styles.featureCardStack}>
-                      {card.stack.map((strip) => (
-                        <div className={styles.featureCardStackItem} key={strip.src}>
-                          <Image
-                            src={strip.src}
-                            alt=""
-                            width={strip.width}
-                            height={strip.height}
-                            sizes="(max-width: 991px) 80vw, 26vw"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : card.image ? (
+                  {card.layout === 'stack' ? (
+                    /* The stack mock renders its own .featureCardStack wrapper
+                       so the layered offsets and z-order stay in the CSS. */
+                    <Mock locale={locale} />
+                  ) : (
                     <div className={styles.featureCardThumb}>
-                      <Image
-                        src={card.image}
-                        alt=""
-                        width={card.width ?? 715}
-                        height={card.height ?? 400}
-                        sizes="(max-width: 991px) 90vw, 30vw"
-                      />
+                      <Mock locale={locale} />
                       {card.layout === 'single-accent' && card.accent ? (
                         <span
                           className={styles.featureAccent}
@@ -257,7 +272,7 @@ export function FintechIndustryPage({
                         />
                       ) : null}
                     </div>
-                  ) : null}
+                  )}
                 </div>
               )
             })}
@@ -314,26 +329,23 @@ export function FintechIndustryPage({
           <FintechReveal variant="up">
             <p className={styles.eyebrow}>{copy.approachEyebrow}</p>
           </FintechReveal>
-          {copy.approach.map((block, index) => (
-            <FintechReveal key={block.id} variant={index % 2 === 1 ? 'right' : 'left'}>
-              <div className={styles.approachRow} data-flip={index % 2 === 1 ? 'true' : 'false'}>
-                <div className={styles.approachMedia}>
-                  <Image
-                    src={block.image}
-                    alt={block.imageAlt}
-                    width={block.width}
-                    height={block.height}
-                    sizes="(max-width: 991px) 92vw, 46vw"
-                  />
+          {copy.approach.map((block, index) => {
+            const Mock = APPROACH_MOCKS[block.id]
+            return (
+              <FintechReveal key={block.id} variant={index % 2 === 1 ? 'right' : 'left'}>
+                <div className={styles.approachRow} data-flip={index % 2 === 1 ? 'true' : 'false'}>
+                  <div className={styles.approachMedia}>
+                    <Mock locale={locale} />
+                  </div>
+                  <div className={styles.approachCopy}>
+                    <span className={styles.approachBadge}>{block.badge}</span>
+                    <h2>{block.title}</h2>
+                    <p>{block.body}</p>
+                  </div>
                 </div>
-                <div className={styles.approachCopy}>
-                  <span className={styles.approachBadge}>{block.badge}</span>
-                  <h2>{block.title}</h2>
-                  <p>{block.body}</p>
-                </div>
-              </div>
-            </FintechReveal>
-          ))}
+              </FintechReveal>
+            )
+          })}
         </section>
 
         {/* ---------------------------- Pricing / engagement model tabs */}

@@ -1,10 +1,18 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { ArrowUpLeft, ArrowUpRight, Check, MessageCircle } from 'lucide-react'
 
 import styles from './restaurants-industry.module.css'
 import type { RestaurantsHeroPillar } from './restaurants-content'
+
+type RestaurantsHeroPhoto = {
+  src: string
+  width: number
+  height: number
+  alt: string
+}
 
 type RestaurantsHeroProps = {
   direction: 'ltr' | 'rtl'
@@ -22,6 +30,8 @@ type RestaurantsHeroProps = {
   dotLabel: string
   prevLabel: string
   nextLabel: string
+  /** Static full-bleed backdrop — it does NOT rotate with the slides. */
+  photo: RestaurantsHeroPhoto
 }
 
 const AUTOPLAY_MS = 5000
@@ -37,6 +47,11 @@ const AUTOPLAY_MS = 5000
  * child carrying an incremental animation-delay for the same staggered feel.
  * A single static <h1> is kept (accessibility) while the pillar tag, headline,
  * note, and device mock re-enter each cycle.
+ *
+ * The backdrop photo is deliberately static and outside the keyed rotator: it
+ * is the LCP image, so it must not be re-fetched or re-animated per slide.
+ * `.hero::before` lays the navy scrim over it — every hero text layer sits on
+ * that scrim, not on raw photo, which is what keeps the copy AA-legible.
  *
  * Autoplay is paused on hover/focus and disabled entirely under
  * prefers-reduced-motion, where the slider becomes a manual (dots/arrows)
@@ -58,6 +73,7 @@ export function RestaurantsHero({
   dotLabel,
   prevLabel,
   nextLabel,
+  photo,
 }: RestaurantsHeroProps) {
   const [active, setActive] = useState(0)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -113,6 +129,15 @@ export function RestaurantsHero({
       onFocusCapture={pause}
       onBlurCapture={resume}
     >
+      <Image
+        className={styles.heroPhoto}
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="100vw"
+        priority
+      />
       <span className={styles.heroBackTitle} aria-hidden="true">
         {backTitle}
       </span>

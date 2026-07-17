@@ -31,9 +31,11 @@ type EcommerceStretcherProps = {
  * slides up via translate3d. Keyboard users reach each panel through a full-area
  * button that mirrors the hover state on focus.
  *
- * Panels ship as palette gradients rather than the template's product photos,
- * because only genuine imagery is used here. The reduced-motion kill switch
- * removes the width/transform transitions, leaving an instant, legible expand.
+ * Panels ship as palette gradients rather than the template's product photos:
+ * an inactive panel collapses to roughly 18% of the row (~130px wide), where a
+ * photo is unreadable mush, whereas the icon + label stay legible at any width.
+ * The reduced-motion kill switch removes the width/transform transitions,
+ * leaving an instant, legible expand.
  *
  * SSR-safe: with no active index every panel shows at its neutral width and all
  * captions are present in the DOM for assistive tech.

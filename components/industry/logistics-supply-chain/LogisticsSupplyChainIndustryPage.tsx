@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowUpLeft,
@@ -54,6 +55,23 @@ function sectionOf<TType extends IndustrySection['type']>(
   return section as Extract<IndustrySection, { type: TType }>
 }
 
+/**
+ * Licensed photography for this world (see CREDITS.md next to the files). All
+ * four are 1800px-wide landscape JPEGs; the intrinsic sizes below are the real
+ * pixel dimensions, so next/image reserves the right box and never shifts.
+ */
+const PHOTO_DIR = '/images/industries/logistics-supply-chain'
+const PHOTOS = {
+  /** Warehouse conveyor corridor — hero backdrop / LCP. */
+  hero: { src: `${PHOTO_DIR}/logistics-supply-chain-1.jpg`, width: 1800, height: 1201 },
+  /** AGV moving a parts rack — expertise section. */
+  about: { src: `${PHOTO_DIR}/logistics-supply-chain-2.jpg`, width: 1800, height: 1201 },
+  /** Circular sortation carousel — shipment-visibility section. */
+  showcase: { src: `${PHOTO_DIR}/logistics-supply-chain-3.jpg`, width: 1800, height: 1201 },
+  /** Robotic palletizing arm — CTA band backdrop. */
+  cta: { src: `${PHOTO_DIR}/logistics-supply-chain-4.jpg`, width: 1800, height: 1129 },
+} as const
+
 function ArrowPair({ locale }: { locale: Locale }) {
   const Arrow = locale === 'ar' ? ArrowUpLeft : ArrowUpRight
   return (
@@ -107,6 +125,17 @@ export function LogisticsSupplyChainIndustryPage({
 
       {/* ------------------------------------------------- Hero (parallax) */}
       <section className={styles.hero} data-header-theme="dark">
+        <Image
+          className={styles.heroPhoto}
+          src={PHOTOS.hero.src}
+          alt={copy.heroImageAlt}
+          width={PHOTOS.hero.width}
+          height={PHOTOS.hero.height}
+          sizes="100vw"
+          priority
+        />
+        {/* Gradient scrim — keeps the white h1 and the glass panel AA over the photo. */}
+        <span className={styles.heroScrim} aria-hidden="true" />
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <p className={styles.heroEyebrow}>
@@ -181,6 +210,15 @@ export function LogisticsSupplyChainIndustryPage({
         <section className={`${styles.section} ${styles.sectionGray}`}>
           <div className={styles.aboutRow}>
             <LogisticsReveal className={styles.aboutMedia} variant="left">
+              <div className={styles.aboutPhoto}>
+                <Image
+                  src={PHOTOS.about.src}
+                  alt={copy.aboutImageAlt}
+                  width={PHOTOS.about.width}
+                  height={PHOTOS.about.height}
+                  sizes="(max-width: 991px) 92vw, 38vw"
+                />
+              </div>
               <div className={styles.aboutPanel}>
                 <p className={styles.aboutPanelLabel}>{copy.aboutPanelLabel}</p>
                 <ol className={styles.aboutTrack}>
@@ -356,6 +394,15 @@ export function LogisticsSupplyChainIndustryPage({
             </LogisticsReveal>
 
             <LogisticsReveal className={styles.showcaseMedia} variant="right">
+              <div className={styles.showcasePhoto}>
+                <Image
+                  src={PHOTOS.showcase.src}
+                  alt={copy.showcaseImageAlt}
+                  width={PHOTOS.showcase.width}
+                  height={PHOTOS.showcase.height}
+                  sizes="(max-width: 991px) 92vw, 44vw"
+                />
+              </div>
               <div className={styles.trackCard} role="group" aria-label={copy.showcasePanelLabel}>
                 <div className={styles.trackCardHead}>
                   <span className={styles.trackCardBadge}>
@@ -514,6 +561,17 @@ export function LogisticsSupplyChainIndustryPage({
         <section className={styles.ctaSection}>
           <div className={styles.ctaSplit}>
             <div className={`${styles.ctaPanel} ${styles.ctaPanelPrimary}`}>
+              {/* Decorative backdrop: atmosphere only, and the panel's own heading and
+                  body already carry the meaning — so it is hidden from the a11y tree.
+                  `.ctaPanelPrimary::before` scrims it. */}
+              <Image
+                className={styles.ctaPhoto}
+                src={PHOTOS.cta.src}
+                alt=""
+                width={PHOTOS.cta.width}
+                height={PHOTOS.cta.height}
+                sizes="(max-width: 991px) 100vw, 55vw"
+              />
               <p className={styles.eyebrowLight}>{copy.ctaEyebrow}</p>
               <LogisticsSplitHeading className={styles.headingLight} text={copy.ctaTitle} />
               <p>{copy.ctaSubtitle}</p>

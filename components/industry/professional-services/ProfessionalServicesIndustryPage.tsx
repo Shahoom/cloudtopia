@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowUpLeft,
@@ -72,6 +73,41 @@ const FEATURE_ICONS: readonly LucideIcon[] = [
   Users,
   BarChart3,
 ]
+
+/**
+ * Licensed photography (Unsplash — see the CREDITS.md beside the files).
+ * Intrinsic dimensions are the real pixel sizes of the JPEGs on disk; src and
+ * dimensions are locale-invariant, so only the alt text lives in the copy file.
+ */
+const PS_PHOTO_BASE = '/images/industries/professional-services'
+
+/** Hero / LCP image — warm tan atrium, matched to the world's accent. */
+const HERO_IMAGE = {
+  src: `${PS_PHOTO_BASE}/professional-services-1.jpg`,
+  width: 1800,
+  height: 1202,
+} as const
+
+/** Approach media, keyed by block id so copy order changes cannot mis-pair. */
+const APPROACH_MEDIA: Record<string, { src: string; width: number; height: number }> = {
+  'one-rail': {
+    src: `${PS_PHOTO_BASE}/professional-services-2.jpg`,
+    width: 1800,
+    height: 1200,
+  },
+  separated: {
+    src: `${PS_PHOTO_BASE}/professional-services-3.jpg`,
+    width: 1800,
+    height: 1201,
+  },
+}
+
+/** Closing CTA masthead strip. */
+const CTA_IMAGE = {
+  src: `${PS_PHOTO_BASE}/professional-services-4.jpg`,
+  width: 1800,
+  height: 1200,
+} as const
 
 export function ProfessionalServicesIndustryPage({
   locale,
@@ -149,6 +185,19 @@ export function ProfessionalServicesIndustryPage({
           </div>
 
           <div className={styles.heroVisual}>
+            {/* The photo sits OUTSIDE the aria-hidden parallax stage so it keeps a
+                real alt for assistive tech, while the decorative keyword card that
+                restates the h1 stays hidden. It is the LCP image, hence priority. */}
+            <div className={styles.heroPhoto}>
+              <Image
+                src={HERO_IMAGE.src}
+                alt={copy.heroImageAlt}
+                width={HERO_IMAGE.width}
+                height={HERO_IMAGE.height}
+                priority
+                sizes="(max-width: 991px) 92vw, (max-width: 1240px) 46vw, 570px"
+              />
+            </div>
             <ProfessionalServicesHero
               slides={copy.heroSlides}
               direction={direction}
@@ -189,31 +238,39 @@ export function ProfessionalServicesIndustryPage({
             <h2>{copy.approachTitle}</h2>
             <p className={styles.sectionIntro}>{copy.approachIntro}</p>
           </ProfessionalServicesReveal>
-          {copy.approach.map((block, index) => (
-            <ProfessionalServicesReveal
-              key={block.id}
-              variant={index % 2 === 1 ? 'right' : 'left'}
-            >
-              <div className={styles.approachRow} data-flip={index % 2 === 1 ? 'true' : 'false'}>
-                {/* TODO(imagery-pass): real explainer/office media goes here;
-                    rendered as a designed labelled panel, not a placeholder box. */}
-                <div
-                  className={styles.approachMedia}
-                  role="img"
-                  aria-label={block.imageAlt}
-                >
-                  <span className={styles.approachMediaMark} aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+          {copy.approach.map((block, index) => {
+            const media = APPROACH_MEDIA[block.id]
+            return (
+              <ProfessionalServicesReveal
+                key={block.id}
+                variant={index % 2 === 1 ? 'right' : 'left'}
+              >
+                <div className={styles.approachRow} data-flip={index % 2 === 1 ? 'true' : 'false'}>
+                  <div className={styles.approachMedia}>
+                    {media ? (
+                      <Image
+                        src={media.src}
+                        alt={block.imageAlt}
+                        width={media.width}
+                        height={media.height}
+                        sizes="(max-width: 991px) 92vw, (max-width: 1240px) 46vw, 570px"
+                      />
+                    ) : null}
+                    {/* Scrim keeps the ghosted numeral legible over the photo. */}
+                    <span className={styles.approachMediaScrim} aria-hidden="true" />
+                    <span className={styles.approachMediaMark} aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <div className={styles.approachCopy}>
+                    <span className={styles.approachBadge}>{block.badge}</span>
+                    <h3>{block.title}</h3>
+                    <p>{block.body}</p>
+                  </div>
                 </div>
-                <div className={styles.approachCopy}>
-                  <span className={styles.approachBadge}>{block.badge}</span>
-                  <h3>{block.title}</h3>
-                  <p>{block.body}</p>
-                </div>
-              </div>
-            </ProfessionalServicesReveal>
-          ))}
+              </ProfessionalServicesReveal>
+            )
+          })}
         </section>
 
         {/* ------------------------------------------------- Services grid */}
@@ -367,6 +424,17 @@ export function ProfessionalServicesIndustryPage({
 
         {/* ----------------------------- Full-width CTA (scroll-zoom band) */}
         <ProfessionalServicesScrollZoomCta>
+          {/* Full-strength masthead strip: no text sits over it, so the band needs
+              no scrim and the copy below keeps the dark gradient it was tuned on. */}
+          <div className={styles.ctaPhoto}>
+            <Image
+              src={CTA_IMAGE.src}
+              alt={copy.ctaImageAlt}
+              width={CTA_IMAGE.width}
+              height={CTA_IMAGE.height}
+              sizes="(max-width: 1240px) 100vw, 1240px"
+            />
+          </div>
           <div className={styles.ctaInner}>
             <p className={styles.eyebrowLight}>{copy.ctaEyebrow}</p>
             <h2>{copy.ctaTitle}</h2>

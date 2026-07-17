@@ -14,10 +14,11 @@ import type { Locale } from '@/lib/i18n/config'
  * Stats are structural facts about the approach and this page — never
  * fabricated performance, citizen-count, or client-outcome metrics.
  *
- * The Whitehall template ships only gray dimension placeholders (no real
- * photos), so this page is intentionally photo-free: the look is carried by the
- * navy/red palette, iconography, gradients, and shape motifs. og-images remain
- * a TODO for the imagery pass.
+ * Photography: four licensed civic-architecture photos carry the hero carousel
+ * (one per cross-fading slide) and the practice panel. They were chosen to read
+ * as GENERIC modern civic architecture — alt text must never name a country,
+ * city, institution, or imply a real government client. Everything else on the
+ * page stays icon/gradient by design. og-images remain a TODO.
  */
 
 type GovTile = {
@@ -52,12 +53,23 @@ type GovCatalogItem = {
   label: string
 }
 
+/**
+ * A licensed photo. `alt` is authored per locale and stays generic — describe
+ * the architecture, never a named place, body, or client.
+ */
+type GovPhoto = {
+  image: string
+  alt: string
+  width: number
+  height: number
+}
+
 type GovHeroSlide = {
   id: string
   kicker: string
   title: string
   description: string
-}
+} & GovPhoto
 
 type GovContent = {
   skip: string
@@ -84,6 +96,7 @@ type GovContent = {
   practiceIntro: string
   practiceBody: string
   practicePoints: readonly GovTile[]
+  practicePhoto: GovPhoto
   practicePanelEyebrow: string
   practicePanelStatement: string
   practicePanelNote: string
@@ -162,6 +175,10 @@ export const governmentLandingCopy = {
         title: 'One clear path from eligibility to a completed service',
         description:
           'We build portals where people find the right service, apply once, upload documents, and track a request to a recorded decision.',
+        image: '/images/industries/government-public-sector/government-public-sector-1.jpg',
+        alt: 'A modern civic building with an angular glass facade under an open sky.',
+        width: 1800,
+        height: 1200,
       },
       {
         id: 'identity',
@@ -169,6 +186,10 @@ export const governmentLandingCopy = {
         title: 'Identity, consent, and records that stay owned and traceable',
         description:
           'Sign-in, consent, and case records are engineered with role-based access, encryption, and audit trails inside the authority’s controls.',
+        image: '/images/industries/government-public-sector/government-public-sector-2.jpg',
+        alt: 'A contemporary public building with a long, sweeping curved roof.',
+        width: 1800,
+        height: 1200,
       },
       {
         id: 'modernization',
@@ -176,6 +197,10 @@ export const governmentLandingCopy = {
         title: 'Legacy services, re-platformed one journey at a time',
         description:
           'We move a priority service off brittle systems into an accessible, reconcilable platform without a risky big-bang rewrite.',
+        image: '/images/industries/government-public-sector/government-public-sector-3.jpg',
+        alt: 'The entrance of a modern civic building, with flags flying under a clear sky.',
+        width: 1800,
+        height: 1198,
       },
     ],
     carouselLabel: 'Public-sector focus areas',
@@ -228,6 +253,12 @@ export const governmentLandingCopy = {
         subtitle: 'Access, encryption, and WCAG 2.1 AA reviewed against the standards you approve.',
       },
     ],
+    practicePhoto: {
+      image: '/images/industries/government-public-sector/government-public-sector-4.jpg',
+      alt: 'The interior of an empty legislative chamber with tiered seating.',
+      width: 1800,
+      height: 1350,
+    },
     practicePanelEyebrow: 'Our commitment',
     practicePanelStatement:
       'A public service should be understandable in the first screen, usable by everyone, and reconcilable to a recorded decision by the authority that owns it.',
@@ -469,6 +500,10 @@ export const governmentLandingCopy = {
         title: 'مسار واضح من الأهلية إلى إتمام الخدمة',
         description:
           'نبني بوابات يجد فيها الناس الخدمة الصحيحة، ويقدّمون مرة واحدة، ويرفعون المستندات، ويتابعون الطلب حتى قرار مسجَّل.',
+        image: '/images/industries/government-public-sector/government-public-sector-1.jpg',
+        alt: 'مبنى مدني حديث بواجهة زجاجية حادة الزوايا تحت سماء مفتوحة.',
+        width: 1800,
+        height: 1200,
       },
       {
         id: 'identity',
@@ -476,6 +511,10 @@ export const governmentLandingCopy = {
         title: 'هوية وموافقة وسجلات تبقى مملوكة وقابلة للتتبع',
         description:
           'يُهندَس تسجيل الدخول والموافقة وسجلات المعاملات بوصول حسب الأدوار وتشفير وسجلات تدقيق ضمن ضوابط الجهة المسؤولة.',
+        image: '/images/industries/government-public-sector/government-public-sector-2.jpg',
+        alt: 'مبنى عام معاصر بسقف منحنٍ ممتد وانسيابي.',
+        width: 1800,
+        height: 1200,
       },
       {
         id: 'modernization',
@@ -483,6 +522,10 @@ export const governmentLandingCopy = {
         title: 'خدمات قديمة يُعاد بناؤها رحلةً تلو الأخرى',
         description:
           'ننقل خدمة ذات أولوية من أنظمة هشة إلى منصة سهلة الوصول وقابلة للمطابقة دون إعادة كتابة شاملة محفوفة بالمخاطر.',
+        image: '/images/industries/government-public-sector/government-public-sector-3.jpg',
+        alt: 'مدخل مبنى مدني حديث ترفرف أمامه الأعلام تحت سماء صافية.',
+        width: 1800,
+        height: 1198,
       },
     ],
     carouselLabel: 'مجالات تركيز القطاع العام',
@@ -535,6 +578,12 @@ export const governmentLandingCopy = {
         subtitle: 'الوصول والتشفير ومعيار WCAG 2.1 AA تُراجَع وفق المعايير التي تعتمدونها.',
       },
     ],
+    practicePhoto: {
+      image: '/images/industries/government-public-sector/government-public-sector-4.jpg',
+      alt: 'قاعة تشريعية خالية من الداخل بمقاعد مدرَّجة.',
+      width: 1800,
+      height: 1350,
+    },
     practicePanelEyebrow: 'التزامنا',
     practicePanelStatement:
       'ينبغي أن تكون الخدمة العامة مفهومة في الشاشة الأولى، وقابلة للاستخدام من الجميع، وقابلة للمطابقة إلى قرار مسجَّل لدى الجهة التي تملكها.',

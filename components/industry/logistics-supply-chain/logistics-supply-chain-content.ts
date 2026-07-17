@@ -128,6 +128,8 @@ type LogisticsContent = {
   heroTrust: readonly string[]
   heroPanelLabel: string
   heroPanelSummary: string
+  /** Alt for the hero backdrop photo (the page's LCP image). */
+  heroImageAlt: string
 
   pillarsEyebrow: string
   pillarsTitle: string
@@ -144,6 +146,8 @@ type LogisticsContent = {
   aboutBadgeLabel: string
   aboutPanelLabel: string
   aboutPanelStatuses: readonly LogisticsTrackStatus[]
+  /** Alt for the expertise-section photo above the shipment-record panel. */
+  aboutImageAlt: string
 
   domainsEyebrow: string
   domainsTitle: string
@@ -181,6 +185,8 @@ type LogisticsContent = {
   showcaseEtaLabel: string
   showcaseEtaValue: string
   showcaseStatuses: readonly LogisticsTrackStatus[]
+  /** Alt for the visibility-section photo above the illustrative tracking card. */
+  showcaseImageAlt: string
 
   guaranteesTitle: string
   guarantees: readonly LogisticsGuarantee[]
@@ -238,6 +244,8 @@ export const logisticsLandingCopy = {
     heroTrust: ['One reconciled record', 'Shipment visibility', 'Bilingual by design'],
     heroPanelLabel: 'Control-tower rail',
     heroPanelSummary: 'One order, tracked from capture to proof of delivery.',
+    heroImageAlt:
+      'A conveyor line running the length of an automated distribution warehouse, past marked floor lanes and numbered picking bays.',
 
     pillarsEyebrow: 'What we build',
     pillarsTitle: 'Four capability pillars for supply-chain teams',
@@ -309,6 +317,8 @@ export const logisticsLandingCopy = {
       { id: 'transit', label: 'In transit', state: 'Tracked', done: false },
       { id: 'delivery', label: 'Proof of delivery', state: 'Pending', done: false },
     ],
+    aboutImageAlt:
+      'An automated guided vehicle carrying a loaded parts rack across a warehouse floor.',
 
     domainsEyebrow: 'Solution domains',
     domainsTitle: 'The domains we engineer for logistics',
@@ -504,6 +514,8 @@ export const logisticsLandingCopy = {
       { id: 'transit', label: 'Out for delivery', state: 'Active', done: true },
       { id: 'delivered', label: 'Delivered', state: 'Pending', done: false },
     ],
+    showcaseImageAlt:
+      'A circular sortation carousel feeding parcels onto a conveyor line in a distribution center.',
 
     guaranteesTitle: 'How we commit to delivery',
     guarantees: [
@@ -661,6 +673,8 @@ export const logisticsLandingCopy = {
     heroTrust: ['سجل واحد مطابَق', 'رؤية الشحنات', 'ثنائي اللغة بالتصميم'],
     heroPanelLabel: 'مسار برج التحكم',
     heroPanelSummary: 'طلب واحد، متتبَّع من الالتقاط حتى إثبات التسليم.',
+    heroImageAlt:
+      'خط ناقل يمتد على طول مستودع توزيع آلي، بمحاذاة مسارات أرضية محدَّدة ومنصات انتقاء مرقَّمة.',
 
     pillarsEyebrow: 'ما الذي نبنيه',
     pillarsTitle: 'أربع ركائز قدرات لفرق سلاسل الإمداد',
@@ -732,6 +746,7 @@ export const logisticsLandingCopy = {
       { id: 'transit', label: 'أثناء النقل', state: 'متتبَّع', done: false },
       { id: 'delivery', label: 'إثبات التسليم', state: 'معلَّق', done: false },
     ],
+    aboutImageAlt: 'مركبة موجَّهة آلياً تنقل رفَّ قطع محمَّلاً عبر أرضية مستودع.',
 
     domainsEyebrow: 'مجالات الحلول',
     domainsTitle: 'المجالات التي نهندسها للوجستيات',
@@ -927,6 +942,7 @@ export const logisticsLandingCopy = {
       { id: 'transit', label: 'خارج للتسليم', state: 'نشط', done: true },
       { id: 'delivered', label: 'تم التسليم', state: 'معلَّق', done: false },
     ],
+    showcaseImageAlt: 'دوّار فرز دائري يغذّي خط ناقل بالطرود داخل مركز توزيع.',
 
     guaranteesTitle: 'كيف نلتزم بالتسليم',
     guarantees: [

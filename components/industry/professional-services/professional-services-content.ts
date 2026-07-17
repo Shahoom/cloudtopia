@@ -71,6 +71,7 @@ type ProfessionalServicesContent = {
   heroScrollHint: string
   heroTimebarLabel: string
   heroTrustLabel: string
+  heroImageAlt: string
   heroTrust: readonly string[]
   heroSlides: readonly { id: string; keyword: string; subhead: string }[]
 
@@ -130,6 +131,7 @@ type ProfessionalServicesContent = {
   ctaTitle: string
   ctaSubtitle: string
   ctaButton: string
+  ctaImageAlt: string
 
   newTab: string
 }
@@ -144,6 +146,8 @@ export const professionalServicesLandingCopy = {
     heroScrollHint: 'Scroll to explore the platform',
     heroTimebarLabel: 'Hero highlight progress',
     heroTrustLabel: 'Engineered around',
+    heroImageAlt:
+      'People on the curved balconies of a warm, open office atrium, looking out over the floors below.',
     heroTrust: ['Owned engagement rail', 'Permissioned client portals', 'Bilingual by design'],
     heroSlides: [
       {
@@ -210,14 +214,16 @@ export const professionalServicesLandingCopy = {
         badge: 'Architecture',
         title: 'One owned engagement rail, not scattered tools',
         body: 'Intake, proposals, delivery, time, and billing sit on one reconciled rail with a named owner and next action at every stage. Status stops disappearing between inboxes, drives, and chats.',
-        imageAlt: 'Engagement rail diagram of a CloudTopia professional-services platform',
+        imageAlt:
+          'The curved glass atrium of a modern office building, its walkways wrapping a single open core.',
       },
       {
         id: 'separated',
         badge: 'Delivery',
         title: 'Client material separated and permissioned',
         body: 'Firm knowledge, client materials, permissions, and retention rules are separated by design, so each client sees only what has been shared and the firm keeps its internal working files private.',
-        imageAlt: 'Permission and separation model of a CloudTopia client portal',
+        imageAlt:
+          'Two people walking through the open lobby of a modern professional office building.',
       },
     ],
 
@@ -464,6 +470,8 @@ export const professionalServicesLandingCopy = {
     ctaTitle: 'Ready to build the system your firm runs on?',
     ctaSubtitle: 'Bring one engagement flow and the people who own it. We will turn it into a buildable brief.',
     ctaButton: 'Structure your client engagement journey',
+    ctaImageAlt:
+      'A glass-walled office atrium with people moving between its upper floors.',
 
     newTab: '(opens in new tab)',
   },
@@ -476,6 +484,8 @@ export const professionalServicesLandingCopy = {
     heroScrollHint: 'مرّروا لاستكشاف المنصة',
     heroTimebarLabel: 'تقدّم عرض البطل',
     heroTrustLabel: 'مهندَس حول',
+    heroImageAlt:
+      'أشخاص على شرفات منحنية في بهو مكتبي مفتوح بألوان دافئة، يطلّون على الطوابق أدناه.',
     heroTrust: ['مسار ارتباط ذو ملكية', 'بوابات عملاء مصرَّح بها', 'ثنائي اللغة بالتصميم'],
     heroSlides: [
       {
@@ -542,14 +552,16 @@ export const professionalServicesLandingCopy = {
         badge: 'الهندسة',
         title: 'مسار ارتباط واحد ذو ملكية، لا أدوات متفرقة',
         body: 'يقع الاستقبال والمقترحات والتنفيذ والوقت والفوترة على مسار مطابَق واحد بمالك محدد وخطوة تالية في كل مرحلة. تتوقف الحالة عن الضياع بين البريد والأقراص والمحادثات.',
-        imageAlt: 'مخطط مسار الارتباط في منصة خدمات مهنية من كلاود توبيا',
+        imageAlt:
+          'بهو زجاجي منحنٍ في مبنى مكاتب حديث، تلتفّ ممراته حول نواة مفتوحة واحدة.',
       },
       {
         id: 'separated',
         badge: 'التسليم',
         title: 'مواد العميل منفصلة ومصرَّح بها',
         body: 'تُفصل معرفة الشركة ومواد العميل والصلاحيات وقواعد الاحتفاظ بالتصميم، فلا يرى كل عميل إلا ما جرت مشاركته، وتُبقي الشركة ملفات عملها الداخلية خاصة.',
-        imageAlt: 'نموذج الصلاحيات والفصل في بوابة عميل من كلاود توبيا',
+        imageAlt:
+          'شخصان يسيران في بهو مفتوح لمبنى مكاتب مهني حديث.',
       },
     ],
 
@@ -796,6 +808,8 @@ export const professionalServicesLandingCopy = {
     ctaTitle: 'مستعدون لبناء النظام الذي تعمل عليه شركتكم؟',
     ctaSubtitle: 'أحضروا مسار ارتباط واحداً والأشخاص الذين يملكونه، وسنحوّله إلى موجز قابل للبناء.',
     ctaButton: 'نظّموا رحلة ارتباط عملائكم',
+    ctaImageAlt:
+      'بهو مكاتب بجدران زجاجية يتنقل فيه أشخاص بين طوابقه العليا.',
 
     newTab: '(يفتح في تبويب جديد)',
   },

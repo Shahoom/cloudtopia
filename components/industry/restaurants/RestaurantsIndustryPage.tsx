@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowUpLeft,
@@ -54,6 +55,20 @@ function sectionOf<TType extends IndustrySection['type']>(
 const CHOOSE_ICONS: readonly LucideIcon[] = [Zap, Gauge, Lock, Layers]
 const GUARANTEE_ICONS: readonly LucideIcon[] = [Gauge, Truck, Lock, Headphones]
 const ABOUT_ICONS: readonly LucideIcon[] = [Layers, LifeBuoy]
+
+/**
+ * Licensed venue photography (credits: public/images/industries/restaurants/
+ * CREDITS.md). Dimensions are the real intrinsic pixel sizes of the files —
+ * next/image needs them to reserve layout and avoid CLS. Alt text is bilingual
+ * and lives in restaurants-content.ts; the hero is the LCP image and is the
+ * only one marked `priority`.
+ */
+const PHOTOS = {
+  hero: { src: '/images/industries/restaurants/restaurants-1.jpg', width: 1800, height: 1350 },
+  about: { src: '/images/industries/restaurants/restaurants-3.jpg', width: 1800, height: 1200 },
+  tabs: { src: '/images/industries/restaurants/restaurants-2.jpg', width: 1800, height: 1193 },
+  cta: { src: '/images/industries/restaurants/restaurants-4.jpg', width: 1800, height: 1200 },
+} as const
 
 export function RestaurantsIndustryPage({
   locale,
@@ -114,6 +129,7 @@ export function RestaurantsIndustryPage({
         dotLabel={copy.heroDotLabel}
         prevLabel={copy.heroPrev}
         nextLabel={copy.heroNext}
+        photo={{ ...PHOTOS.hero, alt: copy.heroImageAlt }}
       />
 
       <div id="restaurants-industry-content" className={styles.content} tabIndex={-1}>
@@ -181,6 +197,14 @@ export function RestaurantsIndustryPage({
               </div>
             </RestaurantsReveal>
             <RestaurantsReveal className={styles.aboutPanel} variant="left">
+              <Image
+                className={styles.aboutPhoto}
+                src={PHOTOS.about.src}
+                alt={copy.aboutImageAlt}
+                width={PHOTOS.about.width}
+                height={PHOTOS.about.height}
+                sizes="(max-width: 991px) 88vw, 32vw"
+              />
               <div className={styles.aboutStats}>
                 {copy.aboutStats.map((stat) => (
                   <div className={styles.aboutStat} key={stat.id}>
@@ -208,6 +232,7 @@ export function RestaurantsIndustryPage({
               tabs={copy.tabs}
               tabsLabel={copy.tabsLabel}
               direction={direction}
+              image={{ ...PHOTOS.tabs, alt: copy.tabsImageAlt }}
             />
           </RestaurantsReveal>
         </section>
@@ -359,6 +384,16 @@ export function RestaurantsIndustryPage({
         {/* ---------------------------------------------- Closing CTA band */}
         <section className={styles.ctaSection}>
           <RestaurantsReveal className={styles.ctaCard} variant="up">
+            {/* Atmosphere only — the heading below carries the message, so this
+                backdrop is decorative and intentionally has no alt text. */}
+            <Image
+              className={styles.ctaPhoto}
+              src={PHOTOS.cta.src}
+              alt=""
+              width={PHOTOS.cta.width}
+              height={PHOTOS.cta.height}
+              sizes="(max-width: 1400px) 100vw, 1320px"
+            />
             <p className={styles.eyebrowLight}>{copy.ctaEyebrow}</p>
             <h2>{copy.ctaTitle}</h2>
             <p>{copy.ctaSubtitle}</p>

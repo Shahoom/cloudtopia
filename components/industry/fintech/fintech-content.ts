@@ -10,27 +10,38 @@ import type { Locale } from '@/lib/i18n/config'
  * owned handoffs) — never fabricated performance or client-outcome metrics.
  */
 
+/**
+ * Card ids double as the mock discriminator: each id maps to exactly one
+ * hand-built product-UI mock in FintechMockups.tsx. Typing them as unions (and
+ * looking the mocks up through a `Record` keyed by these unions) makes the
+ * mapping exhaustive — adding a card without a mock is a compile error.
+ */
+export type FintechServiceId = 'payments' | 'core-banking' | 'lending'
+
+export type FintechFeatureId =
+  | 'security'
+  | 'analytics'
+  | 'scalability'
+  | 'integrations'
+  | 'observability'
+
+export type FintechApproachId = 'security-first' | 'compliance-ready'
+
 type FintechCard = {
-  id: string
+  id: FintechServiceId
   title: string
   subtitle: string
-  image: string
-  width: number
-  height: number
 }
 
 export type FintechFeatureCard = {
-  id: string
+  id: FintechFeatureId
   title: string
   subtitle: string
+  /** 'stack' renders the layered strip mock; 'single-accent' adds the SVG accent. */
   layout: 'single' | 'single-accent' | 'stack'
-  image?: string
-  width?: number
-  height?: number
   accent?: string
   accentWidth?: number
   accentHeight?: number
-  stack?: readonly { src: string; width: number; height: number }[]
 }
 
 type FintechStep = {
@@ -54,14 +65,10 @@ type FintechValue = {
 }
 
 type FintechApproachBlock = {
-  id: string
+  id: FintechApproachId
   badge: string
   title: string
   body: string
-  image: string
-  width: number
-  height: number
-  imageAlt: string
 }
 
 type FintechPlan = {
@@ -78,9 +85,6 @@ type FintechContent = {
   industries: string
   breadcrumb: string
   heroKicker: string
-  heroImageAlt: string
-  heroThumbOneAlt: string
-  heroThumbTwoAlt: string
   heroSecondaryCta: string
   heroTrustLabel: string
   heroTrust: readonly string[]
@@ -144,9 +148,6 @@ export const fintechLandingCopy = {
     industries: 'Industries',
     breadcrumb: 'Breadcrumb',
     heroKicker: 'FinTech engineering',
-    heroImageAlt: 'Fintech account dashboard interface CloudTopia engineers',
-    heroThumbOneAlt: 'Payment confirmation card from a CloudTopia fintech build',
-    heroThumbTwoAlt: 'Transaction analytics snippet from a CloudTopia fintech build',
     heroSecondaryCta: 'See the build paths',
     heroTrustLabel: 'Engineered around',
     heroTrust: ['Security-first architecture', 'Reconciled ledgers', 'Bilingual by design'],
@@ -160,25 +161,16 @@ export const fintechLandingCopy = {
         id: 'payments',
         title: 'Payment & wallet systems',
         subtitle: 'Secure payment flows, wallets, and balances recorded once and reflected everywhere.',
-        image: '/images/industries/fintech/card_img_6.webp',
-        width: 715,
-        height: 372,
       },
       {
         id: 'core-banking',
         title: 'Core banking & ledger platforms',
         subtitle: 'Accounts, double-entry ledgers, and statements a reviewer can reconcile and trust.',
-        image: '/images/industries/fintech/card_img_7.webp',
-        width: 715,
-        height: 292,
       },
       {
         id: 'lending',
         title: 'Lending & credit engines',
         subtitle: 'Eligibility, scoring, and repayment workflows with explainable, auditable decisions.',
-        image: '/images/industries/fintech/card_img_8.webp',
-        width: 536,
-        height: 267,
       },
     ],
 
@@ -192,9 +184,6 @@ export const fintechLandingCopy = {
         title: 'Multi-layer security & encryption',
         subtitle: 'Encryption in transit and at rest, role-based access, and key management in the foundation.',
         layout: 'single-accent',
-        image: '/images/industries/fintech/card_img_3.webp',
-        width: 715,
-        height: 508,
         accent: '/images/industries/fintech/card_mini_img_1.svg',
         accentWidth: 88,
         accentHeight: 96,
@@ -204,38 +193,24 @@ export const fintechLandingCopy = {
         title: 'Real-time analytics & dashboards',
         subtitle: 'Operational and customer dashboards built on the same reconciled event record.',
         layout: 'single',
-        image: '/images/industries/fintech/card_img_5.webp',
-        width: 938,
-        height: 494,
       },
       {
         id: 'scalability',
         title: 'Cloud-native scalability',
         subtitle: 'Systems that scale with transaction volume without losing traceability.',
         layout: 'single',
-        image: '/images/industries/fintech/card_img_6.webp',
-        width: 715,
-        height: 372,
       },
       {
         id: 'integrations',
         title: 'Open-banking & API integrations',
         subtitle: 'Bounded integrations to payment rails, verification, and open-banking providers.',
         layout: 'stack',
-        stack: [
-          { src: '/images/industries/fintech/card_img_4_1.webp', width: 828, height: 150 },
-          { src: '/images/industries/fintech/card_img_4_2.webp', width: 968, height: 154 },
-          { src: '/images/industries/fintech/card_img_4_3.webp', width: 1056, height: 184 },
-        ],
       },
       {
         id: 'observability',
         title: 'Observability & alerting',
         subtitle: 'Monitoring, audit trails, and alerts that surface exceptions before customers feel them.',
         layout: 'single-accent',
-        image: '/images/industries/fintech/card_img_7.webp',
-        width: 715,
-        height: 292,
         accent: '/images/industries/fintech/card_mini_img_2.svg',
         accentWidth: 110,
         accentHeight: 105,
@@ -336,20 +311,12 @@ export const fintechLandingCopy = {
         badge: 'Architecture',
         title: 'Security-first architecture, not a bolt-on',
         body: 'We design encryption, role-based access, key management, and audit trails into the foundation of the platform. Security is a property of how the system is built, not a layer added before launch.',
-        image: '/images/industries/fintech/vision_card_img.webp',
-        width: 624,
-        height: 415,
-        imageAlt: 'Security architecture layers of a CloudTopia fintech platform',
       },
       {
         id: 'compliance-ready',
         badge: 'Delivery',
         title: 'Compliance-ready delivery your reviewers can follow',
         body: 'Every handoff, record, and decision is documented with an owner and an evidence path. We implement the controls your compliance team approves so authorized reviewers can trace what happened and under which rule.',
-        image: '/images/industries/fintech/mission_card_img.webp',
-        width: 624,
-        height: 415,
-        imageAlt: 'Compliance-ready delivery workflow of a CloudTopia fintech build',
       },
     ],
 
@@ -459,9 +426,6 @@ export const fintechLandingCopy = {
     industries: 'القطاعات',
     breadcrumb: 'مسار التنقل',
     heroKicker: 'هندسة التقنية المالية',
-    heroImageAlt: 'واجهة لوحة حساب مالي تهندسها كلاود توبيا',
-    heroThumbOneAlt: 'بطاقة تأكيد دفع من بناء تقنية مالية لكلاود توبيا',
-    heroThumbTwoAlt: 'مقتطف تحليلات معاملات من بناء تقنية مالية لكلاود توبيا',
     heroSecondaryCta: 'اطّلعوا على مسارات البناء',
     heroTrustLabel: 'مهندَس حول',
     heroTrust: ['بنية تعطي الأمان أولوية', 'دفاتر أستاذ مطابَقة', 'ثنائي اللغة بالتصميم'],
@@ -475,25 +439,16 @@ export const fintechLandingCopy = {
         id: 'payments',
         title: 'أنظمة المدفوعات والمحافظ',
         subtitle: 'مسارات دفع ومحافظ وأرصدة آمنة تُسجَّل مرة واحدة وتنعكس في كل مكان.',
-        image: '/images/industries/fintech/card_img_6.webp',
-        width: 715,
-        height: 372,
       },
       {
         id: 'core-banking',
         title: 'منصات البنوك الأساسية ودفاتر الأستاذ',
         subtitle: 'حسابات ودفاتر قيد مزدوج وكشوف يستطيع المراجع مطابقتها والوثوق بها.',
-        image: '/images/industries/fintech/card_img_7.webp',
-        width: 715,
-        height: 292,
       },
       {
         id: 'lending',
         title: 'محركات الإقراض والائتمان',
         subtitle: 'مسارات أهلية وتقييم وسداد بقرارات قابلة للتفسير والتدقيق.',
-        image: '/images/industries/fintech/card_img_8.webp',
-        width: 536,
-        height: 267,
       },
     ],
 
@@ -507,9 +462,6 @@ export const fintechLandingCopy = {
         title: 'أمان وتشفير متعدد الطبقات',
         subtitle: 'تشفير أثناء النقل وفي التخزين، ووصول بحسب الأدوار، وإدارة مفاتيح في الأساس.',
         layout: 'single-accent',
-        image: '/images/industries/fintech/card_img_3.webp',
-        width: 715,
-        height: 508,
         accent: '/images/industries/fintech/card_mini_img_1.svg',
         accentWidth: 88,
         accentHeight: 96,
@@ -519,38 +471,24 @@ export const fintechLandingCopy = {
         title: 'تحليلات ولوحات آنية',
         subtitle: 'لوحات تشغيلية وللعملاء مبنية على سجل الأحداث المطابَق نفسه.',
         layout: 'single',
-        image: '/images/industries/fintech/card_img_5.webp',
-        width: 938,
-        height: 494,
       },
       {
         id: 'scalability',
         title: 'قابلية توسّع سحابية',
         subtitle: 'أنظمة تتوسع مع حجم المعاملات دون فقدان قابلية التتبع.',
         layout: 'single',
-        image: '/images/industries/fintech/card_img_6.webp',
-        width: 715,
-        height: 372,
       },
       {
         id: 'integrations',
         title: 'تكاملات الخدمات المصرفية المفتوحة وواجهات البرمجة',
         subtitle: 'تكاملات محدودة النطاق مع قنوات الدفع والتحقق ومزودي الخدمات المصرفية المفتوحة.',
         layout: 'stack',
-        stack: [
-          { src: '/images/industries/fintech/card_img_4_1.webp', width: 828, height: 150 },
-          { src: '/images/industries/fintech/card_img_4_2.webp', width: 968, height: 154 },
-          { src: '/images/industries/fintech/card_img_4_3.webp', width: 1056, height: 184 },
-        ],
       },
       {
         id: 'observability',
         title: 'المراقبة والتنبيه',
         subtitle: 'مراقبة وسجلات تدقيق وتنبيهات تُظهر الاستثناءات قبل أن يشعر بها العملاء.',
         layout: 'single-accent',
-        image: '/images/industries/fintech/card_img_7.webp',
-        width: 715,
-        height: 292,
         accent: '/images/industries/fintech/card_mini_img_2.svg',
         accentWidth: 110,
         accentHeight: 105,
@@ -651,20 +589,12 @@ export const fintechLandingCopy = {
         badge: 'الهندسة',
         title: 'بنية تعطي الأمان أولوية، لا إضافة لاحقة',
         body: 'نصمم التشفير والوصول بحسب الأدوار وإدارة المفاتيح وسجلات التدقيق في أساس المنصة. الأمان خاصية في طريقة بناء النظام، لا طبقة تُضاف قبل الإطلاق.',
-        image: '/images/industries/fintech/vision_card_img.webp',
-        width: 624,
-        height: 415,
-        imageAlt: 'طبقات بنية الأمان في منصة تقنية مالية من كلاود توبيا',
       },
       {
         id: 'compliance-ready',
         badge: 'التسليم',
         title: 'تسليم جاهز للامتثال يستطيع مراجعوكم متابعته',
         body: 'يُوثَّق كل تسليم وسجل وقرار بمالك ومسار أدلة. ننفذ الضوابط التي يعتمدها فريق الامتثال لديكم ليتمكن المراجعون المخولون من تتبع ما حدث وبأي قاعدة.',
-        image: '/images/industries/fintech/mission_card_img.webp',
-        width: 624,
-        height: 415,
-        imageAlt: 'مسار تسليم جاهز للامتثال في بناء تقنية مالية من كلاود توبيا',
       },
     ],
 

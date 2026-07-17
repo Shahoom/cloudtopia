@@ -549,8 +549,14 @@
 .carouselViewport {
   border: 1px solid rgb(255 255 255 / 14%);
   border-radius: 20px;
-  background: rgb(255 255 255 / 6%);
+  /* Solid navy base: the slides carry photos, so a translucent base would let
+     the hero gradient flash through mid cross-fade. */
+  background: rgb(var(--gov-ink-deep));
   box-shadow: 0 40px 80px rgb(0 0 0 / 32%);
+  /* Grid so the one in-flow (active) slide stretches to the min-height and its
+     photo fills the frame — no navy strip under a short slide. Under reduced
+     motion all three slides are in flow and simply size to their content. */
+  display: grid;
   min-height: var(--carousel-min-h);
   overflow: hidden;
   position: relative;
@@ -560,7 +566,9 @@
   display: grid;
   gap: 1rem;
   inset: 0;
+  isolation: isolate;
   opacity: 0;
+  overflow: hidden;
   padding: clamp(1.75rem, 3vw, 2.6rem);
   position: absolute;
   transition: opacity 1s ease;
@@ -573,6 +581,43 @@
   visibility: visible;
 }
 
+/* ------------------------------------------------- Slide photo + AA scrim */
+.carouselSlideImg {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+/*
+ * Contrast gate. The scrim floor is 74% navy, measured against the worst case
+ * a photo can present: a blown-out white sky directly under the text. There the
+ * labels still clear AA with margin — title #fff 6.36:1, .carouselText 5.53:1,
+ * .carouselKicker 5.37:1. The 88%/90% white label colours below are part of that
+ * budget (at the template's original 70% the kicker measured 4.08:1 and failed).
+ * Do not lighten the floor or the labels without re-measuring all three.
+ */
+.carouselSlideScrim {
+  background: linear-gradient(
+    165deg,
+    rgb(var(--gov-ink-deep) / 92%) 0%,
+    rgb(var(--gov-ink) / 74%) 100%
+  );
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.page[dir='rtl'] .carouselSlideScrim {
+  background: linear-gradient(
+    195deg,
+    rgb(var(--gov-ink-deep) / 92%) 0%,
+    rgb(var(--gov-ink) / 74%) 100%
+  );
+}
+
 .carouselSlideIcon {
   align-items: center;
   background: rgb(var(--gov-accent));
@@ -581,7 +626,9 @@
   display: inline-flex;
   height: 52px;
   justify-content: center;
+  position: relative;
   width: 52px;
+  z-index: 2;
 }
 
 .carouselSlideIcon svg {
@@ -589,12 +636,16 @@
   width: 1.55rem;
 }
 
+/* Raised from 70% white: over a photo the scrim can only be pushed so far
+   before the photo disappears, so the label carries part of the ratio. */
 .carouselKicker {
-  color: rgb(255 255 255 / 70%);
+  color: rgb(255 255 255 / 88%);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
+  position: relative;
   text-transform: uppercase;
+  z-index: 2;
 }
 
 .page[dir='rtl'] .carouselKicker {
@@ -606,12 +657,16 @@
   font-size: clamp(1.4rem, 2.4vw, 1.85rem);
   font-weight: 700;
   line-height: 1.2;
+  position: relative;
+  z-index: 2;
 }
 
 .carouselText {
-  color: rgb(255 255 255 / 82%);
+  color: rgb(255 255 255 / 90%);
   font-size: 1rem;
   line-height: 1.65;
+  position: relative;
+  z-index: 2;
 }
 
 .carouselControls {
@@ -876,9 +931,46 @@
   background: linear-gradient(160deg, rgb(var(--gov-ink-deep)) 6%, rgb(var(--gov-ink)) 94%);
   border-radius: 24px;
   color: #fff;
+  isolation: isolate;
   overflow: hidden;
   padding: clamp(2rem, 3.5vw, 3rem);
   position: relative;
+}
+
+/* Stacking order inside the panel: photo (0) -> scrim (1) -> accent blur (2)
+   -> text (3). The blur sits above the scrim so the red glow survives. */
+.practicePanelImg {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+/*
+ * Contrast gate. 80% navy floor, measured against the worst case: the accent
+ * blur AND a blown-out photo region under the same text. Eyebrow/note at 86%
+ * white clear 5.56:1 there; the statement (#fff) clears 6.93:1. At the
+ * template's original 72% the eyebrow measured 4.39:1 and failed.
+ */
+.practicePanelScrim {
+  background: linear-gradient(
+    160deg,
+    rgb(var(--gov-ink-deep) / 93%) 0%,
+    rgb(var(--gov-ink) / 80%) 100%
+  );
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.page[dir='rtl'] .practicePanelScrim {
+  background: linear-gradient(
+    200deg,
+    rgb(var(--gov-ink-deep) / 93%) 0%,
+    rgb(var(--gov-ink) / 80%) 100%
+  );
 }
 
 .practicePanel::before {
@@ -892,15 +984,17 @@
   opacity: 0.5;
   position: absolute;
   width: 160px;
+  z-index: 2;
 }
 
 .practicePanelEyebrow {
-  color: rgb(255 255 255 / 72%);
+  color: rgb(255 255 255 / 86%);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   position: relative;
   text-transform: uppercase;
+  z-index: 3;
 }
 
 .page[dir='rtl'] .practicePanelEyebrow {
@@ -914,16 +1008,18 @@
   line-height: 1.4;
   margin-block: 1rem 1.25rem;
   position: relative;
+  z-index: 3;
 }
 
 .practicePanelNote {
-  border-block-start: 1px solid rgb(255 255 255 / 18%);
-  color: rgb(255 255 255 / 74%);
+  border-block-start: 1px solid rgb(255 255 255 / 28%);
+  color: rgb(255 255 255 / 86%);
   font-size: 0.9rem;
   line-height: 1.6;
   margin-block-start: 1.25rem;
   padding-block-start: 1.25rem;
   position: relative;
+  z-index: 3;
 }
 
 /* ------------------------------------------------ Domains grid (dark, 8) */

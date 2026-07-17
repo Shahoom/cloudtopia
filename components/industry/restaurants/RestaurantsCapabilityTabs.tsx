@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useRef, useState, type ComponentType, type KeyboardEvent } from 'react'
+import Image from 'next/image'
 import { Check, ChefHat, Gift, ShoppingBag, Truck } from 'lucide-react'
 
 import styles from './restaurants-industry.module.css'
@@ -13,10 +14,19 @@ type CapabilityTab = {
   points: readonly string[]
 }
 
+type CapabilityImage = {
+  src: string
+  width: number
+  height: number
+  alt: string
+}
+
 type RestaurantsCapabilityTabsProps = {
   tabs: readonly CapabilityTab[]
   tabsLabel: string
   direction: 'ltr' | 'rtl'
+  /** Static venue photo filling the aside beneath the tab list. */
+  image: CapabilityImage
 }
 
 const TAB_ICONS: readonly ComponentType[] = [ShoppingBag, ChefHat, Truck, Gift]
@@ -27,11 +37,17 @@ const TAB_ICONS: readonly ComponentType[] = [ShoppingBag, ChefHat, Truck, Gift]
  * (`rtPanelFade`). Full ARIA tab pattern: roving tabindex, RTL-aware arrow keys,
  * Home/End. Panels stay in the DOM; the inactive ones are `hidden` so un-hiding
  * restarts the fade — mirroring the template's tab behaviour.
+ *
+ * The showcase photo lives in `.tabsAside` NEXT TO the tablist, never inside it:
+ * `role="tablist"` may only own `role="tab"` children. On narrow screens the
+ * aside collapses (`display: contents`) so the photo re-orders after the panel
+ * and the tabs stay adjacent to the panel they control.
  */
 export function RestaurantsCapabilityTabs({
   tabs,
   tabsLabel,
   direction,
+  image,
 }: RestaurantsCapabilityTabsProps) {
   const [active, setActive] = useState(0)
   const baseId = useId()
@@ -66,37 +82,48 @@ export function RestaurantsCapabilityTabs({
 
   return (
     <div className={styles.tabsLayout}>
-      <div
-        className={styles.tabList}
-        role="tablist"
-        aria-label={tabsLabel}
-        aria-orientation="vertical"
-        onKeyDown={onKeyDown}
-      >
-        {tabs.map((tab, index) => {
-          const Icon = TAB_ICONS[index] ?? ShoppingBag
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              id={tabId(index)}
-              aria-selected={active === index}
-              aria-controls={panelId(index)}
-              tabIndex={active === index ? 0 : -1}
-              className={styles.tabButton}
-              ref={(el) => {
-                tabRefs.current[index] = el
-              }}
-              onClick={() => setActive(index)}
-            >
-              <span className={styles.tabButtonIcon} aria-hidden="true">
-                <Icon />
-              </span>
-              <span>{tab.label}</span>
-            </button>
-          )
-        })}
+      <div className={styles.tabsAside}>
+        <div
+          className={styles.tabList}
+          role="tablist"
+          aria-label={tabsLabel}
+          aria-orientation="vertical"
+          onKeyDown={onKeyDown}
+        >
+          {tabs.map((tab, index) => {
+            const Icon = TAB_ICONS[index] ?? ShoppingBag
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={tabId(index)}
+                aria-selected={active === index}
+                aria-controls={panelId(index)}
+                tabIndex={active === index ? 0 : -1}
+                className={styles.tabButton}
+                ref={(el) => {
+                  tabRefs.current[index] = el
+                }}
+                onClick={() => setActive(index)}
+              >
+                <span className={styles.tabButtonIcon} aria-hidden="true">
+                  <Icon />
+                </span>
+                <span>{tab.label}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        <Image
+          className={styles.tabsPhoto}
+          src={image.src}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          sizes="(max-width: 991px) 92vw, 28vw"
+        />
       </div>
 
       <div className={styles.tabPanels}>

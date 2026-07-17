@@ -434,13 +434,66 @@
 
 /* -------------------------------------------------------------------- Hero */
 .hero {
-  background:
-    radial-gradient(circle at 82% 14%, rgb(var(--lg-accent) / 30%), transparent 44%),
-    linear-gradient(160deg, rgb(var(--lg-ink)) 0%, rgb(var(--lg-ink-deep)) 100%);
+  background: rgb(var(--lg-ink));
   color: rgb(255 255 255 / 82%);
   isolation: isolate;
   overflow: hidden;
   position: relative;
+}
+
+/*
+ * Hero backdrop photo. The navy gradient that USED to be `.hero`'s background is
+ * now `.heroScrim`, layered over the photo — so every hero text colour keeps the
+ * contrast it had against the flat gradient. The solid ink base above is the
+ * fallback while the photo decodes (or if it 404s), which keeps the white h1
+ * legible at all times.
+ *
+ * Stacking inside `.hero` (isolate): photo (-3) < scrim (-2) < dot grid (-1)
+ * < .heroVisual (2) < .heroCopy (3).
+ *
+ * Scrim ramp is measured, not eyeballed: worst-case sampled contrast over the
+ * real photo is 13.7:1 for the white h1, 9.7:1 for the 82% intro and 6.3:1 for
+ * the 62% trust label (LTR and RTL, desktop and mobile crops).
+ */
+.heroPhoto {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  z-index: -3;
+}
+
+.heroScrim {
+  background:
+    radial-gradient(circle at 82% 14%, rgb(var(--lg-accent) / 26%), transparent 46%),
+    linear-gradient(
+      90deg,
+      rgb(var(--lg-ink) / 93%) 0%,
+      rgb(var(--lg-ink) / 86%) 50%,
+      rgb(var(--lg-ink-deep) / 62%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--lg-ink) / 45%) 0%, rgb(var(--lg-ink-deep) / 68%) 100%);
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -2;
+}
+
+/* Mirror only the ramp so the dense end stays under the copy column. The red
+   radial keeps its 82% origin in both directions, as it did before the photo. */
+.page[dir='rtl'] .heroScrim {
+  background:
+    radial-gradient(circle at 82% 14%, rgb(var(--lg-accent) / 26%), transparent 46%),
+    linear-gradient(
+      270deg,
+      rgb(var(--lg-ink) / 93%) 0%,
+      rgb(var(--lg-ink) / 86%) 50%,
+      rgb(var(--lg-ink-deep) / 62%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--lg-ink) / 45%) 0%, rgb(var(--lg-ink-deep) / 68%) 100%);
 }
 
 .hero::after {
@@ -622,9 +675,14 @@
   inset-inline-end: -4%;
 }
 
+/* Frosted over the backdrop photo. This used to be an 8% WHITE wash, which
+   lightens whatever is behind it — over the photo that pushed the panel's 62%
+   white label down to 4.47:1 (sampled). Tinting with ink instead darkens the
+   photo through the glass and restores it to 6.4:1, while the blur keeps the
+   glass read. */
 .heroPanel {
   backdrop-filter: blur(6px);
-  background: rgb(255 255 255 / 8%);
+  background: rgb(var(--lg-ink) / 55%);
   border: 1px solid rgb(255 255 255 / 16%);
   border-radius: 20px;
   box-shadow: 0 40px 80px rgb(0 0 0 / 34%);
@@ -889,11 +947,33 @@
   position: relative;
 }
 
+/* Photo sits above the shipment-record panel; the panel is opaque navy, so it
+   overlaps the photo's lower edge without any contrast cost. No text sits on
+   the photo itself, so it needs no scrim. */
+.aboutPhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: 24px;
+  box-shadow: 0 40px 80px -40px rgb(var(--lg-shadow) / 50%);
+  overflow: hidden;
+  position: relative;
+}
+
+.aboutPhoto img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Pulled up over the photo's lower edge, inset from the inline-start so the
+   photo stays visible behind the overlap. */
 .aboutPanel {
   background: linear-gradient(160deg, rgb(var(--lg-ink)) 0%, rgb(var(--lg-ink-deep)) 100%);
   border-radius: 24px;
   box-shadow: 0 40px 80px -40px rgb(var(--lg-shadow) / 50%);
   color: #fff;
+  margin-block-start: -2.75rem;
+  margin-inline: 1.5rem 0;
   padding: clamp(1.6rem, 3vw, 2.2rem);
   position: relative;
 }
@@ -1694,6 +1774,29 @@
   line-height: 1.55;
 }
 
+/* Photo + illustrative tracking card, stacked. The card is translucent glass,
+   so it is NOT overlapped onto the photo — a gap keeps its text on the flat
+   navy band and its contrast unchanged. */
+.showcaseMedia {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.showcasePhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: 22px;
+  box-shadow: 0 40px 80px -40px rgb(0 0 0 / 60%);
+  overflow: hidden;
+  position: relative;
+}
+
+.showcasePhoto img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
 /* Illustrative tracking card */
 .trackCard {
   background: rgb(255 255 255 / 7%);
@@ -2452,9 +2555,45 @@
   padding: clamp(2.5rem, 5vw, 4rem);
 }
 
+/*
+ * Same photo-under-scrim construction as the hero: solid ink base (fallback),
+ * photo at -2, gradient scrim at -1, content in flow above both. Sampled
+ * worst-case contrast over the real photo is 12.7:1 for the white heading and
+ * 9.1:1 for the 82% body copy, LTR and RTL.
+ */
 .ctaPanelPrimary {
-  background: linear-gradient(160deg, rgb(var(--lg-ink)) 0%, rgb(var(--lg-ink-deep)) 100%);
+  background: rgb(var(--lg-ink));
   color: rgb(255 255 255 / 82%);
+  isolation: isolate;
+  position: relative;
+}
+
+.ctaPhoto {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  z-index: -2;
+}
+
+.ctaPanelPrimary::before {
+  background:
+    linear-gradient(90deg, rgb(var(--lg-ink) / 94%) 0%, rgb(var(--lg-ink-deep) / 70%) 100%),
+    linear-gradient(180deg, rgb(var(--lg-ink) / 50%) 0%, rgb(var(--lg-ink-deep) / 72%) 100%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.page[dir='rtl'] .ctaPanelPrimary::before {
+  background:
+    linear-gradient(270deg, rgb(var(--lg-ink) / 94%) 0%, rgb(var(--lg-ink-deep) / 70%) 100%),
+    linear-gradient(180deg, rgb(var(--lg-ink) / 50%) 0%, rgb(var(--lg-ink-deep) / 72%) 100%);
 }
 
 .ctaPanelPrimary .eyebrowLight {

@@ -181,17 +181,29 @@ export function EcommerceRetailIndustryPage({
           <EcommerceReveal className={styles.panelGrid} variant="up" stagger>
             {copy.panels.map((panel) => (
               <div className={styles.flagPanel} key={panel.id}>
-                <p className={styles.flagEyebrow}>{panel.eyebrow}</p>
-                <h3>{panel.title}</h3>
-                <p className={styles.flagText}>{panel.subtitle}</p>
-                <ul className={styles.flagList}>
-                  {panel.items.map((item) => (
-                    <li key={item}>
-                      <Check aria-hidden="true" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <div className={styles.flagMedia}>
+                  <Image
+                    className={styles.flagImg}
+                    src={panel.image}
+                    alt={panel.imageAlt}
+                    width={panel.width}
+                    height={panel.height}
+                    sizes="(max-width: 991px) 92vw, (max-width: 1400px) 46vw, 648px"
+                  />
+                </div>
+                <div className={styles.flagBody}>
+                  <p className={styles.flagEyebrow}>{panel.eyebrow}</p>
+                  <h3>{panel.title}</h3>
+                  <p className={styles.flagText}>{panel.subtitle}</p>
+                  <ul className={styles.flagList}>
+                    {panel.items.map((item) => (
+                      <li key={item}>
+                        <Check aria-hidden="true" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </EcommerceReveal>

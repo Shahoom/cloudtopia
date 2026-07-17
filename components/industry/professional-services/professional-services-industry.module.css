@@ -412,10 +412,40 @@
   position: relative;
 }
 
+/*
+ * Hero photograph — the LCP image. It backs the whole visual column; the cream
+ * keyword card below is fully opaque, so no scrim is needed and the card's
+ * ink-on-cream contrast is unchanged. It deliberately sits outside .heroStage
+ * (which is aria-hidden) so it keeps a real alt.
+ */
+.heroPhoto {
+  /*
+   * Mirrors .heroStage's own box (same inline size, same aspect-ratio, both
+   * anchored to the top of .heroVisual) rather than stretching to inset: 0.
+   * .heroVisual carries a min-height that can exceed the stage on narrow
+   * phones, and a stretched photo would then peek out below the card.
+   */
+  aspect-ratio: 4 / 3.4;
+  inset-block-start: 0;
+  inset-inline: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 0;
+}
+
+.heroPhoto img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .heroStage {
   aspect-ratio: 4 / 3.4;
   position: relative;
   width: 100%;
+  z-index: 1;
 }
 
 .heroFrame {
@@ -445,16 +475,25 @@
   inset-inline-end: -12px;
 }
 
+/*
+ * The card is anchored to the foot of the stage rather than filling it, so the
+ * hero photograph reads through the upper band while the card stays a solid
+ * cream surface for the keyword/subhead. min-block-size keeps the split stable
+ * across locales (Arabic runs taller) without ever clipping the copy.
+ */
 .heroCard {
   align-items: flex-start;
   background: rgb(var(--ps-cream));
-  block-size: 100%;
+  block-size: auto;
   border: 1px solid rgb(var(--ps-line));
   display: flex;
   flex-direction: column;
+  inset-block-end: 0;
+  inset-inline: 0;
   justify-content: center;
+  min-block-size: 55%;
   padding: clamp(1.5rem, 3vw, 2.75rem);
-  position: relative;
+  position: absolute;
   will-change: transform;
 }
 
@@ -708,15 +747,47 @@
     linear-gradient(135deg, rgb(var(--ps-cream-2)) 0%, rgb(var(--ps-accent) / 22%) 100%);
   border: 1px solid rgb(var(--ps-line));
   display: flex;
+  overflow: hidden;
   padding: 1.5rem;
+  position: relative;
+}
+
+.approachMedia img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+}
+
+/*
+ * Bottom scrim under the ghosted numeral. The mark is decorative (aria-hidden)
+ * but must not smear into the photograph: white at 80% over this scrim measures
+ * ~6.8:1 against the brightest pixel these photos contain, so it clears AA even
+ * though it is not held to it.
+ */
+.approachMediaScrim {
+  background:
+    linear-gradient(
+      to top,
+      rgb(var(--ps-ink) / 82%) 0%,
+      rgb(var(--ps-ink) / 30%) 55%,
+      rgb(var(--ps-ink) / 0%) 100%
+    );
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
 }
 
 .approachMediaMark {
-  color: rgb(var(--ps-bronze) / 55%);
+  color: rgb(255 255 255 / 80%);
   font-family: var(--font-poppins), var(--font-inter), sans-serif;
   font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 800;
   line-height: 1;
+  position: relative;
 }
 
 .approachBadge {
@@ -1387,8 +1458,30 @@
   border-block-start: 4px solid rgb(var(--ps-accent));
   margin-inline: auto;
   max-width: 1240px;
+  overflow: hidden;
   padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
   will-change: transform;
+}
+
+/*
+ * CTA masthead — bleeds out of the card padding to sit flush under the accent
+ * rule. No text is placed over it, so it runs at full strength with no scrim and
+ * the copy below keeps the exact dark gradient its contrast was tuned against.
+ * The scroll-zoom scales the whole card, so the strip zooms with it.
+ */
+.ctaPhoto {
+  block-size: clamp(8rem, 16vw, 13rem);
+  margin-block: calc(clamp(2.5rem, 6vw, 4.5rem) * -1) clamp(2rem, 4vw, 3rem);
+  margin-inline: calc(clamp(1.5rem, 5vw, 4rem) * -1);
+  overflow: hidden;
+}
+
+.ctaPhoto img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .ctaInner {
@@ -1486,6 +1579,18 @@
 }
 
 @media (max-width: 640px) {
+  /*
+   * The keyword card is content-driven and stops shrinking on small phones, so
+   * at the 4/3.4 desktop ratio it would eat the whole stage and squeeze the
+   * photograph down to a sliver (~13px at 320px wide). A taller stage keeps the
+   * photo band at roughly the same ~45% share it holds on larger screens.
+   * .heroPhoto mirrors .heroStage's box, so both ratios must stay in step.
+   */
+  .heroStage,
+  .heroPhoto {
+    aspect-ratio: 4 / 4.6;
+  }
+
   .heroActions {
     flex-direction: column;
   }

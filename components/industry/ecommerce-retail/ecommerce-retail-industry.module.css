@@ -380,16 +380,37 @@
   width: 100%;
 }
 
+/*
+ * Hero scrim. The slides now carry real photography, and the brightest of them
+ * is a near-white store floor — the old 92%→55%→20% ramp dropped `.heroText`
+ * (white/88%) to ~2.8:1 over those highlights. The plateau below holds 76% out
+ * to 62% of the hero, which is past the caption's trailing edge at every
+ * viewport >=992px (worst case ~60% at 992px itself). 76% over a pure-white
+ * pixel — the worst case any crop can produce — measures 5.38:1 for body text
+ * and 6.36:1 for the title, so AA holds against any photo we ever swap in.
+ * Past the caption the ramp falls to 22%, preserving the template's intent of
+ * letting the photo read on the trailing side.
+ *
+ * RTL only flips the angle via a custom property, so the mobile override below
+ * (which sets `background`) is not out-specified by the [dir='rtl'] rule.
+ */
 .heroSlideScrim {
+  --ec-scrim-angle: 90deg;
+
   inset: 0;
   position: absolute;
-  background:
-    linear-gradient(90deg, rgb(var(--ec-dark) / 92%) 0%, rgb(var(--ec-dark) / 55%) 48%, rgb(var(--ec-dark) / 20%) 100%);
+  background: linear-gradient(
+    var(--ec-scrim-angle),
+    rgb(var(--ec-dark) / 92%) 0%,
+    rgb(var(--ec-dark) / 80%) 40%,
+    rgb(var(--ec-dark) / 76%) 62%,
+    rgb(var(--ec-dark) / 28%) 92%,
+    rgb(var(--ec-dark) / 22%) 100%
+  );
 }
 
 .page[dir='rtl'] .heroSlideScrim {
-  background:
-    linear-gradient(-90deg, rgb(var(--ec-dark) / 92%) 0%, rgb(var(--ec-dark) / 55%) 48%, rgb(var(--ec-dark) / 20%) 100%);
+  --ec-scrim-angle: -90deg;
 }
 
 .heroInner {
@@ -827,15 +848,43 @@
   margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
 }
 
+/* Stays a block box: the ::after accent spine is absolutely positioned against
+   it, and .flagMedia/.flagBody stack fine without flex semantics. */
 .flagPanel {
   border: 1px solid rgb(var(--ec-line));
   border-radius: 8px;
   overflow: hidden;
-  padding: clamp(1.75rem, 3vw, 2.5rem);
   position: relative;
   transition:
     box-shadow var(--ec-motion-large) ease,
     transform var(--ec-motion-hover) ease;
+}
+
+/* Photo header. The panels are the one 2-up in the page whose split — shopper
+   facing vs. behind the store — maps exactly onto the omnichannel photo set,
+   so the physical-retail and fulfilment shots live here. Text stays on the
+   white body below the photo, so no scrim is needed and no contrast is at
+   risk. */
+.flagMedia {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+}
+
+.flagImg {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--ec-motion-large) ease;
+  width: 100%;
+}
+
+.flagPanel:hover .flagImg {
+  transform: scale(1.04);
+}
+
+.flagBody {
+  padding: clamp(1.75rem, 3vw, 2.5rem);
 }
 
 .flagPanel::after {
@@ -1540,6 +1589,18 @@
     align-items: flex-start;
   }
 
+  /* Below 992px the caption spans ~95% of the hero, so the horizontal ramp has
+     no room to fall off before the text ends. Go vertical instead: 88%→78% is
+     >=5.7:1 for body text over a pure-white pixel at every point. Angle-neutral,
+     so it needs no RTL counterpart. */
+  .heroSlideScrim {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--ec-dark) / 88%) 0%,
+      rgb(var(--ec-dark) / 78%) 100%
+    );
+  }
+
   .sectionHeadingSplit {
     grid-template-columns: 1fr;
   }
@@ -1639,6 +1700,12 @@
   .tabsyCopy[data-current='true'],
   .solutionAction {
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* The kill switch only zeroes transition *duration*, so a hover transform
+     would still snap. Drop the panel photo zoom entirely instead. */
+  .flagPanel:hover .flagImg {
     transform: none !important;
   }
 }
