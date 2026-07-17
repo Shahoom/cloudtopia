@@ -224,7 +224,7 @@
 }
 
 .page[dir='rtl'] .heroCopy h1 {
-  font-size: clamp(3.4rem, 6vw, 6rem);
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
   letter-spacing: -0.035em;
   line-height: 1.08;
 }
@@ -595,6 +595,7 @@
 .page[dir='rtl'] .trustHeading h2,
 .page[dir='rtl'] .faqHeading h2,
 .page[dir='rtl'] .sectionHeadingDark h2 {
+  font-size: clamp(2.2rem, 3.9vw, 4.05rem);
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
@@ -1586,6 +1587,7 @@
 }
 
 .page[dir='rtl'] .consultationSection h2 {
+  font-size: clamp(2.2rem, 3.9vw, 3.9rem);
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
@@ -1922,7 +1924,7 @@
   }
 
   .page[dir='rtl'] .heroCopy h1 {
-    font-size: clamp(3rem, 13vw, 4.2rem);
+    font-size: clamp(2.6rem, 11.8vw, 3.6rem);
   }
 
   .heroActions,
@@ -1992,6 +1994,17 @@
   .sectionHeadingDark h2,
   .consultationSection h2 {
     font-size: clamp(2.6rem, 12vw, 3.8rem);
+  }
+
+  .page[dir='rtl'] .sectionHeadingCentered h2,
+  .page[dir='rtl'] .storyCopy h2,
+  .page[dir='rtl'] .clinicTopiaCopy h2,
+  .page[dir='rtl'] .sectionHeadingSplit h2,
+  .page[dir='rtl'] .trustHeading h2,
+  .page[dir='rtl'] .faqHeading h2,
+  .page[dir='rtl'] .sectionHeadingDark h2,
+  .page[dir='rtl'] .consultationSection h2 {
+    font-size: clamp(2.25rem, 10.3vw, 3.25rem);
   }
 
   .principlesGrid {

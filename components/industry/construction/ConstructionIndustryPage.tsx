@@ -83,6 +83,29 @@ function Watermark({ children }: { children: string }) {
   )
 }
 
+const PHOTO_DIR = '/images/industries/construction'
+
+/**
+ * Licensed stock photography (Unsplash — see CREDITS.md beside the files). These
+ * are generic construction scenes, NOT CloudTopia projects and NOT client sites,
+ * which is why they land on atmospheric bands and never behind the project grid
+ * (whose cards are illustrative archetypes — a real building under a card titled
+ * "Hospital build" would read as a delivered project). Alt text lives in
+ * construction-content.ts and describes only what is in the frame.
+ *
+ * width/height are the files' real pixel dimensions.
+ */
+const PHOTOS = {
+  /** Tower cranes at sunset — hero backdrop / LCP. Its amber tone matches the accent. */
+  hero: { src: `${PHOTO_DIR}/construction-1.jpg`, width: 1800, height: 1294 },
+  /** A multi-storey building taking shape — about-band backdrop. */
+  about: { src: `${PHOTO_DIR}/construction-2.jpg`, width: 1800, height: 1200 },
+  /** Cranes over a steel-frame tower — closing-CTA backdrop. */
+  cta: { src: `${PHOTO_DIR}/construction-3.jpg`, width: 1800, height: 1200 },
+  /** Steel structure + crane detail in warm light — call-us band, beside the copy. */
+  callUs: { src: `${PHOTO_DIR}/construction-4.jpg`, width: 1800, height: 1200 },
+} as const
+
 const SPECIALIZATION_ICONS: readonly LucideIcon[] = [HardHat, PencilRuler, Boxes]
 const HIGHLIGHT_ICONS: readonly LucideIcon[] = [Users, FileText, CheckCircle2]
 const SERVICE_ICONS: readonly LucideIcon[] = [ClipboardList, Smartphone, FileStack, Plug]
@@ -142,13 +165,24 @@ export function ConstructionIndustryPage({
 
       {/* -------------------------------------------------- Hero (staggered reveal) */}
       <section className={styles.hero} data-construction-hero data-header-theme="dark">
+        <Image
+          className={styles.heroPhoto}
+          src={PHOTOS.hero.src}
+          alt={copy.heroImageAlt}
+          width={PHOTOS.hero.width}
+          height={PHOTOS.hero.height}
+          sizes="100vw"
+          priority
+        />
+        {/* The ink that used to be `.hero`'s flat background, re-cast as a scrim over
+            the photo — it is what keeps every hero text layer at its old contrast. */}
+        <span className={styles.heroScrim} aria-hidden="true" />
         <span className={styles.heroBlueprint} aria-hidden="true">
           <Image
             src="/images/industries/construction/blueprint-plan.png"
             alt=""
             fill
             sizes="100vw"
-            priority
             style={{ objectFit: 'cover' }}
           />
         </span>
@@ -224,6 +258,15 @@ export function ConstructionIndustryPage({
 
         {/* ------------------------------------------------ About (dark practice band) */}
         <section className={styles.aboutSection} data-header-theme="dark">
+          <Image
+            className={styles.aboutPhoto}
+            src={PHOTOS.about.src}
+            alt={copy.aboutImageAlt}
+            width={PHOTOS.about.width}
+            height={PHOTOS.about.height}
+            sizes="100vw"
+          />
+          <span className={styles.aboutScrim} aria-hidden="true" />
           <Watermark>{copy.aboutWatermark}</Watermark>
           <div className={styles.aboutInner}>
             <ConstructionReveal className={styles.aboutCopy} variant="left">
@@ -329,16 +372,11 @@ export function ConstructionIndustryPage({
         </section>
 
         {/* ------------------------------------------- Call-Us parallax CTA band */}
+        {/* The amber band carries dark ink copy, which no photo can sit under — amber
+            dense enough to hold ink at AA would hide the photo entirely. So the photo
+            takes its own column beside the copy and never underneath it: the ink text
+            keeps the flat amber it always had. */}
         <section className={styles.callUs} aria-labelledby="construction-callus-title">
-          <span className={styles.callUsBlueprint} aria-hidden="true">
-            <Image
-              src="/images/industries/construction/blueprint-building.png"
-              alt=""
-              width={525}
-              height={423}
-              sizes="(max-width: 991px) 60vw, 480px"
-            />
-          </span>
           <div className={styles.callUsInner}>
             <ConstructionReveal variant="up">
               <p className={styles.callUsEyebrow}>{copy.callUsEyebrow}</p>
@@ -349,6 +387,16 @@ export function ConstructionIndustryPage({
                 <span>{copy.callUsButton}</span>
                 <ArrowPair locale={locale} />
               </a>
+            </ConstructionReveal>
+            <ConstructionReveal className={styles.callUsMedia} variant="right">
+              <Image
+                className={styles.callUsPhoto}
+                src={PHOTOS.callUs.src}
+                alt={copy.callUsImageAlt}
+                width={PHOTOS.callUs.width}
+                height={PHOTOS.callUs.height}
+                sizes="(max-width: 991px) 92vw, 42vw"
+              />
             </ConstructionReveal>
           </div>
         </section>
@@ -470,6 +518,15 @@ export function ConstructionIndustryPage({
 
         {/* --------------------------------- Full-width closing CTA (scroll-zoom) */}
         <ConstructionScrollZoomCta>
+          <Image
+            className={styles.ctaPhoto}
+            src={PHOTOS.cta.src}
+            alt={copy.ctaImageAlt}
+            width={PHOTOS.cta.width}
+            height={PHOTOS.cta.height}
+            sizes="(max-width: 1320px) 100vw, 1192px"
+          />
+          <span className={styles.ctaScrim} aria-hidden="true" />
           <span className={styles.ctaBlueprint} aria-hidden="true">
             <Image
               src="/images/industries/construction/blueprint-plan.png"

@@ -62,6 +62,9 @@ type EcommerceTab = {
 
 type EcommerceStretchPanel = {
   id: string
+  /** Layer ordinal, authored per locale so Arabic gets Arabic-Indic digits —
+   *  same convention as `phases`. Decorative: the panel is announced by title. */
+  number: string
   label: string
   title: string
   description: string
@@ -351,30 +354,35 @@ export const ecommerceRetailLandingCopy = {
     stackPanels: [
       {
         id: 'storefront',
+        number: '01',
         label: 'Storefront',
         title: 'Storefront & PWA',
         description: 'The bilingual front end shoppers browse, search, and buy on.',
       },
       {
         id: 'checkout',
+        number: '02',
         label: 'Checkout',
         title: 'Checkout & payments',
         description: 'Cart, tax presentation, and validated payment into one recorded order.',
       },
       {
         id: 'oms',
+        number: '03',
         label: 'OMS',
         title: 'Order management & inventory',
         description: 'Stock and orders kept consistent from every channel to fulfillment.',
       },
       {
         id: 'pos',
+        number: '04',
         label: 'POS',
         title: 'In-store POS',
         description: 'Point of sale and click-and-collect on the same source of truth.',
       },
       {
         id: 'personalization',
+        number: '05',
         label: 'Data',
         title: 'Personalization & analytics',
         description: 'Recommendations, loyalty, and reporting on the reconciled record.',
@@ -635,30 +643,35 @@ export const ecommerceRetailLandingCopy = {
     stackPanels: [
       {
         id: 'storefront',
+        number: '٠١',
         label: 'المتجر',
         title: 'المتجر وتطبيق الويب التقدمي',
         description: 'الواجهة ثنائية اللغة التي يتصفح ويبحث ويشتري عليها المتسوق.',
       },
       {
         id: 'checkout',
+        number: '٠٢',
         label: 'الدفع',
         title: 'الدفع والسداد',
         description: 'سلة وعرض ضريبة ودفع موثوق في طلب واحد مسجَّل.',
       },
       {
         id: 'oms',
+        number: '٠٣',
         label: 'الطلبات',
         title: 'إدارة الطلبات والمخزون',
         description: 'مخزون وطلبات تبقى متسقة من كل قناة إلى التجهيز.',
       },
       {
         id: 'pos',
+        number: '٠٤',
         label: 'نقطة البيع',
         title: 'نقطة البيع في المتجر',
         description: 'نقطة بيع واستلام على مصدر الحقيقة نفسه.',
       },
       {
         id: 'personalization',
+        number: '٠٥',
         label: 'البيانات',
         title: 'التخصيص والتحليلات',
         description: 'توصيات وولاء وتقارير على السجل المطابَق.',

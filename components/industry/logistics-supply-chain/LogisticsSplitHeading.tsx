@@ -70,20 +70,25 @@ export function LogisticsSplitHeading({
     return () => observer.disconnect()
   }, [])
 
-  let charIndex = 0
+  // Arabic is a cursive script: giving every letter its own inline-block box
+  // forces isolated letterforms and destroys joining ("نبني" -> "ن ب ن ي").
+  // When the heading contains Arabic we stagger by WORD instead, so each word
+  // stays a single shaped run; Latin keeps the per-char cascade.
+  const perWord = /[؀-ۿݐ-ݿ]/u.test(text)
+  let unitIndex = 0
   const wordNodes = words.map((word, wordIdx) => (
     <span className={styles.splitWordWrap} aria-hidden="true" key={`${word}-${wordIdx}`}>
       <span className={styles.splitWord}>
-        {Array.from(word).map((char, ci) => {
-          const delay = charIndex * 0.03
-          charIndex += 1
+        {(perWord ? [word] : Array.from(word)).map((unit, ci) => {
+          const delay = unitIndex * (perWord ? 0.09 : 0.03)
+          unitIndex += 1
           return (
             <span
               className={styles.splitChar}
               style={{ transitionDelay: `${delay}s` }}
               key={ci}
             >
-              {char}
+              {unit}
             </span>
           )
         })}

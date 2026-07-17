@@ -456,6 +456,7 @@
 }
 
 .page[dir='rtl'] .heroTitle {
+  font-size: clamp(2rem, 4.2vw, 3.35rem);
   letter-spacing: 0;
   line-height: 1.22;
 }
@@ -667,6 +668,7 @@
 
 .page[dir='rtl'] .sectionHeadingCentered h2,
 .page[dir='rtl'] .sectionHeadingSplit h2 {
+  font-size: clamp(1.6rem, 2.9vw, 2.4rem);
   line-height: 1.32;
 }
 
@@ -1089,6 +1091,14 @@
   padding: 0 clamp(1.25rem, 4vw, 4rem) clamp(2.5rem, 4vw, 3.5rem);
 }
 
+/* `.page h1..h4` pins the dark ink at (0,1,1), which outranks a lone class, so
+   an unscoped heading on this dark band renders #33363d on #2a2d33 — 1.14:1,
+   effectively invisible. Same trap the hero title dodges via `.page .heroTitle`.
+   (0,2,1) wins here: white on #2a2d33 measures 13.80:1. */
+.page .stretcherHead h2 {
+  color: #fff;
+}
+
 .stretcher {
   display: flex;
   flex-direction: column;
@@ -1103,13 +1113,41 @@
   position: relative;
 }
 
+/* Hairline between layers so the tonal descent still reads as five distinct
+   panels rather than one continuous smear. Logical props keep it RTL-correct;
+   the row only exists >=992px, so the stacked view rules the block edge. */
+.stretcherItem + .stretcherItem {
+  border-block-start: 1px solid rgb(255 255 255 / 12%);
+}
+
+/* Flat 30% base holds the measured 5.86:1 label floor; the radial only ever
+   darkens the edges, giving each flat panel some form. */
 .stretcherItem::before {
-  background: rgb(var(--ec-dark) / 30%);
+  background:
+    radial-gradient(125% 95% at 50% 38%, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 30%) 100%),
+    rgb(var(--ec-dark) / 30%);
   content: '';
   inset: 0;
   position: absolute;
   transition: background var(--ec-motion-large) ease;
   z-index: 0;
+}
+
+.stretcherNumber {
+  color: rgb(255 255 255 / 55%);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  inset-block-start: 1.15rem;
+  inset-inline-start: 1.15rem;
+  letter-spacing: 0.14em;
+  position: absolute;
+  transition: color var(--ec-motion-hover) ease;
+  z-index: 1;
+}
+
+.page[dir='rtl'] .stretcherNumber {
+  letter-spacing: 0;
 }
 
 .stretcherRest {
@@ -1121,17 +1159,21 @@
   inset: 0;
   justify-content: center;
   position: absolute;
-  transition: opacity var(--ec-motion-hover) ease;
   z-index: 1;
 }
 
 .stretcherIcon {
   align-items: center;
   background: rgb(255 255 255 / 14%);
-  border-radius: 8px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 18%),
+    0 6px 16px rgb(0 0 0 / 18%);
   display: inline-flex;
   height: 52px;
   justify-content: center;
+  transition: background var(--ec-motion-hover) ease;
   width: 52px;
 }
 
@@ -1144,6 +1186,30 @@
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+  transition: opacity var(--ec-motion-hover) ease;
+}
+
+.page[dir='rtl'] .stretcherLabel {
+  letter-spacing: 0;
+}
+
+/* Affordance for the copy's "hover or focus one to expand it" — the resting row
+   otherwise gives no sign the panels do anything. */
+.stretcherHint {
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 999px;
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity var(--ec-motion-hover) ease;
+  width: 24px;
+}
+
+.stretcherHint svg {
+  height: 0.85rem;
+  width: 0.85rem;
 }
 
 .stretcherFigure {
@@ -1187,14 +1253,38 @@
   transform: translate3d(0, 0, 0);
 }
 
-.stretcherItem[data-state='active'] .stretcherRest,
-.stretcherItem:hover .stretcherRest {
+/* Only the label and hint fade — the layer's icon stays put as an anchor mark so
+   the expanded panel reads as composed (ordinal / icon / caption) instead of a
+   flat field with a caption stranded at the bottom. The icon never moves, so
+   nothing reflows as the panel stretches. */
+.stretcherItem[data-state='active'] .stretcherLabel,
+.stretcherItem:hover .stretcherLabel,
+.stretcherItem[data-state='active'] .stretcherHint,
+.stretcherItem:hover .stretcherHint {
   opacity: 0;
+}
+
+.stretcherItem[data-state='active'] .stretcherIcon,
+.stretcherItem:hover .stretcherIcon {
+  background: rgb(255 255 255 / 22%);
 }
 
 .stretcherItem[data-state='active']::before,
 .stretcherItem:hover::before {
-  background: rgb(var(--ec-dark) / 10%);
+  background:
+    radial-gradient(125% 95% at 50% 38%, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 22%) 100%),
+    rgb(var(--ec-dark) / 10%);
+}
+
+/* The ordinal outlives the icon/label fade so the expanded panel keeps its
+   place in the stack while the caption reads. */
+.stretcherItem[data-state='active'] .stretcherNumber,
+.stretcherItem:hover .stretcherNumber {
+  color: rgb(255 255 255 / 90%);
+}
+
+.stretcherItem[data-state='inactive'] .stretcherIcon {
+  background: rgb(255 255 255 / 10%);
 }
 
 @media (min-width: 992px) {
@@ -1207,6 +1297,12 @@
     flex: 1 1 0;
     min-height: 0;
     transition: flex-grow var(--ec-motion-large) ease;
+  }
+
+  /* Row view: the separator moves to the inline edge. */
+  .stretcherItem + .stretcherItem {
+    border-block-start: 0;
+    border-inline-start: 1px solid rgb(255 255 255 / 12%);
   }
 
   .stretcherItem[data-state='active'] {
@@ -1440,6 +1536,7 @@
 }
 
 .page[dir='rtl'] .faqHeading h2 {
+  font-size: clamp(1.6rem, 2.7vw, 2.2rem);
   line-height: 1.32;
 }
 
@@ -1572,6 +1669,7 @@
 }
 
 .page[dir='rtl'] .ctaInner h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
   letter-spacing: 0;
   line-height: 1.28;
 }

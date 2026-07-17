@@ -456,6 +456,7 @@
 }
 
 .page[dir='rtl'] .heroCopy h1 {
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
   letter-spacing: 0;
   line-height: 1.2;
 }
@@ -670,6 +671,7 @@
 
 .page[dir='rtl'] .sectionHeadingCentered h2,
 .page[dir='rtl'] .sectionHeadingSplit h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
   line-height: 1.32;
 }
 
@@ -998,6 +1000,7 @@
 }
 
 .page[dir='rtl'] .bandCopy h2 {
+  font-size: clamp(1.7rem, 3vw, 2.45rem);
   line-height: 1.32;
 }
 
@@ -1311,6 +1314,7 @@
 }
 
 .page[dir='rtl'] .storyCopy h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
   line-height: 1.32;
 }
 
@@ -1853,6 +1857,7 @@
 }
 
 .page[dir='rtl'] .faqHeading h2 {
+  font-size: clamp(1.7rem, 2.9vw, 2.35rem);
   line-height: 1.32;
 }
 
@@ -1984,6 +1989,7 @@
 }
 
 .page[dir='rtl'] .ctaInner h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.85rem);
   letter-spacing: 0;
   line-height: 1.28;
 }

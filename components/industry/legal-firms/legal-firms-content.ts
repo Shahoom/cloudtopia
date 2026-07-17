@@ -136,7 +136,7 @@ export const legalFirmsLandingCopy = {
     breadcrumb: 'Breadcrumb',
 
     heroKicker: 'Legal technology',
-    heroImageAlt: 'A legal professional reviewing a client intake file, a system CloudTopia engineers',
+    heroImageAlt: 'A woman in a grey blazer holding a clipboard and pen against a dark blue background.',
     heroSecondaryCta: 'See the build paths',
     heroCapabilitiesLabel: 'Engineered around',
     heroCapabilities: [
@@ -177,8 +177,8 @@ export const legalFirmsLandingCopy = {
     aboutEyebrow: 'About our legal practice',
     aboutTitle: 'We build the confidential rails your matters travel on.',
     aboutIntro:
-      'كلاود توبيا partners with firms to engineer the intake, matter, document, and billing systems that carry a client from a first enquiry to an authenticated matter file—inside the confidentiality and conflict rules the firm owns.',
-    aboutImageAlt: 'A lawyer in a courtroom setting, representing legal workflows CloudTopia supports',
+      'CloudTopia partners with firms to engineer the intake, matter, document, and billing systems that carry a client from a first enquiry to an authenticated matter file—inside the confidentiality and conflict rules the firm owns.',
+    aboutImageAlt: 'A smiling woman in a black robe in a wood-panelled courtroom, with people seated behind her.',
     aboutCounterValue: 4,
     aboutCounterSuffix: '',
     aboutCounterLabel: 'owned platform layers, from portal to security',
@@ -263,7 +263,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_injury.webp`,
         width: 800,
         height: 533,
-        alt: 'A caregiver assisting a client, illustrating a personal-injury intake portal pattern',
+        alt: 'A person wrapping a bandage around the hand of someone seated in a wheelchair.',
       },
       {
         id: 'defense-matter',
@@ -272,7 +272,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_criminal.webp`,
         width: 800,
         height: 533,
-        alt: 'Hands in restraints on a table, illustrating a criminal-defense matter management pattern',
+        alt: 'A man in a light blue shirt resting his handcuffed wrists on a wooden table.',
       },
       {
         id: 'employment-docs',
@@ -281,7 +281,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_employment.webp`,
         width: 800,
         height: 533,
-        alt: 'A consultation across a desk, illustrating an employment-dispute document pipeline pattern',
+        alt: 'A man in a suit tearing a sheet of paper in half across a desk from a colleague, a laptop in front of him.',
       },
       {
         id: 'property-closing',
@@ -290,7 +290,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_realestate.webp`,
         width: 800,
         height: 533,
-        alt: 'A hand holding keys beside a model house, illustrating a property-transaction closing pattern',
+        alt: 'A hand holding a bunch of keys above a wooden table, beside a small model house.',
       },
       {
         id: 'corporate-billing',
@@ -299,7 +299,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_corporate.webp`,
         width: 800,
         height: 533,
-        alt: 'A business handshake over documents, illustrating a corporate-counsel billing system pattern',
+        alt: 'Two people in suits shaking hands over a café table covered with printed charts, coffee cups and a laptop, seen from above.',
       },
       {
         id: 'records-security',
@@ -308,7 +308,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_security.webp`,
         width: 800,
         height: 533,
-        alt: 'A professional holding a security shield icon, illustrating a records protection pattern',
+        alt: 'A man in a suit holding out both hands beneath a glowing shield-and-checkmark graphic.',
       },
     ],
 
@@ -316,7 +316,7 @@ export const legalFirmsLandingCopy = {
     deliveryTitle: 'A delivery path built for privileged work',
     deliveryIntro:
       'We move from context to launch in owned stages, so supervising attorneys, intake teams, and clients can follow every handoff across the confidential threshold.',
-    deliveryImageAlt: 'A lawyer signing a document at a desk, representing CloudTopia’s legal delivery process',
+    deliveryImageAlt: 'A person in a navy suit signing a document with a fountain pen at a polished desk, shelves of binders behind them.',
     deliverySteps: [
       {
         id: 'discovery',
@@ -390,7 +390,7 @@ export const legalFirmsLandingCopy = {
     breadcrumb: 'مسار التنقل',
 
     heroKicker: 'التقنية القانونية',
-    heroImageAlt: 'مختصة قانونية تراجع ملف استقبال عميل، وهو نظام تهندسه كلاود توبيا',
+    heroImageAlt: 'امرأة ترتدي سترة رمادية وتحمل حافظة أوراق وقلماً أمام خلفية زرقاء داكنة.',
     heroSecondaryCta: 'اطّلعوا على مسارات البناء',
     heroCapabilitiesLabel: 'مهندَس حول',
     heroCapabilities: [
@@ -432,7 +432,7 @@ export const legalFirmsLandingCopy = {
     aboutTitle: 'نبني المسارات السرية التي تسير عليها قضاياكم.',
     aboutIntro:
       'تشارك كلاود توبيا المكاتب في هندسة أنظمة الاستقبال والقضايا والمستندات والفوترة التي تحمل العميل من أول استفسار إلى ملف قضية موثق—ضمن قواعد السرية وتعارض المصالح التي يملكها المكتب.',
-    aboutImageAlt: 'محامية في قاعة محكمة، تمثل سير العمل القانوني الذي تدعمه كلاود توبيا',
+    aboutImageAlt: 'امرأة مبتسمة ترتدي رداءً أسود في قاعة محكمة مكسوّة بالخشب، وخلفها أشخاص جالسون.',
     aboutCounterValue: 4,
     aboutCounterSuffix: '',
     aboutCounterLabel: 'طبقات منصة مملوكة، من البوابة إلى الأمان',
@@ -517,7 +517,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_injury.webp`,
         width: 800,
         height: 533,
-        alt: 'مقدّم رعاية يساعد عميلاً، توضيحاً لنمط بوابة استقبال قضايا الإصابات الشخصية',
+        alt: 'شخص يلفّ ضمادة حول يد شخص جالس على كرسي متحرك.',
       },
       {
         id: 'defense-matter',
@@ -526,7 +526,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_criminal.webp`,
         width: 800,
         height: 533,
-        alt: 'يدان مقيّدتان على طاولة، توضيحاً لنمط إدارة قضايا الدفاع الجنائي',
+        alt: 'رجل يرتدي قميصاً أزرق فاتحاً يضع معصميه المقيَّدين بالأصفاد على طاولة خشبية.',
       },
       {
         id: 'employment-docs',
@@ -535,7 +535,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_employment.webp`,
         width: 800,
         height: 533,
-        alt: 'استشارة عبر مكتب، توضيحاً لنمط خط مستندات نزاعات العمل',
+        alt: 'رجل ببذلة يمزّق ورقة إلى نصفين عبر مكتب أمام زميلة، وأمامه حاسوب محمول.',
       },
       {
         id: 'property-closing',
@@ -544,7 +544,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_realestate.webp`,
         width: 800,
         height: 533,
-        alt: 'يد تحمل مفاتيح بجانب منزل مصغّر، توضيحاً لنمط إغلاق معاملة عقارية',
+        alt: 'يد تحمل حزمة مفاتيح فوق طاولة خشبية، بجانب منزل مصغّر.',
       },
       {
         id: 'corporate-billing',
@@ -553,7 +553,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_corporate.webp`,
         width: 800,
         height: 533,
-        alt: 'مصافحة عمل فوق مستندات، توضيحاً لنمط نظام فوترة المستشار المؤسسي',
+        alt: 'شخصان ببذلتين يتصافحان فوق طاولة مقهى مغطاة برسوم بيانية مطبوعة وأكواب قهوة وحاسوب محمول، من زاوية علوية.',
       },
       {
         id: 'records-security',
@@ -562,7 +562,7 @@ export const legalFirmsLandingCopy = {
         image: `${IMG}/case_security.webp`,
         width: 800,
         height: 533,
-        alt: 'مختص يحمل أيقونة درع أمان، توضيحاً لنمط حماية السجلات',
+        alt: 'رجل ببذلة يمدّ كلتا يديه تحت رسم متوهج لدرع بداخله علامة صح.',
       },
     ],
 
@@ -570,7 +570,7 @@ export const legalFirmsLandingCopy = {
     deliveryTitle: 'مسار تسليم مبني للعمل المشمول بالسرية',
     deliveryIntro:
       'ننتقل من السياق إلى الإطلاق عبر مراحل مملوكة، ليتمكن المحامون المشرفون وفرق الاستقبال والعملاء من متابعة كل تسليم عبر عتبة السرية.',
-    deliveryImageAlt: 'محامٍ يوقّع مستنداً على مكتب، يمثل مسار التسليم القانوني لكلاود توبيا',
+    deliveryImageAlt: 'شخص ببذلة كحلية يوقّع مستنداً بقلم حبر على مكتب مصقول، وخلفه رفوف من المجلدات.',
     deliverySteps: [
       {
         id: 'discovery',

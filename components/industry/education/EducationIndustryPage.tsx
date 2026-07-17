@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowUpLeft,
@@ -142,9 +143,7 @@ export function EducationIndustryPage({
             <EducationHero
               locale={locale}
               statCards={copy.heroStatCards}
-              visualLabel={copy.heroVisualLabel}
-              mockTitle={copy.heroMockTitle}
-              mockProgressLabel={copy.heroMockProgressLabel}
+              photoAlt={copy.heroPhotoAlt}
             />
           </div>
         </div>
@@ -171,18 +170,29 @@ export function EducationIndustryPage({
         <section className={styles.section}>
           <div className={styles.aboutRow}>
             <EducationReveal className={styles.aboutMediaWrap} variant="left">
-              {/* CSS mock — no real photo asset exists (template shipped gray placeholders). */}
-              <div className={styles.aboutMock} aria-hidden="true">
-                <div className={styles.aboutMockCard}>
-                  <span className={styles.aboutMockChip} />
-                  <i /><i /><i />
+              {/* Licensed stock photographs — the classroom, and students working together in it. */}
+              <div className={styles.aboutMedia}>
+                <div className={`${styles.aboutPhoto} ${styles.aboutPhotoMain}`}>
+                  <Image
+                    className={styles.aboutPhotoImg}
+                    src="/images/industries/education/education-2.jpg"
+                    alt={copy.aboutPhotoMainAlt}
+                    width={1800}
+                    height={1200}
+                    sizes="(max-width: 991px) 92vw, 34vw"
+                  />
                 </div>
-                <div className={styles.aboutMockCard}>
-                  <span className={styles.aboutMockChip} />
-                  <i /><i />
+                <div className={`${styles.aboutPhoto} ${styles.aboutPhotoOffset}`}>
+                  <Image
+                    className={styles.aboutPhotoImg}
+                    src="/images/industries/education/education-3.jpg"
+                    alt={copy.aboutPhotoOffsetAlt}
+                    width={1800}
+                    height={1013}
+                    sizes="(max-width: 991px) 84vw, 30vw"
+                  />
                 </div>
               </div>
-              <p className={styles.aboutMockLabel}>{copy.aboutMockLabel}</p>
               <div className={styles.aboutBadge}>
                 <EducationCount
                   className={styles.aboutBadgeValue}
@@ -279,6 +289,22 @@ export function EducationIndustryPage({
 
         {/* --------------------------------------------- Platform preview */}
         <section className={styles.previewSection} data-header-theme="dark">
+          {/* Licensed stock photograph behind the band. The scrim after it is not
+              decoration — it is what keeps this band's copy above AA once a photo
+              is behind it. Worst-case ratios against the photo's brightest pixel,
+              so they hold for every crop the band's height can produce:
+              h2 10.5:1, intro 7.2:1, eyebrow 5.0:1, figcaption 5.2:1 (needs 4.5).
+              Measured at the shipped crop: 12.4 / 8.4 / 6.6 / 5.4. Re-measure
+              before weakening `.previewBackdropScrim` or swapping this photo. */}
+          <Image
+            className={styles.previewBackdrop}
+            src="/images/industries/education/education-1.jpg"
+            alt={copy.previewPhotoAlt}
+            width={1800}
+            height={1013}
+            sizes="100vw"
+          />
+          <span className={styles.previewBackdropScrim} aria-hidden="true" />
           <div className={styles.previewInner}>
             <EducationReveal className={styles.previewCopy} variant="up">
               <p className={styles.eyebrowLight}>{copy.previewEyebrow}</p>

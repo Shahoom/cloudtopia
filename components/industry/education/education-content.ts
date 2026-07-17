@@ -64,9 +64,7 @@ type EducationContent = {
   heroSecondaryCta: string
   heroTrustLabel: string
   heroTrust: readonly string[]
-  heroVisualLabel: string
-  heroMockTitle: string
-  heroMockProgressLabel: string
+  heroPhotoAlt: string
   heroStatCards: readonly EducationStatCard[]
 
   marqueeLabel: string
@@ -79,7 +77,8 @@ type EducationContent = {
   aboutBadgeSuffix: string
   aboutBadgeLabel: string
   aboutFeatures: readonly EducationFeature[]
-  aboutMockLabel: string
+  aboutPhotoMainAlt: string
+  aboutPhotoOffsetAlt: string
 
   topicsEyebrow: string
   topicsTitle: string
@@ -102,6 +101,7 @@ type EducationContent = {
   previewTitle: string
   previewIntro: string
   previewCaption: string
+  previewPhotoAlt: string
   previewMockLabels: readonly string[]
 
   pricingEyebrow: string
@@ -138,9 +138,8 @@ export const educationLandingCopy = {
     heroSecondaryCta: 'See the build paths',
     heroTrustLabel: 'Engineered around',
     heroTrust: ['Role-aware by design', 'Reconciled records', 'Bilingual and accessible'],
-    heroVisualLabel: 'Illustrative preview of a learning dashboard CloudTopia engineers',
-    heroMockTitle: 'My courses',
-    heroMockProgressLabel: 'Progress',
+    heroPhotoAlt:
+      'A teacher working on a laptop at a desk in front of a chalkboard covered in handwritten equations.',
     heroStatCards: [
       { id: 'patterns', value: 6, label: 'Learning-platform patterns we build' },
       { id: 'paths', value: 4, label: 'Connected build paths into CloudTopia services' },
@@ -181,7 +180,8 @@ export const educationLandingCopy = {
         subtitle: 'Role-based access, guardian models, and retention rules scoped to the data policy your institution approves.',
       },
     ],
-    aboutMockLabel: 'Illustrative enrollment and gradebook views',
+    aboutPhotoMainAlt: 'Students at wooden desks in a classroom, several of them using mobile phones.',
+    aboutPhotoOffsetAlt: 'A group of students gathered around a laptop at a desk in a lecture hall.',
 
     topicsEyebrow: 'Capability domains',
     topicsTitle: 'The domains we cover across a learning platform',
@@ -281,6 +281,8 @@ export const educationLandingCopy = {
     previewIntro:
       'A learner opens one dashboard; behind it, enrollment, courses, and grades stay reconciled and role-scoped. The frame below is an illustrative preview, not a specific institution.',
     previewCaption: 'Illustrative preview — no real learner data',
+    previewPhotoAlt:
+      'A young woman working on a laptop at a desk, an open notebook beside her, in a brightly decorated room.',
     previewMockLabels: ['Enrolled', 'In progress', 'Graded'],
 
     pricingEyebrow: 'Engagement models',
@@ -392,9 +394,7 @@ export const educationLandingCopy = {
     heroSecondaryCta: 'اطّلعوا على مسارات البناء',
     heroTrustLabel: 'مهندَس حول',
     heroTrust: ['مراعٍ للأدوار بالتصميم', 'سجلات مطابَقة', 'ثنائي اللغة ومتاح للجميع'],
-    heroVisualLabel: 'معاينة توضيحية للوحة تعلّم تهندسها كلاود توبيا',
-    heroMockTitle: 'مقرراتي',
-    heroMockProgressLabel: 'التقدّم',
+    heroPhotoAlt: 'معلمة تعمل على حاسوب محمول إلى مكتب أمام سبورة مغطاة بمعادلات مكتوبة بخط اليد.',
     heroStatCards: [
       { id: 'patterns', value: 6, label: 'أنماط منصات تعلّم نبنيها' },
       { id: 'paths', value: 4, label: 'مسارات بناء مترابطة إلى خدمات كلاود توبيا' },
@@ -435,7 +435,8 @@ export const educationLandingCopy = {
         subtitle: 'وصول بحسب الأدوار ونماذج لولي الأمر وقواعد احتفاظ بحسب سياسة البيانات التي تعتمدها مؤسستكم.',
       },
     ],
-    aboutMockLabel: 'واجهات توضيحية للتسجيل وسجل الدرجات',
+    aboutPhotoMainAlt: 'طلاب إلى مقاعد خشبية في فصل دراسي، يستخدم عدد منهم هواتف محمولة.',
+    aboutPhotoOffsetAlt: 'مجموعة من الطلاب يتحلقون حول حاسوب محمول إلى طاولة في قاعة محاضرات.',
 
     topicsEyebrow: 'مجالات القدرات',
     topicsTitle: 'المجالات التي نغطيها عبر منصة التعلّم',
@@ -535,6 +536,7 @@ export const educationLandingCopy = {
     previewIntro:
       'يفتح المتعلم لوحة واحدة؛ وخلفها يبقى التسجيل والمقررات والدرجات مطابَقة ومحددة بحسب الدور. الإطار أدناه معاينة توضيحية، لا مؤسسة بعينها.',
     previewCaption: 'معاينة توضيحية — لا بيانات متعلمين حقيقية',
+    previewPhotoAlt: 'شابة تعمل على حاسوب محمول إلى مكتب، وبجانبها دفتر مفتوح، في غرفة زاهية الألوان.',
     previewMockLabels: ['مسجَّل', 'قيد التقدّم', 'مرصود'],
 
     pricingEyebrow: 'نماذج التعاون',

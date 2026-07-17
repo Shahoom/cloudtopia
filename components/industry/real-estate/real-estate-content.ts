@@ -186,19 +186,19 @@ export const realEstateLandingCopy = {
       {
         id: 'search',
         image: '/images/industries/real-estate/hero_1.png',
-        alt: 'Modern family home CloudTopia builds property platforms for',
+        alt: 'A two-storey suburban house with gabled roofs and a stone-clad base, its windows lit at dusk beside a double garage.',
         valueProp: 'Listing & search platforms that match seekers to the right unit',
       },
       {
         id: 'portal',
         image: '/images/industries/real-estate/hero_2.png',
-        alt: 'Residential property exterior representing agent and agency portals',
+        alt: 'A large two-storey house in brick and shingle siding, with a columned front porch and shuttered windows under a cloudy sky.',
         valueProp: 'Agent & agency portals that keep every lead accountable',
       },
       {
         id: 'management',
         image: '/images/industries/real-estate/hero_3.png',
-        alt: 'Contemporary home representing property-management and tenant systems',
+        alt: 'A row of two-storey townhouses with grey siding and white trim, air-conditioning units and shrubs along their front walls.',
         valueProp: 'Management & tenant portals that hold their record',
       },
     ],
@@ -213,8 +213,8 @@ export const realEstateLandingCopy = {
     aboutTitle: 'We build the systems behind the property experience.',
     aboutBody:
       'CloudTopia engineers the platforms a real-estate business runs on—search and listing, portals and CRM, management and tenant flows—so a seeker moves from first search to agent handoff without losing context, and every listing keeps one trustworthy record.',
-    aboutImageMainAlt: 'Property exterior from a CloudTopia real-estate platform build',
-    aboutImageTallAlt: 'Residential development view from a CloudTopia listing platform',
+    aboutImageMainAlt: 'A two-storey brick-and-shingle house with a columned porch, set back behind a wide lawn.',
+    aboutImageTallAlt: 'A living room with a cream sofa beneath a large framed abstract painting, a coffee table stacked with books in front of it.',
     aboutBadge: 'Bilingual by design',
     statsLabel: 'How this engagement is built',
     statsNote:
@@ -243,7 +243,7 @@ export const realEstateLandingCopy = {
     capabilitiesTitle: 'The capabilities behind a property platform',
     capabilitiesIntro:
       'Each capability is a system CloudTopia engineers on one shared catalog—recorded, reconcilable, and owned.',
-    capabilitiesImageAlt: 'Property detail from a CloudTopia real-estate platform',
+    capabilitiesImageAlt: 'A blue-grey house at dusk with a teal front door and two garage doors, its windows glowing above a wet driveway.',
     capabilities: [
       {
         id: 'listing-search',
@@ -461,7 +461,7 @@ export const realEstateLandingCopy = {
         image: '/images/industries/real-estate/approach_1.png',
         width: 1170,
         height: 550,
-        imageAlt: 'Interior of a property from a CloudTopia real-estate platform build',
+        imageAlt: 'An open-plan living room with a wooden floor, a cream sofa and a desk, opening through glazed doors onto a raised second room.',
       },
       {
         id: 'context-preserving',
@@ -471,7 +471,7 @@ export const realEstateLandingCopy = {
         image: '/images/industries/real-estate/approach_2.png',
         width: 1170,
         height: 550,
-        imageAlt: 'Modern residential building from a CloudTopia real-estate platform build',
+        imageAlt: 'A minimal living room with a wall-mounted television, grey armchairs and a round green marble table beside a floating wooden staircase.',
       },
     ],
 
@@ -531,7 +531,7 @@ export const realEstateLandingCopy = {
     ctaTitle: 'Ready to build a property platform seekers and agents trust?',
     ctaSubtitle: 'Bring one flow and the agents and sources that own it. We will turn it into a buildable brief.',
     ctaButton: 'Map your property journey',
-    ctaImageAlt: 'Property exterior representing a CloudTopia real-estate platform',
+    ctaImageAlt: 'A modern white villa with a dark tiled roof and railed balconies, its windows lit from inside.',
   },
   ar: {
     skip: 'تخطَّ إلى محتوى قطاع العقارات',
@@ -543,19 +543,19 @@ export const realEstateLandingCopy = {
       {
         id: 'search',
         image: '/images/industries/real-estate/hero_1.png',
-        alt: 'منزل عائلي حديث تبني له كلاود توبيا منصات عقارية',
+        alt: 'منزل سكني من طابقين بأسقف جمالونية وقاعدة حجرية، تضيء نوافذه عند الغسق بجانب مرآب مزدوج.',
         valueProp: 'منصات عرض وبحث تربط الباحث بالوحدة المناسبة',
       },
       {
         id: 'portal',
         image: '/images/industries/real-estate/hero_2.png',
-        alt: 'واجهة عقار سكني تمثل بوابات الوسطاء والوكالات',
+        alt: 'منزل كبير من طابقين بواجهة من الطوب والقرميد الخشبي، له شرفة أمامية بأعمدة ونوافذ بمصاريع تحت سماء غائمة.',
         valueProp: 'بوابات للوسطاء والوكالات تُبقي كل عميل محتمل قابلاً للمساءلة',
       },
       {
         id: 'management',
         image: '/images/industries/real-estate/hero_3.png',
-        alt: 'منزل عصري يمثل أنظمة إدارة العقارات والمستأجرين',
+        alt: 'صف من المنازل المتلاصقة من طابقين بكسوة رمادية وإطارات بيضاء، مع وحدات تكييف وشجيرات أمام جدرانها.',
         valueProp: 'بوابات للإدارة والمستأجرين تحتفظ بسجلها',
       },
     ],
@@ -570,8 +570,8 @@ export const realEstateLandingCopy = {
     aboutTitle: 'نبني الأنظمة التي تقف خلف التجربة العقارية.',
     aboutBody:
       'تهندس كلاود توبيا المنصات التي تعمل عليها الشركة العقارية—البحث والعرض، والبوابات وإدارة علاقات العملاء، ومسارات الإدارة والمستأجرين—بحيث ينتقل الباحث من أول بحث إلى التسليم للوسيط دون فقدان السياق، ويحتفظ كل عرض بسجل واحد موثوق.',
-    aboutImageMainAlt: 'واجهة عقار من بناء منصة عقارية لكلاود توبيا',
-    aboutImageTallAlt: 'مشهد لمجمع سكني من منصة عرض عقاري لكلاود توبيا',
+    aboutImageMainAlt: 'منزل من طابقين بواجهة من الطوب والقرميد الخشبي وشرفة بأعمدة، يقع خلف مسطح أخضر واسع.',
+    aboutImageTallAlt: 'غرفة معيشة فيها أريكة كريمية تحت لوحة تجريدية كبيرة مؤطَّرة، وأمامها طاولة قهوة تعلوها كتب مرصوفة.',
     aboutBadge: 'ثنائي اللغة بالتصميم',
     statsLabel: 'كيف يُبنى هذا التعاون',
     statsNote:
@@ -600,7 +600,7 @@ export const realEstateLandingCopy = {
     capabilitiesTitle: 'القدرات التي تقف خلف المنصة العقارية',
     capabilitiesIntro:
       'كل قدرة نظام تهندسه كلاود توبيا على كتالوج مشترك واحد—مسجَّل وقابل للمطابقة وذو مالك واضح.',
-    capabilitiesImageAlt: 'تفصيل عقار من منصة عقارية لكلاود توبيا',
+    capabilitiesImageAlt: 'منزل رمادي مزرقّ عند الغسق بباب أمامي فيروزي ومرآبين، تتوهج نوافذه فوق ممر مبلَّل.',
     capabilities: [
       {
         id: 'listing-search',
@@ -818,7 +818,7 @@ export const realEstateLandingCopy = {
         image: '/images/industries/real-estate/approach_1.png',
         width: 1170,
         height: 550,
-        imageAlt: 'داخلية عقار من بناء منصة عقارية لكلاود توبيا',
+        imageAlt: 'غرفة معيشة مفتوحة بأرضية خشبية وأريكة كريمية ومكتب، تنفتح عبر أبواب زجاجية على غرفة أخرى مرتفعة.',
       },
       {
         id: 'context-preserving',
@@ -828,7 +828,7 @@ export const realEstateLandingCopy = {
         image: '/images/industries/real-estate/approach_2.png',
         width: 1170,
         height: 550,
-        imageAlt: 'مبنى سكني حديث من بناء منصة عقارية لكلاود توبيا',
+        imageAlt: 'غرفة معيشة بسيطة فيها تلفاز مثبَّت على الجدار وكرسيان رماديان وطاولة مستديرة من الرخام الأخضر بجانب درج خشبي معلَّق.',
       },
     ],
 
@@ -888,6 +888,6 @@ export const realEstateLandingCopy = {
     ctaTitle: 'مستعدون لبناء منصة عقارية يثق بها الباحثون والوسطاء؟',
     ctaSubtitle: 'أحضروا مساراً واحداً والوسطاء والمصادر الذين يملكونه، وسنحوّله إلى موجز قابل للبناء.',
     ctaButton: 'لنرسم رحلتكم العقارية',
-    ctaImageAlt: 'واجهة عقار تمثل منصة عقارية من كلاود توبيا',
+    ctaImageAlt: 'فيلا بيضاء حديثة بسقف قرميدي داكن وشرفات بدرابزين، تضيء نوافذها من الداخل.',
   },
 } as const satisfies Record<Locale, RealEstateContent>

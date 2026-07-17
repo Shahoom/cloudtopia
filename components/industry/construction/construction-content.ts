@@ -10,6 +10,12 @@ import type { Locale } from '@/lib/i18n/config'
  * build paths, owned handoffs) or relative delivery focus — never fabricated
  * performance, project counts, or client-outcome metrics. Project cards are
  * illustrative solution archetypes, NOT named client work.
+ *
+ * Photography: the four `construction-*.jpg` files are LICENSED STOCK photos of
+ * generic construction scenes (Unsplash — see CREDITS.md beside the files). They
+ * are not CloudTopia projects and not client sites, so every `*ImageAlt` below
+ * describes only what is visibly in the frame and claims nothing about who built
+ * it, who owns it, or what software runs it.
  */
 
 type ConstructionCard = {
@@ -74,6 +80,8 @@ type ConstructionContent = {
   heroTrust: readonly string[]
   heroSceneLabel: string
   heroSceneCaption: string
+  /** Alt for the hero backdrop photo — the page's LCP image. */
+  heroImageAlt: string
 
   specializationEyebrow: string
   specializationTitle: string
@@ -86,6 +94,8 @@ type ConstructionContent = {
   aboutWatermark: string
   aboutBody: readonly string[]
   aboutHighlights: readonly ConstructionCard[]
+  /** Alt for the about-band backdrop photo. */
+  aboutImageAlt: string
 
   valueEyebrow: string
   valueTitle: string
@@ -112,6 +122,8 @@ type ConstructionContent = {
   callUsTitle: string
   callUsBody: string
   callUsButton: string
+  /** Alt for the call-us band photo (sits beside the copy, never under it). */
+  callUsImageAlt: string
 
   projectsEyebrow: string
   projectsTitle: string
@@ -141,6 +153,8 @@ type ConstructionContent = {
   ctaTitle: string
   ctaSubtitle: string
   ctaButton: string
+  /** Alt for the closing-CTA backdrop photo. */
+  ctaImageAlt: string
 }
 
 export const constructionLandingCopy = {
@@ -156,6 +170,8 @@ export const constructionLandingCopy = {
     heroTrust: ['One current revision', 'Owned, dated decisions', 'Bilingual by design'],
     heroSceneLabel: 'Live project sequence',
     heroSceneCaption: 'Every state shows an owner and what waits behind it.',
+    heroImageAlt:
+      'Tower cranes standing over a construction site, silhouetted against a sunset sky.',
 
     specializationEyebrow: 'What we build',
     specializationTitle: 'Three systems that carry a project',
@@ -207,6 +223,8 @@ export const constructionLandingCopy = {
         subtitle: 'Every workflow ships with a named owner, a dated state, and an auditable record.',
       },
     ],
+    aboutImageAlt:
+      'A multi-storey concrete building under construction, with tower cranes above it against a clear sky.',
 
     valueEyebrow: 'How this engagement is built',
     valueTitle: 'Structure you can count on',
@@ -279,6 +297,8 @@ export const constructionLandingCopy = {
     callUsBody:
       'Bring one project process and the teams that own it. We will scope a bounded, buildable first phase with you.',
     callUsButton: 'Talk to us',
+    callUsImageAlt:
+      'Tower cranes beside the steel frame and scaffolding of a building under construction, in low sunlight.',
 
     projectsEyebrow: 'Solution patterns',
     projectsTitle: 'Illustrative build patterns by sector',
@@ -340,6 +360,8 @@ export const constructionLandingCopy = {
     ctaTitle: 'Ready to keep every project decision visible and moving?',
     ctaSubtitle: 'Bring one process and the teams that own it. We will turn it into a buildable brief.',
     ctaButton: 'Map your construction project workflow',
+    ctaImageAlt:
+      'Cranes on top of a steel-framed tower under construction, with birds flying overhead.',
   },
   ar: {
     skip: 'تخطَّ إلى محتوى قطاع الإنشاء',
@@ -353,6 +375,7 @@ export const constructionLandingCopy = {
     heroTrust: ['مراجعة حالية واحدة', 'قرارات مملوكة ومؤرخة', 'ثنائي اللغة بالتصميم'],
     heroSceneLabel: 'تسلسل مشروع حيّ',
     heroSceneCaption: 'تعرض كل حالة مالكها وما ينتظر خلفها.',
+    heroImageAlt: 'رافعات برجية تنتصب فوق موقع إنشاء، تبدو ظلالها أمام سماء عند الغروب.',
 
     specializationEyebrow: 'ما الذي نبنيه',
     specializationTitle: 'ثلاثة أنظمة تحمل المشروع',
@@ -404,6 +427,7 @@ export const constructionLandingCopy = {
         subtitle: 'يصدر كل مسار عمل بمالك محدد وحالة مؤرخة وسجل قابل للتدقيق.',
       },
     ],
+    aboutImageAlt: 'مبنى خرساني متعدد الطوابق قيد الإنشاء، تعلوه رافعات برجية أمام سماء صافية.',
 
     valueEyebrow: 'كيف يُبنى هذا التعاون',
     valueTitle: 'بنية يمكنكم الاعتماد عليها',
@@ -476,6 +500,8 @@ export const constructionLandingCopy = {
     callUsBody:
       'أحضروا عملية مشروع واحدة والفرق التي تملكها، وسنحدد معكم مرحلة أولى محددة وقابلة للبناء.',
     callUsButton: 'تواصلوا معنا',
+    callUsImageAlt:
+      'رافعات برجية بجوار هيكل فولاذي وسقالات لمبنى قيد الإنشاء، في ضوء شمس منخفض.',
 
     projectsEyebrow: 'أنماط الحلول',
     projectsTitle: 'أنماط بناء توضيحية حسب القطاع',
@@ -537,5 +563,6 @@ export const constructionLandingCopy = {
     ctaTitle: 'مستعدون لإبقاء كل قرار في المشروع واضحاً ومتحركاً؟',
     ctaSubtitle: 'أحضروا عملية واحدة والفرق التي تملكها، وسنحوّلها إلى موجز قابل للبناء.',
     ctaButton: 'لنرسم سير عمل مشاريع الإنشاء لديكم',
+    ctaImageAlt: 'رافعات فوق برج بهيكل فولاذي قيد الإنشاء، وطيور تحلّق في الأعلى.',
   },
 } as const satisfies Record<Locale, ConstructionContent>

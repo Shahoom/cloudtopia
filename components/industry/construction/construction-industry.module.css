@@ -437,12 +437,77 @@
   position: relative;
 }
 
+/*
+ * Hero backdrop photo (tower cranes at sunset) + scrim. The flat ink that USED to
+ * be `.hero`'s background is now `.heroScrim` layered over the photo, so every
+ * hero text colour keeps roughly the contrast it had against the flat band. The
+ * solid ink on `.hero` stays as the fallback while the photo decodes (or if it
+ * 404s), which keeps the white h1 legible at all times.
+ *
+ * Stacking inside `.hero` (isolate): photo (-4) < scrim (-3) < blueprint (-2)
+ * < amber ramp ::after (-1) < .heroVisual (2) < .heroCopy (3).
+ *
+ * MEASURED, not eyeballed. Every text box below was sampled pixel-by-pixel against
+ * the real photo composited under this exact layer stack (LTR + RTL, 1440x900 and
+ * 390x844); the figure is the WORST pixel found across all of them:
+ *   h1 #fff                       9.7:1   (need 3:1, large)
+ *   .heroIntro 80% white          7.3:1   (need 4.5:1, body)
+ *   .buttonGhost #fff            10.6:1
+ *   .heroTrust li 88% white       8.4:1
+ *   panel label #fff              9.7:1   (through the panel's 6% white wash)
+ *   panel stage 90% white         7.8:1   (through 6% + the row's 5% wash)
+ *   panel caption 66% white       5.4:1
+ *   panel state 62% white         5.2:1   <- tightest on the page
+ *   panel num / state amber       5.0:1
+ * The 62%-white state labels are the binding constraint: they are weak even on
+ * flat ink (5.98:1), so the ramp's open end is capped at 87% — past that, extra
+ * ink buys ~0.1:1 and only costs photo. The eyebrow chip and the amber button are
+ * opaque, so the photo never reaches their text.
+ */
+.heroPhoto {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 54%;
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  z-index: -4;
+}
+
+.heroScrim {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--con-ink) / 94%) 0%,
+      rgb(var(--con-ink) / 91%) 52%,
+      rgb(var(--con-ink) / 87%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--con-dark-2) / 30%) 0%, rgb(var(--con-dark-2) / 55%) 100%);
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -3;
+}
+
+/* Mirror only the horizontal ramp so its dense end stays under the copy column. */
+.page[dir='rtl'] .heroScrim {
+  background:
+    linear-gradient(
+      270deg,
+      rgb(var(--con-ink) / 94%) 0%,
+      rgb(var(--con-ink) / 91%) 52%,
+      rgb(var(--con-ink) / 87%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--con-dark-2) / 30%) 0%, rgb(var(--con-dark-2) / 55%) 100%);
+}
+
 .heroBlueprint {
   inset: 0;
   opacity: 0.06;
   pointer-events: none;
   position: absolute;
-  z-index: -1;
+  z-index: -2;
 }
 
 .hero::after {
@@ -519,6 +584,7 @@
 }
 
 .page[dir='rtl'] .heroCopy h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
   letter-spacing: 0;
   line-height: 1.2;
 }
@@ -547,7 +613,9 @@
   padding: 0;
 }
 
-.heroTrustLabel {
+/* Qualified with `li` so it outranks `.heroTrust li` below (0-2-1 beats 0-1-1);
+ * unqualified, that rule wins and the label renders identically to the items. */
+.heroTrust li.heroTrustLabel {
   color: rgb(255 255 255 / 62%);
   display: block;
   font-size: 0.72rem;
@@ -856,6 +924,7 @@
 
 .page[dir='rtl'] .sectionHeadingCentered h2,
 .page[dir='rtl'] .sectionHeadingSplit h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
   line-height: 1.3;
 }
 
@@ -927,8 +996,63 @@
 .aboutSection {
   background: rgb(var(--con-ink));
   color: rgb(255 255 255 / 80%);
+  isolation: isolate;
   overflow: clip;
   position: relative;
+}
+
+/*
+ * About-band backdrop photo (a building taking shape) + scrim. Same construction
+ * as the hero: the band's flat ink is the decode/404 fallback, the photo sits at
+ * -3 and the ink scrim at -2 is the contrast guarantee. The 5%-white watermark
+ * (z-index 0) and `.aboutInner` (z-index 1) both ride above it.
+ *
+ * Unlike the hero, copy runs the full width of this band (prose start-side, the
+ * translucent 5%-white highlight cards end-side), so the ramp stays dense edge to
+ * edge rather than opening up. It is lighter than the hero's because this band
+ * carries no 62%-white text — the weakest thing on it is 74%, which leaves room
+ * for the photo to actually read. Worst sampled pixel (LTR + RTL, 1440 and 390):
+ *   .eyebrowLight amber           9.4:1  (need 4.5:1, body)
+ *   .aboutCopy h2 #fff           10.6:1  (need 3:1, large)
+ *   .aboutBody 78% white          7.7:1
+ *   .aboutHighlight h3 #fff       9.1:1  (through the card's 5% white wash)
+ *   .aboutHighlight p 74% white   6.0:1  <- binding constraint here
+ */
+.aboutPhoto {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 42%;
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  z-index: -3;
+}
+
+.aboutScrim {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--con-ink) / 84%) 0%,
+      rgb(var(--con-ink) / 80%) 60%,
+      rgb(var(--con-ink) / 76%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--con-dark-2) / 10%), rgb(var(--con-dark-2) / 28%));
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -2;
+}
+
+.page[dir='rtl'] .aboutScrim {
+  background:
+    linear-gradient(
+      270deg,
+      rgb(var(--con-ink) / 84%) 0%,
+      rgb(var(--con-ink) / 80%) 60%,
+      rgb(var(--con-ink) / 76%) 100%
+    ),
+    linear-gradient(180deg, rgb(var(--con-dark-2) / 10%), rgb(var(--con-dark-2) / 28%));
 }
 
 .aboutInner {
@@ -951,6 +1075,7 @@
 }
 
 .page[dir='rtl'] .aboutCopy h2 {
+  font-size: clamp(1.6rem, 2.7vw, 2.25rem);
   line-height: 1.3;
 }
 
@@ -1293,29 +1418,46 @@
   position: relative;
 }
 
-.callUsBlueprint {
-  inset-block: 0;
-  inset-inline-end: 4%;
-  opacity: 0.14;
-  pointer-events: none;
-  position: absolute;
-  z-index: 0;
-}
-
-.callUsBlueprint img {
-  display: block;
-  height: 100%;
-  mix-blend-mode: multiply;
-  object-fit: contain;
-  width: auto;
-}
-
+/*
+ * The band is amber (#f5bf23) with INK copy on it, and amber is LIGHT — measured,
+ * amber on white is 1.70:1, which is why it is a fill here and never text. A photo
+ * cannot go behind this band's copy: ink over a bright sky fails outright, and an
+ * amber scrim opaque enough to hold ink at AA would leave nothing of the photo to
+ * see. So the photo takes its own grid column instead and never overlaps the copy
+ * at any width (>=992px side by side; below that it stacks under the text — proved
+ * by sampling the rendered boxes at 1440 and 390, LTR and RTL: zero intersection).
+ * The ink copy therefore keeps the flat amber it always had:
+ *   .callUs h2 ink            10.2:1  (need 3:1, large)
+ *   .callUsBody ink 82%        6.9:1  (need 4.5:1, body)
+ *   .callUsEyebrow ink 72%     5.2:1
+ * The decorative 14%-opacity blueprint that used to fill this end-side space is
+ * gone — the photograph is the thing it was standing in for.
+ */
 .callUsInner {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
   margin-inline: auto;
   max-width: 1320px;
   padding: clamp(3.5rem, 6vw, 5.5rem) clamp(1.25rem, 4vw, 4rem);
   position: relative;
   z-index: 1;
+}
+
+.callUsMedia {
+  position: relative;
+}
+
+.callUsPhoto {
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 34px 60px -34px rgb(var(--con-ink) / 65%);
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  user-select: none;
+  width: 100%;
 }
 
 .callUsEyebrow {
@@ -1332,6 +1474,7 @@
 }
 
 .page[dir='rtl'] .callUs h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
   line-height: 1.25;
 }
 
@@ -1705,6 +1848,7 @@
 }
 
 .page[dir='rtl'] .faqHeading h2 {
+  font-size: clamp(1.7rem, 2.9vw, 2.35rem);
   line-height: 1.3;
 }
 
@@ -1807,6 +1951,43 @@
   will-change: transform;
 }
 
+/*
+ * Closing-CTA backdrop photo (cranes over a steel frame) + scrim. `.ctaCard`
+ * already isolates, so: photo (-3) < scrim (-2) < blueprint (-1) < .ctaInner (1).
+ * The card's flat ink stays as the decode/404 fallback.
+ *
+ * This photo is the brightest of the four — its sky is near-white — and the CTA
+ * copy is centred across the full card, so the scrim is flat rather than ramped.
+ * Even so it is the LIGHTEST of the three: nothing here is under 82% white, and a
+ * near-white sky under 74% ink still lands ~rgb(86), which is plenty. Worst
+ * sampled pixel (LTR + RTL, 1440 and 390):
+ *   .ctaInner .eyebrowLight   5.5:1  (need 3:1 — renders 82% white 19.8px/700)
+ *   .ctaInner h2 #fff         7.4:1  (need 3:1, large)
+ *   .ctaInner p 82% white     6.1:1  (need 4.5:1, body)
+ * The card scroll-zooms (scale 1.06 -> 1), which transforms photo and text
+ * together — the sampled relationship is invariant under it, so one crop covers it.
+ */
+.ctaPhoto {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 58%;
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  z-index: -3;
+}
+
+.ctaScrim {
+  background:
+    linear-gradient(180deg, rgb(var(--con-ink) / 74%) 0%, rgb(var(--con-ink) / 78%) 100%),
+    radial-gradient(circle at 50% 50%, rgb(var(--con-dark-2) / 20%), transparent 70%);
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -2;
+}
+
 .ctaBlueprint {
   inset: 0;
   opacity: 0.08;
@@ -1823,7 +2004,14 @@
   z-index: 1;
 }
 
-.ctaInner .eyebrowLight {
+/* Qualified with `p` so it outranks `.ctaInner p` below (0-2-1 beats 0-1-1).
+ * Colour and size are restated rather than inherited from the shared eyebrow
+ * rules, which at 0-1-0 lose to `.ctaInner p` and leave this rendering as body
+ * copy. Amber over the CTA photo is the tightest text on the band — see the
+ * measured figures above `.ctaPhoto` before changing this colour or size. */
+.ctaInner p.eyebrowLight {
+  color: rgb(var(--con-accent));
+  font-size: 0.78rem;
   margin-block-end: 1.25rem;
 }
 
@@ -1836,6 +2024,7 @@
 }
 
 .page[dir='rtl'] .ctaInner h2 {
+  font-size: clamp(1.85rem, 3.7vw, 3rem);
   letter-spacing: 0;
   line-height: 1.25;
 }
@@ -1857,8 +2046,14 @@
   .aboutInner,
   .valueMetrics,
   .faqSection,
-  .missionLayout {
+  .missionLayout,
+  .callUsInner {
     grid-template-columns: 1fr;
+  }
+
+  /* Stacked under the copy — still never behind it. */
+  .callUsPhoto {
+    aspect-ratio: 16 / 9;
   }
 
   .heroVisual {

@@ -200,6 +200,27 @@
 }
 
 /* ----------------------------------------------------------- theme-btn */
+/*
+ * CASCADE TRAP — read before touching the colours below.
+ *
+ * Every theme-btn is an <a>, so `.page a { color: inherit }` (specificity 0,1,1)
+ * outranks a lone variant class like `.themeBtnLight` (0,1,0). The variants then
+ * lost the cascade and each label silently inherited its band's text colour:
+ * `.themeBtnLight` rendered rgb(255 255 255 / 84%) on its own #fff background —
+ * an invisible label on a blank white rectangle (the icon vanished too, because
+ * the lucide glyphs stroke with currentColor). Only :hover looked right, since
+ * `.themeBtnLight:hover` (0,2,0) did outrank the anchor reset.
+ *
+ * So each variant is written as `.themeBtn.themeBtnX` (0,2,0) and each state as
+ * `.themeBtn.themeBtnX:hover` (0,3,0) — always ahead of `.page a`, and no longer
+ * dependent on source order. Keep the doubled class; do not "simplify" it away.
+ *
+ * The labels must also stay OPAQUE #fff over green — there is no alpha budget.
+ * The label renders at 0.95rem/700 (~17px), under the 18.66px-bold large-text
+ * threshold, so it owes the full 4.5:1. On #00813d, #fff measures 4.99:1 (passes,
+ * but with only ~0.5 to spare) while the inherited 84% white composites to
+ * 3.99:1 (fails). Any alpha on these labels breaks AA — keep them opaque.
+ */
 .themeBtn {
   align-items: center;
   border: 1px solid transparent;
@@ -251,7 +272,17 @@
   width: 1.1rem;
 }
 
-.themeBtnPrimary {
+/* The label and icon ride above the ::before fill so the sweep colours in
+   behind them instead of painting them out. `.themeBtn` sets `isolation`, so
+   this z-index stays scoped to the button. */
+.themeBtnIcon,
+.themeBtnText {
+  position: relative;
+  z-index: 1;
+}
+
+/* Rest colours — doubled class (0,2,0) to clear `.page a` (0,1,1). */
+.themeBtn.themeBtnPrimary {
   background: rgb(var(--rt-green));
   color: #fff;
 }
@@ -260,7 +291,7 @@
   background: rgb(var(--rt-navy));
 }
 
-.themeBtnGhost {
+.themeBtn.themeBtnGhost {
   background: transparent;
   border-color: rgb(255 255 255 / 45%);
   color: #fff;
@@ -270,13 +301,13 @@
   background: #fff;
 }
 
-.themeBtnGhost:hover,
-.themeBtnGhost:focus-visible {
+.themeBtn.themeBtnGhost:hover,
+.themeBtn.themeBtnGhost:focus-visible {
   border-color: #fff;
   color: rgb(var(--rt-ink));
 }
 
-.themeBtnLight {
+.themeBtn.themeBtnLight {
   background: #fff;
   color: rgb(var(--rt-ink));
 }
@@ -285,8 +316,8 @@
   background: rgb(var(--rt-green));
 }
 
-.themeBtnLight:hover,
-.themeBtnLight:focus-visible {
+.themeBtn.themeBtnLight:hover,
+.themeBtn.themeBtnLight:focus-visible {
   color: #fff;
 }
 
@@ -541,6 +572,7 @@
 }
 
 .page[dir='rtl'] .heroTitle {
+  font-size: clamp(2.45rem, 4.9vw, 3.95rem);
   line-height: 1.2;
 }
 
@@ -906,6 +938,11 @@
 .sectionTitle {
   font-size: clamp(2rem, 3.6vw, 3rem);
   margin-block: 1rem;
+}
+
+.page[dir='rtl'] .sectionTitle {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1.3;
 }
 
 .sectionHeadingSplit .sectionTitle {
@@ -1476,6 +1513,11 @@
   margin-block: 1rem;
 }
 
+.page[dir='rtl'] .guaranteesHead h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1.3;
+}
+
 .guaranteesHead p {
   color: rgb(255 255 255 / 88%);
   font-size: 1.05rem;
@@ -1655,6 +1697,10 @@
   font-size: clamp(2rem, 3.4vw, 2.8rem);
 }
 
+.page[dir='rtl'] .faqHeading .sectionTitle {
+  font-size: clamp(1.7rem, 2.9vw, 2.35rem);
+}
+
 .faqList {
   border-block-start: 1px solid rgb(var(--rt-line));
 }
@@ -1796,6 +1842,11 @@
   margin-block-end: 1.1rem;
   margin-inline: auto;
   max-width: 820px;
+}
+
+.page[dir='rtl'] .ctaCard h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.85rem);
+  line-height: 1.3;
 }
 
 .ctaCard > p {

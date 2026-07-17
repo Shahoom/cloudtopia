@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
 import type { Locale } from '@/lib/i18n/config'
@@ -10,15 +11,24 @@ import styles from './education-industry.module.css'
 type EducationHeroProps = {
   locale: Locale
   statCards: readonly EducationStatCard[]
-  visualLabel: string
-  mockTitle: string
-  mockProgressLabel: string
+  photoAlt: string
 }
 
 /**
- * Learnit hero visual — a CSS-built learning-dashboard mock (no photo asset
- * exists; the template shipped only gray placeholders) with two floating glass
- * stat cards and layered decorative shapes.
+ * Learnit hero visual — a licensed stock photograph of an educator at a laptop
+ * in the template's rounded, shadowed frame, with two floating glass stat cards and
+ * layered decorative shapes. (The Learnit package shipped gray dimension
+ * placeholders here; the photo replaces the CSS dashboard mock that stood in for
+ * them. The product-UI mock now lives once, in the platform-preview band.)
+ *
+ * The photo is this page's LCP element, so it alone carries `priority`. No text
+ * is rendered over it except the two glass stat cards, whose 88%-white surface
+ * keeps their ink above AA — see the contrast note on `.heroStatCard` in the
+ * stylesheet. This frame gets the chalkboard shot specifically because its
+ * subject is centred with background in both top corners, so the top stat card
+ * lands on the chalkboard in LTR *and* in RTL, where `inset-inline` mirrors it
+ * to the opposite corner. Swapping in a photo with an off-centre subject will
+ * put a card over somebody's face in one of the two directions.
  *
  * The two stat cards reproduce Learnit's mouse parallax exactly: on
  * `.paralax__animation` mousemove, every `[data-depth]` element is translated by
@@ -28,13 +38,7 @@ type EducationHeroProps = {
  * Continuous shape floats (earth up/down, circle rotate, dots sway) are pure CSS
  * and are neutralised by the reduced-motion kill switch.
  */
-export function EducationHero({
-  locale,
-  statCards,
-  visualLabel,
-  mockTitle,
-  mockProgressLabel,
-}: EducationHeroProps) {
+export function EducationHero({ locale, statCards, photoAlt }: EducationHeroProps) {
   const stageRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -80,43 +84,22 @@ export function EducationHero({
 
   return (
     <div className={styles.heroStage} ref={stageRef}>
-      <span className={styles.srOnly}>{visualLabel}</span>
-
       {/* Decorative floating shapes (continuous CSS floats) */}
       <span className={`${styles.heroShape} ${styles.heroShapeEarth}`} aria-hidden="true" />
       <span className={`${styles.heroShape} ${styles.heroShapeCircle}`} aria-hidden="true" />
       <span className={`${styles.heroShape} ${styles.heroShapeDots}`} aria-hidden="true" />
 
-      {/* CSS platform mock (decorative) */}
-      <div className={styles.heroMock} aria-hidden="true">
-        <div className={styles.heroMockBar}>
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className={styles.heroMockBody}>
-          <p className={styles.heroMockTitle}>{mockTitle}</p>
-          <div className={styles.heroMockRow}>
-            <span className={styles.heroMockThumb} />
-            <span className={styles.heroMockLines}>
-              <i />
-              <i />
-            </span>
-          </div>
-          <div className={styles.heroMockRow}>
-            <span className={styles.heroMockThumb} />
-            <span className={styles.heroMockLines}>
-              <i />
-              <i />
-            </span>
-          </div>
-          <div className={styles.heroMockProgress}>
-            <span className={styles.heroMockProgressLabel}>{mockProgressLabel}</span>
-            <span className={styles.heroMockTrack}>
-              <span className={styles.heroMockFill} />
-            </span>
-          </div>
-        </div>
+      {/* Licensed stock photograph — the LCP image for this page. */}
+      <div className={styles.heroPhoto}>
+        <Image
+          className={styles.heroPhotoImg}
+          src="/images/industries/education/education-4.jpg"
+          alt={photoAlt}
+          width={1800}
+          height={1013}
+          sizes="(max-width: 991px) 360px, 420px"
+          priority
+        />
       </div>
 
       {/* Two floating glass stat cards (parallax + counterUp) */}

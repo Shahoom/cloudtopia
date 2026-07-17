@@ -48,18 +48,25 @@ export function RealEstateSplitHeading({
     node.textContent = ''
     node.style.setProperty('--re-split-x', dir === 'rtl' ? '-50px' : '50px')
 
-    let charIndex = 0
+    // Arabic is a cursive script: giving every letter its own inline-block box
+    // forces isolated letterforms and destroys joining ("نبني" -> "ن ب ن ي").
+    // So in RTL we stagger by WORD — each word stays one shaped run — and only
+    // split to chars for LTR, where the per-char cascade is safe.
+    const perWord = dir === 'rtl'
+    let unitIndex = 0
     const words = text.split(' ')
     words.forEach((word, wordIdx) => {
       const wordSpan = document.createElement('span')
       wordSpan.className = styles.splitWord
       wordSpan.setAttribute('aria-hidden', 'true')
-      for (const char of Array.from(word)) {
+      const units = perWord ? [word] : Array.from(word)
+      const step = perWord ? 0.06 : 0.02
+      for (const unit of units) {
         const charSpan = document.createElement('span')
         charSpan.className = styles.splitChar
-        charSpan.textContent = char
-        charSpan.style.transitionDelay = `${(charIndex * 0.02).toFixed(2)}s`
-        charIndex += 1
+        charSpan.textContent = unit
+        charSpan.style.transitionDelay = `${(unitIndex * step).toFixed(2)}s`
+        unitIndex += 1
         wordSpan.appendChild(charSpan)
       }
       node.appendChild(wordSpan)

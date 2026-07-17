@@ -338,6 +338,11 @@
   margin-block: 1rem 1.25rem;
 }
 
+.page[dir='rtl'] .heroCopy h1 {
+  font-size: clamp(1.75rem, 4.2vw, 2.85rem);
+  line-height: 1.3;
+}
+
 .heroEyebrow {
   align-items: center;
   color: rgb(var(--ps-accent));
@@ -640,6 +645,14 @@
 .faqHeading h2,
 .moduleCopy h2 {
   font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+}
+
+.page[dir='rtl'] .sectionHeadingCentered h2,
+.page[dir='rtl'] .sectionHeadingSplit h2,
+.page[dir='rtl'] .faqHeading h2,
+.page[dir='rtl'] .moduleCopy h2 {
+  font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+  line-height: 1.35;
 }
 
 /* Centered section title gets the template’s 190px centred bronze rule */
@@ -1494,6 +1507,11 @@
   color: #fff;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   margin-block: 0.5rem 1rem;
+}
+
+.page[dir='rtl'] .ctaInner h2 {
+  font-size: clamp(1.5rem, 3.4vw, 2.35rem);
+  line-height: 1.35;
 }
 
 .ctaInner > p {

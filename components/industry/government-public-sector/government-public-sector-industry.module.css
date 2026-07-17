@@ -476,6 +476,7 @@
 }
 
 .page[dir='rtl'] .heroCopy h1 {
+  font-size: clamp(2.2rem, 4.2vw, 3.35rem);
   letter-spacing: 0;
   line-height: 1.2;
 }
@@ -799,6 +800,7 @@
 
 .page[dir='rtl'] .sectionHeadingCentered h2,
 .page[dir='rtl'] .sectionHeadingSplit h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
   line-height: 1.3;
 }
 
@@ -1555,6 +1557,7 @@
 }
 
 .page[dir='rtl'] .faqHeading h2 {
+  font-size: clamp(1.7rem, 2.9vw, 2.35rem);
   line-height: 1.3;
 }
 
@@ -1675,6 +1678,7 @@
 }
 
 .page[dir='rtl'] .ctaInner h2 {
+  font-size: clamp(1.85rem, 3.7vw, 2.85rem);
   letter-spacing: 0;
   line-height: 1.25;
 }
