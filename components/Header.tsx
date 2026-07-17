@@ -486,23 +486,37 @@ export default function Header() {
               className={`w-auto transition-[height,transform] duration-300 group-hover:scale-[1.03] ${isScrolled ? 'h-10 sm:h-11' : 'h-12 sm:h-14'}`}
             />
             {locale === 'ar' ? (
-              <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
-                <span className={`font-logo-ar text-2xl sm:text-3xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+              <>
+                {/* Compact name for narrow phones — the two-line block below is hidden < 390px,
+                    which otherwise leaves only a bare icon. Icon-only stays for ≤ ~360px. */}
+                <span className={`font-logo-ar hidden whitespace-nowrap text-xl font-black leading-none min-[360px]:inline min-[390px]:hidden ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
                   كلاود<span className="text-sky-600">توبيا</span>
                 </span>
-                <span className={`mt-1 font-tagline-ar text-[11px] sm:text-[12px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
-                  تكنولوجيا رقمية وسحابية
+                <span className="hidden min-w-0 flex-col leading-none min-[390px]:flex">
+                  <span className={`font-logo-ar text-2xl sm:text-3xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+                    كلاود<span className="text-sky-600">توبيا</span>
+                  </span>
+                  <span className={`mt-1 font-tagline-ar text-[11px] sm:text-[12px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
+                    تكنولوجيا رقمية وسحابية
+                  </span>
                 </span>
-              </span>
+              </>
             ) : (
-              <span className="hidden min-w-0 flex-col leading-none min-[430px]:flex">
-                <span className={`font-logo text-xl font-black sm:text-2xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
-                  <>Cloud<span className="text-sky-600">Topia</span></>
+              <>
+                {/* Compact name for narrow phones — the two-line block below is hidden < 430px,
+                    which otherwise leaves only a bare icon. Icon-only stays for ≤ ~360px. */}
+                <span className={`font-logo hidden whitespace-nowrap text-base font-black leading-none min-[360px]:inline min-[430px]:hidden ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+                  Cloud<span className="text-sky-600">Topia</span>
                 </span>
-                <span className={`mt-1 text-[9px] font-black uppercase tracking-[0.08em] sm:text-[10px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
-                  Digital & Cloud Technologies
+                <span className="hidden min-w-0 flex-col leading-none min-[430px]:flex">
+                  <span className={`font-logo text-xl font-black sm:text-2xl ${headerIsDark ? 'text-white' : 'text-eerie'}`}>
+                    <>Cloud<span className="text-sky-600">Topia</span></>
+                  </span>
+                  <span className={`mt-1 text-[9px] font-black uppercase tracking-[0.08em] sm:text-[10px] ${headerIsDark ? 'text-white/62' : 'text-neutral-600'}`}>
+                    Digital & Cloud Technologies
+                  </span>
                 </span>
-              </span>
+              </>
             )}
           </Link>
 
