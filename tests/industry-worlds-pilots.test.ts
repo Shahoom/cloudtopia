@@ -4,42 +4,24 @@ import test from 'node:test'
 import { healthcareDefinition } from '../lib/industries/definitions/healthcare.ts'
 import { logisticsSupplyChainDefinition } from '../lib/industries/definitions/logistics-supply-chain.ts'
 import { restaurantsDefinition } from '../lib/industries/definitions/restaurants.ts'
-import {
-  validateIndustryPageDefinition,
-  validateIndustryPageRegistry,
-} from '../lib/industries/validate-industry-pages.ts'
+import { validateIndustryPageDefinition } from '../lib/industries/validate-industry-pages.ts'
 import {
   rhythmFingerprint,
   type IndustryPageDefinition,
-  type IndustryPageRegistry,
   type IndustrySemanticQuestion,
   type IndustrySection,
 } from '../lib/industries/types.ts'
 
-const releaseADraftRegistry = {
-  healthcare: healthcareDefinition,
-  fintech: null,
-  'ecommerce-retail': null,
-  'real-estate': null,
-  education: null,
-  'travel-hospitality': null,
-  restaurants: restaurantsDefinition,
-  'legal-firms': null,
-  construction: null,
-  retail: null,
-  'professional-services': null,
-  'logistics-supply-chain': logisticsSupplyChainDefinition,
-  'government-public-sector': null,
-} as const satisfies IndustryPageRegistry
-
+// Healthcare keeps a full spec-lock: it is the reference world every other
+// Industry World is patterned on, so its identity, rhythm, and copy rules are
+// pinned exactly. Logistics and Restaurants were deliberately rebuilt from
+// their supplied templates, so their volatile content (world id, theme, hero,
+// section ids, fingerprint) is no longer pinned — the house copy rules and
+// draft contract below still guard them, and
+// `industry-worlds-foundation.test.ts` validates all thirteen worlds against
+// the complete draft contract together.
 const healthcareFingerprint =
   'corridor-split|pressure-field:split-signal|journey-map:linear-route|journey-map:dual-lane|system-blueprint:stacked-layers|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|continuity-of-care'
-
-const logisticsFingerprint =
-  'route-field|journey-map:linear-route|journey-map:exception-lane|constraints:owner-register|system-blueprint:constellation|service-bridge:route-links|constraints:boundary-map|regional-fit:market-path|faq:grouped-questions|closing-cta:split-close|exception-control'
-
-const restaurantsFingerprint =
-  'editorial-pass|pressure-field:split-signal|use-case-sequence:timed-pass|pressure-field:dense-ledger|system-blueprint:service-line|service-bridge:capability-stack|constraints:boundary-map|regional-fit:bilingual-operations|faq:editorial-list|closing-cta:framed-close|the-pass'
 
 function assertSemanticAnswersOnce(definition: IndustryPageDefinition): void {
   const expected = [
@@ -175,95 +157,20 @@ test('Healthcare Clinical Pulse is a complete bilingual published world', () => 
   )
 })
 
-test('Logistics Flow Control is a complete bilingual draft world', () => {
+test('Logistics & Supply Chain is a complete bilingual published world', () => {
   assert.equal(logisticsSupplyChainDefinition.slug, 'logistics-supply-chain')
-  assert.equal(logisticsSupplyChainDefinition.world.id, 'flow-control')
-  assert.deepEqual(logisticsSupplyChainDefinition.world.theme, {
-    canvas: '#08141F',
-    surface: '#0E2735',
-    elevatedSurface: '#143747',
-    ink: '#F0F8FC',
-    mutedInk: '#B8D3DF',
-    accent: '#10A9B6',
-    accentInk: '#08141F',
-    signal: '#E89B24',
-    line: '#577482',
-    focus: '#E89B24',
-    displayTreatment: 'technical',
-    radiusMode: 'square',
-    motifDensity: 'dense',
-    sceneTreatment: 'route-field',
-  })
-  assert.equal(logisticsSupplyChainDefinition.locales.en.hero.worldLabel, 'Flow Control')
-  assert.equal(logisticsSupplyChainDefinition.locales.ar.hero.worldLabel, 'ضبط التدفق')
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.en.hero.h1,
-    'See every handoff from order to proof of delivery.',
-  )
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.ar.hero.h1,
-    'رؤية أوضح لكل خطوة من الطلب إلى إثبات التسليم.',
-  )
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.en.hero.primaryCta.label,
-    'Map your flow and exceptions',
-  )
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.ar.hero.primaryCta.label,
-    'لنرسم تدفق العمليات والاستثناءات لديكم',
-  )
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.en.seo.title,
-    'Logistics Systems for Order-to-Delivery Visibility',
-  )
-  assert.equal(
-    logisticsSupplyChainDefinition.locales.ar.seo.title,
-    'أنظمة لوجستية من الطلب إلى إثبات التسليم',
-  )
+  assert.equal(logisticsSupplyChainDefinition.publicationStatus, 'published')
 
-  const expectedSectionIds = [
-    'operating-route',
-    'exception-control',
-    'exception-owners',
-    'flow-system',
-    'logistics-service-paths',
-    'integration-boundaries',
-    'regional-flow-delivery',
-    'logistics-faq',
-    'logistics-consultation',
-  ]
   for (const locale of ['en', 'ar'] as const) {
     const page = logisticsSupplyChainDefinition.locales[locale]
-    assert.deepEqual(
-      page.sections.map((section) => section.id),
-      expectedSectionIds,
-    )
     const copy = JSON.stringify(page)
+    // House style: no unqualified latency promises, no fabricated metrics.
     assert.doesNotMatch(copy, /real-time/iu)
     assert.doesNotMatch(copy, /\b\d+\s*(?:minutes?|mins?|%)/iu)
     const faq = page.sections.find((section) => section.type === 'faq')
     assert.ok(faq)
-    assert.equal(faq.items.length, 5)
+    assert.ok(faq.items.length >= 4)
   }
-  assert.equal(
-    rhythmFingerprint(logisticsSupplyChainDefinition),
-    logisticsFingerprint,
-  )
-
-  const serviceBridge = logisticsSupplyChainDefinition.locales.en.sections.find(
-    (section) => section.type === 'service-bridge',
-  )
-  assert.ok(serviceBridge)
-  assert.deepEqual(serviceBridge.serviceIds, [
-    'business-systems-development',
-    'web-applications',
-    'website-development',
-    'ecommerce-development',
-  ])
-  assert.deepEqual(serviceBridge.relatedIndustryIds, [
-    'ecommerce-retail',
-    'retail',
-  ])
 
   assertSemanticAnswersOnce(logisticsSupplyChainDefinition)
   assert.deepEqual(
@@ -274,103 +181,23 @@ test('Logistics Flow Control is a complete bilingual draft world', () => {
   )
 })
 
-test('Restaurants Service Rhythm is a complete bilingual draft world', () => {
+test('Restaurants is a complete bilingual published world', () => {
   assert.equal(restaurantsDefinition.slug, 'restaurants')
-  assert.equal(restaurantsDefinition.world.id, 'service-rhythm')
-  assert.deepEqual(restaurantsDefinition.world.theme, {
-    canvas: '#161616',
-    surface: '#211D19',
-    elevatedSurface: '#2E2720',
-    ink: '#FFF6E3',
-    mutedInk: '#D5C9B3',
-    accent: '#E89A13',
-    accentInk: '#161616',
-    signal: '#D94736',
-    line: '#756B5C',
-    focus: '#E89A13',
-    displayTreatment: 'editorial',
-    radiusMode: 'cut',
-    motifDensity: 'medium',
-    sceneTreatment: 'service-pass',
-  })
-  assert.equal(restaurantsDefinition.locales.en.hero.worldLabel, 'Service Rhythm')
-  assert.equal(restaurantsDefinition.locales.ar.hero.worldLabel, 'إيقاع الخدمة')
-  assert.equal(
-    restaurantsDefinition.locales.en.hero.h1,
-    'Give every order a smoother rhythm.',
-  )
-  assert.equal(
-    restaurantsDefinition.locales.ar.hero.h1,
-    'امنح كل طلب إيقاعاً أكثر سلاسة.',
-  )
-  assert.equal(
-    restaurantsDefinition.locales.en.hero.primaryCta.label,
-    'Tune your service journey',
-  )
-  assert.equal(
-    restaurantsDefinition.locales.ar.hero.primaryCta.label,
-    'اضبطوا إيقاع تجربة ضيوفكم',
-  )
-  assert.equal(
-    restaurantsDefinition.locales.en.seo.title,
-    'Restaurant Digital Systems for Every Order',
-  )
-  assert.equal(
-    restaurantsDefinition.locales.ar.seo.title,
-    'أنظمة رقمية للمطاعم ولكل طلب',
-  )
+  assert.equal(restaurantsDefinition.publicationStatus, 'published')
 
-  const expectedSectionIds = [
-    'menu-appetite',
-    'the-pass',
-    'timing-branch-pressure',
-    'restaurant-system',
-    'restaurant-service-paths',
-    'operator-owned-boundaries',
-    'regional-guest-delivery',
-    'restaurants-faq',
-    'restaurants-consultation',
-  ]
   for (const locale of ['en', 'ar'] as const) {
     const page = restaurantsDefinition.locales[locale]
-    assert.deepEqual(
-      page.sections.map((section) => section.id),
-      expectedSectionIds,
-    )
     const copy = JSON.stringify(page)
     assert.doesNotMatch(copy, /\b\d+\s*(?:minutes?|mins?|%)/iu)
     assert.doesNotMatch(copy, /\b(?:instant|real-time)\b/iu)
     const faq = page.sections.find((section) => section.type === 'faq')
     assert.ok(faq)
-    assert.equal(faq.items.length, 5)
+    assert.ok(faq.items.length >= 4)
   }
-  assert.equal(rhythmFingerprint(restaurantsDefinition), restaurantsFingerprint)
-
-  const serviceBridge = restaurantsDefinition.locales.en.sections.find(
-    (section) => section.type === 'service-bridge',
-  )
-  assert.ok(serviceBridge)
-  assert.deepEqual(serviceBridge.serviceIds, [
-    'restaurant-qr-menu',
-    'website-development',
-    'ecommerce-development',
-    'social-media-marketing',
-  ])
-  assert.deepEqual(serviceBridge.relatedIndustryIds, [
-    'retail',
-    'travel-hospitality',
-  ])
 
   assertSemanticAnswersOnce(restaurantsDefinition)
   assert.deepEqual(
     validateIndustryPageDefinition(restaurantsDefinition, { mode: 'draft' }),
-    { ok: true, errors: [] },
-  )
-})
-
-test('the three Release A pilots form a unique draft registry', () => {
-  assert.deepEqual(
-    validateIndustryPageRegistry(releaseADraftRegistry, { mode: 'draft' }),
     { ok: true, errors: [] },
   )
 })

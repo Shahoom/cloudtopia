@@ -91,6 +91,24 @@ const nextConfig = {
     ]
   },
 
+  // `retail` and `ecommerce-retail` are one Industry World. Keep a single
+  // canonical URL (ecommerce-retail) and permanently redirect the merged slug
+  // in both locales so the pair never competes as duplicate content.
+  async redirects() {
+    return [
+      {
+        source: '/industries/retail',
+        destination: '/industries/ecommerce-retail',
+        permanent: true,
+      },
+      {
+        source: '/ar/industries/retail',
+        destination: '/ar/industries/ecommerce-retail',
+        permanent: true,
+      },
+    ]
+  },
+
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

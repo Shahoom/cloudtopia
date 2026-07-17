@@ -329,15 +329,15 @@ export const fintechDefinition = {
               label: 'Bilingual financial content and disclosures',
             },
           ],
-          relatedIndustryIds: ['ecommerce-retail', 'professional-services'],
+          relatedIndustryIds: ['professional-services', 'government-public-sector'],
           industryAnchors: [
-            {
-              industryId: 'ecommerce-retail',
-              label: 'Explore commerce and checkout systems',
-            },
             {
               industryId: 'professional-services',
               label: 'Explore expertise and advisory platforms',
+            },
+            {
+              industryId: 'government-public-sector',
+              label: 'Explore regulated public service platforms',
             },
           ],
         },
@@ -742,15 +742,15 @@ export const fintechDefinition = {
               label: 'محتوى مالي وإفصاحات ثنائية اللغة',
             },
           ],
-          relatedIndustryIds: ['ecommerce-retail', 'professional-services'],
+          relatedIndustryIds: ['professional-services', 'government-public-sector'],
           industryAnchors: [
-            {
-              industryId: 'ecommerce-retail',
-              label: 'استكشفوا أنظمة التجارة والدفع',
-            },
             {
               industryId: 'professional-services',
               label: 'استكشفوا منصات الخبرة والاستشارة',
+            },
+            {
+              industryId: 'government-public-sector',
+              label: 'استكشفوا منصات الخدمات العامة المنظَّمة',
             },
           ],
         },

@@ -47,6 +47,46 @@ const WORLD_COMPONENTS: Partial<
     import('@/components/industry/fintech/FintechIndustryPage').then(
       (m) => m.FintechIndustryPage,
     ),
+  construction: () =>
+    import('@/components/industry/construction/ConstructionIndustryPage').then(
+      (m) => m.ConstructionIndustryPage,
+    ),
+  'ecommerce-retail': () =>
+    import(
+      '@/components/industry/ecommerce-retail/EcommerceRetailIndustryPage'
+    ).then((m) => m.EcommerceRetailIndustryPage),
+  education: () =>
+    import('@/components/industry/education/EducationIndustryPage').then(
+      (m) => m.EducationIndustryPage,
+    ),
+  'government-public-sector': () =>
+    import(
+      '@/components/industry/government-public-sector/GovernmentPublicSectorIndustryPage'
+    ).then((m) => m.GovernmentPublicSectorIndustryPage),
+  'legal-firms': () =>
+    import('@/components/industry/legal-firms/LegalFirmsIndustryPage').then(
+      (m) => m.LegalFirmsIndustryPage,
+    ),
+  'logistics-supply-chain': () =>
+    import(
+      '@/components/industry/logistics-supply-chain/LogisticsSupplyChainIndustryPage'
+    ).then((m) => m.LogisticsSupplyChainIndustryPage),
+  'professional-services': () =>
+    import(
+      '@/components/industry/professional-services/ProfessionalServicesIndustryPage'
+    ).then((m) => m.ProfessionalServicesIndustryPage),
+  'real-estate': () =>
+    import('@/components/industry/real-estate/RealEstateIndustryPage').then(
+      (m) => m.RealEstateIndustryPage,
+    ),
+  restaurants: () =>
+    import('@/components/industry/restaurants/RestaurantsIndustryPage').then(
+      (m) => m.RestaurantsIndustryPage,
+    ),
+  'travel-hospitality': () =>
+    import(
+      '@/components/industry/travel-hospitality/TravelHospitalityIndustryPage'
+    ).then((m) => m.TravelHospitalityIndustryPage),
 }
 
 export const dynamicParams = false

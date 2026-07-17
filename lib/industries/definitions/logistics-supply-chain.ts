@@ -1,48 +1,60 @@
-import { isolateLtrToken } from '@/lib/industries/text'
 import type { IndustryPageDefinition } from '@/lib/industries/types'
 
-const arabicTokens = {
-  api: isolateLtrToken('API'),
-  sla: isolateLtrToken('SLA'),
-  tms: isolateLtrToken('TMS'),
-  wms: isolateLtrToken('WMS'),
-}
-
+/**
+ * Hand-authored Logistics & Supply-Chain "Industry World".
+ *
+ * The visible page (components/industry/logistics-supply-chain/
+ * LogisticsSupplyChainIndustryPage.tsx) ports the Logistick template look and
+ * signature animations while presenting CloudTopia's expertise BUILDING
+ * logistics systems: order/inventory, warehouse (WMS), transport (TMS), fleet
+ * and route optimization, shipment tracking & visibility, and control-tower
+ * dashboards. This definition drives the hero, the service-bridge link cards,
+ * the FAQ, and the JSON-LD / markdown / SEO surfaces. Every other ported visual
+ * section pulls its microcopy from logistics-supply-chain-content.ts.
+ *
+ * Framing rule: CloudTopia ENGINEERS the software that plans, records, and
+ * shows freight, inventory, and fleets. It is NOT a carrier, broker, or customs
+ * authority. Physical operations, carrier contracts, customs clearance, and
+ * regulatory approval remain with the operator and its authorized owners; the
+ * systems SUPPORT those owned processes, they never perform or certify them.
+ */
 export const logisticsSupplyChainDefinition = {
   slug: 'logistics-supply-chain',
-  contentVersion: 'release-a-draft-1',
-  updatedAt: '2026-07-16',
+  contentVersion: 'logistics-logistick-published-1',
+  publicationStatus: 'published',
+  updatedAt: '2026-07-17',
   world: {
-    id: 'flow-control',
+    id: 'control-tower',
     theme: {
-      canvas: '#08141F',
-      surface: '#0E2735',
-      elevatedSurface: '#143747',
-      ink: '#F0F8FC',
-      mutedInk: '#B8D3DF',
-      accent: '#10A9B6',
-      accentInk: '#08141F',
-      signal: '#E89B24',
-      line: '#577482',
-      focus: '#E89B24',
+      // Derived from the Logistick palette: vivid logistics red accent
+      // (#df1118) over a near-black navy-teal ink (#032330) on light neutrals.
+      canvas: '#F9FAFA',
+      surface: '#FFFFFF',
+      elevatedSurface: '#EEEFF1',
+      ink: '#032330',
+      mutedInk: '#586069',
+      accent: '#DF1118',
+      accentInk: '#FFFFFF',
+      signal: '#032330',
+      line: '#DFE2E6',
+      focus: '#DF1118',
       displayTreatment: 'technical',
-      radiusMode: 'square',
-      motifDensity: 'dense',
+      radiusMode: 'soft',
+      motifDensity: 'medium',
       sceneTreatment: 'route-field',
     },
     heroScene: 'logistics-flow',
     heroTreatment: 'route-field',
     signatureComposition: {
-      id: 'exception-control',
+      id: 'control-tower-view',
       name: {
-        en: 'Exception control',
-        ar: 'ضبط الاستثناءات',
+        en: 'Control-tower view',
+        ar: 'رؤية برج التحكم',
       },
       sectionIds: [
-        'operating-route',
-        'exception-control',
-        'exception-owners',
-        'flow-system',
+        'logistics-visibility-lanes',
+        'logistics-shipment-journey',
+        'logistics-platform-system',
       ],
     },
   },
@@ -67,414 +79,412 @@ export const logisticsSupplyChainDefinition = {
   locales: {
     en: {
       seo: {
-        title: 'Logistics Systems for Order-to-Delivery Visibility',
+        title: 'Logistics & Supply-Chain Systems — TMS, WMS, Tracking & Control Towers',
         description:
-          'Design connected logistics workflows for order validation, warehouse handoffs, dispatch, delivery proof, and operator-owned exception recovery.',
+          'CloudTopia engineers bilingual logistics and supply-chain systems: order and inventory, warehouse (WMS) and transport (TMS) management, fleet and route optimization, shipment tracking and visibility, and control-tower dashboards.',
       },
       breadcrumbLabel: 'Logistics & Supply Chain',
       hero: {
-        worldLabel: 'Flow Control',
-        eyebrow: 'Logistics operating systems',
-        h1: 'See every handoff from order to proof of delivery.',
+        worldLabel: 'Control Tower',
+        eyebrow: 'Supply-chain product systems',
+        h1: 'We engineer the software that moves your freight, inventory, and fleets.',
         intro:
-          'A shared operating route makes order state, responsible owner, exception path, and delivery evidence easier to follow across commercial, warehouse, dispatch, and service teams.',
+          'CloudTopia designs and builds bilingual logistics systems—order and inventory, warehouse and transport management, fleet and route optimization, shipment tracking and visibility, and control-tower dashboards—so every shipment, exception, and handoff stays visible from order to proof of delivery.',
         primaryCta: {
-          label: 'Map your flow and exceptions',
+          label: 'Map your order-to-delivery flow',
           href: '/api/whatsapp?locale=en',
         },
         secondaryCta: {
-          label: 'Explore business systems development',
+          label: 'Explore logistics system paths',
           serviceId: 'business-systems-development',
         },
         sceneSummary:
-          'The main order route stays visible while exceptions branch to a named owner and return through an agreed recovery decision.',
+          'Orders, inventory, shipments, fleet events, and exceptions stay visible on one reconciled control-tower rail.',
         sceneStages: [
-          { id: 'order', label: 'Order received', state: 'Commercial' },
-          { id: 'validation', label: 'Order validated', state: 'Control' },
-          { id: 'warehouse', label: 'Warehouse handoff', state: 'Warehouse' },
-          { id: 'dispatch', label: 'Dispatch release', state: 'Dispatch' },
-          { id: 'route', label: 'Delivery route', state: 'Transport' },
-          { id: 'exception', label: 'Exception review', state: 'Owner' },
-          { id: 'delivery', label: 'Delivery outcome', state: 'Recipient' },
-          { id: 'proof', label: 'Proof recorded', state: 'Evidence' },
+          { id: 'order', label: 'Order captured', state: 'Recorded' },
+          { id: 'inventory', label: 'Inventory allocated', state: 'Reserved' },
+          { id: 'dispatch', label: 'Dispatch & route', state: 'Planned' },
+          { id: 'transit', label: 'In transit', state: 'Tracked' },
+          { id: 'delivery', label: 'Proof of delivery', state: 'Confirmed' },
         ],
       },
       sections: [
         {
-          id: 'operating-route',
-          type: 'journey-map',
-          variant: 'linear-route',
-          answers: ['journey'],
-          eyebrow: 'Order to proof',
-          title: 'The operating route should show who owns the next handoff.',
+          id: 'logistics-operating-pressure',
+          type: 'pressure-field',
+          variant: 'split-signal',
+          answers: ['operating-pressure'],
+          eyebrow: 'Where the chain breaks',
+          title: 'A supply chain is only as reliable as its least visible handoff.',
           intro:
-            'Each stage accepts a defined input, records an operating state, and passes responsibility to the next role without hiding exceptions inside a generic status.',
-          stages: [
+            'Every order crosses systems, partners, and warehouses that rarely share one record, so the moment a shipment stalls, the team loses the thread of where it is, who owns it, and what to do next.',
+          signals: [
             {
-              id: 'order',
-              label: 'Receive the order',
+              id: 'visibility-gap',
+              label: 'Visibility ends where the next system begins',
               description:
-                'The commercial source supplies the agreed customer, item, destination, and service details.',
-              actor: 'Order channel',
+                'Orders, warehouse moves, carrier scans, and delivery events are often stitched across disconnected tools, so no one view answers "where is it, and is it on time?"',
             },
             {
-              id: 'validation',
-              label: 'Validate the operating request',
+              id: 'inventory-truth',
+              label: 'Inventory needs one reconciled truth',
               description:
-                'Rules and an assigned operator identify missing, conflicting, or unsupported order details before release.',
-              actor: 'Order control',
+                'Stock, allocations, and in-transit units only hold up when every movement is recorded once, reconciled against the physical count, and traceable to an owner and a location.',
             },
             {
-              id: 'warehouse',
-              label: 'Hand over to warehouse work',
+              id: 'exception-cost',
+              label: 'Exceptions decide the real service level',
               description:
-                'The approved request becomes a warehouse task under the inventory and fulfillment process in use.',
-              actor: 'Warehouse team',
-            },
-            {
-              id: 'dispatch',
-              label: 'Release the dispatch handoff',
-              description:
-                'Prepared work is assigned to the agreed dispatch route with recipient and destination context.',
-              actor: 'Dispatch team',
-            },
-            {
-              id: 'route',
-              label: 'Carry the delivery route',
-              description:
-                'The transport process reports the states its provider and operating model make available.',
-              actor: 'Fleet or carrier',
-            },
-            {
-              id: 'delivery',
-              label: 'Record the delivery outcome',
-              description:
-                'The operator records the available completion, retry, refusal, or exception outcome.',
-              actor: 'Delivery operator',
-            },
-            {
-              id: 'proof',
-              label: 'Attach the approved proof',
-              description:
-                'The agreed evidence is associated with the order and made available to authorized operational roles.',
-              actor: 'Operations control',
+                'Delays, failed deliveries, short-shipments, and returns need named queues, evidence, and a documented path back to the plan—not a spreadsheet and a phone call.',
             },
           ],
         },
         {
-          id: 'exception-control',
+          id: 'logistics-shipment-journey',
           type: 'journey-map',
-          variant: 'exception-lane',
-          answers: ['operating-pressure'],
-          eyebrow: 'Control the break in flow',
-          title: 'An exception needs an owner, a decision, and a route back.',
+          variant: 'linear-route',
+          answers: ['journey'],
+          eyebrow: 'From order to proof of delivery',
+          title: 'One reconciled path from order to delivery and reconciliation.',
           intro:
-            'Stock, address, and delivery-proof issues become manageable work when they enter a visible queue with operator-defined priority and recovery rules.',
+            'The system carries a shipment through an understandable operational sequence while keeping inventory, ownership, and every status change inside recorded, traceable states.',
           stages: [
             {
-              id: 'detect',
-              label: 'Detect the exception',
-              description: 'A rule or operator records the issue against the affected order and stage.',
-              actor: 'System or operator',
+              id: 'order',
+              label: 'Capture the order',
+              description:
+                'Orders arrive from channels or partners and are recorded once, validated against inventory and service rules the operator owns.',
+              actor: 'Customer and order system',
             },
             {
-              id: 'classify',
-              label: 'Classify the operating impact',
-              description: 'The issue is grouped by the decision and owner it requires.',
-              actor: 'Control team',
+              id: 'allocate',
+              label: 'Allocate inventory',
+              description:
+                'Stock is reserved against a location and reconciled with the warehouse count, so promised units and physical units stay in agreement.',
+              actor: 'Inventory and warehouse owners',
             },
             {
-              id: 'assign',
-              label: 'Assign the responsible owner',
-              description: 'A named role accepts the item under the operator-defined service window.',
-              actor: 'Exception owner',
+              id: 'fulfil',
+              label: 'Pick, pack, and dispatch',
+              description:
+                'Warehouse tasks and carrier selection produce a labeled, manifested shipment with a single authoritative record and an owner.',
+              actor: 'Warehouse and dispatch team',
             },
             {
-              id: 'communicate',
-              label: 'Coordinate the affected parties',
-              description: 'The approved message and next action reach the relevant internal or customer-facing role.',
-              actor: 'Service team',
+              id: 'transit',
+              label: 'Track in transit',
+              description:
+                'Carrier scans, fleet telemetry, and milestone events update one shipment record, reflected consistently to every operator and customer view.',
+              actor: 'Carriers, fleet, and tracking system',
             },
             {
-              id: 'recover',
-              label: 'Return or close the route',
-              description: 'The owner records the recovery decision and either rejoins the main flow or closes the exception.',
-              actor: 'Exception owner',
+              id: 'deliver',
+              label: 'Confirm delivery',
+              description:
+                'Proof of delivery, signatures, or exceptions are captured and reconciled against the plan, closing the shipment or opening a named exception.',
+              actor: 'Driver and delivery system',
+            },
+            {
+              id: 'reconcile',
+              label: 'Reconcile and review',
+              description:
+                'Costs, performance, and returns are reconciled so authorized reviewers can follow what happened, when, and against which service commitment.',
+              actor: 'Operations and finance reviewers',
+            },
+          ],
+        },
+        {
+          id: 'logistics-visibility-lanes',
+          type: 'journey-map',
+          variant: 'dual-lane',
+          answers: [],
+          eyebrow: 'Signature composition',
+          title: 'Control appears where the physical lane meets the data lane.',
+          intro:
+            'The operation is modeled as two coordinated lanes: what physically moves through the network, and the record, ownership, and controls the operator must hold behind every visible movement.',
+          stages: [
+            {
+              id: 'order',
+              label: 'Order intake',
+              description: 'A physical demand becomes one recorded order with a validated promise the operator can keep.',
+              actor: 'Customer and order system',
+            },
+            {
+              id: 'allocate',
+              label: 'Inventory allocation',
+              description: 'The physical count and the reserved record stay reconciled to one location and owner.',
+              actor: 'Inventory and warehouse owners',
+            },
+            {
+              id: 'dispatch',
+              label: 'Dispatch decision',
+              description: 'Both lanes share one shipment state, with the carrier and route the operator selected.',
+              actor: 'Dispatch and planning owners',
+            },
+            {
+              id: 'transit',
+              label: 'Transit record',
+              description: 'Scans and telemetry keep the moving unit and the tracked record in agreement.',
+              actor: 'Carriers, fleet, and tracking system',
+            },
+            {
+              id: 'exception',
+              label: 'Exception ownership',
+              description: 'A named queue holds the evidence and the documented return path to the plan.',
+              actor: 'Operations and support team',
+            },
+            {
+              id: 'audit',
+              label: 'Reconciliation trail',
+              description: 'The customer sees the outcome; the operator keeps the traceable, reviewable record.',
+              actor: 'Authorized reviewers',
             },
           ],
           lanes: [
             {
-              id: 'main-route',
-              label: 'Main operating route',
-              stageIds: ['detect', 'classify', 'recover'],
+              id: 'physical-lane',
+              label: 'Physical movement lane',
+              stageIds: ['order', 'allocate', 'dispatch', 'transit', 'exception'],
             },
             {
-              id: 'exception-route',
-              label: 'Exception ownership route',
-              stageIds: ['classify', 'assign', 'communicate', 'recover'],
+              id: 'data-lane',
+              label: 'Data and control lane',
+              stageIds: ['allocate', 'dispatch', 'transit', 'exception', 'audit'],
             },
           ],
         },
         {
-          id: 'exception-owners',
-          type: 'constraints',
-          variant: 'owner-register',
-          answers: ['evidence-and-constraints'],
-          eyebrow: 'Operating evidence',
-          title: 'Exception control begins with an owner register.',
-          intro:
-            'This is a proposed responsibility model, not a claim about carrier performance. Every service window and escalation rule is defined by the operator.',
-          items: [
-            {
-              id: 'stock-owner',
-              label: 'Stock exception owner',
-              responsibility:
-                'Confirm the available stock decision, substitute, split, hold, or cancellation route allowed by the business.',
-              dependency: 'Warehouse source data and an operator-defined SLA.',
-              recovery: 'Return the order to validation with the approved stock decision.',
-            },
-            {
-              id: 'address-owner',
-              label: 'Address exception owner',
-              responsibility:
-                'Coordinate the customer-facing correction route and confirm the destination change before release.',
-              dependency: 'An approved contact method and an operator-defined SLA.',
-              recovery: 'Resume dispatch only after the corrected destination is accepted by the responsible role.',
-            },
-            {
-              id: 'proof-owner',
-              label: 'Proof exception owner',
-              responsibility:
-                'Review missing or disputed evidence and select the allowed follow-up route.',
-              dependency: 'Provider evidence fields, access rules, and an operator-defined SLA.',
-              recovery: 'Record the review outcome and reopen the delivery task when required.',
-            },
-            {
-              id: 'communication-owner',
-              label: 'Customer communication owner',
-              responsibility:
-                'Approve the message, channel, and timing used when an operating exception affects the customer.',
-              dependency: 'A named service owner and approved message library.',
-              recovery: 'Escalate wording or route decisions before sending an unsupported promise.',
-            },
-          ],
-        },
-        {
-          id: 'flow-system',
+          id: 'logistics-platform-system',
           type: 'system-blueprint',
-          variant: 'constellation',
+          variant: 'stacked-layers',
           answers: ['buildable-system'],
-          eyebrow: 'A connected control plane',
-          title: 'The system connects events without pretending every source is the same.',
+          eyebrow: 'A buildable boundary',
+          title: 'A logistics platform is a connected set of owned layers.',
           intro:
-            'A buildable scope links order, warehouse, dispatch, exception, and proof responsibilities through bounded interfaces and shared operating identifiers.',
+            'Scope can start with one flow—one warehouse, one lane, one carrier—but every layer needs approved inputs, a named handoff, and an outcome the operator can reconcile and review.',
           layers: [
             {
-              id: 'order-visibility',
-              label: 'Order visibility',
-              description: 'A shared order identity holds the commercial request and its current accepted state.',
-              inputs: ['Order identifier', 'Customer and destination data', 'Requested service'],
-              handoff: 'A validated operating request',
-              outcome: 'A visible source and next responsibility',
+              id: 'order-inventory',
+              label: 'Order & inventory layer',
+              description:
+                'Order capture, allocation, and inventory records keep promised, physical, and in-transit units reconciled across channels and locations.',
+              inputs: ['Order channels and rules', 'Inventory and location model', 'Reconciliation counts'],
+              handoff: 'A validated order with reserved stock',
+              outcome: 'Promised and physical units that agree',
             },
             {
-              id: 'warehouse-events',
-              label: 'Warehouse events',
-              description: 'Available warehouse states are associated with the order without replacing the warehouse source.',
-              inputs: ['Warehouse task states', 'Item decisions', 'Operator notes'],
-              handoff: 'A releasable or exception-marked fulfillment state',
-              outcome: 'A clear dispatch readiness decision',
+              id: 'warehouse-transport',
+              label: 'Warehouse (WMS) & transport (TMS) layer',
+              description:
+                'Pick, pack, dispatch, carrier selection, and route planning turn an order into a manifested shipment with a single authoritative record.',
+              inputs: ['Warehouse task model', 'Carrier and rate rules', 'Route and service constraints'],
+              handoff: 'A labeled, manifested shipment',
+              outcome: 'A dispatch decision an owner can defend',
             },
             {
-              id: 'dispatch-handoff',
-              label: 'Dispatch handoff',
-              description: 'Assignment and route context move to the responsible transport process.',
-              inputs: ['Prepared work', 'Destination context', 'Provider assignment fields'],
-              handoff: 'An accepted dispatch task',
-              outcome: 'A traceable transport responsibility',
+              id: 'tracking-visibility',
+              label: 'Tracking & visibility layer',
+              description:
+                'Carrier scans, fleet telemetry, and milestone events feed one shipment timeline and a control-tower view of exceptions and SLAs.',
+              inputs: ['Carrier and telematics feeds', 'Milestone and status model', 'SLA and alert rules'],
+              handoff: 'One reconciled shipment status',
+              outcome: 'A control-tower view a team can act on',
             },
             {
-              id: 'exception-queue',
-              label: 'Exception queue',
-              description: 'Issues are classified, assigned, and returned through an explicit recovery decision.',
-              inputs: ['Exception type', 'Affected stage', 'Owner and priority rule'],
-              handoff: 'An owned exception work item',
-              outcome: 'A recorded recovery or closure decision',
-            },
-            {
-              id: 'proof-reporting',
-              label: 'Proof and status reporting',
-              description: 'Approved evidence and route outcomes support customer service and operational review.',
-              inputs: ['Delivery outcome', 'Available evidence', 'Review permissions'],
-              handoff: 'An authorized status view',
-              outcome: 'A reviewable order-to-proof record',
+              id: 'integration-observability',
+              label: 'Integration & observability layer',
+              description:
+                'EDI, APIs, provider integrations, monitoring, and audit trails keep the platform connected and verifiable within agreed limits.',
+              inputs: ['Approved partner interfaces', 'Access and data policy', 'Monitoring and alert rules'],
+              handoff: 'A bounded, observed data exchange',
+              outcome: 'A connected platform that stays inside its controls',
             },
           ],
         },
         {
           id: 'logistics-service-paths',
           type: 'service-bridge',
-          variant: 'route-links',
+          variant: 'capability-stack',
           answers: [],
-          eyebrow: 'Implementation routes',
-          title: 'Build the operating route with the right system boundaries.',
+          eyebrow: 'Paths to implementation',
+          title: 'Choose the build paths that assemble the platform.',
           intro:
-            'The capability mix follows the source systems, people, provider interfaces, and exception decisions already present in the operation.',
+            'The final combination depends on the flow you prioritize, the carriers, warehouses, and systems you already use, and the smallest complete, reconcilable handoff worth building first.',
           serviceIds: [
             'business-systems-development',
             'web-applications',
-            'website-development',
             'ecommerce-development',
+            'website-development',
           ],
           serviceAnchors: [
             {
               serviceId: 'business-systems-development',
-              label: 'Logistics business systems',
+              label: 'WMS, TMS, and control-tower operations systems',
             },
             {
               serviceId: 'web-applications',
-              label: 'Operational web applications',
-            },
-            {
-              serviceId: 'website-development',
-              label: 'Customer-facing logistics websites',
+              label: 'Logistics web applications and partner portals',
             },
             {
               serviceId: 'ecommerce-development',
-              label: 'Order and fulfillment commerce connections',
+              label: 'Merchant checkout, order intake, and fulfillment integrations',
+            },
+            {
+              serviceId: 'website-development',
+              label: 'Logistics product and tracking websites',
             },
           ],
           relatedIndustryIds: ['ecommerce-retail', 'retail'],
           industryAnchors: [
             {
               industryId: 'ecommerce-retail',
-              label: 'Explore online order and fulfillment journeys',
+              label: 'Explore commerce and fulfilment systems',
             },
             {
               industryId: 'retail',
-              label: 'Explore branch, stock, and retail operations',
+              label: 'Explore retail and inventory systems',
             },
           ],
         },
         {
-          id: 'integration-boundaries',
+          id: 'logistics-boundaries',
           type: 'constraints',
           variant: 'boundary-map',
-          answers: [],
-          eyebrow: 'Integration boundaries',
-          title: 'Source systems and providers define what can be connected.',
+          answers: ['evidence-and-constraints'],
+          eyebrow: 'Evidence and responsibility',
+          title: 'The design makes operational boundaries explicit.',
           intro:
-            'Warehouse, transport, fleet, and commercial systems remain responsible for the data and capabilities they expose. The workflow must preserve a manual route when an interface is unavailable.',
+            'This page describes a proposed engineering model, not a carrier service, a customs authorization, or a compliance certification. Physical operations, carrier contracts, customs clearance, and regulatory approval remain with the operator and its authorized owners.',
           items: [
             {
-              id: 'wms-boundary',
-              label: 'WMS boundary',
-              responsibility: 'The warehouse owner confirms available task, stock, and completion states.',
-              dependency: 'Current WMS documentation and approved access.',
-              recovery: 'Keep warehouse confirmation in the existing process until the interface is approved.',
+              id: 'operations-boundary',
+              label: 'We build the system, not the fleet',
+              responsibility:
+                'CloudTopia engineers the software that plans, records, and shows the operation; the physical fleet, warehouse labor, and carrier relationships remain owned and operated by you.',
+              dependency: 'A named operations owner and the process the system must support.',
+              recovery: 'Hold the affected step behind a manual process until the operational owner confirms it.',
             },
             {
-              id: 'tms-boundary',
-              label: 'TMS and fleet boundary',
-              responsibility: 'The transport owner confirms assignment, route, and delivery states that can be shared.',
-              dependency: 'Provider capability and TMS access decisions.',
-              recovery: 'Use the agreed dispatch and status-entry path when provider data is unavailable.',
+              id: 'carrier-dependencies',
+              label: 'Carrier and telematics dependencies',
+              responsibility:
+                'Tracking, rating, and label integrations depend on validated carrier access, telematics feeds, contracts, and market availability confirmed by you.',
+              dependency: 'Confirmed carrier and device documentation, credentials, and coverage.',
+              recovery: 'Keep the step behind a manual or sandboxed path until provider access is validated.',
             },
             {
-              id: 'api-boundary',
-              label: 'API contract boundary',
-              responsibility: 'System owners approve fields, authentication, error handling, and change ownership.',
-              dependency: 'An active API contract and responsible technical contacts.',
-              recovery: 'Queue or return the work item without presenting an unconfirmed state.',
+              id: 'customs-compliance',
+              label: 'Customs and regulatory boundary',
+              responsibility:
+                'The platform can prepare documents and records, but customs clearance, licensing, and regulatory decisions are owned by authorities and your compliance team.',
+              dependency: 'Approved document requirements and a named compliance owner.',
+              recovery: 'Route unclear cases to a human owner instead of presenting an unowned automated decision.',
             },
             {
-              id: 'source-quality',
-              label: 'Source-data quality',
-              responsibility: 'Operational owners define how incomplete or conflicting source data is reviewed.',
-              dependency: 'Data ownership and exception classification rules.',
-              recovery: 'Route the item to a named owner before releasing the next handoff.',
+              id: 'data-ownership',
+              label: 'Order, shipment, and location records',
+              responsibility:
+                'Every operational record needs explicit ownership, retention, and access rules defined and approved before it is captured.',
+              dependency: 'An approved data-ownership, retention, and access map.',
+              recovery: 'Keep the record isolated and access-restricted until its rules are confirmed.',
             },
           ],
         },
         {
-          id: 'regional-flow-delivery',
+          id: 'logistics-regional-delivery',
           type: 'regional-fit',
-          variant: 'market-path',
+          variant: 'bilingual-operations',
           answers: ['regional-delivery'],
-          eyebrow: 'Regional operations',
-          title: 'Status language and address context belong in the operating design.',
+          eyebrow: 'Built for bilingual logistics',
+          title: 'Arabic and English are operating languages, not a final translation step.',
           intro:
-            'Arabic and English labels, local address structures, customer messages, and handoff ownership are designed together so the operating meaning remains consistent.',
+            'Operator consoles, driver and warehouse apps, customer tracking, and partner messages are authored for each language while one shared, reconcilable system structure stays constant.',
           items: [
             {
-              id: 'status-language',
-              label: 'Bilingual status language',
-              description: 'Customer-facing states use understandable wording while internal states retain their precise operating meaning.',
+              id: 'bilingual-operations',
+              label: 'Native operational language',
+              description:
+                'Warehouse, dispatch, and tracking wording is written for how operators and drivers read and act in each language, not translated after the fact.',
             },
             {
-              id: 'address-context',
-              label: 'Address and destination context',
-              description: 'The route captures the fields, landmarks, zones, and contact decisions the operator actually uses.',
+              id: 'address-formats',
+              label: 'Regional addresses and routing',
+              description:
+                'Address formats, zones, and routing stay accurate and usable in right-to-left and left-to-right contexts, under a named review owner.',
             },
             {
-              id: 'handoff-ownership',
-              label: 'Regional handoff ownership',
-              description: 'Commercial, warehouse, dispatch, and service teams agree who accepts and explains each transition.',
+              id: 'market-dependencies',
+              label: 'Market-by-market dependencies',
+              description:
+                'Carriers, customs requirements, currencies, and last-mile coverage are checked per market before scope is fixed.',
             },
           ],
         },
         {
           id: 'logistics-faq',
           type: 'faq',
-          variant: 'grouped-questions',
+          variant: 'editorial-list',
           answers: [],
-          eyebrow: 'Operating questions',
-          title: 'Questions that shape a useful logistics system scope.',
+          eyebrow: 'Decision questions',
+          title: 'What logistics teams usually need to decide first.',
           intro:
-            'The best starting point is one order route, its source systems, and the exceptions that consume the most coordination.',
+            'A useful first scope is one complete, reconcilable flow—order to dispatch, or dispatch to proof of delivery—with named inventory, tracking, and operational owners.',
           items: [
             {
+              id: 'operator-role',
+              question: 'Does CloudTopia move freight or operate the fleet?',
+              answer:
+                'No. We engineer the systems that plan, record, and show your operation—order, inventory, WMS, TMS, tracking, and control-tower dashboards. The physical fleet, warehouse labor, and carrier contracts stay with you; the software supports how you already run.',
+            },
+            {
               id: 'existing-systems',
-              question: 'Can the workflow connect with our existing WMS, TMS, or commerce platform?',
-              answer: 'It can be scoped around the interfaces, fields, and access methods those systems and providers confirm. Each connection keeps a named source owner and fallback route.',
+              question: 'Can this connect to our existing WMS, ERP, or carriers?',
+              answer:
+                'It is designed around the interfaces, fields, and access your systems and carriers confirm. We map the required data, responsible systems, reconciliation source, and a manual or sandboxed fallback before committing to a live integration—via EDI or API.',
             },
             {
-              id: 'exception-priority',
-              question: 'How are exception priorities and service windows defined?',
-              answer: 'The operator defines the priority model, SLA, responsible role, escalation path, and customer communication rule. The system applies those approved decisions.',
+              id: 'realtime-tracking',
+              question: 'How does shipment tracking and visibility work?',
+              answer:
+                'Carrier scans, telematics, and milestone events feed one shipment record and a control-tower view. We define the status model, SLA rules, and alerting so exceptions surface before a customer has to ask where their order is.',
             },
             {
-              id: 'carrier-visibility',
-              question: 'Will every carrier expose the same delivery states?',
-              answer: 'No assumption is made. The design maps the states and evidence each provider makes available, then preserves a manual review path for gaps.',
+              id: 'exception-scoping',
+              question: 'How should exception handling be scoped?',
+              answer:
+                'Start with named exception types—delay, failed delivery, short-shipment, return—each with an owner, evidence requirements, and a documented path back to the plan, so nothing becomes a silent spreadsheet.',
             },
             {
-              id: 'customer-status',
-              question: 'Can customers see the same language as the operations team?',
-              answer: 'They can share one underlying state model while customer wording remains concise, bilingual, and appropriate to what the operator has confirmed.',
+              id: 'route-optimization',
+              question: 'Can you build fleet and route optimization?',
+              answer:
+                'Yes. Route planning, load, and fleet optimization are engineered around the constraints and objectives your operations team owns, with explainable results a planner can review and override, not a black box.',
             },
             {
               id: 'starting-point',
               question: 'Where should a logistics team begin?',
-              answer: 'Begin with one order-to-proof route, identify every handoff and exception owner, then select the smallest connected scope that makes those responsibilities visible.',
+              answer:
+                'Begin with one high-value flow—one lane, warehouse, or carrier—identify every handoff, record, and owner it touches, then define the smallest reconcilable system boundary that supports it end to end before expanding.',
             },
           ],
         },
         {
           id: 'logistics-consultation',
           type: 'closing-cta',
-          variant: 'split-close',
+          variant: 'framed-close',
           answers: ['decision-close'],
-          eyebrow: 'Map the operating truth',
-          title: 'Make the exception route part of the system—not an afterthought.',
-          intro: 'Bring one order flow, its source systems, and the exceptions that require the most coordination. We will shape them into a bounded system brief.',
-          decisionCopy: 'Choose one complete order-to-proof route and name the owner at every break in flow.',
+          eyebrow: 'Choose the first flow',
+          title: 'Make one reconcilable flow the starting point.',
+          intro:
+            'Bring one logistics flow, the teams, carriers, and warehouses that own it, and the systems it touches. We will turn that context into a bounded, buildable supply-chain-system brief.',
+          decisionCopy:
+            'Start with one complete, reconcilable flow rather than a list of disconnected features.',
           primary: {
-            label: 'Map your flow and exceptions',
+            label: 'Map your order-to-delivery flow',
             href: '/api/whatsapp?locale=en',
           },
           secondary: {
-            label: 'Explore business systems development',
+            label: 'Explore logistics operations systems',
             serviceId: 'business-systems-development',
           },
         },
@@ -482,403 +492,412 @@ export const logisticsSupplyChainDefinition = {
     },
     ar: {
       seo: {
-        title: 'أنظمة لوجستية من الطلب إلى إثبات التسليم',
+        title: 'أنظمة اللوجستيات وسلاسل الإمداد — إدارة النقل والمستودعات والتتبع وأبراج التحكم',
         description:
-          'صمموا سير عمل لوجستياً مترابطاً للتحقق من الطلب وتسليمات المستودع والتوزيع وإثبات التسليم ومعالجة الاستثناءات بمسؤوليات واضحة.',
+          'تهندس كلاود توبيا أنظمة لوجستيات وسلاسل إمداد ثنائية اللغة: الطلبات والمخزون، وإدارة المستودعات والنقل، وتحسين الأسطول والمسارات، وتتبع الشحنات ورؤيتها، ولوحات أبراج التحكم.',
       },
-      breadcrumbLabel: 'الخدمات اللوجستية وسلاسل الإمداد',
+      breadcrumbLabel: 'اللوجستيات وسلاسل الإمداد',
       hero: {
-        worldLabel: 'ضبط التدفق',
-        eyebrow: 'أنظمة التشغيل اللوجستية',
-        h1: 'رؤية أوضح لكل خطوة من الطلب إلى إثبات التسليم.',
+        worldLabel: 'برج التحكم',
+        eyebrow: 'أنظمة منتجات سلاسل الإمداد',
+        h1: 'نهندس البرمجيات التي تحرّك شحناتكم ومخزونكم وأساطيلكم.',
         intro:
-          'يجعل المسار التشغيلي المشترك حالة الطلب وصاحب المسؤولية ومسار الاستثناء وإثبات التسليم أوضح للفرق التجارية والمستودع والتوزيع وخدمة العملاء.',
+          'تصمم كلاود توبيا وتبني أنظمة لوجستية ثنائية اللغة—الطلبات والمخزون، وإدارة المستودعات والنقل، وتحسين الأسطول والمسارات، وتتبع الشحنات ورؤيتها، ولوحات أبراج التحكم—لتبقى كل شحنة واستثناء وتسليم مرئية من الطلب حتى إثبات التسليم.',
         primaryCta: {
-          label: 'لنرسم تدفق العمليات والاستثناءات لديكم',
+          label: 'لنرسم رحلة الطلب حتى التسليم',
           href: '/api/whatsapp?locale=ar',
         },
         secondaryCta: {
-          label: 'استكشف تطوير أنظمة الأعمال',
+          label: 'استكشفوا مسارات أنظمة اللوجستيات',
           serviceId: 'business-systems-development',
         },
         sceneSummary:
-          'يبقى مسار الطلب الرئيسي ظاهراً، بينما ينتقل الاستثناء إلى مالك محدد ويعود عبر قرار معالجة متفق عليه.',
+          'تبقى الطلبات والمخزون والشحنات وأحداث الأسطول والاستثناءات مرئية على مسار برج تحكم واحد مطابَق.',
         sceneStages: [
-          { id: 'order', label: 'استلام الطلب', state: 'تجاري' },
-          { id: 'validation', label: 'التحقق من الطلب', state: 'ضبط' },
-          { id: 'warehouse', label: 'تسليم المستودع', state: 'المستودع' },
-          { id: 'dispatch', label: 'إطلاق التوزيع', state: 'التوزيع' },
-          { id: 'route', label: 'مسار التسليم', state: 'النقل' },
-          { id: 'exception', label: 'مراجعة الاستثناء', state: 'المالك' },
-          { id: 'delivery', label: 'نتيجة التسليم', state: 'المستلم' },
-          { id: 'proof', label: 'تسجيل الإثبات', state: 'الإثبات' },
+          { id: 'order', label: 'التقاط الطلب', state: 'مسجَّل' },
+          { id: 'inventory', label: 'تخصيص المخزون', state: 'محجوز' },
+          { id: 'dispatch', label: 'الإرسال والمسار', state: 'مخطَّط' },
+          { id: 'transit', label: 'أثناء النقل', state: 'متتبَّع' },
+          { id: 'delivery', label: 'إثبات التسليم', state: 'مؤكَّد' },
         ],
       },
       sections: [
         {
-          id: 'operating-route',
-          type: 'journey-map',
-          variant: 'linear-route',
-          answers: ['journey'],
-          eyebrow: 'من الطلب إلى الإثبات',
-          title: 'يجب أن يوضح المسار التشغيلي من يملك التسليم التالي.',
+          id: 'logistics-operating-pressure',
+          type: 'pressure-field',
+          variant: 'split-signal',
+          answers: ['operating-pressure'],
+          eyebrow: 'أين تنكسر السلسلة',
+          title: 'سلسلة الإمداد بقوة أضعف تسليم غير مرئي فيها.',
           intro:
-            'تستقبل كل مرحلة مدخلاً محدداً وتسجل حالة تشغيلية وتنقل المسؤولية إلى الدور التالي، من دون إخفاء الاستثناءات داخل حالة عامة.',
-          stages: [
+            'يعبر كل طلب أنظمة وشركاء ومستودعات نادراً ما تتشارك سجلاً واحداً، فلحظة تعثّر الشحنة يفقد الفريق تتبع أين هي ومن يملكها وما الإجراء التالي.',
+          signals: [
             {
-              id: 'order',
-              label: 'استلام الطلب',
-              description: 'يوفر المصدر التجاري بيانات العميل والصنف والوجهة والخدمة المتفق عليها.',
-              actor: 'قناة الطلب',
+              id: 'visibility-gap',
+              label: 'الرؤية تنتهي حيث يبدأ النظام التالي',
+              description:
+                'كثيراً ما تتوزع الطلبات وحركات المستودع ومسح الناقل وأحداث التسليم بين أدوات منفصلة، فلا توجد واجهة واحدة تجيب: أين هي، وهل في الموعد؟',
             },
             {
-              id: 'validation',
-              label: 'التحقق من الطلب التشغيلي',
-              description: 'تكشف القواعد والمشغل المسؤول البيانات الناقصة أو المتعارضة أو غير المدعومة قبل الإطلاق.',
-              actor: 'ضبط الطلبات',
+              id: 'inventory-truth',
+              label: 'المخزون يحتاج إلى حقيقة واحدة مطابَقة',
+              description:
+                'لا تصمد المخزونات والحجوزات والوحدات قيد النقل إلا حين يُسجَّل كل حركة مرة واحدة، وتُطابَق مع الجرد الفعلي، ويمكن تتبعها إلى مالك وموقع.',
             },
             {
-              id: 'warehouse',
-              label: 'التسليم إلى عمل المستودع',
-              description: 'يتحول الطلب المعتمد إلى مهمة مستودع وفق عملية المخزون والتنفيذ المستخدمة.',
-              actor: 'فريق المستودع',
-            },
-            {
-              id: 'dispatch',
-              label: 'إطلاق تسليم التوزيع',
-              description: 'يُسند العمل المجهز إلى مسار التوزيع المتفق عليه مع سياق المستلم والوجهة.',
-              actor: 'فريق التوزيع',
-            },
-            {
-              id: 'route',
-              label: 'تنفيذ مسار التسليم',
-              description: 'تعرض عملية النقل الحالات التي يتيحها المزود ونموذج التشغيل.',
-              actor: 'الأسطول أو الناقل',
-            },
-            {
-              id: 'delivery',
-              label: 'تسجيل نتيجة التسليم',
-              description: 'يسجل المشغل نتيجة الإتمام أو إعادة المحاولة أو الرفض أو الاستثناء المتاحة.',
-              actor: 'مشغل التسليم',
-            },
-            {
-              id: 'proof',
-              label: 'إرفاق الإثبات المعتمد',
-              description: 'يرتبط الإثبات المتفق عليه بالطلب ويُتاح للأدوار التشغيلية المخولة.',
-              actor: 'ضبط العمليات',
+              id: 'exception-cost',
+              label: 'الاستثناءات هي ما يحدد مستوى الخدمة الحقيقي',
+              description:
+                'تحتاج التأخيرات والتسليمات الفاشلة والنقص في الشحن والمرتجعات إلى قوائم محددة وأدلة ومسار موثق للعودة إلى الخطة، لا إلى جدول ومكالمة هاتفية.',
             },
           ],
         },
         {
-          id: 'exception-control',
+          id: 'logistics-shipment-journey',
           type: 'journey-map',
-          variant: 'exception-lane',
-          answers: ['operating-pressure'],
-          eyebrow: 'ضبط انقطاع التدفق',
-          title: 'يحتاج الاستثناء إلى مالك وقرار ومسار للعودة.',
+          variant: 'linear-route',
+          answers: ['journey'],
+          eyebrow: 'من الطلب إلى إثبات التسليم',
+          title: 'مسار واحد مطابَق من الطلب إلى التسليم والمطابقة.',
           intro:
-            'تصبح مشكلات المخزون والعنوان وإثبات التسليم عملاً قابلاً للإدارة حين تدخل قائمة ظاهرة بأولوية وقواعد معالجة يحددها المشغل.',
+            'يحمل النظام الشحنة عبر تسلسل تشغيلي مفهوم، مع إبقاء المخزون والملكية وكل تغيّر في الحالة ضمن حالات مسجَّلة قابلة للتتبع.',
           stages: [
             {
-              id: 'detect',
-              label: 'رصد الاستثناء',
-              description: 'تسجل قاعدة أو مشغل المشكلة على الطلب والمرحلة المتأثرة.',
-              actor: 'النظام أو المشغل',
+              id: 'order',
+              label: 'التقاط الطلب',
+              description:
+                'تصل الطلبات من القنوات أو الشركاء وتُسجَّل مرة واحدة، ويُتحقق منها مقابل المخزون وقواعد الخدمة التي يملكها المشغّل.',
+              actor: 'العميل ونظام الطلبات',
             },
             {
-              id: 'classify',
-              label: 'تصنيف الأثر التشغيلي',
-              description: 'تُصنف المشكلة بحسب القرار والمالك المطلوبين.',
-              actor: 'فريق الضبط',
+              id: 'allocate',
+              label: 'تخصيص المخزون',
+              description:
+                'يُحجز المخزون مقابل موقع ويُطابَق مع جرد المستودع، لتبقى الوحدات الموعودة والفعلية متطابقة.',
+              actor: 'أصحاب المخزون والمستودع',
             },
             {
-              id: 'assign',
-              label: 'إسناد المالك المسؤول',
-              description: 'يتسلم دور محدد المهمة ضمن نافذة الخدمة التي يحددها المشغل.',
-              actor: 'مالك الاستثناء',
+              id: 'fulfil',
+              label: 'التجهيز والتغليف والإرسال',
+              description:
+                'تنتج مهام المستودع واختيار الناقل شحنة معنونة ومبيَّنة بسجل مرجعي واحد ومالك واضح.',
+              actor: 'فريق المستودع والإرسال',
             },
             {
-              id: 'communicate',
-              label: 'تنسيق الأطراف المتأثرة',
-              description: 'تصل الرسالة المعتمدة والإجراء التالي إلى الدور الداخلي أو المواجه للعميل.',
-              actor: 'فريق الخدمة',
+              id: 'transit',
+              label: 'التتبع أثناء النقل',
+              description:
+                'يحدّث مسح الناقل وقياسات الأسطول وأحداث المراحل سجل شحنة واحداً، ينعكس باتساق على كل واجهة للمشغّل والعميل.',
+              actor: 'الناقلون والأسطول ونظام التتبع',
             },
             {
-              id: 'recover',
-              label: 'إعادة المسار أو إغلاقه',
-              description: 'يسجل المالك قرار المعالجة ويعيد المهمة إلى التدفق الرئيسي أو يغلق الاستثناء.',
-              actor: 'مالك الاستثناء',
+              id: 'deliver',
+              label: 'تأكيد التسليم',
+              description:
+                'يُلتقط إثبات التسليم أو التوقيع أو الاستثناء ويُطابَق مع الخطة، فيُغلق الشحنة أو يفتح استثناءً محدداً.',
+              actor: 'السائق ونظام التسليم',
+            },
+            {
+              id: 'reconcile',
+              label: 'المطابقة والمراجعة',
+              description:
+                'تُطابَق التكاليف والأداء والمرتجعات ليتمكن المراجعون المخولون من متابعة ما حدث ومتى ومقابل أي التزام خدمة.',
+              actor: 'مراجعو التشغيل والمالية',
+            },
+          ],
+        },
+        {
+          id: 'logistics-visibility-lanes',
+          type: 'journey-map',
+          variant: 'dual-lane',
+          answers: [],
+          eyebrow: 'التكوين المميز',
+          title: 'يظهر التحكم عند التقاء المسار المادي بمسار البيانات.',
+          intro:
+            'تُنمذَج العملية كمسارين متناسقين: ما يتحرك مادياً عبر الشبكة، والسجل والملكية والضوابط التي يجب أن يحتفظ بها المشغّل خلف كل حركة ظاهرة.',
+          stages: [
+            {
+              id: 'order',
+              label: 'استقبال الطلب',
+              description: 'يتحول الطلب المادي إلى طلب مسجَّل واحد بوعد موثوق يستطيع المشغّل الوفاء به.',
+              actor: 'العميل ونظام الطلبات',
+            },
+            {
+              id: 'allocate',
+              label: 'تخصيص المخزون',
+              description: 'يبقى الجرد الفعلي والسجل المحجوز مطابَقين لموقع ومالك واحد.',
+              actor: 'أصحاب المخزون والمستودع',
+            },
+            {
+              id: 'dispatch',
+              label: 'قرار الإرسال',
+              description: 'يتشارك المساران حالة شحنة واحدة، بالناقل والمسار اللذين اختارهما المشغّل.',
+              actor: 'أصحاب الإرسال والتخطيط',
+            },
+            {
+              id: 'transit',
+              label: 'سجل النقل',
+              description: 'يحافظ المسح والقياسات على تطابق الوحدة المتحركة مع السجل المتتبَّع.',
+              actor: 'الناقلون والأسطول ونظام التتبع',
+            },
+            {
+              id: 'exception',
+              label: 'ملكية الاستثناء',
+              description: 'تحتفظ قائمة محددة بالأدلة وبمسار العودة الموثق إلى الخطة.',
+              actor: 'فريق التشغيل والدعم',
+            },
+            {
+              id: 'audit',
+              label: 'سجل المطابقة',
+              description: 'يرى العميل النتيجة، ويحتفظ المشغّل بالسجل القابل للتتبع والمراجعة.',
+              actor: 'المراجعون المخولون',
             },
           ],
           lanes: [
             {
-              id: 'main-route',
-              label: 'المسار التشغيلي الرئيسي',
-              stageIds: ['detect', 'classify', 'recover'],
+              id: 'physical-lane',
+              label: 'مسار الحركة المادية',
+              stageIds: ['order', 'allocate', 'dispatch', 'transit', 'exception'],
             },
             {
-              id: 'exception-route',
-              label: 'مسار ملكية الاستثناء',
-              stageIds: ['classify', 'assign', 'communicate', 'recover'],
+              id: 'data-lane',
+              label: 'مسار البيانات والتحكم',
+              stageIds: ['allocate', 'dispatch', 'transit', 'exception', 'audit'],
             },
           ],
         },
         {
-          id: 'exception-owners',
-          type: 'constraints',
-          variant: 'owner-register',
-          answers: ['evidence-and-constraints'],
-          eyebrow: 'الدليل التشغيلي',
-          title: 'يبدأ ضبط الاستثناءات بسجل للمالكين.',
-          intro:
-            'هذا نموذج مقترح للمسؤوليات، وليس ادعاءً عن أداء الناقل. يحدد المشغل كل نافذة خدمة وقاعدة تصعيد.',
-          items: [
-            {
-              id: 'stock-owner',
-              label: 'مالك استثناء المخزون',
-              responsibility: 'يؤكد قرار المخزون أو البديل أو التقسيم أو التعليق أو الإلغاء الذي تسمح به المنشأة.',
-              dependency: `بيانات مصدر المستودع واتفاقية ${arabicTokens.sla} يحددها المشغل.`,
-              recovery: 'إعادة الطلب إلى التحقق مع قرار المخزون المعتمد.',
-            },
-            {
-              id: 'address-owner',
-              label: 'مالك استثناء العنوان',
-              responsibility: 'ينسق مسار التصحيح مع العميل ويؤكد تغيير الوجهة قبل الإطلاق.',
-              dependency: `طريقة تواصل معتمدة واتفاقية ${arabicTokens.sla} يحددها المشغل.`,
-              recovery: 'استئناف التوزيع بعد قبول الوجهة المصححة من الدور المسؤول.',
-            },
-            {
-              id: 'proof-owner',
-              label: 'مالك استثناء الإثبات',
-              responsibility: 'يراجع الإثبات المفقود أو المختلف عليه ويختار مسار المتابعة المسموح.',
-              dependency: `حقول إثبات المزود وقواعد الوصول واتفاقية ${arabicTokens.sla} يحددها المشغل.`,
-              recovery: 'تسجيل نتيجة المراجعة وإعادة فتح مهمة التسليم عند الحاجة.',
-            },
-            {
-              id: 'communication-owner',
-              label: 'مالك التواصل مع العميل',
-              responsibility: 'يعتمد الرسالة والقناة والتوقيت عند تأثير الاستثناء التشغيلي في العميل.',
-              dependency: 'مالك خدمة محدد ومكتبة رسائل معتمدة.',
-              recovery: 'تصعيد قرار الصياغة أو المسار قبل إرسال وعد غير مدعوم.',
-            },
-          ],
-        },
-        {
-          id: 'flow-system',
+          id: 'logistics-platform-system',
           type: 'system-blueprint',
-          variant: 'constellation',
+          variant: 'stacked-layers',
           answers: ['buildable-system'],
-          eyebrow: 'مستوى ضبط مترابط',
-          title: 'يربط النظام الأحداث من دون افتراض أن كل مصدر يعمل بالطريقة نفسها.',
+          eyebrow: 'نطاق قابل للبناء',
+          title: 'المنصة اللوجستية مجموعة مترابطة من الطبقات ذات الملكية الواضحة.',
           intro:
-            'يربط النطاق القابل للبناء مسؤوليات الطلب والمستودع والتوزيع والاستثناء والإثبات عبر واجهات محدودة ومعرفات تشغيل مشتركة.',
+            'يمكن أن يبدأ النطاق بمسار واحد—مستودع واحد، خط واحد، ناقل واحد—لكن كل طبقة تحتاج إلى مدخلات معتمدة وتسليم محدد ونتيجة يستطيع المشغّل مطابقتها ومراجعتها.',
           layers: [
             {
-              id: 'order-visibility',
-              label: 'رؤية الطلب',
-              description: 'تجمع هوية الطلب المشتركة الطلب التجاري وحالته المقبولة الحالية.',
-              inputs: ['معرف الطلب', 'بيانات العميل والوجهة', 'الخدمة المطلوبة'],
-              handoff: 'طلب تشغيلي خاضع للتحقق',
-              outcome: 'مصدر ومسؤولية تالية واضحان',
+              id: 'order-inventory',
+              label: 'طبقة الطلبات والمخزون',
+              description:
+                'يبقي التقاط الطلب والتخصيص وسجلات المخزون الوحدات الموعودة والفعلية وقيد النقل مطابَقة عبر القنوات والمواقع.',
+              inputs: ['قنوات الطلب وقواعده', 'نموذج المخزون والمواقع', 'عمليات جرد المطابقة'],
+              handoff: 'طلب موثَّق بمخزون محجوز',
+              outcome: 'وحدات موعودة وفعلية متطابقة',
             },
             {
-              id: 'warehouse-events',
-              label: 'أحداث المستودع',
-              description: 'ترتبط حالات المستودع المتاحة بالطلب من دون استبدال مصدر المستودع.',
-              inputs: ['حالات مهمة المستودع', 'قرارات الصنف', 'ملاحظات المشغل'],
-              handoff: 'حالة تنفيذ قابلة للإطلاق أو موسومة باستثناء',
-              outcome: 'قرار واضح لجاهزية التوزيع',
+              id: 'warehouse-transport',
+              label: 'طبقة إدارة المستودعات والنقل',
+              description:
+                'يحوّل التجهيز والتغليف والإرسال واختيار الناقل وتخطيط المسار الطلب إلى شحنة مبيَّنة بسجل مرجعي واحد.',
+              inputs: ['نموذج مهام المستودع', 'قواعد الناقلين والأسعار', 'قيود المسار والخدمة'],
+              handoff: 'شحنة معنونة ومبيَّنة',
+              outcome: 'قرار إرسال يستطيع المالك الدفاع عنه',
             },
             {
-              id: 'dispatch-handoff',
-              label: 'تسليم التوزيع',
-              description: 'ينتقل سياق الإسناد والمسار إلى عملية النقل المسؤولة.',
-              inputs: ['العمل المجهز', 'سياق الوجهة', 'حقول إسناد المزود'],
-              handoff: 'مهمة توزيع مقبولة',
-              outcome: 'مسؤولية نقل قابلة للتتبع',
+              id: 'tracking-visibility',
+              label: 'طبقة التتبع والرؤية',
+              description:
+                'يغذّي مسح الناقل وقياسات الأسطول وأحداث المراحل خط زمن شحنة واحداً ورؤية برج تحكم للاستثناءات ومستويات الخدمة.',
+              inputs: ['تغذيات الناقلين والقياس عن بُعد', 'نموذج المراحل والحالات', 'قواعد الخدمة والتنبيه'],
+              handoff: 'حالة شحنة واحدة مطابَقة',
+              outcome: 'رؤية برج تحكم يستطيع الفريق التصرف بها',
             },
             {
-              id: 'exception-queue',
-              label: 'قائمة الاستثناءات',
-              description: 'تُصنف المشكلات وتُسند وتعود عبر قرار معالجة صريح.',
-              inputs: ['نوع الاستثناء', 'المرحلة المتأثرة', 'المالك وقاعدة الأولوية'],
-              handoff: 'مهمة استثناء مملوكة',
-              outcome: 'قرار معالجة أو إغلاق مسجل',
-            },
-            {
-              id: 'proof-reporting',
-              label: 'تقارير الإثبات والحالة',
-              description: 'تدعم الأدلة المعتمدة ونتائج المسار خدمة العميل والمراجعة التشغيلية.',
-              inputs: ['نتيجة التسليم', 'الإثبات المتاح', 'صلاحيات المراجعة'],
-              handoff: 'عرض حالة مخول',
-              outcome: 'سجل قابل للمراجعة من الطلب إلى الإثبات',
+              id: 'integration-observability',
+              label: 'طبقة التكامل والمراقبة',
+              description:
+                'يحافظ التبادل الإلكتروني وواجهات البرمجة وتكاملات المزودين والمراقبة وسجلات التدقيق على منصة مترابطة وقابلة للتحقق ضمن الحدود المتفق عليها.',
+              inputs: ['واجهات شركاء معتمدة', 'سياسة الوصول والبيانات', 'قواعد المراقبة والتنبيه'],
+              handoff: 'تبادل بيانات محدود ومراقَب',
+              outcome: 'منصة مترابطة تبقى ضمن ضوابطها',
             },
           ],
         },
         {
           id: 'logistics-service-paths',
           type: 'service-bridge',
-          variant: 'route-links',
+          variant: 'capability-stack',
           answers: [],
           eyebrow: 'مسارات التنفيذ',
-          title: 'ابنوا المسار التشغيلي بحدود الأنظمة المناسبة.',
+          title: 'اختاروا مسارات البناء التي تجمع المنصة.',
           intro:
-            'يتبع مزيج القدرات أنظمة المصدر والأشخاص وواجهات المزودين وقرارات الاستثناء الموجودة فعلياً في التشغيل.',
+            'يتحدد المزيج النهائي بحسب المسار الذي تعطونه الأولوية، والناقلين والمستودعات والأنظمة التي تستخدمونها أصلاً، وأصغر تسليم متكامل قابل للمطابقة يستحق البناء أولاً.',
           serviceIds: [
             'business-systems-development',
             'web-applications',
-            'website-development',
             'ecommerce-development',
+            'website-development',
           ],
           serviceAnchors: [
             {
               serviceId: 'business-systems-development',
-              label: 'أنظمة أعمال لوجستية',
+              label: 'أنظمة إدارة المستودعات والنقل وأبراج التحكم',
             },
             {
               serviceId: 'web-applications',
-              label: 'تطبيقات ويب تشغيلية',
-            },
-            {
-              serviceId: 'website-development',
-              label: 'مواقع لوجستية موجهة للعملاء',
+              label: 'تطبيقات ويب وبوابات شركاء للوجستيات',
             },
             {
               serviceId: 'ecommerce-development',
-              label: 'روابط التجارة بين الطلب والتنفيذ',
+              label: 'تكاملات دفع التجار واستقبال الطلبات وتنفيذها',
+            },
+            {
+              serviceId: 'website-development',
+              label: 'مواقع منتجات وتتبع للوجستيات',
             },
           ],
           relatedIndustryIds: ['ecommerce-retail', 'retail'],
           industryAnchors: [
             {
               industryId: 'ecommerce-retail',
-              label: 'استكشف رحلات الطلب والتنفيذ عبر الإنترنت',
+              label: 'استكشفوا أنظمة التجارة والتجهيز',
             },
             {
               industryId: 'retail',
-              label: 'استكشف عمليات الفروع والمخزون والتجزئة',
+              label: 'استكشفوا أنظمة التجزئة والمخزون',
             },
           ],
         },
         {
-          id: 'integration-boundaries',
+          id: 'logistics-boundaries',
           type: 'constraints',
           variant: 'boundary-map',
-          answers: [],
-          eyebrow: 'حدود الربط',
-          title: 'تحدد أنظمة المصدر والمزودون ما يمكن ربطه.',
+          answers: ['evidence-and-constraints'],
+          eyebrow: 'الأدلة والمسؤوليات',
+          title: 'يجعل التصميم الحدود التشغيلية صريحة.',
           intro:
-            'تبقى أنظمة المستودع والنقل والأسطول والتجارة مسؤولة عن البيانات والقدرات التي تتيحها. ويحافظ سير العمل على مسار يدوي عند غياب الواجهة.',
+            'تصف الصفحة نموذج هندسة مقترحاً، لا خدمة نقل ولا تصريح جمارك ولا اعتماد امتثال. تبقى العمليات المادية وعقود الناقلين والتخليص الجمركي والموافقات التنظيمية لدى المشغّل وأصحاب الاختصاص المخولين.',
           items: [
             {
-              id: 'wms-boundary',
-              label: `حدود ${arabicTokens.wms}`,
-              responsibility: 'يؤكد مالك المستودع حالات المهمة والمخزون والإتمام المتاحة.',
-              dependency: `توثيق حالي لنظام ${arabicTokens.wms} وصلاحية وصول معتمدة.`,
-              recovery: 'إبقاء تأكيد المستودع في العملية الحالية حتى اعتماد الواجهة.',
+              id: 'operations-boundary',
+              label: 'نبني النظام لا الأسطول',
+              responsibility:
+                'تهندس كلاود توبيا البرمجيات التي تخطط وتسجل وتُظهر العملية؛ ويبقى الأسطول المادي وعمالة المستودع وعلاقات الناقلين مملوكة ومُشغَّلة لديكم.',
+              dependency: 'مالك تشغيل محدد والعملية التي يجب أن يدعمها النظام.',
+              recovery: 'إبقاء الخطوة المتأثرة خلف عملية يدوية حتى يؤكدها مالك التشغيل.',
             },
             {
-              id: 'tms-boundary',
-              label: `حدود ${arabicTokens.tms} والأسطول`,
-              responsibility: 'يؤكد مالك النقل حالات الإسناد والمسار والتسليم التي يمكن مشاركتها.',
-              dependency: `قدرات المزود وقرارات الوصول إلى ${arabicTokens.tms}.`,
-              recovery: 'استخدام مسار التوزيع وإدخال الحالة المتفق عليه عند غياب بيانات المزود.',
+              id: 'carrier-dependencies',
+              label: 'اعتماديات الناقلين والقياس عن بُعد',
+              responsibility:
+                'تعتمد تكاملات التتبع والتسعير والعنونة على وصول ناقل موثوق وتغذيات قياس وعقود وتوفر في السوق تؤكدونها.',
+              dependency: 'توثيق ناقل وجهاز مؤكد وبيانات اعتماد وتغطية.',
+              recovery: 'إبقاء الخطوة خلف مسار يدوي أو تجريبي حتى يتأكد وصول المزود.',
             },
             {
-              id: 'api-boundary',
-              label: `حدود عقد ${arabicTokens.api}`,
-              responsibility: 'يعتمد مالكو الأنظمة الحقول والمصادقة ومعالجة الأخطاء ومسؤولية التغيير.',
-              dependency: `عقد ${arabicTokens.api} فعّال وجهات اتصال تقنية مسؤولة.`,
-              recovery: 'تعليق المهمة أو إعادتها من دون عرض حالة غير مؤكدة.',
+              id: 'customs-compliance',
+              label: 'حدود الجمارك والتنظيم',
+              responsibility:
+                'يمكن للمنصة تجهيز المستندات والسجلات، لكن التخليص الجمركي والترخيص والقرارات التنظيمية تملكها الجهات وفريق الامتثال لديكم.',
+              dependency: 'متطلبات مستندات معتمدة ومالك امتثال محدد.',
+              recovery: 'توجيه الحالات غير الواضحة إلى مالك بشري بدلاً من عرض قرار آلي بلا مالك.',
             },
             {
-              id: 'source-quality',
-              label: 'جودة بيانات المصدر',
-              responsibility: 'يحدد مالكو التشغيل طريقة مراجعة البيانات الناقصة أو المتعارضة.',
-              dependency: 'ملكية البيانات وقواعد تصنيف الاستثناءات.',
-              recovery: 'توجيه المهمة إلى مالك محدد قبل إطلاق التسليم التالي.',
+              id: 'data-ownership',
+              label: 'سجلات الطلبات والشحنات والمواقع',
+              responsibility:
+                'يحتاج كل سجل تشغيلي إلى قواعد صريحة للملكية والاحتفاظ والوصول تُحدد وتُعتمد قبل جمعه.',
+              dependency: 'خريطة معتمدة لملكية البيانات والاحتفاظ والوصول.',
+              recovery: 'إبقاء السجل معزولاً ومقيَّد الوصول حتى تتأكد قواعده.',
             },
           ],
         },
         {
-          id: 'regional-flow-delivery',
+          id: 'logistics-regional-delivery',
           type: 'regional-fit',
-          variant: 'market-path',
+          variant: 'bilingual-operations',
           answers: ['regional-delivery'],
-          eyebrow: 'تشغيل إقليمي',
-          title: 'لغة الحالة وسياق العنوان جزء من التصميم التشغيلي.',
+          eyebrow: 'مصمم للوجستيات ثنائية اللغة',
+          title: 'العربية والإنجليزية لغتا تشغيل، وليستا خطوة ترجمة أخيرة.',
           intro:
-            'تُصمم المسميات العربية والإنجليزية وبنية العنوان المحلية ورسائل العملاء وملكية التسليم معاً، ليبقى المعنى التشغيلي متسقاً.',
+            'تُصاغ لوحات المشغّل وتطبيقات السائق والمستودع وتتبع العميل ورسائل الشركاء لكل لغة، مع بقاء بنية نظام واحدة قابلة للمطابقة ثابتة.',
           items: [
             {
-              id: 'status-language',
-              label: 'لغة حالة ثنائية',
-              description: 'تستخدم الحالات الموجهة للعميل صياغة مفهومة، بينما تحتفظ الحالات الداخلية بمعناها التشغيلي الدقيق.',
+              id: 'bilingual-operations',
+              label: 'لغة تشغيل طبيعية',
+              description:
+                'تُكتب صياغة المستودع والإرسال والتتبع وفق طريقة قراءة المشغّلين والسائقين وتصرفهم في كل لغة، لا كترجمة لاحقة.',
             },
             {
-              id: 'address-context',
-              label: 'سياق العنوان والوجهة',
-              description: 'يجمع المسار الحقول والمعالم والمناطق وقرارات التواصل التي يستخدمها المشغل فعلياً.',
+              id: 'address-formats',
+              label: 'عناوين ومسارات إقليمية',
+              description:
+                'تبقى صيغ العناوين والمناطق والمسارات دقيقة وقابلة للاستخدام في السياقين العربي والإنجليزي، تحت مالك مراجعة محدد.',
             },
             {
-              id: 'handoff-ownership',
-              label: 'ملكية التسليم الإقليمي',
-              description: 'تتفق فرق التجارة والمستودع والتوزيع والخدمة على من يستلم كل انتقال ومن يشرحه.',
+              id: 'market-dependencies',
+              label: 'اعتماديات حسب السوق',
+              description:
+                'تُراجَع الناقلون ومتطلبات الجمارك والعملات وتغطية الميل الأخير لكل سوق قبل تثبيت النطاق.',
             },
           ],
         },
         {
           id: 'logistics-faq',
           type: 'faq',
-          variant: 'grouped-questions',
+          variant: 'editorial-list',
           answers: [],
-          eyebrow: 'أسئلة التشغيل',
-          title: 'أسئلة تشكل نطاق نظام لوجستي مفيد.',
+          eyebrow: 'أسئلة القرار',
+          title: 'ما الذي تحتاج فرق اللوجستيات إلى حسمه أولاً؟',
           intro:
-            'أفضل نقطة بداية هي مسار طلب واحد وأنظمة مصدره والاستثناءات التي تستهلك أكبر قدر من التنسيق.',
+            'النطاق الأول المفيد هو مسار مكتمل قابل للمطابقة—من الطلب إلى الإرسال، أو من الإرسال إلى إثبات التسليم—مع تحديد أصحاب المخزون والتتبع والتشغيل.',
           items: [
             {
+              id: 'operator-role',
+              question: 'هل تنقل كلاود توبيا الشحنات أو تشغّل الأسطول؟',
+              answer:
+                'لا. نهندس الأنظمة التي تخطط وتسجل وتُظهر عمليتكم—الطلبات والمخزون وإدارة المستودعات والنقل والتتبع ولوحات أبراج التحكم. يبقى الأسطول المادي وعمالة المستودع وعقود الناقلين لديكم؛ وتدعم البرمجيات طريقة تشغيلكم القائمة.',
+            },
+            {
               id: 'existing-systems',
-              question: `هل يمكن ربط سير العمل مع ${arabicTokens.wms} أو ${arabicTokens.tms} أو منصة التجارة الحالية؟`,
-              answer: 'يمكن تحديد النطاق حول الواجهات والحقول وطرق الوصول التي تؤكدها الأنظمة والمزودون. ويحافظ كل ربط على مالك مصدر ومسار بديل محددين.',
+              question: 'هل يمكن ربط ذلك بنظام المستودعات أو تخطيط الموارد أو الناقلين الحاليين؟',
+              answer:
+                'يُصمَّم حول الواجهات والحقول والوصول الذي تؤكده أنظمتكم وناقلوكم. نرسم البيانات المطلوبة والأنظمة المسؤولة ومصدر المطابقة والمسار اليدوي أو التجريبي البديل قبل الالتزام بتكامل مباشر—عبر التبادل الإلكتروني أو واجهات البرمجة.',
             },
             {
-              id: 'exception-priority',
-              question: 'كيف تُحدد أولويات الاستثناء ونوافذ الخدمة؟',
-              answer: `يحدد المشغل نموذج الأولوية واتفاقية ${arabicTokens.sla} والدور المسؤول ومسار التصعيد وقاعدة التواصل مع العميل. ويطبق النظام القرارات المعتمدة.`,
+              id: 'realtime-tracking',
+              question: 'كيف يعمل تتبع الشحنات ورؤيتها؟',
+              answer:
+                'يغذّي مسح الناقل والقياس عن بُعد وأحداث المراحل سجل شحنة واحداً ورؤية برج تحكم. نحدد نموذج الحالات وقواعد الخدمة والتنبيه لتظهر الاستثناءات قبل أن يضطر العميل للسؤال عن مكان طلبه.',
             },
             {
-              id: 'carrier-visibility',
-              question: 'هل سيتيح كل ناقل حالات التسليم نفسها؟',
-              answer: 'لا نفترض ذلك. يرسم التصميم الحالات والأدلة التي يتيحها كل مزود، ويحافظ على مسار مراجعة يدوي للفجوات.',
+              id: 'exception-scoping',
+              question: 'كيف نحدد نطاق معالجة الاستثناءات؟',
+              answer:
+                'ابدؤوا بأنواع استثناءات محددة—تأخير، تسليم فاشل، نقص شحن، مرتجع—لكل منها مالك ومتطلبات إثبات ومسار موثق للعودة إلى الخطة، حتى لا يصبح شيء جدولاً صامتاً.',
             },
             {
-              id: 'customer-status',
-              question: 'هل يمكن أن يرى العميل لغة الحالة التي يستخدمها فريق التشغيل؟',
-              answer: 'يمكن أن يشتركا في نموذج حالة واحد، مع بقاء صياغة العميل موجزة وثنائية اللغة وملائمة لما أكده المشغل.',
+              id: 'route-optimization',
+              question: 'هل يمكنكم بناء تحسين الأسطول والمسارات؟',
+              answer:
+                'نعم. يُهندَس تخطيط المسار والحمولة وتحسين الأسطول حول القيود والأهداف التي يملكها فريق التشغيل لديكم، بنتائج قابلة للتفسير يستطيع المخطِّط مراجعتها وتجاوزها، لا صندوقاً مغلقاً.',
             },
             {
               id: 'starting-point',
-              question: 'من أين يبدأ فريق الخدمات اللوجستية؟',
-              answer: 'ابدؤوا بمسار واحد من الطلب إلى الإثبات، وحددوا كل تسليم ومالك استثناء، ثم اختاروا أصغر نطاق مترابط يجعل تلك المسؤوليات مرئية.',
+              question: 'من أين يبدأ فريق اللوجستيات؟',
+              answer:
+                'ابدؤوا بمسار واحد ذي قيمة عالية—خط أو مستودع أو ناقل واحد—وحددوا كل تسليم وسجل ومالك يمر بها، ثم ارسموا أصغر نطاق نظام قابل للمطابقة يدعمه من طرف إلى طرف قبل التوسع.',
             },
           ],
         },
         {
           id: 'logistics-consultation',
           type: 'closing-cta',
-          variant: 'split-close',
+          variant: 'framed-close',
           answers: ['decision-close'],
-          eyebrow: 'ارسموا حقيقة التشغيل',
-          title: 'اجعلوا مسار الاستثناء جزءاً من النظام، لا فكرة لاحقة.',
-          intro: 'أحضروا تدفق طلب واحداً وأنظمة مصدره والاستثناءات التي تحتاج إلى أكبر قدر من التنسيق، وسنحوّلها إلى موجز نظام محدد النطاق.',
-          decisionCopy: 'اختاروا مساراً مكتملاً من الطلب إلى الإثبات وحددوا المالك عند كل انقطاع في التدفق.',
+          eyebrow: 'اختاروا المسار الأول',
+          title: 'اجعلوا مساراً واحداً قابلاً للمطابقة نقطة البداية.',
+          intro:
+            'أحضروا مساراً لوجستياً واحداً، والفرق والناقلين والمستودعات التي تملكه، والأنظمة التي يمر بها، وسنحوّل هذا السياق إلى موجز نظام سلسلة إمداد محدد النطاق قابل للبناء.',
+          decisionCopy:
+            'ابدؤوا بمسار مكتمل واحد قابل للمطابقة، لا بقائمة خصائص منفصلة.',
           primary: {
-            label: 'لنرسم تدفق العمليات والاستثناءات لديكم',
+            label: 'لنرسم رحلة الطلب حتى التسليم',
             href: '/api/whatsapp?locale=ar',
           },
           secondary: {
-            label: 'استكشف تطوير أنظمة الأعمال',
+            label: 'استكشفوا أنظمة عمليات اللوجستيات',
             serviceId: 'business-systems-development',
           },
         },

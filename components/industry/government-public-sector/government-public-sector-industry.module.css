@@ -1,0 +1,1715 @@
+/*
+ * Government & Public-Sector "Industry World" — ports the Whitehall (City
+ * Government) look & animations. Brand red accent (#e41e2f) on a navy-ink
+ * (#252638) and light-gray surface system, expressed as rgb() channel custom
+ * props so opacity variants stay exact. Dark navy bands (#1a1b28 -> #252638)
+ * drive the hero, domains, pillars, and CTA. RTL via logical properties +
+ * [dir='rtl'] overrides. Every animation is neutralised under
+ * prefers-reduced-motion (kill switch at the end). Accessibility is paramount:
+ * AA+ contrast, focus-visible rings on every interactive element, and no
+ * content that exists only on hover.
+ */
+.page {
+  --gov-accent: 228 30 47; /* #e41e2f */
+  --gov-accent-strong: 193 21 38; /* #c11526 — darker red for gradients/hover */
+  --gov-ink: 37 38 56; /* #252638 */
+  --gov-ink-deep: 26 27 40; /* #1a1b28 */
+  --gov-body: 86 88 105; /* #565869 — darkened from template #696b7e for AA */
+  --gov-muted: 107 109 126; /* #6b6d7e — meta / large text only */
+  --gov-line: 228 228 233; /* #e4e4e9 */
+  --gov-surface: 255 255 255;
+  --gov-gray: 245 245 246; /* #f5f5f6 */
+  --gov-gray-2: 248 248 250; /* #f8f8fa */
+  --gov-tint: 251 228 230; /* #fbe4e6 — light red fill (never body text) */
+  --gov-shadow: 37 38 56; /* navy card shadow tint */
+  --gov-white: 255 255 255;
+  --gov-motion-standard: 400ms;
+  --gov-motion-overlay: 500ms;
+  --gov-motion-accordion: 260ms;
+
+  background: rgb(var(--gov-surface));
+  color: rgb(var(--gov-body));
+  font-family: var(--font-hanken), var(--font-inter), sans-serif;
+  overflow: clip;
+  text-align: start;
+}
+
+.page[dir='rtl'] {
+  font-family: var(--font-arabic), var(--font-cairo), sans-serif;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page p {
+  margin-block: 0;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4 {
+  color: rgb(var(--gov-ink));
+  font-family: var(--font-hanken), var(--font-inter), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.page[dir='rtl'] h1,
+.page[dir='rtl'] h2,
+.page[dir='rtl'] h3,
+.page[dir='rtl'] h4 {
+  font-family: var(--font-arabic), var(--font-cairo), sans-serif;
+  letter-spacing: 0;
+}
+
+.page p {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- Skip link */
+.skipLink {
+  background: rgb(var(--gov-ink));
+  border-radius: 0 0 12px 12px;
+  color: #fff;
+  inset-block-start: 0;
+  inset-inline-start: 1.5rem;
+  padding: 0.8rem 1rem;
+  position: fixed;
+  transform: translateY(-150%);
+  transition: transform 180ms ease;
+  z-index: 1000;
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.srOnly {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* --------------------------------------------------------------- Breadcrumb */
+.breadcrumbFrame {
+  background: rgb(var(--gov-gray));
+  padding: 1.25rem clamp(1rem, 4vw, 4rem) 0;
+  position: relative;
+  z-index: 5;
+}
+
+.breadcrumb {
+  margin-inline: auto;
+  max-width: 1320px;
+}
+
+/* --------------------------------------------------------- Reveal (WOW-like) */
+.reveal {
+  will-change: opacity, transform;
+}
+
+.reveal[data-reveal='out'] {
+  opacity: 0;
+  transition: none;
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='up'] {
+  transform: translateY(42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='down'] {
+  transform: translateY(-42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='left'] {
+  transform: translateX(-42px);
+}
+
+.reveal[data-reveal='out'][data-reveal-variant='right'] {
+  transform: translateX(42px);
+}
+
+.page[dir='rtl'] .reveal[data-reveal='out'][data-reveal-variant='left'] {
+  transform: translateX(42px);
+}
+
+.page[dir='rtl'] .reveal[data-reveal='out'][data-reveal-variant='right'] {
+  transform: translateX(-42px);
+}
+
+.reveal[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 800ms ease,
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Staggered children — WOW's 0/200/400/600ms cascade. Children are visible by
+   default (idle/no-JS); only the JS-applied "out" state hides them. */
+.reveal[data-reveal-stagger='true'] > * {
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='out'] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='out'] > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > * {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(2) {
+  transition-delay: 200ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(3) {
+  transition-delay: 400ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(4) {
+  transition-delay: 600ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(5) {
+  transition-delay: 200ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(6) {
+  transition-delay: 400ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(7) {
+  transition-delay: 600ms;
+}
+
+.reveal[data-reveal-stagger='true'][data-reveal='in'] > *:nth-child(8) {
+  transition-delay: 200ms;
+}
+
+/* ----------------------------------------------------------------- Buttons */
+.button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.7em;
+  display: inline-flex;
+  font-size: 0.98rem;
+  font-weight: 600;
+  gap: 0.7rem;
+  justify-content: center;
+  line-height: 1.5em;
+  min-height: 52px;
+  padding: 0.85rem 1.7rem;
+  position: relative;
+  transition:
+    color var(--gov-motion-standard) ease,
+    background-color var(--gov-motion-standard) ease,
+    border-color var(--gov-motion-standard) ease,
+    box-shadow var(--gov-motion-standard) ease,
+    transform var(--gov-motion-standard) ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.page .buttonPrimary {
+  background: rgb(var(--gov-accent));
+  box-shadow: 0 12px 28px -12px rgb(var(--gov-accent) / 65%);
+  color: #fff;
+}
+
+.page .buttonPrimary:hover,
+.page .buttonPrimary:focus-visible {
+  background: rgb(var(--gov-accent-strong));
+}
+
+.page .buttonLight {
+  background: rgb(var(--gov-white));
+  color: rgb(var(--gov-ink));
+}
+
+.page .buttonLight:hover,
+.page .buttonLight:focus-visible {
+  background: rgb(255 255 255 / 88%);
+}
+
+.page .buttonSecondary {
+  background: transparent;
+  border-color: rgb(255 255 255 / 40%);
+  color: #fff;
+}
+
+.page .buttonSecondary:hover,
+.page .buttonSecondary:focus-visible {
+  background: rgb(255 255 255 / 12%);
+  border-color: rgb(255 255 255 / 70%);
+}
+
+.button > svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+/* Focus rings — shared across every interactive element (light backgrounds) */
+.button:focus-visible,
+.textLink:focus-visible,
+.serviceCard:focus-visible,
+.catalogTile:focus-visible,
+.pricingBtn:focus-visible,
+.contextualServiceLink:focus-visible,
+.carouselArrow:focus-visible,
+.carouselDot:focus-visible,
+.faqItem summary:focus-visible {
+  outline: 3px solid rgb(var(--gov-accent));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* On dark bands invert the ring so it stays visible */
+.hero .button:focus-visible,
+.hero .carouselArrow:focus-visible,
+.hero .carouselDot:focus-visible,
+.ctaCard .button:focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 6px rgb(var(--gov-ink-deep));
+}
+
+.button,
+.serviceCard,
+.catalogTile,
+.pricingBtn,
+.faqItem summary,
+.textLink,
+.carouselArrow,
+.carouselDot,
+.contextualServiceLink {
+  -webkit-tap-highlight-color: rgb(var(--gov-accent) / 18%);
+  touch-action: manipulation;
+}
+
+/* ---------------------------------------------------------------- ArrowPair */
+.arrowPair {
+  display: inline-grid;
+  height: 1.1rem;
+  overflow: hidden;
+  place-items: center;
+  width: 1.1rem;
+}
+
+.arrowPair svg {
+  grid-area: 1 / 1;
+  height: 1rem;
+  transition: transform var(--gov-motion-standard) ease;
+  width: 1rem;
+}
+
+.arrowPair svg:last-child {
+  transform: translate(-140%, 140%);
+}
+
+.page[dir='rtl'] .arrowPair svg:last-child {
+  transform: translate(140%, 140%);
+}
+
+.button:hover .arrowPair svg:first-child,
+.button:focus-visible .arrowPair svg:first-child,
+.textLink:hover .arrowPair svg:first-child,
+.serviceCard:hover .arrowPair svg:first-child {
+  transform: translate(140%, -140%);
+}
+
+.page[dir='rtl'] .button:hover .arrowPair svg:first-child,
+.page[dir='rtl'] .button:focus-visible .arrowPair svg:first-child,
+.page[dir='rtl'] .textLink:hover .arrowPair svg:first-child,
+.page[dir='rtl'] .serviceCard:hover .arrowPair svg:first-child {
+  transform: translate(-140%, -140%);
+}
+
+.button:hover .arrowPair svg:last-child,
+.button:focus-visible .arrowPair svg:last-child,
+.textLink:hover .arrowPair svg:last-child,
+.serviceCard:hover .arrowPair svg:last-child {
+  transform: translate(0);
+}
+
+/* Shared eyebrow / starred kicker */
+.eyebrow,
+.eyebrowLight {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 1.05rem;
+}
+
+.page[dir='rtl'] .eyebrow,
+.page[dir='rtl'] .eyebrowLight {
+  letter-spacing: 0;
+}
+
+.eyebrow {
+  background: rgb(var(--gov-tint));
+  color: rgb(var(--gov-accent-strong));
+}
+
+.sectionGray .eyebrow {
+  background: rgb(var(--gov-surface));
+}
+
+.eyebrowLight {
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+}
+
+.eyebrow svg,
+.eyebrowLight svg {
+  height: 0.95rem;
+  width: 0.95rem;
+}
+
+/* -------------------------------------------------------------------- Hero */
+.hero {
+  background:
+    radial-gradient(circle at 82% 8%, rgb(var(--gov-accent) / 30%), transparent 45%),
+    linear-gradient(160deg, rgb(var(--gov-ink-deep)) 8%, rgb(var(--gov-ink)) 92%);
+  color: rgb(255 255 255 / 84%);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  background-image: radial-gradient(rgb(255 255 255 / 7%) 1px, transparent 1px);
+  background-size: 26px 26px;
+  content: '';
+  inset: 0;
+  mask-image: linear-gradient(90deg, #000, transparent 72%);
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.page[dir='rtl'] .hero::after {
+  mask-image: linear-gradient(-90deg, #000, transparent 72%);
+}
+
+.heroInner {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(6.5rem, 10vw, 9.5rem) clamp(1.25rem, 4vw, 4rem) clamp(4rem, 6vw, 6rem);
+  position: relative;
+}
+
+.heroCopy {
+  max-width: 660px;
+  position: relative;
+  z-index: 3;
+}
+
+.heroEyebrow {
+  align-items: center;
+  background: rgb(255 255 255 / 10%);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%);
+  color: #fff;
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 1.05rem;
+}
+
+.page[dir='rtl'] .heroEyebrow {
+  letter-spacing: 0;
+}
+
+.heroEyebrow svg {
+  color: rgb(var(--gov-accent));
+  height: 1rem;
+  width: 1rem;
+}
+
+.heroCopy h1 {
+  color: #fff;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-block: 1.4rem 1.3rem;
+}
+
+.page[dir='rtl'] .heroCopy h1 {
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.heroIntro {
+  color: rgb(255 255 255 / 82%);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-block-start: 2rem;
+}
+
+.heroTrust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.6rem;
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+}
+
+.heroTrustLabel {
+  color: rgb(255 255 255 / 66%);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-block-end: 0.9rem;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.page[dir='rtl'] .heroTrustLabel {
+  letter-spacing: 0;
+}
+
+.heroTrust li {
+  align-items: center;
+  color: rgb(255 255 255 / 90%);
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 600;
+  gap: 0.5rem;
+}
+
+.heroTrust li svg {
+  color: rgb(var(--gov-accent));
+  height: 1.05rem;
+  width: 1.05rem;
+}
+
+/* ------------------------------------------- Hero carousel (owl cross-fade) */
+.heroVisual {
+  align-self: center;
+  position: relative;
+  z-index: 2;
+}
+
+.carousel {
+  --carousel-min-h: 340px;
+  position: relative;
+}
+
+.carouselViewport {
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 6%);
+  box-shadow: 0 40px 80px rgb(0 0 0 / 32%);
+  min-height: var(--carousel-min-h);
+  overflow: hidden;
+  position: relative;
+}
+
+.carouselSlide {
+  display: grid;
+  gap: 1rem;
+  inset: 0;
+  opacity: 0;
+  padding: clamp(1.75rem, 3vw, 2.6rem);
+  position: absolute;
+  transition: opacity 1s ease;
+  visibility: hidden;
+}
+
+.carouselSlide[data-active='true'] {
+  opacity: 1;
+  position: relative;
+  visibility: visible;
+}
+
+.carouselSlideIcon {
+  align-items: center;
+  background: rgb(var(--gov-accent));
+  border-radius: 14px;
+  color: #fff;
+  display: inline-flex;
+  height: 52px;
+  justify-content: center;
+  width: 52px;
+}
+
+.carouselSlideIcon svg {
+  height: 1.55rem;
+  width: 1.55rem;
+}
+
+.carouselKicker {
+  color: rgb(255 255 255 / 70%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .carouselKicker {
+  letter-spacing: 0;
+}
+
+.carouselTitle {
+  color: #fff;
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.carouselText {
+  color: rgb(255 255 255 / 82%);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.carouselControls {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin-block-start: 1.25rem;
+}
+
+.carouselDots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carouselDot {
+  background: rgb(255 255 255 / 28%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 8px;
+  padding: 0;
+  transition:
+    background var(--gov-motion-standard) ease,
+    width var(--gov-motion-standard) ease;
+  width: 8px;
+}
+
+.carouselDot[aria-current='true'] {
+  background: rgb(var(--gov-accent));
+  width: 26px;
+}
+
+.carouselArrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carouselArrow {
+  align-items: center;
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  transition:
+    background var(--gov-motion-standard) ease,
+    border-color var(--gov-motion-standard) ease;
+  width: 42px;
+}
+
+.carouselArrow:hover {
+  background: rgb(var(--gov-accent));
+  border-color: rgb(var(--gov-accent));
+}
+
+.carouselArrow svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+/* ------------------------------------------------------------ Content shell */
+.content {
+  outline: none;
+  scroll-margin-top: 6rem;
+}
+
+.content:focus-visible {
+  outline: 3px solid rgb(var(--gov-accent));
+  outline-offset: -3px;
+}
+
+.section {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.sectionGray {
+  background: rgb(var(--gov-gray));
+}
+
+.sectionDark {
+  background: linear-gradient(160deg, rgb(var(--gov-ink-deep)) 6%, rgb(var(--gov-ink)) 94%);
+  color: rgb(255 255 255 / 82%);
+  overflow: hidden;
+  position: relative;
+}
+
+.sectionDark::after {
+  background-image: radial-gradient(rgb(255 255 255 / 6%) 1px, transparent 1px);
+  background-size: 28px 28px;
+  content: '';
+  inset: 0;
+  mask-image: radial-gradient(circle at 90% 0, #000, transparent 60%);
+  pointer-events: none;
+  position: absolute;
+}
+
+.sectionInner {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+  position: relative;
+  z-index: 1;
+}
+
+.sectionHeadingCentered {
+  margin-inline: auto;
+  max-width: 760px;
+  text-align: center;
+}
+
+.sectionHeadingSplit {
+  align-items: end;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+}
+
+.sectionHeadingCentered h2,
+.sectionHeadingSplit h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.1;
+  margin-block: 1rem 1rem;
+}
+
+.page[dir='rtl'] .sectionHeadingCentered h2,
+.page[dir='rtl'] .sectionHeadingSplit h2 {
+  line-height: 1.3;
+}
+
+.sectionHeadingSplit h2 {
+  margin-block-end: 0;
+}
+
+.sectionDark .sectionHeadingCentered h2 {
+  color: #fff;
+}
+
+.titleShape {
+  background: rgb(var(--gov-accent));
+  border-radius: 2px;
+  display: block;
+  height: 3px;
+  margin-block: 0.9rem 0;
+  width: 54px;
+}
+
+.sectionHeadingCentered .titleShape {
+  margin-inline: auto;
+}
+
+.sectionIntro {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.sectionDark .sectionIntro {
+  color: rgb(255 255 255 / 80%);
+}
+
+.sectionHeadingCentered .sectionIntro {
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------- Capabilities (raised tiles) */
+.capabilitiesBand {
+  background: rgb(var(--gov-surface));
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 24px;
+  box-shadow: 0 40px 80px -50px rgb(var(--gov-shadow) / 40%);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+  overflow: hidden;
+}
+
+.capabilityTile {
+  background: rgb(var(--gov-surface));
+  outline: 1px solid rgb(var(--gov-line));
+  padding: clamp(1.6rem, 2.4vw, 2.1rem);
+  transition: background var(--gov-motion-standard) ease;
+}
+
+.capabilityTile:hover {
+  background: rgb(var(--gov-gray-2));
+}
+
+.tileIcon {
+  align-items: center;
+  background: rgb(var(--gov-tint));
+  border-radius: 14px;
+  color: rgb(var(--gov-accent-strong));
+  display: inline-flex;
+  height: 54px;
+  justify-content: center;
+  margin-block-end: 1.2rem;
+  width: 54px;
+}
+
+.tileIcon svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.capabilityTile h3 {
+  font-size: 1.2rem;
+  margin-block-end: 0.6rem;
+}
+
+.capabilityTile p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* -------------------------------------------------- Practice (about split) */
+.practiceGrid {
+  align-items: center;
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  margin-block-start: clamp(2rem, 3vw, 3rem);
+}
+
+.practiceBody {
+  color: rgb(var(--gov-body));
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-block-start: 1.25rem;
+}
+
+.practicePoints {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block-start: 2rem;
+}
+
+.practicePoint {
+  background: rgb(var(--gov-gray));
+  border-radius: 16px;
+  border-inline-start: 3px solid rgb(var(--gov-accent));
+  padding: 1.25rem 1.4rem;
+}
+
+.practicePoint h3 {
+  font-size: 1.05rem;
+  margin-block-end: 0.4rem;
+}
+
+.practicePoint p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.practicePanel {
+  background: linear-gradient(160deg, rgb(var(--gov-ink-deep)) 6%, rgb(var(--gov-ink)) 94%);
+  border-radius: 24px;
+  color: #fff;
+  overflow: hidden;
+  padding: clamp(2rem, 3.5vw, 3rem);
+  position: relative;
+}
+
+.practicePanel::before {
+  background: rgb(var(--gov-accent));
+  border-radius: 999px;
+  content: '';
+  filter: blur(60px);
+  height: 160px;
+  inset-block-start: -40px;
+  inset-inline-end: -40px;
+  opacity: 0.5;
+  position: absolute;
+  width: 160px;
+}
+
+.practicePanelEyebrow {
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .practicePanelEyebrow {
+  letter-spacing: 0;
+}
+
+.practicePanelStatement {
+  color: #fff;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-block: 1rem 1.25rem;
+  position: relative;
+}
+
+.practicePanelNote {
+  border-block-start: 1px solid rgb(255 255 255 / 18%);
+  color: rgb(255 255 255 / 74%);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-block-start: 1.25rem;
+  padding-block-start: 1.25rem;
+  position: relative;
+}
+
+/* ------------------------------------------------ Domains grid (dark, 8) */
+.domainsGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.domainCard {
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 18px;
+  padding: 1.6rem 1.5rem;
+  transition:
+    background var(--gov-motion-standard) ease,
+    border-color var(--gov-motion-standard) ease,
+    transform var(--gov-motion-standard) ease;
+}
+
+.domainCard:hover {
+  background: rgb(255 255 255 / 9%);
+  border-color: rgb(var(--gov-accent) / 60%);
+  transform: translateY(-5px);
+}
+
+.domainCard .tileIcon {
+  background: rgb(var(--gov-accent) / 18%);
+  color: #fff;
+  height: 48px;
+  margin-block-end: 1rem;
+  width: 48px;
+}
+
+.domainCard:hover .tileIcon {
+  background: rgb(var(--gov-accent));
+}
+
+.domainCard h3 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-block-end: 0.5rem;
+}
+
+.domainCard p {
+  color: rgb(255 255 255 / 76%);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* ------------------------------------- Pillars (explore hover-overlay flip) */
+.pillarsGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.pillarCard {
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 22px;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.75rem, 2.6vw, 2.25rem);
+  position: relative;
+  transition:
+    border-color var(--gov-motion-overlay) ease,
+    transform var(--gov-motion-overlay) ease;
+}
+
+/* the flip: an accent-tinted overlay sweeps up on hover/focus-within.
+   All content stays in the DOM and visible — the overlay is emphasis only. */
+.pillarCard::before {
+  background: linear-gradient(160deg, rgb(var(--gov-accent) / 70%), rgb(var(--gov-accent-strong) / 55%));
+  content: '';
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transform: translateY(18%);
+  transition:
+    opacity var(--gov-motion-overlay) ease,
+    transform var(--gov-motion-overlay) ease;
+  z-index: -1;
+}
+
+.pillarCard:hover,
+.pillarCard:focus-within {
+  border-color: rgb(var(--gov-accent));
+  transform: translateY(-6px);
+}
+
+.pillarCard:hover::before,
+.pillarCard:focus-within::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pillarCard .tileIcon {
+  background: rgb(var(--gov-accent) / 20%);
+  color: #fff;
+  transition: background var(--gov-motion-overlay) ease;
+}
+
+.pillarCard:hover .tileIcon,
+.pillarCard:focus-within .tileIcon {
+  background: rgb(255 255 255 / 22%);
+}
+
+.pillarCard h3 {
+  color: #fff;
+  font-size: 1.35rem;
+  margin-block-end: 0.6rem;
+}
+
+.pillarSummary {
+  color: rgb(255 255 255 / 82%);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-block-end: 1.25rem;
+}
+
+.pillarPointsLabel {
+  color: rgb(255 255 255 / 66%);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-block-end: 0.75rem;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .pillarPointsLabel {
+  letter-spacing: 0;
+}
+
+.pillarPoints {
+  display: grid;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pillarPoints li {
+  align-items: start;
+  color: rgb(255 255 255 / 92%);
+  display: grid;
+  font-size: 0.92rem;
+  gap: 0.6rem;
+  grid-template-columns: 1rem 1fr;
+  line-height: 1.45;
+}
+
+.pillarPoints li svg {
+  color: #fff;
+  height: 1rem;
+  margin-block-start: 0.15rem;
+  width: 1rem;
+}
+
+/* -------------------------------- Engagement (discover numbered flip cards) */
+.engagementGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.engagementCard {
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 22px;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.6rem, 2.4vw, 2.1rem);
+  position: relative;
+  transition:
+    border-color var(--gov-motion-overlay) ease,
+    box-shadow var(--gov-motion-overlay) ease,
+    transform var(--gov-motion-overlay) ease;
+}
+
+.engagementCard::before {
+  background: linear-gradient(160deg, rgb(var(--gov-accent) / 8%), transparent 70%);
+  content: '';
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity var(--gov-motion-overlay) ease;
+  z-index: -1;
+}
+
+.engagementCard:hover {
+  border-color: rgb(var(--gov-accent) / 55%);
+  box-shadow: 0 30px 60px -40px rgb(var(--gov-shadow) / 45%);
+  transform: translateY(-6px);
+}
+
+.engagementCard:hover::before {
+  opacity: 1;
+}
+
+.engagementNumber {
+  color: rgb(var(--gov-accent));
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.engagementCard .tileIcon {
+  height: 46px;
+  margin-block: 0.9rem 1.1rem;
+  width: 46px;
+}
+
+.engagementCard h3 {
+  font-size: 1.15rem;
+  margin-block-end: 0.6rem;
+}
+
+.engagementCard p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------- Catalog tiles + CTA band */
+.catalogGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.catalogTile {
+  align-items: center;
+  background: rgb(var(--gov-surface));
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 14px;
+  color: rgb(var(--gov-ink));
+  display: flex;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 0.9rem;
+  min-height: 68px;
+  padding: 1rem 1.3rem;
+  position: relative;
+  transition:
+    border-color var(--gov-motion-standard) ease,
+    box-shadow var(--gov-motion-standard) ease,
+    transform var(--gov-motion-standard) ease;
+}
+
+.catalogTile:hover {
+  border-color: rgb(var(--gov-accent) / 55%);
+  box-shadow: 0 20px 44px -32px rgb(var(--gov-shadow) / 45%);
+  transform: translateY(-4px);
+}
+
+.catalogTileMark {
+  align-items: center;
+  background: rgb(var(--gov-tint));
+  border-radius: 9px;
+  color: rgb(var(--gov-accent-strong));
+  display: inline-flex;
+  flex: none;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.catalogTileMark svg {
+  height: 1.15rem;
+  width: 1.15rem;
+}
+
+.catalogCta {
+  background:
+    radial-gradient(circle at 85% 20%, rgb(255 255 255 / 12%), transparent 45%),
+    linear-gradient(120deg, rgb(var(--gov-accent-strong)) 0%, rgb(var(--gov-accent)) 100%);
+  border-radius: 24px;
+  color: #fff;
+  display: grid;
+  gap: 1.5rem 2.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.75rem, 4vw, 3.25rem);
+  position: relative;
+}
+
+.catalogCtaEyebrow {
+  color: rgb(255 255 255 / 82%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .catalogCtaEyebrow {
+  letter-spacing: 0;
+}
+
+.catalogCta h3 {
+  color: #fff;
+  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+  line-height: 1.15;
+  margin-block: 0.6rem 0.6rem;
+}
+
+.page[dir='rtl'] .catalogCta h3 {
+  line-height: 1.3;
+}
+
+.catalogCta p {
+  color: rgb(255 255 255 / 88%);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* --------------------------------------------------------------- Stats band */
+.statsSection {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.statsBand {
+  background: rgb(var(--gov-gray));
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 20px;
+  padding: clamp(2.5rem, 4vw, 3.25rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.statsGrid {
+  display: grid;
+  gap: 2rem 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.statTile {
+  text-align: center;
+}
+
+.statValue {
+  align-items: baseline;
+  color: rgb(var(--gov-ink));
+  display: flex;
+  font-size: clamp(2.6rem, 4vw, 3.5rem);
+  font-weight: 800;
+  gap: 2px;
+  justify-content: center;
+  line-height: 1;
+}
+
+.statValue span[data-fixed] {
+  color: rgb(var(--gov-accent));
+}
+
+.statLabel {
+  color: rgb(var(--gov-body));
+  font-size: 0.96rem;
+  line-height: 1.5;
+  margin-block-start: 0.85rem;
+}
+
+.statsCaption,
+.statsNote {
+  color: rgb(var(--gov-body));
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.statsCaption {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-block-end: 1.75rem;
+  text-transform: uppercase;
+}
+
+.page[dir='rtl'] .statsCaption {
+  letter-spacing: 0;
+}
+
+.statsNote {
+  margin-block-start: 1.75rem;
+}
+
+/* ----------------------------------------------- Compliance / why cards */
+.cardGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.infoCard {
+  background: rgb(var(--gov-surface));
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 22px;
+  padding: 1.75rem;
+  transition:
+    border-color var(--gov-motion-standard) ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.sectionGray .infoCard {
+  background: rgb(var(--gov-surface));
+}
+
+.infoCard:hover {
+  border-color: rgb(var(--gov-accent) / 45%);
+  box-shadow: 0 40px 30px -38px rgb(var(--gov-shadow) / 30%);
+  transform: translateY(-8px);
+}
+
+.infoCard h3 {
+  font-size: 1.15rem;
+  margin-block-end: 0.6rem;
+}
+
+.infoCard p {
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------- Service paths */
+.servicePathGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block-start: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.serviceCard {
+  align-items: center;
+  border: 1px solid rgb(var(--gov-line));
+  border-radius: 16px;
+  display: grid;
+  gap: 0.4rem 1.1rem;
+  grid-template-columns: auto 1fr auto;
+  min-height: 140px;
+  overflow: hidden;
+  padding: 1.6rem;
+  position: relative;
+  transition:
+    border-color var(--gov-motion-standard) ease,
+    box-shadow var(--gov-motion-standard) ease,
+    transform var(--gov-motion-standard) ease;
+}
+
+.serviceCard::before {
+  background: rgb(var(--gov-accent));
+  content: '';
+  inset-block: 0;
+  inset-inline-start: 0;
+  position: absolute;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--gov-motion-standard) ease;
+  width: 4px;
+}
+
+.serviceCard:hover {
+  border-color: rgb(var(--gov-accent) / 40%);
+  box-shadow: 0 24px 50px -30px rgb(var(--gov-shadow) / 30%);
+  transform: translateY(-5px);
+}
+
+.serviceCard:hover::before {
+  transform: scaleY(1);
+}
+
+.serviceCard > span:first-child {
+  color: rgb(var(--gov-accent));
+  font-size: 0.75rem;
+  font-weight: 800;
+  grid-row: 1 / span 2;
+}
+
+.serviceCard h3 {
+  font-size: 1.2rem;
+}
+
+.serviceCard p {
+  color: rgb(var(--gov-body));
+  font-size: 0.85rem;
+}
+
+.serviceCard .arrowPair {
+  color: rgb(var(--gov-accent));
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.contextualServiceLink {
+  align-items: center;
+  color: rgb(var(--gov-accent-strong));
+  display: inline-flex;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  margin-block-start: 1.75rem;
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--gov-accent) / 35%);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35rem;
+}
+
+.contextualServiceLink:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ------------------------------------------------------------------- FAQ */
+.faqSection {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+
+.faqHeading {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+}
+
+.faqHeading h2 {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  line-height: 1.12;
+  margin-block: 1rem 1rem;
+}
+
+.page[dir='rtl'] .faqHeading h2 {
+  line-height: 1.3;
+}
+
+.faqList {
+  border-block-start: 1px solid rgb(var(--gov-line));
+}
+
+.faqItem {
+  border-block-end: 1px solid rgb(var(--gov-line));
+  interpolate-size: allow-keywords;
+}
+
+.faqItem::details-content {
+  block-size: 0;
+  content-visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    block-size var(--gov-motion-accordion) ease,
+    content-visibility var(--gov-motion-accordion) allow-discrete,
+    opacity var(--gov-motion-accordion) ease;
+}
+
+.faqItem[open]::details-content {
+  block-size: auto;
+  content-visibility: visible;
+  opacity: 1;
+}
+
+.faqItem summary {
+  align-items: center;
+  color: rgb(var(--gov-ink));
+  cursor: pointer;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: auto 1fr auto;
+  list-style: none;
+  min-height: 88px;
+  padding: 1.3rem 0;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary > span:first-child {
+  color: rgb(var(--gov-accent));
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.faqItem summary strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.faqItem summary svg {
+  height: 1.15rem;
+  transition:
+    color var(--gov-motion-accordion) ease,
+    transform var(--gov-motion-accordion) ease;
+  width: 1.15rem;
+}
+
+.faqItem[open] summary svg {
+  color: rgb(var(--gov-accent));
+  transform: rotate(180deg);
+}
+
+.faqAnswer {
+  overflow: clip;
+}
+
+.faqAnswer p {
+  line-height: 1.75;
+  max-width: 760px;
+  padding: 0 3rem 1.7rem;
+}
+
+.page[dir='rtl'] .faqAnswer p {
+  padding-inline: 3rem 0;
+}
+
+/* -------------------------------------------------------------- Closing CTA */
+.ctaScrollWrap {
+  margin-inline: auto;
+  max-width: 1320px;
+  padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.ctaCard {
+  background:
+    radial-gradient(circle at 82% 12%, rgb(var(--gov-accent) / 45%), transparent 46%),
+    linear-gradient(160deg, rgb(var(--gov-ink-deep)) 6%, rgb(var(--gov-ink)) 94%);
+  border-radius: 32px;
+  color: rgb(255 255 255 / 82%);
+  overflow: hidden;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+  position: relative;
+}
+
+.ctaInner {
+  margin-inline: auto;
+  max-width: 720px;
+  text-align: center;
+}
+
+.ctaInner .eyebrowLight {
+  margin-block-end: 1.25rem;
+}
+
+.ctaInner h2 {
+  color: #fff;
+  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin-block-end: 1.1rem;
+}
+
+.page[dir='rtl'] .ctaInner h2 {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.ctaInner p {
+  color: rgb(255 255 255 / 84%);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-block-end: 2rem;
+}
+
+/* ============================================================== Responsive */
+@media (max-width: 1100px) {
+  .capabilitiesBand,
+  .domainsGrid,
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .engagementGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 991px) {
+  .heroInner,
+  .workflowInner,
+  .faqSection,
+  .practiceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeadingSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .pillarsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalogGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalogCta {
+    grid-template-columns: 1fr;
+  }
+
+  .servicePathGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqHeading {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .capabilitiesBand,
+  .domainsGrid,
+  .engagementGrid,
+  .cardGrid,
+  .practicePoints,
+  .catalogGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroActions,
+  .heroActions .button {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .heroActions .button {
+    justify-content: space-between;
+  }
+
+  .faqAnswer p {
+    padding-inline: 0;
+  }
+
+  .page[dir='rtl'] .faqAnswer p {
+    padding-inline: 0;
+  }
+
+  .ctaCard {
+    border-radius: 20px;
+  }
+}
+
+/* ============================================= Reduced-motion kill switch */
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    scroll-behavior: auto;
+  }
+
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Reveals must never leave content hidden when motion is reduced */
+  .reveal,
+  .reveal[data-reveal='out'],
+  .reveal[data-reveal-stagger='true'] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Carousel slides all stack visible so no content is trapped off-frame */
+  .carouselSlide {
+    opacity: 1 !important;
+    position: relative !important;
+    visibility: visible !important;
+  }
+
+  .carouselSlide + .carouselSlide {
+    border-block-start: 1px solid rgb(255 255 255 / 14%);
+    margin-block-start: 1rem;
+    padding-block-start: 1.75rem;
+  }
+}
