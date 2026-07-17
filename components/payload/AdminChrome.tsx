@@ -56,6 +56,7 @@ const navGroups: NavGroup[] = [
       { href: '/admin/collections/ai-chat-leads', label: 'Chatbot leads', icon: Send },
       { href: '/admin/collections/contact-inquiries', label: 'Contact inquiries', icon: Mail },
       { href: '/admin/collections/clinictopia-leads', label: 'ClinicTopia leads', icon: Send },
+      { href: '/admin/collections/hasm-erp-leads', label: 'Hasm ERP leads', icon: Send },
       { href: '/admin/collections/newsletter-subscribers', label: 'Newsletter', icon: Inbox },
     ],
   },
