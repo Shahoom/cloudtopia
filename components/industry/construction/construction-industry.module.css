@@ -454,15 +454,18 @@
  *   .heroIntro 80% white          7.3:1   (need 4.5:1, body)
  *   .buttonGhost #fff            10.6:1
  *   .heroTrust li 88% white       8.4:1
+ *   .heroTrustLabel 62% white     5.0:1   (need 4.5:1, body) <- tied tightest here
  *   panel label #fff              9.7:1   (through the panel's 6% white wash)
  *   panel stage 90% white         7.8:1   (through 6% + the row's 5% wash)
  *   panel caption 66% white       5.4:1
- *   panel state 62% white         5.2:1   <- tightest on the page
+ *   panel state 62% white         5.2:1
  *   panel num / state amber       5.0:1
- * The 62%-white state labels are the binding constraint: they are weak even on
- * flat ink (5.98:1), so the ramp's open end is capped at 87% — past that, extra
- * ink buys ~0.1:1 and only costs photo. The eyebrow chip and the amber button are
- * opaque, so the photo never reaches their text.
+ * The 62%-white text is the binding constraint: it is weak even on flat ink
+ * (5.98:1), so the ramp's open end is capped at 87% — past that, extra ink buys
+ * ~0.1:1 and only costs photo. `.heroTrustLabel` is in that group only while its
+ * rule stays qualified as `.heroTrust li.heroTrustLabel`; unqualified, `.heroTrust
+ * li` repaints it at 88% and it stops reading as a label. The eyebrow chip and the
+ * amber button are opaque, so the photo never reaches their text.
  */
 .heroPhoto {
   height: 100%;
@@ -1956,14 +1959,20 @@
  * already isolates, so: photo (-3) < scrim (-2) < blueprint (-1) < .ctaInner (1).
  * The card's flat ink stays as the decode/404 fallback.
  *
- * This photo is the brightest of the four — its sky is near-white — and the CTA
- * copy is centred across the full card, so the scrim is flat rather than ramped.
- * Even so it is the LIGHTEST of the three: nothing here is under 82% white, and a
- * near-white sky under 74% ink still lands ~rgb(86), which is plenty. Worst
- * sampled pixel (LTR + RTL, 1440 and 390):
- *   .ctaInner .eyebrowLight   5.5:1  (need 3:1 — renders 82% white 19.8px/700)
- *   .ctaInner h2 #fff         7.4:1  (need 3:1, large)
+ * This photo is the brightest of the four — its sky is near-white — so the ramp is
+ * aimed at the copy rather than run flat: 80% ink at the top, opening to 74% at the
+ * bottom. The copy is NOT vertically centred (the eyebrow lands 9-12% down), and
+ * the radial below dies at 70% of its radius, so it never reaches the eyebrow —
+ * only this ramp does. Ink spent at the top is bought back at the bottom, which
+ * now shows more photo than a flat 74->78% did. Worst sampled pixel
+ * (LTR + RTL, 1440 and 390):
+ *   .ctaInner p.eyebrowLight  5.1:1  (need 4.5:1 — amber 14.04px/700 is NOT large)
+ *   .ctaInner h2 #fff         8.3:1  (need 3:1, large)
  *   .ctaInner p 82% white     6.1:1  (need 4.5:1, body)
+ * The eyebrow is the binding constraint and it is why the ramp is aimed: amber is a
+ * bright ink (it is only 1.7:1 on white), so it needs the DENSE end behind it. At a
+ * flat 74->78% it measured 4.38:1 and failed. Do not flatten this ramp, and do not
+ * let the eyebrow fall back to the shared 0-1-0 eyebrow rules — see below.
  * The card scroll-zooms (scale 1.06 -> 1), which transforms photo and text
  * together — the sampled relationship is invariant under it, so one crop covers it.
  */
@@ -1980,7 +1989,7 @@
 
 .ctaScrim {
   background:
-    linear-gradient(180deg, rgb(var(--con-ink) / 74%) 0%, rgb(var(--con-ink) / 78%) 100%),
+    linear-gradient(180deg, rgb(var(--con-ink) / 80%) 0%, rgb(var(--con-ink) / 74%) 100%),
     radial-gradient(circle at 50% 50%, rgb(var(--con-dark-2) / 20%), transparent 70%);
   inset: 0;
   pointer-events: none;

@@ -92,7 +92,7 @@ export function ProfessionalServicesTabs({
           ))}
         </div>
       </div>
-      <div className={styles.tabPanels}>
+      <div>
         {tabs.map((tab) => (
           <div
             key={tab.id}

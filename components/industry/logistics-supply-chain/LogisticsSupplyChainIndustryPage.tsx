@@ -523,7 +523,7 @@ export function LogisticsSupplyChainIndustryPage({
                 </a>
               </div>
             </LogisticsReveal>
-            <LogisticsReveal className={styles.mapMedia} variant="right">
+            <LogisticsReveal variant="right">
               <LogisticsFootprintMap regions={copy.regions} canvasLabel={copy.mapCanvasLabel} />
             </LogisticsReveal>
           </div>

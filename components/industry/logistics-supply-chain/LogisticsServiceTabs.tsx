@@ -92,7 +92,7 @@ export function LogisticsServiceTabs({
         })}
       </div>
 
-      <div className={styles.serviceTabPanels}>
+      <div>
         {domains.map((domain, index) => (
           <div
             key={domain.id}

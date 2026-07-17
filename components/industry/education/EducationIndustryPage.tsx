@@ -311,7 +311,7 @@ export function EducationIndustryPage({
               <h2>{copy.previewTitle}</h2>
               <p>{copy.previewIntro}</p>
             </EducationReveal>
-            <EducationReveal className={styles.previewFrameWrap} variant="up">
+            <EducationReveal variant="up">
               <figure className={styles.previewFigure}>
                 <div className={styles.previewFrame} aria-hidden="true">
                   <span className={styles.previewPulse} />
@@ -339,7 +339,7 @@ export function EducationIndustryPage({
         </section>
 
         {/* ------------------------------------------ Engagement models */}
-        <section className={`${styles.section} ${styles.pricingSection} ${styles.sectionGray}`}>
+        <section className={`${styles.section} ${styles.sectionGray}`}>
           <EducationReveal className={styles.sectionHeadingCentered} variant="up">
             <p className={styles.eyebrow}>{copy.pricingEyebrow}</p>
             <h2>{copy.pricingTitle}</h2>

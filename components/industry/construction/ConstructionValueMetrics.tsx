@@ -134,7 +134,7 @@ export function ConstructionValueMetrics({
         <p className={styles.skillsLabel}>{skillsLabel}</p>
         <ul className={styles.skillsList}>
           {skills.map((skill, index) => (
-            <li className={styles.skillRow} key={skill.id}>
+            <li key={skill.id}>
               <div className={styles.skillHead}>
                 <span className={styles.skillName}>{skill.label}</span>
                 <span className={styles.skillValue}>{skill.value}%</span>
