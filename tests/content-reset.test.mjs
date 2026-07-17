@@ -28,5 +28,7 @@ test('Payload CMS integration files are present', () => {
   assert.equal(existsSync(path.join(root, 'payload.config.ts')), true)
   assert.equal(existsSync(path.join(root, 'app/(payload)/admin/[[...segments]]/page.tsx')), true)
   assert.equal(existsSync(path.join(root, 'app/(payload)/api/[[...slug]]/route.ts')), true)
-  assert.equal(existsSync(path.join(root, 'components/payload/EditorialDashboard.tsx')), true)
+  // EditorialDashboard was removed in the 2026-07 dead-code sweep: nothing
+  // imported it and the admin importMap never referenced it.
+  assert.equal(existsSync(path.join(root, 'components/payload/EditorialDashboard.tsx')), false)
 })

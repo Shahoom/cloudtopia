@@ -105,7 +105,6 @@ test('full service taxonomy covers the requested service expansion', async () =>
 test('active site locale model is English and Arabic only', async () => {
   const { locales, localeNames, localeDirection } = await import('../lib/i18n/config.ts')
   const languageContextSource = readFileSync(path.join(process.cwd(), 'lib/i18n/LanguageContext.tsx'), 'utf8')
-  const i18nIndexSource = readFileSync(path.join(process.cwd(), 'lib/i18n/index.ts'), 'utf8')
   const englishDictionarySource = readFileSync(path.join(process.cwd(), 'lib/i18n/translations/en.ts'), 'utf8')
   const arabicDictionarySource = readFileSync(path.join(process.cwd(), 'lib/i18n/translations/ar.ts'), 'utf8')
   const sitemapSource = readFileSync(path.join(process.cwd(), 'lib/sitemap-data.ts'), 'utf8')
@@ -117,10 +116,8 @@ test('active site locale model is English and Arabic only', async () => {
   const processPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/process/page.tsx'), 'utf8')
   const trustPageSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/trust/page.tsx'), 'utf8')
   const adminAuthSource = readFileSync(path.join(process.cwd(), 'components/payload/AuthViews.tsx'), 'utf8')
-  const editorialDashboardSource = readFileSync(path.join(process.cwd(), 'components/payload/EditorialDashboard.tsx'), 'utf8')
   const sourceSurfaces = [
     languageContextSource,
-    i18nIndexSource,
     englishDictionarySource,
     arabicDictionarySource,
     proxySource,
@@ -131,7 +128,6 @@ test('active site locale model is English and Arabic only', async () => {
     processPageSource,
     trustPageSource,
     adminAuthSource,
-    editorialDashboardSource,
   ].join('\n')
 
   assert.deepEqual(locales, ['en', 'ar'])
@@ -279,7 +275,7 @@ test('homepage includes full-expansion trust industry and insights sections', ()
 
   assert.match(homeSource, /Testimonials/, 'Homepage should include the trust/testimonials section')
   assert.match(homeSource, /IndustriesPreview/, 'Homepage should include industry discovery')
-  assert.match(homeSource, /EnterpriseProof/, 'Homepage should include enterprise proof content')
+  assert.match(homeSource, /SolutionFinder/, 'Homepage should include the solution finder (replaced the enterprise-proof section)')
   assert.match(homeSource, /ArticlesTeaser/, 'Homepage should include insights/blog teaser')
 })
 
