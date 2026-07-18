@@ -253,7 +253,13 @@ export default async function FrontendLayout({
                   areaServed: ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
                 },
               ],
-              sameAs: ['https://x.com/thecloudtopia', 'https://instagram.com/thecloudtopia', 'https://github.com/Shahoom'],
+              sameAs: [
+                'https://x.com/thecloudtopia',
+                'https://instagram.com/thecloudtopia',
+                'https://github.com/Shahoom',
+                'https://clutch.co/profile/cloudtopia-0',
+                'https://www.goodfirms.co/company/cloudtopia',
+              ],
               knowsLanguage: ['en', 'ar'],
               // Connect the company entity to the real founder Person, reusing the
               // exact #person @id minted on the /articles/author/mohamad-shahm

@@ -191,7 +191,7 @@ export default function Testimonials() {
       title: 'آراء عملاء عملوا معنا على مواقع، أنظمة، سحابة، وذكاء اصطناعي',
       body: 'كلاود توبيا شركة برمجيات وسحابة تبني حلولاً رقمية للشركات: مواقع احترافية، تطبيقات ويب وجوال، CRM وERP، ترحيل بيانات، أتمتة أعمال، ودعم عملاء بالذكاء الاصطناعي.',
       proof: 'استشارة مجانية + معاينة ديمو مجانية قبل بدء المشروع',
-      clutchLabel: 'تقييمات موثّقة على Clutch',
+      clutchLabel: 'ملفنا على Clutch',
       partnersLabel: 'شركاء تقنيون معتمدون',
     }
     : {
@@ -199,7 +199,7 @@ export default function Testimonials() {
       title: 'Client feedback from websites, systems, cloud, and AI projects',
       body: 'CloudTopia is a software company and cloud technology company building business websites, web and mobile apps, CRM and ERP systems, data migration, business automation, and AI customer care workflows.',
       proof: 'Free consultation + free custom demo preview before the project starts',
-      clutchLabel: 'Verified reviews on Clutch',
+      clutchLabel: 'View our Clutch profile',
       partnersLabel: 'Certified Technology Partners',
     }
 

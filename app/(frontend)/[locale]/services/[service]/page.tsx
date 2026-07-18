@@ -42,6 +42,7 @@ import {
     WEBAPP_LEGACY_REDIRECTS,
     WEBSITE_FAMILY_REDIRECTS,
 } from '@/lib/seo/canonical-redirects'
+import { buildServiceDocumentTitle } from '@/lib/seo/service-metadata'
 
 // Which real CMS projects (by public id) showcase each website sub-service.
 // Related "Projects we did" are now data-driven: each project is tagged in the
@@ -388,9 +389,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         : WEBSITE_FAMILY_REDIRECTS[service.slug] || WEBAPP_LEGACY_REDIRECTS[service.slug] || `/services/${service.slug}`
     const category = getServiceCategory(service.categorySlug)
     const categoryName = category ? localizedServiceValue(category.name, locale) : locale === 'ar' ? 'خدمات كلاود توبيا' : 'CloudTopia Services'
-    const title = locale === 'ar'
-        ? `${name} للشركات`
-        : `${name} for Business`
+    const title = buildServiceDocumentTitle(name, service.slug, locale)
     const socialTitle = `${title} | ${locale === 'ar' ? 'كلاود توبيا' : 'CloudTopia'}`
     const images = ogImagesFor({ page: `services/${service.slug}`, locale })
 
