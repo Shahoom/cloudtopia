@@ -4,6 +4,10 @@ import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { digitalPresenceGroups, digitalPresencePillars } from '../lib/services/digital-presence'
 import { dpSubServiceContent, getDigitalPresenceSubServicesByPillar } from '../lib/services/digital-presence-content'
+import {
+  resolveCanonicalRedirect,
+  WEBSITE_FAMILY_REDIRECTS,
+} from '../lib/seo/canonical-redirects'
 
 const websiteFamilyOrphans = [
   'website-redesign',
@@ -80,14 +84,22 @@ test('business systems hub is canonical under the services namespace', async () 
 })
 
 test('website-family duplicate slugs are redirect-only and excluded from crawler inventories', () => {
-  const proxySource = readFileSync(path.join(process.cwd(), 'proxy.ts'), 'utf8')
   const sitemapSource = readFileSync(path.join(process.cwd(), 'lib/sitemap-data.ts'), 'utf8')
   const llmsSource = readFileSync(path.join(process.cwd(), 'public/llms.txt'), 'utf8')
   const pricingSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/pricing/page.tsx'), 'utf8')
   const aboutSource = readFileSync(path.join(process.cwd(), 'app/(frontend)/[locale]/about/layout.tsx'), 'utf8')
 
   for (const slug of websiteFamilyOrphans) {
-    assert.match(proxySource, new RegExp(`['"]${slug}['"]`), `${slug} should have a one-hop redirect in proxy.ts`)
+    assert.equal(
+      resolveCanonicalRedirect(`/services/${slug}`)?.pathname,
+      WEBSITE_FAMILY_REDIRECTS[slug],
+      `${slug} should resolve directly to its canonical service`,
+    )
+    assert.equal(
+      resolveCanonicalRedirect(`/ar/services/${slug}`)?.pathname,
+      `/ar${WEBSITE_FAMILY_REDIRECTS[slug]}`,
+      `${slug} should preserve the Arabic canonical prefix`,
+    )
     assert.match(sitemapSource, new RegExp(`websiteFamilyOrphanSet[\\s\\S]*['"]${slug}['"]`), `${slug} should be excluded from sitemap generation`)
     assert.doesNotMatch(llmsSource, new RegExp(`https://cloudtopia\\.net/services/${slug}\\b`), `${slug} should not be listed as an indexable LLMS service URL`)
     assert.doesNotMatch(pricingSource, new RegExp(`/services/${slug}\\b`), `${slug} should not be linked from pricing`)

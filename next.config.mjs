@@ -5,6 +5,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  // Proxy owns host, locale, trailing-slash, and legacy-alias normalization so
+  // combined legacy requests reach their final canonical URL in one hop.
+  skipTrailingSlashRedirect: true,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
 
   // Keep Turbopack anchored to this checkout. Without an explicit root, a

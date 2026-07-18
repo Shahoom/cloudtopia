@@ -38,6 +38,10 @@ import { ContactFast } from '@/components/ui/contact-fast'
 import { ProjectsShowcase } from '@/components/ui/projects-showcase'
 import { type Project } from '@/lib/projects'
 import { getProjectsForService } from '@/lib/services/related-projects'
+import {
+    WEBAPP_LEGACY_REDIRECTS,
+    WEBSITE_FAMILY_REDIRECTS,
+} from '@/lib/seo/canonical-redirects'
 
 // Which real CMS projects (by public id) showcase each website sub-service.
 // Related "Projects we did" are now data-driven: each project is tagged in the
@@ -278,30 +282,9 @@ function whatsappHref(serviceName: string, locale: string) {
     return `https://wa.me/96895886393?text=${encodeURIComponent(text)}`
 }
 
-const WEBAPP_ORPHAN_REDIRECTS: Record<string, string> = {
-    'custom-web-application-development': '/services/web-applications/full-stack-web-engineering',
-    'progressive-web-app-development': '/services/web-applications/full-stack-web-engineering',
-    'client-portals': '/services/web-applications/interactive-portals-dashboards',
-    'admin-dashboards': '/services/web-applications/interactive-portals-dashboards',
-    'booking-platforms': '/services/web-applications/interactive-portals-dashboards',
-    'internal-business-tools': '/services/web-applications/interactive-portals-dashboards',
-    'saas-mvp-development': '/services/web-applications/custom-saas-mvp-development',
-}
-
-const WEBSITE_FAMILY_ORPHAN_REDIRECTS: Record<string, string> = {
-    'website-redesign': '/services/website-development',
-    'corporate-website-design': '/services/website-development',
-    'landing-page-design': '/services/website-development',
-    'portfolio-websites': '/services/website-development',
-    'educational-website-development': '/services/website-development',
-    'restaurant-website-development': '/services/website-development',
-    'website-maintenance': '/services/website-development',
-    'ecommerce-website-development': '/services/ecommerce-development',
-}
-
 const redirectedFlatServiceSlugs = new Set<string>([
-    ...Object.keys(WEBAPP_ORPHAN_REDIRECTS),
-    ...Object.keys(WEBSITE_FAMILY_ORPHAN_REDIRECTS),
+    ...Object.keys(WEBAPP_LEGACY_REDIRECTS),
+    ...Object.keys(WEBSITE_FAMILY_REDIRECTS),
 ])
 
 export function generateStaticParams() {
@@ -402,7 +385,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // If this is an older near-duplicate, canonicalize to the new equivalent page.
     const canonicalPath = isAppDevSub
         ? path
-        : WEBSITE_FAMILY_ORPHAN_REDIRECTS[service.slug] || WEBAPP_ORPHAN_REDIRECTS[service.slug] || `/services/${service.slug}`
+        : WEBSITE_FAMILY_REDIRECTS[service.slug] || WEBAPP_LEGACY_REDIRECTS[service.slug] || `/services/${service.slug}`
     const category = getServiceCategory(service.categorySlug)
     const categoryName = category ? localizedServiceValue(category.name, locale) : locale === 'ar' ? 'خدمات كلاود توبيا' : 'CloudTopia Services'
     const title = locale === 'ar'
@@ -446,7 +429,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServiceDetailPage({ params }: PageProps) {
     const { locale = 'en', service: serviceSlug } = await params
-    const orphanRedirect = WEBSITE_FAMILY_ORPHAN_REDIRECTS[serviceSlug] || WEBAPP_ORPHAN_REDIRECTS[serviceSlug]
+    const orphanRedirect = WEBSITE_FAMILY_REDIRECTS[serviceSlug] || WEBAPP_LEGACY_REDIRECTS[serviceSlug]
     if (orphanRedirect) permanentRedirect(localePath(locale, orphanRedirect))
 
     // Closing "what people search for" band — appended after whichever template
