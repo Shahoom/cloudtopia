@@ -8,6 +8,12 @@ import {
   WEBAPP_LEGACY_REDIRECTS,
   WEBSITE_FAMILY_REDIRECTS,
 } from '../lib/seo/canonical-redirects'
+import { businessSystemsSeoFallback } from '../app/(frontend)/[locale]/services/business-systems-development/seo-fallback'
+import { webApplicationsSeoFallback } from '../app/(frontend)/[locale]/services/web-applications/seo-fallback'
+import {
+  ecommerceSolutionsSeoFallback,
+  websiteDesignSeoFallback,
+} from '../lib/services/service-page-seo-fallbacks'
 
 const redirectOnlySlugs = new Set([
   ...Object.keys(WEBAPP_LEGACY_REDIRECTS),
@@ -59,4 +65,41 @@ test('Clutch wording is neutral and Organization schema links authoritative prof
   assert.doesNotMatch(testimonialsSource, /Verified reviews on Clutch|تقييمات موثّقة على Clutch/)
   assert.match(layoutSource, /https:\/\/clutch\.co\/profile\/cloudtopia-0/)
   assert.match(layoutSource, /https:\/\/www\.goodfirms\.co\/company\/cloudtopia/)
+})
+
+test('flagship service descriptions use the available search snippet space', () => {
+  const fallbacks = [
+    businessSystemsSeoFallback,
+    ecommerceSolutionsSeoFallback,
+    webApplicationsSeoFallback,
+    websiteDesignSeoFallback,
+  ]
+
+  for (const fallback of fallbacks) {
+    for (const locale of ['en', 'ar']) {
+      const description = fallback.descriptions[locale]
+      assert.ok(description.length >= 120, `${locale} description is too short: ${description}`)
+      assert.ok(description.length <= 170, `${locale} description is too long: ${description}`)
+    }
+  }
+})
+
+test('audited long-tail services have useful English meta descriptions', () => {
+  const slugs = [
+    'e-commerce-redesign-and-migration',
+    'graphic-design-for-social-media',
+    'influencer-outreach-and-management',
+    'linkedin-b2b-personal-branding',
+    'short-form-video-editing',
+    'social-media-analytics-and-reporting',
+    'social-media-copywriting',
+  ]
+
+  for (const slug of slugs) {
+    const source = JSON.parse(
+      readFileSync(path.join(process.cwd(), `lib/services/dp-subs/${slug}.json`), 'utf8'),
+    ) as { seo: { description: string } }
+    assert.ok(source.seo.description.length >= 120, `${slug} description is too short`)
+    assert.ok(source.seo.description.length <= 170, `${slug} description is too long`)
+  }
 })

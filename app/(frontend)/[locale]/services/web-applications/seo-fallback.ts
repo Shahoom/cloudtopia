@@ -4,7 +4,7 @@ export const webApplicationsSeoFallback = {
     ar: 'تطوير تطبيقات ويب مخصصة ومنصات SaaS',
   } as Record<string, string>,
   descriptions: {
-    en: 'Custom web apps, portals, dashboards, and SaaS on Next.js + React with real-time features and bilingual UI.',
-    ar: 'تطبيقات ويب وبوابات ولوحات تحكم وSaaS مخصصة على Next.js وReact مع ميزات حية وواجهة ثنائية اللغة.',
+    en: 'Custom web apps, client portals, dashboards, and SaaS platforms built with Next.js and React, bilingual UX, secure integrations, and full code ownership.',
+    ar: 'تطبيقات ويب وبوابات عملاء ولوحات تحكم ومنصات SaaS مخصصة باستخدام Next.js وReact، بواجهة ثنائية اللغة وتكاملات آمنة وملكية كاملة للكود.',
   } as Record<string, string>,
 }

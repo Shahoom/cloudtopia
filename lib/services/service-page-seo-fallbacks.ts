@@ -15,8 +15,8 @@ export const ecommerceSolutionsSeoFallback = {
     ar: 'متاجر إلكترونية خليجية — مدى وآبل باي وتابي وتمارا',
   } as Record<string, string>,
   descriptions: {
-    en: 'Online stores with Gulf payment gateways, ZATCA e-invoicing, bilingual checkout, and clear package scope.',
-    ar: 'متاجر إلكترونية مع بوابات دفع خليجية، فوترة ZATCA، دفع ثنائي اللغة، ونطاق باقة واضح.',
+    en: 'E-commerce stores for Gulf businesses with local payment gateways, ZATCA-ready invoicing, bilingual checkout, conversion-focused UX, and clear delivery scope.',
+    ar: 'متاجر إلكترونية لشركات الخليج مع بوابات دفع محلية وفوترة جاهزة لـ ZATCA ودفع ثنائي اللغة وتجربة تركز على التحويل ونطاق تنفيذ وملكية واضحين.',
   } as Record<string, string>,
 }
 
@@ -37,7 +37,7 @@ export const websiteDesignSeoFallback = {
     ar: 'تطوير مواقع الويب في الخليج',
   } as Record<string, string>,
   descriptions: {
-    en: 'Bilingual Arabic + English websites for Gulf businesses. Fast, SEO-ready, RTL-correct, and scoped clearly.',
-    ar: 'مواقع ويب ثنائية اللغة عربي + إنجليزي لأعمال الخليج. سريعة، جاهزة للسيو، RTL صحيح، وبنطاق واضح.',
+    en: 'Bilingual Arabic and English websites for Gulf businesses, built with fast performance, technical SEO, accurate RTL layouts, conversion paths, and clear ownership.',
+    ar: 'مواقع عربية وإنجليزية لشركات الخليج بأداء سريع وتحسين تقني لمحركات البحث وتخطيط RTL دقيق ومسارات تحويل واضحة وملكية كاملة للموقع والحسابات.',
   } as Record<string, string>,
 }
