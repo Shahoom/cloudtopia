@@ -11,6 +11,7 @@ import { buildHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { buildCategoryTaxonomyCopy } from '@/lib/blog/taxonomy-seo'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -89,20 +90,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Arabic uses the hand-written AR_CATEGORY_META map above (category.name is
   // already localized by the data layer for the generic fallback).
   const arMeta = locale === 'ar' ? AR_CATEGORY_META[category.slug] : undefined
-  const title = locale === 'ar'
-    ? (arMeta?.title || `مقالات ${category.name}`)
-    : stripBrandSuffix(category.seo?.metaTitle || `${category.name} Articles`)
-  const description = locale === 'ar'
-    ? (arMeta?.description || `مقالات ${category.name} من كلاود توبيا: أدلة عملية ورؤى تساعد الشركات في الخليج والعالم العربي على النمو الرقمي.`)
-    : (category.seo?.metaDescription || category.description)
+  const copy = buildCategoryTaxonomyCopy({
+    locale,
+    slug: category.slug,
+    name: category.name,
+    description: locale === 'ar' ? (arMeta?.description || category.description) : category.description,
+    metaTitle: locale === 'ar' ? arMeta?.title : stripBrandSuffix(category.seo?.metaTitle || ''),
+    metaDescription: locale === 'ar' ? arMeta?.description : category.seo?.metaDescription,
+  })
 
   return {
-    title,
-    description,
-    robots: category.seo?.noIndex ? { index: false, follow: false } : undefined,
+    title: copy.title,
+    description: copy.description,
     openGraph: {
-      title,
-      description,
+      title: copy.title,
+      description: copy.description,
       url: canonicalUrl(locale, `/articles/category/${category.slug}`),
       type: 'website',
       // Page-level openGraph shallow-merges over the layout's, dropping its
@@ -130,6 +132,15 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
   const search = typeof query.q === 'string' ? query.q : ''
   const page = Number(query.page || 1)
   const data = await getBlogIndexData({ locale, page, search, category: slug })
+  const arMeta = locale === 'ar' ? AR_CATEGORY_META[category.slug] : undefined
+  const taxonomyCopy = buildCategoryTaxonomyCopy({
+    locale,
+    slug: category.slug,
+    name: category.name,
+    description: locale === 'ar' ? (arMeta?.description || category.description) : category.description,
+    metaTitle: locale === 'ar' ? arMeta?.title : stripBrandSuffix(category.seo?.metaTitle || ''),
+    metaDescription: locale === 'ar' ? arMeta?.description : category.seo?.metaDescription,
+  })
 
   // SD-7: CollectionPage + BreadcrumbList + ItemList of the listed articles.
   const categoryUrl = canonicalUrl(locale, `/articles/category/${category.slug}`)
@@ -138,7 +149,7 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
     '@type': 'CollectionPage',
     '@id': `${categoryUrl}#collectionpage`,
     name: category.name,
-    ...(category.description ? { description: category.description } : {}),
+    description: taxonomyCopy.intro,
     url: categoryUrl,
     inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
     isPartOf: { '@type': 'Blog', '@id': `${canonicalUrl(locale, '/articles')}#blog` },
@@ -177,8 +188,8 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
         <SectionMasthead
           className="mt-6 mb-10"
           eyebrow={locale === 'ar' ? 'التصنيف' : 'Category'}
-          title={category.name}
-          description={category.description}
+          title={taxonomyCopy.title}
+          description={taxonomyCopy.intro}
           metaLabel={metaLabel}
         >
           <form action={localePath(locale, `/articles/category/${category.slug}`)} className="relative mt-6 max-w-md">

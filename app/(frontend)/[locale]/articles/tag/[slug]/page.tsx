@@ -10,6 +10,7 @@ import { buildHreflangMap, canonicalUrl, localePath, stripBrandSuffix } from '@/
 import { JsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/seo/schema'
 import { ogImagesFor } from '@/lib/og/og-image'
+import { buildTagTaxonomyCopy } from '@/lib/blog/taxonomy-seo'
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>
@@ -22,22 +23,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tag = tags.find((item) => item.slug === slug)
   if (!tag) return { title: 'Tag Not Found' }
 
-  // No hardcoded brand — the layout template adds "| CloudTopia" once (the EN
-  // fallback used to bake it in, doubling the suffix).
-  const title = stripBrandSuffix(locale === 'ar' ? `وسم ${tag.name} | المقالات` : `${tag.name} Articles`)
-  // TM-11: the old one-liner ("CloudTopia articles tagged with X.") was far
-  // below the snippet budget — expanded to a natural 120-160ch description
-  // that still names the tag.
-  const description = locale === 'ar'
-    ? `مقالات كلاود توبيا تحت وسم ${tag.name}: أدلة عملية ورؤى حول المواقع والأنظمة والأتمتة والذكاء الاصطناعي للشركات في الخليج والعالم العربي.`
-    : `CloudTopia articles tagged ${tag.name} — practical guides on websites, systems, automation and AI for businesses in the GCC and Arab world.`
+  const copy = buildTagTaxonomyCopy({
+    locale,
+    slug: tag.slug,
+    name: tag.name,
+    postCount: tag.postCount,
+  })
 
   return {
-    title,
-    description,
+    title: stripBrandSuffix(copy.title),
+    description: copy.description,
     openGraph: {
-      title,
-      description,
+      title: copy.title,
+      description: copy.description,
       url: canonicalUrl(locale, `/articles/tag/${tag.slug}`),
       type: 'website',
       // Page-level openGraph shallow-merges over the layout's, dropping its
@@ -65,6 +63,12 @@ export default async function ArticleTagPage({ params, searchParams }: PageProps
   const search = typeof query.q === 'string' ? query.q : ''
   const page = Number(query.page || 1)
   const data = await getBlogIndexData({ locale, page, search, tag: slug })
+  const taxonomyCopy = buildTagTaxonomyCopy({
+    locale,
+    slug: tag.slug,
+    name: tag.name,
+    postCount: tag.postCount,
+  })
 
   // SD-7: CollectionPage + BreadcrumbList + ItemList of the listed articles.
   const tagUrl = canonicalUrl(locale, `/articles/tag/${tag.slug}`)
@@ -72,11 +76,8 @@ export default async function ArticleTagPage({ params, searchParams }: PageProps
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     '@id': `${tagUrl}#collectionpage`,
-    name: locale === 'ar' ? `وسم ${tag.name}` : `${tag.name} Articles`,
-    description:
-      locale === 'ar'
-        ? `مقالات CloudTopia الموسومة بـ ${tag.name}.`
-        : `CloudTopia articles tagged with ${tag.name}.`,
+    name: taxonomyCopy.title,
+    description: taxonomyCopy.intro,
     url: tagUrl,
     inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
     isPartOf: { '@type': 'Blog', '@id': `${canonicalUrl(locale, '/articles')}#blog` },
@@ -100,9 +101,6 @@ export default async function ArticleTagPage({ params, searchParams }: PageProps
     { name: tag.name, path: `/articles/tag/${tag.slug}` },
   ])
 
-  const description = locale === 'ar'
-    ? `تم نشر ${tag.postCount} ${tag.postCount === 1 ? 'مقالة' : 'مقالات'} موسومة بـ ${tag.name}.`
-    : `${tag.postCount} published ${tag.postCount === 1 ? 'article' : 'articles'} tagged with ${tag.name}.`
   const count = data.latestPosts.length
   const metaLabel = locale === 'ar'
     ? `${count} ${count === 1 ? 'مقالة' : 'مقالات'}`
@@ -118,8 +116,8 @@ export default async function ArticleTagPage({ params, searchParams }: PageProps
         <SectionMasthead
           className="mt-6 mb-10"
           eyebrow={locale === 'ar' ? 'الوسم' : 'Tag'}
-          title={tag.name}
-          description={description}
+          title={taxonomyCopy.title}
+          description={taxonomyCopy.intro}
           metaLabel={metaLabel}
         >
           <form action={localePath(locale, `/articles/tag/${tag.slug}`)} className="relative mt-6 max-w-md">
