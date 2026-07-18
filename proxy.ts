@@ -168,12 +168,24 @@ export function proxy(request: NextRequest) {
     {
         const nested = cleanPath.match(/^(?:\/(en|ar))?\/services\/app-development\/([a-z0-9-]+)$/)
         if (nested && isAppSubserviceSlug(nested[2])) {
+            const nestedLocale = nested[1] === 'ar' ? 'ar' : defaultLocale
+            const canonicalPath = nestedLocale === 'ar'
+                ? `/ar/services/app-development/${nested[2]}`
+                : `/services/app-development/${nested[2]}`
+
+            if (isWww || pathname !== canonicalPath) {
+                const redirectUrl = new URL(request.url)
+                redirectUrl.host = apexHost
+                redirectUrl.pathname = canonicalPath
+                return NextResponse.redirect(redirectUrl, { status: 301 })
+            }
+
             const url = request.nextUrl.clone()
-            url.pathname = `/${nested[1] || defaultLocale}/services/${nested[2]}`
+            url.pathname = `/${nestedLocale}/services/${nested[2]}`
             const requestHeaders = new Headers(request.headers)
-            requestHeaders.set('x-locale', nested[1] || defaultLocale)
+            requestHeaders.set('x-locale', nestedLocale)
             const response = NextResponse.rewrite(url, { request: { headers: requestHeaders } })
-            response.cookies.set('NEXT_LOCALE', nested[1] || defaultLocale, { path: '/', maxAge: 60 * 60 * 24 * 365 })
+            response.cookies.set('NEXT_LOCALE', nestedLocale, { path: '/', maxAge: 60 * 60 * 24 * 365 })
             return response
         }
     }
@@ -184,7 +196,7 @@ export function proxy(request: NextRequest) {
     const countryRedirect = getCountryRedirect(cleanPath)
 
     if (countryRedirect) {
-        const url = request.nextUrl.clone()
+        const url = new URL(request.url)
         url.host = apexHost
         url.pathname = countryRedirect
         return NextResponse.redirect(url, { status: 301 })

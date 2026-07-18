@@ -87,3 +87,45 @@ test('locale-prefixed trailing slashes normalize without an intermediate hop', (
     assert.equal(response.headers.get('location'), scenario.expected)
   }
 })
+
+test('legacy country URLs combine host, locale, and slash cleanup in one redirect', () => {
+  const response = proxy(
+    new NextRequest('https://www.cloudtopia.net/en/locations/united-arab-emirates/?ref=regional', {
+      headers: { host: 'www.cloudtopia.net' },
+    }),
+  )
+
+  assert.equal(response.status, 301)
+  assert.equal(
+    response.headers.get('location'),
+    'https://cloudtopia.net/united-arab-emirates?ref=regional',
+  )
+})
+
+test('nested app-development canonicals clean host, locale, and trailing slash before rewriting', () => {
+  const scenarios = [
+    {
+      source: 'https://www.cloudtopia.net/services/app-development/ios-app-development/?ref=apps',
+      expected: 'https://cloudtopia.net/services/app-development/ios-app-development?ref=apps',
+    },
+    {
+      source: 'https://cloudtopia.net/en/services/app-development/android-app-development/',
+      expected: 'https://cloudtopia.net/services/app-development/android-app-development',
+    },
+    {
+      source: 'https://www.cloudtopia.net/ar/services/app-development/cross-platform-app-development/',
+      expected: 'https://cloudtopia.net/ar/services/app-development/cross-platform-app-development',
+    },
+  ]
+
+  for (const scenario of scenarios) {
+    const response = proxy(
+      new NextRequest(scenario.source, {
+        headers: { host: new URL(scenario.source).host },
+      }),
+    )
+
+    assert.equal(response.status, 301)
+    assert.equal(response.headers.get('location'), scenario.expected)
+  }
+})
