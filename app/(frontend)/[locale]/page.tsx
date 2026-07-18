@@ -144,6 +144,13 @@ export default async function HomePage({
 
     return (
         <>
+            <link
+                rel="preload"
+                as="image"
+                href="/images/homepage/clouds.webp"
+                type="image/webp"
+                fetchPriority="high"
+            />
             <JsonLd schema={[homeCollectionSchema, serviceCatalogSchema, homeFaqSchema]} />
             <div className="sr-only" aria-hidden="false">
                 {heroDesc && <p>{heroDesc}</p>}

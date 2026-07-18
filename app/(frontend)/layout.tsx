@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
-import { Cairo, Fraunces, Amiri, Hanken_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
+import { Cairo, Hanken_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
@@ -19,25 +19,6 @@ const cairo = Cairo({
   // 300/500 cuts four Cairo font files (two weights × two subsets) from the
   // critical download path.
   weight: ['400', '600', '700', '800', '900'],
-  display: 'swap',
-})
-
-// Editorial display serif (Latin) for the blog — headlines, pull quotes, drop
-// caps. Variable-weight range 400–600 plus italic covers every editorial use.
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-})
-
-// Arabic display serif (Naskh) — the RTL counterpart to Fraunces for blog
-// headlines and pull quotes. Fraunces is Latin-only and never applied to Arabic.
-const amiri = Amiri({
-  subsets: ['arabic', 'latin'],
-  variable: '--font-amiri',
-  weight: ['400', '700'],
   display: 'swap',
 })
 
@@ -176,15 +157,10 @@ export default async function FrontendLayout({
     : 'Digital and cloud technology services for websites, e-commerce, web applications, CRM and ERP systems, cloud infrastructure, and AI automation in Arabic and English.'
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${fraunces.variable} ${amiri.variable} ${hanken.variable} ${arUi.variable}`}>
+    <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${hanken.variable} ${arUi.variable}`}>
       <head>
         {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
         <GoogleAnalytics />
-        {/* Only the LCP hero background is preloaded. The self-hosted TTF body/
-            logo faces use font-display:swap, so preheating them at high priority
-            here just stole bandwidth from the LCP image and render-critical CSS
-            on mobile — they now load lazily and swap in without blocking paint. */}
-        <link rel="preload" as="image" href="/images/homepage/clouds.webp" type="image/webp" fetchPriority="high" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="min-h-screen antialiased" suppressHydrationWarning>
