@@ -345,7 +345,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         }
     }
     const pillar = getStructuredPillarBySlug(serviceSlug)
-    if (pillar) {
+    if (pillar && !legacyMainPagePillarSlugs.has(serviceSlug)) {
         const seoOverride = PILLAR_SEO_OVERRIDES[serviceSlug]
         const pName = seoOverride ? (locale === 'ar' ? seoOverride.title.ar : seoOverride.title.en) : localizedDP(pillar.name, locale)
         // Description precedence: explicit override → dedicated pillar SEO

@@ -43,6 +43,18 @@ test('known short service names use intent-specific title overrides', () => {
   }
 })
 
+test('legacy main service pages bypass structured-pillar metadata', () => {
+  const servicePageSource = readFileSync(
+    path.join(process.cwd(), 'app/(frontend)/[locale]/services/[service]/page.tsx'),
+    'utf8',
+  )
+
+  assert.match(
+    servicePageSource,
+    /if \(pillar && !legacyMainPagePillarSlugs\.has\(serviceSlug\)\) \{[\s\S]*?const seoOverride/,
+  )
+})
+
 test('Arabic service titles retain the localized business qualifier', () => {
   assert.equal(
     buildServiceDocumentTitle('الترحيل إلى السحابة', 'cloud-migration', 'ar'),
