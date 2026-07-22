@@ -18,7 +18,7 @@ import type { PayloadRequest } from 'payload'
 // Structural, language-neutral fields copied to a freshly created counterpart.
 // Everything text/content (title, excerpt, content, blocks, SEO copy …) is left
 // empty for the author to write.
-function buildCounterpartData(doc: any, otherLocale: 'en' | 'ar') {
+export function buildCounterpartData(doc: any, otherLocale: 'en' | 'ar') {
   const relId = (v: any) => (v && typeof v === 'object' ? v.id ?? v : v)
   const relIds = (v: any) => (Array.isArray(v) ? v.map(relId).filter((x) => x != null) : undefined)
 
@@ -69,6 +69,48 @@ function buildCounterpartData(doc: any, otherLocale: 'en' | 'ar') {
   return data
 }
 
+export async function ensureBlogPair({
+  payload,
+  source,
+  req,
+}: {
+  payload: PayloadRequest['payload']
+  source: any
+  req?: PayloadRequest
+}): Promise<{ id: string | number; locale: 'en' | 'ar'; created: boolean }> {
+  const otherLocale: 'en' | 'ar' = source.locale === 'ar' ? 'en' : 'ar'
+  const existing = await payload.find({
+    collection: 'blog-posts' as any,
+    depth: 0,
+    limit: 1,
+    draft: true,
+    overrideAccess: true,
+    req,
+    where: {
+      and: [{ slug: { equals: source.slug } }, { locale: { equals: otherLocale } }],
+    },
+  })
+
+  if (existing.docs[0]?.id) {
+    return { id: existing.docs[0].id, locale: otherLocale, created: false }
+  }
+
+  const created = await payload.create({
+    collection: 'blog-posts' as any,
+    data: buildCounterpartData(source, otherLocale),
+    draft: true,
+    overrideAccess: true,
+    req,
+    context: {
+      skipAutoTranslate: true,
+      skipBlogPairSync: true,
+      skipCoverMirror: true,
+    },
+  })
+
+  return { id: created.id, locale: otherLocale, created: true }
+}
+
 async function parseId(req: PayloadRequest): Promise<string | undefined> {
   const data = req.data as Record<string, unknown> | undefined
   if (data && typeof data.id !== 'undefined') return String(data.id)
@@ -117,35 +159,19 @@ export async function handleBlogPairEndpoint(req: PayloadRequest): Promise<Respo
     return Response.json({ error: 'Save the article first (it needs a slug) before adding the other language.' }, { status: 400 })
   }
 
-  const otherLocale: 'en' | 'ar' = source.locale === 'ar' ? 'en' : 'ar'
-
-  // 1) Does the sibling already exist?
-  const existing = await req.payload.find({
-    collection: 'blog-posts' as any,
-    depth: 0,
-    limit: 1,
-    draft: true,
-    overrideAccess: true,
-    req,
-    where: {
-      and: [{ slug: { equals: source.slug } }, { locale: { equals: otherLocale } }],
-    },
-  })
-
-  if (existing.docs[0]?.id) {
-    return Response.json({ id: existing.docs[0].id, locale: otherLocale, created: false })
+  try {
+    const result = await ensureBlogPair({ payload: req.payload, source, req })
+    return Response.json(result)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('[blog-pair] Arabic draft creation failed', {
+      sourceId: source.id,
+      slug: source.slug,
+      error: message,
+    })
+    return Response.json(
+      { error: `Could not create the Arabic draft: ${message}` },
+      { status: 500 },
+    )
   }
-
-  // 2) Create a blank draft counterpart. draft:true lets required text fields
-  //    stay empty until the author fills them in.
-  const created = await req.payload.create({
-    collection: 'blog-posts' as any,
-    data: buildCounterpartData(source, otherLocale),
-    draft: true,
-    overrideAccess: true,
-    req,
-    context: { skipAutoTranslate: true },
-  })
-
-  return Response.json({ id: created.id, locale: otherLocale, created: true })
 }
