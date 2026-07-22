@@ -6,6 +6,7 @@ import type {
   Field,
 } from 'payload'
 import { blogRichTextEditor } from '../lib/cms/blog-rich-text.ts'
+import { ensureBlogPair } from '../lib/cms/blog-pair-endpoint.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
 import { calculateReadingTime, extractLexicalPlainText, slugify } from '../lib/blog/utils.ts'
 import { calculateBlogContentScores } from '../lib/blog/intelligence.ts'
@@ -109,6 +110,23 @@ const revalidateAfterDelete: CollectionAfterDeleteHook = async ({ doc }) => {
   return doc
 }
 
+const ensureArabicCounterpart: CollectionAfterChangeHook = async ({ doc, req, context }) => {
+  if ((context as Record<string, unknown> | undefined)?.skipBlogPairSync) return doc
+  if (doc?.locale !== 'en' || !doc?.slug) return doc
+
+  try {
+    await ensureBlogPair({ payload: req.payload, source: doc, req })
+  } catch (error) {
+    console.error('[blog-pair] automatic Arabic draft creation failed', {
+      sourceId: doc.id,
+      slug: doc.slug,
+      error: error instanceof Error ? error.message : String(error),
+    })
+  }
+
+  return doc
+}
+
 // Articles are two paired documents that share a slug across locales. When the
 // cover image (or its alt text) is set/changed on one locale, mirror it to the
 // sibling so an editor only uploads once. Runs both directions; guarded by a
@@ -191,7 +209,7 @@ export const BlogPosts: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [normalizePost],
-    afterChange: [mirrorCoverImage, revalidateBlogPosts],
+    afterChange: [mirrorCoverImage, ensureArabicCounterpart, revalidateBlogPosts],
     afterDelete: [revalidateAfterDelete],
   },
   fields: [
