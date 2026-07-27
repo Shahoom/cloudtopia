@@ -264,6 +264,14 @@ export function proxy(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/((?!_next/static|_next/image|_vercel|favicon.ico|favicon.svg|icon.svg|images|icon-|apple-touch|manifest).*)',
+        // Excluded AT THE EDGE rather than inside the function. Every prefix below
+        // used to boot the proxy purely so isStaticPath() could turn around and
+        // return NextResponse.next() — a billed invocation per font, icon, OG
+        // image, upload, API call, and admin asset. The in-function isStaticPath()
+        // check is kept as the safety net for anything not listed here.
+        //
+        // robots.txt / sitemap.xml / llms.txt are deliberately NOT excluded: they
+        // are low-volume and still need the proxy's single-hop www -> apex 301.
+        '/((?!_next/|_vercel/|api/|admin|uploads/|images/|icons/|logos/|og/|fonts/|\\.well-known/|favicon\\.|icon\\.svg|icon-|apple-touch|manifest\\.).*)',
     ],
 }

@@ -7,10 +7,22 @@ const readSource = (relativePath: string) =>
   readFileSync(path.join(process.cwd(), relativePath), 'utf8')
 
 test('the root frontend layout does not preload homepage or editorial-only resources', () => {
-  const source = readSource('app/(frontend)/layout.tsx')
+  // The root layout moved from app/(frontend)/layout.tsx down into the [locale]
+  // segment so it could read the locale from params instead of a request header
+  // (a dynamic API in a root layout opts the whole site out of static rendering).
+  const source = readSource('app/(frontend)/[locale]/layout.tsx')
 
   assert.doesNotMatch(source, /Fraunces|Amiri/)
   assert.doesNotMatch(source, /href="\/images\/homepage\/clouds\.webp"/)
+})
+
+test('no layout reads request headers — that would make every route dynamic', () => {
+  for (const layout of [
+    'app/(frontend)/[locale]/layout.tsx',
+    'app/(country-landing)/[locale]/layout.tsx',
+  ]) {
+    assert.doesNotMatch(readSource(layout), /next\/headers/, `${layout} must not import next/headers`)
+  }
 })
 
 test('the localized homepage owns its hero image preload', () => {

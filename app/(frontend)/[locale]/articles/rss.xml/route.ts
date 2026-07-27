@@ -1,7 +1,9 @@
 import { buildInsightsRss } from '@/lib/blog/rss'
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+// Matches the s-maxage below: the feed is regenerated hourly instead of on every
+// reader/crawler poll, so a poll costs a CDN hit rather than a function boot.
+export const revalidate = 3600
 
 export async function GET(_: Request, { params }: { params: Promise<{ locale: string }> }) {
   const { locale = 'en' } = await params

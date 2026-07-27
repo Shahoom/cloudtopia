@@ -68,7 +68,7 @@ test('Clutch wording is neutral and Organization schema links authoritative prof
     'utf8',
   )
   const layoutSource = readFileSync(
-    path.join(process.cwd(), 'app/(frontend)/layout.tsx'),
+    path.join(process.cwd(), 'app/(frontend)/[locale]/layout.tsx'),
     'utf8',
   )
 

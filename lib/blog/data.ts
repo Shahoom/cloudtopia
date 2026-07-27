@@ -8,7 +8,10 @@ import { buildTableOfContents, normalizeMediaUrl } from './utils'
 import { localizeCategoryName, localizeTagName } from './taxonomy-i18n'
 import { filterAndSortBlogPosts, type BlogSearchSort } from './search'
 
-const CMS_REVALIDATE_SECONDS = 60
+// Backstop only — these caches are tagged `cms-blog` and busted on save by
+// revalidateCmsTags(). See the matching note in lib/cms/content.ts: at 60s this
+// floor capped the route revalidate of every page reading blog data.
+const CMS_REVALIDATE_SECONDS = 3600
 const locales = ['en', 'ar'] as const
 
 export type BlogMedia = {

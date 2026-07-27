@@ -174,7 +174,10 @@ const heroImages: Record<string, string> = {
   restaurants: "/images/homepage/Restaurants.jpg",
   "legal-firms": "/images/homepage/business systems.jpeg",
   construction: "/images/homepage/Logistics.webp",
-  retail: "/images/homepage/E-commerce.jpg",
+  // Was E-commerce.jpg — a 4.1 MB original whose 48 KB .webp twin is what every
+  // other entry (including ecommerce-retail, which /industries/retail now 301s
+  // to) already uses.
+  retail: "/images/homepage/E-commerce.webp",
   "professional-services": "/images/homepage/digital presence.png",
   "logistics-supply-chain": "/images/homepage/Logistics.webp",
   "government-public-sector": "/images/homepage/cloud & infrastructure.webp",

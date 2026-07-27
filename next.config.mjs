@@ -109,6 +109,14 @@ const nextConfig = {
         destination: '/ar/industries/ecommerce-retail',
         permanent: true,
       },
+      // The insights blog was renamed to Articles. This used to be a
+      // force-dynamic route handler, i.e. a function boot per feed poll, for
+      // what is only a permanent redirect — serve it from the edge instead.
+      {
+        source: '/insights/rss.xml',
+        destination: '/articles/rss.xml',
+        permanent: true,
+      },
     ]
   },
 
