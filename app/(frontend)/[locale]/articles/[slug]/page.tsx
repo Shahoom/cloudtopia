@@ -13,7 +13,22 @@ type PageProps = {
   params: Promise<{ locale: string; slug: string }>
 }
 
-export const dynamic = 'force-dynamic'
+// Articles hold no per-request data — the only live value is `viewsCount`, and
+// views are recorded client-side by ArticleViewBeacon, so the counter keeps
+// working while the page itself is CDN-cached. ISR here instead of
+// force-dynamic: each article is rendered once per hour at most rather than on
+// every single request, and CMS saves bust it immediately via revalidateCmsTags.
+export const revalidate = 3600
+
+// Without this, a dynamic segment can't be prerendered and Next falls back to
+// rendering it per request — `revalidate` alone does not make it cacheable.
+// Enumerating the published slugs per locale is what actually puts articles on
+// the CDN. Unknown slugs still render on demand (dynamicParams defaults to true),
+// so a post published between builds is not a 404.
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+  const posts = await getPublishedBlogPosts(params.locale)
+  return posts.map((post) => ({ slug: post.slug }))
+}
 
 function absoluteUrl(url?: string | null) {
   if (!url) return undefined

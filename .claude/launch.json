@@ -7,6 +7,14 @@
       "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "comment": "Serves the production build. Use this (not Dev) to verify static/ISR behaviour — dev mode renders every request, so cache headers and prerendering are only observable here. Requires `npx next build` first.",
+      "name": "Next.js Prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 3100,
+      "autoPort": true
     }
   ]
 }

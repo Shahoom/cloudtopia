@@ -13,6 +13,16 @@ type PageProps = {
     params: Promise<{ locale: string; slug: string }>
 }
 
+export const revalidate = 3600
+
+// `slug` here is the project id (see getProjectById/getProject below). Listing
+// them lets each case study prerender onto the CDN instead of being
+// server-rendered per view; unknown ids still resolve on demand.
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+    const projects = await getAllProjects(params.locale)
+    return projects.map((project) => ({ slug: String(project.id) }))
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale = 'en', slug } = await params
     const project = await getProjectById(slug, locale)

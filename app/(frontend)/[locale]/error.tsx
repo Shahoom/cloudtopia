@@ -19,8 +19,11 @@ export default function Error({
     console.error(error)
   }, [error])
 
+  // NOT startsWith('/ar') — that also matches '/articles', which would show the
+  // Arabic error copy on every English article page. Match the locale segment.
   const isArabic =
-    typeof window !== 'undefined' && window.location.pathname.startsWith('/ar')
+    typeof window !== 'undefined' &&
+    (window.location.pathname === '/ar' || window.location.pathname.startsWith('/ar/'))
 
   const copy = isArabic
     ? {

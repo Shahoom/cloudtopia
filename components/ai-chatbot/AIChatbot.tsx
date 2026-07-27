@@ -499,7 +499,10 @@ function looksLikeLeadIntent(text: string) {
 
 function detectPageLocale(): 'ar' | 'en' {
   if (document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl') return 'ar'
-  if (window.location.pathname.startsWith('/ar')) return 'ar'
+  // NOT startsWith('/ar') — that also matches '/articles', so every English
+  // article page was served the Arabic chatbot. Match the locale segment only.
+  const path = window.location.pathname
+  if (path === '/ar' || path.startsWith('/ar/')) return 'ar'
   return 'en'
 }
 

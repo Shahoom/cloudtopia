@@ -15,7 +15,10 @@ import { buildSitemapEntriesFromCMS } from '@/lib/sitemap-data'
 const BASE_URL = 'https://cloudtopia.net'
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+// Rebuilt hourly rather than on every crawler hit. Search engines, the IndexNow
+// cron, and AI crawlers request this constantly; regenerating the full CMS
+// entry set each time was pure repeated compute for a near-identical document.
+export const revalidate = 3600
 
 function escape(s: string): string {
     return s

@@ -69,7 +69,13 @@ export async function getCMSMetadata(
   const result: Metadata = {
     title: metadataTitle,
     description,
-    robots: seo.noindex ? { index: false, follow: false } : undefined,
+    // OMIT the key entirely for indexable pages — `robots: undefined` is not the
+    // same as absent. Next treats a present key as an explicit override and
+    // resets whatever the parent set, so returning undefined here silently
+    // stripped the site-wide googleBot directives (max-image-preview:large,
+    // max-snippet:-1, max-video-preview:-1) from every one of the 26 pages that
+    // spreads this object — production served no robots meta at all.
+    ...(seo.noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       title: ogTitle,
       description,

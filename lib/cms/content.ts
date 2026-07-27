@@ -18,7 +18,14 @@ import {
 import { composeSiteDesignJSON, flattenSiteDesignRow } from './site-design-structure.ts'
 
 const staticDictionaries = { en, ar }
-const CMS_REVALIDATE_SECONDS = 60
+// Time-based revalidation is the BACKSTOP, not the freshness mechanism: every
+// unstable_cache below is tagged, and revalidateCmsTags() invalidates the tags
+// plus the rendered pages on each CMS save. At 60s this floor also capped the
+// route revalidate of every page that reads this data (Next takes the minimum),
+// so the whole site regenerated once a minute for content that changes weekly.
+// Writes that bypass the Payload hooks (direct SQL / MCP imports) can still
+// force a refresh via POST /api/revalidate.
+const CMS_REVALIDATE_SECONDS = 3600
 
 export type SiteDesign = {
   key: string
