@@ -18,7 +18,10 @@ type PageProps = {
 // working while the page itself is CDN-cached. ISR here instead of
 // force-dynamic: each article is rendered once per hour at most rather than on
 // every single request, and CMS saves bust it immediately via revalidateCmsTags.
-export const revalidate = 3600
+// Keep in sync with CMS_REVALIDATE_SECONDS in lib/cms/cache-policy.ts (that file
+// carries the rationale). Next requires this to be a literal, so it cannot
+// import the constant; tests/cache-policy.test.ts asserts they match.
+export const revalidate = 86400
 
 // Without this, a dynamic segment can't be prerendered and Next falls back to
 // rendering it per request — `revalidate` alone does not make it cacheable.

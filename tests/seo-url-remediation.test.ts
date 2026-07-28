@@ -129,3 +129,44 @@ test('nested app-development canonicals clean host, locale, and trailing slash b
     assert.equal(response.headers.get('location'), scenario.expected)
   }
 })
+
+test('native-script article slugs resolve to a 404 instead of crashing the ISR route', () => {
+  // Next puts the resolved pathname in the `x-next-cache-tags` response header
+  // of every cached route. Non-ASCII bytes are illegal there, so an Arabic slug
+  // made /articles/[slug] throw ERR_INVALID_CHAR and return 500 once the route
+  // became ISR. Production hit this on legacy indexed URLs (6 errors, 3 users).
+  const arabicSlug = encodeURIComponent('برمجيات-مخصصة-مقابل-جاهزة')
+
+  for (const [source, expectedRewrite] of [
+    [`https://cloudtopia.net/ar/articles/${arabicSlug}`, '/ar/articles/_missing'],
+    [`https://cloudtopia.net/articles/${arabicSlug}`, '/en/articles/_missing'],
+  ] as const) {
+    const response = proxy(new NextRequest(source, { headers: { host: 'cloudtopia.net' } }))
+    assert.equal(
+      response.headers.get('x-middleware-rewrite'),
+      `https://cloudtopia.net${expectedRewrite}`,
+      `${source} should rewrite to the ASCII sentinel`,
+    )
+  }
+})
+
+test('ASCII article slugs and multi-segment article routes are left alone', () => {
+  // The sentinel rewrite must not swallow real posts, nor taxonomy routes —
+  // those are dynamic (searchParams), emit no cache tags, and may legitimately
+  // carry native-script slugs.
+  const untouched = [
+    'https://cloudtopia.net/articles/how-to-build-a-bilingual-arabic-english-website',
+    'https://cloudtopia.net/ar/articles/how-to-build-a-bilingual-arabic-english-website',
+    `https://cloudtopia.net/ar/articles/tag/${encodeURIComponent('تطوير')}`,
+    `https://cloudtopia.net/ar/articles/category/${encodeURIComponent('تقنية')}`,
+  ]
+
+  for (const source of untouched) {
+    const response = proxy(new NextRequest(source, { headers: { host: 'cloudtopia.net' } }))
+    const rewrite = response.headers.get('x-middleware-rewrite')
+    assert.ok(
+      !rewrite || !rewrite.includes('_missing'),
+      `${source} must not be rewritten to the not-found sentinel (got ${rewrite})`,
+    )
+  }
+})
