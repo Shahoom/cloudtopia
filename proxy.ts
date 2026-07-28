@@ -103,6 +103,33 @@ function hasStaticExtension(pathname: string): boolean {
     return STATIC_EXTENSIONS.some((ext) => lower.endsWith(ext))
 }
 
+/**
+ * ASCII sentinel slug that no post uses, so /articles/[slug] renders its 404.
+ * See the ERR_INVALID_CHAR note at the call site.
+ */
+const MISSING_ARTICLE_SLUG = '_missing'
+
+/**
+ * True when a path is a single-segment article URL whose slug contains
+ * non-ASCII characters once decoded.
+ *
+ * Deliberately single-segment (`[^/]+`): /articles/tag/<x>, /articles/category/<x>
+ * and /articles/author/<x> are dynamic (searchParams) rather than ISR, so they
+ * emit no cache tags and must keep working with native-script taxonomy slugs.
+ */
+function hasNonAsciiArticleSlug(pathname: string): boolean {
+    const match = pathname.match(/^(?:\/(?:en|ar))?\/articles\/([^/]+)$/)
+    if (!match) return false
+    let slug: string
+    try {
+        slug = decodeURIComponent(match[1])
+    } catch {
+        // Malformed percent-encoding can't address a real post either.
+        return true
+    }
+    return /[^\x20-\x7E]/.test(slug)
+}
+
 function isStaticPath(pathname: string): boolean {
     if (STATIC_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
         return true
@@ -149,6 +176,31 @@ export function proxy(request: NextRequest) {
         pathname.length > 1 && pathname.endsWith('/')
             ? pathname.slice(0, -1)
             : pathname
+
+    // (B.5) Native-script article slugs — resolve to a clean 404.
+    //
+    // Next puts the resolved pathname inside the `x-next-cache-tags` RESPONSE
+    // header of every cached (ISR) route. Non-ASCII bytes are illegal in HTTP
+    // header values, so an Arabic slug makes the response construction throw
+    // ERR_INVALID_CHAR and the route 500s instead of rendering — including on
+    // the notFound() path. Only surfaced once /articles/[slug] became ISR;
+    // under the previous force-dynamic there were no cache tags to emit.
+    //
+    // No published post has a non-ASCII slug (checked: 0 of 82 rows), so every
+    // such URL is a stale indexed one that should 404. Rewrite to an ASCII
+    // sentinel so the localized 404 page renders with a real 404 status and
+    // ASCII-safe cache tags.
+    //
+    // If native-script slugs are ever wanted, this route has to go back to
+    // dynamic rendering — ISR cannot represent them until Next encodes the tag.
+    if (hasNonAsciiArticleSlug(cleanPath)) {
+        const articleLocale = cleanPath.startsWith('/ar/') ? 'ar' : defaultLocale
+        const url = request.nextUrl.clone()
+        url.pathname = `/${articleLocale}/articles/${MISSING_ARTICLE_SLUG}`
+        const requestHeaders = new Headers(request.headers)
+        requestHeaders.set('x-locale', articleLocale)
+        return NextResponse.rewrite(url, { request: { headers: requestHeaders } })
+    }
 
     // Resolve legacy aliases before locale rewrites. A native URL is used here
     // (and for generic host/slash cleanup below) because NextURL retains the

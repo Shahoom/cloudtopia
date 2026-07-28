@@ -18,6 +18,9 @@ export const runtime = 'nodejs'
 // Rebuilt hourly rather than on every crawler hit. Search engines, the IndexNow
 // cron, and AI crawlers request this constantly; regenerating the full CMS
 // entry set each time was pure repeated compute for a near-identical document.
+// Keep in sync with FEED_REVALIDATE_SECONDS in lib/cms/cache-policy.ts (that file
+// carries the rationale). Next requires this to be a literal, so it cannot
+// import the constant; tests/cache-policy.test.ts asserts they match.
 export const revalidate = 3600
 
 function escape(s: string): string {

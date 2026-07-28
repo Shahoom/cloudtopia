@@ -22,7 +22,10 @@ export function generateStaticParams() {
     return locales.map((locale) => ({ locale }))
 }
 
-export const revalidate = 3600
+// Keep in sync with CMS_REVALIDATE_SECONDS in lib/cms/cache-policy.ts (that file
+// carries the rationale). Next requires this to be a literal, so it cannot
+// import the constant; tests/cache-policy.test.ts asserts they match.
+export const revalidate = 86400
 
 const cairo = Cairo({
     subsets: ['latin', 'arabic'],
