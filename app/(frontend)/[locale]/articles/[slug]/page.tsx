@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { notFound } from 'next/navigation'
 import { ArticleContent } from '@/components/blog/ArticleContent'
 import { ArticleHero } from '@/components/blog/ArticleHero'
@@ -181,15 +182,15 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen">
       <ReadingProgress />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleSchema) }} />
       {post.seo.breadcrumbSchema !== false && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }} />
       )}
       {faqItems.length > 0 && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonLd({
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
               mainEntity: faqItems.map((item) => ({

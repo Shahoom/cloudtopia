@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Locale } from '@/lib/i18n/config'
 import { BASE_URL, buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
 import ProjectsPageClient from './ProjectsPageClient'
@@ -163,19 +164,19 @@ export default async function ProjectsPage({
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(itemListSchema) }}
             />
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsCollectionSchema) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(projectsCollectionSchema) }}
             />
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsFaqSchema) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(projectsFaqSchema) }}
             />
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }}
             />
             <div className="sr-only" aria-hidden="false">
                 <p>{heroTitle} {heroHighlight}</p>

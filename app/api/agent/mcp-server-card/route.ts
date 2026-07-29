@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { BASE_URL, COMPANY, MCP_SERVER_NAME, MCP_SERVER_VERSION, RESOURCES } from '@/lib/agent/site-facts'
+import { BASE_URL, COMPANY, MCP_SERVER_NAME, MCP_SERVER_VERSION, RESOURCES, SERVICES } from '@/lib/agent/site-facts'
 
 export const runtime = 'nodejs'
 
@@ -23,7 +23,7 @@ export function GET() {
     },
     capabilities: ['tools'],
     description:
-      'Read-only MCP server for CloudTopia — query the company overview, the 7 service ' +
+      `Read-only MCP server for CloudTopia — query the company overview, the ${SERVICES.length} service ` +
       'categories, pricing, contact/WhatsApp routing, and search published articles.',
     documentationUrl: RESOURCES.llms,
     websiteUrl: BASE_URL,

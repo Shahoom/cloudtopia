@@ -1,4 +1,5 @@
 import { notFound, permanentRedirect } from 'next/navigation'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
 import { canonicalUrl, stripBrandSuffix } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'
@@ -155,7 +156,7 @@ export default async function NestedSubServicePage({ params }: PageProps) {
                     <script
                         key={index}
                         type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+                        dangerouslySetInnerHTML={{ __html: serializeJsonLd(node) }}
                     />
                 ))}
                 {page}

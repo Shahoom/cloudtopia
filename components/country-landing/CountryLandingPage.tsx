@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import Image from 'next/image'
 import type { CSSProperties } from 'react'
 import {
@@ -179,7 +180,7 @@ function servicePath(locale: CountryLocale, slug: string) {
 }
 
 function JsonLd({ data }: { data: unknown }) {
-    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
 }
 
 function Eyebrow({ children, tone = 'dark' }: { children: React.ReactNode; tone?: 'dark' | 'light' }) {
@@ -381,7 +382,7 @@ export default function CountryLandingPage({ country, locale }: Props) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cloudtopia.net/' },
+            { '@type': 'ListItem', position: 1, name: isArabic ? 'الرئيسية' : 'Home', item: `https://cloudtopia.net${isArabic ? '/ar' : '/'}` },
             { '@type': 'ListItem', position: 2, name: isArabic ? 'الأسواق' : 'Markets', item: `https://cloudtopia.net${marketsHref}` },
             { '@type': 'ListItem', position: 3, name: countryName, item: schemaUrl },
         ],

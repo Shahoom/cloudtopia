@@ -12,7 +12,7 @@ import { CreativePricing, type PricingTier } from '@/components/ui/creative-pric
 import { ContactFast } from '@/components/ui/contact-fast'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
 import { getServiceCategory, localizedPackageName } from '@/lib/seo/services'
-import { JsonLd } from '@/components/seo/JsonLd'
+import { JsonLd, serializeJsonLd } from '@/components/seo/JsonLd'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
 
 /**
@@ -138,7 +138,7 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
     return (
         <main dir={dir} className="relative overflow-hidden bg-[#f4f1f8]">
             <JsonLd schema={[serviceSchema, breadcrumbSchema]} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }} />
 
             {/* SEO: the ONE keyword-rich H1. The cinematic hero's big text is
                 decorative (and GSAP-hides until reveal), so the real semantic

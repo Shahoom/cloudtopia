@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { ogImagesFor } from '@/lib/og/og-image'
 import { buildOrganizationRef } from '@/lib/seo/schema'
 import { buildHreflangMap, canonicalUrl } from '@/lib/i18n/url'
@@ -156,7 +157,7 @@ export default async function DigitalPresenceLayout({ children, params }: Layout
       <script
         type="application/ld+json"
         suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema).replace(/</g, '\\u003c') }}
       />
       {children}
     </>

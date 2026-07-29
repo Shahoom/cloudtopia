@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { Cairo } from 'next/font/google'
 import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
@@ -88,7 +89,7 @@ export default async function CountryLandingRootLayout({
                     type="application/ld+json"
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
+                        __html: serializeJsonLd({
                             '@context': 'https://schema.org',
                             '@type': 'WebSite',
                             '@id': 'https://cloudtopia.net/#website',

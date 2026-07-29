@@ -219,7 +219,7 @@ ${COMPANY.hubs.map((h) => `- **${h.name}** — ${h.covers}`).join('\n')}
 
 ## Services
 
-CloudTopia organizes its work into 7 modular service categories (clients pick what they need — no forced bundles).
+CloudTopia organizes its work into ${SERVICES.length} modular service categories (clients pick what they need — no forced bundles).
 
 ${services}
 

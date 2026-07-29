@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { buildServiceSchema } from '@/lib/seo/schema'
@@ -91,9 +92,9 @@ export function GetFoundPillarPage({
 
     return (
         <main dir={dir} className="relative min-h-screen bg-[#f4f1f8]">
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(serviceSchema) }} />
 
             {/* Hero — dark conversion hero with the CMS lead form (matches the
                 sub-service hero family, scaled up for a pillar). */}

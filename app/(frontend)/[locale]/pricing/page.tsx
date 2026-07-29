@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import Link from 'next/link'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
@@ -380,8 +381,8 @@ export default async function PricingPage({ params }: PageProps) {
 
     return (
         <main className="relative min-h-screen bg-[#f4f1f8]" dir={isRTL ? 'rtl' : 'ltr'}>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(pricingSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(pricingFaqSchema) }} />
             <section className="relative overflow-hidden bg-[#f4f1f8] px-4 pb-16 pt-32 sm:px-6 lg:px-8 md:pb-24 md:pt-40" data-header-theme="light">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(125,211,252,0.38),transparent_32%),radial-gradient(circle_at_84%_14%,rgba(216,180,254,0.45),transparent_34%),radial-gradient(circle_at_55%_90%,rgba(187,247,208,0.35),transparent_32%)]" />
                 <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'linear-gradient(to right,#0f172a 1px,transparent 1px),linear-gradient(to bottom,#0f172a 1px,transparent 1px)', backgroundSize: '56px 56px' }} />

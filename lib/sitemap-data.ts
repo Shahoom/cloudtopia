@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getAllProjectIds, getAllProjectIdsFromCMS } from '@/lib/projects'
+import { getAllProjectIds, getAllProjectIdsFromCMS, getProjectIdsForLocale } from '@/lib/projects'
 import {
     buildBaseIndustrySitemapEntries,
     isResolverOwnedIndustryCmsSlug,
@@ -196,9 +196,24 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         })
     })
 
+    // projectIds is EN-enumerated, so a CMS project without a published Arabic
+    // twin would otherwise emit an /ar/projects/<id> URL (and hreflang) that
+    // 404s. Gate the Arabic entry on a real Arabic twin. Fall back to the prior
+    // always-paired behaviour when the Arabic set can't be read, so a transient
+    // fetch failure never drops valid /ar URLs.
+    const arabicProjectIdSet = new Set(await getProjectIdsForLocale('ar'))
+    const gateArabicProjects = arabicProjectIdSet.size > 0
     projectIds.forEach((projectId) => {
-        const languages = buildHreflangMap(`/projects/${projectId}`)
+        const hasArabicTwin = !gateArabicProjects || arabicProjectIdSet.has(projectId)
+        const languages = hasArabicTwin
+            ? buildHreflangMap(`/projects/${projectId}`)
+            : {
+                  en: canonicalUrl('en', `/projects/${projectId}`),
+                  'x-default': canonicalUrl('en', `/projects/${projectId}`),
+              }
         locales.forEach((loc) => {
+            // Skip the Arabic URL when the project has no published Arabic twin.
+            if (loc === 'ar' && !hasArabicTwin) return
             entries.push({
                 url: canonicalUrl(loc, `/projects/${projectId}`),
                 // Projects are CMS rows, so their section tracks the newest CMS

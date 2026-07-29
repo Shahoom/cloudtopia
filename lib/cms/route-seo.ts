@@ -70,7 +70,26 @@ export async function applySeoOverride(base: Metadata, locale: string, path: str
     out.twitter = { ...(out.twitter || base.twitter || {}), description: o.metaDescription }
   }
   if (o.noIndex || o.noFollow) {
-    out.robots = { index: !o.noIndex, follow: !o.noFollow }
+    const index = !o.noIndex
+    const follow = !o.noFollow
+    // A nofollow-only (still-indexable) override must not silently drop the
+    // site-wide rich-preview directives. Replacing the whole robots object
+    // discards the inherited googleBot max-image-preview:large / max-snippet:-1
+    // (preserved elsewhere by omitting the robots key — see lib/cms/metadata.ts),
+    // so re-assert them whenever the page remains indexable.
+    out.robots = index
+      ? {
+          index,
+          follow,
+          googleBot: {
+            index,
+            follow,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+            'max-video-preview': -1,
+          },
+        }
+      : { index, follow }
   }
   if (o.canonicalUrl) {
     out.alternates = { ...(base.alternates || {}), canonical: o.canonicalUrl }

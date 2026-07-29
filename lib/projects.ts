@@ -43,3 +43,11 @@ export async function getAllProjectIdsFromCMS(): Promise<string[]> {
     const ids = projects.map((project) => project.id).filter(Boolean)
     return ids.length > 0 ? ids : getAllProjectIds()
 }
+
+// Project ids that actually resolve in the given locale — used to gate the
+// sitemap/hreflang so an EN-only project (no published Arabic twin) never
+// advertises an /ar URL that would 404.
+export async function getProjectIdsForLocale(locale: string): Promise<string[]> {
+    const projects = await getProjects(locale)
+    return projects.map((project) => project.id).filter(Boolean)
+}

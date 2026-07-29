@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { motion, useInView } from "framer-motion"
 import { ArrowRight, ArrowLeft, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -649,7 +650,7 @@ export function QRMenuServiceSection({ isRTL = false, locale = "en" }: QRMenuSer
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             "@context": "https://schema.org",
             "@type": "Service",
             "serviceType": isRTL ? "أنظمة قوائم QR للمطاعم" : "Restaurant QR Menu Systems & Digital Menu Solutions",

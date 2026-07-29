@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import { ORGANIZATION_ID } from '@/lib/seo/schema'
@@ -88,7 +89,7 @@ export default async function ContactPage({
 
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(contactSchema) }} />
             <div className="sr-only" aria-hidden="false">
                 <p>{title}</p>
                 {desc && <p>{desc}</p>}

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { Cairo, Hanken_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -269,7 +270,7 @@ export default async function LocaleLayout({
                     type="application/ld+json"
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
+                        __html: serializeJsonLd({
                             '@context': 'https://schema.org',
                             '@type': 'Organization',
                             // Stable @id — the single canonical Organization node every other
@@ -354,7 +355,7 @@ export default async function LocaleLayout({
                     type="application/ld+json"
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
+                        __html: serializeJsonLd({
                             '@context': 'https://schema.org',
                             '@type': 'WebSite',
                             '@id': 'https://cloudtopia.net/#website',

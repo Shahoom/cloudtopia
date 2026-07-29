@@ -26,21 +26,26 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function ({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale = 'en' } = await params
     const faqSchema = await buildFAQSchema('restaurant-qr-menu', locale)
+    // Locale-branch the schema labels so Arabic URLs don't ship English
+    // breadcrumb/Service names that contradict the Arabic canonical + content.
+    const isAr = locale === 'ar'
 
     return (
         <>
             <JsonLd
                 schema={[
                     buildBreadcrumbSchema(locale, [
-                        { name: 'Home', path: '/' },
-                        { name: 'Services', path: '/services' },
-                        { name: 'Restaurant QR Menu', path: '/restaurant-qr-menu' },
+                        { name: isAr ? 'الرئيسية' : 'Home', path: '/' },
+                        { name: isAr ? 'الخدمات' : 'Services', path: '/services' },
+                        { name: isAr ? 'قائمة QR للمطاعم' : 'Restaurant QR Menu', path: '/restaurant-qr-menu' },
                     ]),
                     buildServiceSchema(locale, {
-                        name: 'Restaurant QR Menu Systems',
-                        description: 'Multilingual QR menus with ordering, payment, and instant updates for Gulf restaurants and cafés.',
+                        name: isAr ? 'أنظمة قائمة QR للمطاعم' : 'Restaurant QR Menu Systems',
+                        description: isAr
+                            ? 'قوائم QR متعددة اللغات مع الطلب والدفع والتحديث الفوري لمطاعم ومقاهي الخليج.'
+                            : 'Multilingual QR menus with ordering, payment, and instant updates for Gulf restaurants and cafés.',
                         path: '/restaurant-qr-menu',
-                        serviceType: 'Digital Menu Solutions',
+                        serviceType: isAr ? 'حلول القوائم الرقمية' : 'Digital Menu Solutions',
                     }),
                     faqSchema,
                 ]}

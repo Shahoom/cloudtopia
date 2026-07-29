@@ -1,4 +1,5 @@
 import { getPageBundle } from '@/lib/cms/content'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Locale } from '@/lib/i18n/config'
 import { canonicalUrl } from '@/lib/i18n/url'
 import ServicesPageClient from './ServicesPageClient'
@@ -56,7 +57,7 @@ export default async function ServicesPage({
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }}
             />
             <div className="sr-only" aria-hidden="false">
                 <h1>{heroTitle}</h1>

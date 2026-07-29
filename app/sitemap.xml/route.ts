@@ -42,13 +42,19 @@ export async function GET() {
                 alternates?: { languages?: Record<string, string> }
             }
             const loc = escape(e.url)
-            const lastmod = e.lastModified
-                ? `\n    <lastmod>${
-                      e.lastModified instanceof Date
-                          ? e.lastModified.toISOString()
-                          : new Date(e.lastModified).toISOString()
-                  }</lastmod>`
-                : ''
+            // Guard against an invalid CMS timestamp. An Invalid Date is still
+            // `instanceof Date`, so calling .toISOString() on it throws a
+            // RangeError — one bad date on any of ~500 entries would 500 the
+            // entire sitemap (total discovery loss) instead of just omitting one
+            // <lastmod>. Every upstream aggregation loop already guards with
+            // isNaN(getTime()); this is the last unguarded date site.
+            let lastmod = ''
+            if (e.lastModified) {
+                const d = e.lastModified instanceof Date ? e.lastModified : new Date(e.lastModified)
+                if (!isNaN(d.getTime())) {
+                    lastmod = `\n    <lastmod>${d.toISOString()}</lastmod>`
+                }
+            }
             const changefreq = e.changeFrequency
                 ? `\n    <changefreq>${e.changeFrequency}</changefreq>`
                 : ''

@@ -1,4 +1,5 @@
 import { canonicalUrl } from '@/lib/i18n/url'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { categoryFrontDoor } from '@/lib/seo/services'
 
 export default async function ServicesLayout({ children, params }: { children: React.ReactNode, params: Promise<{ locale: string }> }) {
@@ -25,7 +26,7 @@ export default async function ServicesLayout({ children, params }: { children: R
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+                    __html: serializeJsonLd({
                         '@context': 'https://schema.org',
                         '@type': 'ItemList',
                         name: i.name,

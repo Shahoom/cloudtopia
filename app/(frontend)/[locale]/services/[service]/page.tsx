@@ -1,4 +1,5 @@
 import { notFound, permanentRedirect } from 'next/navigation'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
@@ -477,7 +478,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <>
                     <script
                         type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(richServiceSchema) }}
+                        dangerouslySetInnerHTML={{ __html: serializeJsonLd(richServiceSchema) }}
                     />
                     <RichPillarPage data={rich} locale={locale} />
                 </>,
@@ -694,10 +695,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
     return (
         <main className="relative min-h-screen bg-[#f4f1f8]" dir={isRTL ? 'rtl' : 'ltr'}>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(webPageSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(serviceSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }} />
 
             <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
                 <PageBreadcrumbs

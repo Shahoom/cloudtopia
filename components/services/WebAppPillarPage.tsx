@@ -14,7 +14,7 @@ import { getWebApplicationsSubServicesByPillar } from '@/lib/services/web-applic
 import { getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
 import { localizedDP } from '@/lib/services/digital-presence'
 import { buildBreadcrumbSchema, buildServiceSchema } from '@/lib/seo/schema'
-import { JsonLd } from '@/components/seo/JsonLd'
+import { JsonLd, serializeJsonLd } from '@/components/seo/JsonLd'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { ContactFast } from '@/components/ui/contact-fast'
@@ -123,7 +123,7 @@ export default async function WebAppPillarPage({
             {faqSchema ? (
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                    dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
                 />
             ) : null}
 

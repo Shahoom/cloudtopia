@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -30,6 +31,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { locale = 'en', slug } = await params
     const project = await getProjectById(slug, locale)
     if (!project) return { title: 'Project Not Found' }
+
+    // Only advertise the alternate-locale hreflang when a twin actually resolves
+    // in that locale — an EN-only project (no published Arabic version) would
+    // otherwise point hreflang="ar" at a page that 404s. Mirrors the article and
+    // industry twin-checks.
+    const otherLocale = locale === 'ar' ? 'en' : 'ar'
+    const hasTwin = Boolean(await getProjectById(slug, otherLocale))
+    const alternateLanguages = hasTwin
+        ? {
+              en: canonicalUrl('en', `/projects/${slug}`),
+              ar: canonicalUrl('ar', `/projects/${slug}`),
+              'x-default': canonicalUrl('en', `/projects/${slug}`),
+          }
+        : {
+              [locale]: canonicalUrl(locale, `/projects/${slug}`),
+              'x-default': canonicalUrl(locale, `/projects/${slug}`),
+          }
 
     // Keep the " — Case Study" qualifier only for shorter project names; longer
     // ones drop it so the title stays under ~60 chars and isn't truncated in SERPs.
@@ -64,11 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         },
         alternates: {
             canonical: canonicalUrl(locale, `/projects/${slug}`),
-            languages: {
-                'en': canonicalUrl('en', `/projects/${slug}`),
-                'ar': canonicalUrl('ar', `/projects/${slug}`),
-                'x-default': canonicalUrl('en', `/projects/${slug}`),
-            },
+            languages: alternateLanguages,
         },
     }
 }
@@ -124,16 +138,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
-            { '@type': 'ListItem', position: 2, name: 'Projects', item: canonicalUrl(locale, '/projects') },
+            { '@type': 'ListItem', position: 1, name: isRTL ? 'الرئيسية' : 'Home', item: canonicalUrl(locale, '/') },
+            { '@type': 'ListItem', position: 2, name: isRTL ? 'المشاريع' : 'Projects', item: canonicalUrl(locale, '/projects') },
             { '@type': 'ListItem', position: 3, name: project.title, item: canonicalUrl(locale, `/projects/${project.id}`) },
         ],
     }
 
     return (
         <div className="relative min-h-screen bg-lavender" dir={isRTL ? 'rtl' : 'ltr'}>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(caseStudySchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }} />
 
             {/* Hero */}
             <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-8 bg-[#FAFAFA] overflow-hidden" data-header-theme="light">

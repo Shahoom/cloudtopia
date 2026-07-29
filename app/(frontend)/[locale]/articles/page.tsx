@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { AnnouncementStrip } from '@/components/blog/insights/AnnouncementStrip'
 import { CategoryNavBar } from '@/components/blog/insights/CategoryNavBar'
 import { CategoriesGrid } from '@/components/blog/insights/CategoriesGrid'
@@ -142,8 +143,8 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
 
   return (
     <div className="min-h-screen">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(blogSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema) }} />
 
       <AnnouncementStrip locale={locale} items={announcementItems} />
 
