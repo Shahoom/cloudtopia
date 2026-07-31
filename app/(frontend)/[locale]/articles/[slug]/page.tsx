@@ -16,13 +16,15 @@ type PageProps = {
 
 // Articles hold no per-request data — the only live value is `viewsCount`, and
 // views are recorded client-side by ArticleViewBeacon, so the counter keeps
-// working while the page itself is CDN-cached. ISR here instead of
-// force-dynamic: each article is rendered once per hour at most rather than on
-// every single request, and CMS saves bust it immediately via revalidateCmsTags.
-// Keep in sync with CMS_REVALIDATE_SECONDS in lib/cms/cache-policy.ts (that file
-// carries the rationale). Next requires this to be a literal, so it cannot
-// import the constant; tests/cache-policy.test.ts asserts they match.
-export const revalidate = 86400
+// working while the page itself is CDN-cached (the displayed number just
+// refreshes on the next regeneration rather than live).
+//
+// Cached until something explicitly invalidates it — CMS saves already call
+// revalidatePath('/', 'layout') via revalidateCmsTags(). A timer here would only
+// re-render pages nobody changed; see PAGE_REVALIDATE in lib/cms/cache-policy.ts
+// for the numbers. Next requires a literal, so tests/cache-policy.test.ts is
+// what keeps this in sync with that constant.
+export const revalidate = false
 
 // Without this, a dynamic segment can't be prerendered and Next falls back to
 // rendering it per request — `revalidate` alone does not make it cacheable.
