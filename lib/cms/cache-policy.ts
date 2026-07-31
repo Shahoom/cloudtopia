@@ -25,14 +25,19 @@
 export const PAGE_REVALIDATE = false as const
 
 /**
- * The `unstable_cache` data layer keeps a finite backstop even though pages do
- * not. The always-dynamic routes (/articles and the taxonomy pages, which read
- * searchParams) re-render per request and read straight through this cache, so
- * a backstop is what lets them self-heal if a tag invalidation is ever missed.
- * It costs nothing on statically cached pages, which only consult it when they
- * actually regenerate.
+ * The `unstable_cache` data layer, and it MUST match PAGE_REVALIDATE.
+ *
+ * Next takes the MINIMUM revalidate across a route and everything it reads. A
+ * finite value here therefore overrides `export const revalidate = false` on
+ * every page that touches CMS data — setting the page to `false` while leaving
+ * this at 86400 shipped a build whose route table still read `Revalidate: 1d`
+ * on all ~450 routes, i.e. the daily regeneration wave completely intact. Do
+ * not give this a number unless you also intend to cap every page by it.
+ *
+ * `false` is a valid unstable_cache revalidate (`number | false`) and means
+ * cache until a tag is invalidated — which revalidateCmsTags() does on save.
  */
-export const CMS_REVALIDATE_SECONDS = 86400
+export const CMS_REVALIDATE_SECONDS = false as const
 
 /**
  * Feeds and the sitemap are a handful of routes rather than hundreds, and their
