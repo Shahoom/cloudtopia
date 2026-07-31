@@ -1,29 +1,43 @@
 /**
- * Single source of truth for how long CMS-backed content stays cached.
+ * How long CMS-backed content stays cached.
  *
- * This is a BACKSTOP, not the freshness mechanism. Content goes live the moment
- * an editor saves: the Payload afterChange hooks call revalidateCmsTags(), which
- * busts the tagged data caches AND calls revalidatePath('/', 'layout') to drop
- * the rendered HTML. Time-based revalidation only covers the case where that
- * path fails (e.g. a direct SQL / MCP import that bypasses the hooks — those can
- * force a refresh with POST /api/revalidate).
+ * Freshness is ON-DEMAND, not time-based. Every Payload afterChange hook calls
+ * revalidateCmsTags(), which busts the tagged data caches AND calls
+ * revalidatePath('/', 'layout') to drop the rendered HTML. An editor's save is
+ * live on the next request. A timer adds nothing on top of that — it only
+ * re-renders pages nobody changed.
  *
- * Why 24h and not 1h: Next takes the MINIMUM revalidate across a route and its
- * data dependencies, so this value caps the ISR window of ~460 routes at once.
- * At 3600 every crawler pass over the sitemap re-rendered every page it touched,
- * once an hour — production logs showed ~16 `cache=STALE` background
- * regenerations per hour, each one a full render billed as Active CPU plus an
- * ISR write. The content behind these pages changes weekly at most.
+ * PAGE_REVALIDATE is therefore `false` (cache until explicitly invalidated).
  *
- * Keep the route-level `export const revalidate` in sync with this by importing
- * it rather than hardcoding a second number.
+ * Why not a timer: all ~460 routes share a deploy-synchronised expiry, so any
+ * finite window makes the entire site go stale at the same moment and
+ * regenerate in one wave. Production showed that directly — 38,120 ISR write
+ * units on 2026-07-29, then ~17-18K/day, on a site whose content changes
+ * weekly. At 3600 it was worse still (~16 `cache=STALE` regenerations an hour,
+ * each a full render billed as Active CPU).
+ *
+ * TRADE-OFF, know this before shortening it: a content change that does NOT go
+ * through a Payload save — a direct SQL insert or an MCP/bulk import — will not
+ * appear until someone calls `POST /api/revalidate` (bearer CRON_SECRET) or a
+ * deploy happens. That is a real workflow here, not a hypothetical; the blog
+ * was imported that way. Use the endpoint after such an import.
+ */
+export const PAGE_REVALIDATE = false as const
+
+/**
+ * The `unstable_cache` data layer keeps a finite backstop even though pages do
+ * not. The always-dynamic routes (/articles and the taxonomy pages, which read
+ * searchParams) re-render per request and read straight through this cache, so
+ * a backstop is what lets them self-heal if a tag invalidation is ever missed.
+ * It costs nothing on statically cached pages, which only consult it when they
+ * actually regenerate.
  */
 export const CMS_REVALIDATE_SECONDS = 86400
 
 /**
  * Feeds and the sitemap are a handful of routes rather than hundreds, and their
- * freshness feeds crawler discovery, so they revalidate far more often than page
- * HTML. Regenerating one is heavier than a page render (it walks every CMS
- * entry), but 24 of them a day is noise next to 460 pages.
+ * freshness drives crawler discovery, so they keep a short timer. Regenerating
+ * one is heavier than a page render (it walks every CMS entry), but 24 a day is
+ * noise next to 460 pages.
  */
 export const FEED_REVALIDATE_SECONDS = 3600

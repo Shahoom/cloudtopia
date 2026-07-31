@@ -14,10 +14,12 @@ type PageProps = {
     params: Promise<{ locale: string; slug: string }>
 }
 
-// Keep in sync with CMS_REVALIDATE_SECONDS in lib/cms/cache-policy.ts (that file
-// carries the rationale). Next requires this to be a literal, so it cannot
-// import the constant; tests/cache-policy.test.ts asserts they match.
-export const revalidate = 86400
+// Cached until something explicitly invalidates it — CMS saves already call
+// revalidatePath('/', 'layout') via revalidateCmsTags(). A timer here would only
+// re-render pages nobody changed; see PAGE_REVALIDATE in lib/cms/cache-policy.ts
+// for the numbers. Next requires a literal, so tests/cache-policy.test.ts is
+// what keeps this in sync with that constant.
+export const revalidate = false
 
 // `slug` here is the project id (see getProjectById/getProject below). Listing
 // them lets each case study prerender onto the CDN instead of being
