@@ -68,20 +68,23 @@ if (s3Config) {
         media: true,
       },
       bucket: s3Config.bucket,
-      // Upload straight from the browser to Supabase Storage using a
-      // short-lived presigned URL, instead of POSTing the bytes through
-      // /api/media.
+      // NOTE: do NOT enable `clientUploads` here.
       //
-      // Vercel caps a serverless function's REQUEST BODY at 4.5 MB and rejects
-      // anything larger at the edge with a 413 — the function never runs, so
-      // nothing appears in the runtime logs and the CMS just shows an upload
-      // error. Every image uploaded while this worked was 0.8–1.6 MB; the first
-      // photo over the cap silently became "I can't add photos to articles".
+      // It was tried to sidestep Vercel's 4.5 MB request-body cap (which is
+      // real — a larger POST is refused at the edge with a 413 the function
+      // never sees). But it splits one upload into two independent steps: the
+      // browser PUTs the bytes straight to Supabase, then separately POSTs the
+      // document. When that PUT fails the POST still succeeds, so Payload
+      // answers 201 Created and stores a media row whose file does not exist —
+      // an image that looks saved, shows nothing, and only "works" after
+      // deleting and re-uploading. Observed intermittently in production:
+      //   POST /api/media 201
+      //   GET  /api/media/file/<name> 404
+      // Uploading through the function instead keeps it atomic: if S3 rejects
+      // the object the request 500s and no row is written.
       //
-      // Access defaults to `({ req }) => Boolean(req.user)`, which is exactly
-      // the `adminOnly` rule already guarding Media.create, so a presigned URL
-      // is still only ever issued to a logged-in CMS user.
-      clientUploads: true,
+      // The cap is a real ceiling — images must stay under ~4.5 MB. Revisit
+      // client uploads only with the failed-PUT path actually verified.
       config: {
         region: s3Config.region,
         endpoint: s3Config.endpoint,
