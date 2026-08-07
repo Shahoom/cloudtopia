@@ -9,7 +9,7 @@
     "vercel-build": "node scripts/vercel-build.mjs",
     "start": "next start",
     "lint": "eslint .",
-    "test:smoke": "node --test tests/content-reset.test.mjs && node --test --import tsx tests/cms-env.test.ts && node --test --import tsx tests/blog-utils.test.ts && node --test --import tsx tests/blog-pair.test.ts tests/blog-intelligence.test.ts tests/blog-search.test.ts tests/seo-expansion.test.ts tests/full-site-expansion.test.ts tests/country-landing-pages.test.ts tests/blog-normalize-headings.test.ts tests/seo-url-remediation.test.ts tests/blog-taxonomy-seo.test.ts tests/seo-metadata-trust.test.ts tests/frontend-preload-scope.test.ts tests/cache-policy.test.ts",
+    "test:smoke": "node --test tests/content-reset.test.mjs && node --test --import tsx tests/cms-env.test.ts && node --test --import tsx tests/blog-utils.test.ts && node --test --import tsx tests/blog-pair.test.ts tests/blog-intelligence.test.ts tests/blog-search.test.ts tests/seo-expansion.test.ts tests/full-site-expansion.test.ts tests/country-landing-pages.test.ts tests/blog-normalize-headings.test.ts tests/media-filename.test.ts tests/seo-url-remediation.test.ts tests/blog-taxonomy-seo.test.ts tests/seo-metadata-trust.test.ts tests/frontend-preload-scope.test.ts tests/cache-policy.test.ts",
     "payload": "payload",
     "payload:types": "payload --use-swc generate:types",
     "payload:migrate": "payload --use-swc migrate",
