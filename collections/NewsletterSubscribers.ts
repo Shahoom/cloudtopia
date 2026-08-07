@@ -12,7 +12,10 @@ export const NewsletterSubscribers: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    create: () => true,   // public endpoint — the newsletter API route validates the data
+    // NOT public: app/(frontend)/api/newsletter/route.ts writes with
+    // `overrideAccess: true`, so REST create was never needed — it only let
+    // anyone bulk-inject subscriber rows without going through that route.
+    create: adminOnly,
     update: adminOnly,
     delete: adminOnly,
   },

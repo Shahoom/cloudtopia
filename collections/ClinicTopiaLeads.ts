@@ -19,7 +19,10 @@ export const ClinicTopiaLeads: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    create: () => true, // public endpoint — the API route validates the data
+    // NOT public: app/api/clinictopia-lead/route.ts writes with
+    // `overrideAccess: true`, so REST create was never needed — it only let
+    // anyone inject unvalidated leads straight into the table.
+    create: adminOnly,
     update: adminOnly,
     delete: adminOnly,
   },

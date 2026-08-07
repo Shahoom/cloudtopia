@@ -12,7 +12,11 @@ export const ContactInquiries: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    create: () => true,   // public endpoint — API route validates the data
+    // NOT public: app/api/contact/route.ts writes with `overrideAccess: true`,
+    // so REST create was never needed. Open create let anyone bypass that
+    // route's email validation, length clamping, source allow-list and IP
+    // capture, and write arbitrary `status`/`ipAddress` values straight in.
+    create: adminOnly,
     update: adminOnly,
     delete: adminOnly,
   },

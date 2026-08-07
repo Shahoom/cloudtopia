@@ -15,10 +15,14 @@ export const AIChatConversations: CollectionConfig = {
   },
   access: {
     read: adminOnly,
-    // Public creation/updates are allowed — the API route validates and upserts
-    // with overrideAccess, mirroring how ai-chat-leads is captured.
-    create: () => true,
-    update: () => true,
+    // NOT public. conversationService.ts upserts through the Local API with
+    // `overrideAccess: true`, so the chatbot never needs REST write access.
+    // Leaving these open let anyone on the internet POST rows and PATCH any
+    // existing conversation by guessing its sequential id (verified against
+    // production: an unauthenticated PATCH returned 404 "Not Found" rather than
+    // 403, i.e. access control had already allowed the write).
+    create: adminOnly,
+    update: adminOnly,
     delete: adminOnly,
   },
   fields: [
