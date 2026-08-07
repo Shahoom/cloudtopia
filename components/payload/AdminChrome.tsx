@@ -113,7 +113,10 @@ export function CloudTopiaAdminNav() {
         <Link className="ct-admin-nav__site-link" href="/" style={styles.siteLink}>
           View site
         </Link>
-        <Link className="ct-admin-nav__logout" href="/admin/logout" style={styles.logout} aria-label="Log out">
+        {/* prefetch={false}: Next prefetches every in-viewport Link, so the
+            default would fetch /admin/logout on every admin page load (visible
+            as a GET /admin/logout in the runtime logs right after each login). */}
+        <Link className="ct-admin-nav__logout" href="/admin/logout" prefetch={false} style={styles.logout} aria-label="Log out">
           <LogOut size={17} strokeWidth={2} />
         </Link>
       </div>

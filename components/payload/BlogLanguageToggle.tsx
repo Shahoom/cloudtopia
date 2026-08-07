@@ -42,7 +42,9 @@ export function BlogLanguageToggle() {
     params.set('where[locale][equals]', otherLocale)
     params.set('limit', '1')
     params.set('depth', '0')
-    params.set('draft', 'true')
+    // No `draft=true`: that reads through the versions table, so a sibling with
+    // no version row (bulk-imported articles) reads as missing and this button
+    // offers "+ Add" for a version that already exists.
     fetch(`/api/blog-posts?${params.toString()}`, { credentials: 'include' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {

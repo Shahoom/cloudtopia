@@ -79,11 +79,19 @@ export async function ensureBlogPair({
   req?: PayloadRequest
 }): Promise<{ id: string | number; locale: 'en' | 'ar'; created: boolean }> {
   const otherLocale: 'en' | 'ar' = source.locale === 'ar' ? 'en' : 'ar'
+  // Deliberately NOT `draft: true`. This is an existence check against the
+  // composite (slug, locale) unique index, which lives on the main collection
+  // table. A draft-scoped read resolves through the _blog_posts_v versions
+  // table, so any post that never got a version row — every article inserted
+  // straight into Postgres by the bulk import — looks ABSENT here. The endpoint
+  // then tries to CREATE a sibling that already exists and dies on the unique
+  // index ("The following field is invalid: slug, locale"), which is what the
+  // editor's EN ⇄ العربية toggle surfaced as "could not open the other
+  // language". Reading the main table finds published and draft siblings alike.
   const existing = await payload.find({
     collection: 'blog-posts' as any,
     depth: 0,
     limit: 1,
-    draft: true,
     overrideAccess: true,
     req,
     where: {

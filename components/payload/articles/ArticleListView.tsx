@@ -93,12 +93,21 @@ export function ArticleListView({ rows, categories, selected, onToggleSelect, on
 
   async function translate(row: ArticleRow) {
     setBusyId(row.id)
+    // The tab MUST be opened synchronously, inside the click's user-activation
+    // window. Calling window.open() after `await pairArticle(...)` loses that
+    // activation, so browsers silently block the popup and the button appears
+    // to do nothing. Open a blank tab now, point it at the sibling once the id
+    // comes back, and fall back to same-tab navigation if it was blocked anyway.
+    const tab = window.open('', '_blank')
     try {
       const res = await pairArticle(row.id)
       onToast(res.created ? `Created ${res.locale.toUpperCase()} draft` : `${res.locale.toUpperCase()} version exists`)
-      window.open(`/admin/collections/blog-posts/${res.id}`, '_blank')
+      const href = `/admin/collections/blog-posts/${res.id}`
+      if (tab && !tab.closed) tab.location.href = href
+      else window.location.href = href
       onRefresh()
     } catch (e: any) {
+      tab?.close()
       onToast(e?.message || 'Translate failed')
     } finally {
       setBusyId(null)

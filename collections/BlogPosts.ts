@@ -145,12 +145,15 @@ const mirrorCoverImage: CollectionAfterChangeHook = async ({ doc, previousDoc, r
 
   const otherLocale = doc.locale === 'ar' ? 'en' : 'ar'
   try {
+    // Not `draft: true` — a draft-scoped read resolves through the versions
+    // table, so a sibling with no version row (every bulk-imported article)
+    // comes back empty and the cover silently fails to mirror. The (slug,
+    // locale) pair is on the main table, which is what we want to match.
     const siblings = await req.payload.find({
       collection: 'blog-posts' as any,
       where: { and: [{ slug: { equals: doc.slug } }, { locale: { equals: otherLocale } }] },
       limit: 1,
       depth: 0,
-      draft: true,
       overrideAccess: true,
       req,
     })
