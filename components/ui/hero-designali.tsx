@@ -29,18 +29,6 @@ WavePhase.prototype = {
   },
 };
 
-// Node class for line points
-function Node() {
-  // @ts-ignore
-  this.x = 0;
-  // @ts-ignore
-  this.y = 0;
-  // @ts-ignore
-  this.vy = 0;
-  // @ts-ignore
-  this.vx = 0;
-}
-
 // Configuration
 const E = {
   debug: true,
@@ -51,108 +39,112 @@ const E = {
   tension: 0.99,
 };
 
-// Global state
-let ctx: CanvasRenderingContext2D | null = null;
-let f: any = null;
-let pos = { x: 0, y: 0 };
-let lines: any[] = [];
+type TrailNode = { x: number; y: number; vx: number; vy: number }
+type TrailLine = { spring: number; friction: number; nodes: TrailNode[] }
 
-// @ts-ignore
-function Line(e) {
-  // @ts-ignore
-  this.init(e || {});
-}
+/**
+ * Mouse-trail canvas with instance-owned state: context, lines, pointer
+ * position, and the animation frame all live inside this call, and the
+ * returned cleanup cancels the frame and removes every listener — so repeated
+ * navigation cannot multiply listeners or frames.
+ */
+const renderCanvas = function (
+  canvas: HTMLCanvasElement,
+  isActive: () => boolean = () => true,
+): () => void {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return () => undefined;
 
-Line.prototype = {
-  // @ts-ignore
-  init: function (e) {
-    // @ts-ignore
-    this.spring = e.spring + 0.1 * Math.random() - 0.05;
-    // @ts-ignore
-    this.friction = E.friction + 0.01 * Math.random() - 0.005;
-    // @ts-ignore
-    this.nodes = [];
-    for (let i = 0; i < E.size; i++) {
-      // @ts-ignore
-      const t = new Node();
-      // @ts-ignore
-      t.x = pos.x;
-      // @ts-ignore
-      t.y = pos.y;
-      // @ts-ignore
-      this.nodes.push(t);
+  const pos = { x: 0, y: 0 };
+  let lines: TrailLine[] = [];
+  let frameId: number | null = null;
+  let running = true;
+  const hue = new (WavePhase as any)({
+    phase: Math.random() * 2 * Math.PI,
+    amplitude: 85,
+    frequency: 0.0015,
+    offset: 285,
+  });
+
+  const makeLine = (spring: number): TrailLine => ({
+    spring: spring + 0.1 * Math.random() - 0.05,
+    friction: E.friction + 0.01 * Math.random() - 0.005,
+    nodes: Array.from({ length: E.size }, () => ({ x: pos.x, y: pos.y, vx: 0, vy: 0 })),
+  });
+
+  const initLines = () => {
+    lines = [];
+    for (let e = 0; e < E.trails; e++) {
+      lines.push(makeLine(0.45 + (e / E.trails) * 0.025));
     }
-  },
-  update: function () {
-    // @ts-ignore
-    let e = this.spring,
-      // @ts-ignore
-      t = this.nodes[0];
-    // @ts-ignore
+  };
+
+  const updateLine = (line: TrailLine) => {
+    let e = line.spring;
+    let t = line.nodes[0];
     t.vx += (pos.x - t.x) * e;
-    // @ts-ignore
     t.vy += (pos.y - t.y) * e;
-    // @ts-ignore
-    for (let i = 0, a = this.nodes.length; i < a; i++) {
-      // @ts-ignore
-      t = this.nodes[i];
+    for (let i = 0, a = line.nodes.length; i < a; i++) {
+      t = line.nodes[i];
       if (i > 0) {
-        // @ts-ignore
-        const n = this.nodes[i - 1];
+        const n = line.nodes[i - 1];
         t.vx += (n.x - t.x) * e;
         t.vy += (n.y - t.y) * e;
         t.vx += n.vx * E.dampening;
         t.vy += n.vy * E.dampening;
       }
-      // @ts-ignore
-      t.vx *= this.friction;
-      // @ts-ignore
-      t.vy *= this.friction;
+      t.vx *= line.friction;
+      t.vy *= line.friction;
       t.x += t.vx;
       t.y += t.vy;
       e *= E.tension;
     }
-  },
-  draw: function () {
-    if (!ctx) return;
-    let e,
-      t,
-      // @ts-ignore
-      n = this.nodes[0].x,
-      // @ts-ignore
-      i = this.nodes[0].y;
+  };
+
+  const drawLine = (line: TrailLine) => {
+    let e: TrailNode;
+    let t: TrailNode;
+    let n = line.nodes[0].x;
+    let i = line.nodes[0].y;
     ctx.beginPath();
     ctx.moveTo(n, i);
-    // @ts-ignore
-    for (let a = 1, o = this.nodes.length - 2; a < o; a++) {
-      // @ts-ignore
-      e = this.nodes[a];
-      // @ts-ignore
-      t = this.nodes[a + 1];
+    for (let a = 1, o = line.nodes.length - 2; a < o; a++) {
+      e = line.nodes[a];
+      t = line.nodes[a + 1];
       n = 0.5 * (e.x + t.x);
       i = 0.5 * (e.y + t.y);
       ctx.quadraticCurveTo(e.x, e.y, n, i);
     }
-    // @ts-ignore
-    e = this.nodes[this.nodes.length - 2];
-    // @ts-ignore
-    t = this.nodes[this.nodes.length - 1];
+    e = line.nodes[line.nodes.length - 2];
+    t = line.nodes[line.nodes.length - 1];
     ctx.quadraticCurveTo(e.x, e.y, t.x, t.y);
     ctx.stroke();
     ctx.closePath();
-  },
-};
+  };
 
-function initLines() {
-  lines = [];
-  for (let e = 0; e < E.trails; e++) {
-    // @ts-ignore
-    lines.push(new Line({ spring: 0.45 + (e / E.trails) * 0.025 }));
-  }
-}
+  const render = () => {
+    frameId = null;
+    if (!running || !isActive()) return;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.strokeStyle = "hsla(" + Math.round(hue.update()) + ",100%,50%,0.025)";
+    ctx.lineWidth = 10;
+    for (let t = 0; t < E.trails; t++) {
+      const line = lines[t];
+      updateLine(line);
+      drawLine(line);
+    }
+    frameId = window.requestAnimationFrame(render);
+  };
 
-function onMousemove(e: MouseEvent | TouchEvent) {
-  function handleMove(e: MouseEvent | TouchEvent) {
+  const startRender = () => {
+    if (frameId === null && running) {
+      frameId = window.requestAnimationFrame(render);
+    }
+  };
+
+  const handleMove = (e: MouseEvent | TouchEvent) => {
     if ("touches" in e) {
       pos.x = e.touches[0].pageX;
       pos.y = e.touches[0].pageY;
@@ -160,77 +152,53 @@ function onMousemove(e: MouseEvent | TouchEvent) {
       pos.x = e.clientX;
       pos.y = e.clientY;
     }
-    e.preventDefault();
-  }
+    if (lines.length === 0) initLines();
+    startRender();
+  };
 
-  function handleTouchStart(e: TouchEvent) {
+  const handleTouchStart = (e: TouchEvent) => {
     if (e.touches.length === 1) {
       pos.x = e.touches[0].pageX;
       pos.y = e.touches[0].pageY;
     }
-  }
+  };
 
-  document.removeEventListener("mousemove", onMousemove as any);
-  document.removeEventListener("touchstart", onMousemove as any);
-  document.addEventListener("mousemove", handleMove as any);
-  document.addEventListener("touchmove", handleMove as any);
-  document.addEventListener("touchstart", handleTouchStart as any);
-  handleMove(e);
-  initLines();
-  render();
-}
+  const resizeCanvas = () => {
+    ctx.canvas.width = window.innerWidth - 20;
+    ctx.canvas.height = window.innerHeight;
+  };
 
-function render() {
-  if (!ctx || !(ctx as any).running) return;
-  ctx.globalCompositeOperation = "source-over";
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.globalCompositeOperation = "lighter";
-  ctx.strokeStyle = "hsla(" + Math.round(f.update()) + ",100%,50%,0.025)";
-  ctx.lineWidth = 10;
-  for (let t = 0; t < E.trails; t++) {
-    const e = lines[t];
-    e.update();
-    e.draw();
-  }
-  (ctx as any).frame++;
-  window.requestAnimationFrame(render);
-}
+  const handleFocus = () => startRender();
+  const handleBlur = () => {
+    if (frameId !== null) {
+      window.cancelAnimationFrame(frameId);
+      frameId = null;
+    }
+  };
 
-function resizeCanvas() {
-  if (!ctx) return;
-  ctx.canvas.width = window.innerWidth - 20;
-  ctx.canvas.height = window.innerHeight;
-}
-
-const renderCanvas = function () {
-  const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-  if (!canvas) return;
-  ctx = canvas.getContext("2d");
-  if (!ctx) return;
-  (ctx as any).running = true;
-  (ctx as any).frame = 1;
-  f = new (WavePhase as any)({
-    phase: Math.random() * 2 * Math.PI,
-    amplitude: 85,
-    frequency: 0.0015,
-    offset: 285,
-  });
-  document.addEventListener("mousemove", onMousemove as any);
-  document.addEventListener("touchstart", onMousemove as any);
+  document.addEventListener("mousemove", handleMove);
+  document.addEventListener("touchmove", handleMove);
+  document.addEventListener("touchstart", handleTouchStart);
   document.body.addEventListener("orientationchange", resizeCanvas);
   window.addEventListener("resize", resizeCanvas);
-  window.addEventListener("focus", () => {
-    if (ctx && !(ctx as any).running) {
-      (ctx as any).running = true;
-      render();
-    }
-  });
-  window.addEventListener("blur", () => {
-    if (ctx) {
-      (ctx as any).running = true;
-    }
-  });
+  window.addEventListener("focus", handleFocus);
+  window.addEventListener("blur", handleBlur);
   resizeCanvas();
+
+  return () => {
+    running = false;
+    if (frameId !== null) {
+      window.cancelAnimationFrame(frameId);
+      frameId = null;
+    }
+    document.removeEventListener("mousemove", handleMove);
+    document.removeEventListener("touchmove", handleMove);
+    document.removeEventListener("touchstart", handleTouchStart);
+    document.body.removeEventListener("orientationchange", resizeCanvas);
+    window.removeEventListener("resize", resizeCanvas);
+    window.removeEventListener("focus", handleFocus);
+    window.removeEventListener("blur", handleBlur);
+  };
 };
 
 // TypeWriter component

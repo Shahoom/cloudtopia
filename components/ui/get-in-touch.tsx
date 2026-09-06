@@ -6,17 +6,11 @@ import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export const ProfessionalConnect = () => {
     const [, setHoveredIndex] = useState<number | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isLoaded, setIsLoaded] = useState(false);
     const { t, dir, locale } = useLanguage();
 
     useEffect(() => {
         setIsLoaded(true);
-        const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
     const socialPlatforms = [

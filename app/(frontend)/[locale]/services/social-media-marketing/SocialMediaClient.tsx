@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { renderCanvas, TypeWriter } from "@/components/ui/hero-designali"
 import { Plus, CheckCircle } from "lucide-react"
@@ -61,9 +61,12 @@ const Hero = ({ t: pageT }: { t?: any }) => {
   ]
 
   const talkAbout = p?.hero?.talkAbout || (locale === 'ar' ? talkAboutAr : talkAboutEn)
+  const trailCanvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    renderCanvas()
+    const canvas = trailCanvasRef.current
+    if (!canvas) return
+    return renderCanvas(canvas, () => document.visibilityState === 'visible')
   }, [])
 
   const content = {
@@ -168,6 +171,7 @@ const Hero = ({ t: pageT }: { t?: any }) => {
           </div>
         </div>
         <canvas
+          ref={trailCanvasRef}
           className="pointer-events-none absolute inset-0 mx-auto"
           id="canvas"
         ></canvas>

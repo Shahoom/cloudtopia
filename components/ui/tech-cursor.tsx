@@ -50,98 +50,108 @@ const TechCursor = () => {
   const techImagesRef = useRef<TechImage[]>([]);
 
   useEffect(() => {
-    // Preload images
-    const loadImages = async () => {
-      techImagesRef.current = await Promise.all(
-        icons.map(({ name, src }) => {
-          return new Promise<TechImage>((resolve) => {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => resolve({ name, src, image: img });
-          });
-        }),
-      );
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // The frame ID and mounted flag live in the effect scope so the cleanup
+    // below can always cancel the loop, even while images are still loading.
+    let frameId: number | null = null;
+    let mounted = true;
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
-    loadImages().then(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-      const handleResize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      };
+    const particles = particlesRef.current;
 
-      handleResize();
-      window.addEventListener("resize", handleResize);
-
-      const particles = particlesRef.current;
-
-      const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = particles.length - 1; i >= 0; i--) {
-          const p = particles[i];
-          p.update();
-          p.draw(ctx);
-          if (p.alpha <= 0) {
-            particles.splice(i, 1);
-          }
+    const animate = () => {
+      frameId = null;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw(ctx);
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
         }
-        requestAnimationFrame(animate);
+      }
+      // Idle when nothing is on screen; onMove restarts the loop.
+      if (particles.length > 0) {
+        frameId = requestAnimationFrame(animate);
+      }
+    };
+
+    let frameCount = 0;
+
+    const onMove = (e: MouseEvent) => {
+      if (techImagesRef.current.length === 0) return;
+
+      // Balanced spawn rate (every 3rd move)
+      frameCount++;
+      if (frameCount % 3 !== 0) return;
+
+      const randomIcon =
+        techImagesRef.current[
+        Math.floor(Math.random() * techImagesRef.current.length)
+        ];
+
+      const size = 22 + Math.random() * 8;
+
+      const particle: Particle = {
+        x: e.clientX,
+        y: e.clientY,
+        alpha: 1,
+        image: randomIcon.image,
+        size,
+        update() {
+          this.y -= 0.4;  // Slightly slower upward movement
+          this.alpha -= 0.01;  // Slightly slower fade out
+        },
+        draw(ctx: CanvasRenderingContext2D) {
+          ctx.globalAlpha = this.alpha;
+          ctx.drawImage(
+            this.image,
+            this.x - this.size / 2,
+            this.y - this.size / 2,
+            this.size,
+            this.size,
+          );
+          ctx.globalAlpha = 1;
+        },
       };
 
-      animate();
+      particles.push(particle);
+      if (frameId === null) {
+        frameId = requestAnimationFrame(animate);
+      }
+    };
 
-      let frameCount = 0;
-
-      const onMove = (e: MouseEvent) => {
-        if (techImagesRef.current.length === 0) return;
-
-        // Balanced spawn rate (every 3rd move)
-        frameCount++;
-        if (frameCount % 3 !== 0) return;
-
-        const randomIcon =
-          techImagesRef.current[
-          Math.floor(Math.random() * techImagesRef.current.length)
-          ];
-
-        const size = 22 + Math.random() * 8;
-
-        const particle: Particle = {
-          x: e.clientX,
-          y: e.clientY,
-          alpha: 1,
-          image: randomIcon.image,
-          size,
-          update() {
-            this.y -= 0.4;  // Slightly slower upward movement
-            this.alpha -= 0.01;  // Slightly slower fade out
-          },
-          draw(ctx: CanvasRenderingContext2D) {
-            ctx.globalAlpha = this.alpha;
-            ctx.drawImage(
-              this.image,
-              this.x - this.size / 2,
-              this.y - this.size / 2,
-              this.size,
-              this.size,
-            );
-            ctx.globalAlpha = 1;
-          },
-        };
-
-        particles.push(particle);
-      };
-
-      window.addEventListener("mousemove", onMove);
-      return () => {
-        window.removeEventListener("mousemove", onMove);
-        window.removeEventListener("resize", handleResize);
-      };
+    Promise.all(
+      icons.map(({ name, src }) => {
+        return new Promise<TechImage>((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => resolve({ name, src, image: img });
+        });
+      }),
+    ).then((images) => {
+      if (!mounted) return;
+      techImagesRef.current = images;
     });
+
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      mounted = false;
+      if (frameId !== null) cancelAnimationFrame(frameId);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (

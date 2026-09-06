@@ -525,12 +525,28 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  // Desktop-only cursor: false until we KNOW the viewport is >=768px and the
+  // visitor has not asked for reduced motion, so mobile first render never
+  // mounts (or downloads) the effect.
+  const [cursorEnabled, setCursorEnabled] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+
+    const desktop = window.matchMedia('(min-width: 768px)')
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updateCursor = () => setCursorEnabled(desktop.matches && !reduced.matches)
+    updateCursor()
+    desktop.addEventListener('change', updateCursor)
+    reduced.addEventListener('change', updateCursor)
+
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      desktop.removeEventListener('change', updateCursor)
+      reduced.removeEventListener('change', updateCursor)
+    }
   }, [])
 
   // Smooth scroll progress for Apple-like parallax
@@ -618,7 +634,7 @@ export default function ProjectsPageClient({ t: pageT }: { t?: any }) {
   return (
     <>
       {/* Tech Cursor Effect - Only on Desktop */}
-      {!isMobile && <TechCursor />}
+      {cursorEnabled && <TechCursor />}
 
       {/* HERO SECTION */}
       <section

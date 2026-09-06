@@ -219,13 +219,21 @@ const ParticleTextEffect: React.FC<ParticleTextEffectProps> = ({
     };
 
     const animate = () => {
+        animationIdRef.current = null;
         const ctx = ctxRef.current;
         const canvas = canvasRef.current;
         if (!ctx || !canvas) return;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particlesRef.current.forEach(p => p.move(interactionRadiusRef.current, hasPointerRef.current));
-        animationIdRef.current = requestAnimationFrame(animate);
+        let anyMoved = false;
+        particlesRef.current.forEach(p => {
+            if (p.move(interactionRadiusRef.current, hasPointerRef.current)) anyMoved = true;
+        });
+        // Stop the frame loop once every particle has settled and the pointer
+        // has left; pointer handlers restart it.
+        if (anyMoved || hasPointerRef.current) {
+            animationIdRef.current = requestAnimationFrame(animate);
+        }
     };
 
     const initialize = () => {
