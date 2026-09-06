@@ -198,10 +198,10 @@ export default async function IndustriesPage({ params }: PageProps) {
           <h2 className={styles.ctaTitle}>{content.cta.title}</h2>
           <p className={styles.ctaDescription}>{content.cta.description}</p>
           <div className={styles.ctaActions}>
-            <Link href={`/api/whatsapp?locale=${locale}`} className={styles.ctaPrimary}>
+            <a href={`/api/whatsapp?locale=${locale}`} className={styles.ctaPrimary}>
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
               {content.cta.primary}
-            </Link>
+            </a>
             <Link href={localePath(locale, '/contact')} className={styles.ctaSecondary}>
               {content.cta.secondary}
               <DirectionalArrow className="h-5 w-5" aria-hidden="true" />

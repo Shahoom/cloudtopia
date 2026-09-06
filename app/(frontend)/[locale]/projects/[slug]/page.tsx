@@ -339,13 +339,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 <div className="relative max-w-3xl mx-auto text-center">
                     <h2 className="text-3xl md:text-5xl font-bold mb-5">{L.readyForYours}</h2>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-                        <Link
+                        <a
                             href={`/api/whatsapp?locale=${locale}`}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white text-primary-700 font-semibold hover:bg-lavender transition-colors"
                         >
                             {L.startProject}
                             <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-                        </Link>
+                        </a>
                         <Link
                             href={localePath(locale, '/pricing')}
                             className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-white/30 hover:border-white font-semibold transition-colors"

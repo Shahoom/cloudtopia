@@ -493,13 +493,13 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                     </p>
 
                                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                                        <Link
+                                        <a
                                             href={`/api/whatsapp?locale=${locale}`}
                                             className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:bg-cyan-100"
                                         >
                                             {operatingModel.primaryCta}
                                             <ArrowRight className={cn("h-4 w-4 transition-transform group-hover:translate-x-1", isRTL && "rotate-180 group-hover:-translate-x-1")} />
-                                        </Link>
+                                        </a>
                                         <Link
                                             href={localePath(locale, '/pricing')}
                                             className="inline-flex items-center justify-center gap-2 rounded-md border border-white/20 px-5 py-3 text-sm font-black text-white transition hover:border-amber-200 hover:bg-white/10"
@@ -639,13 +639,13 @@ export default function AboutPageClient({ t: pageT }: { t?: any }) {
                                 <p className="text-xl md:text-2xl text-neutral-600 max-w-2xl font-light">
                                     {t.about.cta.description}
                                 </p>
-                                <Link
+                                <a
                                     href={`/api/whatsapp?locale=${locale}`}
                                     className="group relative inline-flex items-center gap-3 px-12 py-5 bg-blue-600 text-white rounded-2xl font-black text-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(37,99,235,0.2)]"
                                 >
                                     <span>{t.about.cta.button}</span>
                                     <ArrowRight className={cn("w-6 h-6 group-hover:translate-x-1 transition-transform", isRTL && "rotate-180")} />
-                                </Link>
+                                </a>
                             </motion.div>
                         </div>
                     </section>

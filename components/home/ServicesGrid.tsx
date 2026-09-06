@@ -307,7 +307,6 @@ export default function ServicesGrid() {
                   fill
                   sizes="(max-width: 1024px) 100vw, 1000px"
                   quality={90}
-                  priority
                   className="object-cover transition-transform duration-700 hover:scale-103"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent flex flex-col justify-end p-6">

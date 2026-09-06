@@ -289,13 +289,13 @@ export function GetFoundPillarPage({
                             : "Book a free consultation and we'll map your next growth play together."}
                     </p>
                     <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                        <Link
+                        <a
                             href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center gap-2 rounded-full bg-amber-400 px-8 py-4 text-sm font-black text-[#070b16] transition-all duration-300 hover:bg-amber-300 hover:shadow-[0_14px_44px_-12px_rgba(245,158,11,0.6)]"
                         >
                             {isAr ? 'ابدأ الآن' : 'Get started'}
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" />
-                        </Link>
+                        </a>
                         <Link
                             href={L('/projects')}
                             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-sm font-bold text-white transition-colors duration-300 hover:bg-white/10"

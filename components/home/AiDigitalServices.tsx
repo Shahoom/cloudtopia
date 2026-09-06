@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
-import Link from 'next/link'
 import Image from 'next/image'
 import { Check, ArrowRight, CornerDownRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -496,7 +495,6 @@ export default function AiDigitalServices() {
                       alt={locale === 'ar' ? activeTabData.heading.ar : activeTabData.heading.en}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      priority
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1b1b23]/80 via-transparent to-transparent opacity-80" />

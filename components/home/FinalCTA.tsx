@@ -143,13 +143,13 @@ export default function FinalCTA() {
                         <p className="text-xs font-bold uppercase tracking-widest text-cyan-300/90">{copy.panelTitle}</p>
 
                         <div className="mt-6 flex flex-col gap-3">
-                            <Link
+                            <a
                                 href={`/api/whatsapp?locale=${locale}`}
                                 className="group inline-flex items-center justify-between gap-2 px-6 py-4 rounded-2xl bg-white text-eerie font-semibold hover:bg-cyan-100 transition-colors"
                             >
                                 {primaryCTA}
                                 <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : ''}`} aria-hidden="true" />
-                            </Link>
+                            </a>
 
                             <a
                                 href={WHATSAPP_HREF}

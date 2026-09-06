@@ -229,11 +229,11 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
           </ContainerAnimated>
 
           <ContainerAnimated className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 md:mb-0">
-            <Link href={`/api/whatsapp?locale=${locale}`}>
+            <a href={`/api/whatsapp?locale=${locale}`}>
               <Button className="gap-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
                 {currentContent.cta} <Smartphone className="w-4 h-4" />
               </Button>
-            </Link>
+            </a>
             <Button variant="outline" className="gap-2 border-slate-300 text-slate-700 hover:bg-lavender px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
               {currentContent.learnMore} <ArrowRight className="w-4 h-4" />
             </Button>

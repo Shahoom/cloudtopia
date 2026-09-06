@@ -924,13 +924,13 @@ const ServiceExplainer = ({ locale, t: pageT }: { locale: string, t?: any }) => 
           <p className="text-neutral-300 mb-8 max-w-2xl mx-auto">
             {currentT.ctaDescription}
           </p>
-          <Link
+          <a
             href={`/api/whatsapp?locale=${locale}`}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/25"
           >
             {currentT.ctaButton}
             <span>→</span>
-          </Link>
+          </a>
         </div>
 
       </div>

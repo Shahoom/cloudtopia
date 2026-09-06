@@ -496,13 +496,13 @@ export default async function PricingPage({ params }: PageProps) {
                             ))}
                         </div>
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                            <Link
+                            <a
                                 href={`/api/whatsapp?locale=${locale}`}
                                 className="inline-flex items-center justify-center gap-2 border-2 border-white bg-white px-6 py-3 text-sm font-bold text-neutral-950 transition-colors hover:bg-primary-100"
                             >
                                 {L.contactCta}
                                 <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} aria-hidden="true" />
-                            </Link>
+                            </a>
                             <Link
                                 href={localePath(locale, '/services')}
                                 className="inline-flex items-center justify-center gap-2 border-2 border-white/30 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"

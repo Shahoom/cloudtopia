@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, HelpCircle, MessageCircle } from 'lucide-react'
-import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 
@@ -86,13 +85,13 @@ export default function FAQ() {
                             transition={{ duration: 0.6, delay: 0.15 }}
                             className={`flex ${isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'}`}
                         >
-                            <Link
+                            <a
                                 href={`/api/whatsapp?locale=${locale}`}
                                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-900 transition-colors group"
                             >
                                 <MessageCircle className="w-4 h-4" />
                                 {t.home?.faq?.contactCTA || (locale === 'ar' ? 'لا تجد سؤالك؟ راسلنا' : "Don't see your question? Email us")}
-                            </Link>
+                            </a>
                         </motion.div>
 
                         <motion.div

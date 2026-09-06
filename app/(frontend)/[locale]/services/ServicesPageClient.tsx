@@ -982,10 +982,10 @@ export default function ServicesPageClient({ t: pageT }: { t?: any }) {
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] text-white" style={{ textWrap: 'balance' } as React.CSSProperties}>{finalCtaTitle}</h2>
                         <div className="w-12 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" aria-hidden="true" />
                         <p className="text-base md:text-lg text-violet-200/60 max-w-lg mx-auto leading-relaxed">{finalCtaDesc}</p>
-                        <Link href={`/api/whatsapp?locale=${locale}`} className="group inline-flex items-center gap-3 px-10 py-4 bg-amber-500 text-white rounded-xl font-bold text-base transition-all duration-300 hover:bg-amber-400 hover:scale-105 active:scale-95 touch-manipulation shadow-lg shadow-amber-500/25" aria-label={finalCtaButton}>
+                        <a href={`/api/whatsapp?locale=${locale}`} className="group inline-flex items-center gap-3 px-10 py-4 bg-amber-500 text-white rounded-xl font-bold text-base transition-all duration-300 hover:bg-amber-400 hover:scale-105 active:scale-95 touch-manipulation shadow-lg shadow-amber-500/25" aria-label={finalCtaButton}>
                             {finalCtaButton}
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" aria-hidden="true" />
-                        </Link>
+                        </a>
                     </motion.div>
                 </div>
             </section>

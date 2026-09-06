@@ -193,9 +193,9 @@ function WebDesignHero({ t }: { t: any }) {
               transition: { type: "spring", damping: 30, stiffness: 400 },
             }}
           >
-            <Link href={`/api/whatsapp?locale=${locale}`}>
+            <a href={`/api/whatsapp?locale=${locale}`}>
               {p?.hero?.ctaStart || (isRTL ? "ابدأ مشروعك" : "Start Your Project")} <span className={`font-serif ${isRTL ? 'mr-1' : 'ml-1'}`}>{isRTL ? '←' : '→'}</span>
-            </Link>
+            </a>
           </motion.button>
           <motion.button
             className="text-base sm:text-base md:text-lg lg:text-xl font-semibold tracking-tight text-primary-600 bg-lavender border-2 border-primary-200 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-lg hover:bg-lavender transition-colors"

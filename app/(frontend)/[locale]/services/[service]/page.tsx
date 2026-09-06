@@ -1081,10 +1081,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     <h2 className="mb-5 text-3xl font-black text-white md:text-5xl">{L.readyTitle}</h2>
                     <p className="mb-8 text-lg font-semibold leading-8 text-white/75">{L.readyDesc}</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-3">
-                        <Link href={`/api/whatsapp?locale=${locale}`} className="inline-flex items-center justify-center gap-2 bg-white px-8 py-4 font-black text-neutral-900 transition-colors hover:bg-cyan-100">
+                        <a href={`/api/whatsapp?locale=${locale}`} className="inline-flex items-center justify-center gap-2 bg-white px-8 py-4 font-black text-neutral-900 transition-colors hover:bg-cyan-100">
                             {L.start}
                             <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-                        </Link>
+                        </a>
                         <Link href={whatsAppUrl} className="inline-flex items-center justify-center gap-2 border border-white/20 px-8 py-4 font-black text-white transition-colors hover:bg-white/10">
                             <MessageCircle className="w-4 h-4" />
                             {L.whatsapp}

@@ -226,7 +226,7 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                         {p?.cta?.description || "Let's build a custom business system that meets your unique needs and drives your growth."}
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link
+                        <a
                             href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-lavender rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
@@ -234,7 +234,7 @@ export default function BusinessSystemsClient({ t: pageT }: { t?: any }) {
                             <svg className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 rtl:rotate-180 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
-                        </Link>
+                        </a>
                         <Link
                             href={localePath(locale, '/services')}
                             className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full hover:bg-lavender/10 transition-all duration-300"

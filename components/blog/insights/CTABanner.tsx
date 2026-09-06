@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { localePath } from '@/lib/i18n/url'
 
@@ -31,13 +30,13 @@ export function CTABanner({
             {subtitle ?? defaultSubtitle}
           </p>
         </div>
-        <Link
+        <a
           href={`/api/whatsapp?locale=${locale}`}
           className="ed-eyebrow inline-flex h-11 shrink-0 items-center gap-2 bg-[color:var(--ed-accent)] px-6 text-white transition-colors hover:bg-[color:var(--ed-accent-ink)]"
         >
           {buttonText}
           <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-        </Link>
+        </a>
       </div>
     </section>
   )

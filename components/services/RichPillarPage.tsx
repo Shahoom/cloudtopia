@@ -158,7 +158,7 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
                     <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl lg:text-5xl">{data.cta.title}</h2>
                     <p className="mx-auto mb-10 max-w-2xl text-lg text-slate-300 md:text-xl">{data.cta.description}</p>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                        <Link
+                        <a
                             href={`/api/whatsapp?locale=${locale}`}
                             className="group inline-flex items-center justify-center rounded-full bg-lavender px-8 py-4 text-lg font-semibold text-slate-900 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                         >
@@ -166,7 +166,7 @@ export default function RichPillarPage({ data, locale }: { data: RichPillarData;
                             <svg className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 rtl:ml-0 rtl:mr-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
-                        </Link>
+                        </a>
                         <Link
                             href={localePath(locale, '/services')}
                             className="inline-flex items-center justify-center rounded-full border-2 border-white/30 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-lavender/10"

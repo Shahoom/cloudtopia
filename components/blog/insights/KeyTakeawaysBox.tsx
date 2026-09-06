@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { localePath } from '@/lib/i18n/url'
 
 export function KeyTakeawaysBox({
@@ -42,13 +41,13 @@ export function KeyTakeawaysBox({
           </li>
         ))}
       </ul>
-      <Link
+      <a
         href={`/api/whatsapp?locale=${locale}`}
         className="mt-5 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold text-white transition hover:opacity-90"
         style={{ backgroundColor: 'var(--ed-ink)' }}
       >
         {locale === 'ar' ? 'احجز مكالمة استراتيجية مجانية' : 'Book a Free Strategy Call'}
-      </Link>
+      </a>
     </aside>
   )
 }

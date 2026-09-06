@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -133,7 +132,7 @@ export function CreativePricing({
                     </details>
                   )}
 
-                  <Link
+                  <a
                     href={tier.href || '/api/whatsapp'}
                     className={cn(
                       'mt-auto inline-flex h-12 items-center justify-center gap-2 rounded-md border border-slate-950 px-4 text-sm font-black transition-[background-color,transform] duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500',
@@ -142,7 +141,7 @@ export function CreativePricing({
                   >
                     {cta}
                     <ArrowRight className={cn('h-4 w-4', isRTL && 'rotate-180')} aria-hidden="true" />
-                  </Link>
+                  </a>
                 </div>
               </article>
             )
