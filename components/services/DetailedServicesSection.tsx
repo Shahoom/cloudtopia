@@ -2,8 +2,7 @@
 
 import { Layers } from 'lucide-react'
 import { getStructuredGroups, getStructuredPillarBySlug } from '@/lib/services/structured-catalog'
-import { getDigitalPresenceSubServicesByPillar } from '@/lib/services/digital-presence-content'
-import { getBusinessSystemsSubServicesByPillar } from '@/lib/services/business-systems-content'
+import { getSubserviceNavItems } from '@/lib/services/subservice-nav-index'
 import { getLocalizedPillarSubServiceNames } from '@/lib/services/pillar-subservices-localized'
 import { localizedDP, type DPPillar } from '@/lib/services/digital-presence'
 import { SubServiceGlowCard } from './SubServiceGlowCard'
@@ -23,10 +22,12 @@ import { cn } from '@/lib/utils'
 type SubCard = { name: string; desc?: string; href: string }
 
 function pillarSubCards(pillar: DPPillar, locale: string): SubCard[] {
-  const bs = getBusinessSystemsSubServicesByPillar(pillar.slug, locale)
-  const tailored = bs.length > 0 ? bs : getDigitalPresenceSubServicesByPillar(pillar.slug, locale)
+  // Sub-services with their own page (href differs from the pillar) render as
+  // rich cards; the rest keep the historical name-only card linking the pillar.
+  const items = getSubserviceNavItems(pillar.slug, locale === 'ar' ? 'ar' : 'en')
+  const tailored = items.filter((s) => s.href !== pillar.href)
   if (tailored.length > 0) {
-    return tailored.map((s) => ({ name: s.name, desc: s.desc as string | undefined, href: s.href }))
+    return tailored.map((s) => ({ name: s.name, desc: s.description, href: s.href }))
   }
   // Pillars whose sub-services have no own page yet → name cards link to the
   // pillar. Names are localized (falls back to raw English subServices) so the

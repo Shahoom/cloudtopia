@@ -73,11 +73,11 @@ function FloatingCard({
     )
 }
 
-export default function HomePageClient({ serverDictionary, articlePosts }: { serverDictionary?: any; articlePosts?: TeaserPost[] }) {
+export default function HomePageClient({ articlePosts }: { articlePosts?: TeaserPost[] }) {
     const { locale, t } = useLanguage()
-    // Prefer server-fetched dictionary (from getPageBundle) when available,
-    // falling back to context for backward compatibility.
-    const dict = serverDictionary || t
+    // The layout's LanguageProvider already carries the merged CMS dictionary;
+    // reading it from context avoids serializing the whole dictionary twice.
+    const dict = t as any
     const { scrollYProgress } = useScroll()
     const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
     const isRTL = locale === 'ar'

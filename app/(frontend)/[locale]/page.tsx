@@ -164,7 +164,7 @@ export default async function HomePage({
                     </ul>
                 )}
             </div>
-            <HomePageClient serverDictionary={homepageDictionary} articlePosts={articlePosts} />
+            <HomePageClient articlePosts={articlePosts} />
         </>
     )
 }

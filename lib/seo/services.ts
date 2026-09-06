@@ -1,4 +1,5 @@
 import type { LocaleKey, LocalizedText } from './industries'
+import { serviceCategoryName } from '@/lib/services/service-category-index'
 import { businessSystemsPillarSeoDescriptions } from '@/lib/services/business-systems'
 import { webAppPillarSeoDescriptions } from '@/lib/services/web-applications'
 
@@ -28,49 +29,49 @@ const t = (en: string, ar: string): LocalizedText => ({ en, ar })
 
 const categoryCopy: Record<string, { name: LocalizedText; description: LocalizedText; packageNames: string[] }> = {
     'digital-presence': {
-        name: t('Digital Presence', 'الحضور الرقمي'),
+        name: serviceCategoryName('digital-presence')!,
         description: t(
             'Websites, stores, content, and maintenance for companies that need a credible online presence.',
             'مواقع ومتاجر ومحتوى وصيانة للشركات التي تحتاج حضوراً رقمياً موثوقاً.'),
         packageNames: ['Basic Web Presence', 'E-commerce Pro', 'Enterprise Digital Hub'],
     },
     'interactive-web-applications': {
-        name: t('Interactive Web Applications', 'تطبيقات ويب تفاعلية'),
+        name: serviceCategoryName('interactive-web-applications')!,
         description: t(
             'Custom portals, dashboards, SaaS MVPs, booking tools, and mobile-ready application experiences.',
             'بوابات ولوحات وMVP SaaS وأدوات حجز وتجارب تطبيقات جاهزة للجوال.'),
         packageNames: ['MVP Launchpad', 'Growth Accelerator', 'Enterprise Custom App'],
     },
     'mobile-app-development': {
-        name: t('Mobile App Development', 'تطوير تطبيقات الجوال'),
+        name: serviceCategoryName('mobile-app-development')!,
         description: t(
             'iOS, Android, cross-platform, PWA, customer, staff, booking, delivery, and app-backend services for mobile-first businesses.',
             'تطبيقات iOS وAndroid ومتعددة المنصات وPWA وتطبيقات عملاء وموظفين وحجز وتوصيل وخلفيات API للشركات التي تعمل من الجوال.'),
         packageNames: ['Mobile App Starter', 'Cross-Platform Launch', 'App Ecosystem'],
     },
     'business-systems-development': {
-        name: t('Business Systems Development', 'تطوير أنظمة الأعمال'),
+        name: serviceCategoryName('business-systems-development')!,
         description: t(
             'CRM, ERP, workflow automation, inventory, sales, HR, finance, and API systems built around operations.',
             'أنظمة CRM وERP وأتمتة ومخزون ومبيعات وموارد بشرية ومالية وAPI مبنية حول العمليات.'),
         packageNames: ['Core Business Automation', 'Integrated Enterprise', 'Custom Ecosystem'],
     },
     'cloud-infrastructure': {
-        name: t('Cloud & Infrastructure', 'السحابة والبنية التحتية'),
+        name: serviceCategoryName('cloud-infrastructure')!,
         description: t(
             'Hosting, migration, deployment, database, backup, security, performance, and scalable cloud architecture.',
             'استضافة وترحيل ونشر وقواعد بيانات ونسخ احتياطي وأمان وأداء وبنية سحابية قابلة للتوسع.'),
         packageNames: ['Cloud Foundation', 'Optimized Cloud', 'Enterprise Cloud'],
     },
     'ai-powered-solutions': {
-        name: t('AI-Powered Solutions', 'حلول مدعومة بالذكاء الاصطناعي'),
+        name: serviceCategoryName('ai-powered-solutions')!,
         description: t(
             'AI assistants, automation, chatbots, content systems, reporting dashboards, NLP, and machine learning support.',
             'مساعدون وأتمتة وروبوتات محادثة وأنظمة محتوى ولوحات تقارير وNLP ودعم تعلم آلي.'),
         packageNames: ['AI Starter', 'Intelligent Automation', 'Custom AI/ML'],
     },
     'digital-growth-support': {
-        name: t('Digital Growth Support', 'دعم النمو الرقمي'),
+        name: serviceCategoryName('digital-growth-support')!,
         description: t(
             'SEO, social, paid landing pages, content systems, lead generation, CRO, email automation, and brand support.',
             'SEO وتواصل اجتماعي وصفحات إعلانات وأنظمة محتوى وتوليد عملاء وCRO وأتمتة بريد ودعم هوية.'),

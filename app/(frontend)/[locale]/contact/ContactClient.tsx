@@ -5,7 +5,8 @@ import { Mail, Phone, MapPin, Send, MessageSquare, Globe, Clock, CheckCircle, Sp
 import { useState, useRef, useEffect } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ProfessionalConnect } from '@/components/ui/get-in-touch'
-import { serviceCategories, localizedServiceValue } from '@/lib/seo/services'
+import { SERVICE_CATEGORY_OPTIONS } from '@/lib/services/service-category-index'
+import type { Locale } from '@/lib/i18n/config'
 
 interface MousePosition {
   x: number
@@ -183,9 +184,9 @@ const CustomSelect = ({ label, id, value, onChange, options, required = false }:
 
 const IntroSection = ({ t }: { t: any }) => {
   const sentences = [
-    t.contact.intro.line1,
-    t.contact.intro.line2,
-    t.contact.intro.line3
+    copy.intro.line1,
+    copy.intro.line2,
+    copy.intro.line3
   ]
 
   return (
@@ -232,9 +233,15 @@ const IntroSection = ({ t }: { t: any }) => {
   )
 }
 
-export default function ContactClient({ t: pageT }: { t?: any }) {
-  const { t: contextT, dir, locale } = useLanguage()
-  const t = pageT || contextT
+type ContactCopy = (typeof import('@/lib/i18n/translations/en'))['en']['contact']
+
+type ContactClientProps = {
+  locale: Locale
+  copy: ContactCopy
+}
+
+export default function ContactClient({ locale, copy }: ContactClientProps) {
+  const dir = locale === 'ar' ? 'rtl' : 'ltr'
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [activeTab, setActiveTab] = useState('email')
   const intakeContent = locale === 'ar'
@@ -312,13 +319,13 @@ export default function ContactClient({ t: pageT }: { t?: any }) {
     e.preventDefault()
     setIsSubmitting(true)
     saveInquiry('whatsapp')
-    const message = `${t.contact.form.waMessage}
+    const message = `${copy.form.waMessage}
 
-${t.contact.form.name}: ${formData.name || 'N/A'}
-${t.contact.form.email}: ${formData.email || 'N/A'}
-${t.contact.form.company}: ${formData.company || 'N/A'}
-${t.contact.form.service}: ${formData.interest || 'N/A'}
-${t.contact.form.message}: ${formData.message || 'N/A'}`
+${copy.form.name}: ${formData.name || 'N/A'}
+${copy.form.email}: ${formData.email || 'N/A'}
+${copy.form.company}: ${formData.company || 'N/A'}
+${copy.form.service}: ${formData.interest || 'N/A'}
+${copy.form.message}: ${formData.message || 'N/A'}`
 
     const encodedMessage = encodeURIComponent(message)
     setTimeout(() => {
@@ -334,16 +341,16 @@ ${t.contact.form.message}: ${formData.message || 'N/A'}`
     e.preventDefault()
     setIsSubmitting(true)
     saveInquiry('email')
-    const subject = `${t.contact.form.emailSubject} ${formData.name}`
-    const body = `${t.contact.form.name}: ${formData.name}
-${t.contact.form.email}: ${formData.email}
-${t.contact.form.phone}: ${formData.phone || 'N/A'}
-${t.contact.form.company}: ${formData.company || 'N/A'}
-${t.contact.form.service}: ${formData.interest}
-${t.contact.form.budget}: ${formData.budget || 'N/A'}
-${t.contact.form.timeline}: ${formData.timeline || 'N/A'}
+    const subject = `${copy.form.emailSubject} ${formData.name}`
+    const body = `${copy.form.name}: ${formData.name}
+${copy.form.email}: ${formData.email}
+${copy.form.phone}: ${formData.phone || 'N/A'}
+${copy.form.company}: ${formData.company || 'N/A'}
+${copy.form.service}: ${formData.interest}
+${copy.form.budget}: ${formData.budget || 'N/A'}
+${copy.form.timeline}: ${formData.timeline || 'N/A'}
 
-${t.contact.form.message}:
+${copy.form.message}:
 ${formData.message}`
 
     setTimeout(() => {
@@ -372,27 +379,27 @@ ${formData.message}`
             >
               <div className="inline-flex items-center gap-2 bg-white/40 backdrop-blur-md px-6 py-3 rounded-full shadow-sm border border-white/50 mb-8">
                 <Sparkles className="w-5 h-5 text-primary-500" />
-                <span className="font-bold text-primary-600 uppercase tracking-widest text-xs">{t.contact.hero.badge}</span>
+                <span className="font-bold text-primary-600 uppercase tracking-widest text-xs">{copy.hero.badge}</span>
               </div>
               <h1 className="text-3xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-neutral-900">
-                {t.contact.hero.title}<br />
+                {copy.hero.title}<br />
                 <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-600 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient">
-                  {t.contact.hero.titleHighlight}
+                  {copy.hero.titleHighlight}
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-neutral-600 font-medium leading-relaxed max-w-xl">
-                {t.contact.hero.description}
+                {copy.hero.description}
               </p>
             </motion.div>
 
             <div className="space-y-6">
-              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-primary-600/60 ml-2">{t.contact.info.directContact}</h2>
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-primary-600/60 ml-2">{copy.info.directContact}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <TiltCard className="flex flex-col items-center sm:items-start text-center sm:text-start">
                   <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 text-primary-600">
                     <Mail className="w-8 h-8" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{t.contact.info.email}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-neutral-900">{copy.info.email}</h3>
                   <a href="mailto:info@cloudtopia.net" className="text-primary-600 font-bold hover:underline">info@cloudtopia.net</a>
                 </TiltCard>
 
@@ -543,8 +550,8 @@ ${formData.message}`
               <div className="relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                   <div>
-                    <h2 className="text-4xl font-black text-neutral-900 tracking-tight">{t.contact.form.title}</h2>
-                    <p className="text-neutral-500 font-medium mt-2">{t.contact.form.description}</p>
+                    <h2 className="text-4xl font-black text-neutral-900 tracking-tight">{copy.form.title}</h2>
+                    <p className="text-neutral-500 font-medium mt-2">{copy.form.description}</p>
                     <p className="mt-2 text-sm font-semibold text-primary-700">Personal response within one business day.</p>
                   </div>
 
@@ -554,14 +561,14 @@ ${formData.message}`
                       onClick={() => setActiveTab('email')}
                       className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === 'email' ? 'bg-white text-primary-600 shadow-md' : 'text-neutral-500 hover:text-neutral-800'}`}
                     >
-                      {t.contact.form.emailTab}
+                      {copy.form.emailTab}
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveTab('whatsapp')}
                       className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === 'whatsapp' ? 'bg-white text-green-600 shadow-md' : 'text-neutral-500 hover:text-neutral-800'}`}
                     >
-                      {t.contact.form.whatsappTab}
+                      {copy.form.whatsappTab}
                     </button>
                   </div>
                 </div>
@@ -569,14 +576,14 @@ ${formData.message}`
                 <form onSubmit={activeTab === 'email' ? handleEmailSubmit : handleWhatsApp} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FloatingInput
-                      label={t.contact.form.name}
+                      label={copy.form.name}
                       id="name"
                       value={formData.name}
                       onChange={(e: any) => setFormData({ ...formData, name: e.target.value })}
                       required
                     />
                     <FloatingInput
-                      label={t.contact.form.email}
+                      label={copy.form.email}
                       id="email"
                       type="email"
                       value={formData.email}
@@ -587,14 +594,14 @@ ${formData.message}`
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FloatingInput
-                      label={t.contact.form.phone}
+                      label={copy.form.phone}
                       id="phone"
                       type="tel"
                       value={formData.phone}
                       onChange={(e: any) => setFormData({ ...formData, phone: e.target.value })}
                     />
                     <FloatingInput
-                      label={t.contact.form.company}
+                      label={copy.form.company}
                       id="company"
                       value={formData.company}
                       onChange={(e: any) => setFormData({ ...formData, company: e.target.value })}
@@ -603,45 +610,45 @@ ${formData.message}`
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <CustomSelect
-                      label={t.contact.form.service}
+                      label={copy.form.service}
                       id="interest"
                       value={formData.interest}
                       onChange={(e: any) => setFormData({ ...formData, interest: e.target.value })}
                       required
-                      options={serviceCategories.map((category) => ({
-                        value: category.slug,
-                        label: localizedServiceValue(category.name, locale),
+                      options={SERVICE_CATEGORY_OPTIONS.map(({ slug, name }) => ({
+                        value: slug,
+                        label: name[locale === 'ar' ? 'ar' : 'en'],
                       }))}
                     />
                     <CustomSelect
-                      label={t.contact.form.budget}
+                      label={copy.form.budget}
                       id="budget"
                       value={formData.budget}
                       onChange={(e: any) => setFormData({ ...formData, budget: e.target.value })}
                       options={[
-                        { value: 'under-1k', label: t.contact.form.budgetOptions.small },
-                        { value: '1k-5k', label: t.contact.form.budgetOptions.medium },
-                        { value: '5k-10k', label: t.contact.form.budgetOptions.large },
-                        { value: '10k-plus', label: t.contact.form.budgetOptions.enterprise },
-                        { value: 'discuss', label: t.contact.form.budgetOptions.discuss },
+                        { value: 'under-1k', label: copy.form.budgetOptions.small },
+                        { value: '1k-5k', label: copy.form.budgetOptions.medium },
+                        { value: '5k-10k', label: copy.form.budgetOptions.large },
+                        { value: '10k-plus', label: copy.form.budgetOptions.enterprise },
+                        { value: 'discuss', label: copy.form.budgetOptions.discuss },
                       ]}
                     />
                     <CustomSelect
-                      label={t.contact.form.timeline}
+                      label={copy.form.timeline}
                       id="timeline"
                       value={formData.timeline}
                       onChange={(e: any) => setFormData({ ...formData, timeline: e.target.value })}
                       options={[
-                        { value: 'urgent', label: t.contact.form.timelineOptions.urgent },
-                        { value: '1-month', label: t.contact.form.timelineOptions.month },
-                        { value: '2-3-months', label: t.contact.form.timelineOptions.quarter },
-                        { value: 'flexible', label: t.contact.form.timelineOptions.flexible },
+                        { value: 'urgent', label: copy.form.timelineOptions.urgent },
+                        { value: '1-month', label: copy.form.timelineOptions.month },
+                        { value: '2-3-months', label: copy.form.timelineOptions.quarter },
+                        { value: 'flexible', label: copy.form.timelineOptions.flexible },
                       ]}
                     />
                   </div>
 
                   <FloatingTextarea
-                    label={t.contact.form.message}
+                    label={copy.form.message}
                     id="message"
                     value={formData.message}
                     onChange={(e: any) => setFormData({ ...formData, message: e.target.value })}
@@ -684,7 +691,7 @@ ${formData.message}`
                           className="flex items-center gap-2"
                         >
                           <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>{t.contact.form.sending}</span>
+                          <span>{copy.form.sending}</span>
                         </motion.div>
                       ) : (
                         <motion.div
@@ -695,7 +702,7 @@ ${formData.message}`
                           className="flex items-center gap-3"
                         >
                           {activeTab === 'email' ? <Mail className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-                          {activeTab === 'email' ? t.contact.form.sendEmail : t.contact.form.sendWhatsApp}
+                          {activeTab === 'email' ? copy.form.sendEmail : copy.form.sendWhatsApp}
                           <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform ${dir === 'rtl' ? 'rotate-180 group-hover:-translate-x-2' : ''}`} />
                         </motion.div>
                       )}

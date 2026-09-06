@@ -1,14 +1,14 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { Locale, defaultLocale, localeDirection, locales } from './config'
-import { en } from './translations/en'
-import { ar } from './translations/ar'
 import { useRouteAlternates } from './RouteAlternatesContext'
 import { localePath, stripLocalePrefix } from './url'
 
-type Translations = typeof en
+// Type-only reference: the provider never imports the locale databases at
+// runtime — the server passes the single active-locale dictionary as a prop.
+type Translations = typeof import('./translations/en').en
 
 interface LanguageContextType {
   locale: Locale
@@ -18,11 +18,6 @@ interface LanguageContextType {
   design: Record<string, unknown> | null
   navigation: Record<string, any> | null
   settings: Record<string, any> | null
-}
-
-const translations: Record<Locale, Translations> = {
-  en,
-  ar,
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
@@ -38,16 +33,6 @@ function getLocaleFromPathname(pathname: string): Locale {
   return defaultLocale
 }
 
-// Helper to get locale from cookie
-function getLocaleFromCookie(): Locale | null {
-  if (typeof document === 'undefined') return null
-  const match = document.cookie.match(/NEXT_LOCALE=([^;]+)/)
-  if (match && locales.includes(match[1] as Locale)) {
-    return match[1] as Locale
-  }
-  return null
-}
-
 export function LanguageProvider({
   children,
   initialLocale,
@@ -58,7 +43,7 @@ export function LanguageProvider({
 }: {
   children: ReactNode
   initialLocale?: Locale
-  initialDictionary?: Translations
+  initialDictionary: Translations
   initialDesign?: Record<string, unknown> | null
   initialNavigation?: Record<string, any> | null
   initialSettings?: Record<string, any> | null
@@ -71,65 +56,44 @@ export function LanguageProvider({
   // not a 404 from naive segment-swap.
   const routeAlternates = useRouteAlternates()
 
-  // Get initial locale from URL (cookie is fallback for the SSR-hydrate
-  // transition; URL is authoritative)
-  const resolvedInitialLocale = initialLocale || getLocaleFromPathname(pathname) || getLocaleFromCookie() || defaultLocale
-  const [locale, setLocaleState] = useState<Locale>(resolvedInitialLocale)
-  const [cmsTranslations, setCmsTranslations] = useState<Record<Locale, Translations>>({
-    ...translations,
-    ...(initialDictionary ? { [resolvedInitialLocale]: initialDictionary } : {}),
-  })
+  // URL is authoritative for the current locale; the prop seeds SSR output.
+  const locale = initialLocale || getLocaleFromPathname(pathname)
+  const [dictionary, setDictionary] = useState(initialDictionary)
   const [design, setDesign] = useState<Record<string, unknown> | null>(initialDesign)
   const [navigation, setNavigation] = useState<Record<string, any> | null>(initialNavigation)
   const [settings, setSettings] = useState<Record<string, any> | null>(initialSettings)
-  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setDictionary(initialDictionary), [initialDictionary])
 
   useEffect(() => {
-    // On mount, sync locale from URL
-    const urlLocale = getLocaleFromPathname(pathname)
-    if (urlLocale !== locale) {
-      setLocaleState(urlLocale)
-    }
-    setMounted(true)
-  }, [pathname])
-
-  useEffect(() => {
-    if (mounted) {
-      // Update document direction and language
-      document.documentElement.dir = localeDirection[locale]
-      document.documentElement.lang = locale
-
-      // Save to cookie
-      document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`
-
-      // Also save to localStorage for backward compatibility
-      localStorage.setItem('cloudtopia-locale', locale)
-    }
-  }, [locale, mounted])
-
-  useEffect(() => {
-    if (initialDictionary) {
-      setCmsTranslations((current) => ({
-        ...current,
-        [resolvedInitialLocale]: initialDictionary,
-      }))
-    }
     setDesign(initialDesign)
     setNavigation(initialNavigation)
     setSettings(initialSettings)
-  }, [initialDictionary, initialDesign, initialNavigation, initialSettings, resolvedInitialLocale])
+  }, [initialDesign, initialNavigation, initialSettings])
 
   useEffect(() => {
-    if (!mounted || !design) return
+    // Update document direction and language
+    document.documentElement.dir = localeDirection[locale]
+    document.documentElement.lang = locale
+
+    // Save to cookie
+    document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`
+
+    // Also save to localStorage for backward compatibility
+    localStorage.setItem('cloudtopia-locale', locale)
+  }, [locale])
+
+  useEffect(() => {
+    if (!design) return
     const theme = (design as { theme?: Record<string, unknown> }).theme
     if (!theme || typeof theme !== 'object') return
     const colors = (theme as { colors?: Record<string, string> }).colors
     if (colors?.primary) document.documentElement.style.setProperty('--cms-primary', colors.primary)
     if (colors?.secondary) document.documentElement.style.setProperty('--cms-secondary', colors.secondary)
     if (colors?.background) document.documentElement.style.setProperty('--cms-background', colors.background)
-  }, [design, mounted])
+  }, [design])
 
-  const setLocale = (newLocale: Locale) => {
+  const setLocale = useCallback((newLocale: Locale) => {
     if (newLocale === locale) return
 
     let newPath: string
@@ -148,22 +112,20 @@ export function LanguageProvider({
       newPath = localePath(newLocale, basePath)
     }
 
-    // Update state first for immediate UI update
-    setLocaleState(newLocale)
-
-    // Navigate to new URL with new locale
+    // Navigate to new URL with new locale; the destination page's provider
+    // delivers the matching dictionary.
     router.push(newPath)
-  }
+  }, [locale, pathname, routeAlternates, router])
 
-  const value: LanguageContextType = {
+  const value = useMemo<LanguageContextType>(() => ({
     locale,
     setLocale,
-    t: cmsTranslations[locale],
+    t: dictionary,
     dir: localeDirection[locale],
     design,
     navigation,
     settings,
-  }
+  }), [locale, setLocale, dictionary, design, navigation, settings])
 
   return (
     <LanguageContext.Provider value={value}>

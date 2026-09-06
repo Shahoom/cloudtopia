@@ -27,10 +27,9 @@ export default async function ContactPage({
 }) {
     const { locale: rawLocale = 'en' } = await params
     const locale = rawLocale as Locale
-    const { dictionary } = await getPageBundle(locale, 'contact')
-    const t = dictionary as any
-    
-    const p = t.contact
+    const { dictionary } = (await getPageBundle(locale, 'contact')) as { dictionary: any }
+
+    const p = dictionary.contact
     const title = p?.hero?.title || 'Contact Us'
     const desc = p?.hero?.description ?? ''
     const isArabic = locale === 'ar'
@@ -94,7 +93,7 @@ export default async function ContactPage({
                 <p>{title}</p>
                 {desc && <p>{desc}</p>}
             </div>
-            <ContactClient t={t} />
+            <ContactClient locale={locale} copy={dictionary.contact} />
         </>
     )
 }

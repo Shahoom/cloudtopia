@@ -44,9 +44,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 import { getStructuredPillars } from '@/lib/services/structured-catalog'
-import { webAppPillarSubServices } from '@/lib/services/web-applications'
-import { subServiceContent, subServiceContentAr } from '@/lib/services/business-systems-content'
-import { subServiceHref } from '@/lib/services/sub-service-routing'
+import { getSubserviceNavItems } from '@/lib/services/subservice-nav-index'
 
 // Map of Icon strings to Lucide components for type safety
 const IconMap: Record<string, React.ComponentType<any>> = {
@@ -97,25 +95,20 @@ const SERVICE_TABS_META: { id: string; label: LocalizedText; description: Locali
 // link to their parent pillar (they have no standalone page); BS subs link to
 // their nested sub-service page.
 function fillerSubCards(p: { slug: string; href: string; description: LocalizedText }, categoryId: string, iconName: string): ServiceItem[] {
-  if (categoryId === 'interactive-web-applications') {
-    return (webAppPillarSubServices[p.slug] || []).map((s) => ({
-      title: { en: s.en, ar: s.ar },
-      description: s.desc ?? p.description,
-      link: p.href,
-      iconName,
-    }))
+  if (categoryId !== 'interactive-web-applications' && categoryId !== 'business-systems-development') {
+    return []
   }
-  if (categoryId === 'business-systems-development') {
-    return Object.values(subServiceContent)
-      .filter((s) => s.pillarSlug === p.slug)
-      .map((s) => ({
-        title: { en: s.hero.title, ar: subServiceContentAr[s.slug]?.hero?.title ?? s.hero.title },
-        description: p.description,
-        link: subServiceHref(s.pillarSlug, s.slug),
-        iconName,
-      }))
-  }
-  return []
+  const en = getSubserviceNavItems(p.slug, 'en')
+  const ar = getSubserviceNavItems(p.slug, 'ar')
+  return en.map((s, i) => ({
+    title: { en: s.name, ar: ar[i]?.name ?? s.name },
+    description:
+      categoryId === 'interactive-web-applications' && s.description
+        ? { en: s.description, ar: ar[i]?.description ?? s.description }
+        : p.description,
+    link: s.href,
+    iconName,
+  }))
 }
 
 const TABS_DATA: TabData[] = SERVICE_TABS_META.map((meta) => {
