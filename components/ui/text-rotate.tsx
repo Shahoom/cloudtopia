@@ -31,6 +31,7 @@ interface TextRotateProps {
   transition?: Transition
   loop?: boolean
   auto?: boolean
+  active?: boolean
   splitBy?: "words" | "characters" | "lines" | string
   onNext?: (index: number) => void
   mainClassName?: string
@@ -65,6 +66,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
       staggerFrom = "first",
       loop = true,
       auto = true,
+      active = true,
       splitBy = "characters",
       onNext,
       mainClassName,
@@ -169,10 +171,10 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
 
 
     useEffect(() => {
-      if (!auto) return
-      const intervalId = setInterval(next, rotationInterval)
-      return () => clearInterval(intervalId)
-    }, [next, rotationInterval, auto])
+      if (!auto || !active) return
+      const intervalId = window.setInterval(next, rotationInterval)
+      return () => window.clearInterval(intervalId)
+    }, [next, rotationInterval, auto, active])
 
     return (
       <motion.span

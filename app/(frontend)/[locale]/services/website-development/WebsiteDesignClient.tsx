@@ -1,8 +1,10 @@
 'use client'
 
 import Link from "next/link"
+import Image from 'next/image'
 import { LayoutGroup, motion } from "framer-motion"
 import { TextRotate } from "@/components/ui/text-rotate"
+import { useDeferredInteraction } from "@/hooks/useDeferredInteraction"
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating"
 import { ScrollHeroSection } from "@/components/ui/scroll-hero-section"
 import { ServiceExplanationSection } from "@/components/ui/service-explanation-section"
@@ -11,34 +13,19 @@ import { localePath } from "@/lib/i18n/url"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
 const exampleImages = [
-  {
-    url: "/images/services/website-design/1.avif",
-    title: "Website Design Example 1",
-  },
-  {
-    url: "/images/services/website-design/2.avif",
-    title: "Website Design Example 2",
-  },
-  {
-    url: "/images/services/website-design/3.avif",
-    title: "Website Design Example 3",
-  },
-  {
-    url: "/images/services/website-design/4.avif",
-    title: "Website Design Example 4",
-  },
-  {
-    url: "/images/services/website-design/5.avif",
-    title: "Website Design Example 5",
-  },
-  {
-    url: "/images/services/website-design/6.jpg",
-    title: "Website Design Example 6",
-  },
-]
+  { url: '/images/services/website-design/1.avif', title: 'Website Design Example 1', width: 2564, height: 3205, sizes: '(max-width: 640px) 64px, (max-width: 1024px) 112px, 128px' },
+  { url: '/images/services/website-design/2.avif', title: 'Website Design Example 2', width: 2426, height: 1728, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 224px, 240px' },
+  { url: '/images/services/website-design/3.avif', title: 'Website Design Example 3', width: 2670, height: 1780, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
+  { url: '/images/services/website-design/4.avif', title: 'Website Design Example 4', width: 2436, height: 1921, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
+  { url: '/images/services/website-design/5.avif', title: 'Website Design Example 5', width: 2669, height: 1782, sizes: '(max-width: 640px) 176px, (max-width: 1024px) 288px, 320px' },
+  { url: '/images/services/website-design/6.jpg', title: 'Website Design Example 6', width: 2560, height: 1708, sizes: '100vw' },
+] as const
+
+const MotionImage = motion.create(Image)
 
 function WebDesignHero({ t }: { t: any }) {
   const { locale, dir } = useLanguage()
+  const enhancementsActive = useDeferredInteraction()
   const p = t.services?.websiteDesignPage || t.websiteDesignPage
 
   const texts = p?.hero?.rotatingTexts || [
@@ -61,9 +48,13 @@ function WebDesignHero({ t }: { t: any }) {
           depth={0.5}
           className="top-[15%] left-[2%] md:top-[25%] md:left-[5%]"
         >
-          <motion.img
+          <MotionImage
             src={exampleImages[0].url}
             alt={exampleImages[0].title}
+            width={exampleImages[0].width}
+            height={exampleImages[0].height}
+            sizes={exampleImages[0].sizes}
+            quality={60}
             className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-cover hover:scale-105 duration-200 transition-transform -rotate-[3deg] shadow-2xl rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -75,9 +66,13 @@ function WebDesignHero({ t }: { t: any }) {
           depth={1}
           className="top-[0%] left-[8%] md:top-[6%] md:left-[11%]"
         >
-          <motion.img
+          <MotionImage
             src={exampleImages[1].url}
             alt={exampleImages[1].title}
+            width={exampleImages[1].width}
+            height={exampleImages[1].height}
+            sizes={exampleImages[1].sizes}
+            quality={60}
             className="w-40 h-28 sm:w-48 sm:h-36 md:w-56 md:h-44 lg:w-60 lg:h-48 object-cover hover:scale-105 duration-200 transition-transform -rotate-12 shadow-2xl rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -89,9 +84,13 @@ function WebDesignHero({ t }: { t: any }) {
           depth={4}
           className="top-[90%] left-[6%] md:top-[80%] md:left-[8%]"
         >
-          <motion.img
+          <MotionImage
             src={exampleImages[2].url}
             alt={exampleImages[2].title}
+            width={exampleImages[2].width}
+            height={exampleImages[2].height}
+            sizes={exampleImages[2].sizes}
+            quality={60}
             className="w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 lg:w-64 lg:h-64 object-cover -rotate-[4deg] hover:scale-105 duration-200 transition-transform shadow-2xl rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -103,9 +102,13 @@ function WebDesignHero({ t }: { t: any }) {
           depth={2}
           className="top-[0%] left-[87%] md:top-[2%] md:left-[83%]"
         >
-          <motion.img
+          <MotionImage
             src={exampleImages[3].url}
             alt={exampleImages[3].title}
+            width={exampleImages[3].width}
+            height={exampleImages[3].height}
+            sizes={exampleImages[3].sizes}
+            quality={60}
             className="w-40 h-36 sm:w-48 sm:h-44 md:w-60 md:h-52 lg:w-64 lg:h-56 object-cover hover:scale-105 duration-200 transition-transform shadow-2xl rotate-[6deg] rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -117,9 +120,13 @@ function WebDesignHero({ t }: { t: any }) {
           depth={1}
           className="top-[78%] left-[83%] md:top-[68%] md:left-[83%]"
         >
-          <motion.img
+          <MotionImage
             src={exampleImages[4].url}
             alt={exampleImages[4].title}
+            width={exampleImages[4].width}
+            height={exampleImages[4].height}
+            sizes={exampleImages[4].sizes}
+            quality={60}
             className="w-44 h-44 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover hover:scale-105 duration-200 transition-transform shadow-2xl rotate-[19deg] rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -152,6 +159,7 @@ function WebDesignHero({ t }: { t: any }) {
               </motion.span>
               <TextRotate
                 texts={texts}
+                active={enhancementsActive}
                 mainClassName="overflow-hidden px-2 sm:px-3 text-primary-600 py-0 pb-2 md:pb-4 rounded-xl"
                 splitBy="words"
                 staggerDuration={0.02}
