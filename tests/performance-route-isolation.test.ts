@@ -19,3 +19,15 @@ test('the fallback dynamic route imports no bespoke world', () => {
   assert.doesNotMatch(code, /WORLD_COMPONENTS/)
   assert.doesNotMatch(code, /components\/industry\/(healthcare|fintech|construction|education)/)
 })
+
+test('generic nested route does not import every renderer and content database', () => {
+  const code = readFileSync('app/(frontend)/[locale]/services/[service]/[subservice]/page.tsx', 'utf8')
+  assert.doesNotMatch(code, /business-systems-content|digital-presence-content|webapp-service-content/)
+  assert.doesNotMatch(code, /SubServicePage|DigitalPresenceSubServicePage|WebAppPillarPage/)
+})
+
+test('canonical parent routes use branch-specific factories', () => {
+  const webapp = readFileSync('app/(frontend)/[locale]/services/web-applications/[subservice]/page.tsx', 'utf8')
+  assert.match(webapp, /createWebappNestedPage/)
+  assert.doesNotMatch(webapp, /business-systems-content|digital-presence-content/)
+})
