@@ -182,7 +182,7 @@ const CustomSelect = ({ label, id, value, onChange, options, required = false }:
   )
 }
 
-const IntroSection = ({ t }: { t: any }) => {
+const IntroSection = ({ copy }: { copy: any }) => {
   const sentences = [
     copy.intro.line1,
     copy.intro.line2,
@@ -367,7 +367,7 @@ ${formData.message}`
       <InteractiveBackground />
 
       <div className="max-w-7xl mx-auto">
-        <IntroSection t={t} />
+        <IntroSection copy={copy} />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
           {/* Left Column: Info & Vision */}
