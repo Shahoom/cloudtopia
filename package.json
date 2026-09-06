@@ -16,6 +16,7 @@
     "payload:migrate:create": "payload --use-swc migrate:create",
     "payload:migrate:status": "payload --use-swc migrate:status",
     "seed:payload": "node --import tsx scripts/seed-payload-direct.ts",
+    "measure:routes": "node scripts/measure-route-assets.mjs",
     "generate:service-nav": "node --import tsx scripts/generate-subservice-nav-index.ts",
     "sync:dictionary": "node --import tsx scripts/sync-dictionary.ts",
     "seed:payload:local-api": "payload --use-swc run scripts/seed-payload.ts",
