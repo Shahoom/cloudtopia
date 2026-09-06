@@ -1,10 +1,12 @@
 'use client'
 
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import ContainerScroll from "@/components/ui/container-scroll"
 import EcommerceServiceSection from "@/components/ui/ecommerce-service-section"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
+import { useAnimationActivity } from "@/hooks/useAnimationActivity"
 
 // three.js-backed 3D gallery — client-only after hydration so the heavy WebGL
 // bundle stays out of the initial page payload.
@@ -99,6 +101,12 @@ const ecommerceImages = [
 
 export default function EcommerceSolutionsClient({ t: pageT }: { t?: any }) {
   const { locale, dir } = useLanguage()
+  const { ref: galleryHostRef, active: galleryNearViewport } = useAnimationActivity<HTMLDivElement>({ rootMargin: '400px' })
+  const [galleryApproached, setGalleryApproached] = useState(false)
+
+  useEffect(() => {
+    if (galleryNearViewport) setGalleryApproached(true)
+  }, [galleryNearViewport])
   const { t: contextT } = useLanguage()
   const t = pageT || contextT
   const p = t?.services?.ecommercePage || t?.ecommercePage
@@ -177,14 +185,19 @@ export default function EcommerceSolutionsClient({ t: pageT }: { t?: any }) {
             </p>
           </div>
 
-          {/* 3D Gallery */}
-          <div className="relative">
-            <InfiniteGallery
-              images={ecommerceImages}
-              speed={1.2}
-              visibleCount={14}
-              className="h-[60vh] sm:h-[70vh] md:h-[80vh] w-full"
-            />
+          {/* 3D Gallery — the WebGL chunk only loads once this host first
+              approaches the viewport */}
+          <div ref={galleryHostRef} className="relative">
+            {galleryApproached ? (
+              <InfiniteGallery
+                images={ecommerceImages}
+                speed={1.2}
+                visibleCount={14}
+                className="h-[60vh] sm:h-[70vh] md:h-[80vh] w-full"
+              />
+            ) : (
+              <div className="h-[60vh] sm:h-[70vh] md:h-[80vh] w-full" />
+            )}
 
             {/* Overlay Text */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">

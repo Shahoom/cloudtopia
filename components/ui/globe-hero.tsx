@@ -5,6 +5,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import React, { useRef } from "react";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
+import { useAnimationActivity } from "@/hooks/useAnimationActivity";
 
 interface DotGlobeHeroProps {
     rotationSpeed?: number;
@@ -54,6 +55,10 @@ const DotGlobeHero = React.forwardRef<
     children,
     ...props
 }, ref) => {
+    // Pause the globe's frame loop offscreen, on hidden tabs, and for reduced
+    // motion — the first rendered frame stays visible as a static globe.
+    const { ref: canvasHostRef, active } = useAnimationActivity<HTMLDivElement>();
+
     return (
         <div
             ref={ref}
@@ -67,8 +72,8 @@ const DotGlobeHero = React.forwardRef<
                 {children}
             </div>
 
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <Canvas>
+            <div ref={canvasHostRef} className="absolute inset-0 z-0 pointer-events-none">
+                <Canvas frameloop={active ? 'always' : 'never'}>
                     <PerspectiveCamera makeDefault position={[0, 0, 3]} fov={75} />
                     <ambientLight intensity={0.5} />
                     <pointLight position={[10, 10, 10]} intensity={1} />

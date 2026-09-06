@@ -1,9 +1,11 @@
 "use client";
 
 import * as THREE from "three";
+import NextImage from "next/image";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { useMemo, useRef, useState, useEffect } from "react";
+import { useAnimationActivity } from "@/hooks/useAnimationActivity";
 
 /* =========================================================
    RevealWaveImage Component (Optimized)
@@ -253,22 +255,45 @@ export const RevealWaveImage = ({
 }: RevealWaveImageProps) => {
   const [isMouseInCanvas, setIsMouseInCanvas] = useState(false);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
+  // Each instance observes its own host: textures and the Canvas only mount
+  // near the viewport, the frame loop pauses offscreen/hidden, and reduced
+  // motion renders the plain image instead of the shader scene.
+  const { ref: hostRef, active, reducedMotion } = useAnimationActivity<HTMLDivElement>({ rootMargin: "400px" });
+  const [approached, setApproached] = useState(false);
 
   useEffect(() => {
+    if (active) setApproached(true);
+  }, [active]);
+
+  useEffect(() => {
+    if (!approached) return;
     const img = new Image();
     img.src = src;
     img.onload = () => {
       setAspectRatio(img.naturalWidth / img.naturalHeight);
     };
-  }, [src]);
+  }, [src, approached]);
+
+  const staticFallback = (
+    <NextImage
+      src={src}
+      alt=""
+      fill
+      sizes="(max-width: 767px) 100vw, 50vw"
+      className="object-cover"
+    />
+  );
 
   return (
     <div
+      ref={hostRef}
       className={`relative overflow-hidden ${className}`}
       onMouseEnter={() => setIsMouseInCanvas(true)}
       onMouseLeave={() => setIsMouseInCanvas(false)}
     >
-      {aspectRatio !== null && (
+      {reducedMotion || !approached ? (
+        staticFallback
+      ) : aspectRatio !== null ? (
         <Canvas
           style={{
             width: "100%",
@@ -277,6 +302,7 @@ export const RevealWaveImage = ({
           }}
           gl={{ antialias: false }}
           camera={{ position: [0, 0, 1] }}
+          frameloop={active ? 'always' : 'never'}
         >
           <ImagePlane
             src={src}
@@ -291,6 +317,8 @@ export const RevealWaveImage = ({
             isMouseInCanvas={isMouseInCanvas}
           />
         </Canvas>
+      ) : (
+        staticFallback
       )}
     </div>
   );

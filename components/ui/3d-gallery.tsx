@@ -5,6 +5,7 @@ import { useRef, useMemo, useCallback, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
+import { useAnimationActivity } from '@/hooks/useAnimationActivity'
 
 type ImageItem = string | { src: string; alt?: string }
 
@@ -143,11 +144,13 @@ function ImagePlane({
   position,
   scale,
   material,
+  onMesh,
 }: {
   texture: THREE.Texture
   position: [number, number, number]
   scale: [number, number, number]
   material: THREE.ShaderMaterial
+  onMesh?: (mesh: THREE.Mesh | null) => void
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -166,7 +169,10 @@ function ImagePlane({
 
   return (
     <mesh
-      ref={meshRef}
+      ref={(mesh) => {
+        meshRef.current = mesh
+        onMesh?.(mesh)
+      }}
       position={position}
       scale={scale}
       material={material}
@@ -192,9 +198,12 @@ function GalleryScene({
     maxBlur: 3.0,
   },
 }: Omit<InfiniteGalleryProps, 'className' | 'style'>) {
-  const [scrollVelocity, setScrollVelocity] = useState(0)
-  const [autoPlay, setAutoPlay] = useState(true)
+  // Per-frame values live in refs — updating React state on every wheel tick /
+  // animation frame re-rendered the whole scene continuously.
+  const scrollVelocityRef = useRef(0)
+  const autoPlayRef = useRef(true)
   const lastInteraction = useRef(Date.now())
+  const meshRefs = useRef<(THREE.Mesh | null)[]>([])
 
   const normalizedImages = useMemo(
     () =>
@@ -263,8 +272,8 @@ function GalleryScene({
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       event.preventDefault()
-      setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed)
-      setAutoPlay(false)
+      scrollVelocityRef.current += event.deltaY * 0.01 * speed
+      autoPlayRef.current = false
       lastInteraction.current = Date.now()
     },
     [speed]
@@ -273,12 +282,12 @@ function GalleryScene({
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        setScrollVelocity((prev) => prev - 2 * speed)
-        setAutoPlay(false)
+        scrollVelocityRef.current -= 2 * speed
+        autoPlayRef.current = false
         lastInteraction.current = Date.now()
       } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        setScrollVelocity((prev) => prev + 2 * speed)
-        setAutoPlay(false)
+        scrollVelocityRef.current += 2 * speed
+        autoPlayRef.current = false
         lastInteraction.current = Date.now()
       }
     },
@@ -298,21 +307,16 @@ function GalleryScene({
     }
   }, [handleWheel, handleKeyDown])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Date.now() - lastInteraction.current > 3000) {
-        setAutoPlay(true)
-      }
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
-
   useFrame((state, delta) => {
-    if (autoPlay) {
-      setScrollVelocity((prev) => prev + 0.3 * delta)
+    if (!autoPlayRef.current && Date.now() - lastInteraction.current > 3000) {
+      autoPlayRef.current = true
+    }
+    if (autoPlayRef.current) {
+      scrollVelocityRef.current += 0.3 * delta
     }
 
-    setScrollVelocity((prev) => prev * 0.95)
+    scrollVelocityRef.current *= 0.95
+    const scrollVelocity = scrollVelocityRef.current
 
     const time = state.clock.getElapsedTime()
     materials.forEach((material) => {
@@ -412,6 +416,24 @@ function GalleryScene({
         material.uniforms.opacity.value = opacity
         material.uniforms.blurAmount.value = blur
       }
+
+      // Drive mesh transforms and texture swaps imperatively — plane movement
+      // must not depend on React re-renders now that velocity lives in a ref.
+      const mesh = meshRefs.current[i]
+      if (mesh) {
+        mesh.position.set(plane.x, plane.y, plane.z - halfRange)
+        const texture = textures[plane.imageIndex]
+        if (texture && material && material.uniforms.map.value !== texture) {
+          material.uniforms.map.value = texture
+          const img = texture.image as HTMLImageElement | undefined
+          const aspect = img ? img.width / img.height : 1
+          if (aspect > 1) {
+            mesh.scale.set(2 * aspect, 2, 1)
+          } else {
+            mesh.scale.set(2, 2 / aspect, 1)
+          }
+        }
+      }
     })
   })
 
@@ -441,6 +463,9 @@ function GalleryScene({
             position={[plane.x, plane.y, worldZ]}
             scale={scale}
             material={material}
+            onMesh={(mesh) => {
+              meshRefs.current[i] = mesh
+            }}
           />
         )
       })}
@@ -495,6 +520,7 @@ export default function InfiniteGallery({
   },
 }: InfiniteGalleryProps) {
   const [webglSupported, setWebglSupported] = useState(true)
+  const { ref: hostRef, active, reducedMotion } = useAnimationActivity<HTMLDivElement>()
 
   useEffect(() => {
     try {
@@ -509,6 +535,10 @@ export default function InfiniteGallery({
     }
   }, [])
 
+  const firstImage = images.length > 0
+    ? (typeof images[0] === 'string' ? { src: images[0], alt: '' } : images[0])
+    : null
+
   if (!webglSupported) {
     return (
       <div className={className} style={style}>
@@ -517,11 +547,28 @@ export default function InfiniteGallery({
     )
   }
 
+  // Reduced motion: a composed static frame of the first image instead of a
+  // perpetually animating scene.
+  if (reducedMotion) {
+    return (
+      <div ref={hostRef} className={className} style={style}>
+        {firstImage && (
+          <img
+            src={firstImage.src}
+            alt={firstImage.alt ?? ''}
+            className="h-full w-full object-cover"
+          />
+        )}
+      </div>
+    )
+  }
+
   return (
-    <div className={className} style={style}>
+    <div ref={hostRef} className={className} style={style}>
       <Canvas
         camera={{ position: [0, 0, 0], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
+        frameloop={active ? 'always' : 'never'}
       >
         <GalleryScene
           images={images}
