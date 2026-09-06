@@ -212,7 +212,6 @@ export default function Footer() {
                   alt="CloudTopia Logo"
                   width={56}
                   height={56}
-                  priority
                   className="h-14 w-auto shrink-0"
                 />
                 {locale === 'ar' ? (
@@ -279,7 +278,7 @@ export default function Footer() {
 
             <div className="flex items-center justify-center">
               <a href={dmcaUrl} title="DMCA.com Protection Status" className="dmca-badge" target="_blank" rel="noopener noreferrer">
-                <img src="https://images.dmca.com/Badges/dmca-badge-w100-2x1-03.png?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c" alt="DMCA.com Protection Status" className="h-8 w-auto" />
+                <img src="https://images.dmca.com/Badges/dmca-badge-w100-2x1-03.png?ID=6f1b367c-c649-4bf8-bbba-aa05c9a9100c" alt="DMCA.com Protection Status" width={100} height={50} loading="lazy" className="h-8 w-auto" />
               </a>
               <Script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js" strategy="lazyOnload" />
             </div>

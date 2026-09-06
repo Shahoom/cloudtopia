@@ -15,6 +15,9 @@ import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'
 
 import CloudHero from '@/components/home/CloudHero'
+import { ViewportEnhancement } from '@/components/performance/ViewportEnhancement'
+import { ServicesGridStatic } from '@/components/home/ServicesGridStatic'
+import { AiDigitalServicesStatic } from '@/components/home/AiDigitalServicesStatic'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { type TeaserPost } from '@/components/home/ArticlesTeaser'
 
@@ -155,11 +158,16 @@ export default function HomePageClient({ articlePosts }: { articlePosts?: Teaser
                 </div>
             </section>
 
-            {/* 4. Services Grid */}
-            <ServicesGrid />
+            {/* 4. Services Grid — static localized shell first; the interactive
+                grid (and its chunk) swaps in near the viewport */}
+            <ViewportEnhancement fallback={<ServicesGridStatic locale={isRTL ? 'ar' : 'en'} />} minHeight={900}>
+                <ServicesGrid />
+            </ViewportEnhancement>
 
             {/* AI & Digital Systems Services */}
-            <AiDigitalServices />
+            <ViewportEnhancement fallback={<AiDigitalServicesStatic locale={isRTL ? 'ar' : 'en'} />} minHeight={900}>
+                <AiDigitalServices />
+            </ViewportEnhancement>
 
             {/* 5. Industries */}
             <IndustriesPreview />
@@ -171,22 +179,32 @@ export default function HomePageClient({ articlePosts }: { articlePosts?: Teaser
             <EnterpriseGrowthCTA />
 
             {/* "We Work With" Business Types Section */}
-            <WorkWithSection />
+            <div className="cv-auto">
+                <WorkWithSection />
+            </div>
 
             {/* Technology Stack – after "We Work With" */}
-            <TechnologyStackSection />
+            <div className="cv-auto">
+                <TechnologyStackSection />
+            </div>
 
             {/* 7. Why CloudTopia */}
-            <WhyCloudTopia />
+            <div className="cv-auto">
+                <WhyCloudTopia />
+            </div>
 
             {/* 8. Testimonials */}
             <Testimonials />
 
             {/* 9. How We Work */}
-            <HowWeWork />
+            <div className="cv-auto">
+                <HowWeWork />
+            </div>
 
             {/* 9. FAQ */}
-            <FAQ />
+            <div className="cv-auto">
+                <FAQ />
+            </div>
 
             {/* 10. Featured Projects */}
             <AuroraBackground className="py-8 md:py-10 px-4 sm:px-6 lg:px-8 min-h-0 w-full" data-header-theme="light">

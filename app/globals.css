@@ -40,12 +40,12 @@
 
 :root {
   /* Body: Hanken Grotesk for Latin (English), Tajawal for Arabic (Changa fallback). */
-  --font-inter: var(--font-hanken), var(--font-ar-ui), 'Changa', sans-serif;
+  --font-inter: var(--font-hanken), var(--font-ar-ui), sans-serif;
   --font-arabic: var(--font-ar-ui), 'Changa', sans-serif;
   /* Headings: Cairo (loaded via next/font in layout.tsx) */
-  --font-poppins: var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  --font-poppins: var(--font-cairo), 'Cairo', sans-serif;
   /* Logo keeps the brand's AgharaPro face */
-  --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', 'Changa', sans-serif;
+  --font-logo: 'AgharaPro', var(--font-cairo), 'Cairo', sans-serif;
   --font-logo-ar: 'Talasem', sans-serif;
   --font-tagline-ar: 'MadaniArabic', sans-serif;
   --eerie-black: #1B1B23;
@@ -340,4 +340,12 @@
       transform: translateY(0);
     }
   }
+}
+
+/* Rendering containment for long below-fold sections: the browser skips
+   layout/paint until the section nears the viewport. The intrinsic size
+   reserves approximate space so the scrollbar stays stable. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }

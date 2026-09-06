@@ -319,7 +319,6 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
               alt="Instagram" 
               width={24} 
               height={24}
-              priority
               className="h-6 w-6 object-contain drop-shadow-sm transition-opacity duration-200 group-hover:opacity-100"
             />
           </a>
@@ -343,7 +342,6 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
               alt="Gmail" 
               width={24} 
               height={24}
-              priority
               className="h-6 w-6 object-contain drop-shadow-sm transition-opacity duration-200 group-hover:opacity-100"
             />
           </a>
@@ -361,7 +359,6 @@ function AnnouncementBar({ locale, dir }: { locale: string; dir: 'ltr' | 'rtl' }
               alt="WhatsApp" 
               width={24} 
               height={24}
-              priority
               className="h-6 w-6 object-contain drop-shadow-sm transition-opacity duration-200 group-hover:opacity-100"
             />
           </a>

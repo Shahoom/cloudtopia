@@ -51,13 +51,15 @@ export function generateStaticParams() {
 export const revalidate = false
 
 const cairo = Cairo({
-    subsets: ['latin', 'arabic'],
+    subsets: ['arabic', 'latin'],
     variable: '--font-cairo',
     // Headings only ever use 600/700/800/900 (+400 baseline); dropping the unused
     // 300/500 cuts four Cairo font files (two weights × two subsets) from the
-    // critical download path.
+    // critical download path. Not preloaded: headings swap in via CSS while the
+    // preloaded body face carries first paint.
     weight: ['400', '600', '700', '800', '900'],
     display: 'swap',
+    preload: false,
 })
 
 // Latin UI face for English. A refined grotesque with more character and a
@@ -80,6 +82,9 @@ const arUi = IBM_Plex_Sans_Arabic({
     variable: '--font-ar-ui',
     weight: ['400', '500', '600', '700'],
     display: 'swap',
+    // Loaded on demand by Arabic text via CSS — preloading it on every English
+    // first visit doubled the critical font payload.
+    preload: false,
 })
 
 /**

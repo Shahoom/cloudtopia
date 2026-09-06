@@ -49,7 +49,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://widget.clutch.co;
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://widget.clutch.co https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://images.dmca.com;
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https: blob:;
               font-src 'self' data:;

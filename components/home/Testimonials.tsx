@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { ArrowRight, Quote, ShieldCheck, Star } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { cn } from '@/lib/utils'
@@ -161,28 +161,52 @@ export const testimonials = {
 export default function Testimonials() {
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
+  const clutchHostRef = useRef<HTMLDivElement | null>(null)
+  const [clutchNear, setClutchNear] = useState(false)
+
+  // Load Clutch only when the testimonial section approaches the viewport.
+  useEffect(() => {
+    const host = clutchHostRef.current
+    if (!host) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setClutchNear(true)
+      },
+      { rootMargin: '600px' },
+    )
+    observer.observe(host)
+    return () => observer.disconnect()
+  }, [])
 
   // Clutch's widget.js only auto-renders `.clutch-widget` elements that exist
   // while the document is still loading. This section is dynamically imported,
   // so we inject the script ourselves and poll for window.CLUTCHCO.Init, then
   // call it once the API is ready — reliable regardless of mount/load order.
   useEffect(() => {
+    if (!clutchNear) return
     const SRC = 'https://widget.clutch.co/static/js/widget.js'
+    let inserted: HTMLScriptElement | null = null
+    let initialized = false
     if (!document.querySelector(`script[src="${SRC}"]`)) {
-      const s = document.createElement('script')
-      s.src = SRC
-      s.async = true
-      document.body.appendChild(s)
+      inserted = document.createElement('script')
+      inserted.src = SRC
+      inserted.async = true
+      document.body.appendChild(inserted)
     }
     let tries = 0
     const id = window.setInterval(() => {
       const C = (window as unknown as { CLUTCHCO?: { Init?: () => void } }).CLUTCHCO
-      if ((C && typeof C.Init === 'function' && (C.Init(), true)) || ++tries > 40) {
+      if ((C && typeof C.Init === 'function' && ((initialized = true), C.Init(), true)) || ++tries > 40) {
         window.clearInterval(id)
       }
     }, 250)
-    return () => window.clearInterval(id)
-  }, [])
+    return () => {
+      window.clearInterval(id)
+      // If this component inserted the script and unmounts before Clutch ever
+      // initialized, remove it again so navigation doesn't accumulate scripts.
+      if (inserted && !initialized) inserted.remove()
+    }
+  }, [clutchNear])
 
   const items = (locale === 'ar' ? testimonials.ar : testimonials.en).slice(0, 7)
   const copy = locale === 'ar'
@@ -243,7 +267,7 @@ export default function Testimonials() {
               <span className="text-xs font-black uppercase tracking-[0.18em] text-primary-700">
                 {copy.clutchLabel}
               </span>
-              <div className="flex min-h-[52px] items-center justify-center">
+              <div ref={clutchHostRef} className="flex min-h-[52px] items-center justify-center">
                 {/* The Clutch iframe is width:100% — the container needs an
                     explicit width or it collapses to 0 inside the flex row. */}
                 <div
