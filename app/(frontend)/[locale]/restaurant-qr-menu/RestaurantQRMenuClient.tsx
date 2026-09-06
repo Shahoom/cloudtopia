@@ -1,60 +1,13 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
 import { ConnoisseurStackInteractor } from "@/components/ui/connoisseur-stack-interactor"
 import { QRMenuServiceSection } from "@/components/ui/qr-menu-service-section"
-import {
-  ContainerAnimated,
-  ContainerScroll,
-  ContainerStagger,
-  ContainerSticky,
-  GalleryCol,
-  GalleryContainer,
-} from "@/components/ui/animated-gallery"
+import { ContainerAnimated, ContainerStagger } from "@/components/ui/animated-gallery"
 import { Button } from "@/components/ui/Button"
 import { useLanguage } from "@/lib/i18n/LanguageContext"
-import { localePath } from "@/lib/i18n/url"
 import { QrCode, Smartphone, ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
-
-// All images combined for mobile carousel - mix of restaurants and digital menus
-const ALL_IMAGES = [
-  "/images/services/restaurant-qr-menu/1.webp",
-  "/images/services/restaurant-qr-menu/2.avif",
-  "/images/services/restaurant-qr-menu/3.webp",
-  "/images/services/restaurant-qr-menu/4.avif",
-  "/images/services/restaurant-qr-menu/5.avif",
-  "/images/services/restaurant-qr-menu/6.avif",
-  "/images/services/restaurant-qr-menu/7.avif",
-  "/images/services/restaurant-qr-menu/8.avif",
-  "/images/services/restaurant-qr-menu/9.avif",
-]
-
-// Column 1: Mix of restaurant and digital
-const IMAGES_1 = [
-  "/images/services/restaurant-qr-menu/1.webp",
-  "/images/services/restaurant-qr-menu/2.avif",
-  "/images/services/restaurant-qr-menu/3.webp",
-  "/images/services/restaurant-qr-menu/4.avif",
-]
-
-// Column 2: Digital focus
-const IMAGES_2 = [
-  "/images/services/restaurant-qr-menu/5.avif",
-  "/images/services/restaurant-qr-menu/6.avif",
-  "/images/services/restaurant-qr-menu/7.avif",
-  "/images/services/restaurant-qr-menu/8.avif",
-]
-
-// Column 3: Mix of both
-const IMAGES_3 = [
-  "/images/services/restaurant-qr-menu/9.avif",
-  "/images/services/restaurant-qr-menu/1.webp",
-  "/images/services/restaurant-qr-menu/2.avif",
-  "/images/services/restaurant-qr-menu/3.webp",
-]
+import { RestaurantQRHeroGallery } from "./RestaurantQRHeroGallery"
 
 const localContent = {
   en: {
@@ -120,53 +73,6 @@ const localMenuItems = {
   ],
 }
 
-// Mobile Image Carousel Component
-function MobileImageCarousel() {
-  const { locale } = useLanguage()
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev: number) => (prev + 1) % ALL_IMAGES.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="relative w-full h-[50vh] overflow-hidden rounded-2xl mx-auto max-w-[90vw]">
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-lavender via-transparent to-transparent z-10 pointer-events-none" />
-
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={currentIndex}
-          src={ALL_IMAGES[currentIndex]}
-          alt={locale === 'ar' ? 'مطعم' : 'Restaurant'}
-          className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.7 }}
-        />
-      </AnimatePresence>
-
-      {/* Dots indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {ALL_IMAGES.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-              ? "bg-lavender w-6"
-              : "bg-lavender/60"
-              }`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
 export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
   const { locale, dir, t: contextT } = useLanguage()
   const isRTL = dir === 'rtl'
@@ -185,14 +91,6 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
 
   const currentItems = p?.menuItems || (localMenuItems as any)[locale] || localMenuItems.en
   
-  const [isMobile, setIsMobile] = useState<boolean>(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   return (
     <main className="flex-grow" dir={isRTL ? "rtl" : "ltr"}>
@@ -250,58 +148,7 @@ export default function RestaurantQRMenuClient({ t: pageT }: { t?: any }) {
           }}
         />
 
-        {/* Mobile: Auto-sliding Carousel */}
-        {isMobile && (
-          <div className="relative z-20 py-8">
-            <MobileImageCarousel />
-          </div>
-        )}
-
-        {/* Desktop: 3D Scrolling Gallery */}
-        {!isMobile && (
-          <ContainerScroll className="relative h-[350vh] -mt-12">
-            <ContainerSticky className="h-svh">
-              <GalleryContainer>
-                <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
-                  {IMAGES_1.map((imageUrl, index) => (
-                    <img
-                      key={index}
-                      loading="lazy"
-                      decoding="async"
-                      className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
-                      src={imageUrl}
-                      alt={locale === 'ar' ? 'تصميم داخلي للمطعم' : 'Restaurant interior'}
-                    />
-                  ))}
-                </GalleryCol>
-                <GalleryCol className="mt-[-50%]" yRange={["15%", "5%"]}>
-                  {IMAGES_2.map((imageUrl, index) => (
-                    <img
-                      key={index}
-                      loading="lazy"
-                      decoding="async"
-                      className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
-                      src={imageUrl}
-                      alt={locale === 'ar' ? 'تجربة القائمة الرقمية' : 'Digital menu experience'}
-                    />
-                  ))}
-                </GalleryCol>
-                <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
-                  {IMAGES_3.map((imageUrl, index) => (
-                    <img
-                      key={index}
-                      loading="lazy"
-                      decoding="async"
-                      className="aspect-video block h-auto max-h-full w-full rounded-lg object-cover shadow-lg"
-                      src={imageUrl}
-                      alt={locale === 'ar' ? 'تقنية المطاعم' : 'Restaurant technology'}
-                    />
-                  ))}
-                </GalleryCol>
-              </GalleryContainer>
-            </ContainerSticky>
-          </ContainerScroll>
-        )}
+        <RestaurantQRHeroGallery locale={locale} />
       </div>
 
       {/* Interactive Menu Section */}
