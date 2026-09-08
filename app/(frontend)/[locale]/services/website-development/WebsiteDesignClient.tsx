@@ -12,12 +12,16 @@ import { useLanguage } from "@/lib/i18n/LanguageContext"
 import { localePath } from "@/lib/i18n/url"
 import DetailedServicesSection from "@/components/services/DetailedServicesSection"
 
+// Hero card sources are pre-resized WebP variants (hero-*.webp, max 1280px):
+// Vercel's image optimizer passes AVIF SOURCES through untransformed, so the
+// original multi-megapixel .avif files shipped at full size no matter what
+// width was requested. WebP sources resize normally.
 const exampleImages = [
-  { url: '/images/services/website-design/1.avif', title: 'Website Design Example 1', width: 2564, height: 3205, sizes: '(max-width: 640px) 64px, (max-width: 1024px) 112px, 128px' },
-  { url: '/images/services/website-design/2.avif', title: 'Website Design Example 2', width: 2426, height: 1728, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 224px, 240px' },
-  { url: '/images/services/website-design/3.avif', title: 'Website Design Example 3', width: 2670, height: 1780, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
-  { url: '/images/services/website-design/4.avif', title: 'Website Design Example 4', width: 2436, height: 1921, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
-  { url: '/images/services/website-design/5.avif', title: 'Website Design Example 5', width: 2669, height: 1782, sizes: '(max-width: 640px) 176px, (max-width: 1024px) 288px, 320px' },
+  { url: '/images/services/website-design/hero-1.webp', title: 'Website Design Example 1', width: 1280, height: 1600, sizes: '(max-width: 640px) 64px, (max-width: 1024px) 112px, 128px' },
+  { url: '/images/services/website-design/hero-2.webp', title: 'Website Design Example 2', width: 1280, height: 912, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 224px, 240px' },
+  { url: '/images/services/website-design/hero-3.webp', title: 'Website Design Example 3', width: 1280, height: 853, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
+  { url: '/images/services/website-design/hero-4.webp', title: 'Website Design Example 4', width: 1280, height: 1009, sizes: '(max-width: 640px) 160px, (max-width: 1024px) 240px, 256px' },
+  { url: '/images/services/website-design/hero-5.webp', title: 'Website Design Example 5', width: 1280, height: 855, sizes: '(max-width: 640px) 176px, (max-width: 1024px) 288px, 320px' },
   { url: '/images/services/website-design/6.jpg', title: 'Website Design Example 6', width: 2560, height: 1708, sizes: '100vw' },
 ] as const
 
