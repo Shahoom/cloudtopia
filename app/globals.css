@@ -349,3 +349,21 @@
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
+
+/* Hero entrance animations that do NOT wait for hydration: framer-motion
+   `initial={{opacity:0}}` ships opacity:0 in the SSR HTML and reveals only
+   after the JS bundle hydrates, pushing LCP out by seconds on mobile. These
+   CSS twins run immediately on paint and look identical. */
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hero-rise-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-hero-fade { animation: hero-fade-in 0.5s ease-out both; }
+.animate-hero-rise { animation: hero-rise-in 0.3s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-fade, .animate-hero-rise { animation: none; opacity: 1; transform: none; }
+}
