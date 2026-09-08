@@ -176,4 +176,39 @@ const nextConfig = {
   },
 }
 
-export default withPayload(nextConfig)
+const config = withPayload(nextConfig)
+
+/**
+ * withPayload injects `Accept-CH`/`Critical-CH`/`Vary: Sec-CH-Prefers-Color-Scheme`
+ * on `/:path*` for the admin panel's theme detection. Critical-CH forces the
+ * browser to RESTART the very first navigation to every page (~800ms measured
+ * on every public route), and the Vary header splits the CDN cache per color
+ * scheme. The public site never reads this hint, so scope all three to /admin.
+ */
+const CLIENT_HINT_KEYS = new Set(['Accept-CH', 'Critical-CH'])
+const isColorSchemeHint = (h) =>
+  CLIENT_HINT_KEYS.has(h.key) ||
+  (h.key === 'Vary' && h.value === 'Sec-CH-Prefers-Color-Scheme')
+
+const payloadHeaders = config.headers
+config.headers = async () => {
+  const rules = await payloadHeaders()
+  return [
+    ...rules
+      .map((rule) => ({
+        ...rule,
+        headers: rule.headers.filter((h) => !isColorSchemeHint(h)),
+      }))
+      .filter((rule) => rule.headers.length > 0),
+    {
+      source: '/admin/:path*',
+      headers: [
+        { key: 'Accept-CH', value: 'Sec-CH-Prefers-Color-Scheme' },
+        { key: 'Vary', value: 'Sec-CH-Prefers-Color-Scheme' },
+        { key: 'Critical-CH', value: 'Sec-CH-Prefers-Color-Scheme' },
+      ],
+    },
+  ]
+}
+
+export default config
