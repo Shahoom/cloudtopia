@@ -2560,8 +2560,12 @@ export const en = {
         footer: 'However, no method of transmission over the internet is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.',
       },
       {
-        title: '5. Your Rights',
-        content: 'You have the right to:',
+        title: 'Data Retention',
+        content: 'We keep personal data only as long as needed: contact and project inquiries for up to 24 months after our last exchange (or the life of the resulting contract plus statutory record-keeping periods), newsletter data until you unsubscribe, and analytics data for the periods set by Google Analytics (up to 14 months) and Meta. You can request earlier deletion at any time.',
+      },
+      {
+        title: '5. Your Rights and Legal Bases',
+        content: 'We process personal data to answer your inquiries and perform contracts with you (contractual necessity), to run consented analytics and marketing (consent — withdrawable at any time), and to secure our services (legitimate interest). Depending on where you live — including under Oman\'s Personal Data Protection Law (Royal Decree 6/2022), the Saudi and UAE PDPLs, and the EU/UK GDPR — you have the right to:',
         items: [
           'Access: Request a copy of your personal information',
           'Correction: Update or correct inaccurate information',
@@ -2573,13 +2577,14 @@ export const en = {
       },
       {
         title: '6. Cookies and Tracking',
-        content: 'We use cookies and similar tracking technologies to improve your experience on our website. These include:',
+        content: 'We use a small, defined set of cookies. Analytics and marketing cookies are set ONLY after you accept them in our cookie banner:',
         items: [
-          'Essential Cookies: Required for basic website functionality',
-          'Analytics Cookies: Help us understand how visitors use our site',
-          'Preference Cookies: Remember your settings and preferences',
+          'Strictly necessary: your language choice (NEXT_LOCALE) and your cookie choice (ct-consent) — always active',
+          'Google Analytics 4 (_ga, _ga_*): usage statistics — only with your consent',
+          'Meta Pixel (_fbp): marketing measurement — only with your consent',
+          'Vercel Web Analytics / Speed Insights: cookieless performance monitoring that identifies no individual',
         ],
-        footer: 'You can control cookies through your browser settings. Note that disabling cookies may affect website functionality.',
+        footer: 'The full list, storage periods, and how to change your choice are in our Cookie Policy at /cookies. If you chose "Necessary only", no analytics or marketing cookie is loaded at all.',
       },
       {
         title: '7. International Data Transfers',
@@ -2594,12 +2599,15 @@ export const en = {
         content: 'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date. We encourage you to review this policy periodically.',
       },
       {
-        title: '10. Contact Us',
-        content: 'If you have any questions about this Privacy Policy or how we handle your information, please contact us:',
+        title: '10. Who We Are & Contact',
+        content: 'The data controller for this website is CloudTopia, a digital and cloud technology company registered in the Sultanate of Oman. For any question about this policy, to exercise your rights, or to withdraw consent:',
         items: [
           'Email: info@cloudtopia.net',
-                    'Service Areas: Worldwide',
+          'WhatsApp (Oman / GCC): +968 9588 6393',
+          'WhatsApp (international): +90 501 151 11 16',
+          'Service Areas: Gulf region and worldwide',
         ],
+        footer: 'You may also lodge a complaint with your local data protection authority.',
       },
     ],
   },
@@ -2644,7 +2652,7 @@ export const en = {
           'Payment Schedule: Typically includes initial deposit and milestone payments',
           'Payment Methods: Bank transfer, credit card, or other agreed methods',
           'Late Payments: May result in project delays or suspension of services',
-          'Refunds: Subject to project stage and agreement terms',
+          'Refunds & cancellations: Governed by our Refund & Cancellation Policy at /refunds (your signed proposal prevails where it differs)',
         ],
         footer: 'Specific payment terms will be outlined in your project agreement.',
       },
@@ -2695,7 +2703,7 @@ export const en = {
       },
       {
         title: '12. Governing Law',
-        content: 'These terms are governed by international business law and the laws of the jurisdiction where services are provided.',
+        content: 'These terms are governed by the laws of the Sultanate of Oman, and disputes are subject to the jurisdiction of the competent courts of Oman — without limiting any mandatory consumer protections of the country you buy from. For clients contracting under a signed proposal, the governing-law clause of that proposal prevails.',
       },
       {
         title: '13. Changes to Terms',
@@ -2703,7 +2711,7 @@ export const en = {
       },
       {
         title: '14. Contact Information',
-        content: 'For questions about these Terms of Service, please contact us at info@cloudtopia.net',
+        content: 'CloudTopia is a digital and cloud technology company registered in the Sultanate of Oman. For questions about these Terms of Service: info@cloudtopia.net · WhatsApp (Oman/GCC) +968 9588 6393 · WhatsApp (international) +90 501 151 11 16. See also our Privacy Policy (/privacy), Cookie Policy (/cookies), and Refund & Cancellation Policy (/refunds).',
       },
     ],
   },

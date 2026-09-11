@@ -379,7 +379,7 @@ ${formData.message}`
             >
               <div className="inline-flex items-center gap-2 bg-white/40 backdrop-blur-md px-6 py-3 rounded-full shadow-sm border border-white/50 mb-8">
                 <Sparkles className="w-5 h-5 text-primary-500" />
-                <span className="font-bold text-primary-600 uppercase tracking-widest text-xs">{copy.hero.badge}</span>
+                <span className="font-bold text-primary-700 uppercase tracking-widest text-xs">{copy.hero.badge}</span>
               </div>
               <h1 className="text-3xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter text-neutral-900">
                 {copy.hero.title}<br />
@@ -427,7 +427,8 @@ ${formData.message}`
                     </svg>
                   ),
                   href: 'https://wa.me/905011511116',
-                  color: 'hover:text-green-600'
+                  color: 'hover:text-green-600',
+                  label: 'WhatsApp'
                 },
                 {
                   icon: (
@@ -436,7 +437,8 @@ ${formData.message}`
                     </svg>
                   ),
                   href: 'https://x.com/thecloudtopia',
-                  color: 'hover:text-neutral-900'
+                  color: 'hover:text-neutral-900',
+                  label: 'X (Twitter)'
                 },
                 {
                   icon: (
@@ -445,7 +447,8 @@ ${formData.message}`
                     </svg>
                   ),
                   href: 'https://github.com/Shahoom',
-                  color: 'hover:text-neutral-900'
+                  color: 'hover:text-neutral-900',
+                  label: 'GitHub'
                 },
                 {
                   icon: (
@@ -456,7 +459,8 @@ ${formData.message}`
                     </svg>
                   ),
                   href: 'https://instagram.com/thecloudtopia',
-                  color: 'hover:text-pink-600'
+                  color: 'hover:text-pink-600',
+                  label: 'Instagram'
                 }
               ].map((platform, i) => (
                 <motion.a
@@ -464,6 +468,7 @@ ${formData.message}`
                   href={platform.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={platform.label}
                   whileHover={{ scale: 1.2, rotate: 10 }}
                   className={`w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/50 text-neutral-600 transition-colors ${platform.color}`}
                 >
@@ -670,6 +675,35 @@ ${formData.message}`
                       </div>
                     </div>
                   </div>
+
+                  {/* Privacy consent — required before the form can be sent */}
+                  <label className="mb-6 flex cursor-pointer items-start gap-3 text-sm leading-6 text-neutral-700">
+                    <input
+                      id="privacy-consent"
+                      type="checkbox"
+                      required
+                      className="mt-1 h-4 w-4 shrink-0 cursor-pointer rounded border-neutral-300 accent-primary-600"
+                    />
+                    <span>
+                      {locale === 'ar' ? (
+                        <>
+                          أوافق على معالجة بياناتي للرد على استفساري وفق{' '}
+                          <a href="/ar/privacy" className="font-semibold text-primary-700 underline underline-offset-2">
+                            سياسة الخصوصية
+                          </a>
+                          .
+                        </>
+                      ) : (
+                        <>
+                          I agree to the processing of my details to answer my inquiry, as described in the{' '}
+                          <a href="/privacy" className="font-semibold text-primary-700 underline underline-offset-2">
+                            Privacy Policy
+                          </a>
+                          .
+                        </>
+                      )}
+                    </span>
+                  </label>
 
                   <motion.button
                     type="submit"

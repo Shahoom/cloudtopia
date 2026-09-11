@@ -125,6 +125,19 @@ export function NewsletterBox({ locale = 'en' }: { locale?: string }) {
               ? (ar ? 'جارٍ الاشتراك...' : 'Subscribing...')
               : (ar ? 'اشترك' : 'Subscribe')}
           </button>
+          <p className="sm:col-span-2 lg:col-span-3 text-xs leading-5" style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-ink-soft, #6b7280)' }}>
+            {ar ? (
+              <>
+                بالاشتراك توافق على تلقي نشرتنا البريدية ويمكنك إلغاء الاشتراك في أي وقت. راجع{' '}
+                <a href="/ar/privacy" className="underline underline-offset-2">سياسة الخصوصية</a>.
+              </>
+            ) : (
+              <>
+                By subscribing you agree to receive our newsletter; you can unsubscribe at any time. See our{' '}
+                <a href="/privacy" className="underline underline-offset-2">Privacy Policy</a>.
+              </>
+            )}
+          </p>
           {message && (
             <p
               className="sm:col-span-2 lg:col-span-3 text-sm"

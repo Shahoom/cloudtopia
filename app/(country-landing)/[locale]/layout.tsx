@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { Cairo } from 'next/font/google'
-import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
-import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
+import { CookieConsent } from '@/components/consent/CookieConsent'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import { locales } from '@/lib/i18n/config'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -80,8 +80,6 @@ export default async function CountryLandingRootLayout({
     return (
         <html lang={locale} dir={dir} suppressHydrationWarning className={cairo.variable}>
             <head>
-                {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
-                <GoogleAnalytics />
                 <link rel="manifest" href="/manifest.json" />
                 {/* Canonical WebSite node. The country-landing pages each emit the
                     #organization node themselves; the layout supplies the matching
@@ -119,10 +117,11 @@ export default async function CountryLandingRootLayout({
                 />
             </head>
             <body className="min-h-screen antialiased font-['Changa',sans-serif]">
-                <MetaPixelBoot />
+                {/* GA + Meta Pixel load ONLY after cookie consent (CookieConsent below). */}
                 <PixelRouteChangeTracker />
                 {children}
                 <AIChatbot />
+                <CookieConsent locale={locale} />
                 <SpeedInsights />
                 <Analytics />
             </body>

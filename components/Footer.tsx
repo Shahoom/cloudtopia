@@ -215,7 +215,7 @@ export default function Footer() {
                   className="h-14 w-auto shrink-0"
                 />
                 {locale === 'ar' ? (
-                  <span className="text-3xl font-logo-ar text-neutral-900">كلاود<span className="text-sky-600">توبيا</span></span>
+                  <span className="text-3xl font-logo-ar text-neutral-900">كلاود<span className="text-sky-700">توبيا</span></span>
                 ) : (
                   <span className="text-2xl font-bold font-logo text-neutral-900">{brandText}</span>
                 )}
@@ -225,7 +225,7 @@ export default function Footer() {
                   تكنولوجيا رقمية وسحابية
                 </p>
               ) : (
-                <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-neutral-500">
+                <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-neutral-600">
                   {t.header?.tagline || 'Digital & Cloud Technologies'}
                 </p>
               )}
@@ -283,15 +283,28 @@ export default function Footer() {
               <Script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js" strategy="lazyOnload" />
             </div>
 
-            <div className={`flex text-sm ${dir === 'rtl' ? 'space-x-reverse space-x-6' : 'space-x-6'}`}>
+            <div className={`flex flex-wrap gap-x-6 gap-y-2 text-sm`}>
               <Link href={l('/privacy')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
                 {t.footer.links.privacy}
               </Link>
               <Link href={l('/terms')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
                 {t.footer.links.terms}
               </Link>
+              <Link href={l('/cookies')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
+                {locale === 'ar' ? 'ملفات تعريف الارتباط' : 'Cookie Policy'}
+              </Link>
+              <Link href={l('/refunds')} className="text-neutral-600 hover:text-blue-600 transition-colors font-medium">
+                {locale === 'ar' ? 'الاسترداد والإلغاء' : 'Refund Policy'}
+              </Link>
             </div>
           </div>
+
+          {/* Business identity — displayed for legal transparency */}
+          <p className={`mt-6 text-xs leading-5 text-neutral-500 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+            {locale === 'ar'
+              ? 'كلاود توبيا — شركة تقنيات رقمية وسحابية مسجّلة في سلطنة عُمان · info@cloudtopia.net'
+              : 'CloudTopia — a digital & cloud technology company registered in the Sultanate of Oman · info@cloudtopia.net'}
+          </p>
         </div>
       </div>
     </footer>

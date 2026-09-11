@@ -179,6 +179,8 @@ export async function buildSitemapEntriesFromCMS(): Promise<MetadataRoute.Sitema
         { path: '/services/web-applications', priority: 0.8, changeFrequency: 'monthly' },
         { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/cookies', priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/refunds', priority: 0.3, changeFrequency: 'yearly' },
     ]
 
     guaranteedStaticRoutes.forEach((route) => {
@@ -324,6 +326,8 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
         { path: '/services/web-applications', priority: 0.8, changeFrequency: 'monthly', ogPage: 'web-applications' },
         { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
         { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/cookies', priority: 0.3, changeFrequency: 'yearly' },
+        { path: '/refunds', priority: 0.3, changeFrequency: 'yearly' },
     ]
 
     const sitemapEntries: MetadataRoute.Sitemap = []

@@ -3,8 +3,8 @@ import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { Cairo, Hanken_Grotesk, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { MetaPixelBoot, PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
-import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { PixelRouteChangeTracker } from '@/components/analytics/MetaPixel'
+import { CookieConsent } from '@/components/consent/CookieConsent'
 import { AIChatbotLazy as AIChatbot } from '@/components/ai-chatbot/AIChatbotLazy'
 import { ThemeProvider } from '@/components/theme-provider'
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp'
@@ -268,8 +268,6 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} dir={dir} suppressHydrationWarning className={`${cairo.variable} ${hanken.variable} ${arUi.variable}`}>
             <head>
-                {/* Google tag (gtag.js) — first in <head>, exactly one per page. */}
-                <GoogleAnalytics />
                 <link rel="manifest" href="/manifest.json" />
             </head>
             <body className="min-h-screen antialiased" suppressHydrationWarning>
@@ -389,7 +387,7 @@ export default async function LocaleLayout({
                     }}
                 />
                 <div className="min-h-screen">
-                    <MetaPixelBoot />
+                    {/* GA + Meta Pixel load ONLY after cookie consent (CookieConsent below). */}
                     <PixelRouteChangeTracker />
                     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
                         <LanguageProvider
@@ -411,6 +409,7 @@ export default async function LocaleLayout({
                             route handler (GCC -> Oman, elsewhere -> Türkiye) rather than
                             from a request header here, so this layout stays static. */}
                         <FloatingWhatsApp href={`/api/whatsapp?locale=${locale}`} locale={locale} />
+                        <CookieConsent locale={locale} />
                     </ThemeProvider>
                     <SpeedInsights />
                     <Analytics />

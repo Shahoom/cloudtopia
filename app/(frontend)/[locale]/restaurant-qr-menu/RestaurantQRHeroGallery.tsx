@@ -100,12 +100,20 @@ function MobileImageCarousel({ locale }: { locale: string }) {
       </AnimatePresence>
 
       {/* Dots indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20"
+        role="tablist"
+        aria-label={locale === 'ar' ? 'صور المعرض' : 'Gallery images'}
+      >
         {ALL_IMAGES.map((_, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
+            role="tab"
+            aria-selected={index === currentIndex}
+            aria-label={locale === 'ar' ? `الصورة ${index + 1}` : `Image ${index + 1}`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${index === currentIndex
               ? 'bg-lavender w-6'
               : 'bg-lavender/60'
               }`}
