@@ -7,7 +7,6 @@ import {
   Languages,
   Mail,
   MessageSquare,
-  Newspaper,
   Plus,
   Scale,
   Server,
@@ -19,8 +18,15 @@ import {
 import { getOverviewStats } from '../../lib/cms/admin/overview.ts'
 import type { ActivityItem } from '../../lib/cms/admin/types.ts'
 
-const CYAN = '#0ea5e9'
+// Soft-premium palette (Notion/Stripe direction): warm canvas, ink text,
+// floating white cards, one restrained teal accent.
+const INK = '#37352f'
+const INK_SOFT = '#787774'
+const INK_FAINT = '#a8a29e'
 const TEAL = '#0d9488'
+const CYAN = INK // chart series 1 renders in ink on the warm canvas
+const CARD_BORDER = '1px solid rgba(55, 53, 47, 0.09)'
+const CARD_SHADOW = '0 1px 2px rgba(15, 15, 15, 0.03), 0 8px 24px rgba(15, 15, 15, 0.05)'
 
 function relTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime()
@@ -38,96 +44,81 @@ const kindIcon: Record<ActivityItem['kind'], typeof Target> = {
   'hasm-demo': Scale,
 }
 
-// KPI accent palette + icons, cycled by position.
-const KPI_ACCENTS = ['#0ea5e9', '#0d9488', '#8b5cf6', '#f59e0b', '#f43f5e']
-const KPI_ICONS: Record<string, typeof Target> = {
-  'New leads · 7d': Target,
-  'Conversations · 7d': MessageSquare,
-  'Published articles': Newspaper,
-  'Drafts to review': Clock,
-  'Total article views': Eye,
-}
+// Muted KPI accent dots, cycled by position.
+const KPI_ACCENTS = ['#0d9488', '#b45309', '#7c3aed', '#0369a1', '#be123c']
 
 export async function CommandCenter() {
   const stats = await getOverviewStats()
   const maxDay = Math.max(1, ...stats.activityByDay.map((d) => d.conversations + d.leads))
 
+  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+
   return (
-    <div style={{ padding: '24px 28px', maxWidth: 1200, margin: '0 auto' }}>
+    <div style={{ padding: '40px 36px 48px', maxWidth: 1160, margin: '0 auto' }}>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           flexWrap: 'wrap',
-          gap: 14,
-          marginBottom: 22,
-          padding: '26px 28px',
-          borderRadius: 18,
-          background: 'linear-gradient(120deg, #0b1220 0%, #134e5e 55%, #0d9488 100%)',
-          boxShadow: '0 10px 30px rgba(13, 148, 136, 0.25)',
+          gap: 16,
+          marginBottom: 32,
         }}
       >
         <div>
-          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: '#f8fafc', letterSpacing: '-0.01em' }}>Command center</h1>
-          <p style={{ margin: '6px 0 0', color: 'rgba(226, 232, 240, 0.75)', fontSize: 13.5 }}>
-            Your CloudTopia control center — content, leads and site health at a glance
+          <p style={{ margin: '0 0 6px', fontSize: 13, fontWeight: 500, color: INK_FAINT }}>{today}</p>
+          <h1 style={{ margin: 0, fontSize: 34, fontWeight: 700, color: INK, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
+            Command center
+          </h1>
+          <p style={{ margin: '8px 0 0', color: INK_SOFT, fontSize: 14.5 }}>
+            Content, leads and site health — at a glance.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <Link
-            href="/admin/collections/blog-posts/create"
-            style={{ ...btn(true), background: '#f8fafc', borderColor: '#f8fafc', color: '#0b1220', fontWeight: 600 }}
-          >
-            <Plus size={16} /> New article
+        <div style={{ display: 'flex', gap: 10 }}>
+          <Link href="/admin/collections/blog-posts/create" style={btn(true)}>
+            <Plus size={15} /> New article
           </Link>
-          <Link
-            href="/admin/collections/blog-posts/create"
-            style={{ ...btn(false), color: '#e2e8f0', borderColor: 'rgba(226, 232, 240, 0.35)' }}
-          >
-            <Upload size={16} /> Import MDX
+          <Link href="/admin/collections/blog-posts/create" style={btn(false)}>
+            <Upload size={15} /> Import MDX
           </Link>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 12, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 14, marginBottom: 24 }}>
         {stats.kpis.map((k, i) => {
           const accent = KPI_ACCENTS[i % KPI_ACCENTS.length]
-          const Icon = KPI_ICONS[k.label] ?? TrendingUp
           return (
-            <div key={k.label} style={{ ...card(), borderTop: `3px solid ${accent}`, position: 'relative' }}>
-              <span
+            <div key={k.label} style={card()}>
+              <p
                 style={{
-                  position: 'absolute',
-                  top: 14,
-                  insetInlineEnd: 14,
-                  width: 34,
-                  height: 34,
-                  borderRadius: 10,
-                  display: 'inline-flex',
+                  margin: 0,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: '0.07em',
+                  textTransform: 'uppercase',
+                  color: INK_FAINT,
+                  display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  background: `${accent}1a`,
-                  color: accent,
+                  gap: 7,
                 }}
               >
-                <Icon size={17} />
-              </span>
-              <p style={{ margin: 0, fontSize: 12.5, fontWeight: 600, color: 'var(--theme-elevation-500)' }}>{k.label}</p>
-              <p style={{ margin: '8px 0 0', fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em' }}>{k.value}</p>
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: accent, flexShrink: 0 }} />
+                {k.label}
+              </p>
+              <p style={{ margin: '12px 0 0', fontSize: 31, fontWeight: 700, letterSpacing: '-0.03em', color: INK, lineHeight: 1 }}>{k.value}</p>
               {k.delta && k.delta.direction !== 'flat' && (
-                <p style={{ margin: '4px 0 0', fontSize: 12, color: k.delta.direction === 'up' ? TEAL : '#dc2626', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {k.delta.direction === 'up' ? <TrendingUp size={14} /> : <TrendingDown size={14} />} {k.delta.pct}% vs prev
+                <p style={{ margin: '8px 0 0', fontSize: 12, color: k.delta.direction === 'up' ? TEAL : '#b91c1c', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {k.delta.direction === 'up' ? <TrendingUp size={13} /> : <TrendingDown size={13} />} {k.delta.pct}% vs prev
                 </p>
               )}
-              {k.hint && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#b45309' }}>{k.hint}</p>}
+              {k.hint && <p style={{ margin: '8px 0 0', fontSize: 12, color: '#b45309' }}>{k.hint}</p>}
             </div>
           )
         })}
       </div>
 
       <div style={panel()}>
-        <p style={{ margin: '0 0 14px', fontSize: 16, fontWeight: 600 }}>Activity — last 7 days</p>
+        <p style={{ margin: '0 0 14px', fontSize: 15, fontWeight: 600, color: INK }}>Activity — last 7 days</p>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 160 }}>
           {stats.activityByDay.map((d) => (
             <div key={d.day} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
@@ -147,7 +138,7 @@ export async function CommandCenter() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 12, marginTop: 12 }}>
         <div style={panel()}>
-          <p style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>Recent activity</p>
+          <p style={{ margin: '0 0 8px', fontSize: 15, fontWeight: 600, color: INK }}>Recent activity</p>
           {stats.recent.length === 0 && <p style={empty()}>No recent activity yet.</p>}
           {stats.recent.map((it) => {
             const Icon = kindIcon[it.kind]
@@ -165,7 +156,7 @@ export async function CommandCenter() {
         </div>
 
         <div style={panel()}>
-          <p style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>Needs your attention</p>
+          <p style={{ margin: '0 0 8px', fontSize: 15, fontWeight: 600, color: INK }}>Needs your attention</p>
           {stats.attention.map((a) => (
             <Link key={a.label} href={a.href} style={row()}>
               <AlertTriangle size={16} color={a.tone === 'danger' ? '#dc2626' : a.tone === 'warning' ? '#b45309' : 'var(--theme-elevation-500)'} />
@@ -176,7 +167,7 @@ export async function CommandCenter() {
         </div>
 
         <div style={panel()}>
-          <p style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>
+          <p style={{ margin: '0 0 8px', fontSize: 15, fontWeight: 600, color: INK }}>
             <Languages size={15} style={{ verticalAlign: -2, marginRight: 6 }} />
             AR/EN pairing
           </p>
@@ -197,7 +188,7 @@ export async function CommandCenter() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 12, marginTop: 12 }}>
         <div style={panel()}>
-          <p style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>Top articles</p>
+          <p style={{ margin: '0 0 8px', fontSize: 15, fontWeight: 600, color: INK }}>Top articles</p>
           {stats.topArticles.length === 0 && <p style={empty()}>No published articles yet.</p>}
           {stats.topArticles.map((a) => (
             <Link key={a.id} href={a.href} style={row()}>
@@ -209,7 +200,7 @@ export async function CommandCenter() {
         </div>
 
         <div style={panel()}>
-          <p style={{ margin: '0 0 12px', fontSize: 16, fontWeight: 600 }}>Top topics asked</p>
+          <p style={{ margin: '0 0 12px', fontSize: 15, fontWeight: 600, color: INK }}>Top topics asked</p>
           {stats.topTopics.length === 0 && <p style={empty()}>No conversations yet.</p>}
           {stats.topTopics.map((t, i) => {
             const max = stats.topTopics[0]?.count || 1
@@ -245,44 +236,45 @@ function btn(primary: boolean): CSSProperties {
   return {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: 6,
-    fontSize: 13,
-    padding: '8px 14px',
-    borderRadius: 8,
+    gap: 7,
+    fontSize: 13.5,
+    fontWeight: 500,
+    padding: '9px 16px',
+    borderRadius: 10,
     textDecoration: 'none',
-    border: '1px solid var(--theme-elevation-150)',
-    color: primary ? '#fff' : 'var(--theme-text)',
-    background: primary ? CYAN : 'transparent',
-    borderColor: primary ? CYAN : 'var(--theme-elevation-150)',
+    color: primary ? '#ffffff' : INK,
+    background: primary ? '#1a1a1a' : '#ffffff',
+    border: primary ? '1px solid #1a1a1a' : CARD_BORDER,
+    boxShadow: primary ? '0 2px 8px rgba(15, 15, 15, 0.18)' : '0 1px 2px rgba(15, 15, 15, 0.04)',
   }
 }
 function card(): CSSProperties {
   return {
-    background: 'var(--theme-elevation-0)',
-    border: '1px solid var(--theme-elevation-100)',
-    borderRadius: 14,
-    padding: '16px 18px',
-    boxShadow: '0 1px 3px rgba(2, 8, 23, 0.06)',
+    background: '#ffffff',
+    border: CARD_BORDER,
+    borderRadius: 16,
+    padding: '18px 20px',
+    boxShadow: CARD_SHADOW,
   }
 }
 function panel(): CSSProperties {
   return {
-    background: 'var(--theme-elevation-0)',
-    border: '1px solid var(--theme-elevation-100)',
-    borderRadius: 16,
-    padding: '18px 22px',
-    boxShadow: '0 1px 3px rgba(2, 8, 23, 0.05)',
+    background: '#ffffff',
+    border: CARD_BORDER,
+    borderRadius: 18,
+    padding: '22px 26px',
+    boxShadow: CARD_SHADOW,
   }
 }
 function row(): CSSProperties {
-  return { display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: '1px solid var(--theme-elevation-100)', textDecoration: 'none', color: 'var(--theme-text)' }
+  return { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', borderTop: '1px solid rgba(55, 53, 47, 0.06)', textDecoration: 'none', color: INK }
 }
 function iconCircle(): CSSProperties {
-  return { width: 32, height: 32, borderRadius: '50%', background: 'var(--theme-elevation-100)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
+  return { width: 32, height: 32, borderRadius: 10, background: '#f1efe9', color: INK_SOFT, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
 }
 function countPill(): CSSProperties {
-  return { background: 'var(--theme-elevation-100)', color: 'var(--theme-elevation-600)', fontSize: 12, padding: '2px 8px', borderRadius: 8 }
+  return { background: '#f1efe9', color: '#57534e', fontSize: 12, fontWeight: 600, padding: '2px 9px', borderRadius: 999 }
 }
 function empty(): CSSProperties {
-  return { fontSize: 13, color: 'var(--theme-elevation-450)', margin: '8px 0' }
+  return { fontSize: 13, color: INK_FAINT, margin: '8px 0' }
 }

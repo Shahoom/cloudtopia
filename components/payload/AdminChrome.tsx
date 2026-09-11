@@ -20,7 +20,6 @@ import {
   Users,
 } from 'lucide-react'
 
-const CYAN = '#0ea5e9'
 
 type NavLink = { href: string; label: string; icon: typeof LayoutDashboard }
 type NavGroup = { title: string; items: NavLink[] }
@@ -145,6 +144,11 @@ function CloudTopiaMark() {
   )
 }
 
+// Soft-premium palette shared with the command center.
+const INK = '#37352f'
+const INK_SOFT = '#57534e'
+const INK_FAINT = '#a8a29e'
+
 const styles: Record<string, CSSProperties> = {
   nav: {
     position: 'sticky',
@@ -152,14 +156,14 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 60,
     display: 'flex',
     flexDirection: 'column',
-    gap: 14,
+    gap: 16,
     alignItems: 'stretch',
     width: '100%',
     minHeight: '100vh',
     height: '100vh',
-    padding: 14,
-    borderRight: '1px solid rgba(148, 163, 184, 0.14)',
-    background: 'linear-gradient(180deg, #0b1220 0%, #0f172a 60%, #0b1626 100%)',
+    padding: '16px 12px',
+    borderRight: '1px solid rgba(55, 53, 47, 0.09)',
+    background: '#f4f2ec',
     fontFamily: 'var(--font-cairo), ui-sans-serif, system-ui, sans-serif',
   },
   brand: {
@@ -168,12 +172,10 @@ const styles: Record<string, CSSProperties> = {
     gap: 10,
     width: '100%',
     minWidth: 0,
-    padding: '8px 8px',
-    borderRadius: 12,
-    color: '#f8fafc',
+    padding: '6px 8px',
+    borderRadius: 10,
+    color: INK,
     textDecoration: 'none',
-    background: 'rgba(14, 165, 233, 0.08)',
-    border: '1px solid rgba(14, 165, 233, 0.18)',
   },
   brandCopy: {
     display: 'grid',
@@ -182,45 +184,45 @@ const styles: Record<string, CSSProperties> = {
   brandName: {
     fontSize: 15,
     fontWeight: 700,
-    letterSpacing: 0,
+    letterSpacing: '-0.01em',
     lineHeight: 1.1,
-    color: '#f8fafc',
+    color: INK,
   },
   brandMeta: {
-    color: '#38bdf8',
+    color: INK_FAINT,
     fontSize: 11,
-    fontWeight: 600,
+    fontWeight: 500,
     letterSpacing: '0.02em',
     lineHeight: 1.2,
   },
   links: {
     display: 'grid',
-    gap: 2,
+    gap: 1,
     minWidth: 0,
     overflowX: 'hidden',
     overflowY: 'auto',
     scrollbarWidth: 'none',
   },
   group: {
-    marginBottom: 12,
+    marginBottom: 14,
   },
   groupTitle: {
-    margin: '0 0 5px 10px',
-    fontSize: 10.5,
-    fontWeight: 700,
-    letterSpacing: '0.09em',
+    margin: '0 0 4px 10px',
+    fontSize: 10,
+    fontWeight: 600,
+    letterSpacing: '0.08em',
     textTransform: 'uppercase',
-    color: '#64748b',
+    color: INK_FAINT,
   },
   link: {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 9,
     width: '100%',
-    minHeight: 36,
+    minHeight: 32,
     padding: '0 10px',
-    borderRadius: 9,
-    color: '#cbd5e1',
+    borderRadius: 8,
+    color: INK_SOFT,
     textDecoration: 'none',
     fontSize: 13,
     fontWeight: 500,
@@ -239,16 +241,17 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    minHeight: 40,
+    minHeight: 38,
     padding: '0 14px',
     borderRadius: 10,
-    background: `linear-gradient(135deg, ${CYAN}, #0d9488)`,
+    background: '#1a1a1a',
+    border: '1px solid #1a1a1a',
     color: '#ffffff',
     textDecoration: 'none',
     fontSize: 13,
-    fontWeight: 600,
+    fontWeight: 500,
     whiteSpace: 'nowrap',
-    boxShadow: '0 4px 14px rgba(14, 165, 233, 0.35)',
+    boxShadow: '0 2px 8px rgba(15, 15, 15, 0.18)',
     transition: 'opacity 0.15s ease',
   },
   logout: {
@@ -256,19 +259,20 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: 38,
+    height: 36,
     borderRadius: 10,
-    border: '1px solid rgba(148, 163, 184, 0.2)',
-    background: 'rgba(148, 163, 184, 0.08)',
-    color: '#cbd5e1',
+    border: '1px solid rgba(55, 53, 47, 0.12)',
+    background: '#ffffff',
+    color: INK_SOFT,
     textDecoration: 'none',
+    boxShadow: '0 1px 2px rgba(15, 15, 15, 0.04)',
     transition: 'background 0.15s ease',
   },
   logo: {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 10,
-    color: 'var(--theme-text)',
+    color: INK,
     fontWeight: 700,
     fontFamily: 'var(--font-cairo), ui-sans-serif, system-ui, sans-serif',
   },
@@ -277,15 +281,14 @@ const styles: Record<string, CSSProperties> = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    background: `linear-gradient(135deg, ${CYAN}, #0d9488)`,
-    color: '#ffffff',
-    fontSize: 13,
+    width: 32,
+    height: 32,
+    borderRadius: 9,
+    background: '#1a1a1a',
+    color: '#f4f2ec',
+    fontSize: 12,
     fontWeight: 700,
-    letterSpacing: 0,
-    boxShadow: '0 2px 10px rgba(14, 165, 233, 0.4)',
+    letterSpacing: '0.02em',
   },
 }
 
@@ -317,32 +320,43 @@ const chromeStyles = `
     width: 100% !important;
     max-width: none !important;
     min-width: 0 !important;
+    background: #faf9f6 !important;
+  }
+
+  .template-default {
+    background: #faf9f6 !important;
   }
 
   .ct-admin-nav__link:hover {
-    background: rgba(14, 165, 233, 0.16) !important;
-    color: #7dd3fc !important;
+    background: rgba(55, 53, 47, 0.07) !important;
+    color: #1f1f1f !important;
   }
 
   .ct-admin-nav__site-link:hover {
-    opacity: 0.92 !important;
+    opacity: 0.88 !important;
   }
 
   .ct-admin-nav__logout:hover {
-    background: rgba(148, 163, 184, 0.18) !important;
-    color: #f8fafc !important;
+    background: #f1efe9 !important;
+    color: #1f1f1f !important;
   }
 
   .template-default input:focus,
   .template-default textarea:focus,
   .template-default select:focus {
-    outline: 3px solid rgba(14, 165, 233, 0.22) !important;
+    outline: 3px solid rgba(13, 148, 136, 0.2) !important;
   }
 
   .template-default .btn--style-primary {
-    background: linear-gradient(135deg, ${CYAN}, #0d9488) !important;
-    border-color: transparent !important;
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
     color: #ffffff !important;
+    border-radius: 10px !important;
+  }
+
+  .template-default .table {
+    background: #ffffff;
+    border-radius: 14px;
   }
 
   @media (max-width: 760px) {
