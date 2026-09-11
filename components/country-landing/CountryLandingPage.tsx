@@ -884,6 +884,35 @@ export default function CountryLandingPage({ country, locale }: Props) {
                 </div>
             </section>
 
+            <section className="border-b border-neutral-950 bg-[var(--country-surface)] px-4 py-16 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-[1500px]">
+                    <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+                        <div>
+                            <Eyebrow>{isArabic ? 'آراء العملاء' : 'Client Voice'}</Eyebrow>
+                            <h2 className="text-3xl font-black leading-tight md:text-4xl xl:text-5xl [text-wrap:balance]">
+                                {isArabic ? `ما الذي يهم عملاء ${countryName}؟` : `What Clients In ${countryName} Care About`}
+                            </h2>
+                        </div>
+                        <p className="max-w-xl text-sm font-black leading-7 text-neutral-600">
+                            {isArabic ? 'ملاحظات مختصرة من أنواع العملاء الذين نخدمهم، بدون ادعاء أسماء شركات أو قصص غير موثقة.' : 'Short feedback patterns from the types of clients we serve, without fake company claims.'}
+                        </p>
+                    </div>
+                    <div className="grid gap-5 lg:grid-cols-3">
+                        {country.testimonials.map((testimonial) => (
+                            <figure key={testimonial.name} className="border border-neutral-950 bg-white p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[8px_8px_0_rgba(11,13,18,0.12)]">
+                                <blockquote className="text-lg font-black leading-9 text-neutral-950">
+                                    “{isArabic ? testimonial.quoteArabic : testimonial.quoteEnglish}”
+                                </blockquote>
+                                <figcaption className="mt-8 border-t border-neutral-200 pt-4">
+                                    <p className="font-black">{testimonial.name}</p>
+                                    <p className="mt-1 text-sm font-semibold leading-6 text-neutral-600">{isArabic ? testimonial.roleArabic : testimonial.roleEnglish}</p>
+                                </figcaption>
+                            </figure>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             <section className="border-b border-neutral-950 bg-white px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-[1500px] gap-8 lg:grid-cols-[0.48fr_1fr]">
                     <h2 className="text-3xl font-black leading-tight md:text-4xl xl:text-5xl [text-wrap:balance]">

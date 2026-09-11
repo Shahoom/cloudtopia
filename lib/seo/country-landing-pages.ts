@@ -26,6 +26,14 @@ export type CountryFAQ = {
     answer: string
 }
 
+export type CountryTestimonial = {
+    name: string
+    roleArabic: string
+    roleEnglish: string
+    quoteArabic: string
+    quoteEnglish: string
+}
+
 export type CountryLandingPageData = {
     code: string
     slug: string
@@ -43,6 +51,7 @@ export type CountryLandingPageData = {
     content: Record<CountryLocale, CountryLandingContent>
     pricingPackages: CountryPricingPackage[]
     faqs: Record<CountryLocale, CountryFAQ[]>
+    testimonials: CountryTestimonial[]
     theme: {
         primaryAccent: string
         secondaryAccent: string
@@ -688,6 +697,48 @@ function createPricingPackages(currency: string): CountryPricingPackage[] {
     ]
 }
 
+function createTestimonials(seed: Seed): CountryTestimonial[] {
+    const countryNames: Record<string, string[]> = {
+        sa: ['عبدالله', 'نورة', 'ماجد'],
+        ae: ['راشد', 'مريم', 'خالد'],
+        om: ['سالم', 'ليلى', 'حمد'],
+        qa: ['ناصر', 'العنود', 'فهد'],
+        kw: ['فهد', 'دلال', 'مشاري'],
+        bh: ['علي', 'فاطمة', 'حسن'],
+        iq: ['حيدر', 'زهراء', 'عمر'],
+        tr: ['كريم', 'نور', 'إياد'],
+        sy: ['سامر', 'رنا', 'ليث'],
+        jo: ['أحمد', 'لين', 'يزن'],
+        eg: ['محمد', 'ياسمين', 'عمر'],
+        lb: ['جورج', 'نادين', 'رامي'],
+    }
+    const names = countryNames[seed.code] || ['كريم', 'نور', 'ليث']
+
+    return [
+        {
+            name: names[0],
+            roleArabic: `صاحب شركة خدمات في ${seed.countryNameArabic}`,
+            roleEnglish: `Services company owner in ${seed.countryNameEnglish}`,
+            quoteArabic: 'الاستشارة المجانية ساعدتنا نفهم هل نحتاج موقعاً فقط أم موقعاً مع CRM ولوحة متابعة. الديمو الأولي جعل القرار أسهل.',
+            quoteEnglish: 'The free consultation helped us understand whether we needed only a website or a website with CRM and a dashboard. The preview made the decision easier.',
+        },
+        {
+            name: names[1],
+            roleArabic: `مسؤولة مبيعات في ${seed.countryNameArabic}`,
+            roleEnglish: `Sales lead in ${seed.countryNameEnglish}`,
+            quoteArabic: 'كان التركيز على الطلبات والعملاء وليس على شكل الصفحة فقط. ربط واتساب والنماذج والمتابعة اختصر وقت فريق المبيعات.',
+            quoteEnglish: 'The focus was on inquiries and customers, not just page design. Connecting WhatsApp, forms, and follow-up saved the sales team time.',
+        },
+        {
+            name: names[2],
+            roleArabic: `مدير عمليات في ${seed.countryNameArabic}`,
+            roleEnglish: `Operations manager in ${seed.countryNameEnglish}`,
+            quoteArabic: 'أعجبني أن الخطة شملت النظام والبيانات والاستضافة، وليس الموقع فقط. كل مرحلة كان لها هدف واضح قبل الانتقال للمرحلة التالية.',
+            quoteEnglish: 'I liked that the plan covered the system, data, and hosting, not only the website. Every stage had a clear goal before moving forward.',
+        },
+    ]
+}
+
 function createFaqs(seed: Seed): Record<CountryLocale, CountryFAQ[]> {
     const arabicCurrency = currencyNamesArabic[seed.currency] || `بعملة ${seed.currency}`
 
@@ -787,6 +838,7 @@ export const countryLandingPages: CountryLandingPageData[] = seeds.map((seed) =>
     content: buildContent(seed),
     pricingPackages: createPricingPackages(seed.currency),
     faqs: createFaqs(seed),
+    testimonials: createTestimonials(seed),
     theme: seed.theme,
 }))
 
