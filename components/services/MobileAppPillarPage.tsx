@@ -7,7 +7,6 @@ import { localePath } from '@/lib/i18n/url'
 import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { SubServiceGlowCard } from '@/components/services/SubServiceGlowCard'
 import { CinematicHero } from '@/components/ui/cinematic-landing-hero'
-import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { CreativePricing, type PricingTier } from '@/components/ui/creative-pricing'
 import { ContactFast } from '@/components/ui/contact-fast'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
@@ -260,7 +259,6 @@ export default async function MobileAppPillarPage({ locale }: { locale: string }
                 </div>
             </section>
 
-            <TestimonialsMarquee locale={loc} dir={dir} />
 
             <CreativePricing
                 tag={t('Packages', 'الباقات')}

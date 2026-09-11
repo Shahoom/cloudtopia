@@ -40,9 +40,9 @@ test('country landing page data exposes bilingual canonical URL pairs', () => {
     assert.ok(country.content.en.heroSubtitle.includes(country.countryNameEnglish))
     assert.ok(country.faqs.ar.length >= 6)
     assert.ok(country.faqs.en.length >= 6)
-    assert.equal(country.testimonials.length, 3)
-    assert.ok(country.testimonials.every((item) => item.roleArabic.includes(country.countryNameArabic)))
-    assert.ok(country.testimonials.every((item) => item.quoteArabic.length > 40))
+    // Synthetic testimonials were removed site-wide (fabricated reviews are a
+    // consumer-protection risk); country pages must not reintroduce them.
+    assert.equal('testimonials' in country, false)
     assert.match(country.theme.surface, /^#[0-9A-F]{6}$/i)
     assert.match(country.theme.softAccent, /^#[0-9A-F]{6}$/i)
     assert.match(country.theme.ink, /^#[0-9A-F]{6}$/i)

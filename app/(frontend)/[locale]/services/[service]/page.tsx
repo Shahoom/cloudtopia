@@ -33,7 +33,6 @@ import { WebAppProcess } from '@/components/ui/webapp-process'
 import { getWebappServiceContent, asWebAppLocale } from '@/lib/services/webapp-service-content'
 import { getWebappFaq } from '@/lib/services/webapp-faq-content'
 import { ProcessOverview } from '@/components/ui/process-overview'
-import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
 import { ContactFast } from '@/components/ui/contact-fast'
 import { ProjectsShowcase } from '@/components/ui/projects-showcase'
@@ -760,7 +759,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                             projectHref={(id) => localePath(locale, `/projects/${id}`)}
                         />
                     ) : null}
-                    <TestimonialsMarquee locale={serviceLocale} dir={isRTL ? 'rtl' : 'ltr'} />
                     {websiteFaq ? (
                         <FaqAccordion eyebrow={websiteFaq.eyebrow} heading={websiteFaq.heading} subheading={websiteFaq.subheading} items={websiteFaq.items} dir={isRTL ? 'rtl' : 'ltr'} />
                     ) : null}
@@ -781,7 +779,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                             sub={isRTL ? 'تطبيقات ويب حقيقية صمّمناها وبنيناها وأطلقناها لعملاء.' : 'Real web applications we’ve designed, built, and launched for clients.'}
                         />
                     ) : null}
-                    <TestimonialsMarquee locale={webappLocale} dir={isRTL ? 'rtl' : 'ltr'} />
                     {webappFaq ? (
                         <FaqAccordion eyebrow={webappFaq.eyebrow} heading={webappFaq.heading} subheading={webappFaq.subheading} items={webappFaq.items} dir={isRTL ? 'rtl' : 'ltr'} />
                     ) : null}

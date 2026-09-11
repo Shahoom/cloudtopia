@@ -3,7 +3,6 @@ import { PageBreadcrumbs } from '@/components/ui/PageBreadcrumbs'
 import { WebAppHero } from '@/components/ui/webapp-hero'
 import { WebAppFeatures } from '@/components/ui/webapp-features'
 import { WebAppProcess } from '@/components/ui/webapp-process'
-import { TestimonialsMarquee } from '@/components/ui/testimonials-marquee'
 import { FaqAccordion } from '@/components/ui/faq-accordion'
 import { ProjectsShowcase } from '@/components/ui/projects-showcase'
 import { type Project } from '@/lib/projects'
@@ -25,7 +24,7 @@ import { Pencil, Star, Sparkles } from 'lucide-react'
  * Self-contained render for a structured interactive-web-application pillar.
  *
  * Mirrors the legacy inline webapp branch of ServiceDetail (WebAppHero →
- * WebAppFeatures → WebAppProcess → ProjectsShowcase → TestimonialsMarquee →
+ * WebAppFeatures → WebAppProcess → ProjectsShowcase →
  * FaqAccordion) so the new structured pillars (SaaS/MVP, full-stack, portals,
  * modernization, media) get the same rich, bilingual experience.
  *
@@ -186,7 +185,6 @@ export default async function WebAppPillarPage({
                 />
             ) : null}
 
-            <TestimonialsMarquee locale={webappLocale} dir={isRTL ? 'rtl' : 'ltr'} />
 
             {faq ? (
                 <FaqAccordion
