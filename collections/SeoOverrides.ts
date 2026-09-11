@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionConfig } from 'payload'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 const revalidate: CollectionAfterChangeHook = async ({ doc }) => {
   await revalidateCmsTags(['cms-pages'])
@@ -28,9 +28,9 @@ export const SeoOverrides: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   hooks: {
     afterChange: [revalidate],

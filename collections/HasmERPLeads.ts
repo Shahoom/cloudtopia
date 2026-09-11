@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const HasmERPLeads: CollectionConfig = {
   slug: 'hasm-erp-leads',
@@ -11,10 +11,10 @@ export const HasmERPLeads: CollectionConfig = {
     description: 'Qualified demo-access leads from legal.cloudtopia.net.',
   },
   access: {
-    read: adminOnly,
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    read: adminRoleOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     { name: 'name', type: 'text', required: true },

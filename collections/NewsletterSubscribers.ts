@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const NewsletterSubscribers: CollectionConfig = {
   slug: 'newsletter-subscribers',
@@ -11,13 +11,13 @@ export const NewsletterSubscribers: CollectionConfig = {
     description: 'Subscribers captured from the Insights newsletter form.',
   },
   access: {
-    read: adminOnly,
+    read: adminRoleOnly,
     // NOT public: app/(frontend)/api/newsletter/route.ts writes with
     // `overrideAccess: true`, so REST create was never needed — it only let
     // anyone bulk-inject subscriber rows without going through that route.
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     {

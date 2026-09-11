@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const BlogAIGenerationLogs: CollectionConfig = {
   slug: 'blog-ai-generation-logs',
@@ -11,10 +11,10 @@ export const BlogAIGenerationLogs: CollectionConfig = {
     description: 'Audit log for AI writing assistant requests. Outputs are stored as previews only.',
   },
   access: {
-    read: adminOnly,
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    read: adminRoleOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     {

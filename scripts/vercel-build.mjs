@@ -104,17 +104,25 @@ const startDetail = {
 await report('start', startDetail)
 console.log('[deploy-diag] start', JSON.stringify(startDetail))
 
-// Phase 1 — migrations against the direct connection.
-const migrateEnv = { ...process.env, DATABASE_URL: directUrl }
-const migrate = await runStep('migrate', 'npx', ['payload', '--use-swc', 'migrate'], migrateEnv)
-await report(migrate.code === 0 ? 'migrate-done' : 'migrate-failed', {
-  code: migrate.code,
-  signal: migrate.signal,
-  tail: migrate.tail.slice(-4000),
-})
-if (migrate.code !== 0) {
-  await pool?.end()
-  process.exit(migrate.code)
+// Phase 1 — migrations. DECOUPLED from deploy by default (Payload redesign
+// plan, Phase 1): a deploy must never alter the prod schema as a side effect.
+// Run schema changes deliberately with `npm run migrate:prod` BEFORE pushing.
+// Set RUN_MIGRATIONS_ON_DEPLOY=1 in Vercel env only to restore the old
+// behavior temporarily.
+if (process.env.RUN_MIGRATIONS_ON_DEPLOY === '1') {
+  const migrateEnv = { ...process.env, DATABASE_URL: directUrl }
+  const migrate = await runStep('migrate', 'npx', ['payload', '--use-swc', 'migrate'], migrateEnv)
+  await report(migrate.code === 0 ? 'migrate-done' : 'migrate-failed', {
+    code: migrate.code,
+    signal: migrate.signal,
+    tail: migrate.tail.slice(-4000),
+  })
+  if (migrate.code !== 0) {
+    await pool?.end()
+    process.exit(migrate.code)
+  }
+} else {
+  await report('migrate-skipped', { reason: 'decoupled — use npm run migrate:prod' })
 }
 
 // Phase 1.5 — regenerate the machine-readable llms.txt Articles/Services blocks

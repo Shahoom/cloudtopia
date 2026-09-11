@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const AIChatLeads: CollectionConfig = {
   slug: 'ai-chat-leads',
@@ -11,13 +11,13 @@ export const AIChatLeads: CollectionConfig = {
     description: 'Qualified sales/support inquiries captured by the CloudTopia AI chatbot.',
   },
   access: {
-    read: adminOnly,
+    read: adminRoleOnly,
     // NOT public: lib/ai-chatbot/leadService.ts writes with `overrideAccess:
     // true`, so REST create was never needed — it only let anyone inject
     // unvalidated leads straight into the table.
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     { name: 'name', type: 'text' },

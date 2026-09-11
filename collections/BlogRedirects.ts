@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const BlogRedirects: CollectionConfig = {
   slug: 'blog-redirects',
@@ -16,10 +16,10 @@ export const BlogRedirects: CollectionConfig = {
       'NOT YET WIRED — redirects entered here are not applied by the app yet (no middleware reads blog_redirects). Hidden until wired.',
   },
   access: {
-    read: adminOnly,
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    read: adminRoleOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     {

@@ -11,3 +11,10 @@ export const publishedOrAdmin: Access = ({ req }) => {
     },
   }
 }
+
+/**
+ * Admin ROLE only (not merely authenticated). Used by lead/system collections
+ * so an `editor` account manages content but never reads leads or site-wide
+ * configuration. Existing accounts were backfilled as `admin`.
+ */
+export const adminRoleOnly: Access = ({ req }) => req.user?.role === 'admin'

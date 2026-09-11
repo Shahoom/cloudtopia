@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 export const ContactInquiries: CollectionConfig = {
   slug: 'contact-inquiries',
@@ -11,14 +11,14 @@ export const ContactInquiries: CollectionConfig = {
     description: 'Inquiries submitted through the contact form and article sidebar consultation widget.',
   },
   access: {
-    read: adminOnly,
+    read: adminRoleOnly,
     // NOT public: app/api/contact/route.ts writes with `overrideAccess: true`,
     // so REST create was never needed. Open create let anyone bypass that
     // route's email validation, length clamping, source allow-list and IP
     // capture, and write arbitrary `status`/`ipAddress` values straight in.
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     { name: 'name', type: 'text' },

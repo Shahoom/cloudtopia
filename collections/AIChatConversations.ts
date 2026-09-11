@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 // Full transcripts of every CloudTopia AI chatbot conversation. Written by the
 // client at session end (and via sendBeacon on tab close) through
@@ -14,16 +14,16 @@ export const AIChatConversations: CollectionConfig = {
     description: 'Full transcripts of every conversation handled by the CloudTopia AI chatbot.',
   },
   access: {
-    read: adminOnly,
+    read: adminRoleOnly,
     // NOT public. conversationService.ts upserts through the Local API with
     // `overrideAccess: true`, so the chatbot never needs REST write access.
     // Leaving these open let anyone on the internet POST rows and PATCH any
     // existing conversation by guessing its sequential id (verified against
     // production: an unauthenticated PATCH returned 404 "Not Found" rather than
     // 403, i.e. access control had already allowed the write).
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   fields: [
     { name: 'sessionId', type: 'text', required: true, index: true },

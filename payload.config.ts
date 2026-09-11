@@ -107,6 +107,7 @@ export default buildConfig({
       icons: [{ rel: 'icon', url: '/favicon.svg' }],
     },
     components: {
+      beforeDashboard: ['@/components/payload/AdminDashboard#AdminDashboard'],
       Nav: '@/components/payload/AdminChrome#CloudTopiaAdminNav',
       graphics: {
         Icon: '@/components/payload/AdminChrome#CloudTopiaIcon',

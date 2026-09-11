@@ -1,7 +1,7 @@
 import type { CollectionAfterChangeHook, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 import { composeSiteDesignJSON } from '../lib/cms/site-design-structure.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
-import { adminOnly } from './blogAccess.ts'
+import { adminRoleOnly } from './blogAccess.ts'
 
 const syncStructuredDesign: CollectionBeforeValidateHook = ({ data }) => {
   const next = data || {}
@@ -25,9 +25,9 @@ export const SiteDesign: CollectionConfig = {
   lockDocuments: false,
   access: {
     read: () => true,
-    create: adminOnly,
-    update: adminOnly,
-    delete: adminOnly,
+    create: adminRoleOnly,
+    update: adminRoleOnly,
+    delete: adminRoleOnly,
   },
   admin: {
     group: 'Design',
