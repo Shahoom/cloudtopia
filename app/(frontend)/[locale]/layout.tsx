@@ -257,13 +257,19 @@ export default async function LocaleLayout({
             },
         },
     }
-    // The retired fabricated hero testimonial was removed from the code
-    // dictionaries, but the CMS chrome bundle still merges a stored copy back
-    // in. Strip it here — the single point every page's dictionary passes
-    // through — so no CMS state can reintroduce it into page payloads.
-    delete (chromeDictionary as any).home?.hero?.testimonial
-    delete (chromeDictionary as any).home?.hero?.testimonialAuthor
-    delete (chromeDictionary as any).home?.hero?.testimonialRole
+    // The retired fabricated testimonial (inside the demo-request modal copy)
+    // was removed from the code dictionaries, but the CMS chrome bundle still
+    // merges a stored copy back in. Strip it here — the single point every
+    // page's dictionary passes through — so no CMS state can reintroduce it
+    // into page payloads.
+    {
+        const heroModal = (chromeDictionary as any).home?.hero?.modal
+        if (heroModal) {
+            delete heroModal.testimonial
+            delete heroModal.testimonialAuthor
+            delete heroModal.testimonialRole
+        }
+    }
 
     const organizationDescription = isArabic
         ? 'كلاود توبيا شركة تقنيات رقمية وسحابية مسجّلة في سلطنة عُمان، وشريك معتمد لـ AWS ومايكروسوفت وسيلز فورس وسترايب وشوبيفاي. تطور مواقع محسنة لمحركات البحث، متاجر إلكترونية، تطبيقات ويب، أنظمة CRM وERP، بنية سحابية، وأتمتة بالذكاء الاصطناعي للشركات في الخليج والشرق الأوسط.'
