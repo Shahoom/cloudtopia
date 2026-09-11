@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { escapeHtml } from '@/lib/security/escape-html'
 import { getPayloadClient } from '@/lib/cms/payload.ts'
 import { isPayloadConfigured } from '@/lib/cms/env.ts'
 import { getClientIp } from '@/lib/cms/client-ip.ts'
@@ -110,22 +111,22 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           from:    process.env.CONTACT_FROM_EMAIL || 'noreply@cloudtopia.co',
           to:      [notifyEmail],
-          subject: `📬 New Inquiry — ${name || email || 'Anonymous'} (${service || 'General'})`,
+          subject: `📬 New Inquiry — ${(name || email || 'Anonymous').slice(0, 80)} (${(service || 'General').slice(0, 40)})`,
           html: `
 <h2 style="color:#0284c7">New CloudTopia Contact Inquiry</h2>
 <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Name</td><td style="padding:8px 12px">${name || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Email</td><td style="padding:8px 12px">${email || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Phone</td><td style="padding:8px 12px">${phone || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Company</td><td style="padding:8px 12px">${company || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Country</td><td style="padding:8px 12px">${country || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Service</td><td style="padding:8px 12px">${service || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Budget</td><td style="padding:8px 12px">${budget || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Timeline</td><td style="padding:8px 12px">${timeline || '—'}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Source</td><td style="padding:8px 12px">${source}</td></tr>
-  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Message</td><td style="padding:8px 12px">${message}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Name</td><td style="padding:8px 12px">${escapeHtml(name) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Email</td><td style="padding:8px 12px">${escapeHtml(email) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Phone</td><td style="padding:8px 12px">${escapeHtml(phone) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Company</td><td style="padding:8px 12px">${escapeHtml(company) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Country</td><td style="padding:8px 12px">${escapeHtml(country) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Service</td><td style="padding:8px 12px">${escapeHtml(service) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Budget</td><td style="padding:8px 12px">${escapeHtml(budget) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Timeline</td><td style="padding:8px 12px">${escapeHtml(timeline) || '—'}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Source</td><td style="padding:8px 12px">${escapeHtml(source)}</td></tr>
+  <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Message</td><td style="padding:8px 12px">${escapeHtml(message)}</td></tr>
 </table>
-<p style="margin-top:24px;font-size:12px;color:#999">Submitted from ${pageUrl || 'cloudtopia.co'}</p>`,
+<p style="margin-top:24px;font-size:12px;color:#999">Submitted from ${escapeHtml(pageUrl) || 'cloudtopia.co'}</p>`,
         }),
       })
       if (emailRes.ok) captured = true

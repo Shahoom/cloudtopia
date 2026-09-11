@@ -81,7 +81,9 @@ test('no short timer reintroduces crawler-driven regeneration', () => {
   // re-rendered every page it touched. At 86400 it became one full-site wave a
   // day (38,120 ISR write units on 2026-07-29). Freshness comes from
   // revalidateCmsTags(), so any timer here is pure cost.
-  const shortest = [PAGE_REVALIDATE, CMS_REVALIDATE_SECONDS].filter(
+  // Both constants are currently the literal `false`, so TS must be told the
+  // array can in principle hold numbers for the guard below to typecheck.
+  const shortest = ([PAGE_REVALIDATE, CMS_REVALIDATE_SECONDS] as Array<number | false>).filter(
     (v): v is number => typeof v === 'number',
   )
   for (const seconds of shortest) {

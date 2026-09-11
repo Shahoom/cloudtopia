@@ -33,6 +33,14 @@ const KEY_LOCATION = `https://${HOST}/${KEY}.txt`
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow'
 
 export async function POST(req: Request) {
+    // Internal tool: an open submission proxy would let anyone spam IndexNow
+    // under this site's key and get it flagged. Same fail-closed gate as the
+    // cron route — no CRON_SECRET configured means nobody is authorized.
+    const secret = process.env.CRON_SECRET
+    if (!secret || req.headers.get('authorization') !== `Bearer ${secret}`) {
+        return Response.json({ error: 'unauthorized' }, { status: 401 })
+    }
+
     let body: { urls?: string[] }
     try {
         body = await req.json()

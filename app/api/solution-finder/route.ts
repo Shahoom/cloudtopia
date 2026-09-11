@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { escapeHtml } from '@/lib/security/escape-html'
 import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 import { generateAIRecommendationDetails } from '@/lib/solution-finder/aiRecommendation.ts'
 import { deriveSolutionFinderCountryHint, getHeaderCountryCode } from '@/lib/solution-finder/countryHint.ts'
@@ -165,7 +166,10 @@ function getRateLimitKey(request: NextRequest) {
   const realIp = request.headers.get('x-real-ip')?.trim()
   const session = request.headers.get('x-ai-chat-session')?.trim()
 
-  return session || forwardedFor || realIp || 'anonymous'
+  // Key on the IP alone whenever one is present: the session header is
+  // attacker-supplied, so any key that includes it can be reset at will by
+  // rotating the header. Session is only a fallback for IP-less local dev.
+  return forwardedFor || realIp || session || 'anonymous'
 }
 
 // ─── Email helper (stub — wire up Resend / SendGrid / Nodemailer) ─────────────
@@ -179,24 +183,24 @@ async function sendEmailNotification(lead: Record<string, any>, toEmail: string)
     return
   }
 
-  const subject = `🎯 New Solution Finder Lead — ${lead.recommendedPackage} (${lead.industry})`
+  const subject = `🎯 New Solution Finder Lead — ${String(lead.recommendedPackage).slice(0, 60)} (${String(lead.industry).slice(0, 40)})`
   const html = `
     <h2 style="color:#0284c7">New CloudTopia Solution Finder Lead</h2>
     <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Name</td><td style="padding:8px 12px">${lead.name}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Email</td><td style="padding:8px 12px">${lead.email}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Phone</td><td style="padding:8px 12px">${lead.phone}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Company</td><td style="padding:8px 12px">${lead.company}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Country</td><td style="padding:8px 12px">${lead.country}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Industry</td><td style="padding:8px 12px">${lead.industry}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Project Type</td><td style="padding:8px 12px">${lead.projectType}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Business Goal</td><td style="padding:8px 12px">${lead.businessGoal}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Budget</td><td style="padding:8px 12px">${lead.budget}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Timeline</td><td style="padding:8px 12px">${lead.timeline}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Recommended Package</td><td style="padding:8px 12px;color:#0284c7;font-weight:bold">${lead.recommendedPackage}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Contact Method</td><td style="padding:8px 12px">${lead.contactMethod}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Description</td><td style="padding:8px 12px">${lead.description || '—'}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Submitted At</td><td style="padding:8px 12px">${lead.createdAt}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Name</td><td style="padding:8px 12px">${escapeHtml(lead.name)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Email</td><td style="padding:8px 12px">${escapeHtml(lead.email)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Phone</td><td style="padding:8px 12px">${escapeHtml(lead.phone)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Company</td><td style="padding:8px 12px">${escapeHtml(lead.company)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Country</td><td style="padding:8px 12px">${escapeHtml(lead.country)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Industry</td><td style="padding:8px 12px">${escapeHtml(lead.industry)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Project Type</td><td style="padding:8px 12px">${escapeHtml(lead.projectType)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Business Goal</td><td style="padding:8px 12px">${escapeHtml(lead.businessGoal)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Budget</td><td style="padding:8px 12px">${escapeHtml(lead.budget)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Timeline</td><td style="padding:8px 12px">${escapeHtml(lead.timeline)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Recommended Package</td><td style="padding:8px 12px;color:#0284c7;font-weight:bold">${escapeHtml(lead.recommendedPackage)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Contact Method</td><td style="padding:8px 12px">${escapeHtml(lead.contactMethod)}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Description</td><td style="padding:8px 12px">${escapeHtml(lead.description) || '—'}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:bold;background:#f4f1f8">Submitted At</td><td style="padding:8px 12px">${escapeHtml(lead.createdAt)}</td></tr>
     </table>
     <p style="margin-top:24px;font-size:12px;color:#999">This lead was submitted via the CloudTopia Solution Finder on cloudtopia.co</p>
   `

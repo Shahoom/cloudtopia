@@ -69,8 +69,11 @@ export interface Config {
   collections: {
     users: User;
     'ai-chat-leads': AiChatLead;
+    'ai-chat-conversations': AiChatConversation;
     'solution-finder-leads': SolutionFinderLead;
     'contact-inquiries': ContactInquiry;
+    'clinictopia-leads': ClinictopiaLead;
+    'hasm-erp-leads': HasmErpLead;
     media: Media;
     authors: Author;
     'blog-categories': BlogCategory;
@@ -86,6 +89,7 @@ export interface Config {
     'site-content': SiteContent;
     pages: Page;
     'site-design': SiteDesign;
+    'seo-overrides': SeoOverride;
     'payload-kv': PayloadKv;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -94,8 +98,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     'ai-chat-leads': AiChatLeadsSelect<false> | AiChatLeadsSelect<true>;
+    'ai-chat-conversations': AiChatConversationsSelect<false> | AiChatConversationsSelect<true>;
     'solution-finder-leads': SolutionFinderLeadsSelect<false> | SolutionFinderLeadsSelect<true>;
     'contact-inquiries': ContactInquiriesSelect<false> | ContactInquiriesSelect<true>;
+    'clinictopia-leads': ClinictopiaLeadsSelect<false> | ClinictopiaLeadsSelect<true>;
+    'hasm-erp-leads': HasmErpLeadsSelect<false> | HasmErpLeadsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
@@ -111,6 +118,7 @@ export interface Config {
     'site-content': SiteContentSelect<false> | SiteContentSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'site-design': SiteDesignSelect<false> | SiteDesignSelect<true>;
+    'seo-overrides': SeoOverridesSelect<false> | SeoOverridesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -156,6 +164,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name?: string | null;
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -187,6 +196,10 @@ export interface AiChatLead {
   email?: string | null;
   phone?: string | null;
   country?: string | null;
+  /**
+   * Visitor IP captured from the request (x-forwarded-for).
+   */
+  ipAddress?: string | null;
   businessType?: string | null;
   serviceNeeded?: string | null;
   budgetRange?: string | null;
@@ -207,6 +220,53 @@ export interface AiChatLead {
   updatedAt: string;
 }
 /**
+ * Full transcripts of every conversation handled by the CloudTopia AI chatbot.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-chat-conversations".
+ */
+export interface AiChatConversation {
+  id: number;
+  sessionId: string;
+  language?: ('ar' | 'en' | 'unknown') | null;
+  country?: string | null;
+  /**
+   * Visitor IP captured from the request (x-forwarded-for).
+   */
+  ipAddress?: string | null;
+  pageUrl?: string | null;
+  /**
+   * Readable, plain-text version of the full conversation.
+   */
+  transcriptText?: string | null;
+  /**
+   * Structured transcript: each turn with role and source (user / flow / ai / system).
+   */
+  messages?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  messageCount?: number | null;
+  /**
+   * True if this conversation produced a captured lead.
+   */
+  leadCaptured?: boolean | null;
+  status: 'active' | 'completed';
+  /**
+   * Conversation source for CRM segmentation.
+   */
+  source?: string | null;
+  startedAt?: string | null;
+  endedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
  * Qualified project inquiries captured by the AI-powered recommendation flow.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -215,10 +275,14 @@ export interface AiChatLead {
 export interface SolutionFinderLead {
   id: number;
   name: string;
-  phone: string;
+  phone?: string | null;
   email?: string | null;
   company?: string | null;
   country?: string | null;
+  /**
+   * Visitor IP captured from the request (x-forwarded-for).
+   */
+  ipAddress?: string | null;
   industry?: string | null;
   projectType?: string | null;
   businessGoal?: string | null;
@@ -273,6 +337,10 @@ export interface ContactInquiry {
   company?: string | null;
   country?: string | null;
   /**
+   * Visitor IP captured from the request (x-forwarded-for).
+   */
+  ipAddress?: string | null;
+  /**
    * Service or area of interest selected by the visitor.
    */
   service?: string | null;
@@ -282,12 +350,85 @@ export interface ContactInquiry {
   /**
    * Which widget or page captured this inquiry.
    */
-  source?: ('contact-form' | 'article-sidebar' | 'pricing-page' | 'other') | null;
+  source?: ('contact-form' | 'service-page' | 'article-sidebar' | 'pricing-page' | 'other') | null;
   locale?: ('en' | 'ar') | null;
   pageUrl?: string | null;
   status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
   /**
    * Internal CRM notes — visible only in the admin panel.
+   */
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * Leads from the ClinicTopia demo sign-in (clinic.cloudtopia.net).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clinictopia-leads".
+ */
+export interface ClinictopiaLead {
+  id: number;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  /**
+   * Visitor IP captured from the request (cf-connecting-ip / x-forwarded-for).
+   */
+  ipAddress?: string | null;
+  language?: ('ar' | 'en') | null;
+  timezone?: string | null;
+  screen?: string | null;
+  userAgent?: string | null;
+  pageUrl?: string | null;
+  /**
+   * Where the lead came from.
+   */
+  source?: string | null;
+  product?: string | null;
+  status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
+  /**
+   * Internal CRM notes — visible only in the admin panel.
+   */
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * Qualified demo-access leads from legal.cloudtopia.net.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hasm-erp-leads".
+ */
+export interface HasmErpLead {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  /**
+   * Captured at the Cloudtopia edge; never accepted from the browser body.
+   */
+  ipAddress?: string | null;
+  language: 'ar' | 'en';
+  timezone?: string | null;
+  screen?: string | null;
+  userAgent?: string | null;
+  acceptLanguage?: string | null;
+  pageUrl?: string | null;
+  referrer?: string | null;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  utmTerm?: string | null;
+  utmContent?: string | null;
+  consentAt: string;
+  consentVersion: string;
+  submissionId: string;
+  source: string;
+  product: string;
+  status: 'new' | 'contacted' | 'qualified' | 'won' | 'lost';
+  /**
+   * Internal CRM notes.
    */
   notes?: string | null;
   createdAt: string;
@@ -524,7 +665,7 @@ export interface BlogPost {
   id: number;
   title: string;
   /**
-   * Auto-generated from the title when empty.
+   * Auto-generated from the title when empty. Translations of the same article share this slug across locales.
    */
   slug: string;
   subtitle?: string | null;
@@ -722,6 +863,8 @@ export interface BlogPost {
     noIndex?: boolean | null;
     noFollow?: boolean | null;
   };
+  seoScore?: number | null;
+  contentScore?: number | null;
   aiGenerated?: boolean | null;
   aiAssisted?: boolean | null;
   readabilityScore?: number | null;
@@ -747,6 +890,9 @@ export interface BlogPost {
   relatedPosts?: (number | BlogPost)[] | null;
   series?: (number | null) | BlogSery;
   status: 'idea' | 'outline' | 'draft' | 'in_review' | 'scheduled' | 'published' | 'archived';
+  /**
+   * Set by the language toggle at the top of the editor.
+   */
   locale: 'en' | 'ar';
   approvalStatus?: ('not_required' | 'waiting' | 'approved' | 'rejected') | null;
   publishedAt?: string | null;
@@ -760,7 +906,7 @@ export interface BlogPost {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Managed legacy blog redirects for old URLs and campaign links.
+ * NOT YET WIRED — redirects entered here are not applied by the app yet (no middleware reads blog_redirects). Hidden until wired.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-redirects".
@@ -815,7 +961,7 @@ export interface BlogAiGenerationLog {
   updatedAt: string;
 }
 /**
- * Reusable article templates for CloudTopia editorial planning.
+ * NOT YET WIRED — these templates are not read by the AI generator or dashboard yet. Hidden until wired.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-content-templates".
@@ -914,6 +1060,10 @@ export interface Project {
    */
   id: string;
   category: string;
+  /**
+   * Comma-separated service/pillar slugs this project showcases (e.g. "website-development, corporate-website-development"). Drives the “Projects we did” section on those service pages.
+   */
+  relatedServiceSlugs?: string | null;
   type: string;
   featured?: boolean | null;
   title: string;
@@ -1072,7 +1222,7 @@ export interface Page {
     | boolean
     | null;
   /**
-   * Optional editorial overrides for generated market, industry, and sub-service pages. Static SEO data remains the fallback when these fields are empty.
+   * NOT YET CONSUMED — overrides entered here are not yet read by the generated market/industry/sub-service routes (static lib/seo data is still used). Hidden until wired.
    */
   programmaticLanding?: {
     /**
@@ -1270,6 +1420,30 @@ export interface SiteDesign {
   createdAt: string;
 }
 /**
+ * Per-page SEO overrides (tab title + meta description) for every public route. Edited from the SEO control center.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-overrides".
+ */
+export interface SeoOverride {
+  id: number;
+  /**
+   * Route path without locale, e.g. "/", "services", "industries/real-estate".
+   */
+  routePath: string;
+  locale: 'en' | 'ar';
+  /**
+   * Browser-tab title for this route.
+   */
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  canonicalUrl?: string | null;
+  noIndex?: boolean | null;
+  noFollow?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1326,6 +1500,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1352,6 +1527,7 @@ export interface AiChatLeadsSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
   country?: T;
+  ipAddress?: T;
   businessType?: T;
   serviceNeeded?: T;
   budgetRange?: T;
@@ -1367,6 +1543,27 @@ export interface AiChatLeadsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-chat-conversations_select".
+ */
+export interface AiChatConversationsSelect<T extends boolean = true> {
+  sessionId?: T;
+  language?: T;
+  country?: T;
+  ipAddress?: T;
+  pageUrl?: T;
+  transcriptText?: T;
+  messages?: T;
+  messageCount?: T;
+  leadCaptured?: T;
+  status?: T;
+  source?: T;
+  startedAt?: T;
+  endedAt?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "solution-finder-leads_select".
  */
 export interface SolutionFinderLeadsSelect<T extends boolean = true> {
@@ -1375,6 +1572,7 @@ export interface SolutionFinderLeadsSelect<T extends boolean = true> {
   email?: T;
   company?: T;
   country?: T;
+  ipAddress?: T;
   industry?: T;
   projectType?: T;
   businessGoal?: T;
@@ -1419,6 +1617,7 @@ export interface ContactInquiriesSelect<T extends boolean = true> {
   phone?: T;
   company?: T;
   country?: T;
+  ipAddress?: T;
   service?: T;
   budget?: T;
   timeline?: T;
@@ -1426,6 +1625,58 @@ export interface ContactInquiriesSelect<T extends boolean = true> {
   source?: T;
   locale?: T;
   pageUrl?: T;
+  status?: T;
+  notes?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clinictopia-leads_select".
+ */
+export interface ClinictopiaLeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  ipAddress?: T;
+  language?: T;
+  timezone?: T;
+  screen?: T;
+  userAgent?: T;
+  pageUrl?: T;
+  source?: T;
+  product?: T;
+  status?: T;
+  notes?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hasm-erp-leads_select".
+ */
+export interface HasmErpLeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  ipAddress?: T;
+  language?: T;
+  timezone?: T;
+  screen?: T;
+  userAgent?: T;
+  acceptLanguage?: T;
+  pageUrl?: T;
+  referrer?: T;
+  utmSource?: T;
+  utmMedium?: T;
+  utmCampaign?: T;
+  utmTerm?: T;
+  utmContent?: T;
+  consentAt?: T;
+  consentVersion?: T;
+  submissionId?: T;
+  source?: T;
+  product?: T;
   status?: T;
   notes?: T;
   createdAt?: T;
@@ -1764,6 +2015,8 @@ export interface BlogPostsSelect<T extends boolean = true> {
         noIndex?: T;
         noFollow?: T;
       };
+  seoScore?: T;
+  contentScore?: T;
   aiGenerated?: T;
   aiAssisted?: T;
   readabilityScore?: T;
@@ -1899,6 +2152,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   cmsKey?: T;
   id?: T;
   category?: T;
+  relatedServiceSlugs?: T;
   type?: T;
   featured?: T;
   title?: T;
@@ -2111,6 +2365,21 @@ export interface SiteDesignSelect<T extends boolean = true> {
   theme?: T;
   navigation?: T;
   editableSections?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-overrides_select".
+ */
+export interface SeoOverridesSelect<T extends boolean = true> {
+  routePath?: T;
+  locale?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  canonicalUrl?: T;
+  noIndex?: T;
+  noFollow?: T;
   updatedAt?: T;
   createdAt?: T;
 }

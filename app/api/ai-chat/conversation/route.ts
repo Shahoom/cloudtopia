@@ -81,5 +81,8 @@ function getRateLimitKey(request: NextRequest) {
   const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
   const realIp = request.headers.get('x-real-ip')?.trim()
   const session = request.headers.get('x-ai-chat-session')?.trim()
-  return session || forwardedFor || realIp || 'anonymous'
+  // Key on the IP alone whenever one is present: the session header is
+  // attacker-supplied, so any key that includes it can be reset at will by
+  // rotating the header. Session is only a fallback for IP-less local dev.
+  return forwardedFor || realIp || session || 'anonymous'
 }

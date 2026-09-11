@@ -16,10 +16,10 @@ const ALLOWED_ORIGINS = new Set([
 ])
 
 function corsHeaders(origin: string | null): Record<string, string> {
-  const allow =
-    origin && (ALLOWED_ORIGINS.has(origin) || /\.vercel\.app$/.test(new URL(origin).hostname))
-      ? origin
-      : 'https://clinic.cloudtopia.net'
+  // Exact allow-list only. `*.vercel.app` matched EVERY Vercel deployment on
+  // the internet (anyone can deploy there), and `new URL('null')` threw on the
+  // `Origin: null` sandboxed-iframe case and 500'd the request.
+  const allow = origin && ALLOWED_ORIGINS.has(origin) ? origin : 'https://clinic.cloudtopia.net'
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',

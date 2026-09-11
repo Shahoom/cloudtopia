@@ -21,6 +21,7 @@ import * as migration_20260630_120000_add_related_service_slugs from './20260630
 import * as migration_20260715_120000_add_hasm_erp_leads from './20260715_120000_add_hasm_erp_leads';
 import * as migration_20260715_123000_secure_public_tables from './20260715_123000_secure_public_tables';
 import * as migration_20260715_124500_secure_legacy_demo_capture from './20260715_124500_secure_legacy_demo_capture';
+import * as migration_20260911_120000_add_user_roles from './20260911_120000_add_user_roles';
 
 export const migrations = [
   {
@@ -137,5 +138,10 @@ export const migrations = [
     up: migration_20260715_124500_secure_legacy_demo_capture.up,
     down: migration_20260715_124500_secure_legacy_demo_capture.down,
     name: '20260715_124500_secure_legacy_demo_capture'
+  },
+  {
+    up: migration_20260911_120000_add_user_roles.up,
+    down: migration_20260911_120000_add_user_roles.down,
+    name: '20260911_120000_add_user_roles'
   },
 ];
