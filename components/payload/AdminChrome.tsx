@@ -158,8 +158,8 @@ const styles: Record<string, CSSProperties> = {
     minHeight: '100vh',
     height: '100vh',
     padding: 14,
-    borderRight: '1px solid var(--theme-elevation-150)',
-    background: 'var(--theme-elevation-0)',
+    borderRight: '1px solid rgba(148, 163, 184, 0.14)',
+    background: 'linear-gradient(180deg, #0b1220 0%, #0f172a 60%, #0b1626 100%)',
     fontFamily: 'var(--font-cairo), ui-sans-serif, system-ui, sans-serif',
   },
   brand: {
@@ -168,10 +168,12 @@ const styles: Record<string, CSSProperties> = {
     gap: 10,
     width: '100%',
     minWidth: 0,
-    padding: '6px 6px',
-    borderRadius: 10,
-    color: 'var(--theme-text)',
+    padding: '8px 8px',
+    borderRadius: 12,
+    color: '#f8fafc',
     textDecoration: 'none',
+    background: 'rgba(14, 165, 233, 0.08)',
+    border: '1px solid rgba(14, 165, 233, 0.18)',
   },
   brandCopy: {
     display: 'grid',
@@ -182,9 +184,10 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 700,
     letterSpacing: 0,
     lineHeight: 1.1,
+    color: '#f8fafc',
   },
   brandMeta: {
-    color: CYAN,
+    color: '#38bdf8',
     fontSize: 11,
     fontWeight: 600,
     letterSpacing: '0.02em',
@@ -199,14 +202,15 @@ const styles: Record<string, CSSProperties> = {
     scrollbarWidth: 'none',
   },
   group: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
   groupTitle: {
-    margin: '0 0 4px 10px',
-    fontSize: 11,
-    fontWeight: 600,
-    letterSpacing: '0.04em',
-    color: 'var(--theme-elevation-400)',
+    margin: '0 0 5px 10px',
+    fontSize: 10.5,
+    fontWeight: 700,
+    letterSpacing: '0.09em',
+    textTransform: 'uppercase',
+    color: '#64748b',
   },
   link: {
     display: 'inline-flex',
@@ -215,8 +219,8 @@ const styles: Record<string, CSSProperties> = {
     width: '100%',
     minHeight: 36,
     padding: '0 10px',
-    borderRadius: 8,
-    color: 'var(--theme-elevation-700)',
+    borderRadius: 9,
+    color: '#cbd5e1',
     textDecoration: 'none',
     fontSize: 13,
     fontWeight: 500,
@@ -235,15 +239,16 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    minHeight: 38,
+    minHeight: 40,
     padding: '0 14px',
-    borderRadius: 8,
-    background: CYAN,
+    borderRadius: 10,
+    background: `linear-gradient(135deg, ${CYAN}, #0d9488)`,
     color: '#ffffff',
     textDecoration: 'none',
     fontSize: 13,
     fontWeight: 600,
     whiteSpace: 'nowrap',
+    boxShadow: '0 4px 14px rgba(14, 165, 233, 0.35)',
     transition: 'opacity 0.15s ease',
   },
   logout: {
@@ -252,10 +257,10 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: 'center',
     width: '100%',
     height: 38,
-    borderRadius: 8,
-    border: '1px solid var(--theme-elevation-150)',
-    background: 'var(--theme-elevation-50)',
-    color: 'var(--theme-elevation-700)',
+    borderRadius: 10,
+    border: '1px solid rgba(148, 163, 184, 0.2)',
+    background: 'rgba(148, 163, 184, 0.08)',
+    color: '#cbd5e1',
     textDecoration: 'none',
     transition: 'background 0.15s ease',
   },
@@ -274,12 +279,13 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: 'center',
     width: 36,
     height: 36,
-    borderRadius: 9,
-    background: CYAN,
+    borderRadius: 10,
+    background: `linear-gradient(135deg, ${CYAN}, #0d9488)`,
     color: '#ffffff',
     fontSize: 13,
     fontWeight: 700,
     letterSpacing: 0,
+    boxShadow: '0 2px 10px rgba(14, 165, 233, 0.4)',
   },
 }
 
@@ -314,8 +320,8 @@ const chromeStyles = `
   }
 
   .ct-admin-nav__link:hover {
-    background: rgba(14, 165, 233, 0.12) !important;
-    color: ${CYAN} !important;
+    background: rgba(14, 165, 233, 0.16) !important;
+    color: #7dd3fc !important;
   }
 
   .ct-admin-nav__site-link:hover {
@@ -323,7 +329,8 @@ const chromeStyles = `
   }
 
   .ct-admin-nav__logout:hover {
-    background: var(--theme-elevation-100) !important;
+    background: rgba(148, 163, 184, 0.18) !important;
+    color: #f8fafc !important;
   }
 
   .template-default input:focus,
@@ -333,8 +340,8 @@ const chromeStyles = `
   }
 
   .template-default .btn--style-primary {
-    background: ${CYAN} !important;
-    border-color: ${CYAN} !important;
+    background: linear-gradient(135deg, ${CYAN}, #0d9488) !important;
+    border-color: transparent !important;
     color: #ffffff !important;
   }
 

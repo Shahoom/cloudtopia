@@ -7,6 +7,7 @@ import {
   Languages,
   Mail,
   MessageSquare,
+  Newspaper,
   Plus,
   Scale,
   Server,
@@ -37,40 +38,92 @@ const kindIcon: Record<ActivityItem['kind'], typeof Target> = {
   'hasm-demo': Scale,
 }
 
+// KPI accent palette + icons, cycled by position.
+const KPI_ACCENTS = ['#0ea5e9', '#0d9488', '#8b5cf6', '#f59e0b', '#f43f5e']
+const KPI_ICONS: Record<string, typeof Target> = {
+  'New leads · 7d': Target,
+  'Conversations · 7d': MessageSquare,
+  'Published articles': Newspaper,
+  'Drafts to review': Clock,
+  'Total article views': Eye,
+}
+
 export async function CommandCenter() {
   const stats = await getOverviewStats()
   const maxDay = Math.max(1, ...stats.activityByDay.map((d) => d.conversations + d.leads))
 
   return (
     <div style={{ padding: '24px 28px', maxWidth: 1200, margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 14,
+          marginBottom: 22,
+          padding: '26px 28px',
+          borderRadius: 18,
+          background: 'linear-gradient(120deg, #0b1220 0%, #134e5e 55%, #0d9488 100%)',
+          boxShadow: '0 10px 30px rgba(13, 148, 136, 0.25)',
+        }}
+      >
         <div>
-          <h1 style={{ margin: 0, fontSize: 22, fontWeight: 600 }}>Command center</h1>
-          <p style={{ margin: '4px 0 0', color: 'var(--theme-elevation-500)', fontSize: 13 }}>Your CloudTopia control center</p>
+          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: '#f8fafc', letterSpacing: '-0.01em' }}>Command center</h1>
+          <p style={{ margin: '6px 0 0', color: 'rgba(226, 232, 240, 0.75)', fontSize: 13.5 }}>
+            Your CloudTopia control center — content, leads and site health at a glance
+          </p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <Link href="/admin/collections/blog-posts/create" style={btn(true)}>
+          <Link
+            href="/admin/collections/blog-posts/create"
+            style={{ ...btn(true), background: '#f8fafc', borderColor: '#f8fafc', color: '#0b1220', fontWeight: 600 }}
+          >
             <Plus size={16} /> New article
           </Link>
-          <Link href="/admin/collections/blog-posts/create" style={btn(false)}>
+          <Link
+            href="/admin/collections/blog-posts/create"
+            style={{ ...btn(false), color: '#e2e8f0', borderColor: 'rgba(226, 232, 240, 0.35)' }}
+          >
             <Upload size={16} /> Import MDX
           </Link>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
-        {stats.kpis.map((k) => (
-          <div key={k.label} style={card()}>
-            <p style={{ margin: 0, fontSize: 13, color: 'var(--theme-elevation-500)' }}>{k.label}</p>
-            <p style={{ margin: '6px 0 0', fontSize: 24, fontWeight: 600 }}>{k.value}</p>
-            {k.delta && k.delta.direction !== 'flat' && (
-              <p style={{ margin: '4px 0 0', fontSize: 12, color: k.delta.direction === 'up' ? TEAL : '#dc2626', display: 'flex', alignItems: 'center', gap: 4 }}>
-                {k.delta.direction === 'up' ? <TrendingUp size={14} /> : <TrendingDown size={14} />} {k.delta.pct}% vs prev
-              </p>
-            )}
-            {k.hint && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#b45309' }}>{k.hint}</p>}
-          </div>
-        ))}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 12, marginBottom: 20 }}>
+        {stats.kpis.map((k, i) => {
+          const accent = KPI_ACCENTS[i % KPI_ACCENTS.length]
+          const Icon = KPI_ICONS[k.label] ?? TrendingUp
+          return (
+            <div key={k.label} style={{ ...card(), borderTop: `3px solid ${accent}`, position: 'relative' }}>
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 14,
+                  insetInlineEnd: 14,
+                  width: 34,
+                  height: 34,
+                  borderRadius: 10,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: `${accent}1a`,
+                  color: accent,
+                }}
+              >
+                <Icon size={17} />
+              </span>
+              <p style={{ margin: 0, fontSize: 12.5, fontWeight: 600, color: 'var(--theme-elevation-500)' }}>{k.label}</p>
+              <p style={{ margin: '8px 0 0', fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em' }}>{k.value}</p>
+              {k.delta && k.delta.direction !== 'flat' && (
+                <p style={{ margin: '4px 0 0', fontSize: 12, color: k.delta.direction === 'up' ? TEAL : '#dc2626', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {k.delta.direction === 'up' ? <TrendingUp size={14} /> : <TrendingDown size={14} />} {k.delta.pct}% vs prev
+                </p>
+              )}
+              {k.hint && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#b45309' }}>{k.hint}</p>}
+            </div>
+          )
+        })}
       </div>
 
       <div style={panel()}>
@@ -204,10 +257,22 @@ function btn(primary: boolean): CSSProperties {
   }
 }
 function card(): CSSProperties {
-  return { background: 'var(--theme-elevation-50)', borderRadius: 8, padding: 16 }
+  return {
+    background: 'var(--theme-elevation-0)',
+    border: '1px solid var(--theme-elevation-100)',
+    borderRadius: 14,
+    padding: '16px 18px',
+    boxShadow: '0 1px 3px rgba(2, 8, 23, 0.06)',
+  }
 }
 function panel(): CSSProperties {
-  return { background: 'var(--theme-elevation-0)', border: '1px solid var(--theme-elevation-100)', borderRadius: 12, padding: '16px 20px' }
+  return {
+    background: 'var(--theme-elevation-0)',
+    border: '1px solid var(--theme-elevation-100)',
+    borderRadius: 16,
+    padding: '18px 22px',
+    boxShadow: '0 1px 3px rgba(2, 8, 23, 0.05)',
+  }
 }
 function row(): CSSProperties {
   return { display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: '1px solid var(--theme-elevation-100)', textDecoration: 'none', color: 'var(--theme-text)' }
