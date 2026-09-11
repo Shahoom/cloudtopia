@@ -121,6 +121,25 @@ export async function CommandCenter() {
             </Link>
           ))}
         </div>
+
+        <div style={panel()}>
+          <p style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>
+            <Languages size={15} style={{ verticalAlign: -2, marginRight: 6 }} />
+            AR/EN pairing
+          </p>
+          {stats.unpairedPosts.length === 0 && <p style={empty()}>All articles have both language versions.</p>}
+          {stats.unpairedPosts.map((u) => (
+            <Link
+              key={`${u.locale}:${u.slug}`}
+              href={`/admin/collections/blog-posts?where[slug][equals]=${encodeURIComponent(u.slug)}`}
+              style={row()}
+            >
+              <span style={{ ...countPill(), textTransform: 'uppercase', minWidth: 28, textAlign: 'center' }}>{u.locale}</span>
+              <span style={{ flex: 1, minWidth: 0, fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.title}</span>
+              <span style={{ fontSize: 11, color: '#b45309', whiteSpace: 'nowrap' }}>missing {u.locale === 'en' ? 'AR' : 'EN'}</span>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 12, marginTop: 12 }}>

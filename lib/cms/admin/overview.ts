@@ -3,7 +3,7 @@ import { getPayloadClient } from '../payload.ts'
 import { isDatabaseConfigured, queryDatabase } from '../db.ts'
 import { getS3StorageConfig } from '../env.ts'
 import { bucketTopics } from './topics.ts'
-import { computeDelta, countMissingArSiblings } from './metrics.ts'
+import { computeDelta, countMissingArSiblings, listUnpairedPosts } from './metrics.ts'
 import type { ActivityItem, DayCount, OverviewStats } from './types.ts'
 
 const DAY = 86_400_000
@@ -30,6 +30,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     topArticles: [],
     topTopics: [],
     siteHealth: { storageConfigured: Boolean(getS3StorageConfig()), pagesMissingMeta: 0, articlesMissingAr: 0 },
+    unpairedPosts: [],
   }
   if (!isDatabaseConfigured()) return empty
 
@@ -51,7 +52,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     'hasm-erp-leads',
   ]
 
-  const [leads7, leadsPrev7, convo7, convoPrev7, drafts, scheduled] = await Promise.all([
+  const [leads7, leadsPrev7, convo7, convoPrev7, drafts, scheduled, published] = await Promise.all([
     Promise.all(leadCollections.map((c) => safeCount(payload, c, { createdAt: { greater_than: last7 } }))).then((a) => a.reduce((x, y) => x + y, 0)),
     Promise.all(
       leadCollections.map((c) => safeCount(payload, c, { and: [{ createdAt: { greater_than: prev7 } }, { createdAt: { less_than: last7 } }] })),
@@ -60,6 +61,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     safeCount(payload, 'ai-chat-conversations', { and: [{ createdAt: { greater_than: prev7 } }, { createdAt: { less_than: last7 } }] }),
     safeCount(payload, 'blog-posts', { status: { equals: 'draft' } }),
     safeCount(payload, 'blog-posts', { and: [{ status: { equals: 'scheduled' } }, { scheduledAt: { less_than: next7 } }] }),
+    safeCount(payload, 'blog-posts', { status: { equals: 'published' } }),
   ])
 
   let totalViews = 0
@@ -72,7 +74,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
 
   let topArticles: OverviewStats['topArticles'] = []
   let lowSeo = 0
-  let allPostsForSiblings: Array<{ slug: string; locale: string }> = []
+  let allPostsForSiblings: Array<{ slug: string; locale: string; title?: string }> = []
   try {
     const top = await payload.find({ collection: 'blog-posts', where: { status: { equals: 'published' } }, sort: '-viewsCount', limit: 5, depth: 0, overrideAccess: true })
     topArticles = (top.docs || []).map((d: any) => ({
@@ -84,8 +86,8 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     }))
     const lowSeoRes = await payload.count({ collection: 'blog-posts', where: { seoScore: { less_than: 60 } }, overrideAccess: true })
     lowSeo = lowSeoRes.totalDocs ?? 0
-    const allPosts = await payload.find({ collection: 'blog-posts', limit: 1000, depth: 0, overrideAccess: true, select: { slug: true, locale: true } })
-    allPostsForSiblings = (allPosts.docs || []).map((d: any) => ({ slug: d.slug, locale: d.locale }))
+    const allPosts = await payload.find({ collection: 'blog-posts', limit: 1000, depth: 0, overrideAccess: true, select: { slug: true, locale: true, title: true } })
+    allPostsForSiblings = (allPosts.docs || []).map((d: any) => ({ slug: d.slug, locale: d.locale, title: d.title }))
   } catch {
     /* leave defaults */
   }
@@ -118,6 +120,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     kpis: [
       { label: 'New leads · 7d', value: String(leads7), delta: leadDelta },
       { label: 'Conversations · 7d', value: String(convo7), delta: convoDelta },
+      { label: 'Published articles', value: String(published) },
       { label: 'Drafts to review', value: String(drafts), hint: lowSeo ? `${lowSeo} have low SEO` : undefined },
       { label: 'Total article views', value: totalViews.toLocaleString('en-US') },
     ],
@@ -133,6 +136,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     topArticles,
     topTopics,
     siteHealth: { storageConfigured: Boolean(getS3StorageConfig()), pagesMissingMeta, articlesMissingAr },
+    unpairedPosts: listUnpairedPosts(allPostsForSiblings).slice(0, 12),
   }
 }
 
