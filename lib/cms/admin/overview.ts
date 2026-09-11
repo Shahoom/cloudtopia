@@ -31,6 +31,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     topTopics: [],
     siteHealth: { storageConfigured: Boolean(getS3StorageConfig()), pagesMissingMeta: 0, articlesMissingAr: 0 },
     unpairedPosts: [],
+    latestPosts: [],
   }
   if (!isDatabaseConfigured()) return empty
 
@@ -92,6 +93,29 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     /* leave defaults */
   }
 
+  let latestPosts: OverviewStats['latestPosts'] = []
+  try {
+    const latest = await payload.find({
+      collection: 'blog-posts',
+      sort: '-updatedAt',
+      limit: 6,
+      depth: 0,
+      overrideAccess: true,
+      select: { title: true, locale: true, status: true, viewsCount: true, updatedAt: true },
+    })
+    latestPosts = (latest.docs || []).map((d: any) => ({
+      id: String(d.id),
+      title: d.title || '(untitled)',
+      locale: (d.locale || 'en').toUpperCase(),
+      status: d.status || 'draft',
+      views: d.viewsCount || 0,
+      updatedAt: d.updatedAt || new Date().toISOString(),
+      href: `/admin/collections/blog-posts/${d.id}`,
+    }))
+  } catch {
+    /* [] */
+  }
+
   let pagesMissingMeta = 0
   try {
     const pages = await payload.find({ collection: 'pages', limit: 1000, depth: 0, overrideAccess: true })
@@ -137,6 +161,7 @@ export async function getOverviewStats(now = Date.now()): Promise<OverviewStats>
     topTopics,
     siteHealth: { storageConfigured: Boolean(getS3StorageConfig()), pagesMissingMeta, articlesMissingAr },
     unpairedPosts: listUnpairedPosts(allPostsForSiblings).slice(0, 12),
+    latestPosts,
   }
 }
 

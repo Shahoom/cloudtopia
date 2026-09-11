@@ -17,6 +17,15 @@ export type TopArticle = { id: string; title: string; locale: string; views: num
 export type TopicCount = { category: string; count: number }
 export type DayCount = { day: string; conversations: number; leads: number }
 export type UnpairedPost = { slug: string; locale: string; title: string }
+export type LatestPost = {
+  id: string
+  title: string
+  locale: string
+  status: string
+  views: number
+  updatedAt: string
+  href: string
+}
 export type SiteHealth = { storageConfigured: boolean; pagesMissingMeta: number; articlesMissingAr: number }
 export type OverviewStats = {
   kpis: Kpi[]
@@ -27,4 +36,5 @@ export type OverviewStats = {
   topTopics: TopicCount[]
   siteHealth: SiteHealth
   unpairedPosts: UnpairedPost[]
+  latestPosts: LatestPost[]
 }
