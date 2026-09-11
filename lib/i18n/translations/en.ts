@@ -41,9 +41,6 @@ export const en = {
           title: 'Global Reach',
           description: 'Deploy your presence globally with local expertise in the Middle East and beyond.'
         },
-        testimonial: '"CloudTopia transformed how we operate. Our digital presence saw a 300% growth in engagement within months."',
-        testimonialAuthor: 'Ahmed Al-Saud',
-        testimonialRole: 'Founder, Riyadh Tech Solutions',
         form: {
           title: 'Get a Demo',
           subtitle: 'Fill out the form below and we\'ll contact you shortly.',
