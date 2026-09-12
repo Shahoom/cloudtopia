@@ -25,6 +25,8 @@ const CATEGORY_NAME_AR: Record<string, string> = {
   'e-commerce': 'التجارة الإلكترونية',
   'case-studies': 'دراسات الحالة',
   'guides': 'الأدلة',
+  'pricing': 'الأسعار والتكاليف',
+  'regulations': 'الأنظمة والامتثال',
 }
 
 /**
@@ -63,6 +65,12 @@ const TAG_NAME_AR: Record<string, string> = {
   'small-business': 'الشركات الصغيرة',
   'website-strategy': 'استراتيجية المواقع',
   'whatsapp': 'واتساب',
+  'oman': 'سلطنة عمان',
+  'saudi-arabia': 'السعودية',
+  'uae': 'الإمارات',
+  'pricing': 'الأسعار',
+  'payments': 'المدفوعات',
+  'regulations': 'الأنظمة واللوائح',
 }
 
 export function localizeTagName(
