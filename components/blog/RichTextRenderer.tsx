@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { slugify, type LexicalNode } from '@/lib/blog/utils'
+import { normalizeMediaUrl, slugify, type LexicalNode } from '@/lib/blog/utils'
 
 function textFromNode(node: LexicalNode): string {
   if (typeof node.text === 'string') return node.text
@@ -43,7 +43,7 @@ function mediaFromUpload(node: LexicalNode) {
   if (!value?.url) return null
 
   return {
-    url: String(value.url),
+    url: normalizeMediaUrl(String(value.url)),
     alt: String(value.alt || value.caption || ''),
     width: typeof value.width === 'number' ? value.width : undefined,
     height: typeof value.height === 'number' ? value.height : undefined,

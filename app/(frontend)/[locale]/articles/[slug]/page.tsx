@@ -113,7 +113,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
   const toc = getArticleToc(post)
   const canonical = post.seo.canonicalUrl || canonicalUrl(locale, `/articles/${post.slug}`)
-  const relatedPosts = await getRelatedBlogPosts(post)
+  const relatedPosts = await getRelatedBlogPosts(post, 8)
   const previousNext = await getPreviousNextPosts(post)
   // Article/BlogPosting schema REQUIRES an image. When a post has neither an
   // OG nor a cover image, absoluteUrl() returns undefined and the post ships

@@ -58,16 +58,30 @@ export function calculateReadingTime(content: unknown, wordsPerMinute = 220) {
   return Math.max(1, Math.ceil(words / wordsPerMinute))
 }
 
+// R2 media bucket behind the Cloudflare edge (cached, custom domain). Serving
+// media from here skips two serverless hops (/_next/image → /api/media/file →
+// bucket origin) that made first paints of CMS images take seconds.
+const MEDIA_CDN = 'https://media.cloudtopia.net'
+
 export function normalizeMediaUrl(url: string | null | undefined): string {
   if (!url) return ''
 
-  // Media uploaded through Payload is stored in object storage (Supabase S3)
-  // and served via the `/api/media/file/...` route, which streams from the
-  // bucket. Do NOT rewrite that to `/uploads/...` — the file is not on local
-  // disk (Vercel's FS is read-only at runtime), so that path 404s and images
-  // silently break. Legacy assets already use `/uploads`, `/og`, or `/icons`
-  // and pass through untouched.
-  //
+  // CMS media stored as `/api/media/file/<filename>` now lives in the R2
+  // bucket exposed at media.cloudtopia.net — rewrite to the CDN (the Payload
+  // route keeps working for the admin, but the public site never uses it).
+  // Legacy assets under `/images`, `/uploads`, `/og`, `/icons` are static repo
+  // files and pass through untouched.
+  const apiPrefix = '/api/media/file/'
+  if (url.startsWith(apiPrefix)) {
+    let name = url.slice(apiPrefix.length)
+    try {
+      if (/%[0-9a-fA-F]{2}/.test(name)) name = decodeURIComponent(name)
+    } catch {
+      /* keep raw */
+    }
+    return `${MEDIA_CDN}/${encodeURIComponent(name)}`
+  }
+
   // Return already-encoded URLs as-is (S3 URLs are stored percent-encoded) to
   // avoid double-encoding; encode only legacy values that still contain raw
   // spaces or other unsafe characters.

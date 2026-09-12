@@ -133,6 +133,14 @@ const nextConfig = {
     // effectively immutable, so cache optimized outputs for 31 days.
     minimumCacheTTL: 2678400,
     remotePatterns: [
+      // R2 media bucket behind Cloudflare CDN (edge-cached, immutable) — the
+      // canonical origin for CMS media since 2026-09; normalizeMediaUrl
+      // rewrites stored /api/media/file/* paths to this host.
+      {
+        protocol: 'https',
+        hostname: 'media.cloudtopia.net',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
