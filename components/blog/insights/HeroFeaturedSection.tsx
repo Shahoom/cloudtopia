@@ -76,35 +76,43 @@ function FeaturedPost({ post, locale }: { post: BlogPostSummary; locale: string 
   )
 }
 
-function SecondaryPost({
-  post,
-  locale,
-  divided,
-}: {
-  post: BlogPostSummary
-  locale: string
-  divided: boolean
-}) {
+// Cinematic filmstrip card: cover fills the card, dark gradient overlay,
+// category chip pinned top, white serif title + date sitting on the image.
+function StripCard({ post, locale, index }: { post: BlogPostSummary; locale: string; index: number }) {
   const href = localePath(locale, `/articles/${post.slug}`)
   const accent = categoryAccent(post.category)
-
-  // Broadsheet columns: 2nd and 3rd items carry a leading vertical hairline on
-  // wide screens; on narrow screens they stack with a top hairline instead.
-  const dividerClass = divided
-    ? 'border-t border-[var(--ed-rule)] pt-5 sm:border-t-0 sm:border-s sm:border-[var(--ed-rule)] sm:ps-5 sm:pt-0'
-    : ''
-
   return (
-    <article className={`group ${dividerClass}`}>
-      <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ed-accent)]">
-        {post.category && <Kicker color={accent}>{post.category.name}</Kicker>}
-        <h3
-          className="ed-serif mt-2 line-clamp-4 transition-colors group-hover:text-[color:var(--ed-accent-ink)]"
-          style={{ fontSize: '1.1rem', lineHeight: 1.25 }}
-        >
-          {post.title}
-        </h3>
-        <div className="ed-meta mt-3">{formatDate(post.publishedAt, locale)}</div>
+    <article className="ct-strip-card group" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <Link href={href} tabIndex={index < 0 ? -1 : undefined} className="relative block h-full w-full overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ed-accent)]">
+        {post.coverImage?.url ? (
+          <Image
+            src={post.coverImage.url}
+            alt={post.coverImage.alt || post.title}
+            fill
+            sizes="360px"
+            quality={60}
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <TypographicCover title={post.title} category={post.category} size="card" className="absolute inset-0" />
+        )}
+        <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/5" aria-hidden="true" />
+        {post.category && (
+          <span
+            className="absolute top-3 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white"
+            style={{ insetInlineStart: 12, background: accent }}
+          >
+            {post.category.name}
+          </span>
+        )}
+        <span className="absolute inset-x-0 bottom-0 p-4">
+          <span className="ed-serif block text-[1.05rem] leading-snug text-white [text-wrap:balance] line-clamp-3">
+            {post.title}
+          </span>
+          <span className="mt-2 block text-[11px] font-medium tracking-wide text-white/70">
+            {formatDate(post.publishedAt, locale)}
+          </span>
+        </span>
       </Link>
     </article>
   )
@@ -119,16 +127,50 @@ export function HeroFeaturedSection({
   sidebarPosts: BlogPostSummary[]
   locale: string
 }) {
-  const sidebar = sidebarPosts.slice(0, 3)
+  const strip = sidebarPosts
+  const loop = strip.length >= 4 ? strip : [...strip, ...strip]
+  const duration = Math.max(28, loop.length * 6)
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <FeaturedPost post={featuredPost} locale={locale} />
-      {sidebar.length > 0 && (
-        <div className="mt-8 grid gap-5 border-t-2 border-[var(--ed-rule-ink)] pt-6 sm:grid-cols-3 sm:gap-0">
-          {sidebar.map((post, i) => (
-            <SecondaryPost key={post.id} post={post} locale={locale} divided={i > 0} />
-          ))}
+      {loop.length > 0 && (
+        <div className="mt-8 border-t-2 border-[var(--ed-rule-ink)] pt-6">
+          <style>{`
+            .ct-strip-viewport { overflow: hidden; }
+            .ct-strip-track {
+              display: flex;
+              gap: 16px;
+              width: max-content;
+              animation: ct-strip-scroll ${duration}s linear infinite;
+            }
+            .ct-strip-viewport:hover .ct-strip-track,
+            .ct-strip-viewport:focus-within .ct-strip-track { animation-play-state: paused; }
+            .ct-strip-card { width: 340px; height: 210px; flex-shrink: 0; position: relative; }
+            /* Reverse direction vs the article-page marquee for variety. */
+            @keyframes ct-strip-scroll {
+              from { transform: translateX(-50%); }
+              to { transform: translateX(0); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .ct-strip-track { animation: none; }
+              .ct-strip-viewport { overflow-x: auto; }
+            }
+            @media (max-width: 640px) {
+              .ct-strip-card { width: 260px; height: 170px; }
+              .ct-strip-track { gap: 12px; }
+            }
+          `}</style>
+          <div className="ct-strip-viewport" dir="ltr">
+            <div className="ct-strip-track">
+              {loop.map((post, i) => (
+                <StripCard key={`${post.id}-a-${i}`} post={post} locale={locale} index={i} />
+              ))}
+              {loop.map((post, i) => (
+                <StripCard key={`${post.id}-b-${i}`} post={post} locale={locale} index={-1} />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </section>

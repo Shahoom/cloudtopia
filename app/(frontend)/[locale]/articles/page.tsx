@@ -66,12 +66,14 @@ export default async function ArticlesPage({ params, searchParams }: PageProps) 
   })
 
   const featuredPost = data.featuredPosts[0] || data.posts[0]
+  // The strip under the featured article is a marquee now — feed it more
+  // posts; only the first three are excluded from the grid below so the
+  // "Latest Articles" grid stays full.
   const sidebarPosts = data.featuredPosts.length > 1
-    ? data.featuredPosts.slice(1, 4)
-    : data.posts.slice(1, 4)
-  // Don't repeat the hero/sidebar articles in the grid below.
+    ? data.featuredPosts.slice(1, 9)
+    : data.posts.slice(1, 9)
   const heroIds = new Set(
-    [featuredPost, ...sidebarPosts].filter(Boolean).map((p) => (p as { id: number | string }).id),
+    [featuredPost, ...sidebarPosts.slice(0, 3)].filter(Boolean).map((p) => (p as { id: number | string }).id),
   )
   const gridPosts = data.latestPosts.filter((post) => !heroIds.has(post.id))
 
