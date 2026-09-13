@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { localizeCategoryName } from '@/lib/blog/taxonomy-i18n'
 import { notFound } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { BlogPagination } from '@/components/blog/BlogPagination'
@@ -23,6 +24,18 @@ type PageProps = {
 // pages. Arabic titles/descriptions are written fresh per slug here — the CMS
 // seo fields are only honored when locale === 'en'.
 const AR_CATEGORY_META: Record<string, { title: string; description: string }> = {
+  'rankings': {
+    title: 'قوائم أفضل الشركات والأنظمة في الخليج 2026',
+    description: 'قوائم مقارنة محدّثة لأفضل شركات البرمجة وتصميم المواقع والمتاجر وأنظمة الأعمال والشات بوت في سلطنة عمان والسعودية والإمارات، مع معايير اختيار واضحة لكل قائمة.',
+  },
+  'pricing': {
+    title: 'أسعار وتكاليف المواقع والتطبيقات في الخليج',
+    description: 'أدلة أسعار عملية بالريال العماني والسعودي والدرهم: تكلفة تصميم المواقع والمتاجر وبرمجة التطبيقات، وما الذي يرفع السعر وما لا يستحق الدفع مقابله.',
+  },
+  'regulations': {
+    title: 'الأنظمة والامتثال الرقمي في الخليج',
+    description: 'كل ما يخص تراخيص التجارة الإلكترونية والفوترة الإلكترونية وحماية البيانات وبوابات الدفع في سلطنة عمان والسعودية والإمارات — بلغة عملية لأصحاب الأعمال.',
+  },
   'web-development': {
     title: 'مقالات تطوير الويب والمواقع',
     description: 'مقالات عملية في تطوير الويب: بناء مواقع سريعة وآمنة، اختيار التقنيات المناسبة، وتحسين الأداء وتجربة الاستخدام لمواقع الشركات في الخليج والعالم العربي.',
@@ -87,13 +100,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // template adds it once; stripBrandSuffix guards a CMS metaTitle that already
   // includes the brand. (Was producing "… | CloudTopia Articles | CloudTopia".)
   // CMS seo fields are English-only, so they only apply on the English locale;
-  // Arabic uses the hand-written AR_CATEGORY_META map above (category.name is
+  // Arabic uses the hand-written AR_CATEGORY_META map above (localizeCategoryName(category.slug, category.name, locale) is
   // already localized by the data layer for the generic fallback).
   const arMeta = locale === 'ar' ? AR_CATEGORY_META[category.slug] : undefined
   const copy = buildCategoryTaxonomyCopy({
     locale,
     slug: category.slug,
-    name: category.name,
+    name: localizeCategoryName(category.slug, category.name, locale),
     description: locale === 'ar' ? (arMeta?.description || category.description) : category.description,
     metaTitle: locale === 'ar' ? arMeta?.title : stripBrandSuffix(category.seo?.metaTitle || ''),
     metaDescription: locale === 'ar' ? arMeta?.description : category.seo?.metaDescription,
@@ -136,7 +149,7 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
   const taxonomyCopy = buildCategoryTaxonomyCopy({
     locale,
     slug: category.slug,
-    name: category.name,
+    name: localizeCategoryName(category.slug, category.name, locale),
     description: locale === 'ar' ? (arMeta?.description || category.description) : category.description,
     metaTitle: locale === 'ar' ? arMeta?.title : stripBrandSuffix(category.seo?.metaTitle || ''),
     metaDescription: locale === 'ar' ? arMeta?.description : category.seo?.metaDescription,
@@ -148,7 +161,7 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     '@id': `${categoryUrl}#collectionpage`,
-    name: category.name,
+    name: localizeCategoryName(category.slug, category.name, locale),
     description: taxonomyCopy.intro,
     url: categoryUrl,
     inLanguage: locale === 'ar' ? 'ar-SA' : 'en-US',
@@ -170,21 +183,21 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
   const breadcrumbSchema = buildBreadcrumbSchema(locale, [
     { name: locale === 'ar' ? 'الرئيسية' : 'Home', path: '/' },
     { name: locale === 'ar' ? 'المقالات' : 'Articles', path: '/articles' },
-    { name: category.name, path: `/articles/category/${category.slug}` },
+    { name: localizeCategoryName(category.slug, category.name, locale), path: `/articles/category/${category.slug}` },
   ])
 
   const count = data.latestPosts.length
   const metaLabel = locale === 'ar'
     ? `${count} ${count === 1 ? 'مقالة' : 'مقالات'}`
     : `${count} ${count === 1 ? 'article' : 'articles'}`
-  const searchLabel = locale === 'ar' ? `البحث في مقالات ${category.name}` : `Search ${category.name} articles`
+  const searchLabel = locale === 'ar' ? `البحث في مقالات ${localizeCategoryName(category.slug, category.name, locale)}` : `Search ${localizeCategoryName(category.slug, category.name, locale)} articles`
   const searchPlaceholder = locale === 'ar' ? 'ابحث عن المواقع، الذكاء الاصطناعي، الأتمتة...' : 'Search websites, AI, CRM, automation...'
 
   return (
     <div className="px-4 pb-20 pt-28 sm:px-6 lg:px-8">
       <JsonLd schema={[collectionSchema, breadcrumbSchema]} />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs locale={locale} items={[{ label: category.name }]} />
+        <Breadcrumbs locale={locale} items={[{ label: localizeCategoryName(category.slug, category.name, locale) }]} />
         <SectionMasthead
           className="mt-6 mb-10"
           eyebrow={locale === 'ar' ? 'التصنيف' : 'Category'}
@@ -211,7 +224,7 @@ export default async function ArticleCategoryPage({ params, searchParams }: Page
         {data.latestPosts.length === 0 ? (
           <div className="border-t border-[var(--ed-rule)] py-16 text-center">
             <h2 className="ed-serif" style={{ fontSize: '1.5rem' }}>
-              {locale === 'ar' ? `لا توجد مقالات في ${category.name} بعد` : `No ${category.name} articles yet`}
+              {locale === 'ar' ? `لا توجد مقالات في ${localizeCategoryName(category.slug, category.name, locale)} بعد` : `No ${localizeCategoryName(category.slug, category.name, locale)} articles yet`}
             </h2>
             <p className="mx-auto mt-3 max-w-xl" style={{ fontFamily: 'var(--ed-sans)', color: 'var(--ed-graphite)', lineHeight: 1.6 }}>
               {locale === 'ar' ? 'ستظهر المقالات المنشورة لهذا التصنيف هنا.' : 'Published articles for this category will appear here.'}
