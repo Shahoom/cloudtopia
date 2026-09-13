@@ -26,6 +26,7 @@ const CATEGORY_NAME_AR: Record<string, string> = {
   'case-studies': 'دراسات الحالة',
   'guides': 'الأدلة',
   'pricing': 'الأسعار والتكاليف',
+  'rankings': 'قوائم الأفضل',
   'regulations': 'الأنظمة والامتثال',
 }
 

@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run vercel-build",
+  "ignoreCommand": "bash scripts/vercel-ignore.sh",
   "regions": ["sin1"],
   "crons": [
     {
