@@ -1,4 +1,5 @@
-import type { CollectionBeforeOperationHook, CollectionConfig } from 'payload'
+import { createHash } from 'node:crypto'
+import { APIError, type CollectionBeforeChangeHook, type CollectionBeforeOperationHook, type CollectionConfig } from 'payload'
 import { adminOnly } from './blogAccess.ts'
 
 /**
@@ -51,9 +52,35 @@ const useStorageSafeFilename: CollectionBeforeOperationHook = ({ args, req }) =>
   return args
 }
 
+// Byte-identical re-uploads under a new name were how the same photo ended up
+// on several articles. Hash the incoming bytes and refuse a file that already
+// exists, naming the existing asset so the editor can pick it instead.
+const rejectDuplicateUpload: CollectionBeforeChangeHook = async ({ data, req, originalDoc }) => {
+  const bytes = req?.file?.data
+  if (!bytes || !bytes.length) return data
+  const contentHash = createHash('md5').update(bytes).digest('hex')
+  const existing = await req.payload.find({
+    collection: 'media',
+    where: { contentHash: { equals: contentHash } },
+    limit: 1,
+    depth: 0,
+    overrideAccess: true,
+    req,
+  })
+  const match = existing.docs[0] as { id: number | string; filename?: string } | undefined
+  if (match && match.id !== originalDoc?.id) {
+    throw new APIError(
+      `This image is already in the media library as "${match.filename}" (id ${match.id}). Choose the existing file instead of uploading it again.`,
+      409,
+    )
+  }
+  return { ...data, contentHash }
+}
+
 export const Media: CollectionConfig = {
   slug: 'media',
   lockDocuments: false,
+  trash: true,
   access: {
     // Media files are served at public URLs, so read must be public.
     read: () => true,
@@ -63,13 +90,24 @@ export const Media: CollectionConfig = {
   },
   hooks: {
     beforeOperation: [useStorageSafeFilename],
+    beforeChange: [rejectDuplicateUpload],
   },
   upload: {
     // Local fallback for dev/CI. In production, the s3Storage plugin in
     // payload.config.ts (gated on S3_* env vars) takes over and stores files in
-    // Supabase Storage instead — Vercel's filesystem is read-only at runtime.
+    // Cloudflare R2 instead — Vercel's filesystem is read-only at runtime.
     staticDir: 'public/uploads',
     mimeTypes: ['image/*', 'application/pdf'],
+    focalPoint: true,
+    adminThumbnail: 'thumbnail',
+    // Originals stay JPEG/PNG (social cards still read them as og:image) but
+    // are capped so a 6000px camera export can't ship as a 4MB page asset.
+    resizeOptions: { width: 2400, withoutEnlargement: true },
+    imageSizes: [
+      { name: 'thumbnail', width: 400, withoutEnlargement: true, formatOptions: { format: 'webp', options: { quality: 78 } } },
+      { name: 'card', width: 900, withoutEnlargement: true, formatOptions: { format: 'webp', options: { quality: 80 } } },
+      { name: 'hero', width: 1800, withoutEnlargement: true, formatOptions: { format: 'webp', options: { quality: 82 } } },
+    ],
   },
   admin: {
     group: 'Content',
@@ -90,6 +128,12 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'text',
+    },
+    {
+      name: 'contentHash',
+      type: 'text',
+      index: true,
+      admin: { readOnly: true, position: 'sidebar', description: 'MD5 of the uploaded bytes — used to block duplicate uploads.' },
     },
   ],
 }

@@ -22,6 +22,7 @@ import * as migration_20260715_120000_add_hasm_erp_leads from './20260715_120000
 import * as migration_20260715_123000_secure_public_tables from './20260715_123000_secure_public_tables';
 import * as migration_20260715_124500_secure_legacy_demo_capture from './20260715_124500_secure_legacy_demo_capture';
 import * as migration_20260911_120000_add_user_roles from './20260911_120000_add_user_roles';
+import * as migration_20260914_120000_payload_platform_upgrade from './20260914_120000_payload_platform_upgrade';
 
 export const migrations = [
   {
@@ -143,5 +144,10 @@ export const migrations = [
     up: migration_20260911_120000_add_user_roles.up,
     down: migration_20260911_120000_add_user_roles.down,
     name: '20260911_120000_add_user_roles'
+  },
+  {
+    up: migration_20260914_120000_payload_platform_upgrade.up,
+    down: migration_20260914_120000_payload_platform_upgrade.down,
+    name: '20260914_120000_payload_platform_upgrade'
   },
 ];

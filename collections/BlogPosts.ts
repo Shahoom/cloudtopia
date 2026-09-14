@@ -1,9 +1,10 @@
-import type {
-  CollectionAfterChangeHook,
-  CollectionAfterDeleteHook,
-  CollectionBeforeValidateHook,
-  CollectionConfig,
-  Field,
+import {
+  APIError,
+  type CollectionAfterChangeHook,
+  type CollectionAfterDeleteHook,
+  type CollectionBeforeValidateHook,
+  type CollectionConfig,
+  type Field,
 } from 'payload'
 import { blogRichTextEditor } from '../lib/cms/blog-rich-text.ts'
 import { ensureBlogPair } from '../lib/cms/blog-pair-endpoint.ts'
@@ -66,6 +67,9 @@ const normalizePost: CollectionBeforeValidateHook = ({ data, originalDoc }) => {
   }
 
   const status = next.status || originalDoc?.status
+  if (status === 'scheduled' && !(next.scheduledAt || originalDoc?.scheduledAt)) {
+    throw new APIError('Set "Scheduled at" before marking the article as Scheduled — the publishing cron uses that date.', 400)
+  }
   if (status === 'published' && !next.publishedAt && !originalDoc?.publishedAt) {
     next.publishedAt = new Date().toISOString()
   }
@@ -196,6 +200,7 @@ export const BlogPosts: CollectionConfig = {
     drafts: true,
     maxPerDoc: 25,
   },
+  trash: true,
   admin: {
     group: 'Insights',
     useAsTitle: 'title',

@@ -195,6 +195,7 @@ export async function FastMediaListView() {
   }>(`
     select id, alt, filename, url, mime_type, filesize, width, height, updated_at
     from media
+    where deleted_at is null
     order by id desc
     limit 120
   `)

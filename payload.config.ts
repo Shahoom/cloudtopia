@@ -1,6 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { importExportPlugin } from '@payloadcms/plugin-import-export'
+import { mcpPlugin } from '@payloadcms/plugin-mcp'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import { buildConfig, type Plugin } from 'payload'
@@ -59,13 +62,87 @@ if (!payloadSecret) {
 // falls back to local disk so dev/build/CI keep working without cloud storage.
 const s3Config = getS3StorageConfig()
 
-const plugins: Plugin[] = []
+// plugin-mcp mounts its endpoint at /api/mcp, which app/api/mcp already serves
+// as the public, read-only site-facts MCP server (the more specific Next route
+// wins, so the CMS endpoint would be unreachable). Move the CMS one aside.
+const moveCmsMcpEndpoint: Plugin = (config) => ({
+  ...config,
+  endpoints: (config.endpoints || []).map((endpoint) =>
+    endpoint.path === '/mcp' ? { ...endpoint, path: '/cms-mcp' } : endpoint,
+  ),
+})
+
+const LEAD_COLLECTIONS = [
+  'contact-inquiries',
+  'solution-finder-leads',
+  'ai-chat-leads',
+  'clinictopia-leads',
+  'hasm-erp-leads',
+  'newsletter-subscribers',
+] as const
+
+// Order matters: s3Storage (pushed last, below) wraps upload collections that
+// exist at the time it runs, so the import-export collections must be added first.
+const plugins: Plugin[] = [
+  searchPlugin({
+    collections: ['blog-posts', 'pages', 'projects', 'contact-inquiries'],
+    defaultPriorities: { 'blog-posts': 10, pages: 20, projects: 30, 'contact-inquiries': 40 },
+    searchOverrides: {
+      // Every CloudTopia collection runs with locking off; a plugin collection
+      // that locks would make Payload create payload_locked_documents tables.
+      lockDocuments: false,
+      admin: { group: 'Workspace' },
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        { name: 'locale', type: 'text', index: true, admin: { readOnly: true } },
+        { name: 'status', type: 'text', index: true, admin: { readOnly: true } },
+        { name: 'subtitle', type: 'text', admin: { readOnly: true } },
+      ],
+    },
+    beforeSync: ({ originalDoc, searchDoc }) => ({
+      ...searchDoc,
+      title: originalDoc?.title || originalDoc?.name || originalDoc?.fullName || originalDoc?.email || searchDoc.title,
+      locale: originalDoc?.locale ?? null,
+      status: originalDoc?.status ?? null,
+      subtitle: originalDoc?.slug || originalDoc?.email || originalDoc?.company || null,
+    }),
+  }),
+  importExportPlugin({
+    collections: [
+      ...LEAD_COLLECTIONS.map((slug) => ({ slug, export: { disableJobsQueue: true }, import: false as const })),
+      { slug: 'blog-posts', export: { disableJobsQueue: true }, import: false },
+      { slug: 'blog-categories', export: { disableJobsQueue: true }, import: { disableJobsQueue: true } },
+      { slug: 'blog-tags', export: { disableJobsQueue: true }, import: { disableJobsQueue: true } },
+    ],
+  }),
+  mcpPlugin({
+    overrideApiKeyCollection: (collection) => ({
+      ...collection,
+      lockDocuments: false,
+      admin: { ...collection.admin, group: 'Workspace' },
+    }),
+    collections: {
+      'blog-posts': {
+        description: 'CloudTopia articles. Each article is two documents (locale "en" and "ar") sharing one slug.',
+        enabled: { find: true, create: true, update: true },
+      },
+      media: { description: 'Images stored on Cloudflare R2.', enabled: { find: true, create: true } },
+      'blog-categories': { enabled: { find: true } },
+      'blog-tags': { enabled: { find: true } },
+      authors: { enabled: { find: true } },
+      pages: { enabled: { find: true } },
+    },
+  }),
+  moveCmsMcpEndpoint,
+]
 
 if (s3Config) {
   plugins.push(
     s3Storage({
       collections: {
         media: true,
+        exports: true,
+        imports: true,
       },
       bucket: s3Config.bucket,
       // NOTE: do NOT enable `clientUploads` here.

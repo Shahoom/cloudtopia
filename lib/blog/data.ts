@@ -396,6 +396,66 @@ async function hydrateContentBlocks(blocks: unknown): Promise<unknown> {
   })
 }
 
+function lexicalUploadId(value: unknown): number | null {
+  if (typeof value === 'number') return value
+  if (typeof value === 'string' && /^\d+$/.test(value)) return Number(value)
+  if (value && typeof value === 'object' && !(value as any).url && (value as any).id != null) return Number((value as any).id)
+  return null
+}
+
+function collectLexicalUploadIds(node: unknown, ids: Set<number>) {
+  if (!node || typeof node !== 'object') return
+  const n = node as Record<string, any>
+  if (n.type === 'upload') {
+    const id = lexicalUploadId(n.value)
+    if (id) ids.add(id)
+  }
+  if (Array.isArray(n.children)) for (const child of n.children) collectLexicalUploadIds(child, ids)
+  if (n.root) collectLexicalUploadIds(n.root, ids)
+}
+
+// Articles saved through Payload (the admin editor, the Local-API importer)
+// store upload nodes as a bare media id; only SQL-imported ones carry a
+// populated object. The renderer needs the url, so resolve ids here.
+async function hydrateLexicalUploads(content: unknown): Promise<unknown> {
+  const ids = new Set<number>()
+  collectLexicalUploadIds(content, ids)
+  if (ids.size === 0) return content
+
+  const rows = await queryDatabase<any>(
+    `select id, url, alt, width, height, filename, mime_type from media where id = any($1::int[])`,
+    [[...ids]],
+  )
+  const media = new Map(rows.map((row) => [numberValue(row.id), row]))
+
+  const fill = (node: any): any => {
+    if (!node || typeof node !== 'object') return node
+    let next = node
+    if (node.type === 'upload') {
+      const id = lexicalUploadId(node.value)
+      const row = id ? media.get(id) : undefined
+      if (row) {
+        next = {
+          ...node,
+          value: {
+            id,
+            url: row.url,
+            alt: row.alt || '',
+            width: row.width == null ? null : numberValue(row.width),
+            height: row.height == null ? null : numberValue(row.height),
+            filename: row.filename,
+            mimeType: row.mime_type,
+          },
+        }
+      }
+    }
+    if (Array.isArray(next.children)) next = { ...next, children: next.children.map(fill) }
+    if (next.root) next = { ...next, root: fill(next.root) }
+    return next
+  }
+  return fill(content)
+}
+
 function normalizePostRow(row: BlogRow): BlogPostSummary {
   const category =
     row.category_id && row.category_name && row.category_slug
@@ -616,7 +676,7 @@ async function getPublishedBlogPostsUncached(locale: string): Promise<BlogPostSu
        left join blog_posts_related_services prs on prs._parent_id = p.id
        left join blog_posts_rels tag_rel on tag_rel.parent_id = p.id and tag_rel.path = 'tags'
        left join blog_tags t on t.id = tag_rel.blog_tags_id
-       where p.status = 'published' and p.locale = $1
+       where p.status = 'published' and p.deleted_at is null and p.locale = $1
        group by
         p.id, cover.id, og.id, twitter.id, c.id, a.id, author_image.id, s.id
        order by p.pinned desc, p.featured desc, p.published_at desc nulls last, p.created_at desc`,
@@ -733,7 +793,7 @@ async function getBlogPostUncached(locale: string, slug: string): Promise<BlogPo
        left join blog_posts_related_services prs on prs._parent_id = p.id
        left join blog_posts_rels tag_rel on tag_rel.parent_id = p.id and tag_rel.path = 'tags'
        left join blog_tags t on t.id = tag_rel.blog_tags_id
-       where p.status = 'published' and p.locale = $1 and p.slug = $2
+       where p.status = 'published' and p.deleted_at is null and p.locale = $1 and p.slug = $2
        group by
         p.id, cover.id, og.id, twitter.id, c.id, a.id, author_image.id, s.id
        limit 1`,
@@ -744,7 +804,7 @@ async function getBlogPostUncached(locale: string, slug: string): Promise<BlogPo
     const contentBlocks = await hydrateContentBlocks(rows[0].content_blocks)
     return {
       ...normalizePostRow(rows[0]),
-      content: rows[0].content,
+      content: await hydrateLexicalUploads(rows[0].content),
       contentBlocks,
       tableOfContents: rows[0].table_of_contents !== false,
     }
@@ -784,7 +844,7 @@ async function getBlogCategoriesUncached(locale: string): Promise<BlogCategory[]
        left join media image on image.id = c.image_id
        left join media og on og.id = c.seo_og_image_id
        left join blog_categories_related_services crs on crs._parent_id = c.id
-       left join blog_posts p on p.category_id = c.id and p.status = 'published' and p.locale::text = $1
+       left join blog_posts p on p.category_id = c.id and p.status = 'published' and p.deleted_at is null and p.locale::text = $1
        -- Source the canonical (English) category set for every locale — there
        -- are no Arabic category rows, so filtering by $1 returned 0 on /ar and
        -- left the nav/grid empty. Names are localized in code (taxonomy-i18n).
@@ -847,7 +907,7 @@ async function getBlogTagsUncached(locale: string): Promise<BlogTag[]> {
         count(distinct p.id)::int as post_count
        from blog_tags t
        left join blog_posts_rels rel on rel.blog_tags_id = t.id and rel.path = 'tags'
-       left join blog_posts p on p.id = rel.parent_id and p.status = 'published' and p.locale::text = $1
+       left join blog_posts p on p.id = rel.parent_id and p.status = 'published' and p.deleted_at is null and p.locale::text = $1
        -- Canonical (English) tag set for every locale; names are localized in
        -- code (taxonomy-i18n). Post counts still filter by the requested locale.
        where t.locale::text = 'en'

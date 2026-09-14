@@ -232,7 +232,7 @@ async function fetchPublishedPosts(locale: 'en' | 'ar'): Promise<Post[]> {
     const { rows } = await client.query<Post>(
       `SELECT title, slug, excerpt, locale
          FROM blog_posts
-        WHERE status = 'published' AND locale = $1
+        WHERE status = 'published' AND deleted_at IS NULL AND locale = $1
         ORDER BY published_at DESC, slug ASC`,
       [locale],
     )
