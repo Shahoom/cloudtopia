@@ -11,11 +11,12 @@
  *
  *   DATABASE_URL=<target> S3_BUCKET=… S3_REGION=auto S3_ENDPOINT=… \
  *   S3_ACCESS_KEY_ID=… S3_SECRET_ACCESS_KEY=… \
- *   npx payload --use-swc run scripts/import-batch-payload.ts -- --dir content-batch4 \
- *     [--only <folder>] [--dry] [--schedule-start 2026-09-16T05:00:00Z --every-days 2]
+ *   IMPORT_DIR=content-batch4 IMPORT_META=scripts/batch4-meta.json [IMPORT_DRY=1] \
+ *   [IMPORT_ONLY=<folder>] [SCHEDULE_START=2026-09-16T05:00:00Z EVERY_DAYS=2] \
+ *   npx payload --use-swc run scripts/import-batch-payload.ts
  *
- * Without --schedule-start every article publishes immediately. With it, the
- * pairs are scheduled in folder order, one pair every --every-days days, and
+ * Without SCHEDULE_START every article publishes immediately. With it, the
+ * pairs are scheduled in folder order, one pair every EVERY_DAYS days, and
  * /api/cron/publish-scheduled makes each one live on its date.
  *
  * Idempotent: existing (slug, locale) posts are skipped and images already in
@@ -28,17 +29,28 @@ import path from 'node:path'
 import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
 import { getPayload } from 'payload'
 import config from '../payload.config.ts'
+import { toStorageSafeFilename } from '../collections/Media.ts'
 import { blogRichTextFeatures } from '../lib/cms/blog-rich-text.ts'
 
 const arg = (name: string) => {
   const i = process.argv.indexOf(`--${name}`)
   return i === -1 ? undefined : process.argv[i + 1]
 }
-const DRY = process.argv.includes('--dry')
-const DIR = path.resolve(process.cwd(), arg('dir') || 'content-batch4')
-const ONLY = arg('only')
-const SCHEDULE_START = arg('schedule-start')
-const EVERY_DAYS = Number(arg('every-days') || 2)
+// `payload run` does not reliably forward CLI flags to the script, and a lost
+// --dry would silently turn a dry run into a real import — so options come
+// from env vars (IMPORT_DRY=1, IMPORT_DIR, IMPORT_META, IMPORT_ONLY,
+// SCHEDULE_START, EVERY_DAYS), with flags as a fallback for plain node runs.
+const opt = (env: string, flag: string) => process.env[env] || arg(flag)
+const DRY = process.env.IMPORT_DRY === '1' || process.argv.includes('--dry')
+const DIR = path.resolve(process.cwd(), opt('IMPORT_DIR', 'dir') || 'content-batch4')
+const ONLY = opt('IMPORT_ONLY', 'only')
+const SCHEDULE_START = opt('SCHEDULE_START', 'schedule-start')
+const EVERY_DAYS = Number(opt('EVERY_DAYS', 'every-days') || 2)
+// Optional per-slug settings the article files don't carry: { [slug]: { tags, editorPick } }
+const META_PATH = opt('IMPORT_META', 'meta')
+const META: Record<string, { tags?: string[]; editorPick?: boolean }> = META_PATH
+  ? JSON.parse(readFileSync(path.resolve(process.cwd(), META_PATH), 'utf8'))
+  : {}
 const AUTHOR_ID = 1 // Mohamad Shahm | محمد شـهم
 const SKIP_HOOK_SIDE_EFFECTS = { skipBlogPairSync: true, skipCoverMirror: true, skipAutoTranslate: true }
 
@@ -140,17 +152,35 @@ async function main() {
     return found.docs.map((d: any) => Number(d.id))
   }
 
+  // Both locales reference the same assets: remember what this run already
+  // resolved instead of asking the library twice.
+  const mediaCache = new Map<string, number>()
   const mediaIdFor = async (slug: string, folder: string, file: string, alt: string): Promise<number> => {
     const source = path.join(DIR, folder, 'assets', file)
     if (!existsSync(source)) throw new Error(`${folder}: image not found: assets/${file}`)
     if (DRY) return -1
+    if (mediaCache.has(source)) return mediaCache.get(source)!
     const contentHash = createHash('md5').update(readFileSync(source)).digest('hex')
-    const existing = await payload.find({ collection: 'media', where: { contentHash: { equals: contentHash } }, limit: 1, depth: 0, overrideAccess: true })
-    if (existing.docs[0]) return Number(existing.docs[0].id)
-    const staged = path.join(tmp, `${slug}--${file.replace(/\.jpeg$/i, '.jpg')}`)
-    copyFileSync(source, staged)
-    const created = await payload.create({ collection: 'media', data: { alt: alt || slug } as any, filePath: staged, overrideAccess: true })
-    return Number(created.id)
+    const stagedName = `${slug}--${file.replace(/\.jpeg$/i, '.jpg')}`
+    const byHash = await payload.find({ collection: 'media', where: { contentHash: { equals: contentHash } }, limit: 1, depth: 0, overrideAccess: true })
+    // Rows from an interrupted run may carry a hash of the re-encoded image; the
+    // storage-safe filename still identifies them.
+    const byName = byHash.docs[0]
+      ? byHash
+      : await payload.find({ collection: 'media', where: { filename: { equals: toStorageSafeFilename(stagedName) } }, limit: 1, depth: 0, overrideAccess: true })
+    let id: number
+    if (byName.docs[0]) {
+      id = Number(byName.docs[0].id)
+      if ((byName.docs[0] as any).contentHash !== contentHash) {
+        await payload.update({ collection: 'media', id, data: { contentHash } as any, overrideAccess: true })
+      }
+    } else {
+      const staged = path.join(tmp, stagedName)
+      copyFileSync(source, staged)
+      id = Number((await payload.create({ collection: 'media', data: { alt: alt || slug } as any, filePath: staged, overrideAccess: true })).id)
+    }
+    mediaCache.set(source, id)
+    return id
   }
 
   const report = { created: [] as string[], skipped: [] as string[], failed: [] as string[] }
@@ -164,6 +194,13 @@ async function main() {
     try {
       const coverFile = path.basename(fm.coverImage)
       const coverId = await mediaIdFor(slug, folder, coverFile, fm.coverImageAltEn || fm.coverImageAltAr)
+      // Resolve every inline image up front, so a re-run that skips posts that
+      // already exist still repairs the hashes of rows an interrupted run made.
+      for (const loc of ['en', 'ar'] as const) {
+        for (const [, alt, file] of bodies[loc].matchAll(IMAGE_LINE)) {
+          if (file !== coverFile) await mediaIdFor(slug, folder, file, alt)
+        }
+      }
 
       // Read-also: batch siblings in the same category first, then neighbours.
       const related = [
@@ -193,7 +230,10 @@ async function main() {
             continue
           }
           const id = await mediaIdFor(slug, folder, file, alt)
-          markdown = markdown.replace(line, `@@upload:${id}@@`)
+          // Blank lines on both sides: a caption or sentence on the next line
+          // would otherwise merge into the token's paragraph and the token
+          // would ship as literal text instead of becoming an image.
+          markdown = markdown.replace(line, `\n\n@@upload:${id}@@\n\n`)
         }
 
         const readAlso = related
@@ -203,6 +243,11 @@ async function main() {
 
         const content = convertMarkdownToLexical({ editorConfig, markdown })
         replaceUploadTokens(content)
+        const expectedInline = images.filter(([, , file]) => file !== coverFile).length
+        const convertedInline = (content.root.children as any[]).filter((n) => n.type === 'upload').length
+        if (JSON.stringify(content).includes('@@upload:') || convertedInline !== expectedInline) {
+          throw new Error(`${locale}: ${convertedInline}/${expectedInline} inline images converted — refusing to publish literal image tokens`)
+        }
 
         const title = locale === 'ar' ? fm.title : fm.titleEn
         const metaTitle = (locale === 'ar' ? fm.metaTitle : fm.metaTitleEn) || title
@@ -227,7 +272,8 @@ async function main() {
           shortExcerpt: metaDescription.slice(0, 160),
           content,
           category: DRY ? undefined : await categoryId(fm.category),
-          tags: DRY ? [] : await tagIds(fm.tags),
+          tags: DRY ? [] : await tagIds(fm.tags || META[slug]?.tags),
+          editorPick: Boolean(META[slug]?.editorPick),
           author: AUTHOR_ID,
           coverImage: coverId,
           featuredImageAlt: locale === 'ar' ? fm.coverImageAltAr : fm.coverImageAltEn,
@@ -267,7 +313,9 @@ async function main() {
   process.exit(report.failed.length ? 1 : 0)
 }
 
-main().catch((error) => {
+// Top-level await: `payload run` exits once the module finishes evaluating, so
+// a floating main() promise would be killed before it imports anything.
+await main().catch((error) => {
   console.error(error)
   process.exit(1)
 })

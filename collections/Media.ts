@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { APIError, type CollectionBeforeChangeHook, type CollectionBeforeOperationHook, type CollectionConfig } from 'payload'
+import { APIError, type CollectionBeforeOperationHook, type CollectionConfig } from 'payload'
 import { adminOnly } from './blogAccess.ts'
 
 /**
@@ -55,9 +55,15 @@ const useStorageSafeFilename: CollectionBeforeOperationHook = ({ args, req }) =>
 // Byte-identical re-uploads under a new name were how the same photo ended up
 // on several articles. Hash the incoming bytes and refuse a file that already
 // exists, naming the existing asset so the editor can pick it instead.
-const rejectDuplicateUpload: CollectionBeforeChangeHook = async ({ data, req, originalDoc }) => {
+//
+// This must run in beforeOperation, on the raw upload: by beforeChange Payload
+// has already re-encoded the image (resizeOptions), so the hash would describe
+// sharp's output — it would never match the CDN originals the library was
+// backfilled from, nor a hash computed from the source file.
+const rejectDuplicateUpload: CollectionBeforeOperationHook = async ({ args, operation, req }) => {
+  if (operation !== 'create' && operation !== 'update') return args
   const bytes = req?.file?.data
-  if (!bytes || !bytes.length) return data
+  if (!bytes || !bytes.length) return args
   const contentHash = createHash('md5').update(bytes).digest('hex')
   const existing = await req.payload.find({
     collection: 'media',
@@ -68,13 +74,15 @@ const rejectDuplicateUpload: CollectionBeforeChangeHook = async ({ data, req, or
     req,
   })
   const match = existing.docs[0] as { id: number | string; filename?: string } | undefined
-  if (match && match.id !== originalDoc?.id) {
+  const selfId = operation === 'update' ? (args as { id?: number | string }).id : undefined
+  if (match && String(match.id) !== String(selfId)) {
     throw new APIError(
       `This image is already in the media library as "${match.filename}" (id ${match.id}). Choose the existing file instead of uploading it again.`,
       409,
     )
   }
-  return { ...data, contentHash }
+  ;(args as { data?: Record<string, unknown> }).data = { ...((args as { data?: Record<string, unknown> }).data || {}), contentHash }
+  return args
 }
 
 export const Media: CollectionConfig = {
@@ -89,8 +97,7 @@ export const Media: CollectionConfig = {
     delete: adminOnly,
   },
   hooks: {
-    beforeOperation: [useStorageSafeFilename],
-    beforeChange: [rejectDuplicateUpload],
+    beforeOperation: [useStorageSafeFilename, rejectDuplicateUpload],
   },
   upload: {
     // Local fallback for dev/CI. In production, the s3Storage plugin in
