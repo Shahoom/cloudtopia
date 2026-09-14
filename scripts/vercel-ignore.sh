@@ -15,6 +15,7 @@ if git diff --quiet "$BASE" HEAD -- . \
   ':(exclude)docs' \
   ':(exclude)content-deliverables' \
   ':(exclude)content-batch2' \
+  ':(exclude)content-new-2026' \
   ':(exclude)scratchpad' \
   ':(exclude)README.md'; then
   echo "Only docs/content changed since $BASE — skipping build."
