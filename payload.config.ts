@@ -6,7 +6,7 @@ import { mcpPlugin } from '@payloadcms/plugin-mcp'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
-import { buildConfig, type Plugin } from 'payload'
+import { buildConfig, type Config, type Plugin } from 'payload'
 import { Authors } from './collections/Authors.ts'
 import { AIChatLeads } from './collections/AIChatLeads.ts'
 import { AIChatConversations } from './collections/AIChatConversations.ts'
@@ -66,12 +66,17 @@ const s3Config = getS3StorageConfig()
 // plugin-mcp mounts its endpoint at /api/mcp, which app/api/mcp already serves
 // as the public, read-only site-facts MCP server (the more specific Next route
 // wins, so the CMS endpoint would be unreachable). Move the CMS one aside.
-const moveCmsMcpEndpoint: Plugin = (config) => ({
-  ...config,
-  endpoints: (config.endpoints || []).map((endpoint) =>
-    endpoint.path === '/mcp' ? { ...endpoint, path: '/cms-mcp' } : endpoint,
-  ),
-})
+// buildConfig runs plugins sorted by `order`; plugin-mcp declares order 10, so
+// this rename must sort after it or it finds no /mcp endpoint to move.
+const moveCmsMcpEndpoint: Plugin = Object.assign(
+  (config: Config): Config => ({
+    ...config,
+    endpoints: (config.endpoints || []).map((endpoint) =>
+      endpoint.path === '/mcp' ? { ...endpoint, path: '/cms-mcp' } : endpoint,
+    ),
+  }),
+  { order: 20 },
+)
 
 const LEAD_COLLECTIONS = [
   'contact-inquiries',
