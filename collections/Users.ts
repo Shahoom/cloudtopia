@@ -1,4 +1,5 @@
 import type { Access, CollectionConfig } from 'payload'
+import { isAdminAccount } from './blogAccess.ts'
 
 /**
  * Role-gated user management. Every other collection grants full CRUD to any
@@ -10,11 +11,13 @@ import type { Access, CollectionConfig } from 'payload'
  * day-to-day accounts as `editor`.
  */
 
-const isAdmin: Access = ({ req }) => req.user?.role === 'admin'
+const isAdmin: Access = ({ req }) => isAdminAccount(req.user)
 
 const isAdminOrSelf: Access = ({ req, id }) => {
-  if (req.user?.role === 'admin') return true
-  return Boolean(req.user && id && String(req.user.id) === String(id))
+  if (isAdminAccount(req.user)) return true
+  // An MCP API key's numeric id can collide with a user id; "self" only means
+  // a signed-in team account reading its own record.
+  return Boolean(req.user?.collection === 'users' && id && String(req.user.id) === String(id))
 }
 
 export const Users: CollectionConfig = {
@@ -49,7 +52,7 @@ export const Users: CollectionConfig = {
       ],
       access: {
         // Only admins may change roles — an editor must not promote itself.
-        update: ({ req }) => req.user?.role === 'admin',
+        update: ({ req }) => isAdminAccount(req.user),
       },
     },
   ],
