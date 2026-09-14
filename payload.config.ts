@@ -31,6 +31,7 @@ import { ClinicTopiaLeads } from './collections/ClinicTopiaLeads.ts'
 import { HasmERPLeads } from './collections/HasmERPLeads.ts'
 import { Users } from './collections/Users.ts'
 import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
+import { searchPluginConfig } from './lib/cms/search-config.ts'
 import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
 import { handleTranslateEndpoint } from './lib/cms/translate-endpoint.ts'
 import { handleBlogPairEndpoint } from './lib/cms/blog-pair-endpoint.ts'
@@ -84,29 +85,7 @@ const LEAD_COLLECTIONS = [
 // Order matters: s3Storage (pushed last, below) wraps upload collections that
 // exist at the time it runs, so the import-export collections must be added first.
 const plugins: Plugin[] = [
-  searchPlugin({
-    collections: ['blog-posts', 'pages', 'projects', 'contact-inquiries'],
-    defaultPriorities: { 'blog-posts': 10, pages: 20, projects: 30, 'contact-inquiries': 40 },
-    searchOverrides: {
-      // Every CloudTopia collection runs with locking off; a plugin collection
-      // that locks would make Payload create payload_locked_documents tables.
-      lockDocuments: false,
-      admin: { group: 'Workspace' },
-      fields: ({ defaultFields }) => [
-        ...defaultFields,
-        { name: 'locale', type: 'text', index: true, admin: { readOnly: true } },
-        { name: 'status', type: 'text', index: true, admin: { readOnly: true } },
-        { name: 'subtitle', type: 'text', admin: { readOnly: true } },
-      ],
-    },
-    beforeSync: ({ originalDoc, searchDoc }) => ({
-      ...searchDoc,
-      title: originalDoc?.title || originalDoc?.name || originalDoc?.fullName || originalDoc?.email || searchDoc.title,
-      locale: originalDoc?.locale ?? null,
-      status: originalDoc?.status ?? null,
-      subtitle: originalDoc?.slug || originalDoc?.email || originalDoc?.company || null,
-    }),
-  }),
+  searchPlugin(searchPluginConfig),
   importExportPlugin({
     collections: [
       ...LEAD_COLLECTIONS.map((slug) => ({ slug, export: { disableJobsQueue: true }, import: false as const })),
