@@ -1,0 +1,256 @@
+/* CloudTopia admin command palette — design E. Scoped to .ct-cmdk*. */
+
+.ct-cmdk {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  padding: 12vh 16px 16px;
+  background: rgba(17, 24, 39, 0.34);
+  backdrop-filter: blur(3px);
+  font-family: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  animation: ct-cmdk-fade 0.12s ease-out;
+}
+
+.ct-cmdk *,
+.ct-cmdk *::before,
+.ct-cmdk *::after {
+  box-sizing: border-box;
+}
+
+.ct-cmdk kbd {
+  padding: 2px 5px 1px;
+  border: 1px solid #e5e7eb;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #fff;
+  color: #6b7280;
+  font: 500 10.5px/1.2 var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.ct-cmdk__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(640px, 100%);
+  max-height: min(560px, 76vh);
+  align-self: flex-start;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow:
+    0 32px 80px rgba(17, 24, 39, 0.28),
+    0 4px 14px rgba(17, 24, 39, 0.08);
+  animation: ct-cmdk-pop 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.ct-cmdk__input-row {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 14px 0 16px;
+  border-bottom: 1px solid #f1f2f4;
+}
+
+.ct-cmdk__input-icon {
+  flex: none;
+  color: #9ca3af;
+}
+
+.ct-cmdk__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #111827;
+  font: 400 15px/1.2 var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+}
+
+.ct-cmdk__input::placeholder {
+  color: #9ca3af;
+}
+
+.ct-cmdk__spinner {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #e0e7ff;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: ct-cmdk-spin 0.7s linear infinite;
+}
+
+.ct-cmdk__list {
+  flex: 1;
+  min-height: 0;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ct-cmdk__group + .ct-cmdk__group {
+  margin-top: 4px;
+}
+
+.ct-cmdk__group-label {
+  padding: 9px 10px 5px;
+  color: #9ca3af;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ct-cmdk__item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #374151;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.ct-cmdk__item[data-active='true'] {
+  background: #eef2ff;
+  color: #312e81;
+}
+
+.ct-cmdk__item-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #eceef2;
+  border-radius: 7px;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.ct-cmdk__item[data-active='true'] .ct-cmdk__item-icon {
+  border-color: #c7d2fe;
+  background: #fff;
+  color: #4f46e5;
+}
+
+.ct-cmdk__item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-cmdk__item-hint {
+  flex: none;
+  max-width: 40%;
+  overflow: hidden;
+  color: #9ca3af;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-cmdk__item-enter {
+  flex: none;
+  color: #6366f1;
+  opacity: 0;
+}
+
+.ct-cmdk__item[data-active='true'] .ct-cmdk__item-enter {
+  opacity: 1;
+}
+
+.ct-cmdk__empty {
+  padding: 36px 16px;
+  color: #6b7280;
+  font-size: 13px;
+  text-align: center;
+}
+
+.ct-cmdk__empty strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.ct-cmdk__footer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 16px;
+  height: 38px;
+  padding: 0 16px;
+  border-top: 1px solid #f1f2f4;
+  background: #fafafa;
+  color: #9ca3af;
+  font-size: 11.5px;
+}
+
+.ct-cmdk__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@keyframes ct-cmdk-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ct-cmdk-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ct-cmdk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .ct-cmdk {
+    padding-top: 8vh;
+  }
+
+  .ct-cmdk__footer {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-cmdk,
+  .ct-cmdk__panel,
+  .ct-cmdk__spinner {
+    animation: none !important;
+  }
+}

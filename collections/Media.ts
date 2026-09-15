@@ -140,7 +140,12 @@ export const Media: CollectionConfig = {
       name: 'contentHash',
       type: 'text',
       index: true,
-      admin: { readOnly: true, position: 'sidebar', description: 'MD5 of the uploaded bytes — used to block duplicate uploads.' },
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        disableListColumn: true,
+        description: 'MD5 of the uploaded bytes — used to block duplicate uploads.',
+      },
     },
   ],
 }

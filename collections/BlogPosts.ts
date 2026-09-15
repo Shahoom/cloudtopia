@@ -447,6 +447,16 @@ export const BlogPosts: CollectionConfig = {
     },
     // Sidebar fields
     {
+      name: 'articleInspector',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/components/payload/admin/ArticleInspector#ArticleInspector',
+        },
+      },
+    },
+    {
       name: 'status',
       type: 'select',
       required: true,

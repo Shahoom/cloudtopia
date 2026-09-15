@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import {
   Brush,
-  CheckCircle2,
   FileText,
   FolderKanban,
   HelpCircle,
@@ -11,6 +10,10 @@ import {
   Plus,
 } from 'lucide-react'
 import { isDatabaseConfigured, queryDatabase } from '../../lib/cms/db.ts'
+
+// Presentation lives in app/(payload)/cloudtopia-admin.css under `.ct-fast-list*`
+// (design E). Only the per-row colour swatch keeps an inline style, because its
+// value comes from the database.
 
 type RowValue = string | number | boolean | null | undefined
 
@@ -31,6 +34,8 @@ type ListShellProps<T> = {
   rows: T[]
   title: string
 }
+
+type StatusTone = 'success' | 'info' | 'review' | 'danger' | 'neutral'
 
 export async function FastPagesListView() {
   const rows = await safeQuery<{
@@ -278,54 +283,59 @@ function ListShell<T>({
   title,
 }: ListShellProps<T>) {
   return (
-    <main className="ct-fast-list" style={styles.page}>
-      <style>{listStyles}</style>
-      <section className="ct-fast-list-header" style={styles.header}>
-        <span style={styles.headerIcon}>
-          <Icon size={20} />
-        </span>
-        <span style={styles.headerCopy}>
-          <span style={styles.kicker}>CloudTopia CMS</span>
-          <h1 style={styles.title}>{title}</h1>
-          <p style={styles.description}>{description}</p>
-        </span>
-        <span style={styles.headerActions}>
-          <span style={styles.count}>{countLabel}</span>
-          <Link href={actionHref} style={styles.action}>
-            <Plus size={16} />
-            {actionLabel}
-          </Link>
-        </span>
-      </section>
+    <main className="ct-fast-list">
+      <header className="ct-fast-list__header">
+        <div className="ct-fast-list__heading">
+          <h1 className="ct-fast-list__title">
+            {title}
+            <span className="ct-fast-list__count">{rows.length}</span>
+          </h1>
+          <p className="ct-fast-list__description">{description}</p>
+        </div>
+        <Link className="ct-fast-list__create" href={actionHref}>
+          <Plus aria-hidden="true" size={14} strokeWidth={2.2} />
+          {actionLabel}
+        </Link>
+      </header>
 
-      <section style={styles.tableShell}>
+      <section className="ct-fast-list__card">
         {rows.length > 0 ? (
-          <div style={styles.tableScroller}>
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  {columns.map((column) => (
-                    <th key={column.key} style={styles.th}>
-                      {column.label}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, index) => (
-                  <tr key={index} style={styles.tr}>
+          <>
+            <div className="ct-fast-list__scroller">
+              <table className="ct-fast-list__table">
+                <thead>
+                  <tr>
                     {columns.map((column) => (
-                      <td key={column.key} style={styles.td}>
-                        {column.render(row)}
-                      </td>
+                      <th key={column.key} scope="col">
+                        {column.label}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {rows.map((row, index) => (
+                    <tr key={index}>
+                      {columns.map((column) => (
+                        <td key={column.key}>{column.render(row)}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <footer className="ct-fast-list__foot">{countLabel}</footer>
+          </>
         ) : (
-          <div style={styles.empty}>{emptyLabel}</div>
+          <div className="ct-fast-list__empty">
+            <span className="ct-fast-list__empty-icon">
+              <Icon aria-hidden="true" size={18} />
+            </span>
+            <p>{emptyLabel}</p>
+            <Link className="ct-fast-list__create ct-fast-list__create--secondary" href={actionHref}>
+              <Plus aria-hidden="true" size={14} strokeWidth={2.2} />
+              {actionLabel}
+            </Link>
+          </div>
         )}
       </section>
     </main>
@@ -334,62 +344,89 @@ function ListShell<T>({
 
 function editLink(collection: string, id: string | number, label: ReactNode) {
   return (
-    <Link href={`/admin/collections/${collection}/${encodeURIComponent(String(id))}`} style={styles.editLink}>
+    <Link className="ct-fast-list__link" href={`/admin/collections/${collection}/${encodeURIComponent(String(id))}`}>
       {label}
     </Link>
   )
 }
 
 function value(input: RowValue) {
-  return <span style={styles.value}>{String(input || '-')}</span>
+  return <span className="ct-fast-list__value">{String(input || '-')}</span>
 }
 
 function small(input: RowValue) {
-  return <span style={styles.small}>{String(input || '-')}</span>
+  return <span className="ct-fast-list__muted">{String(input || '-')}</span>
 }
 
 function mediaPath(input: RowValue) {
-  return <span style={styles.path}>{String(input || '-')}</span>
-}
+  const text = String(input || '-')
 
-function localePill(locale: RowValue) {
-  return <span style={styles.pill}>{String(locale || 'en').toUpperCase()}</span>
-}
-
-function statusPill(status: RowValue) {
-  const active = status === 'published'
   return (
-    <span style={{ ...styles.pill, ...(active ? styles.goodPill : styles.warnPill) }}>
-      {active ? <CheckCircle2 size={13} /> : null}
-      {titleCase(String(status || 'draft'))}
+    <span className="ct-fast-list__path" title={text}>
+      {text}
     </span>
   )
 }
 
+function localePill(locale: RowValue) {
+  return <span className="ct-fast-list__locale">{String(locale || 'en').toUpperCase()}</span>
+}
+
+function statusPill(status: RowValue) {
+  const key = String(status || 'draft')
+
+  return <span className={`ct-fast-list__status ct-fast-list__status--${statusTone(key)}`}>{titleCase(key)}</span>
+}
+
+function statusTone(status: string): StatusTone {
+  switch (status) {
+    case 'published':
+    case 'active':
+    case 'completed':
+      return 'success'
+    case 'scheduled':
+    case 'pending':
+      return 'info'
+    case 'review':
+    case 'in-review':
+      return 'review'
+    case 'failed':
+    case 'error':
+      return 'danger'
+    default:
+      return 'neutral'
+  }
+}
+
 function countBadge(input: RowValue) {
-  return <span style={styles.countBadge}>{String(input || '0')}</span>
+  return <span className="ct-fast-list__badge">{String(input || '0')}</span>
 }
 
 function yesNo(input: boolean) {
-  return <span style={{ ...styles.pill, ...(input ? styles.goodPill : styles.neutralPill) }}>{input ? 'Yes' : 'No'}</span>
+  return (
+    <span className={`ct-fast-list__status ct-fast-list__status--${input ? 'success' : 'neutral'}`}>
+      {input ? 'Yes' : 'No'}
+    </span>
+  )
 }
 
 function colorSwatch(color: RowValue) {
   const token = String(color || '#ffffff')
+
   return (
-    <span style={styles.swatchWrap}>
-      <span style={{ ...styles.swatch, background: token }} />
-      {token}
+    <span className="ct-fast-list__swatch">
+      <span aria-hidden="true" className="ct-fast-list__swatch-chip" style={{ background: token }} />
+      <code>{token}</code>
     </span>
   )
 }
 
 function mediaPreview(row: { alt?: string; filename?: string; url?: string }) {
   return (
-    <span style={styles.mediaPreview}>
+    <span className="ct-fast-list__media">
       {/* eslint-disable-next-line @next/next/no-img-element -- Admin thumbnails use existing public asset URLs and do not affect public LCP. */}
-      {row.url ? <img src={row.url} alt="" style={styles.thumb} /> : <span style={styles.thumbFallback} />}
-      <span style={styles.mediaName}>{row.filename || row.alt || 'Asset'}</span>
+      {row.url ? <img alt="" className="ct-fast-list__thumb" src={row.url} /> : <span className="ct-fast-list__thumb" />}
+      <span className="ct-fast-list__media-name">{row.filename || row.alt || 'Asset'}</span>
     </span>
   )
 }
@@ -412,254 +449,3 @@ function formatBytes(input: RowValue) {
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`
 }
-
-const styles: Record<string, CSSProperties> = {
-  page: {
-    display: 'grid',
-    gap: 16,
-    padding: '24px clamp(18px, 3vw, 34px) 40px',
-    color: '#071522',
-    fontFamily: 'var(--font-cairo), ui-sans-serif, system-ui, sans-serif',
-  },
-  header: {
-    display: 'grid',
-    gridTemplateColumns: 'auto minmax(0, 1fr) auto',
-    gap: 16,
-    alignItems: 'center',
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    background: '#ffffff',
-    padding: 18,
-    boxShadow: '0 18px 45px rgba(7, 21, 34, 0.06)',
-  },
-  headerIcon: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 46,
-    height: 46,
-    borderRadius: 8,
-    background: '#071522',
-    color: '#8ee6ff',
-  },
-  headerCopy: {
-    display: 'grid',
-    gap: 4,
-    minWidth: 0,
-  },
-  kicker: {
-    color: '#0b75bc',
-    fontSize: 12,
-    fontWeight: 950,
-    letterSpacing: 0,
-    textTransform: 'uppercase',
-  },
-  title: {
-    margin: 0,
-    color: '#071522',
-    fontSize: 'clamp(28px, 4vw, 46px)',
-    lineHeight: 1,
-    letterSpacing: 0,
-  },
-  description: {
-    maxWidth: 820,
-    margin: 0,
-    color: '#54677a',
-    fontSize: 15,
-    lineHeight: 1.5,
-  },
-  headerActions: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    gap: 10,
-    flexWrap: 'wrap',
-  },
-  count: {
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    padding: '9px 11px',
-    color: '#40566a',
-    fontSize: 12,
-    fontWeight: 900,
-    whiteSpace: 'nowrap',
-  },
-  action: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 7,
-    minHeight: 40,
-    borderRadius: 8,
-    background: '#071522',
-    color: '#ffffff',
-    padding: '0 14px',
-    textDecoration: 'none',
-    fontSize: 13,
-    fontWeight: 950,
-    whiteSpace: 'nowrap',
-  },
-  tableShell: {
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    overflow: 'hidden',
-    background: '#ffffff',
-    boxShadow: '0 22px 70px rgba(7, 21, 34, 0.07)',
-  },
-  tableScroller: {
-    overflowX: 'auto',
-  },
-  table: {
-    width: '100%',
-    minWidth: 880,
-    borderCollapse: 'separate',
-    borderSpacing: 0,
-  },
-  th: {
-    padding: '14px 16px',
-    borderBottom: '1px solid #dce7f1',
-    background: '#f7fbff',
-    color: '#40566a',
-    fontSize: 12,
-    fontWeight: 950,
-    textAlign: 'left',
-    textTransform: 'uppercase',
-  },
-  tr: {
-    background: '#ffffff',
-  },
-  td: {
-    padding: '14px 16px',
-    borderBottom: '1px solid #edf3f8',
-    color: '#071522',
-    fontSize: 14,
-    verticalAlign: 'middle',
-  },
-  editLink: {
-    color: '#071522',
-    fontWeight: 950,
-    textDecoration: 'underline',
-    textUnderlineOffset: 4,
-  },
-  value: {
-    color: '#26394d',
-    fontWeight: 800,
-  },
-  small: {
-    color: '#63778a',
-    fontSize: 12,
-    fontWeight: 800,
-  },
-  path: {
-    display: 'inline-block',
-    maxWidth: 300,
-    overflow: 'hidden',
-    color: '#63778a',
-    fontSize: 12,
-    fontWeight: 800,
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  pill: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 5,
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    background: '#f7fbff',
-    color: '#40566a',
-    padding: '5px 8px',
-    fontSize: 12,
-    fontWeight: 950,
-    whiteSpace: 'nowrap',
-  },
-  goodPill: {
-    borderColor: '#c8f0dc',
-    background: '#f0fff6',
-    color: '#0f8a57',
-  },
-  warnPill: {
-    borderColor: '#fde5bd',
-    background: '#fff8ed',
-    color: '#b45309',
-  },
-  neutralPill: {
-    borderColor: '#dce7f1',
-    background: '#f7fbff',
-    color: '#63778a',
-  },
-  countBadge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 32,
-    height: 28,
-    borderRadius: 8,
-    background: '#071522',
-    color: '#8ee6ff',
-    fontSize: 12,
-    fontWeight: 950,
-  },
-  swatchWrap: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 8,
-    color: '#26394d',
-    fontSize: 13,
-    fontWeight: 900,
-  },
-  swatch: {
-    width: 22,
-    height: 22,
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.35)',
-  },
-  mediaPreview: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 10,
-    minWidth: 0,
-  },
-  thumb: {
-    width: 44,
-    height: 44,
-    border: '1px solid #dce7f1',
-    borderRadius: 8,
-    background: '#f7fbff',
-    objectFit: 'cover',
-  },
-  thumbFallback: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-    background: '#e7f4ff',
-  },
-  mediaName: {
-    display: 'inline-block',
-    maxWidth: 220,
-    overflow: 'hidden',
-    color: '#26394d',
-    fontSize: 13,
-    fontWeight: 900,
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  empty: {
-    padding: 32,
-    color: '#63778a',
-    fontWeight: 900,
-  },
-}
-
-const listStyles = `
-  .ct-fast-list a:hover {
-    opacity: 0.84;
-  }
-
-  @media (max-width: 980px) {
-    .ct-fast-list-header {
-      grid-template-columns: 1fr;
-    }
-  }
-`

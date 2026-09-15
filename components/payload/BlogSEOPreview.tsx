@@ -1,71 +1,55 @@
 'use client'
 
-import type { CSSProperties } from 'react'
+import { useFormFields } from '@payloadcms/ui'
+import { Search } from 'lucide-react'
+import './admin/editor-widgets.css'
 
+// Live Google-style preview of the SEO fields on this tab.
 export function BlogSEOPreview() {
+  const { metaTitle, metaDescription, title, excerpt, slug, locale } = useFormFields(([fields]) => ({
+    metaTitle: fields?.['seo.metaTitle']?.value as string | undefined,
+    metaDescription: fields?.['seo.metaDescription']?.value as string | undefined,
+    title: fields?.title?.value as string | undefined,
+    excerpt: fields?.excerpt?.value as string | undefined,
+    slug: fields?.slug?.value as string | undefined,
+    locale: fields?.locale?.value as string | undefined,
+  }))
+
+  const shownTitle = metaTitle || title || 'Your SEO title appears here'
+  const shownDescription = metaDescription || excerpt || 'Your meta description should explain the value of the article in one useful sentence.'
+  const path = `${locale === 'ar' ? 'ar › ' : ''}articles › ${slug || 'your-article-slug'}`
+  const titleLength = (metaTitle || '').length
+  const descriptionLength = (metaDescription || '').length
+
   return (
-    <section style={styles.card} aria-label="SEO preview guidance">
-      <p style={styles.kicker}>SEO preview</p>
-      <h3 style={styles.title}>Search, social, and schema are generated from this tab.</h3>
-      <p style={styles.copy}>
-        Fill the meta title, meta description, focus keyword, image alt text, and schema toggles. The content score updates when you save.
-      </p>
-      <div style={styles.preview}>
-        <span style={styles.url}>cloudtopia.net/insights/your-article-slug</span>
-        <strong style={styles.previewTitle}>Your SEO title appears here</strong>
-        <span style={styles.previewText}>Your meta description should clearly explain the value of the article in one useful sentence.</span>
+    <section className="ct-widget" aria-label="Search result preview">
+      <div className="ct-widget__head">
+        <span className="ct-widget__icon" aria-hidden>
+          <Search size={16} />
+        </span>
+        <div className="ct-widget__heading">
+          <p className="ct-widget__kicker">Search preview</p>
+          <h3 className="ct-widget__title">How this article can appear on Google</h3>
+          <p className="ct-widget__copy">
+            Meta title {titleLength}/60 · meta description {descriptionLength}/155. Empty fields fall back to the title
+            and excerpt.
+          </p>
+        </div>
+      </div>
+      <div className="ct-serp" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="ct-serp__site">
+          <span className="ct-serp__favicon" aria-hidden>
+            CT
+          </span>
+          <span>
+            CloudTopia
+            <br />
+            <span className="ct-serp__url">cloudtopia.net › {path}</span>
+          </span>
+        </div>
+        <div className="ct-serp__title">{shownTitle}</div>
+        <div className="ct-serp__desc">{shownDescription}</div>
       </div>
     </section>
   )
-}
-
-const styles: Record<string, CSSProperties> = {
-  card: {
-    border: '1px solid rgba(2, 132, 199, 0.18)',
-    background: 'linear-gradient(135deg, #ffffff, #f4f1f8)',
-    borderRadius: 16,
-    padding: 18,
-    marginBottom: 18,
-  },
-  kicker: {
-    margin: 0,
-    color: '#0284c7',
-    fontSize: 11,
-    fontWeight: 950,
-    textTransform: 'uppercase',
-  },
-  title: {
-    margin: '8px 0 6px',
-    color: '#0f172a',
-    fontSize: 18,
-    lineHeight: 1.3,
-  },
-  copy: {
-    margin: 0,
-    color: '#475569',
-    lineHeight: 1.6,
-  },
-  preview: {
-    display: 'grid',
-    gap: 5,
-    marginTop: 16,
-    borderRadius: 12,
-    background: '#fff',
-    border: '1px solid rgba(15, 23, 42, 0.08)',
-    padding: 14,
-  },
-  url: {
-    color: '#0f766e',
-    fontSize: 13,
-    fontWeight: 700,
-  },
-  previewTitle: {
-    color: '#1d4ed8',
-    fontSize: 18,
-  },
-  previewText: {
-    color: '#475569',
-    fontSize: 14,
-    lineHeight: 1.45,
-  },
 }

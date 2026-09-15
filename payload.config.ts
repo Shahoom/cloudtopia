@@ -163,12 +163,22 @@ if (s3Config) {
 export default buildConfig({
   admin: {
     user: Users.slug,
+    theme: 'light',
+    // Local development only: signs in as an existing account from the local
+    // database so the admin UI can be reviewed in the preview without typing a
+    // password. Inert in production (NODE_ENV) and when the variable is unset.
+    autoLogin:
+      process.env.NODE_ENV !== 'production' && process.env.PAYLOAD_DEV_AUTOLOGIN_EMAIL
+        ? { email: process.env.PAYLOAD_DEV_AUTOLOGIN_EMAIL }
+        : false,
     meta: {
       titleSuffix: '- CloudTopia CMS',
       icons: [{ rel: 'icon', url: '/favicon.svg' }],
     },
     components: {
-      Nav: '@/components/payload/AdminChrome#CloudTopiaAdminNav',
+      Nav: '@/components/payload/admin/Nav#CloudTopiaNav',
+      actions: ['@/components/payload/admin/TopBarActions#TopBarActions'],
+      providers: ['@/components/payload/admin/CommandPalette#CommandPaletteProvider'],
       graphics: {
         Icon: '@/components/payload/AdminChrome#CloudTopiaIcon',
         Logo: '@/components/payload/AdminChrome#CloudTopiaLogo',

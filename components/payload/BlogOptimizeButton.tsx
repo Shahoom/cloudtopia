@@ -1,8 +1,10 @@
 'use client'
 
 import { useForm } from '@payloadcms/ui'
+import { Sparkles } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { normalizeHeadings } from '@/lib/blog/normalize-headings'
+import './admin/editor-widgets.css'
 
 type OptimizeResult = {
   metaTitle?: string
@@ -105,84 +107,75 @@ export function BlogOptimizeButton() {
   }, [getData, dispatchFields])
 
   return (
-    <div className="ctopt">
-      <style>{css}</style>
-      <div className="ctopt__head">
-        <div>
-          <p className="ctopt__kicker">CloudTopia SEO AI</p>
-          <h3 className="ctopt__title">Optimize &amp; auto-fill SEO</h3>
-          <p className="ctopt__copy">
-            Fixes your heading structure (single H1) and auto-fills the SEO fields from your content. Your prose is
-            never rewritten. Review, then Save.
+    <div className="ct-widget">
+      <div className="ct-widget__head">
+        <span className="ct-widget__icon" aria-hidden>
+          <Sparkles size={16} />
+        </span>
+        <div className="ct-widget__heading">
+          <p className="ct-widget__kicker">SEO assistant</p>
+          <h3 className="ct-widget__title">Optimize &amp; auto-fill SEO</h3>
+          <p className="ct-widget__copy">
+            Fixes the heading structure (single H1) and fills the SEO fields from your content. Your prose is never
+            rewritten — review the fields, then save.
           </p>
         </div>
-        <button type="button" className="ctopt__btn" onClick={run} disabled={loading} aria-busy={loading}>
-          {loading ? 'Optimizing…' : '✨ Optimize & auto-fill'}
-        </button>
+        <div className="ct-widget__actions">
+          <button type="button" className="ct-btn ct-btn--primary" onClick={run} disabled={loading} aria-busy={loading}>
+            <Sparkles size={14} aria-hidden />
+            {loading ? 'Optimizing…' : 'Optimize & auto-fill'}
+          </button>
+        </div>
       </div>
 
-      {error ? <p className="ctopt__err">{error}</p> : null}
+      {error ? (
+        <div className="ct-widget__body">
+          <p className="ct-widget__error">{error}</p>
+        </div>
+      ) : null}
 
       {summary ? (
-        <div className="ctopt__summary">
-          <strong>Applied:</strong>
-          <ul>
-            {summary.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-          {result?.secondaryKeywords?.length ? (
-            <p className="ctopt__sub">
-              <strong>Secondary keywords:</strong> {result.secondaryKeywords.join(' · ')}
-            </p>
-          ) : null}
-          {result?.internalLinks?.length ? (
-            <div className="ctopt__sub">
-              <strong>Suggested internal links:</strong>
+        <div className="ct-widget__body">
+          <div className="ct-widget__result">
+            <div>
+              <strong>Applied</strong>
               <ul>
-                {result.internalLinks.map((l, i) => (
-                  <li key={i}>
-                    “{l.anchor}” → <code>{l.target}</code>
-                  </li>
+                {summary.map((s, i) => (
+                  <li key={i}>{s}</li>
                 ))}
               </ul>
             </div>
-          ) : null}
-          {result?.warnings?.length ? (
-            <div className="ctopt__warn">
-              <strong>⚠ Warnings:</strong>
-              <ul>
-                {result.warnings.map((w, i) => (
-                  <li key={i}>{w}</li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-          <p className="ctopt__note">Nothing is saved yet — review the fields above and click Payload’s Save.</p>
+            {result?.secondaryKeywords?.length ? (
+              <div>
+                <strong>Secondary keywords:</strong> {result.secondaryKeywords.join(' · ')}
+              </div>
+            ) : null}
+            {result?.internalLinks?.length ? (
+              <div>
+                <strong>Suggested internal links</strong>
+                <ul>
+                  {result.internalLinks.map((l, i) => (
+                    <li key={i}>
+                      “{l.anchor}” → <code>{l.target}</code>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {result?.warnings?.length ? (
+              <div className="ct-widget__warn">
+                <strong>Warnings</strong>
+                <ul>
+                  {result.warnings.map((w, i) => (
+                    <li key={i}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            <p className="ct-widget__note">Nothing is saved yet — review the fields and click Save.</p>
+          </div>
         </div>
       ) : null}
     </div>
   )
 }
-
-const css = `
-  .ctopt { margin-bottom: 28px; padding: 20px; border-radius: 14px; color:#e6f6ff;
-    background: linear-gradient(135deg, #0b3a52, #075985); border:1px solid #0ea5e9;
-    box-shadow: 0 10px 30px -10px rgba(14,165,233,.45); }
-  .ctopt__head { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; }
-  .ctopt__kicker { margin:0; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#7dd3fc; }
-  .ctopt__title { margin:4px 0 6px; font-size:1.15rem; font-weight:800; color:#fff; }
-  .ctopt__copy { margin:0; max-width:520px; font-size:.85rem; line-height:1.5; color:#bae6fd; }
-  .ctopt__btn { flex-shrink:0; background:#fff; color:#075985; border:0; border-radius:10px; padding:12px 20px;
-    font-size:.9rem; font-weight:800; cursor:pointer; transition:transform .15s ease, background .15s ease; }
-  .ctopt__btn:hover:not(:disabled) { background:#e0f2fe; transform:translateY(-1px); }
-  .ctopt__btn:disabled { opacity:.6; cursor:wait; }
-  .ctopt__err { margin:14px 0 0; color:#fecaca; font-weight:700; font-size:.85rem; }
-  .ctopt__summary { margin:16px 0 0; padding:14px 16px; background:rgba(255,255,255,.08); border-radius:10px; font-size:.85rem; }
-  .ctopt__summary ul { margin:6px 0 0; padding-left:18px; }
-  .ctopt__summary li { margin:2px 0; }
-  .ctopt__sub { margin:12px 0 0; color:#cdeeff; }
-  .ctopt__sub code { background:rgba(0,0,0,.25); padding:1px 6px; border-radius:5px; }
-  .ctopt__warn { margin:12px 0 0; color:#fde68a; }
-  .ctopt__note { margin:12px 0 0; font-size:.8rem; color:#9fd8f2; font-style:italic; }
-`

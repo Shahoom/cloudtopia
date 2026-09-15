@@ -1,13 +1,24 @@
 'use client'
 
+import '../dashboard/dashboard.css'
+import '../dashboard/seo-center.css'
 import { useEffect, useMemo, useState } from 'react'
-import type { CSSProperties } from 'react'
-import { Check, ExternalLink, RotateCcw, Search, X } from 'lucide-react'
+import { AlertCircle, Check, Cloud, ExternalLink, RotateCcw, Search, X } from 'lucide-react'
+import { EmptyState } from '../dashboard/EmptyState.tsx'
 import type { Override, RouteGroup } from './api.ts'
 import { deleteOverride, fetchManifest, saveOverride } from './api.ts'
 
-const CYAN = '#0ea5e9'
 const EMPTY: Override = { metaTitle: '', metaDescription: '', canonicalUrl: '', noIndex: false, noFollow: false }
+
+const isOverridden = (ov?: Override) => !!(ov && (ov.metaTitle || ov.metaDescription || ov.canonicalUrl || ov.noIndex || ov.noFollow))
+
+function Meter({ length, max }: { length: number; max: number }) {
+  return (
+    <div className="ct-dash-seo-meter" aria-hidden="true">
+      <i className={length > max ? 'is-over' : undefined} style={{ width: `${Math.min(100, (length / max) * 100)}%` }} />
+    </div>
+  )
+}
 
 export function SeoControlCenter() {
   const [groups, setGroups] = useState<RouteGroup[]>([])
@@ -19,11 +30,11 @@ export function SeoControlCenter() {
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [toast, setToast] = useState('')
+  const [toast, setToast] = useState<{ text: string; error: boolean } | null>(null)
 
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(''), 3000)
+  function showToast(text: string, isError = false) {
+    setToast({ text, error: isError })
+    setTimeout(() => setToast(null), 3000)
   }
 
   useEffect(() => {
@@ -52,7 +63,7 @@ export function SeoControlCenter() {
       showToast('Saved')
       setEditing(null)
     } catch (e: any) {
-      showToast(e?.message || 'Save failed')
+      showToast(e?.message || 'Save failed', true)
     } finally {
       setSaving(false)
     }
@@ -73,7 +84,7 @@ export function SeoControlCenter() {
       showToast('Reset to default')
       setEditing(null)
     } catch (e: any) {
-      showToast(e?.message || 'Reset failed')
+      showToast(e?.message || 'Reset failed', true)
     } finally {
       setSaving(false)
     }
@@ -87,125 +98,244 @@ export function SeoControlCenter() {
       .filter((g) => g.routes.length > 0)
   }, [groups, q])
 
+  const totals = useMemo(() => {
+    let routes = 0
+    let overridden = 0
+    let noindex = 0
+    for (const g of groups) {
+      for (const r of g.routes) {
+        const ov = overrides[`${r.path}|${locale}`]
+        routes += 1
+        if (isOverridden(ov)) overridden += 1
+        if (ov?.noIndex) noindex += 1
+      }
+    }
+    return { routes, overridden, noindex }
+  }, [groups, overrides, locale])
+
+  const dir = locale === 'ar' ? 'rtl' : 'ltr'
+  const ready = !loading && !error
+
   return (
-    <div style={{ padding: '24px 28px', maxWidth: 1100, margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12, marginBottom: 8 }}>
+    <div className="ct-dash-root ct-dash-seo">
+      <header className="ct-dash-head">
         <div>
-          <h1 style={{ margin: 0, fontSize: 22, fontWeight: 600 }}>SEO control center</h1>
-          <p style={{ margin: '3px 0 0', fontSize: 13, color: 'var(--theme-elevation-500)' }}>Edit the tab title + meta description for every page. Articles are managed in the Articles workspace.</p>
+          <h1 className="ct-dash-title">
+            SEO center
+            {ready && <span className="ct-dash-seo-count">{totals.routes}</span>}
+          </h1>
+          <div className="ct-dash-sub">Edit the tab title and meta description for every page. Articles are managed in the Articles workspace.</div>
         </div>
-        <div style={{ display: 'inline-flex', border: '1px solid var(--theme-elevation-150)', borderRadius: 8, overflow: 'hidden' }}>
-          <button type="button" onClick={() => setLocale('en')} style={toggle(locale === 'en')}>English</button>
-          <button type="button" onClick={() => setLocale('ar')} style={toggle(locale === 'ar')}>Arabic</button>
+        <div className="ct-dash-seg" role="group" aria-label="Meta language">
+          <button type="button" className={locale === 'en' ? 'is-on' : undefined} aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>
+            English
+          </button>
+          <button type="button" className={locale === 'ar' ? 'is-on' : undefined} aria-pressed={locale === 'ar'} onClick={() => setLocale('ar')}>
+            Arabic
+          </button>
         </div>
+      </header>
+
+      <div className="ct-dash-seo-toolbar">
+        <label className="ct-dash-seo-search">
+          <Search size={15} strokeWidth={2} aria-hidden="true" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search routes…" aria-label="Search routes" />
+        </label>
+        {ready && (
+          <>
+            <span className="ct-dash-pill is-accent">{totals.overridden} overridden</span>
+            {totals.noindex > 0 && <span className="ct-dash-pill is-error">{totals.noindex} noindex</span>}
+          </>
+        )}
       </div>
 
-      <div style={{ position: 'relative', margin: '14px 0 18px' }}>
-        <Search size={16} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--theme-elevation-400)' }} />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search routes…" style={{ width: '100%', paddingLeft: 32 }} />
-      </div>
+      {error && (
+        <div className="ct-dash-notice" role="alert">
+          <AlertCircle size={15} strokeWidth={2} aria-hidden="true" />
+          {error}
+        </div>
+      )}
 
-      {error && <p style={{ color: '#dc2626', fontSize: 14 }}>{error}</p>}
-      {loading && <p style={{ color: 'var(--theme-elevation-450)', fontSize: 14 }}>Loading routes…</p>}
+      {loading && (
+        <div className="ct-dash-card" role="status" aria-busy="true">
+          <span className="ct-dash-sr">Loading routes…</span>
+          {Array.from({ length: 6 }, (_, i) => (
+            <div key={i} className="ct-dash-seo-skeleton-row" aria-hidden="true">
+              <i style={{ width: `${62 + ((i * 17) % 34)}%` }} />
+              <i style={{ width: `${40 + ((i * 23) % 48)}%` }} />
+              <i />
+            </div>
+          ))}
+        </div>
+      )}
 
-      {filtered.map((group) => (
-        <div key={group.group} style={{ marginBottom: 22 }}>
-          <p style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 600, letterSpacing: '0.04em', color: 'var(--theme-elevation-400)' }}>{group.group} · {group.routes.length}</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {group.routes.map((r) => {
-              const ov = overrides[keyFor(r.path)]
-              const cur = r.current?.[locale] || { title: '', description: '' }
-              const hasOverride = !!(ov && (ov.metaTitle || ov.metaDescription || ov.canonicalUrl || ov.noIndex || ov.noFollow))
-              const effectiveTitle = ov?.metaTitle || cur.title
-              const isEditing = editing === r.path
-              return (
-                <div key={r.path} style={isEditing ? editCard() : card()}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span style={{ fontSize: 14, color: 'var(--theme-text)' }}>{r.label}</span>
-                        {hasOverride && <span style={{ fontSize: 10, padding: '1px 7px', borderRadius: 5, background: 'rgba(14,165,233,0.14)', color: CYAN }}>Overridden</span>}
-                        {ov?.noIndex && <span style={{ fontSize: 10, padding: '1px 7px', borderRadius: 5, background: 'rgba(220,38,38,0.14)', color: '#dc2626' }}>noindex</span>}
+      {ready && filtered.length === 0 && (
+        <div className="ct-dash-card">
+          <EmptyState
+            icon={<Search size={16} strokeWidth={2} aria-hidden="true" />}
+            title={q.trim() ? `No routes match “${q.trim()}”` : 'No routes found'}
+            hint={q.trim() ? 'Search by page name or by a path segment such as “services”.' : undefined}
+          />
+        </div>
+      )}
+
+      <div className="ct-dash-seo-groups">
+        {filtered.map((group) => (
+          <section key={group.group} className="ct-dash-card" aria-label={group.group}>
+            <header className="ct-dash-card-head">
+              <h2 className="ct-dash-card-title">{group.group}</h2>
+              <span className="ct-dash-card-sub">
+                {group.routes.length} {group.routes.length === 1 ? 'route' : 'routes'}
+              </span>
+            </header>
+            <ul className="ct-dash-seo-list">
+              {group.routes.map((r) => {
+                const ov = overrides[keyFor(r.path)]
+                const cur = r.current?.[locale] || { title: '', description: '' }
+                const hasOverride = isOverridden(ov)
+                const effectiveTitle = ov?.metaTitle || cur.title
+                const isEditing = editing === r.path
+                const segments = r.path === '/' ? [] : r.path.split('/').filter(Boolean)
+                return (
+                  <li key={r.path} className={`ct-dash-seo-row${isEditing ? ' is-editing' : ''}`}>
+                    <div className="ct-dash-seo-route">
+                      <div className="ct-dash-seo-route-line">
+                        <span className="ct-dash-seo-label">{r.label}</span>
+                        {hasOverride && <span className="ct-dash-pill is-accent">Overridden</span>}
+                        {ov?.noIndex && <span className="ct-dash-pill is-error">noindex</span>}
                       </div>
-                      <span style={{ fontSize: 12, color: 'var(--theme-elevation-450)', fontFamily: 'var(--font-mono, monospace)' }}>/{r.path === '/' ? '' : r.path}</span>
-                      {!isEditing && <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--theme-elevation-500)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={effectiveTitle}>{effectiveTitle || '—'}</p>}
+                      <code className="ct-dash-seo-path">/{r.path === '/' ? '' : r.path}</code>
                     </div>
+
                     {!isEditing && (
-                      <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                        <a href={`/${locale}/${r.path === '/' ? '' : r.path}`} target="_blank" rel="noreferrer" aria-label="Open page" style={iconBtn()}><ExternalLink size={15} /></a>
-                        <button type="button" onClick={() => openEdit(r.path)} style={editBtn()}>Edit</button>
+                      <>
+                        <div className="ct-dash-seo-title" dir={locale === 'ar' ? 'rtl' : undefined} title={effectiveTitle}>
+                          {effectiveTitle || '—'}
+                        </div>
+                        <div className="ct-dash-seo-row-actions">
+                          <a
+                            className="ct-dash-seo-icon-btn"
+                            href={`/${locale}/${r.path === '/' ? '' : r.path}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`Open ${r.label} in a new tab`}
+                          >
+                            <ExternalLink size={15} strokeWidth={2} aria-hidden="true" />
+                          </a>
+                          <button type="button" className="ct-dash-seo-btn" onClick={() => openEdit(r.path)}>
+                            Edit<span className="ct-dash-sr"> {r.label}</span>
+                          </button>
+                        </div>
+                      </>
+                    )}
+
+                    {isEditing && (
+                      <div className="ct-dash-seo-edit">
+                        <div className="ct-dash-seo-fields">
+                          <label className="ct-dash-seo-lbl" htmlFor="ct-seo-title">
+                            Meta title (tab name)
+                            <span className={`ct-dash-seo-cnt${form.metaTitle.length > 60 ? ' is-over' : ''}`}>{form.metaTitle.length}/60</span>
+                          </label>
+                          <input
+                            id="ct-seo-title"
+                            className="ct-dash-seo-input"
+                            dir={dir}
+                            value={form.metaTitle}
+                            onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
+                            placeholder={cur.title ? `Default: ${cur.title}` : 'Browser-tab title…'}
+                          />
+                          <Meter length={form.metaTitle.length} max={60} />
+
+                          <label className="ct-dash-seo-lbl" htmlFor="ct-seo-description">
+                            Meta description
+                            <span className={`ct-dash-seo-cnt${form.metaDescription.length > 155 ? ' is-over' : ''}`}>{form.metaDescription.length}/155</span>
+                          </label>
+                          <textarea
+                            id="ct-seo-description"
+                            className="ct-dash-seo-input"
+                            dir={dir}
+                            rows={3}
+                            value={form.metaDescription}
+                            onChange={(e) => setForm({ ...form, metaDescription: e.target.value })}
+                            placeholder={cur.description ? `Default: ${cur.description.slice(0, 90)}…` : 'Search-result description…'}
+                          />
+                          <Meter length={form.metaDescription.length} max={155} />
+
+                          <label className="ct-dash-seo-lbl" htmlFor="ct-seo-canonical">
+                            Canonical URL <span className="ct-dash-seo-optional">Optional</span>
+                          </label>
+                          <input
+                            id="ct-seo-canonical"
+                            className="ct-dash-seo-input"
+                            dir="ltr"
+                            value={form.canonicalUrl}
+                            onChange={(e) => setForm({ ...form, canonicalUrl: e.target.value })}
+                            placeholder="https://cloudtopia.net/…"
+                          />
+
+                          <div className="ct-dash-seo-checks">
+                            <label className="ct-dash-seo-check">
+                              <input type="checkbox" checked={form.noIndex} onChange={(e) => setForm({ ...form, noIndex: e.target.checked })} />
+                              noindex
+                            </label>
+                            <label className="ct-dash-seo-check">
+                              <input type="checkbox" checked={form.noFollow} onChange={(e) => setForm({ ...form, noFollow: e.target.checked })} />
+                              nofollow
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="ct-dash-seo-preview">
+                          <div className="ct-dash-seo-preview-k">Search preview</div>
+                          <div className="ct-dash-seo-serp" dir={dir}>
+                            <div className="ct-dash-seo-serp-site">
+                              <span className="ct-dash-seo-serp-fav" aria-hidden="true">
+                                <Cloud size={12} strokeWidth={2} />
+                              </span>
+                              <div style={{ minWidth: 0 }}>
+                                <div>CloudTopia</div>
+                                <div className="ct-dash-seo-serp-url">{['cloudtopia.net', locale, ...segments].join(' › ')}</div>
+                              </div>
+                            </div>
+                            <div className="ct-dash-seo-serp-t">{form.metaTitle || cur.title || r.label}</div>
+                            <div className={`ct-dash-seo-serp-d${form.metaDescription || cur.description ? '' : ' is-placeholder'}`}>
+                              {form.metaDescription || cur.description || 'No description set — the page default will be used.'}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="ct-dash-seo-edit-actions">
+                          <button type="button" className="ct-dash-seo-btn is-primary" onClick={() => save(r.path)} disabled={saving}>
+                            <Check size={15} strokeWidth={2} aria-hidden="true" />
+                            {saving ? 'Saving…' : 'Save'}
+                          </button>
+                          <button type="button" className="ct-dash-seo-btn" onClick={() => setEditing(null)}>
+                            <X size={15} strokeWidth={2} aria-hidden="true" />
+                            Cancel
+                          </button>
+                          {hasOverride && (
+                            <button type="button" className="ct-dash-seo-btn is-danger" onClick={() => reset(r.path)} disabled={saving}>
+                              <RotateCcw size={14} strokeWidth={2} aria-hidden="true" />
+                              Reset to default
+                            </button>
+                          )}
+                        </div>
                       </div>
                     )}
-                  </div>
-
-                  {isEditing && (
-                    <div style={{ marginTop: 12 }}>
-                      <label style={lbl()}>Meta title (tab name) <span style={count(form.metaTitle.length, 60)}>{form.metaTitle.length}/60</span></label>
-                      <input value={form.metaTitle} onChange={(e) => setForm({ ...form, metaTitle: e.target.value })} placeholder={cur.title ? `Default: ${cur.title}` : 'Browser-tab title…'} style={{ width: '100%', marginBottom: 10 }} />
-                      <label style={lbl()}>Meta description <span style={count(form.metaDescription.length, 155)}>{form.metaDescription.length}/155</span></label>
-                      <textarea value={form.metaDescription} onChange={(e) => setForm({ ...form, metaDescription: e.target.value })} placeholder={cur.description ? `Default: ${cur.description.slice(0, 90)}…` : 'Search-result description…'} style={{ width: '100%', minHeight: 56, marginBottom: 10 }} />
-
-                      <div style={snippet()}>
-                        <div style={{ fontSize: 12, color: '#1a7f37', marginBottom: 2 }}>cloudtopia.net › {r.path === '/' ? '' : r.path}</div>
-                        <div style={{ fontSize: 15, color: '#1a0dab', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{form.metaTitle || cur.title || r.label}</div>
-                        <div style={{ fontSize: 12, color: 'var(--theme-elevation-600)' }}>{form.metaDescription || cur.description || 'No description set — the page default will be used.'}</div>
-                      </div>
-
-                      <input value={form.canonicalUrl} onChange={(e) => setForm({ ...form, canonicalUrl: e.target.value })} placeholder="Canonical URL (optional)" style={{ width: '100%', margin: '10px 0' }} />
-                      <div style={{ display: 'flex', gap: 16, marginBottom: 12 }}>
-                        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--theme-text)' }}><input type="checkbox" checked={form.noIndex} onChange={(e) => setForm({ ...form, noIndex: e.target.checked })} /> noindex</label>
-                        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--theme-text)' }}><input type="checkbox" checked={form.noFollow} onChange={(e) => setForm({ ...form, noFollow: e.target.checked })} /> nofollow</label>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <button type="button" onClick={() => save(r.path)} disabled={saving} style={primaryBtn()}><Check size={15} /> {saving ? 'Saving…' : 'Save'}</button>
-                        <button type="button" onClick={() => setEditing(null)} style={ghostBtn()}><X size={15} /> Cancel</button>
-                        {hasOverride && <button type="button" onClick={() => reset(r.path)} disabled={saving} style={{ ...ghostBtn(), marginLeft: 'auto', color: '#dc2626' }}><RotateCcw size={14} /> Reset</button>}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      ))}
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
 
       {toast && (
-        <div style={{ position: 'sticky', bottom: 16, display: 'flex', justifyContent: 'center' }}>
-          <span style={{ background: 'var(--theme-elevation-800)', color: 'var(--theme-elevation-0)', fontSize: 13, padding: '8px 16px', borderRadius: 999 }}>{toast}</span>
+        <div className={`ct-dash-seo-toast${toast.error ? ' is-error' : ''}`} role="status" aria-live="polite">
+          {toast.error ? <AlertCircle size={15} strokeWidth={2} aria-hidden="true" /> : <Check size={15} strokeWidth={2} aria-hidden="true" />}
+          {toast.text}
         </div>
       )}
     </div>
   )
-}
-
-function card(): CSSProperties {
-  return { background: 'var(--theme-elevation-0)', border: '1px solid var(--theme-elevation-100)', borderRadius: 10, padding: '12px 14px' }
-}
-function editCard(): CSSProperties {
-  return { background: 'var(--theme-elevation-50)', border: `1px solid ${CYAN}`, borderRadius: 10, padding: 14 }
-}
-function toggle(active: boolean): CSSProperties {
-  return { fontSize: 13, padding: '7px 14px', border: 'none', cursor: 'pointer', background: active ? 'var(--theme-elevation-100)' : 'transparent', color: active ? 'var(--theme-text)' : 'var(--theme-elevation-500)' }
-}
-function iconBtn(): CSSProperties {
-  return { width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 7, border: '1px solid var(--theme-elevation-150)', background: 'transparent', color: 'var(--theme-elevation-600)', textDecoration: 'none' }
-}
-function editBtn(): CSSProperties {
-  return { fontSize: 13, padding: '6px 14px', borderRadius: 7, border: '1px solid var(--theme-elevation-150)', background: 'transparent', color: 'var(--theme-text)', cursor: 'pointer' }
-}
-function primaryBtn(): CSSProperties {
-  return { display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, padding: '7px 14px', borderRadius: 8, border: `1px solid ${CYAN}`, background: CYAN, color: '#fff', cursor: 'pointer' }
-}
-function ghostBtn(): CSSProperties {
-  return { display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, padding: '7px 14px', borderRadius: 8, border: '1px solid var(--theme-elevation-150)', background: 'transparent', color: 'var(--theme-text)', cursor: 'pointer' }
-}
-function lbl(): CSSProperties {
-  return { display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--theme-elevation-500)', marginBottom: 4 }
-}
-function count(len: number, max: number): CSSProperties {
-  return { color: len > max ? '#dc2626' : 'var(--theme-elevation-400)' }
-}
-function snippet(): CSSProperties {
-  return { background: 'var(--theme-elevation-0)', border: '1px solid var(--theme-elevation-150)', borderRadius: 8, padding: '10px 12px' }
 }

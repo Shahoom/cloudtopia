@@ -1,0 +1,184 @@
+/* Article editor sidebar inspector — design E. Scoped to .ct-inspector*. */
+
+.ct-inspector {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 1px solid #e9eaec;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  font-family: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ct-inspector *,
+.ct-inspector *::before,
+.ct-inspector *::after {
+  box-sizing: border-box;
+}
+
+.ct-inspector__scores {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ct-inspector__score {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 52px;
+}
+
+.ct-inspector__score svg {
+  transform: rotate(-90deg);
+}
+
+.ct-inspector__ring-track {
+  fill: none;
+  stroke: #f1f2f4;
+  stroke-width: 4;
+}
+
+.ct-inspector__ring-value {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 4;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.ct-inspector__score.is-good .ct-inspector__ring-value {
+  stroke: #10b981;
+}
+
+.ct-inspector__score.is-fair .ct-inspector__ring-value {
+  stroke: #0ea5e9;
+}
+
+.ct-inspector__score.is-poor .ct-inspector__ring-value {
+  stroke: #f43f5e;
+}
+
+.ct-inspector__score-value {
+  position: absolute;
+  top: 12px;
+  color: #111827;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.ct-inspector__score-label {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.ct-inspector__stats {
+  display: grid;
+  gap: 4px;
+  margin-inline-start: auto;
+  color: #6b7280;
+  font-size: 12px;
+  text-align: end;
+}
+
+.ct-inspector__stats b {
+  color: #111827;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.ct-inspector__section {
+  padding-top: 12px;
+  border-top: 1px solid #f1f2f4;
+}
+
+.ct-inspector__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ct-inspector__title svg {
+  color: #6b7280;
+}
+
+.ct-inspector__title em {
+  margin-inline-start: auto;
+  color: #9ca3af;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.ct-inspector__empty {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ct-inspector__outline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.ct-inspector__heading {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 8px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: #374151;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12.5px;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-inspector__heading.is-h3 {
+  padding-inline-start: 20px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.ct-inspector__heading:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.ct-inspector__heading:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 1px;
+}
+
+.ct-inspector-flash {
+  border-radius: 6px;
+  background: #eef2ff;
+  box-shadow: 0 0 0 6px #eef2ff;
+  transition:
+    background-color 0.6s ease,
+    box-shadow 0.6s ease;
+}

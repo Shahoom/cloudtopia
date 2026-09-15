@@ -1,7 +1,8 @@
 'use client'
 
+import { Bot } from 'lucide-react'
 import { useState } from 'react'
-import type { CSSProperties } from 'react'
+import './admin/editor-widgets.css'
 
 const actions = [
   ['idea', 'Generate Idea'],
@@ -60,129 +61,64 @@ export function BlogAIAssistantPanel() {
   }
 
   return (
-    <section style={styles.card}>
-      <div>
-        <p style={styles.kicker}>CloudTopia AI assistant</p>
-        <h3 style={styles.title}>Generate editorial suggestions safely inside Payload</h3>
-        <p style={styles.copy}>
-          AI outputs are logged, never published automatically, and should be reviewed before inserting into the article.
-        </p>
+    <section className="ct-widget">
+      <div className="ct-widget__head">
+        <span className="ct-widget__icon" aria-hidden>
+          <Bot size={16} />
+        </span>
+        <div className="ct-widget__heading">
+          <p className="ct-widget__kicker">AI assistant</p>
+          <h3 className="ct-widget__title">Editorial suggestions</h3>
+          <p className="ct-widget__copy">
+            Outputs are logged and never published automatically — review them before inserting into the article.
+          </p>
+        </div>
       </div>
-      <div style={styles.grid}>
-        <label style={styles.label}>
-          Tool
-          <select value={action} onChange={(event) => setAction(event.target.value as any)} style={styles.input}>
-            {actions.map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+      <div className="ct-widget__body">
+        <div className="ct-widget__grid">
+          <label className="ct-widget__field">
+            Tool
+            <select value={action} onChange={(event) => setAction(event.target.value as any)} className="ct-widget__select">
+              {actions.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="ct-widget__field">
+            Topic or keyword
+            <input value={topic} onChange={(event) => setTopic(event.target.value)} className="ct-widget__input" dir="auto" />
+          </label>
+          <label className="ct-widget__field">
+            Target audience
+            <input value={targetAudience} onChange={(event) => setTargetAudience(event.target.value)} className="ct-widget__input" />
+          </label>
+          <label className="ct-widget__field">
+            Service focus
+            <input value={serviceFocus} onChange={(event) => setServiceFocus(event.target.value)} className="ct-widget__input" />
+          </label>
+          <label className="ct-widget__field">
+            Tone
+            <input value={tone} onChange={(event) => setTone(event.target.value)} className="ct-widget__input" />
+          </label>
+        </div>
+        <label className="ct-widget__field">
+          Selected section / extra context
+          <textarea value={section} onChange={(event) => setSection(event.target.value)} rows={5} className="ct-widget__textarea" dir="auto" />
         </label>
-        <label style={styles.label}>
-          Topic or keyword
-          <input value={topic} onChange={(event) => setTopic(event.target.value)} style={styles.input} />
-        </label>
-        <label style={styles.label}>
-          Target audience
-          <input value={targetAudience} onChange={(event) => setTargetAudience(event.target.value)} style={styles.input} />
-        </label>
-        <label style={styles.label}>
-          Service focus
-          <input value={serviceFocus} onChange={(event) => setServiceFocus(event.target.value)} style={styles.input} />
-        </label>
-        <label style={styles.label}>
-          Tone
-          <input value={tone} onChange={(event) => setTone(event.target.value)} style={styles.input} />
-        </label>
+        <div className="ct-widget__row">
+          <button type="button" className="ct-btn ct-btn--primary" onClick={submit} disabled={loading}>
+            {loading ? 'Generating…' : 'Generate suggestion'}
+          </button>
+        </div>
+        {error && <p className="ct-widget__error">{error}</p>}
+        {output && (
+          <pre className="ct-widget__output" dir="auto">
+            {output}
+          </pre>
+        )}
       </div>
-      <label style={styles.label}>
-        Selected section / extra context
-        <textarea value={section} onChange={(event) => setSection(event.target.value)} rows={5} style={styles.textarea} />
-      </label>
-      <button type="button" style={styles.button} onClick={submit} disabled={loading}>
-        {loading ? 'Generating...' : 'Generate suggestion'}
-      </button>
-      {error && <p style={styles.error}>{error}</p>}
-      {output && <pre style={styles.output}>{output}</pre>}
     </section>
   )
-}
-
-const styles: Record<string, CSSProperties> = {
-  card: {
-    display: 'grid',
-    gap: 16,
-    border: '1px solid rgba(2, 132, 199, 0.18)',
-    background: 'linear-gradient(135deg, #ffffff, #eef9ff)',
-    borderRadius: 16,
-    padding: 18,
-  },
-  kicker: {
-    margin: 0,
-    color: '#0284c7',
-    fontSize: 11,
-    fontWeight: 950,
-    textTransform: 'uppercase',
-  },
-  title: {
-    margin: '8px 0 6px',
-    color: '#0f172a',
-    fontSize: 18,
-  },
-  copy: {
-    margin: 0,
-    color: '#475569',
-    lineHeight: 1.6,
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: 12,
-  },
-  label: {
-    display: 'grid',
-    gap: 6,
-    color: '#0f172a',
-    fontSize: 12,
-    fontWeight: 900,
-  },
-  input: {
-    border: '1px solid rgba(15, 23, 42, 0.14)',
-    borderRadius: 10,
-    padding: '10px 12px',
-    background: '#fff',
-    color: '#0f172a',
-  },
-  textarea: {
-    border: '1px solid rgba(15, 23, 42, 0.14)',
-    borderRadius: 10,
-    padding: 12,
-    background: '#fff',
-    color: '#0f172a',
-    resize: 'vertical',
-  },
-  button: {
-    justifySelf: 'start',
-    border: 0,
-    borderRadius: 10,
-    background: '#0f172a',
-    color: '#fff',
-    padding: '11px 15px',
-    fontWeight: 900,
-    cursor: 'pointer',
-  },
-  output: {
-    whiteSpace: 'pre-wrap',
-    borderRadius: 12,
-    background: '#0f172a',
-    color: '#e0f2fe',
-    padding: 14,
-    overflowX: 'auto',
-    lineHeight: 1.6,
-  },
-  error: {
-    color: '#9f1239',
-    fontWeight: 800,
-  },
 }

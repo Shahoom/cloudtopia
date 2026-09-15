@@ -1,99 +1,132 @@
 'use client'
 
-import { useState } from 'react'
-import type { CSSProperties } from 'react'
-import type { ArticleRow, Status } from './types.ts'
+import { useEffect, useMemo, useState } from 'react'
+import type { DragEvent } from 'react'
+import type { ArticleIndex, ArticleRow, Status, ViewKey } from './types.ts'
 import { STATUS_DOT, STATUS_LABELS, STATUS_ORDER } from './types.ts'
-import { updateArticle } from './api.ts'
-
-const CYAN = '#0ea5e9'
+import { cx, fmtNumber, pairFor } from './format.ts'
+import { LocalePills, SeoRing } from './ui.tsx'
 
 type Props = {
   rows: ArticleRow[]
-  onRefresh: () => void
-  onToast: (msg: string) => void
+  view: ViewKey
+  index: ArticleIndex | null
+  peekId: string | null
+  totalDocs: number
+  onPeek: (id: string) => void
+  /** Resolves true when the status change was saved. */
+  onMove: (id: string, status: Status) => Promise<boolean>
 }
 
-function seoTone(score: number): CSSProperties {
-  if (score >= 80) return { background: 'rgba(22,163,74,0.14)', color: '#16a34a' }
-  if (score >= 60) return { background: 'rgba(217,119,6,0.16)', color: '#d97706' }
-  return { background: 'rgba(220,38,38,0.14)', color: '#dc2626' }
-}
-
-export function ArticleBoardView({ rows, onRefresh, onToast }: Props) {
+// Kanban by editorial status. Drag a card to another column to PATCH its
+// status (same REST call as before). Read-only in the Trash view.
+export function ArticleBoardView({ rows, view, index, peekId, totalDocs, onPeek, onMove }: Props) {
   const [dragId, setDragId] = useState<string | null>(null)
   const [overCol, setOverCol] = useState<Status | null>(null)
+  // Optimistic column placement until the refreshed rows arrive.
+  const [pending, setPending] = useState<Record<string, Status>>({})
+  const readOnly = view === 'trash'
 
-  async function drop(target: Status) {
+  useEffect(() => {
+    setPending({})
+  }, [rows])
+
+  const columns = useMemo(() => {
+    const map = new Map<Status, ArticleRow[]>(STATUS_ORDER.map((s) => [s, []]))
+    for (const r of rows) map.get(pending[r.id] ?? r.status)?.push(r)
+    return map
+  }, [rows, pending])
+
+  async function drop(e: DragEvent<HTMLElement>, target: Status) {
+    e.preventDefault()
     setOverCol(null)
-    const id = dragId
+    const id = dragId ?? e.dataTransfer.getData('text/plain')
     setDragId(null)
-    if (!id) return
     const row = rows.find((r) => r.id === id)
-    if (!row || row.status === target) return
-    try {
-      await updateArticle(id, { status: target })
-      onToast(`Moved to ${STATUS_LABELS[target]}`)
-      onRefresh()
-    } catch (e: any) {
-      onToast(e?.message || 'Could not move article')
+    if (!row || readOnly || (pending[id] ?? row.status) === target) return
+    setPending((p) => ({ ...p, [id]: target }))
+    const ok = await onMove(id, target)
+    if (!ok) {
+      setPending((p) => {
+        const next = { ...p }
+        delete next[id]
+        return next
+      })
     }
   }
 
   return (
-    <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
-      {STATUS_ORDER.map((col) => {
-        const items = rows.filter((r) => r.status === col)
-        return (
-          <div
-            key={col}
-            onDragOver={(e) => { e.preventDefault(); setOverCol(col) }}
-            onDragLeave={() => setOverCol((c) => (c === col ? null : c))}
-            onDrop={() => drop(col)}
-            style={{
-              flex: '0 0 232px',
-              background: overCol === col ? 'rgba(14,165,233,0.06)' : 'var(--theme-elevation-50)',
-              border: `1px solid ${overCol === col ? CYAN : 'var(--theme-elevation-100)'}`,
-              borderRadius: 12,
-              padding: 10,
-              minHeight: 120,
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px' }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: STATUS_DOT[col] }} />
-              <span style={{ fontSize: 13, fontWeight: 600 }}>{STATUS_LABELS[col]}</span>
-              <span style={{ marginLeft: 'auto', fontSize: 12, color: 'var(--theme-elevation-450)' }}>{items.length}</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {items.map((row) => (
-                <div
-                  key={row.id}
-                  draggable
-                  onDragStart={(e) => { setDragId(row.id); e.dataTransfer.effectAllowed = 'move' }}
-                  onDragEnd={() => setDragId(null)}
-                  style={{
-                    background: 'var(--theme-elevation-0)',
-                    border: '1px solid var(--theme-elevation-150)',
-                    borderRadius: 9,
-                    padding: '9px 10px',
-                    cursor: 'grab',
-                    opacity: dragId === row.id ? 0.5 : 1,
-                  }}
-                >
-                  <a href={`/admin/collections/blog-posts/${row.id}`} style={{ fontSize: 13, color: 'var(--theme-text)', textDecoration: 'none', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: 6 }}>
-                    {row.title}
-                  </a>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 5, border: '1px solid var(--theme-elevation-200)', color: 'var(--theme-elevation-600)' }}>{row.locale.toUpperCase()}</span>
-                    <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 5, ...seoTone(row.seoScore) }}>SEO {row.seoScore}</span>
-                  </div>
-                </div>
-              ))}
-              {items.length === 0 && <p style={{ fontSize: 12, color: 'var(--theme-elevation-400)', margin: '4px 2px' }}>—</p>}
-            </div>
-          </div>
-        )
-      })}
+    <div className="ct-articles-boardwrap">
+      {totalDocs > rows.length && (
+        <div className="ct-articles-board-note">
+          Showing the first {fmtNumber(rows.length)} of {fmtNumber(totalDocs)} articles. Narrow it down with filters.
+        </div>
+      )}
+      <div className="ct-articles-board">
+        {STATUS_ORDER.map((col) => {
+          const items = columns.get(col) ?? []
+          return (
+            <section
+              key={col}
+              className={cx('ct-articles-col', overCol === col && 'is-over')}
+              aria-label={`${STATUS_LABELS[col]}: ${items.length}`}
+              onDragOver={(e) => {
+                if (readOnly || !dragId) return
+                e.preventDefault()
+                e.dataTransfer.dropEffect = 'move'
+                if (overCol !== col) setOverCol(col)
+              }}
+              onDragLeave={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOverCol((c) => (c === col ? null : c))
+              }}
+              onDrop={(e) => drop(e, col)}
+            >
+              <header className="ct-articles-col-h">
+                <span className="ct-articles-dot" style={{ background: STATUS_DOT[col] }} aria-hidden />
+                {STATUS_LABELS[col]}
+                <span className="ct-articles-col-c">{fmtNumber(items.length)}</span>
+              </header>
+              <div className="ct-articles-col-b">
+                {items.map((row) => (
+                  <article
+                    key={row.id}
+                    className={cx('ct-articles-kcard', dragId === row.id && 'is-drag', peekId === row.id && 'is-peek', readOnly && 'is-static')}
+                    draggable={!readOnly}
+                    tabIndex={0}
+                    aria-label={row.title || 'Untitled draft'}
+                    onDragStart={(e) => {
+                      setDragId(row.id)
+                      e.dataTransfer.effectAllowed = 'move'
+                      e.dataTransfer.setData('text/plain', row.id)
+                    }}
+                    onDragEnd={() => {
+                      setDragId(null)
+                      setOverCol(null)
+                    }}
+                    onClick={() => onPeek(row.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        onPeek(row.id)
+                      }
+                    }}
+                  >
+                    <div className={cx('ct-articles-kcard-t', !row.title && 'is-untitled')} dir="auto">
+                      {row.title || 'Untitled draft'}
+                    </div>
+                    <div className="ct-articles-kcard-m">
+                      <LocalePills pair={pairFor(index, row)} />
+                      <span className="ct-articles-sp" />
+                      <SeoRing value={row.seoScore} size={24} />
+                    </div>
+                  </article>
+                ))}
+                {items.length === 0 && <div className="ct-articles-col-empty">{readOnly ? 'Nothing here' : 'Drop articles here'}</div>}
+              </div>
+            </section>
+          )
+        })}
+      </div>
     </div>
   )
 }

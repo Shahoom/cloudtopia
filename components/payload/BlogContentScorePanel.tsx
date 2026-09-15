@@ -1,7 +1,8 @@
 'use client'
 
+import { ClipboardCheck } from 'lucide-react'
 import { useState } from 'react'
-import type { CSSProperties } from 'react'
+import './admin/editor-widgets.css'
 
 type AnalysisResult = {
   contentScore?: number
@@ -43,25 +44,40 @@ export function BlogContentScorePanel() {
   }
 
   return (
-    <section style={styles.card}>
-      <div>
-        <p style={styles.kicker}>Content assistant</p>
-        <h3 style={styles.title}>Editorial readiness checklist</h3>
-        <p style={styles.copy}>Save the post, then run an analysis to catch missing SEO, content, CTA, FAQ, author, and image-alt items.</p>
+    <section className="ct-widget">
+      <div className="ct-widget__head">
+        <span className="ct-widget__icon" aria-hidden>
+          <ClipboardCheck size={16} />
+        </span>
+        <div className="ct-widget__heading">
+          <p className="ct-widget__kicker">Content assistant</p>
+          <h3 className="ct-widget__title">Editorial readiness checklist</h3>
+          <p className="ct-widget__copy">
+            Save the post, then run an analysis to catch missing SEO, content, CTA, FAQ, author, and image-alt items.
+          </p>
+        </div>
+        <div className="ct-widget__actions">
+          <button type="button" className="ct-btn ct-btn--secondary" onClick={analyze} disabled={loading}>
+            {loading ? 'Analyzing…' : 'Analyze saved article'}
+          </button>
+        </div>
       </div>
-      <button type="button" style={styles.button} onClick={analyze} disabled={loading}>
-        {loading ? 'Analyzing...' : 'Analyze saved article'}
-      </button>
-      {error && <p style={styles.error}>{error}</p>}
+      {error && (
+        <div className="ct-widget__body">
+          <p className="ct-widget__error">{error}</p>
+        </div>
+      )}
       {result && (
-        <div style={styles.grid}>
-          <Metric label="Content" value={result.contentScore} />
-          <Metric label="SEO" value={result.seoScore} />
-          <Metric label="Readability" value={result.readabilityScore} />
-          <Metric label="Words" value={result.wordCount} />
-          {(result.missing || []).length > 0 && (
-            <p style={styles.missing}>Missing: {(result.missing || []).join(', ')}</p>
-          )}
+        <div className="ct-widget__body">
+          <div className="ct-widget__metrics">
+            <Metric label="Content" value={result.contentScore} />
+            <Metric label="SEO" value={result.seoScore} />
+            <Metric label="Readability" value={result.readabilityScore} />
+            <Metric label="Words" value={result.wordCount} />
+            {(result.missing || []).length > 0 && (
+              <p className="ct-widget__missing">Missing: {(result.missing || []).join(', ')}</p>
+            )}
+          </div>
         </div>
       )}
     </section>
@@ -70,73 +86,9 @@ export function BlogContentScorePanel() {
 
 function Metric({ label, value }: { label: string; value?: number }) {
   return (
-    <span style={styles.metric}>
-      <strong>{value ?? '-'}</strong>
+    <span className="ct-widget__metric">
+      <strong>{value ?? '–'}</strong>
       {label}
     </span>
   )
-}
-
-const styles: Record<string, CSSProperties> = {
-  card: {
-    display: 'grid',
-    gap: 14,
-    border: '1px solid rgba(2, 132, 199, 0.18)',
-    background: '#ffffff',
-    borderRadius: 16,
-    padding: 18,
-    marginTop: 18,
-  },
-  kicker: {
-    margin: 0,
-    color: '#0284c7',
-    fontSize: 11,
-    fontWeight: 950,
-    textTransform: 'uppercase',
-  },
-  title: {
-    margin: '8px 0 6px',
-    color: '#0f172a',
-    fontSize: 18,
-  },
-  copy: {
-    margin: 0,
-    color: '#475569',
-    lineHeight: 1.6,
-  },
-  button: {
-    justifySelf: 'start',
-    border: 0,
-    borderRadius: 10,
-    background: '#0284c7',
-    color: '#fff',
-    padding: '10px 14px',
-    fontWeight: 900,
-    cursor: 'pointer',
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-    gap: 10,
-  },
-  metric: {
-    display: 'grid',
-    gap: 3,
-    borderRadius: 12,
-    background: '#f4f1f8',
-    padding: 12,
-    color: '#475569',
-    fontSize: 12,
-    fontWeight: 800,
-  },
-  missing: {
-    gridColumn: '1 / -1',
-    margin: 0,
-    color: '#9f1239',
-    fontWeight: 800,
-  },
-  error: {
-    color: '#9f1239',
-    fontWeight: 800,
-  },
 }

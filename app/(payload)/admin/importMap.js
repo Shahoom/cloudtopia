@@ -36,6 +36,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { BlogSEOPreview as BlogSEOPreview_134516634709aa02c1b226ab713770bb } from '@/components/payload/BlogSEOPreview'
 import { BlogAIAssistantPanel as BlogAIAssistantPanel_56b71d2157d308172388e68ecbcd7602 } from '@/components/payload/BlogAIAssistantPanel'
 import { BlogContentScorePanel as BlogContentScorePanel_4dc16b8a62bee90615688a4712c0a46d } from '@/components/payload/BlogContentScorePanel'
+import { ArticleInspector as ArticleInspector_15dd418fa4324910040ce60df4b07194 } from '@/components/payload/admin/ArticleInspector'
 import { FastProjectsListView as FastProjectsListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0 } from '@/components/payload/FastCollectionLists'
 import { FastServiceFAQsListView as FastServiceFAQsListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0 } from '@/components/payload/FastCollectionLists'
 import { FastSiteContentListView as FastSiteContentListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0 } from '@/components/payload/FastCollectionLists'
@@ -55,9 +56,11 @@ import { ExportPreview as ExportPreview_cdf7e044479f899a31f804427d568b36 } from 
 import { ExportSaveButton as ExportSaveButton_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { ImportPreview as ImportPreview_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { ImportSaveButton as ImportSaveButton_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { CloudTopiaAdminNav as CloudTopiaAdminNav_571965f0f42445db79b9bfab12c648d3 } from '@/components/payload/AdminChrome'
+import { CloudTopiaNav as CloudTopiaNav_b2de597762638bc9a05efcdc70e0c497 } from '@/components/payload/admin/Nav'
 import { CloudTopiaIcon as CloudTopiaIcon_571965f0f42445db79b9bfab12c648d3 } from '@/components/payload/AdminChrome'
 import { CloudTopiaLogo as CloudTopiaLogo_571965f0f42445db79b9bfab12c648d3 } from '@/components/payload/AdminChrome'
+import { TopBarActions as TopBarActions_d6e0e8ea1fe06dc0627edbb5882b2b79 } from '@/components/payload/admin/TopBarActions'
+import { CommandPaletteProvider as CommandPaletteProvider_b48caf2e0d1c4832b0b1ec514a42b9b3 } from '@/components/payload/admin/CommandPalette'
 import { ImportExportProvider as ImportExportProvider_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { CloudTopiaCreateFirstUserView as CloudTopiaCreateFirstUserView_e0b55275f3ddf4e3d487dc379ef639d4 } from '@/components/payload/AuthViews'
 import { CommandCenter as CommandCenter_525eeb9915ad59cb8aa45e9242d5a04d } from '@/components/payload/CommandCenter'
@@ -106,6 +109,7 @@ export const importMap = {
   "@/components/payload/BlogSEOPreview#BlogSEOPreview": BlogSEOPreview_134516634709aa02c1b226ab713770bb,
   "@/components/payload/BlogAIAssistantPanel#BlogAIAssistantPanel": BlogAIAssistantPanel_56b71d2157d308172388e68ecbcd7602,
   "@/components/payload/BlogContentScorePanel#BlogContentScorePanel": BlogContentScorePanel_4dc16b8a62bee90615688a4712c0a46d,
+  "@/components/payload/admin/ArticleInspector#ArticleInspector": ArticleInspector_15dd418fa4324910040ce60df4b07194,
   "@/components/payload/FastCollectionLists#FastProjectsListView": FastProjectsListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0,
   "@/components/payload/FastCollectionLists#FastServiceFAQsListView": FastServiceFAQsListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0,
   "@/components/payload/FastCollectionLists#FastSiteContentListView": FastSiteContentListView_da5c1f2bbfd1e2ea84f3cff460ce6ce0,
@@ -125,9 +129,11 @@ export const importMap = {
   "@payloadcms/plugin-import-export/rsc#ExportSaveButton": ExportSaveButton_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#ImportPreview": ImportPreview_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#ImportSaveButton": ImportSaveButton_cdf7e044479f899a31f804427d568b36,
-  "@/components/payload/AdminChrome#CloudTopiaAdminNav": CloudTopiaAdminNav_571965f0f42445db79b9bfab12c648d3,
+  "@/components/payload/admin/Nav#CloudTopiaNav": CloudTopiaNav_b2de597762638bc9a05efcdc70e0c497,
   "@/components/payload/AdminChrome#CloudTopiaIcon": CloudTopiaIcon_571965f0f42445db79b9bfab12c648d3,
   "@/components/payload/AdminChrome#CloudTopiaLogo": CloudTopiaLogo_571965f0f42445db79b9bfab12c648d3,
+  "@/components/payload/admin/TopBarActions#TopBarActions": TopBarActions_d6e0e8ea1fe06dc0627edbb5882b2b79,
+  "@/components/payload/admin/CommandPalette#CommandPaletteProvider": CommandPaletteProvider_b48caf2e0d1c4832b0b1ec514a42b9b3,
   "@payloadcms/plugin-import-export/rsc#ImportExportProvider": ImportExportProvider_cdf7e044479f899a31f804427d568b36,
   "@/components/payload/AuthViews#CloudTopiaCreateFirstUserView": CloudTopiaCreateFirstUserView_e0b55275f3ddf4e3d487dc379ef639d4,
   "@/components/payload/CommandCenter#CommandCenter": CommandCenter_525eeb9915ad59cb8aa45e9242d5a04d,

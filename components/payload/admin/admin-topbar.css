@@ -1,0 +1,312 @@
+/* CloudTopia admin top-bar actions — design E. Scoped to .ct-topbar* and .ct-shell-*. */
+
+.ct-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-family: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ct-topbar *,
+.ct-topbar *::before,
+.ct-topbar *::after {
+  box-sizing: border-box;
+}
+
+.ct-topbar button {
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ct-topbar a {
+  text-decoration: none;
+}
+
+.ct-topbar :focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.ct-topbar kbd {
+  padding: 2px 5px 1px;
+  border: 1px solid #e5e7eb;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #f9fafb;
+  color: #6b7280;
+  font: 500 10.5px/1.2 var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+}
+
+.ct-topbar__nav-toggle {
+  display: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0 !important;
+  border-radius: 8px;
+  color: #374151 !important;
+}
+
+.ct-topbar__nav-toggle:hover {
+  background: #f3f4f6 !important;
+}
+
+.ct-topbar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: clamp(220px, 28vw, 400px);
+  height: 34px;
+  padding: 0 7px 0 11px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 9px;
+  background: #fafafa !important;
+  color: #9ca3af !important;
+  text-align: start;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ct-topbar__search:hover {
+  border-color: #d1d5db !important;
+  background: #fff !important;
+  color: #6b7280 !important;
+}
+
+.ct-topbar__search span {
+  flex: 1;
+  overflow: hidden;
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-topbar__create {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  border-radius: 9px;
+  box-shadow: 0 1px 2px rgba(79, 70, 229, 0.35);
+}
+
+.ct-topbar__create-main,
+.ct-topbar__create-toggle {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  background: #4f46e5 !important;
+  color: #fff !important;
+  transition: background-color 0.15s ease;
+}
+
+.ct-topbar__create-main {
+  gap: 6px;
+  padding: 0 12px 0 11px;
+  border-start-start-radius: 9px;
+  border-end-start-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ct-topbar__create-toggle {
+  justify-content: center;
+  width: 30px;
+  padding: 0 !important;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-start-end-radius: 9px;
+  border-end-end-radius: 9px;
+}
+
+.ct-topbar__create-main:hover,
+.ct-topbar__create-toggle:hover,
+.ct-topbar__create-toggle[aria-expanded='true'] {
+  background: #4338ca !important;
+}
+
+.ct-topbar__pop {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% + 6px);
+  inset-inline-end: 0;
+  width: 208px;
+  padding: 5px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 18px 44px rgba(17, 24, 39, 0.14),
+    0 2px 6px rgba(17, 24, 39, 0.05);
+  animation: ct-topbar-pop 0.14s ease-out;
+}
+
+.ct-topbar__pop a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 8px;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ct-topbar__pop a:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.ct-topbar__pop svg {
+  flex: none;
+  color: #6b7280;
+}
+
+.ct-topbar__icon {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  color: #6b7280;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ct-topbar__icon:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.ct-topbar__count {
+  position: absolute;
+  top: 3px;
+  inset-inline-end: 2px;
+  display: grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ct-topbar__site {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 9px;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ct-topbar__site:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.ct-topbar__site svg {
+  color: #6b7280;
+}
+
+@keyframes ct-topbar-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .ct-topbar__search span,
+  .ct-topbar__search kbd {
+    display: none;
+  }
+
+  .ct-topbar__search {
+    justify-content: center;
+    width: 34px;
+    padding: 0 !important;
+  }
+
+  .ct-topbar__site span {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .ct-topbar__nav-toggle {
+    display: grid;
+    order: -1;
+  }
+
+  .ct-topbar__create-main span {
+    display: none;
+  }
+}
+
+/* ── Shell header for custom views (mirrors Payload's app header) ── */
+
+.ct-shell-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: #6b7280;
+  font-family: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.ct-shell-crumbs a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.ct-shell-crumbs a:hover {
+  color: #111827;
+}
+
+.ct-shell-crumbs__sep {
+  color: #d1d5db;
+}
+
+.ct-shell-crumbs__current {
+  overflow: hidden;
+  color: #111827;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  .ct-shell-crumbs:has(.ct-shell-crumbs__current) > :not(.ct-shell-crumbs__current) {
+    display: none;
+  }
+}

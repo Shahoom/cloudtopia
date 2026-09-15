@@ -9,6 +9,14 @@
       "autoPort": true
     },
     {
+      "comment": "Dev server with the dev auto-login disabled (an empty value survives .env.local loading), for checking the login and create-first-user screens.",
+      "name": "Next.js Dev (no autologin)",
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["PAYLOAD_DEV_AUTOLOGIN_EMAIL=", "npm", "run", "dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
       "comment": "Serves the production build. Use this (not Dev) to verify static/ISR behaviour — dev mode renders every request, so cache headers and prerendering are only observable here. Requires `npx next build` first.",
       "name": "Next.js Prod",
       "runtimeExecutable": "npm",

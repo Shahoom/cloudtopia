@@ -1,0 +1,529 @@
+/*
+ * CloudTopia admin — sign-in / create-first-user (design E, mockup screen A).
+ * Namespaced `ct-auth-`. The bare `.ct-auth` class is deliberately unused: the
+ * global admin theme still styles it. Payload's own form is restyled in place;
+ * the global theme forces field/button/.form-submit/.render-fields styles with
+ * !important, so those overrides use `body .ct-auth-form …` to win.
+ */
+
+/* Escape Payload's minimal template (centered 480px column with padding). */
+.template-minimal:has(.ct-auth-shell) {
+  display: block !important;
+  min-height: 100vh;
+  padding: 0 !important;
+  background: #fafafa !important;
+}
+
+.template-minimal:has(.ct-auth-shell) > .template-minimal__wrap {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.ct-auth-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  min-height: 100vh;
+  background: #fafafa;
+  color: #374151;
+  font-family: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ct-auth-shell *,
+.ct-auth-shell *::before,
+.ct-auth-shell *::after {
+  box-sizing: border-box;
+}
+
+body .ct-auth-shell h1,
+body .ct-auth-shell p,
+body .ct-auth-shell ul {
+  margin: 0;
+}
+
+body .ct-auth-shell a:focus-visible,
+body .ct-auth-shell button:focus-visible,
+body .ct-auth-shell input:focus-visible {
+  outline: 2px solid #4f46e5 !important;
+  outline-offset: 2px !important;
+}
+
+/* ── brand panel (the only place the indigo gradient is allowed) ───────── */
+
+.ct-auth-brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 40px 56px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #1e1b4b 0%, #312e81 38%, #4338ca 72%, #6366f1 100%);
+  color: #fff;
+}
+
+.ct-auth-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ct-auth-brand > :not(.ct-auth-pattern) {
+  position: relative;
+}
+
+.ct-auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ct-auth-logo-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.ct-auth-hero {
+  max-width: 480px;
+  margin-top: auto;
+}
+
+body .ct-auth-shell .ct-auth-headline {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+body .ct-auth-shell .ct-auth-lede {
+  color: #c7d2fe;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ct-auth-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px !important;
+  padding: 0;
+  list-style: none;
+}
+
+.ct-auth-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  color: #e0e7ff;
+  font-size: 13.5px;
+}
+
+.ct-auth-list b {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ct-auth-list-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: -1px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ct-auth-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 28px;
+  color: #a5b4fc;
+  font-size: 12px;
+}
+
+/* ── sign-in card ───────────────────────────────────────────────────────── */
+
+.ct-auth-main {
+  display: grid;
+  place-items: center;
+  padding: 40px;
+  background: #fafafa;
+}
+
+.ct-auth-card-wrap {
+  width: 100%;
+  max-width: 392px;
+}
+
+.ct-auth-card {
+  padding: 28px;
+  border: 1px solid #e9eaec;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.ct-auth-card-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: #4f46e5;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 1px 2px rgba(67, 56, 202, 0.3);
+  color: #fff;
+}
+
+body .ct-auth-shell .ct-auth-title {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+body .ct-auth-shell .ct-auth-env {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: #6b7280;
+}
+
+.ct-auth-env-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px #d1fae5;
+}
+
+.ct-auth-env-dot.is-preview { background: #0ea5e9; box-shadow: 0 0 0 3px #e0f2fe; }
+.ct-auth-env-dot.is-development { background: #64748b; box-shadow: 0 0 0 3px #e2e8f0; }
+
+body .ct-auth-shell .ct-auth-intro {
+  margin-top: 12px;
+  color: #6b7280;
+}
+
+.ct-auth-form {
+  margin-top: 22px;
+}
+
+.ct-auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  color: #9ca3af;
+  font-size: 11.5px;
+}
+
+.ct-auth-divider::before,
+.ct-auth-divider::after {
+  flex: 1;
+  height: 1px;
+  background: #e9eaec;
+  content: '';
+}
+
+.ct-auth-sso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 38px;
+  border: 1px solid #e9eaec;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ct-auth-soon {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  margin-left: 4px;
+  padding: 0 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+body .ct-auth-shell .ct-auth-footnote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.ct-auth-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 0 4px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.ct-auth-meta a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.ct-auth-meta a:hover {
+  color: #4338ca;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Payload's form, restyled in place ──────────────────────────────────── */
+
+body .ct-auth-form .login__brand,
+body .ct-auth-form .create-first-user > h1,
+body .ct-auth-form .create-first-user > p {
+  display: none !important;
+}
+
+body .ct-auth-form .create-first-user {
+  display: block;
+}
+
+body .ct-auth-form form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body .ct-auth-form form::before {
+  content: none !important;
+}
+
+body .ct-auth-form .login__form__inputWrap,
+body .ct-auth-form .emailAndUsername,
+body .ct-auth-form .render-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body .ct-auth-form .field-type {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+body .ct-auth-form .field-type__wrap {
+  padding: 0 !important;
+}
+
+body .ct-auth-form .field-label {
+  display: flex !important;
+  align-items: center;
+  gap: 2px;
+  margin: 0 0 6px !important;
+  padding: 0 !important;
+  color: #374151 !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 18px !important;
+}
+
+body .ct-auth-form .field-label .required {
+  color: #e11d48;
+}
+
+body .ct-auth-form .field-type input {
+  width: 100%;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 10px !important;
+  border: 1px solid #e9eaec !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 1px rgba(17, 24, 39, 0.03) !important;
+  color: #111827 !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  line-height: normal !important;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+body .ct-auth-form .field-type input:hover {
+  border-color: #dcdee3 !important;
+}
+
+body .ct-auth-form .field-type input:focus,
+body .ct-auth-form .field-type input:focus-visible {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.13) !important;
+  outline: none !important;
+}
+
+body .ct-auth-form .field-type.error input {
+  border-color: #e11d48 !important;
+  background: #fff1f2 !important;
+}
+
+body .ct-auth-form .field-description {
+  margin-top: 5px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+body .ct-auth-form .rs__control {
+  min-height: 38px !important;
+  border: 1px solid #e9eaec !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 1px rgba(17, 24, 39, 0.03) !important;
+  font-size: 13px;
+}
+
+body .ct-auth-form .rs__control--is-focused {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.13) !important;
+}
+
+/* "Forgot password?" sits in the password label row: email label 18 + gap 6 +
+   input 38 + field gap 14 = 76px from the top of the form. */
+body .ct-auth-form form.login__form > a {
+  position: absolute;
+  top: 76px;
+  inset-inline-end: 0;
+  color: #4f46e5 !important;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+}
+
+body .ct-auth-form form.login__form > a:hover {
+  color: #4338ca !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body .ct-auth-form .form-submit {
+  width: 100% !important;
+  margin: 4px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body .ct-auth-form .form-submit .btn,
+body .ct-auth-form .form-submit button[type='submit'] {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  border: 1px solid #4f46e5 !important;
+  border-radius: 8px !important;
+  background: #4f46e5 !important;
+  box-shadow: 0 1px 2px rgba(79, 70, 229, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+body .ct-auth-form .form-submit .btn:hover,
+body .ct-auth-form .form-submit button[type='submit']:hover {
+  border-color: #4338ca !important;
+  background: #4338ca !important;
+  transform: none !important;
+}
+
+body .ct-auth-form .form-submit .btn--disabled,
+body .ct-auth-form .form-submit .btn[disabled] {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+body .ct-auth-form .form-submit .btn__content {
+  justify-content: center;
+}
+
+/* ── small screens: brand collapses into a header above the card ───────── */
+
+@media (max-width: 960px) {
+  .ct-auth-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ct-auth-brand {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .ct-auth-hero {
+    margin-top: 28px;
+  }
+
+  body .ct-auth-shell .ct-auth-headline {
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+
+  body .ct-auth-shell .ct-auth-lede,
+  .ct-auth-list,
+  .ct-auth-foot {
+    display: none;
+  }
+
+  .ct-auth-main {
+    padding: 28px 16px 40px;
+  }
+}
