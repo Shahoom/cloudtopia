@@ -121,17 +121,18 @@ const nextConfig = {
   },
 
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    // Vercel's image optimizer is not used: its Hobby allowance ran out and every
+    // uncached variant answered 402, blanking images site-wide. Cloudflare Image
+    // Transformations resize and convert instead (AVIF/WebP via format=auto).
+    loader: 'custom',
+    loaderFile: './lib/cloudflare-image-loader.ts',
+    // Every width a browser picks is its own Cloudflare transformation (the free
+    // tier counts 5,000 unique ones a month), so srcsets stop at 1920.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // 60/65 are used by the hero images on website-development and
-    // restaurant-qr-menu — a quality missing from this allowlist makes the
-    // optimizer answer 400 and the image simply not render.
+    // restaurant-qr-menu; keep every quality the components request in this list.
     qualities: [60, 65, 75, 90],
-    // 60s forced the optimizer to re-encode the same images constantly and is
-    // what Lighthouse flags as "inefficient cache lifetimes". Brand imagery is
-    // effectively immutable, so cache optimized outputs for 31 days.
-    minimumCacheTTL: 2678400,
     remotePatterns: [
       // R2 media bucket behind Cloudflare CDN (edge-cached, immutable) — the
       // canonical origin for CMS media since 2026-09; normalizeMediaUrl
