@@ -40,6 +40,41 @@ export const Users: CollectionConfig = {
     group: 'System',
     useAsTitle: 'email',
   },
+  hooks: {
+    // Flag when a password is being set so the afterChange hook can react.
+    beforeChange: [
+      ({ data, operation, req }) => {
+        if (operation === 'update' && typeof data?.password === 'string' && data.password.length > 0) {
+          req.context = req.context || {}
+          ;(req.context as Record<string, unknown>).ctPasswordChanged = true
+        }
+        return data
+      },
+    ],
+    // When an admin resets ANOTHER user's password (the compromise-recovery
+    // path), revoke that user's server-side sessions so a stolen/old token
+    // stops working. A self password change keeps the current session (no
+    // forced logout). The nested update carries no password, so it does not
+    // re-trigger this hook, and the ctSkipSessionClear guard is belt-and-braces.
+    afterChange: [
+      async ({ doc, operation, req }) => {
+        const ctx = (req.context as Record<string, unknown>) || {}
+        if (operation === 'update' && ctx.ctPasswordChanged && !ctx.ctSkipSessionClear) {
+          const actorId = req.user && req.user.collection === 'users' ? String(req.user.id) : null
+          if (actorId && actorId !== String(doc.id)) {
+            await req.payload.update({
+              collection: 'users',
+              id: doc.id,
+              data: { sessions: [] },
+              overrideAccess: true,
+              context: { ctSkipSessionClear: true },
+            })
+          }
+        }
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'name',

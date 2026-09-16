@@ -1,4 +1,5 @@
 import * as migration_20260521_010356_initial_payload_schema from './20260521_010356_initial_payload_schema';
+import * as migration_20260916_120000_enforce_rls_all_tables from './20260916_120000_enforce_rls_all_tables';
 import * as migration_20260521_011700_add_pages_and_site_design from './20260521_011700_add_pages_and_site_design';
 import * as migration_20260521_160000_structured_pages from './20260521_160000_structured_pages';
 import * as migration_20260521_170000_structured_site_design from './20260521_170000_structured_site_design';
@@ -155,5 +156,10 @@ export const migrations = [
     up: migration_20260914_130000_pages_programmatic_landing.up,
     down: migration_20260914_130000_pages_programmatic_landing.down,
     name: '20260914_130000_pages_programmatic_landing'
+  },
+  {
+    up: migration_20260916_120000_enforce_rls_all_tables.up,
+    down: migration_20260916_120000_enforce_rls_all_tables.down,
+    name: '20260916_120000_enforce_rls_all_tables'
   },
 ];
