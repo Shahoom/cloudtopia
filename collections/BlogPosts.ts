@@ -11,7 +11,7 @@ import { ensureBlogPair } from '../lib/cms/blog-pair-endpoint.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
 import { calculateReadingTime, extractLexicalPlainText, slugify } from '../lib/blog/utils.ts'
 import { calculateBlogContentScores } from '../lib/blog/intelligence.ts'
-import { adminOnly, publishedOrAdmin } from './blogAccess.ts'
+import { adminOnly, denyAnonDraftTrash, publishedOrAdmin } from './blogAccess.ts'
 import { blogContentBlocks } from './blogBlocks.ts'
 
 const statusOptions = [
@@ -216,6 +216,7 @@ export const BlogPosts: CollectionConfig = {
     delete: adminOnly,
   },
   hooks: {
+    beforeOperation: [denyAnonDraftTrash],
     beforeValidate: [normalizePost],
     afterChange: [mirrorCoverImage, ensureArabicCounterpart, revalidateBlogPosts],
     afterDelete: [revalidateAfterDelete],
