@@ -22,7 +22,12 @@ const isAdminOrSelf: Access = ({ req, id }) => {
 
 export const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  // Send the session cookie with Secure in production so it is never
+  // transmitted over plaintext HTTP (Payload's default is secure:false).
+  // Gated on NODE_ENV so local http dev still receives the cookie.
+  auth: {
+    cookies: { secure: process.env.NODE_ENV === 'production' },
+  },
   lockDocuments: false,
   access: {
     read: isAdminOrSelf,

@@ -104,7 +104,11 @@ export const Media: CollectionConfig = {
     // payload.config.ts (gated on S3_* env vars) takes over and stores files in
     // Cloudflare R2 instead — Vercel's filesystem is read-only at runtime.
     staticDir: 'public/uploads',
-    mimeTypes: ['image/*', 'application/pdf'],
+    // Raster images + PDF only. 'image/*' previously admitted image/svg+xml,
+    // which can carry executable script; an <?xml-prefixed SVG also slips past
+    // Payload's SVG sanitizer, and the media CDN serves it without a CSP. If a
+    // sanitized SVG upload is ever needed, add it back with server-side scrubbing.
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'application/pdf'],
     focalPoint: true,
     adminThumbnail: 'thumbnail',
     // Originals stay JPEG/PNG (social cards still read them as og:image) but
