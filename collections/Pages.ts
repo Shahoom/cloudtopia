@@ -2,7 +2,7 @@ import type { CollectionAfterChangeHook, CollectionConfig } from 'payload'
 import { shouldRunAutoTranslate, translatePayload } from '../lib/cms/auto-translate.ts'
 import { publicPathForSlug, syncDictionaryWithPage, templateForSlug } from '../lib/cms/page-structure.ts'
 import { revalidateCmsTags } from '../lib/cms/revalidate.ts'
-import { adminOnly } from './blogAccess.ts'
+import { adminOnly, publishedOrAdmin } from './blogAccess.ts'
 
 const syncPageToSiteContent: CollectionAfterChangeHook = async ({ doc, req }) => {
   if (!doc?.locale) return doc
@@ -112,7 +112,10 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   lockDocuments: false,
   access: {
-    read: () => true,
+    // Anonymous callers get only published pages (the public renderer already
+    // filters on status via raw SQL; this stops draft pages leaking through the
+    // Payload REST/GraphQL API). Authenticated CMS users read everything.
+    read: publishedOrAdmin,
     create: adminOnly,
     update: adminOnly,
     delete: adminOnly,
@@ -381,6 +384,11 @@ export const Pages: CollectionConfig = {
     {
       name: 'editorNotes',
       type: 'textarea',
+      // Internal notes must never reach anonymous API readers, even on an
+      // otherwise-published page. Restrict this field's read to logged-in users.
+      access: {
+        read: ({ req }) => Boolean(req.user),
+      },
       admin: {
         description: 'Internal notes for editors. Not rendered publicly.',
       },

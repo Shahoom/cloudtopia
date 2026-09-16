@@ -90,6 +90,53 @@ export function isPayloadConfigured() {
   return Boolean(getDatabaseUrl() && getPayloadSecret())
 }
 
+/**
+ * The canonical origin the app and Payload admin are served from. Prefers
+ * NEXT_PUBLIC_SITE_URL, falling back to the production apex or localhost.
+ * Used for Payload `serverURL`/`csrf`.
+ */
+export function getServerURL() {
+  const configured = clean(process.env.NEXT_PUBLIC_SITE_URL)
+  if (configured) return configured.replace(/\/$/, '')
+  return isProduction() ? 'https://cloudtopia.net' : 'http://localhost:3000'
+}
+
+/**
+ * Exact Origins allowed to send the Payload session cookie. Payload's default
+ * `csrf: []` accepts the payload-token cookie from ANY Origin, so a script on a
+ * same-site subdomain (e.g. media.cloudtopia.net) could drive authenticated CMS
+ * writes with a logged-in admin's ambient cookie. Pinning the allowlist makes
+ * extractJWT reject the cookie for every other Origin. We include the canonical
+ * origin plus its www/apex sibling, the Vercel preview URLs (so /admin keeps
+ * working on preview deployments), and localhost in development.
+ */
+export function getCsrfOrigins(): string[] {
+  const origins = new Set<string>()
+  const server = getServerURL()
+  origins.add(server)
+  try {
+    const u = new URL(server)
+    if (u.hostname.startsWith('www.')) {
+      origins.add(`${u.protocol}//${u.hostname.slice(4)}`)
+    } else {
+      origins.add(`${u.protocol}//www.${u.hostname}`)
+    }
+  } catch {
+    // ignore a malformed NEXT_PUBLIC_SITE_URL
+  }
+  // Vercel injects these host-only (no protocol).
+  for (const v of [
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.VERCEL_URL,
+  ]) {
+    const host = clean(v)
+    if (host) origins.add(`https://${host}`)
+  }
+  if (!isProduction()) origins.add('http://localhost:3000')
+  return Array.from(origins)
+}
+
 export type S3StorageConfig = {
   bucket: string
   region: string

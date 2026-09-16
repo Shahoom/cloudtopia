@@ -30,7 +30,15 @@ import { SolutionFinderLeads } from './collections/SolutionFinderLeads.ts'
 import { ClinicTopiaLeads } from './collections/ClinicTopiaLeads.ts'
 import { HasmERPLeads } from './collections/HasmERPLeads.ts'
 import { Users } from './collections/Users.ts'
-import { databaseRequiresSsl, getDatabaseUrl, getPayloadSecret, getS3StorageConfig } from './lib/cms/env.ts'
+import { adminRoleOnly } from './collections/blogAccess.ts'
+import {
+  databaseRequiresSsl,
+  getCsrfOrigins,
+  getDatabaseUrl,
+  getPayloadSecret,
+  getS3StorageConfig,
+  getServerURL,
+} from './lib/cms/env.ts'
 import { searchPluginConfig } from './lib/cms/search-config.ts'
 import { handleBlogAIEndpoint } from './lib/cms/blog-ai-endpoint.ts'
 import { handleTranslateEndpoint } from './lib/cms/translate-endpoint.ts'
@@ -98,6 +106,21 @@ const plugins: Plugin[] = [
       { slug: 'blog-categories', export: { disableJobsQueue: true }, import: { disableJobsQueue: true } },
       { slug: 'blog-tags', export: { disableJobsQueue: true }, import: { disableJobsQueue: true } },
     ],
+    // A saved export embeds rows fetched with the creator's access, so an admin
+    // export of a lead collection stores lead PII as a downloadable file. The
+    // plugin's exports collection otherwise defaults read/create/delete to "any
+    // authenticated user", which would let an editor or MCP API key download it.
+    // Pin the whole exports collection to the admin role.
+    overrideExportCollection: ({ collection }) => ({
+      ...collection,
+      access: {
+        ...collection.access,
+        read: adminRoleOnly,
+        create: adminRoleOnly,
+        update: () => false,
+        delete: adminRoleOnly,
+      },
+    }),
   }),
   mcpPlugin({
     overrideApiKeyCollection: (collection) => ({
@@ -161,6 +184,11 @@ if (s3Config) {
 }
 
 export default buildConfig({
+  // Bind the CMS session cookie to trusted Origins. Without this, Payload's
+  // default `csrf: []` accepts the payload-token cookie from any Origin, so a
+  // script on a same-site subdomain could forge authenticated CMS writes.
+  serverURL: getServerURL(),
+  csrf: getCsrfOrigins(),
   admin: {
     user: Users.slug,
     theme: 'light',
