@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Marquee } from "@/components/ui/marquee";

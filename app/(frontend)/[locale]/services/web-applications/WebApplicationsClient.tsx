@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'

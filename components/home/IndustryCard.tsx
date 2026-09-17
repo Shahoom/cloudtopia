@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
 import { localePath } from '@/lib/i18n/url'
 import type { HomeIndustryLocale, HomeIndustrySlide } from './industryData'

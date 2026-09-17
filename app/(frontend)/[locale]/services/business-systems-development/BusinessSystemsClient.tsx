@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import dynamic from 'next/dynamic'

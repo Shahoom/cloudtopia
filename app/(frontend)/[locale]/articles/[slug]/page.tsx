@@ -28,12 +28,17 @@ export const revalidate = false
 
 // Without this, a dynamic segment can't be prerendered and Next falls back to
 // rendering it per request — `revalidate` alone does not make it cacheable.
-// Enumerating the published slugs per locale is what actually puts articles on
-// the CDN. Unknown slugs still render on demand (dynamicParams defaults to true),
-// so a post published between builds is not a 404.
+// Slugs left out still render on their first request and are cached from then on
+// (dynamicParams defaults to true), so a post published between builds is not a
+// 404. Only the pinned, featured and newest posts are built up front: prerendering
+// every article in both locales made each deploy ~0.5 GB, which kept Vercel's
+// deployment storage over the Hobby limit. On-demand rendering needs ASCII slugs:
+// a non-ASCII slug can't go into the x-next-cache-tags header and the route 500s.
+const PRERENDERED_POSTS_PER_LOCALE = 40
+
 export async function generateStaticParams({ params }: { params: { locale: string } }) {
   const posts = await getPublishedBlogPosts(params.locale)
-  return posts.map((post) => ({ slug: post.slug }))
+  return posts.slice(0, PRERENDERED_POSTS_PER_LOCALE).map((post) => ({ slug: post.slug }))
 }
 
 function absoluteUrl(url?: string | null) {

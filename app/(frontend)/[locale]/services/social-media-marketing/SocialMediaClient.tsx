@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import Link from "@/components/ui/link"
 import { renderCanvas, TypeWriter } from "@/components/ui/hero-designali"
 import { Plus, CheckCircle } from "lucide-react"
 import { useLanguage } from '@/lib/i18n/LanguageContext'

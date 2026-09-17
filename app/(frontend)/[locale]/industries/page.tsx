@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowUpLeft, ArrowUpRight, CheckCircle2, ChevronDown, MessageCircle } from 'lucide-react'
 import { applySeoOverride } from '@/lib/cms/route-seo'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'

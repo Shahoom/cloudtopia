@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import { localePath } from '@/lib/i18n/url'
 import { CANONICAL_SERVICE_TARGETS } from '@/lib/industries/service-targets'

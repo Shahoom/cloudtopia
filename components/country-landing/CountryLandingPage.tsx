@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
 import Image from 'next/image'
 import type { CSSProperties } from 'react'

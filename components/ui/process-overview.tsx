@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/link";
 import { type ComponentType } from "react";
 import { ArrowUpRight, Compass, PenTool, Code2, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";

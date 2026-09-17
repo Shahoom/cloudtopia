@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import {
     ArrowRight, Sparkles, Star, Smartphone, Boxes, Layers, Server, FlaskConical,
     Activity, Rocket, ShieldCheck, Gauge, Fingerprint, Store, CheckCircle2, Cpu, Pencil,

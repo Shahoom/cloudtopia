@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import type { Locale } from '@/lib/i18n/config'
 import { localePath } from '@/lib/i18n/url'

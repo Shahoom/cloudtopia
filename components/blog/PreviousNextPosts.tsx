@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'

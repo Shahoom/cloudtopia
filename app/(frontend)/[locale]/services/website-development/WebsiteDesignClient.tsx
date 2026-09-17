@@ -1,6 +1,6 @@
 'use client'
 
-import Link from "next/link"
+import Link from "@/components/ui/link"
 import Image from 'next/image'
 import { LayoutGroup, motion } from "framer-motion"
 import { TextRotate } from "@/components/ui/text-rotate"

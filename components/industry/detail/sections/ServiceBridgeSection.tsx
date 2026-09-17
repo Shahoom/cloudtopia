@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 import type { ServiceBridgeSection as ServiceBridgeSectionModel } from '@/lib/industries/types'
 

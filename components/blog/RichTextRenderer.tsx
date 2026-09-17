@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { normalizeMediaUrl, slugify, type LexicalNode } from '@/lib/blog/utils'
 
 function textFromNode(node: LexicalNode): string {

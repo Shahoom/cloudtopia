@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import Image from 'next/image'
 import { ArrowRight, ExternalLink, CheckCircle2, Target, Lightbulb, TrendingUp } from 'lucide-react'
 import { getProjectById, getAllProjects } from '@/lib/projects'

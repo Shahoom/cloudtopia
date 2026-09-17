@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Pencil, Sparkles, Star } from 'lucide-react'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ChevronRight } from 'lucide-react'
 import { localePath } from '@/lib/i18n/url'
 

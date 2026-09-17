@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import type { BlogCategory } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
 import { categoryAccent, categoryGlyphName, categoryGlyphs } from '@/components/blog/editorial/categoryColor'

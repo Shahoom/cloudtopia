@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 function pageHref(basePath: string, params: Record<string, string | undefined>, page: number) {

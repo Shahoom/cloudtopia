@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import Image from 'next/image'
 import Script from 'next/script'
 import { usePathname } from 'next/navigation'

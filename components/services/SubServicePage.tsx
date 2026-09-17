@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, BarChart3, Bot, Building2, Check, Cloud, Database, Layers, MessageCircle, Plug, Settings, Workflow } from 'lucide-react'
 import { localePath } from '@/lib/i18n/url'
 import { ContactLeadForm } from '@/components/services/ContactLeadForm'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, MessageCircle, Search, PenTool, Code2, Rocket, ShieldCheck, Globe, Sparkles, Headphones } from 'lucide-react'
 import { HeroGeometric } from '@/components/ui/shape-landing-hero'
 import { FeaturesBento, type FeaturesBentoContent } from '@/components/ui/features-bento'

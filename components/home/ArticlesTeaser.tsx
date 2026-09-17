@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import Image from 'next/image'
 import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import type { BlogPostSummary } from '@/lib/blog/data'
 import { localePath } from '@/lib/i18n/url'
 import { Kicker } from './editorial/Kicker'

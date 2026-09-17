@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { GlowingEffect } from './glowing-effect'
 import { cn } from '@/lib/utils'

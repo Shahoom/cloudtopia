@@ -19,7 +19,7 @@
  */
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { localePath } from '@/lib/i18n/url'
 
 const CONSENT_COOKIE = 'ct-consent'

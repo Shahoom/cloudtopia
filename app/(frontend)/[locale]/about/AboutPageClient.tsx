@@ -24,7 +24,7 @@ import {
     FileText,
     Building2,
 } from 'lucide-react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 // tsparticles-backed sparkles — client-only after hydration so the particle
 // engine bundle stays out of the initial page payload.

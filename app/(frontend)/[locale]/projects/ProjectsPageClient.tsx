@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'
 import {

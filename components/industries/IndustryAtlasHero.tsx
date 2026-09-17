@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, type KeyboardEvent } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowDown, ArrowUpLeft, ArrowUpRight, CheckCircle2, Sparkles, Workflow } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { localePath } from '@/lib/i18n/url'

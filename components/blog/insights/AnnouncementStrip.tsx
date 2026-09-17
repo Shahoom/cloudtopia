@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { localePath } from '@/lib/i18n/url'
 
 export type AnnouncementItem = { title: string; href: string }

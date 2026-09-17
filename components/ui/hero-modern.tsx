@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, Layers, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 

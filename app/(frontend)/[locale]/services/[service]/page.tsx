@@ -1,7 +1,7 @@
 import { notFound, permanentRedirect } from 'next/navigation'
 import { serializeJsonLd } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, ArrowUpRight, CheckCircle2, CircleDollarSign, Database, Gauge, HelpCircle, Layers, MessageCircle, MonitorCheck, Network, Pencil, Rocket, Search, Settings2, ShieldCheck, Sparkles, Star, Workflow } from 'lucide-react'
 import { canonicalUrl, localePath } from '@/lib/i18n/url'
 import { ogImagesFor } from '@/lib/og/og-image'

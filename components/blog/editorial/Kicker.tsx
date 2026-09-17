@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 
 // Small-caps, letterspaced eyebrow label. Colored with the global accent by
 // default; pass `color` to use a category accent. Becomes a link when `href` set.

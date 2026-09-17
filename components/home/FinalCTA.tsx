@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowRight, Mail, Sparkles, MessageCircle, Check, Clock } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { localePath } from '@/lib/i18n/url'

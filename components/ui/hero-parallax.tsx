@@ -8,7 +8,7 @@ import {
     MotionValue,
 } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/link";
 
 export const HeroParallax = ({
     products,

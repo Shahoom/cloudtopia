@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/link'
 import { ArrowUpLeft, ArrowUpRight, ChevronDown } from 'lucide-react'
 import { localePath } from '@/lib/i18n/url'
 import type { IndustriesPageContent } from '@/lib/seo/industries-page'
