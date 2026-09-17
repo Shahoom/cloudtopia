@@ -285,19 +285,6 @@ export async function POST(request: NextRequest) {
 
   const batch = Array.isArray(payload)
   const requests = (batch ? payload : [payload]) as JsonRpcRequest[]
-
-  // Bound the batch. This is a tiny read-only, static-backed server; no honest
-  // client sends dozens of calls at once. Capping stops a single request from
-  // fanning out into an unbounded amount of work (JSON-RPC 2.0 §6 lets a server
-  // reject an oversized/invalid batch with a single error).
-  const MAX_BATCH = 25
-  if (requests.length === 0 || requests.length > MAX_BATCH) {
-    return NextResponse.json(
-      rpcError(null, -32600, `Invalid Request: batch must contain 1–${MAX_BATCH} requests.`),
-      { status: 400, headers: CORS_HEADERS },
-    )
-  }
-
   const responses = (await Promise.all(requests.map(handleOne))).filter((r): r is object => r !== null)
 
   // Only notifications → 202 Accepted with no body (Streamable HTTP).
