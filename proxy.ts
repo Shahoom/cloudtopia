@@ -141,7 +141,15 @@ function isStaticPath(pathname: string): boolean {
 }
 
 export function proxy(request: NextRequest) {
-    const pathname = request.nextUrl.pathname
+    // Collapse leading slashes first. A request for `//evil.com/x` arrives with
+    // pathname `//evil.com/x`; every redirect below rebuilds an absolute URL with
+    // an explicit apex host so the Location can never actually go off-site, but
+    // normalising here is a cheap belt-and-braces guard so no `//…` value can
+    // ever flow into a redirect target as a protocol-relative URL. No legitimate
+    // path begins with `//`.
+    const pathname = request.nextUrl.pathname.startsWith('//')
+        ? '/' + request.nextUrl.pathname.replace(/^\/+/, '')
+        : request.nextUrl.pathname
     const requestLocale = request.headers.get('x-locale')
     const host = request.headers.get('host') || ''
     const isWww = host.startsWith('www.')

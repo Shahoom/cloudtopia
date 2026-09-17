@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/cms/payload.ts'
 import { isPayloadConfigured } from '@/lib/cms/env.ts'
 import { getClientIp } from '@/lib/cms/client-ip.ts'
+import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 
 export const runtime = 'nodejs'
 
@@ -35,6 +36,17 @@ export function OPTIONS(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const cors = corsHeaders(request.headers.get('origin'))
+
+  // Throttle per client IP (shared 10/min, 50/hour limiter) — the endpoint
+  // writes a CMS lead per call, so leave it unthrottled and it becomes a spam
+  // sink. Keep the CORS headers on the 429 so the cross-origin demo can read it.
+  const rate = aiChatRateLimiter.check(`clinictopia:${getClientIp(request.headers)}`)
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait a moment and try again.' },
+      { status: 429, headers: { ...cors, 'Retry-After': String(rate.retryAfterSeconds) } },
+    )
+  }
 
   let body: unknown
   try {
