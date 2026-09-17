@@ -3,12 +3,24 @@ import { escapeHtml } from '@/lib/security/escape-html'
 import { getPayloadClient } from '@/lib/cms/payload.ts'
 import { isPayloadConfigured } from '@/lib/cms/env.ts'
 import { getClientIp } from '@/lib/cms/client-ip.ts'
+import { aiChatRateLimiter } from '@/lib/ai-chatbot/rateLimit.ts'
 
 export const runtime = 'nodejs'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
+  // Throttle per client IP: every accepted request writes a CMS row AND sends a
+  // Resend email, so an unthrottled endpoint is a spam/cost amplifier. Uses the
+  // same shared in-memory limiter (10/min, 50/hour) as the other lead routes.
+  const rate = aiChatRateLimiter.check(`contact:${getClientIp(request.headers)}`)
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait a moment and try again.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } },
+    )
+  }
+
   let body: unknown
   try {
     body = await request.json()
